@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -265,8 +265,13 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
         jsonErrorUnmarshallers = new ArrayList<JsonErrorUnmarshaller>();
         jsonErrorUnmarshallers.add(new InvalidLexiconExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidNextTokenExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new InvalidS3BucketExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new InvalidS3KeyExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidSampleRateExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new InvalidSnsTopicArnExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidSsmlExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new InvalidTaskIdExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new LanguageNotSupportedExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new LexiconNotFoundExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new LexiconSizeExceededExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new MarksNotSupportedForFormatExceptionUnmarshaller());
@@ -274,6 +279,7 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
         jsonErrorUnmarshallers.add(new MaxLexiconsNumberExceededExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new ServiceFailureExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new SsmlMarksNotSupportedForTextTypeExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new SynthesisTaskNotFoundExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new TextLengthExceededExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new UnsupportedPlsAlphabetExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new UnsupportedPlsLanguageExceptionUnmarshaller());
@@ -346,6 +352,7 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -415,6 +422,7 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -464,6 +472,61 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Retrieves a specific SpeechSynthesisTask object based on its TaskID. This
+     * object contains information about the given speech synthesis task,
+     * including the status of the task, and a link to the S3 bucket containing
+     * the output of the task.
+     * </p>
+     * 
+     * @param getSpeechSynthesisTaskRequest
+     * @return getSpeechSynthesisTaskResult The response from the
+     *         GetSpeechSynthesisTask service method, as returned by Amazon
+     *         Polly.
+     * @throws InvalidTaskIdException
+     * @throws ServiceFailureException
+     * @throws SynthesisTaskNotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Polly indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetSpeechSynthesisTaskResult getSpeechSynthesisTask(
+            GetSpeechSynthesisTaskRequest getSpeechSynthesisTaskRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getSpeechSynthesisTaskRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetSpeechSynthesisTaskRequest> request = null;
+        Response<GetSpeechSynthesisTaskResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetSpeechSynthesisTaskRequestMarshaller()
+                        .marshall(getSpeechSynthesisTaskRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetSpeechSynthesisTaskResult, JsonUnmarshallerContext> unmarshaller = new GetSpeechSynthesisTaskResultJsonUnmarshaller();
+            JsonResponseHandler<GetSpeechSynthesisTaskResult> responseHandler = new JsonResponseHandler<GetSpeechSynthesisTaskResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -513,6 +576,59 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Returns a list of SpeechSynthesisTask objects ordered by their creation
+     * date. This operation can filter the tasks by their status, for example,
+     * allowing users to list only tasks that are completed.
+     * </p>
+     * 
+     * @param listSpeechSynthesisTasksRequest
+     * @return listSpeechSynthesisTasksResult The response from the
+     *         ListSpeechSynthesisTasks service method, as returned by Amazon
+     *         Polly.
+     * @throws InvalidNextTokenException
+     * @throws ServiceFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Polly indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListSpeechSynthesisTasksResult listSpeechSynthesisTasks(
+            ListSpeechSynthesisTasksRequest listSpeechSynthesisTasksRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listSpeechSynthesisTasksRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListSpeechSynthesisTasksRequest> request = null;
+        Response<ListSpeechSynthesisTasksResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListSpeechSynthesisTasksRequestMarshaller()
+                        .marshall(listSpeechSynthesisTasksRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListSpeechSynthesisTasksResult, JsonUnmarshallerContext> unmarshaller = new ListSpeechSynthesisTasksResultJsonUnmarshaller();
+            JsonResponseHandler<ListSpeechSynthesisTasksResult> responseHandler = new JsonResponseHandler<ListSpeechSynthesisTasksResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -573,6 +689,73 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Allows the creation of an asynchronous synthesis task, by starting a new
+     * <code>SpeechSynthesisTask</code>. This operation requires all the
+     * standard information needed for speech synthesis, plus the name of an
+     * Amazon S3 bucket for the service to store the output of the synthesis
+     * task and two optional parameters (OutputS3KeyPrefix and SnsTopicArn).
+     * Once the synthesis task is created, this operation will return a
+     * SpeechSynthesisTask object, which will include an identifier of this task
+     * as well as the current status.
+     * </p>
+     * 
+     * @param startSpeechSynthesisTaskRequest
+     * @return startSpeechSynthesisTaskResult The response from the
+     *         StartSpeechSynthesisTask service method, as returned by Amazon
+     *         Polly.
+     * @throws TextLengthExceededException
+     * @throws InvalidS3BucketException
+     * @throws InvalidS3KeyException
+     * @throws InvalidSampleRateException
+     * @throws InvalidSnsTopicArnException
+     * @throws InvalidSsmlException
+     * @throws LexiconNotFoundException
+     * @throws ServiceFailureException
+     * @throws MarksNotSupportedForFormatException
+     * @throws SsmlMarksNotSupportedForTextTypeException
+     * @throws LanguageNotSupportedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Polly indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartSpeechSynthesisTaskResult startSpeechSynthesisTask(
+            StartSpeechSynthesisTaskRequest startSpeechSynthesisTaskRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startSpeechSynthesisTaskRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartSpeechSynthesisTaskRequest> request = null;
+        Response<StartSpeechSynthesisTaskResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartSpeechSynthesisTaskRequestMarshaller()
+                        .marshall(startSpeechSynthesisTaskRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartSpeechSynthesisTaskResult, JsonUnmarshallerContext> unmarshaller = new StartSpeechSynthesisTaskResultJsonUnmarshaller();
+            JsonResponseHandler<StartSpeechSynthesisTaskResult> responseHandler = new JsonResponseHandler<StartSpeechSynthesisTaskResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -598,6 +781,7 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
      * @throws ServiceFailureException
      * @throws MarksNotSupportedForFormatException
      * @throws SsmlMarksNotSupportedForTextTypeException
+     * @throws LanguageNotSupportedException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -630,6 +814,7 @@ public class AmazonPollyClient extends AmazonWebServiceClient implements AmazonP
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Client method for returning the configuration information and metadata of the
- * specified user pool client.
+ * specified user pool app client.
  * </p>
  */
 public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest implements Serializable {
@@ -39,7 +39,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The ID of the client associated with the user pool.
+     * The app client ID of the app associated with the user pool.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -107,7 +107,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The ID of the client associated with the user pool.
+     * The app client ID of the app associated with the user pool.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -115,7 +115,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>[\w+]+<br/>
      *
      * @return <p>
-     *         The ID of the client associated with the user pool.
+     *         The app client ID of the app associated with the user pool.
      *         </p>
      */
     public String getClientId() {
@@ -124,7 +124,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The ID of the client associated with the user pool.
+     * The app client ID of the app associated with the user pool.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -132,7 +132,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>[\w+]+<br/>
      *
      * @param clientId <p>
-     *            The ID of the client associated with the user pool.
+     *            The app client ID of the app associated with the user pool.
      *            </p>
      */
     public void setClientId(String clientId) {
@@ -141,7 +141,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The ID of the client associated with the user pool.
+     * The app client ID of the app associated with the user pool.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -152,7 +152,7 @@ public class DescribeUserPoolClientRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>[\w+]+<br/>
      *
      * @param clientId <p>
-     *            The ID of the client associated with the user pool.
+     *            The app client ID of the app associated with the user pool.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

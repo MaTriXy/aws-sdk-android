@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ public enum AuthFlowType {
     REFRESH_TOKEN_AUTH("REFRESH_TOKEN_AUTH"),
     REFRESH_TOKEN("REFRESH_TOKEN"),
     CUSTOM_AUTH("CUSTOM_AUTH"),
-    ADMIN_NO_SRP_AUTH("ADMIN_NO_SRP_AUTH");
+    ADMIN_NO_SRP_AUTH("ADMIN_NO_SRP_AUTH"),
+    USER_PASSWORD_AUTH("USER_PASSWORD_AUTH");
 
     private String value;
 
@@ -48,6 +49,7 @@ public enum AuthFlowType {
         enumMap.put("REFRESH_TOKEN", REFRESH_TOKEN);
         enumMap.put("CUSTOM_AUTH", CUSTOM_AUTH);
         enumMap.put("ADMIN_NO_SRP_AUTH", ADMIN_NO_SRP_AUTH);
+        enumMap.put("USER_PASSWORD_AUTH", USER_PASSWORD_AUTH);
     }
 
     /**

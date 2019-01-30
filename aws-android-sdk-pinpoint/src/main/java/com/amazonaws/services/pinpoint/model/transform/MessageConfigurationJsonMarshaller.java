@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,20 +26,40 @@ class MessageConfigurationJsonMarshaller {
     public void marshall(MessageConfiguration messageConfiguration, AwsJsonWriter jsonWriter)
             throws Exception {
         jsonWriter.beginObject();
+        if (messageConfiguration.getADMMessage() != null) {
+            Message aDMMessage = messageConfiguration.getADMMessage();
+            jsonWriter.name("ADMMessage");
+            MessageJsonMarshaller.getInstance().marshall(aDMMessage, jsonWriter);
+        }
         if (messageConfiguration.getAPNSMessage() != null) {
             Message aPNSMessage = messageConfiguration.getAPNSMessage();
             jsonWriter.name("APNSMessage");
             MessageJsonMarshaller.getInstance().marshall(aPNSMessage, jsonWriter);
+        }
+        if (messageConfiguration.getBaiduMessage() != null) {
+            Message baiduMessage = messageConfiguration.getBaiduMessage();
+            jsonWriter.name("BaiduMessage");
+            MessageJsonMarshaller.getInstance().marshall(baiduMessage, jsonWriter);
         }
         if (messageConfiguration.getDefaultMessage() != null) {
             Message defaultMessage = messageConfiguration.getDefaultMessage();
             jsonWriter.name("DefaultMessage");
             MessageJsonMarshaller.getInstance().marshall(defaultMessage, jsonWriter);
         }
+        if (messageConfiguration.getEmailMessage() != null) {
+            CampaignEmailMessage emailMessage = messageConfiguration.getEmailMessage();
+            jsonWriter.name("EmailMessage");
+            CampaignEmailMessageJsonMarshaller.getInstance().marshall(emailMessage, jsonWriter);
+        }
         if (messageConfiguration.getGCMMessage() != null) {
             Message gCMMessage = messageConfiguration.getGCMMessage();
             jsonWriter.name("GCMMessage");
             MessageJsonMarshaller.getInstance().marshall(gCMMessage, jsonWriter);
+        }
+        if (messageConfiguration.getSMSMessage() != null) {
+            CampaignSmsMessage sMSMessage = messageConfiguration.getSMSMessage();
+            jsonWriter.name("SMSMessage");
+            CampaignSmsMessageJsonMarshaller.getInstance().marshall(sMSMessage, jsonWriter);
         }
         jsonWriter.endObject();
     }

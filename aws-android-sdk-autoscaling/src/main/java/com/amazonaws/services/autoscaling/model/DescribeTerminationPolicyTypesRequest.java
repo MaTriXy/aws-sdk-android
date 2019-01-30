@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,13 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Describes the termination policies supported by Auto Scaling.
+ * Describes the termination policies supported by Amazon EC2 Auto Scaling.
+ * </p>
+ * <p>
+ * For more information, see <a href=
+ * "http://docs.aws.amazon.com/autoscaling/ec2/userguide/as-instance-termination.html"
+ * >Controlling Which Auto Scaling Instances Terminate During Scale In</a> in
+ * the <i>Amazon EC2 Auto Scaling User Guide</i>.
  * </p>
  */
 public class DescribeTerminationPolicyTypesRequest extends AmazonWebServiceRequest implements

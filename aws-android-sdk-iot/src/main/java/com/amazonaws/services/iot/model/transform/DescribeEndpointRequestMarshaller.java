@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,10 @@ public class DescribeEndpointRequestMarshaller implements
         request.setHttpMethod(HttpMethodName.GET);
 
         String uriResourcePath = "/endpoint";
+        if (describeEndpointRequest.getEndpointType() != null) {
+            request.addParameter("endpointType",
+                    StringUtils.fromString(describeEndpointRequest.getEndpointType()));
+        }
         request.setResourcePath(uriResourcePath);
         if (!request.getHeaders().containsKey("Content-Type")) {
             request.addHeader("Content-Type", "application/x-amz-json-1.0");

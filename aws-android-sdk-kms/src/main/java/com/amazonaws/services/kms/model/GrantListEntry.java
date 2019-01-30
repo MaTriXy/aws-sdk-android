@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public class GrantListEntry implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      */
     private String keyId;
 
@@ -71,6 +71,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      */
     private String granteePrincipal;
 
@@ -81,6 +82,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      */
     private String retiringPrincipal;
 
@@ -91,6 +93,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      */
     private String issuingAccount;
 
@@ -103,7 +106,8 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The conditions under which the grant's operations are allowed.
+     * A list of key-value pairs that must be present in the encryption context
+     * of certain subsequent operations that the grant allows.
      * </p>
      */
     private GrantConstraints constraints;
@@ -115,7 +119,7 @@ public class GrantListEntry implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
      *         The unique identifier for the customer master key (CMK) to which
@@ -133,7 +137,7 @@ public class GrantListEntry implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
      *            The unique identifier for the customer master key (CMK) to
@@ -154,7 +158,7 @@ public class GrantListEntry implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
      *            The unique identifier for the customer master key (CMK) to
@@ -343,6 +347,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
      *         The principal that receives the grant's permissions.
@@ -359,6 +364,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param granteePrincipal <p>
      *            The principal that receives the grant's permissions.
@@ -378,6 +384,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param granteePrincipal <p>
      *            The principal that receives the grant's permissions.
@@ -397,6 +404,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
      *         The principal that can retire the grant.
@@ -413,6 +421,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param retiringPrincipal <p>
      *            The principal that can retire the grant.
@@ -432,6 +441,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param retiringPrincipal <p>
      *            The principal that can retire the grant.
@@ -451,6 +461,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
      *         The AWS account under which the grant was issued.
@@ -467,6 +478,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param issuingAccount <p>
      *            The AWS account under which the grant was issued.
@@ -486,6 +498,7 @@ public class GrantListEntry implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param issuingAccount <p>
      *            The AWS account under which the grant was issued.
@@ -574,11 +587,13 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The conditions under which the grant's operations are allowed.
+     * A list of key-value pairs that must be present in the encryption context
+     * of certain subsequent operations that the grant allows.
      * </p>
      *
      * @return <p>
-     *         The conditions under which the grant's operations are allowed.
+     *         A list of key-value pairs that must be present in the encryption
+     *         context of certain subsequent operations that the grant allows.
      *         </p>
      */
     public GrantConstraints getConstraints() {
@@ -587,11 +602,14 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The conditions under which the grant's operations are allowed.
+     * A list of key-value pairs that must be present in the encryption context
+     * of certain subsequent operations that the grant allows.
      * </p>
      *
      * @param constraints <p>
-     *            The conditions under which the grant's operations are allowed.
+     *            A list of key-value pairs that must be present in the
+     *            encryption context of certain subsequent operations that the
+     *            grant allows.
      *            </p>
      */
     public void setConstraints(GrantConstraints constraints) {
@@ -600,14 +618,17 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The conditions under which the grant's operations are allowed.
+     * A list of key-value pairs that must be present in the encryption context
+     * of certain subsequent operations that the grant allows.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param constraints <p>
-     *            The conditions under which the grant's operations are allowed.
+     *            A list of key-value pairs that must be present in the
+     *            encryption context of certain subsequent operations that the
+     *            grant allows.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

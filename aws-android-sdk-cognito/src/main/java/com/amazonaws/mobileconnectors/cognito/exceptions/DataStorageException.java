@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2017 Amazon.com, 
+ * Copyright 2013-2018 Amazon.com, 
  * Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Amazon Software License (the "License"). 
@@ -22,7 +22,9 @@ import com.amazonaws.AmazonClientException;
 /**
  * This exception is thrown when an error occurs during an data storage
  * operation.
+ * @deprecated The Amazon Cognito Sync SDK for Android is deprecated as of release 2.9.0. Please use the AWS AppSync SDK for Android along with AWS AppSync service instead.
  */
+@Deprecated
 public class DataStorageException extends AmazonClientException {
 
     private static final long serialVersionUID = -6906342391685175623L;

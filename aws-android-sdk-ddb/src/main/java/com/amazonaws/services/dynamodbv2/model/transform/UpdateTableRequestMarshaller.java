@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -103,6 +103,11 @@ public class UpdateTableRequestMarshaller implements
                 jsonWriter.name("StreamSpecification");
                 StreamSpecificationJsonMarshaller.getInstance().marshall(streamSpecification,
                         jsonWriter);
+            }
+            if (updateTableRequest.getSSESpecification() != null) {
+                SSESpecification sSESpecification = updateTableRequest.getSSESpecification();
+                jsonWriter.name("SSESpecification");
+                SSESpecificationJsonMarshaller.getInstance().marshall(sSESpecification, jsonWriter);
             }
 
             jsonWriter.endObject();

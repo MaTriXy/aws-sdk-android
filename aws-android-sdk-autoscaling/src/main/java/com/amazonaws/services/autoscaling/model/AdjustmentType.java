@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import java.io.Serializable;
  * </p>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/as-scale-based-on-demand.html"
- * >Dynamic Scaling</a> in the <i>Auto Scaling Developer Guide</i>.
+ * "http://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scale-based-on-demand.html"
+ * >Dynamic Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.
  * </p>
  */
 public class AdjustmentType implements Serializable {

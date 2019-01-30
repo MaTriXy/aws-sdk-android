@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,15 +25,13 @@ public class PermissionValidator {
         this.permission = permission;
     }
 
-    public void validate(Context context) {
+    public void validate(final Context context) {
         if (!hasPermission(context, permission)) {
-            throw new RuntimeException(permission +
-                                               " permission is not granted.");
+            throw new RuntimeException(permission + " permission is not granted.");
         }
     }
 
-    private boolean hasPermission(final Context context,
-                                         final String permission) {
+    private boolean hasPermission(final Context context, final String permission) {
         int res = context.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
     }

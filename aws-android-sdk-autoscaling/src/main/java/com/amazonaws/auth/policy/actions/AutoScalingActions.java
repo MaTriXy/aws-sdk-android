@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,8 +27,17 @@ public enum AutoScalingActions implements Action {
     /** Action for the AttachInstances operation. */
     AttachInstances("autoscaling:AttachInstances"),
 
+    /** Action for the AttachLoadBalancerTargetGroups operation. */
+    AttachLoadBalancerTargetGroups("autoscaling:AttachLoadBalancerTargetGroups"),
+
     /** Action for the AttachLoadBalancers operation. */
     AttachLoadBalancers("autoscaling:AttachLoadBalancers"),
+
+    /** Action for the BatchDeleteScheduledAction operation. */
+    BatchDeleteScheduledAction("autoscaling:BatchDeleteScheduledAction"),
+
+    /** Action for the BatchPutScheduledUpdateGroupAction operation. */
+    BatchPutScheduledUpdateGroupAction("autoscaling:BatchPutScheduledUpdateGroupAction"),
 
     /** Action for the CompleteLifecycleAction operation. */
     CompleteLifecycleAction("autoscaling:CompleteLifecycleAction"),
@@ -87,6 +96,9 @@ public enum AutoScalingActions implements Action {
     /** Action for the DescribeLifecycleHooks operation. */
     DescribeLifecycleHooks("autoscaling:DescribeLifecycleHooks"),
 
+    /** Action for the DescribeLoadBalancerTargetGroups operation. */
+    DescribeLoadBalancerTargetGroups("autoscaling:DescribeLoadBalancerTargetGroups"),
+
     /** Action for the DescribeLoadBalancers operation. */
     DescribeLoadBalancers("autoscaling:DescribeLoadBalancers"),
 
@@ -116,6 +128,9 @@ public enum AutoScalingActions implements Action {
 
     /** Action for the DetachInstances operation. */
     DetachInstances("autoscaling:DetachInstances"),
+
+    /** Action for the DetachLoadBalancerTargetGroups operation. */
+    DetachLoadBalancerTargetGroups("autoscaling:DetachLoadBalancerTargetGroups"),
 
     /** Action for the DetachLoadBalancers operation. */
     DetachLoadBalancers("autoscaling:DetachLoadBalancers"),

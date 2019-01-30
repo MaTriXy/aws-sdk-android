@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,13 +21,23 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Adds a grant to a key to specify who can use the key and under what
- * conditions. Grants are alternate permission mechanisms to key policies.
+ * Adds a grant to a customer master key (CMK). The grant specifies who can use
+ * the CMK and under what conditions. When setting permissions, grants are an
+ * alternative to key policies.
  * </p>
  * <p>
- * For more information about grants, see <a
+ * To perform this operation on a CMK in a different AWS account, specify the
+ * key ARN in the value of the <code>KeyId</code> parameter. For more
+ * information about grants, see <a
  * href="http://docs.aws.amazon.com/kms/latest/developerguide/grants.html"
  * >Grants</a> in the <i>AWS Key Management Service Developer Guide</i>.
+ * </p>
+ * <p>
+ * The result of this operation varies with the key state of the CMK. For
+ * details, see <a
+ * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
+ * Management Service Developer Guide</i>.
  * </p>
  */
 public class CreateGrantRequest extends AmazonWebServiceRequest implements Serializable {
@@ -37,25 +47,32 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * applies to.
      * </p>
      * <p>
-     * To specify this value, use the globally unique key ID or the Amazon
-     * Resource Name (ARN) of the key. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Key ARN: arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-
-     * 123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      */
     private String keyId;
 
@@ -68,9 +85,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * To specify the principal, use the <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      * >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS principals
-     * include AWS accounts (root), IAM users, federated users, and assumed role
-     * users. For examples of the ARN syntax to use for specifying a principal,
-     * see <a href=
+     * include AWS accounts (root), IAM users, IAM roles, federated users, and
+     * assumed role users. For examples of the ARN syntax to use for specifying
+     * a principal, see <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      * >AWS Identity and Access Management (IAM)</a> in the Example ARNs section
      * of the <i>AWS General Reference</i>.
@@ -78,6 +95,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      */
     private String granteePrincipal;
 
@@ -100,6 +118,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      */
     private String retiringPrincipal;
 
@@ -112,13 +131,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The conditions under which the operations permitted by the grant are
-     * allowed.
-     * </p>
-     * <p>
-     * You can use this value to allow the operations permitted by the grant
-     * only when a specified encryption context is present. For more
-     * information, see <a href=
+     * A structure that you can use to allow certain operations in the grant
+     * only when the desired encryption context is present. For more information
+     * about encryption context, see <a href=
      * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      * >Encryption Context</a> in the <i>AWS Key Management Service Developer
      * Guide</i>.
@@ -172,48 +187,62 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * applies to.
      * </p>
      * <p>
-     * To specify this value, use the globally unique key ID or the Amazon
-     * Resource Name (ARN) of the key. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Key ARN: arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-
-     * 123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
      *         The unique identifier for the customer master key (CMK) that the
      *         grant applies to.
      *         </p>
      *         <p>
-     *         To specify this value, use the globally unique key ID or the
-     *         Amazon Resource Name (ARN) of the key. Examples:
+     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         To specify a CMK in a different AWS account, you must use the key
+     *         ARN.
+     *         </p>
+     *         <p>
+     *         For example:
      *         </p>
      *         <ul>
      *         <li>
      *         <p>
-     *         Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     *         Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *         </p>
      *         </li>
      *         <li>
      *         <p>
      *         Key ARN:
-     *         arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234
-     *         -1234-123456789012
+     *         <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *         </p>
      *         </li>
      *         </ul>
+     *         <p>
+     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     *         <a>DescribeKey</a>.
+     *         </p>
      */
     public String getKeyId() {
         return keyId;
@@ -225,48 +254,62 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * applies to.
      * </p>
      * <p>
-     * To specify this value, use the globally unique key ID or the Amazon
-     * Resource Name (ARN) of the key. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Key ARN: arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-
-     * 123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
      *            The unique identifier for the customer master key (CMK) that
      *            the grant applies to.
      *            </p>
      *            <p>
-     *            To specify this value, use the globally unique key ID or the
-     *            Amazon Resource Name (ARN) of the key. Examples:
+     *            Specify the key ID or the Amazon Resource Name (ARN) of the
+     *            CMK. To specify a CMK in a different AWS account, you must use
+     *            the key ARN.
+     *            </p>
+     *            <p>
+     *            For example:
      *            </p>
      *            <ul>
      *            <li>
      *            <p>
-     *            Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            <li>
      *            <p>
      *            Key ARN:
-     *            arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234
-     *            -1234-123456789012
+     *            <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
+     *            or <a>DescribeKey</a>.
+     *            </p>
      */
     public void setKeyId(String keyId) {
         this.keyId = keyId;
@@ -278,51 +321,65 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * applies to.
      * </p>
      * <p>
-     * To specify this value, use the globally unique key ID or the Amazon
-     * Resource Name (ARN) of the key. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Key ARN: arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-
-     * 123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
      *            The unique identifier for the customer master key (CMK) that
      *            the grant applies to.
      *            </p>
      *            <p>
-     *            To specify this value, use the globally unique key ID or the
-     *            Amazon Resource Name (ARN) of the key. Examples:
+     *            Specify the key ID or the Amazon Resource Name (ARN) of the
+     *            CMK. To specify a CMK in a different AWS account, you must use
+     *            the key ARN.
+     *            </p>
+     *            <p>
+     *            For example:
      *            </p>
      *            <ul>
      *            <li>
      *            <p>
-     *            Globally unique key ID: 12345678-1234-1234-1234-123456789012
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            <li>
      *            <p>
      *            Key ARN:
-     *            arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234
-     *            -1234-123456789012
+     *            <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
+     *            or <a>DescribeKey</a>.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -340,9 +397,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * To specify the principal, use the <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      * >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS principals
-     * include AWS accounts (root), IAM users, federated users, and assumed role
-     * users. For examples of the ARN syntax to use for specifying a principal,
-     * see <a href=
+     * include AWS accounts (root), IAM users, IAM roles, federated users, and
+     * assumed role users. For examples of the ARN syntax to use for specifying
+     * a principal, see <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      * >AWS Identity and Access Management (IAM)</a> in the Example ARNs section
      * of the <i>AWS General Reference</i>.
@@ -350,6 +407,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
      *         The principal that is given permission to perform the operations
@@ -359,9 +417,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      *         To specify the principal, use the <a href=
      *         "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      *         >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS
-     *         principals include AWS accounts (root), IAM users, federated
-     *         users, and assumed role users. For examples of the ARN syntax to
-     *         use for specifying a principal, see <a href=
+     *         principals include AWS accounts (root), IAM users, IAM roles,
+     *         federated users, and assumed role users. For examples of the ARN
+     *         syntax to use for specifying a principal, see <a href=
      *         "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      *         >AWS Identity and Access Management (IAM)</a> in the Example ARNs
      *         section of the <i>AWS General Reference</i>.
@@ -380,9 +438,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * To specify the principal, use the <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      * >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS principals
-     * include AWS accounts (root), IAM users, federated users, and assumed role
-     * users. For examples of the ARN syntax to use for specifying a principal,
-     * see <a href=
+     * include AWS accounts (root), IAM users, IAM roles, federated users, and
+     * assumed role users. For examples of the ARN syntax to use for specifying
+     * a principal, see <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      * >AWS Identity and Access Management (IAM)</a> in the Example ARNs section
      * of the <i>AWS General Reference</i>.
@@ -390,6 +448,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param granteePrincipal <p>
      *            The principal that is given permission to perform the
@@ -399,9 +458,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      *            To specify the principal, use the <a href=
      *            "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      *            >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS
-     *            principals include AWS accounts (root), IAM users, federated
-     *            users, and assumed role users. For examples of the ARN syntax
-     *            to use for specifying a principal, see <a href=
+     *            principals include AWS accounts (root), IAM users, IAM roles,
+     *            federated users, and assumed role users. For examples of the
+     *            ARN syntax to use for specifying a principal, see <a href=
      *            "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      *            >AWS Identity and Access Management (IAM)</a> in the Example
      *            ARNs section of the <i>AWS General Reference</i>.
@@ -420,9 +479,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * To specify the principal, use the <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      * >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS principals
-     * include AWS accounts (root), IAM users, federated users, and assumed role
-     * users. For examples of the ARN syntax to use for specifying a principal,
-     * see <a href=
+     * include AWS accounts (root), IAM users, IAM roles, federated users, and
+     * assumed role users. For examples of the ARN syntax to use for specifying
+     * a principal, see <a href=
      * "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      * >AWS Identity and Access Management (IAM)</a> in the Example ARNs section
      * of the <i>AWS General Reference</i>.
@@ -433,6 +492,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param granteePrincipal <p>
      *            The principal that is given permission to perform the
@@ -442,9 +502,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      *            To specify the principal, use the <a href=
      *            "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
      *            >Amazon Resource Name (ARN)</a> of an AWS principal. Valid AWS
-     *            principals include AWS accounts (root), IAM users, federated
-     *            users, and assumed role users. For examples of the ARN syntax
-     *            to use for specifying a principal, see <a href=
+     *            principals include AWS accounts (root), IAM users, IAM roles,
+     *            federated users, and assumed role users. For examples of the
+     *            ARN syntax to use for specifying a principal, see <a href=
      *            "http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html#arn-syntax-iam"
      *            >AWS Identity and Access Management (IAM)</a> in the Example
      *            ARNs section of the <i>AWS General Reference</i>.
@@ -476,6 +536,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
      *         The principal that is given permission to retire the grant by
@@ -516,6 +577,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param retiringPrincipal <p>
      *            The principal that is given permission to retire the grant by
@@ -559,6 +621,7 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param retiringPrincipal <p>
      *            The principal that is given permission to retire the grant by
@@ -659,26 +722,18 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The conditions under which the operations permitted by the grant are
-     * allowed.
-     * </p>
-     * <p>
-     * You can use this value to allow the operations permitted by the grant
-     * only when a specified encryption context is present. For more
-     * information, see <a href=
+     * A structure that you can use to allow certain operations in the grant
+     * only when the desired encryption context is present. For more information
+     * about encryption context, see <a href=
      * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      * >Encryption Context</a> in the <i>AWS Key Management Service Developer
      * Guide</i>.
      * </p>
      *
      * @return <p>
-     *         The conditions under which the operations permitted by the grant
-     *         are allowed.
-     *         </p>
-     *         <p>
-     *         You can use this value to allow the operations permitted by the
-     *         grant only when a specified encryption context is present. For
-     *         more information, see <a href=
+     *         A structure that you can use to allow certain operations in the
+     *         grant only when the desired encryption context is present. For
+     *         more information about encryption context, see <a href=
      *         "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      *         >Encryption Context</a> in the <i>AWS Key Management Service
      *         Developer Guide</i>.
@@ -690,26 +745,18 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The conditions under which the operations permitted by the grant are
-     * allowed.
-     * </p>
-     * <p>
-     * You can use this value to allow the operations permitted by the grant
-     * only when a specified encryption context is present. For more
-     * information, see <a href=
+     * A structure that you can use to allow certain operations in the grant
+     * only when the desired encryption context is present. For more information
+     * about encryption context, see <a href=
      * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      * >Encryption Context</a> in the <i>AWS Key Management Service Developer
      * Guide</i>.
      * </p>
      *
      * @param constraints <p>
-     *            The conditions under which the operations permitted by the
-     *            grant are allowed.
-     *            </p>
-     *            <p>
-     *            You can use this value to allow the operations permitted by
-     *            the grant only when a specified encryption context is present.
-     *            For more information, see <a href=
+     *            A structure that you can use to allow certain operations in
+     *            the grant only when the desired encryption context is present.
+     *            For more information about encryption context, see <a href=
      *            "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      *            >Encryption Context</a> in the <i>AWS Key Management Service
      *            Developer Guide</i>.
@@ -721,13 +768,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The conditions under which the operations permitted by the grant are
-     * allowed.
-     * </p>
-     * <p>
-     * You can use this value to allow the operations permitted by the grant
-     * only when a specified encryption context is present. For more
-     * information, see <a href=
+     * A structure that you can use to allow certain operations in the grant
+     * only when the desired encryption context is present. For more information
+     * about encryption context, see <a href=
      * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      * >Encryption Context</a> in the <i>AWS Key Management Service Developer
      * Guide</i>.
@@ -737,13 +780,9 @@ public class CreateGrantRequest extends AmazonWebServiceRequest implements Seria
      * together.
      *
      * @param constraints <p>
-     *            The conditions under which the operations permitted by the
-     *            grant are allowed.
-     *            </p>
-     *            <p>
-     *            You can use this value to allow the operations permitted by
-     *            the grant only when a specified encryption context is present.
-     *            For more information, see <a href=
+     *            A structure that you can use to allow certain operations in
+     *            the grant only when the desired encryption context is present.
+     *            For more information about encryption context, see <a href=
      *            "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
      *            >Encryption Context</a> in the <i>AWS Key Management Service
      *            Developer Guide</i>.

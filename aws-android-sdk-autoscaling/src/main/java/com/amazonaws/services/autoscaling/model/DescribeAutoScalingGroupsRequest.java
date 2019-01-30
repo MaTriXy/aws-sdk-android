@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,15 +21,16 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Describes one or more Auto Scaling groups. If a list of names is not
- * provided, the call describes all Auto Scaling groups.
+ * Describes one or more Auto Scaling groups.
  * </p>
  */
 public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest implements
         Serializable {
     /**
      * <p>
-     * The group names.
+     * The names of the Auto Scaling groups. You can specify up to
+     * <code>MaxRecords</code> names. If you omit this parameter, all Auto
+     * Scaling groups are described.
      * </p>
      */
     private java.util.List<String> autoScalingGroupNames = new java.util.ArrayList<String>();
@@ -48,18 +49,23 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 50 and the maximum value is 100.
      * </p>
      */
     private Integer maxRecords;
 
     /**
      * <p>
-     * The group names.
+     * The names of the Auto Scaling groups. You can specify up to
+     * <code>MaxRecords</code> names. If you omit this parameter, all Auto
+     * Scaling groups are described.
      * </p>
      *
      * @return <p>
-     *         The group names.
+     *         The names of the Auto Scaling groups. You can specify up to
+     *         <code>MaxRecords</code> names. If you omit this parameter, all
+     *         Auto Scaling groups are described.
      *         </p>
      */
     public java.util.List<String> getAutoScalingGroupNames() {
@@ -68,11 +74,15 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The group names.
+     * The names of the Auto Scaling groups. You can specify up to
+     * <code>MaxRecords</code> names. If you omit this parameter, all Auto
+     * Scaling groups are described.
      * </p>
      *
      * @param autoScalingGroupNames <p>
-     *            The group names.
+     *            The names of the Auto Scaling groups. You can specify up to
+     *            <code>MaxRecords</code> names. If you omit this parameter, all
+     *            Auto Scaling groups are described.
      *            </p>
      */
     public void setAutoScalingGroupNames(java.util.Collection<String> autoScalingGroupNames) {
@@ -86,14 +96,18 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The group names.
+     * The names of the Auto Scaling groups. You can specify up to
+     * <code>MaxRecords</code> names. If you omit this parameter, all Auto
+     * Scaling groups are described.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param autoScalingGroupNames <p>
-     *            The group names.
+     *            The names of the Auto Scaling groups. You can specify up to
+     *            <code>MaxRecords</code> names. If you omit this parameter, all
+     *            Auto Scaling groups are described.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -112,14 +126,18 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The group names.
+     * The names of the Auto Scaling groups. You can specify up to
+     * <code>MaxRecords</code> names. If you omit this parameter, all Auto
+     * Scaling groups are described.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param autoScalingGroupNames <p>
-     *            The group names.
+     *            The names of the Auto Scaling groups. You can specify up to
+     *            <code>MaxRecords</code> names. If you omit this parameter, all
+     *            Auto Scaling groups are described.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -195,11 +213,13 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 50 and the maximum value is 100.
      * </p>
      *
      * @return <p>
-     *         The maximum number of items to return with this call.
+     *         The maximum number of items to return with this call. The default
+     *         value is 50 and the maximum value is 100.
      *         </p>
      */
     public Integer getMaxRecords() {
@@ -208,11 +228,13 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 50 and the maximum value is 100.
      * </p>
      *
      * @param maxRecords <p>
-     *            The maximum number of items to return with this call.
+     *            The maximum number of items to return with this call. The
+     *            default value is 50 and the maximum value is 100.
      *            </p>
      */
     public void setMaxRecords(Integer maxRecords) {
@@ -221,14 +243,16 @@ public class DescribeAutoScalingGroupsRequest extends AmazonWebServiceRequest im
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 50 and the maximum value is 100.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param maxRecords <p>
-     *            The maximum number of items to return with this call.
+     *            The maximum number of items to return with this call. The
+     *            default value is 50 and the maximum value is 100.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

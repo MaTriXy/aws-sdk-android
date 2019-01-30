@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Describes the available CloudWatch metrics for Auto Scaling.
+ * Describes the available CloudWatch metrics for Amazon EC2 Auto Scaling.
  * </p>
  * <p>
- * Note that the <code>GroupStandbyInstances</code> metric is not returned by
- * default. You must explicitly request this metric when calling
+ * The <code>GroupStandbyInstances</code> metric is not returned by default. You
+ * must explicitly request this metric when calling
  * <a>EnableMetricsCollection</a>.
  * </p>
  */

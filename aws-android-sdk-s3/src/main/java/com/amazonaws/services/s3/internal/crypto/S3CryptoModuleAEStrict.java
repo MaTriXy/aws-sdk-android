@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,11 @@ import com.amazonaws.services.s3.model.EncryptionMaterialsProvider;
 /**
  * Strict Authenticated encryption (AE) cryptographic module for the S3
  * encryption client.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 class S3CryptoModuleAEStrict extends S3CryptoModuleAE {
     /**
      * @param cryptoConfig a read-only copy of the crypto configuration.

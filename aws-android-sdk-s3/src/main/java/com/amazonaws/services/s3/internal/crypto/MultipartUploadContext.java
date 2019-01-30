@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2011-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,11 @@ import java.util.Map;
 
 /**
  * Contextual information for an in-flight multipart upload.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public abstract class MultipartUploadContext {
     private final String bucketName;
     private final String key;

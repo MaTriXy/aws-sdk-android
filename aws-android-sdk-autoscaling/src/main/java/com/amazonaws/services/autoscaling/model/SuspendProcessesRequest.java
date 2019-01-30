@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,28 +21,27 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Suspends the specified Auto Scaling processes, or all processes, for the
+ * Suspends the specified automatic scaling processes, or all processes, for the
  * specified Auto Scaling group.
  * </p>
  * <p>
- * Note that if you suspend either the <code>Launch</code> or
- * <code>Terminate</code> process types, it can prevent other process types from
- * functioning properly.
+ * If you suspend either the <code>Launch</code> or <code>Terminate</code>
+ * process types, it can prevent other process types from functioning properly.
  * </p>
  * <p>
  * To resume processes that have been suspended, use <a>ResumeProcesses</a>.
  * </p>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/US_SuspendResume.html"
- * >Suspending and Resuming Auto Scaling Processes</a> in the <i>Auto Scaling
- * Developer Guide</i>.
+ * "http://docs.aws.amazon.com/autoscaling/ec2/userguide/as-suspend-resume-processes.html"
+ * >Suspending and Resuming Scaling Processes</a> in the <i>Amazon EC2 Auto
+ * Scaling User Guide</i>.
  * </p>
  */
 public class SuspendProcessesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -54,7 +53,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * One or more of the following processes:
+     * One or more of the following processes. If you omit this parameter, all
+     * processes are specified.
      * </p>
      * <ul>
      * <li>
@@ -103,7 +103,7 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -112,7 +112,7 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * <br/>
      *
      * @return <p>
-     *         The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -121,7 +121,7 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -130,8 +130,7 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name or Amazon Resource Name (ARN) of the Auto Scaling
-     *            group.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -140,7 +139,7 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -152,8 +151,7 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name or Amazon Resource Name (ARN) of the Auto Scaling
-     *            group.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -165,7 +163,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * One or more of the following processes:
+     * One or more of the following processes. If you omit this parameter, all
+     * processes are specified.
      * </p>
      * <ul>
      * <li>
@@ -211,7 +210,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * </ul>
      *
      * @return <p>
-     *         One or more of the following processes:
+     *         One or more of the following processes. If you omit this
+     *         parameter, all processes are specified.
      *         </p>
      *         <ul>
      *         <li>
@@ -262,7 +262,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * One or more of the following processes:
+     * One or more of the following processes. If you omit this parameter, all
+     * processes are specified.
      * </p>
      * <ul>
      * <li>
@@ -308,7 +309,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * </ul>
      *
      * @param scalingProcesses <p>
-     *            One or more of the following processes:
+     *            One or more of the following processes. If you omit this
+     *            parameter, all processes are specified.
      *            </p>
      *            <ul>
      *            <li>
@@ -364,7 +366,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * One or more of the following processes:
+     * One or more of the following processes. If you omit this parameter, all
+     * processes are specified.
      * </p>
      * <ul>
      * <li>
@@ -413,7 +416,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * together.
      *
      * @param scalingProcesses <p>
-     *            One or more of the following processes:
+     *            One or more of the following processes. If you omit this
+     *            parameter, all processes are specified.
      *            </p>
      *            <ul>
      *            <li>
@@ -472,7 +476,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * One or more of the following processes:
+     * One or more of the following processes. If you omit this parameter, all
+     * processes are specified.
      * </p>
      * <ul>
      * <li>
@@ -521,7 +526,8 @@ public class SuspendProcessesRequest extends AmazonWebServiceRequest implements 
      * together.
      *
      * @param scalingProcesses <p>
-     *            One or more of the following processes:
+     *            One or more of the following processes. If you omit this
+     *            parameter, all processes are specified.
      *            </p>
      *            <ul>
      *            <li>

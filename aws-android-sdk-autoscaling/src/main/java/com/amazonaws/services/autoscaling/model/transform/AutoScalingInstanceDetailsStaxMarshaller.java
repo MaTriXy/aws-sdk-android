@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,6 +57,13 @@ class AutoScalingInstanceDetailsStaxMarshaller {
             String launchConfigurationName = _autoScalingInstanceDetails
                     .getLaunchConfigurationName();
             request.addParameter(prefix, StringUtils.fromString(launchConfigurationName));
+        }
+        if (_autoScalingInstanceDetails.getLaunchTemplate() != null) {
+            prefix = _prefix + "LaunchTemplate";
+            LaunchTemplateSpecification launchTemplate = _autoScalingInstanceDetails
+                    .getLaunchTemplate();
+            LaunchTemplateSpecificationStaxMarshaller.getInstance().marshall(launchTemplate,
+                    request, prefix + ".");
         }
         if (_autoScalingInstanceDetails.getProtectedFromScaleIn() != null) {
             prefix = _prefix + "ProtectedFromScaleIn";

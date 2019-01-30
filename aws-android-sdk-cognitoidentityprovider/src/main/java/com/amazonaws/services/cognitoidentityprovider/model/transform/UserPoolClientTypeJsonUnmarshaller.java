@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,6 +71,43 @@ class UserPoolClientTypeJsonUnmarshaller implements
                 userPoolClientType.setExplicitAuthFlows(new ListUnmarshaller<String>(
                         StringJsonUnmarshaller.getInstance()
                         )
+                                .unmarshall(context));
+            } else if (name.equals("SupportedIdentityProviders")) {
+                userPoolClientType.setSupportedIdentityProviders(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("CallbackURLs")) {
+                userPoolClientType.setCallbackURLs(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("LogoutURLs")) {
+                userPoolClientType.setLogoutURLs(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("DefaultRedirectURI")) {
+                userPoolClientType.setDefaultRedirectURI(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("AllowedOAuthFlows")) {
+                userPoolClientType.setAllowedOAuthFlows(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("AllowedOAuthScopes")) {
+                userPoolClientType.setAllowedOAuthScopes(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("AllowedOAuthFlowsUserPoolClient")) {
+                userPoolClientType.setAllowedOAuthFlowsUserPoolClient(BooleanJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("AnalyticsConfiguration")) {
+                userPoolClientType
+                        .setAnalyticsConfiguration(AnalyticsConfigurationTypeJsonUnmarshaller
+                                .getInstance()
                                 .unmarshall(context));
             } else {
                 reader.skipValue();

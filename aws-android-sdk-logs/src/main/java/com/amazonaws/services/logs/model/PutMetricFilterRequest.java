@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -65,8 +65,7 @@ public class PutMetricFilterRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * A collection of information needed to define how metric data gets
-     * emitted.
+     * A collection of information that defines how metric data gets emitted.
      * </p>
      */
     private java.util.List<MetricTransformation> metricTransformations;
@@ -95,8 +94,8 @@ public class PutMetricFilterRequest extends AmazonWebServiceRequest implements S
      *            log events.
      *            </p>
      * @param metricTransformations <p>
-     *            A collection of information needed to define how metric data
-     *            gets emitted.
+     *            A collection of information that defines how metric data gets
+     *            emitted.
      *            </p>
      */
     public PutMetricFilterRequest(String logGroupName, String filterName, String filterPattern,
@@ -280,12 +279,11 @@ public class PutMetricFilterRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * A collection of information needed to define how metric data gets
-     * emitted.
+     * A collection of information that defines how metric data gets emitted.
      * </p>
      *
      * @return <p>
-     *         A collection of information needed to define how metric data gets
+     *         A collection of information that defines how metric data gets
      *         emitted.
      *         </p>
      */
@@ -295,13 +293,12 @@ public class PutMetricFilterRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * A collection of information needed to define how metric data gets
-     * emitted.
+     * A collection of information that defines how metric data gets emitted.
      * </p>
      *
      * @param metricTransformations <p>
-     *            A collection of information needed to define how metric data
-     *            gets emitted.
+     *            A collection of information that defines how metric data gets
+     *            emitted.
      *            </p>
      */
     public void setMetricTransformations(
@@ -317,16 +314,15 @@ public class PutMetricFilterRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * A collection of information needed to define how metric data gets
-     * emitted.
+     * A collection of information that defines how metric data gets emitted.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param metricTransformations <p>
-     *            A collection of information needed to define how metric data
-     *            gets emitted.
+     *            A collection of information that defines how metric data gets
+     *            emitted.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -345,16 +341,15 @@ public class PutMetricFilterRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * A collection of information needed to define how metric data gets
-     * emitted.
+     * A collection of information that defines how metric data gets emitted.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param metricTransformations <p>
-     *            A collection of information needed to define how metric data
-     *            gets emitted.
+     *            A collection of information that defines how metric data gets
+     *            emitted.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

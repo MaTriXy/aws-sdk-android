@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,10 +71,25 @@ class CertificateDescriptionJsonMarshaller {
             jsonWriter.name("lastModifiedDate");
             jsonWriter.value(lastModifiedDate);
         }
+        if (certificateDescription.getCustomerVersion() != null) {
+            Integer customerVersion = certificateDescription.getCustomerVersion();
+            jsonWriter.name("customerVersion");
+            jsonWriter.value(customerVersion);
+        }
         if (certificateDescription.getTransferData() != null) {
             TransferData transferData = certificateDescription.getTransferData();
             jsonWriter.name("transferData");
             TransferDataJsonMarshaller.getInstance().marshall(transferData, jsonWriter);
+        }
+        if (certificateDescription.getGenerationId() != null) {
+            String generationId = certificateDescription.getGenerationId();
+            jsonWriter.name("generationId");
+            jsonWriter.value(generationId);
+        }
+        if (certificateDescription.getValidity() != null) {
+            CertificateValidity validity = certificateDescription.getValidity();
+            jsonWriter.name("validity");
+            CertificateValidityJsonMarshaller.getInstance().marshall(validity, jsonWriter);
         }
         jsonWriter.endObject();
     }

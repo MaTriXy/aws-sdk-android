@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,16 +46,18 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <li>
  * <p>
  * Create a new global secondary index on the table. Once the index begins
- * backfilling, you can use <i>UpdateTable</i> to perform other operations.
+ * backfilling, you can use <code>UpdateTable</code> to perform other
+ * operations.
  * </p>
  * </li>
  * </ul>
  * <p>
- * <i>UpdateTable</i> is an asynchronous operation; while it is executing, the
- * table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While
- * it is <code>UPDATING</code>, you cannot issue another <i>UpdateTable</i>
- * request. When the table returns to the <code>ACTIVE</code> state, the
- * <i>UpdateTable</i> operation is complete.
+ * <code>UpdateTable</code> is an asynchronous operation; while it is executing,
+ * the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>.
+ * While it is <code>UPDATING</code>, you cannot issue another
+ * <code>UpdateTable</code> request. When the table returns to the
+ * <code>ACTIVE</code> state, the <code>UpdateTable</code> operation is
+ * complete.
  * </p>
  */
 public class UpdateTableRequest extends AmazonWebServiceRequest implements Serializable {
@@ -63,8 +65,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * An array of attributes that describe the key schema for the table and
      * indexes. If you are adding a new global secondary index to the table,
-     * <i>AttributeDefinitions</i> must include the key element(s) of the new
-     * index.
+     * <code>AttributeDefinitions</code> must include the key element(s) of the
+     * new index.
      * </p>
      */
     private java.util.List<AttributeDefinition> attributeDefinitions;
@@ -82,15 +84,7 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Represents the provisioned throughput settings for a specified table or
-     * index. The settings can be modified using the <i>UpdateTable</i>
-     * operation.
-     * </p>
-     * <p>
-     * For current minimum and maximum provisioned throughput values, see <a
-     * href=
-     * "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     * >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     * The new provisioned throughput settings for the specified table or index.
      * </p>
      */
     private ProvisionedThroughput provisionedThroughput;
@@ -103,18 +97,18 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <ul>
      * <li>
      * <p>
-     * <i>Create</i> - add a new global secondary index to the table.
+     * <code>Create</code> - add a new global secondary index to the table.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Update</i> - modify the provisioned throughput settings of an existing
-     * global secondary index.
+     * <code>Update</code> - modify the provisioned throughput settings of an
+     * existing global secondary index.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Delete</i> - remove a global secondary index from the table.
+     * <code>Delete</code> - remove a global secondary index from the table.
      * </p>
      * </li>
      * </ul>
@@ -133,13 +127,20 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * </p>
      * <note>
      * <p>
-     * You will receive a <i>ResourceInUseException</i> if you attempt to enable
-     * a stream on a table that already has a stream, or if you attempt to
-     * disable a stream on a table which does not have a stream.
+     * You will receive a <code>ResourceInUseException</code> if you attempt to
+     * enable a stream on a table that already has a stream, or if you attempt
+     * to disable a stream on a table which does not have a stream.
      * </p>
      * </note>
      */
     private StreamSpecification streamSpecification;
+
+    /**
+     * <p>
+     * The new server-side encryption settings for the specified table.
+     * </p>
+     */
+    private SSESpecification sSESpecification;
 
     /**
      * Default constructor for UpdateTableRequest object. Callers should use the
@@ -158,15 +159,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *            The name of the table to be updated.
      *            </p>
      * @param provisionedThroughput <p>
-     *            Represents the provisioned throughput settings for a specified
-     *            table or index. The settings can be modified using the
-     *            <i>UpdateTable</i> operation.
-     *            </p>
-     *            <p>
-     *            For current minimum and maximum provisioned throughput values,
-     *            see <a href=
-     *            "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     *            >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     *            The new provisioned throughput settings for the specified
+     *            table or index.
      *            </p>
      */
     public UpdateTableRequest(String tableName, ProvisionedThroughput provisionedThroughput) {
@@ -178,14 +172,14 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * An array of attributes that describe the key schema for the table and
      * indexes. If you are adding a new global secondary index to the table,
-     * <i>AttributeDefinitions</i> must include the key element(s) of the new
-     * index.
+     * <code>AttributeDefinitions</code> must include the key element(s) of the
+     * new index.
      * </p>
      *
      * @return <p>
      *         An array of attributes that describe the key schema for the table
      *         and indexes. If you are adding a new global secondary index to
-     *         the table, <i>AttributeDefinitions</i> must include the key
+     *         the table, <code>AttributeDefinitions</code> must include the key
      *         element(s) of the new index.
      *         </p>
      */
@@ -197,15 +191,15 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * An array of attributes that describe the key schema for the table and
      * indexes. If you are adding a new global secondary index to the table,
-     * <i>AttributeDefinitions</i> must include the key element(s) of the new
-     * index.
+     * <code>AttributeDefinitions</code> must include the key element(s) of the
+     * new index.
      * </p>
      *
      * @param attributeDefinitions <p>
      *            An array of attributes that describe the key schema for the
      *            table and indexes. If you are adding a new global secondary
-     *            index to the table, <i>AttributeDefinitions</i> must include
-     *            the key element(s) of the new index.
+     *            index to the table, <code>AttributeDefinitions</code> must
+     *            include the key element(s) of the new index.
      *            </p>
      */
     public void setAttributeDefinitions(
@@ -223,8 +217,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * An array of attributes that describe the key schema for the table and
      * indexes. If you are adding a new global secondary index to the table,
-     * <i>AttributeDefinitions</i> must include the key element(s) of the new
-     * index.
+     * <code>AttributeDefinitions</code> must include the key element(s) of the
+     * new index.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -233,8 +227,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * @param attributeDefinitions <p>
      *            An array of attributes that describe the key schema for the
      *            table and indexes. If you are adding a new global secondary
-     *            index to the table, <i>AttributeDefinitions</i> must include
-     *            the key element(s) of the new index.
+     *            index to the table, <code>AttributeDefinitions</code> must
+     *            include the key element(s) of the new index.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -254,8 +248,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * An array of attributes that describe the key schema for the table and
      * indexes. If you are adding a new global secondary index to the table,
-     * <i>AttributeDefinitions</i> must include the key element(s) of the new
-     * index.
+     * <code>AttributeDefinitions</code> must include the key element(s) of the
+     * new index.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -264,8 +258,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * @param attributeDefinitions <p>
      *            An array of attributes that describe the key schema for the
      *            table and indexes. If you are adding a new global secondary
-     *            index to the table, <i>AttributeDefinitions</i> must include
-     *            the key element(s) of the new index.
+     *            index to the table, <code>AttributeDefinitions</code> must
+     *            include the key element(s) of the new index.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -335,27 +329,12 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Represents the provisioned throughput settings for a specified table or
-     * index. The settings can be modified using the <i>UpdateTable</i>
-     * operation.
-     * </p>
-     * <p>
-     * For current minimum and maximum provisioned throughput values, see <a
-     * href=
-     * "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     * >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     * The new provisioned throughput settings for the specified table or index.
      * </p>
      *
      * @return <p>
-     *         Represents the provisioned throughput settings for a specified
-     *         table or index. The settings can be modified using the
-     *         <i>UpdateTable</i> operation.
-     *         </p>
-     *         <p>
-     *         For current minimum and maximum provisioned throughput values,
-     *         see <a href=
-     *         "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     *         >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     *         The new provisioned throughput settings for the specified table
+     *         or index.
      *         </p>
      */
     public ProvisionedThroughput getProvisionedThroughput() {
@@ -364,27 +343,12 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Represents the provisioned throughput settings for a specified table or
-     * index. The settings can be modified using the <i>UpdateTable</i>
-     * operation.
-     * </p>
-     * <p>
-     * For current minimum and maximum provisioned throughput values, see <a
-     * href=
-     * "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     * >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     * The new provisioned throughput settings for the specified table or index.
      * </p>
      *
      * @param provisionedThroughput <p>
-     *            Represents the provisioned throughput settings for a specified
-     *            table or index. The settings can be modified using the
-     *            <i>UpdateTable</i> operation.
-     *            </p>
-     *            <p>
-     *            For current minimum and maximum provisioned throughput values,
-     *            see <a href=
-     *            "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     *            >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     *            The new provisioned throughput settings for the specified
+     *            table or index.
      *            </p>
      */
     public void setProvisionedThroughput(ProvisionedThroughput provisionedThroughput) {
@@ -393,30 +357,15 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Represents the provisioned throughput settings for a specified table or
-     * index. The settings can be modified using the <i>UpdateTable</i>
-     * operation.
-     * </p>
-     * <p>
-     * For current minimum and maximum provisioned throughput values, see <a
-     * href=
-     * "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     * >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     * The new provisioned throughput settings for the specified table or index.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param provisionedThroughput <p>
-     *            Represents the provisioned throughput settings for a specified
-     *            table or index. The settings can be modified using the
-     *            <i>UpdateTable</i> operation.
-     *            </p>
-     *            <p>
-     *            For current minimum and maximum provisioned throughput values,
-     *            see <a href=
-     *            "http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html"
-     *            >Limits</a> in the <i>Amazon DynamoDB Developer Guide</i>.
+     *            The new provisioned throughput settings for the specified
+     *            table or index.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -434,18 +383,18 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <ul>
      * <li>
      * <p>
-     * <i>Create</i> - add a new global secondary index to the table.
+     * <code>Create</code> - add a new global secondary index to the table.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Update</i> - modify the provisioned throughput settings of an existing
-     * global secondary index.
+     * <code>Update</code> - modify the provisioned throughput settings of an
+     * existing global secondary index.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Delete</i> - remove a global secondary index from the table.
+     * <code>Delete</code> - remove a global secondary index from the table.
      * </p>
      * </li>
      * </ul>
@@ -463,18 +412,20 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *         <ul>
      *         <li>
      *         <p>
-     *         <i>Create</i> - add a new global secondary index to the table.
+     *         <code>Create</code> - add a new global secondary index to the
+     *         table.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         <i>Update</i> - modify the provisioned throughput settings of an
-     *         existing global secondary index.
+     *         <code>Update</code> - modify the provisioned throughput settings
+     *         of an existing global secondary index.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         <i>Delete</i> - remove a global secondary index from the table.
+     *         <code>Delete</code> - remove a global secondary index from the
+     *         table.
      *         </p>
      *         </li>
      *         </ul>
@@ -497,18 +448,18 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <ul>
      * <li>
      * <p>
-     * <i>Create</i> - add a new global secondary index to the table.
+     * <code>Create</code> - add a new global secondary index to the table.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Update</i> - modify the provisioned throughput settings of an existing
-     * global secondary index.
+     * <code>Update</code> - modify the provisioned throughput settings of an
+     * existing global secondary index.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Delete</i> - remove a global secondary index from the table.
+     * <code>Delete</code> - remove a global secondary index from the table.
      * </p>
      * </li>
      * </ul>
@@ -527,18 +478,19 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *            <ul>
      *            <li>
      *            <p>
-     *            <i>Create</i> - add a new global secondary index to the table.
+     *            <code>Create</code> - add a new global secondary index to the
+     *            table.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            <i>Update</i> - modify the provisioned throughput settings of
-     *            an existing global secondary index.
+     *            <code>Update</code> - modify the provisioned throughput
+     *            settings of an existing global secondary index.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            <i>Delete</i> - remove a global secondary index from the
+     *            <code>Delete</code> - remove a global secondary index from the
      *            table.
      *            </p>
      *            </li>
@@ -569,18 +521,18 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <ul>
      * <li>
      * <p>
-     * <i>Create</i> - add a new global secondary index to the table.
+     * <code>Create</code> - add a new global secondary index to the table.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Update</i> - modify the provisioned throughput settings of an existing
-     * global secondary index.
+     * <code>Update</code> - modify the provisioned throughput settings of an
+     * existing global secondary index.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Delete</i> - remove a global secondary index from the table.
+     * <code>Delete</code> - remove a global secondary index from the table.
      * </p>
      * </li>
      * </ul>
@@ -602,18 +554,19 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *            <ul>
      *            <li>
      *            <p>
-     *            <i>Create</i> - add a new global secondary index to the table.
+     *            <code>Create</code> - add a new global secondary index to the
+     *            table.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            <i>Update</i> - modify the provisioned throughput settings of
-     *            an existing global secondary index.
+     *            <code>Update</code> - modify the provisioned throughput
+     *            settings of an existing global secondary index.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            <i>Delete</i> - remove a global secondary index from the
+     *            <code>Delete</code> - remove a global secondary index from the
      *            table.
      *            </p>
      *            </li>
@@ -647,18 +600,18 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * <ul>
      * <li>
      * <p>
-     * <i>Create</i> - add a new global secondary index to the table.
+     * <code>Create</code> - add a new global secondary index to the table.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Update</i> - modify the provisioned throughput settings of an existing
-     * global secondary index.
+     * <code>Update</code> - modify the provisioned throughput settings of an
+     * existing global secondary index.
      * </p>
      * </li>
      * <li>
      * <p>
-     * <i>Delete</i> - remove a global secondary index from the table.
+     * <code>Delete</code> - remove a global secondary index from the table.
      * </p>
      * </li>
      * </ul>
@@ -680,18 +633,19 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *            <ul>
      *            <li>
      *            <p>
-     *            <i>Create</i> - add a new global secondary index to the table.
+     *            <code>Create</code> - add a new global secondary index to the
+     *            table.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            <i>Update</i> - modify the provisioned throughput settings of
-     *            an existing global secondary index.
+     *            <code>Update</code> - modify the provisioned throughput
+     *            settings of an existing global secondary index.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            <i>Delete</i> - remove a global secondary index from the
+     *            <code>Delete</code> - remove a global secondary index from the
      *            table.
      *            </p>
      *            </li>
@@ -717,9 +671,9 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * </p>
      * <note>
      * <p>
-     * You will receive a <i>ResourceInUseException</i> if you attempt to enable
-     * a stream on a table that already has a stream, or if you attempt to
-     * disable a stream on a table which does not have a stream.
+     * You will receive a <code>ResourceInUseException</code> if you attempt to
+     * enable a stream on a table that already has a stream, or if you attempt
+     * to disable a stream on a table which does not have a stream.
      * </p>
      * </note>
      *
@@ -728,10 +682,10 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *         </p>
      *         <note>
      *         <p>
-     *         You will receive a <i>ResourceInUseException</i> if you attempt
-     *         to enable a stream on a table that already has a stream, or if
-     *         you attempt to disable a stream on a table which does not have a
-     *         stream.
+     *         You will receive a <code>ResourceInUseException</code> if you
+     *         attempt to enable a stream on a table that already has a stream,
+     *         or if you attempt to disable a stream on a table which does not
+     *         have a stream.
      *         </p>
      *         </note>
      */
@@ -745,9 +699,9 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * </p>
      * <note>
      * <p>
-     * You will receive a <i>ResourceInUseException</i> if you attempt to enable
-     * a stream on a table that already has a stream, or if you attempt to
-     * disable a stream on a table which does not have a stream.
+     * You will receive a <code>ResourceInUseException</code> if you attempt to
+     * enable a stream on a table that already has a stream, or if you attempt
+     * to disable a stream on a table which does not have a stream.
      * </p>
      * </note>
      *
@@ -756,7 +710,7 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *            </p>
      *            <note>
      *            <p>
-     *            You will receive a <i>ResourceInUseException</i> if you
+     *            You will receive a <code>ResourceInUseException</code> if you
      *            attempt to enable a stream on a table that already has a
      *            stream, or if you attempt to disable a stream on a table which
      *            does not have a stream.
@@ -773,9 +727,9 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      * </p>
      * <note>
      * <p>
-     * You will receive a <i>ResourceInUseException</i> if you attempt to enable
-     * a stream on a table that already has a stream, or if you attempt to
-     * disable a stream on a table which does not have a stream.
+     * You will receive a <code>ResourceInUseException</code> if you attempt to
+     * enable a stream on a table that already has a stream, or if you attempt
+     * to disable a stream on a table which does not have a stream.
      * </p>
      * </note>
      * <p>
@@ -787,7 +741,7 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      *            </p>
      *            <note>
      *            <p>
-     *            You will receive a <i>ResourceInUseException</i> if you
+     *            You will receive a <code>ResourceInUseException</code> if you
      *            attempt to enable a stream on a table that already has a
      *            stream, or if you attempt to disable a stream on a table which
      *            does not have a stream.
@@ -798,6 +752,53 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
      */
     public UpdateTableRequest withStreamSpecification(StreamSpecification streamSpecification) {
         this.streamSpecification = streamSpecification;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The new server-side encryption settings for the specified table.
+     * </p>
+     *
+     * @return <p>
+     *         The new server-side encryption settings for the specified table.
+     *         </p>
+     */
+    public SSESpecification getSSESpecification() {
+        return sSESpecification;
+    }
+
+    /**
+     * <p>
+     * The new server-side encryption settings for the specified table.
+     * </p>
+     *
+     * @param sSESpecification <p>
+     *            The new server-side encryption settings for the specified
+     *            table.
+     *            </p>
+     */
+    public void setSSESpecification(SSESpecification sSESpecification) {
+        this.sSESpecification = sSESpecification;
+    }
+
+    /**
+     * <p>
+     * The new server-side encryption settings for the specified table.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param sSESpecification <p>
+     *            The new server-side encryption settings for the specified
+     *            table.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UpdateTableRequest withSSESpecification(SSESpecification sSESpecification) {
+        this.sSESpecification = sSESpecification;
         return this;
     }
 
@@ -821,7 +822,9 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
         if (getGlobalSecondaryIndexUpdates() != null)
             sb.append("GlobalSecondaryIndexUpdates: " + getGlobalSecondaryIndexUpdates() + ",");
         if (getStreamSpecification() != null)
-            sb.append("StreamSpecification: " + getStreamSpecification());
+            sb.append("StreamSpecification: " + getStreamSpecification() + ",");
+        if (getSSESpecification() != null)
+            sb.append("SSESpecification: " + getSSESpecification());
         sb.append("}");
         return sb.toString();
     }
@@ -843,6 +846,8 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
                         : getGlobalSecondaryIndexUpdates().hashCode());
         hashCode = prime * hashCode
                 + ((getStreamSpecification() == null) ? 0 : getStreamSpecification().hashCode());
+        hashCode = prime * hashCode
+                + ((getSSESpecification() == null) ? 0 : getSSESpecification().hashCode());
         return hashCode;
     }
 
@@ -883,6 +888,11 @@ public class UpdateTableRequest extends AmazonWebServiceRequest implements Seria
             return false;
         if (other.getStreamSpecification() != null
                 && other.getStreamSpecification().equals(this.getStreamSpecification()) == false)
+            return false;
+        if (other.getSSESpecification() == null ^ this.getSSESpecification() == null)
+            return false;
+        if (other.getSSESpecification() != null
+                && other.getSSESpecification().equals(this.getSSESpecification()) == false)
             return false;
         return true;
     }

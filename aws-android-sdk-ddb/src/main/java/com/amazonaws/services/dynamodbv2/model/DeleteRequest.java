@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Represents a request to perform a <i>DeleteItem</i> operation on an item.
+ * Represents a request to perform a <code>DeleteItem</code> operation on an
+ * item.
  * </p>
  */
 public class DeleteRequest implements Serializable {

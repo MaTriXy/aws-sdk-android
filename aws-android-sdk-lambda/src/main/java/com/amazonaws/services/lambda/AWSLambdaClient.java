@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,11 +40,11 @@ import com.amazonaws.services.lambda.model.transform.*;
  * </p>
  * <p>
  * This is the <i>AWS Lambda API Reference</i>. The AWS Lambda Developer Guide
- * provides additional information. For the service overview, go to <a
+ * provides additional information. For the service overview, see <a
  * href="http://docs.aws.amazon.com/lambda/latest/dg/welcome.html">What is AWS
- * Lambda</a>, and for information about how the service works, go to <a
+ * Lambda</a>, and for information about how the service works, see <a
  * href="http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html"
- * >AWS Lambda: How it Works</a> in the <i>AWS Lambda Developer Guide</i>.
+ * >AWS Lambda: How it Works</a> in the <b>AWS Lambda Developer Guide</b>.
  * </p>
  */
 public class AWSLambdaClient extends AmazonWebServiceClient implements AWSLambda {
@@ -271,6 +271,7 @@ public class AWSLambdaClient extends AmazonWebServiceClient implements AWSLambda
         jsonErrorUnmarshallers.add(new ENILimitReachedExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidParameterValueExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidRequestContentExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new InvalidRuntimeExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidSecurityGroupIDExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidSubnetIDExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidZipFileExceptionUnmarshaller());
@@ -305,28 +306,46 @@ public class AWSLambdaClient extends AmazonWebServiceClient implements AWSLambda
 
     /**
      * <p>
-     * Invokes a specific Lambda function. For an example, see <a href=
+     * Invokes a Lambda function. For an example, see <a href=
      * "http://docs.aws.amazon.com/lambda/latest/dg/with-dynamodb-create-function.html#with-dbb-invoke-manually"
      * >Create the Lambda Function and Test It Manually</a>.
      * </p>
      * <p>
-     * If you are using the versioning feature, you can invoke the specific
-     * function version by providing function version or alias name that is
-     * pointing to the function version using the <code>Qualifier</code>
-     * parameter in the request. If you don't provide the <code>Qualifier</code>
-     * parameter, the <code>$LATEST</code> version of the Lambda function is
-     * invoked. Invocations occur at least once in response to an event and
-     * functions must be idempotent to handle this. For information about the
-     * versioning feature, see <a href=
-     * "http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html">AWS
-     * Lambda Function Versioning and Aliases</a>.
+     * Specify just a function name to invoke the latest version of the
+     * function. To invoke a published version, use the <code>Qualifier</code>
+     * parameter to specify a <a href=
+     * "http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html"
+     * >version or alias</a>.
+     * </p>
+     * <p>
+     * If you use the <code>RequestResponse</code> (synchronous) invocation
+     * option, the function will be invoked only once. If you use the
+     * <code>Event</code> (asynchronous) invocation option, the function will be
+     * invoked at least once in response to an event and the function must be
+     * idempotent to handle this.
+     * </p>
+     * <p>
+     * For functions with a long timeout, your client may be disconnected during
+     * synchronous invocation while it waits for a response. Configure your HTTP
+     * client, SDK, firewall, proxy, or operating system to allow for long
+     * connections with timeout or keep-alive settings.
      * </p>
      * <p>
      * This operation requires permission for the
      * <code>lambda:InvokeFunction</code> action.
      * </p>
+     * <p>
+     * The <code>TooManyRequestsException</code> noted below will return the
+     * following: <code>ConcurrentInvocationLimitExceeded</code> will be
+     * returned if you have no functions with reserved concurrency and have
+     * exceeded your account concurrent limit or if a function without reserved
+     * concurrency exceeds the account's unreserved concurrency limit.
+     * <code>ReservedFunctionConcurrentInvocationLimitExceeded</code> will be
+     * returned when a function with reserved concurrency exceeds its configured
+     * concurrency limit.
+     * </p>
      * 
-     * @param invokeRequest <p/>
+     * @param invokeRequest
      * @return invokeResult The response from the Invoke service method, as
      *         returned by AWS Lambda.
      * @throws ServiceException
@@ -348,6 +367,7 @@ public class AWSLambdaClient extends AmazonWebServiceClient implements AWSLambda
      * @throws KMSInvalidStateException
      * @throws KMSAccessDeniedException
      * @throws KMSNotFoundException
+     * @throws InvalidRuntimeException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -380,6 +400,7 @@ public class AWSLambdaClient extends AmazonWebServiceClient implements AWSLambda
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }

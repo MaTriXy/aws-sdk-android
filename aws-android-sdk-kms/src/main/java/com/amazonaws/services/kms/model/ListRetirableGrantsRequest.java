@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ import com.amazonaws.AmazonWebServiceRequest;
 public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * When paginating results, specify the maximum number of items to return in
-     * the response. If additional items exist beyond the number you specify,
-     * the <code>Truncated</code> element in the response is set to true.
+     * Use this parameter to specify the maximum number of items to return. When
+     * this value is present, AWS KMS does not return more than the specified
+     * number of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -48,13 +48,13 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Use this parameter only when paginating results and only in a subsequent
-     * request after you receive a response with truncated results. Set it to
-     * the value of <code>NextMarker</code> from the response you just received.
+     * Use this parameter in a subsequent request after you receive a response
+     * with truncated results. Set it to the value of <code>NextMarker</code>
+     * from the truncated response you just received.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 320<br/>
+     * <b>Length: </b>1 - 1024<br/>
      * <b>Pattern: </b>[ -\u00FF]*<br/>
      */
     private String marker;
@@ -77,14 +77,15 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      */
     private String retiringPrincipal;
 
     /**
      * <p>
-     * When paginating results, specify the maximum number of items to return in
-     * the response. If additional items exist beyond the number you specify,
-     * the <code>Truncated</code> element in the response is set to true.
+     * Use this parameter to specify the maximum number of items to return. When
+     * this value is present, AWS KMS does not return more than the specified
+     * number of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -95,10 +96,9 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <b>Range: </b>1 - 1000<br/>
      *
      * @return <p>
-     *         When paginating results, specify the maximum number of items to
-     *         return in the response. If additional items exist beyond the
-     *         number you specify, the <code>Truncated</code> element in the
-     *         response is set to true.
+     *         Use this parameter to specify the maximum number of items to
+     *         return. When this value is present, AWS KMS does not return more
+     *         than the specified number of items, but it might return fewer.
      *         </p>
      *         <p>
      *         This value is optional. If you include a value, it must be
@@ -112,9 +112,9 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * When paginating results, specify the maximum number of items to return in
-     * the response. If additional items exist beyond the number you specify,
-     * the <code>Truncated</code> element in the response is set to true.
+     * Use this parameter to specify the maximum number of items to return. When
+     * this value is present, AWS KMS does not return more than the specified
+     * number of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -125,10 +125,10 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <b>Range: </b>1 - 1000<br/>
      *
      * @param limit <p>
-     *            When paginating results, specify the maximum number of items
-     *            to return in the response. If additional items exist beyond
-     *            the number you specify, the <code>Truncated</code> element in
-     *            the response is set to true.
+     *            Use this parameter to specify the maximum number of items to
+     *            return. When this value is present, AWS KMS does not return
+     *            more than the specified number of items, but it might return
+     *            fewer.
      *            </p>
      *            <p>
      *            This value is optional. If you include a value, it must be
@@ -142,9 +142,9 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * When paginating results, specify the maximum number of items to return in
-     * the response. If additional items exist beyond the number you specify,
-     * the <code>Truncated</code> element in the response is set to true.
+     * Use this parameter to specify the maximum number of items to return. When
+     * this value is present, AWS KMS does not return more than the specified
+     * number of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -158,10 +158,10 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <b>Range: </b>1 - 1000<br/>
      *
      * @param limit <p>
-     *            When paginating results, specify the maximum number of items
-     *            to return in the response. If additional items exist beyond
-     *            the number you specify, the <code>Truncated</code> element in
-     *            the response is set to true.
+     *            Use this parameter to specify the maximum number of items to
+     *            return. When this value is present, AWS KMS does not return
+     *            more than the specified number of items, but it might return
+     *            fewer.
      *            </p>
      *            <p>
      *            This value is optional. If you include a value, it must be
@@ -178,20 +178,20 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Use this parameter only when paginating results and only in a subsequent
-     * request after you receive a response with truncated results. Set it to
-     * the value of <code>NextMarker</code> from the response you just received.
+     * Use this parameter in a subsequent request after you receive a response
+     * with truncated results. Set it to the value of <code>NextMarker</code>
+     * from the truncated response you just received.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 320<br/>
+     * <b>Length: </b>1 - 1024<br/>
      * <b>Pattern: </b>[ -\u00FF]*<br/>
      *
      * @return <p>
-     *         Use this parameter only when paginating results and only in a
-     *         subsequent request after you receive a response with truncated
-     *         results. Set it to the value of <code>NextMarker</code> from the
-     *         response you just received.
+     *         Use this parameter in a subsequent request after you receive a
+     *         response with truncated results. Set it to the value of
+     *         <code>NextMarker</code> from the truncated response you just
+     *         received.
      *         </p>
      */
     public String getMarker() {
@@ -200,20 +200,20 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Use this parameter only when paginating results and only in a subsequent
-     * request after you receive a response with truncated results. Set it to
-     * the value of <code>NextMarker</code> from the response you just received.
+     * Use this parameter in a subsequent request after you receive a response
+     * with truncated results. Set it to the value of <code>NextMarker</code>
+     * from the truncated response you just received.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 320<br/>
+     * <b>Length: </b>1 - 1024<br/>
      * <b>Pattern: </b>[ -\u00FF]*<br/>
      *
      * @param marker <p>
-     *            Use this parameter only when paginating results and only in a
-     *            subsequent request after you receive a response with truncated
-     *            results. Set it to the value of <code>NextMarker</code> from
-     *            the response you just received.
+     *            Use this parameter in a subsequent request after you receive a
+     *            response with truncated results. Set it to the value of
+     *            <code>NextMarker</code> from the truncated response you just
+     *            received.
      *            </p>
      */
     public void setMarker(String marker) {
@@ -222,23 +222,23 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Use this parameter only when paginating results and only in a subsequent
-     * request after you receive a response with truncated results. Set it to
-     * the value of <code>NextMarker</code> from the response you just received.
+     * Use this parameter in a subsequent request after you receive a response
+     * with truncated results. Set it to the value of <code>NextMarker</code>
+     * from the truncated response you just received.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 320<br/>
+     * <b>Length: </b>1 - 1024<br/>
      * <b>Pattern: </b>[ -\u00FF]*<br/>
      *
      * @param marker <p>
-     *            Use this parameter only when paginating results and only in a
-     *            subsequent request after you receive a response with truncated
-     *            results. Set it to the value of <code>NextMarker</code> from
-     *            the response you just received.
+     *            Use this parameter in a subsequent request after you receive a
+     *            response with truncated results. Set it to the value of
+     *            <code>NextMarker</code> from the truncated response you just
+     *            received.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -266,6 +266,7 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
      *         The retiring principal for which to list grants.
@@ -304,6 +305,7 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param retiringPrincipal <p>
      *            The retiring principal for which to list grants.
@@ -346,6 +348,7 @@ public class ListRetirableGrantsRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 256<br/>
+     * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param retiringPrincipal <p>
      *            The retiring principal for which to list grants.

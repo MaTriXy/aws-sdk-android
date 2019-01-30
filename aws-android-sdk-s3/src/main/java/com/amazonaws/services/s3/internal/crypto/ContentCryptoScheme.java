@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,7 +33,11 @@ import javax.crypto.spec.IvParameterSpec;
  * Cryptographic scheme for content encrypt/decryption.
  *
  * @author Hanson Char
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 abstract class ContentCryptoScheme {
 
     private static final int GCM_SHIFT_VALUE = 32;
@@ -199,12 +203,12 @@ abstract class ContentCryptoScheme {
         String specificProvider = getSpecificCipherProvider();
         Cipher cipher;
         try {
-            if (specificProvider != null) { // use the specific provider if
+            if (securityProvider != null) { // use the one optionally
+                // specified in the input
+                cipher = Cipher.getInstance(getCipherAlgorithm(), securityProvider);
+            } else if (specificProvider != null) { // use the specific provider if
                                             // defined
                 cipher = Cipher.getInstance(getCipherAlgorithm(), specificProvider);
-            } else if (securityProvider != null) { // use the one optionally
-                                                   // specified in the input
-                cipher = Cipher.getInstance(getCipherAlgorithm(), securityProvider);
             } else { // use the default provider
                 cipher = Cipher.getInstance(getCipherAlgorithm());
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,11 +30,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * from that domain.
  * </p>
  * <p>
- * This action is throttled at one request per second.
+ * You can execute this operation no more than once per second.
  * </p>
  * <p>
  * To enable or disable Easy DKIM signing for a domain, use the
- * <code>SetIdentityDkimEnabled</code> action.
+ * <code>SetIdentityDkimEnabled</code> operation.
  * </p>
  * <p>
  * For more information about creating DNS records using DKIM tokens, go to the

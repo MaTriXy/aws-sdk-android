@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,6 +26,17 @@ class WriteApplicationSettingsRequestJsonMarshaller {
     public void marshall(WriteApplicationSettingsRequest writeApplicationSettingsRequest,
             AwsJsonWriter jsonWriter) throws Exception {
         jsonWriter.beginObject();
+        if (writeApplicationSettingsRequest.getCampaignHook() != null) {
+            CampaignHook campaignHook = writeApplicationSettingsRequest.getCampaignHook();
+            jsonWriter.name("CampaignHook");
+            CampaignHookJsonMarshaller.getInstance().marshall(campaignHook, jsonWriter);
+        }
+        if (writeApplicationSettingsRequest.getCloudWatchMetricsEnabled() != null) {
+            Boolean cloudWatchMetricsEnabled = writeApplicationSettingsRequest
+                    .getCloudWatchMetricsEnabled();
+            jsonWriter.name("CloudWatchMetricsEnabled");
+            jsonWriter.value(cloudWatchMetricsEnabled);
+        }
         if (writeApplicationSettingsRequest.getLimits() != null) {
             CampaignLimits limits = writeApplicationSettingsRequest.getLimits();
             jsonWriter.name("Limits");

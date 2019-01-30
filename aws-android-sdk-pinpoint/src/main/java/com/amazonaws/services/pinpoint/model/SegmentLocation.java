@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,42 +17,83 @@ package com.amazonaws.services.pinpoint.model;
 
 import java.io.Serializable;
 
+/**
+ * Segment location dimensions
+ */
 public class SegmentLocation implements Serializable {
     /**
-     * The country filter according to ISO 3166-1 Alpha-2 codes.
+     * The country or region, in ISO 3166-1 alpha-2 format.
      */
     private SetDimension country;
 
     /**
-     * The country filter according to ISO 3166-1 Alpha-2 codes.
+     * The GPS Point dimension.
+     */
+    private GPSPointDimension gPSPoint;
+
+    /**
+     * The country or region, in ISO 3166-1 alpha-2 format.
      *
-     * @return The country filter according to ISO 3166-1 Alpha-2 codes.
+     * @return The country or region, in ISO 3166-1 alpha-2 format.
      */
     public SetDimension getCountry() {
         return country;
     }
 
     /**
-     * The country filter according to ISO 3166-1 Alpha-2 codes.
+     * The country or region, in ISO 3166-1 alpha-2 format.
      *
-     * @param country The country filter according to ISO 3166-1 Alpha-2 codes.
+     * @param country The country or region, in ISO 3166-1 alpha-2 format.
      */
     public void setCountry(SetDimension country) {
         this.country = country;
     }
 
     /**
-     * The country filter according to ISO 3166-1 Alpha-2 codes.
+     * The country or region, in ISO 3166-1 alpha-2 format.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param country The country filter according to ISO 3166-1 Alpha-2 codes.
+     * @param country The country or region, in ISO 3166-1 alpha-2 format.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public SegmentLocation withCountry(SetDimension country) {
         this.country = country;
+        return this;
+    }
+
+    /**
+     * The GPS Point dimension.
+     *
+     * @return The GPS Point dimension.
+     */
+    public GPSPointDimension getGPSPoint() {
+        return gPSPoint;
+    }
+
+    /**
+     * The GPS Point dimension.
+     *
+     * @param gPSPoint The GPS Point dimension.
+     */
+    public void setGPSPoint(GPSPointDimension gPSPoint) {
+        this.gPSPoint = gPSPoint;
+    }
+
+    /**
+     * The GPS Point dimension.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param gPSPoint The GPS Point dimension.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public SegmentLocation withGPSPoint(GPSPointDimension gPSPoint) {
+        this.gPSPoint = gPSPoint;
         return this;
     }
 
@@ -68,7 +109,9 @@ public class SegmentLocation implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         if (getCountry() != null)
-            sb.append("Country: " + getCountry());
+            sb.append("Country: " + getCountry() + ",");
+        if (getGPSPoint() != null)
+            sb.append("GPSPoint: " + getGPSPoint());
         sb.append("}");
         return sb.toString();
     }
@@ -79,6 +122,7 @@ public class SegmentLocation implements Serializable {
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getCountry() == null) ? 0 : getCountry().hashCode());
+        hashCode = prime * hashCode + ((getGPSPoint() == null) ? 0 : getGPSPoint().hashCode());
         return hashCode;
     }
 
@@ -96,6 +140,10 @@ public class SegmentLocation implements Serializable {
         if (other.getCountry() == null ^ this.getCountry() == null)
             return false;
         if (other.getCountry() != null && other.getCountry().equals(this.getCountry()) == false)
+            return false;
+        if (other.getGPSPoint() == null ^ this.getGPSPoint() == null)
+            return false;
+        if (other.getGPSPoint() != null && other.getGPSPoint().equals(this.getGPSPoint()) == false)
             return false;
         return true;
     }

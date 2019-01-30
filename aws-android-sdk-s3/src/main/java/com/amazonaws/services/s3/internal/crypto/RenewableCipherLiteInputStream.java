@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,11 @@ import java.io.InputStream;
  * mark-and-reset in the sense that, if the underlying input stream supports
  * mark-and-reset, this input stream can then be marked at and get reset back to
  * the very beginning of the stream (but not anywhere else).
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public final class RenewableCipherLiteInputStream extends CipherLiteInputStream {
     private boolean hasBeenAccessed;
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2017 Amazon.com, 
+ * Copyright 2013-2018 Amazon.com, 
  * Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Amazon Software License (the "License"). 
@@ -22,7 +22,9 @@ import com.amazonaws.AmazonClientException;
 /**
  * An exception that's thrown when the subscription to a silent sync dataset
  * fails
+ * @deprecated The Amazon Cognito Sync SDK for Android is deprecated as of release 2.9.0. Please use the AWS AppSync SDK for Android along with AWS AppSync service instead.
  */
+@Deprecated
 public class SubscribeFailedException extends AmazonClientException {
     private static final long serialVersionUID = 5706724903415180392L;
 

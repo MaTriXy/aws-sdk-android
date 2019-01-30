@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ public class KinesisRecorderConfig {
     private long maxStorageSize = DEFAUT_MAX_STORAGE_SIZE;
     private final ClientConfiguration clientConfiguration;
     private String partitionKey;
+    private DeadLetterListener mDeadLetterListener;
 
     /**
      * Construct an instance of KinesisRecorderConfig which has default values
@@ -91,6 +92,24 @@ public class KinesisRecorderConfig {
      */
     public long getMaxStorageSize() {
         return this.maxStorageSize;
+    }
+
+    /**
+     * Returns the {@link DeadLetterListener} that will respond to records being dropped.
+     * @return the {@link DeadLetterListener} that will respond to records being dropped.
+     */
+    public DeadLetterListener getDeadLetterListener() {
+        return mDeadLetterListener;
+    }
+
+    /**
+     * Sets the {@link DeadLetterListener} that will respond to records being dropped.
+     * @param deadLetterListener responds to records being dropped.
+     * @return This class for chaining.
+     */
+    public KinesisRecorderConfig withDeadLetterListener(DeadLetterListener deadLetterListener) {
+        this.mDeadLetterListener = deadLetterListener;
+        return this;
     }
 
     /**

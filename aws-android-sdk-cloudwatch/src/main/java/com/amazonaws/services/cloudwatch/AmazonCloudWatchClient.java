@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -332,6 +332,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             request.setAWSRequestMetrics(awsRequestMetrics);
             invoke(request, null, executionContext);
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -375,6 +376,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
                     executionContext);
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -412,6 +414,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             response = invoke(request, new DescribeAlarmsResultStaxUnmarshaller(), executionContext);
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -451,6 +454,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
                     executionContext);
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -486,6 +490,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             request.setAWSRequestMetrics(awsRequestMetrics);
             invoke(request, null, executionContext);
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -517,6 +522,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             request.setAWSRequestMetrics(awsRequestMetrics);
             invoke(request, null, executionContext);
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -596,6 +602,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
                     executionContext);
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -641,6 +648,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             response = invoke(request, new ListMetricsResultStaxUnmarshaller(), executionContext);
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -717,6 +725,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             request.setAWSRequestMetrics(awsRequestMetrics);
             invoke(request, null, executionContext);
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -771,6 +780,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             request.setAWSRequestMetrics(awsRequestMetrics);
             invoke(request, null, executionContext);
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }
@@ -813,6 +823,7 @@ public class AmazonCloudWatchClient extends AmazonWebServiceClient implements Am
             request.setAWSRequestMetrics(awsRequestMetrics);
             invoke(request, null, executionContext);
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response);
         }
     }

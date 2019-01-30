@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,24 +19,24 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Represents the output of an <i>UpdateTable</i> operation.
+ * Represents the output of an <code>UpdateTable</code> operation.
  * </p>
  */
 public class UpdateTableResult implements Serializable {
     /**
      * <p>
-     * Represents the properties of a table.
+     * Represents the properties of the table.
      * </p>
      */
     private TableDescription tableDescription;
 
     /**
      * <p>
-     * Represents the properties of a table.
+     * Represents the properties of the table.
      * </p>
      *
      * @return <p>
-     *         Represents the properties of a table.
+     *         Represents the properties of the table.
      *         </p>
      */
     public TableDescription getTableDescription() {
@@ -45,11 +45,11 @@ public class UpdateTableResult implements Serializable {
 
     /**
      * <p>
-     * Represents the properties of a table.
+     * Represents the properties of the table.
      * </p>
      *
      * @param tableDescription <p>
-     *            Represents the properties of a table.
+     *            Represents the properties of the table.
      *            </p>
      */
     public void setTableDescription(TableDescription tableDescription) {
@@ -58,14 +58,14 @@ public class UpdateTableResult implements Serializable {
 
     /**
      * <p>
-     * Represents the properties of a table.
+     * Represents the properties of the table.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param tableDescription <p>
-     *            Represents the properties of a table.
+     *            Represents the properties of the table.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

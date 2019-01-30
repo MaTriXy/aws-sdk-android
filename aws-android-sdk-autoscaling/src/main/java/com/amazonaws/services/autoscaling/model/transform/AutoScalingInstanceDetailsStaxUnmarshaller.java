@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,6 +75,12 @@ class AutoScalingInstanceDetailsStaxUnmarshaller implements
                 if (context.testExpression("LaunchConfigurationName", targetDepth)) {
                     autoScalingInstanceDetails.setLaunchConfigurationName(StringStaxUnmarshaller
                             .getInstance().unmarshall(context));
+                    continue;
+                }
+                if (context.testExpression("LaunchTemplate", targetDepth)) {
+                    autoScalingInstanceDetails
+                            .setLaunchTemplate(LaunchTemplateSpecificationStaxUnmarshaller
+                                    .getInstance().unmarshall(context));
                     continue;
                 }
                 if (context.testExpression("ProtectedFromScaleIn", targetDepth)) {

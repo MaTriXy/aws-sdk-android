@@ -1,5 +1,5 @@
 /**
- * Copyright 2015-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2015-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 class TransferDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "awss3transfertable.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private int version;
 

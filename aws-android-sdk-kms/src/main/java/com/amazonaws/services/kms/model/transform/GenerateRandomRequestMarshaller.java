@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,6 +63,11 @@ public class GenerateRandomRequestMarshaller implements
                 Integer numberOfBytes = generateRandomRequest.getNumberOfBytes();
                 jsonWriter.name("NumberOfBytes");
                 jsonWriter.value(numberOfBytes);
+            }
+            if (generateRandomRequest.getCustomKeyStoreId() != null) {
+                String customKeyStoreId = generateRandomRequest.getCustomKeyStoreId();
+                jsonWriter.name("CustomKeyStoreId");
+                jsonWriter.value(customKeyStoreId);
             }
 
             jsonWriter.endObject();

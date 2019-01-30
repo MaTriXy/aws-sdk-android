@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -109,6 +109,13 @@ class ScalingPolicyStaxMarshaller {
                 alarmsIndex++;
             }
             prefix = alarmsPrefix;
+        }
+        if (_scalingPolicy.getTargetTrackingConfiguration() != null) {
+            prefix = _prefix + "TargetTrackingConfiguration";
+            TargetTrackingConfiguration targetTrackingConfiguration = _scalingPolicy
+                    .getTargetTrackingConfiguration();
+            TargetTrackingConfigurationStaxMarshaller.getInstance().marshall(
+                    targetTrackingConfiguration, request, prefix + ".");
         }
     }
 

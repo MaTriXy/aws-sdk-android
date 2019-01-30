@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.utils.AnalyticsContextBuilder;
@@ -34,7 +35,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE, sdk=23)
 public class PinpointDBUtilTest {
 
     private static final String SDK_NAME = "AppIntelligenceSDK-Analytics";
@@ -58,10 +59,10 @@ public class PinpointDBUtilTest {
                               .withSdkInfo(SDK_NAME, SDK_VERSION)
                               .withUniqueIdValue(UNIQUE_ID)
                               .withDeviceDetails(testDeviceDetails)
-                              .withContext(Robolectric.application
+                              .withContext(RuntimeEnvironment.application
                                                    .getApplicationContext())
                               .build();
-        dbUtil = new PinpointDBUtil(Robolectric.application
+        dbUtil = new PinpointDBUtil(RuntimeEnvironment.application
                                             .getApplicationContext());
     }
 

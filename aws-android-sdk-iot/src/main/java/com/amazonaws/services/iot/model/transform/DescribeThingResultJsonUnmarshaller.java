@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,6 +39,12 @@ public class DescribeThingResultJsonUnmarshaller implements
             } else if (name.equals("thingName")) {
                 describeThingResult.setThingName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("thingId")) {
+                describeThingResult.setThingId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("thingArn")) {
+                describeThingResult.setThingArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("thingTypeName")) {
                 describeThingResult.setThingTypeName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -49,6 +55,9 @@ public class DescribeThingResultJsonUnmarshaller implements
                                 .unmarshall(context));
             } else if (name.equals("version")) {
                 describeThingResult.setVersion(LongJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("billingGroupName")) {
+                describeThingResult.setBillingGroupName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

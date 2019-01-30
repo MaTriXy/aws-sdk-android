@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class ReceiptAction implements Serializable {
     /**
      * <p>
      * Calls Amazon WorkMail and, optionally, publishes a notification to Amazon
-     * SNS.
+     * Amazon SNS.
      * </p>
      */
     private WorkmailAction workmailAction;
@@ -199,12 +199,12 @@ public class ReceiptAction implements Serializable {
     /**
      * <p>
      * Calls Amazon WorkMail and, optionally, publishes a notification to Amazon
-     * SNS.
+     * Amazon SNS.
      * </p>
      *
      * @return <p>
      *         Calls Amazon WorkMail and, optionally, publishes a notification
-     *         to Amazon SNS.
+     *         to Amazon Amazon SNS.
      *         </p>
      */
     public WorkmailAction getWorkmailAction() {
@@ -214,12 +214,12 @@ public class ReceiptAction implements Serializable {
     /**
      * <p>
      * Calls Amazon WorkMail and, optionally, publishes a notification to Amazon
-     * SNS.
+     * Amazon SNS.
      * </p>
      *
      * @param workmailAction <p>
      *            Calls Amazon WorkMail and, optionally, publishes a
-     *            notification to Amazon SNS.
+     *            notification to Amazon Amazon SNS.
      *            </p>
      */
     public void setWorkmailAction(WorkmailAction workmailAction) {
@@ -229,7 +229,7 @@ public class ReceiptAction implements Serializable {
     /**
      * <p>
      * Calls Amazon WorkMail and, optionally, publishes a notification to Amazon
-     * SNS.
+     * Amazon SNS.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -237,7 +237,7 @@ public class ReceiptAction implements Serializable {
      *
      * @param workmailAction <p>
      *            Calls Amazon WorkMail and, optionally, publishes a
-     *            notification to Amazon SNS.
+     *            notification to Amazon Amazon SNS.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

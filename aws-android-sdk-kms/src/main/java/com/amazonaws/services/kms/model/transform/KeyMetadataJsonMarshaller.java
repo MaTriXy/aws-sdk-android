@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -80,10 +80,25 @@ class KeyMetadataJsonMarshaller {
             jsonWriter.name("Origin");
             jsonWriter.value(origin);
         }
+        if (keyMetadata.getCustomKeyStoreId() != null) {
+            String customKeyStoreId = keyMetadata.getCustomKeyStoreId();
+            jsonWriter.name("CustomKeyStoreId");
+            jsonWriter.value(customKeyStoreId);
+        }
+        if (keyMetadata.getCloudHsmClusterId() != null) {
+            String cloudHsmClusterId = keyMetadata.getCloudHsmClusterId();
+            jsonWriter.name("CloudHsmClusterId");
+            jsonWriter.value(cloudHsmClusterId);
+        }
         if (keyMetadata.getExpirationModel() != null) {
             String expirationModel = keyMetadata.getExpirationModel();
             jsonWriter.name("ExpirationModel");
             jsonWriter.value(expirationModel);
+        }
+        if (keyMetadata.getKeyManager() != null) {
+            String keyManager = keyMetadata.getKeyManager();
+            jsonWriter.name("KeyManager");
+            jsonWriter.value(keyManager);
         }
         jsonWriter.endObject();
     }

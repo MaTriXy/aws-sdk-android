@@ -1,5 +1,5 @@
 /**
- * Copyright 2015-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2015-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,13 +18,12 @@ package com.amazonaws.mobileconnectors.s3.transferutility;
 import android.database.Cursor;
 
 import com.amazonaws.AmazonClientException;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferService.NetworkInfoReceiver;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
 import com.amazonaws.util.json.JsonUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import java.io.File;
 import java.util.Map;
@@ -68,6 +67,7 @@ class TransferRecord {
     public String headerContentEncoding;
     public String headerCacheControl;
     public String headerExpire;
+    public String headerStorageClass;
 
     /**
      * The following were added in 2.2.6 to support object metdata
@@ -147,6 +147,8 @@ class TransferRecord {
         this.sseKMSKey = c.getString(c.getColumnIndexOrThrow(TransferTable.COLUMN_SSE_KMS_KEY));
         this.md5 = c.getString(c.getColumnIndexOrThrow(TransferTable.COLUMN_CONTENT_MD5));
         this.cannedAcl = c.getString(c.getColumnIndexOrThrow(TransferTable.COLUMN_CANNED_ACL));
+        this.headerStorageClass = c
+                .getString(c.getColumnIndexOrThrow(TransferTable.COLUMN_HEADER_STORAGE_CLASS));
     }
 
     /**
@@ -156,18 +158,18 @@ class TransferRecord {
      * @param s3 s3 instance
      * @param dbUtil database util
      * @param updater status updater
-     * @param networkInfo network info
      * @return Whether the task is running.
      */
-    public boolean start(AmazonS3 s3, TransferDBUtil dbUtil, TransferStatusUpdater updater,
-            NetworkInfoReceiver networkInfo) {
+    public boolean start(AmazonS3 s3,
+                         TransferDBUtil dbUtil,
+                         TransferStatusUpdater updater) {
         if (!isRunning() && checkIsReadyToRun()) {
             if (type.equals(TransferType.DOWNLOAD)) {
                 submittedTask = TransferThreadPool
-                        .submitTask(new DownloadTask(this, s3, updater, networkInfo));
+                        .submitTask(new DownloadTask(this, s3, updater));
             } else {
                 submittedTask = TransferThreadPool
-                        .submitTask(new UploadTask(this, s3, dbUtil, updater, networkInfo));
+                        .submitTask(new UploadTask(this, s3, dbUtil, updater));
             }
             return true;
         }
@@ -195,7 +197,7 @@ class TransferRecord {
 
     /**
      * Cancels a running transfer.
-     *
+     * 
      * @param s3 s3 instance
      * @param updater status updater
      * @return true if the transfer is running and is canceled successfully,
@@ -287,9 +289,10 @@ class TransferRecord {
                 .append("isLastPart:").append(isLastPart).append(",")
                 .append("partNumber:").append(partNumber).append(",")
                 .append("multipartId:").append(multipartId).append(",")
-                .append("eTag:").append(eTag)
+                .append("eTag:").append(eTag).append(",")
+                .append("storageClass:").append(headerStorageClass).append(",")
+                .append("userMetadata:").append(userMetadata.toString()).append(",")
                 .append("]");
         return sb.toString();
     }
 }
-

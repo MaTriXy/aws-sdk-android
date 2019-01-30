@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,7 +31,19 @@ import com.amazonaws.AmazonWebServiceRequest;
  * performing face match and search operations using the and operations.
  * </p>
  * <p>
- * If you provide the optional <code>externalImageID</code> for the input image
+ * If you are using version 1.0 of the face detection model,
+ * <code>IndexFaces</code> indexes the 15 largest faces in the input image.
+ * Later versions of the face detection model index the 100 largest faces in the
+ * input image. To determine which version of the model you are using, check the
+ * the value of <code>FaceModelVersion</code> in the response from
+ * <code>IndexFaces</code>.
+ * </p>
+ * <p>
+ * For more information, see Model Versioning in the Amazon Rekognition
+ * Developer Guide.
+ * </p>
+ * <p>
+ * If you provide the optional <code>ExternalImageID</code> for the input image
  * you provided, Amazon Rekognition associates this ID with all faces that it
  * detects. When you call the operation, the response returns the external ID.
  * You can use this external image ID to create a client-side index to associate
@@ -43,16 +55,23 @@ import com.amazonaws.AmazonWebServiceRequest;
  * faces. This includes, the bounding box of the detected face, confidence value
  * (indicating the bounding box contains a face), a face ID assigned by the
  * service for each face that is detected and stored, and an image ID assigned
- * by the service for the input image If you request all facial attributes
+ * by the service for the input image. If you request all facial attributes
  * (using the <code>detectionAttributes</code> parameter, Amazon Rekognition
  * returns detailed facial attributes such as facial landmarks (for example,
- * location of eye and mount) and other facial attributes such gender. If you
+ * location of eye and mouth) and other facial attributes such gender. If you
  * provide the same image, specify the same collection, and use the same
  * external ID in the <code>IndexFaces</code> operation, Amazon Rekognition
  * doesn't save duplicate face metadata.
  * </p>
  * <p>
- * For an example, see <a>example2</a>.
+ * For more information, see Adding Faces to a Collection in the Amazon
+ * Rekognition Developer Guide.
+ * </p>
+ * <p>
+ * The input image is passed either as base64-encoded image bytes or as a
+ * reference to an image in an Amazon S3 bucket. If you use the Amazon CLI to
+ * call Amazon Rekognition operations, passing image bytes is not supported. The
+ * image must be either a PNG or JPEG formatted file.
  * </p>
  * <p>
  * This operation requires permissions to perform the
@@ -74,27 +93,9 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * Provides the source image either as bytes or an S3 object.
-     * </p>
-     * <p>
-     * The region for the S3 bucket containing the S3 object must match the
-     * region you use for Amazon Rekognition operations.
-     * </p>
-     * <p>
-     * You may need to Base64-encode the image bytes depending on the language
-     * you are using and whether or not you are using the AWS SDK. For more
-     * information, see <a>example4</a>.
-     * </p>
-     * <p>
-     * If you use the Amazon CLI to call Amazon Rekognition operations, passing
-     * image bytes using the Bytes property is not supported. You must first
-     * upload the image to an Amazon S3 bucket and then call the operation using
-     * the S3Object property.
-     * </p>
-     * <p>
-     * For Amazon Rekognition to process an S3 object, the user must have
-     * permission to access the S3 object. For more information, see
-     * <a>manage-access-resource-policies</a>.
+     * The input image as base64-encoded bytes or an S3 object. If you use the
+     * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
+     * image bytes is not supported.
      * </p>
      */
     private Image image;
@@ -112,8 +113,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A list of facial attributes that you want to be returned. This can be the
-     * default list of attributes or all attributes. If you don't specify a
+     * An array of facial attributes that you want to be returned. This can be
+     * the default list of attributes or all attributes. If you don't specify a
      * value for <code>Attributes</code> or if you specify
      * <code>["DEFAULT"]</code>, the API returns the following subset of facial
      * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
@@ -147,28 +148,9 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      *            faces that are detected in the input images.
      *            </p>
      * @param image <p>
-     *            Provides the source image either as bytes or an S3 object.
-     *            </p>
-     *            <p>
-     *            The region for the S3 bucket containing the S3 object must
-     *            match the region you use for Amazon Rekognition operations.
-     *            </p>
-     *            <p>
-     *            You may need to Base64-encode the image bytes depending on the
-     *            language you are using and whether or not you are using the
-     *            AWS SDK. For more information, see <a>example4</a>.
-     *            </p>
-     *            <p>
-     *            If you use the Amazon CLI to call Amazon Rekognition
-     *            operations, passing image bytes using the Bytes property is
-     *            not supported. You must first upload the image to an Amazon S3
-     *            bucket and then call the operation using the S3Object
-     *            property.
-     *            </p>
-     *            <p>
-     *            For Amazon Rekognition to process an S3 object, the user must
-     *            have permission to access the S3 object. For more information,
-     *            see <a>manage-access-resource-policies</a>.
+     *            The input image as base64-encoded bytes or an S3 object. If
+     *            you use the AWS CLI to call Amazon Rekognition operations,
+     *            passing base64-encoded image bytes is not supported.
      *            </p>
      */
     public IndexFacesRequest(String collectionId, Image image) {
@@ -241,51 +223,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * Provides the source image either as bytes or an S3 object.
-     * </p>
-     * <p>
-     * The region for the S3 bucket containing the S3 object must match the
-     * region you use for Amazon Rekognition operations.
-     * </p>
-     * <p>
-     * You may need to Base64-encode the image bytes depending on the language
-     * you are using and whether or not you are using the AWS SDK. For more
-     * information, see <a>example4</a>.
-     * </p>
-     * <p>
-     * If you use the Amazon CLI to call Amazon Rekognition operations, passing
-     * image bytes using the Bytes property is not supported. You must first
-     * upload the image to an Amazon S3 bucket and then call the operation using
-     * the S3Object property.
-     * </p>
-     * <p>
-     * For Amazon Rekognition to process an S3 object, the user must have
-     * permission to access the S3 object. For more information, see
-     * <a>manage-access-resource-policies</a>.
+     * The input image as base64-encoded bytes or an S3 object. If you use the
+     * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
+     * image bytes is not supported.
      * </p>
      *
      * @return <p>
-     *         Provides the source image either as bytes or an S3 object.
-     *         </p>
-     *         <p>
-     *         The region for the S3 bucket containing the S3 object must match
-     *         the region you use for Amazon Rekognition operations.
-     *         </p>
-     *         <p>
-     *         You may need to Base64-encode the image bytes depending on the
-     *         language you are using and whether or not you are using the AWS
-     *         SDK. For more information, see <a>example4</a>.
-     *         </p>
-     *         <p>
-     *         If you use the Amazon CLI to call Amazon Rekognition operations,
-     *         passing image bytes using the Bytes property is not supported.
-     *         You must first upload the image to an Amazon S3 bucket and then
-     *         call the operation using the S3Object property.
-     *         </p>
-     *         <p>
-     *         For Amazon Rekognition to process an S3 object, the user must
-     *         have permission to access the S3 object. For more information,
-     *         see <a>manage-access-resource-policies</a>.
+     *         The input image as base64-encoded bytes or an S3 object. If you
+     *         use the AWS CLI to call Amazon Rekognition operations, passing
+     *         base64-encoded image bytes is not supported.
      *         </p>
      */
     public Image getImage() {
@@ -294,52 +240,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * Provides the source image either as bytes or an S3 object.
-     * </p>
-     * <p>
-     * The region for the S3 bucket containing the S3 object must match the
-     * region you use for Amazon Rekognition operations.
-     * </p>
-     * <p>
-     * You may need to Base64-encode the image bytes depending on the language
-     * you are using and whether or not you are using the AWS SDK. For more
-     * information, see <a>example4</a>.
-     * </p>
-     * <p>
-     * If you use the Amazon CLI to call Amazon Rekognition operations, passing
-     * image bytes using the Bytes property is not supported. You must first
-     * upload the image to an Amazon S3 bucket and then call the operation using
-     * the S3Object property.
-     * </p>
-     * <p>
-     * For Amazon Rekognition to process an S3 object, the user must have
-     * permission to access the S3 object. For more information, see
-     * <a>manage-access-resource-policies</a>.
+     * The input image as base64-encoded bytes or an S3 object. If you use the
+     * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
+     * image bytes is not supported.
      * </p>
      *
      * @param image <p>
-     *            Provides the source image either as bytes or an S3 object.
-     *            </p>
-     *            <p>
-     *            The region for the S3 bucket containing the S3 object must
-     *            match the region you use for Amazon Rekognition operations.
-     *            </p>
-     *            <p>
-     *            You may need to Base64-encode the image bytes depending on the
-     *            language you are using and whether or not you are using the
-     *            AWS SDK. For more information, see <a>example4</a>.
-     *            </p>
-     *            <p>
-     *            If you use the Amazon CLI to call Amazon Rekognition
-     *            operations, passing image bytes using the Bytes property is
-     *            not supported. You must first upload the image to an Amazon S3
-     *            bucket and then call the operation using the S3Object
-     *            property.
-     *            </p>
-     *            <p>
-     *            For Amazon Rekognition to process an S3 object, the user must
-     *            have permission to access the S3 object. For more information,
-     *            see <a>manage-access-resource-policies</a>.
+     *            The input image as base64-encoded bytes or an S3 object. If
+     *            you use the AWS CLI to call Amazon Rekognition operations,
+     *            passing base64-encoded image bytes is not supported.
      *            </p>
      */
     public void setImage(Image image) {
@@ -348,55 +257,18 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * Provides the source image either as bytes or an S3 object.
-     * </p>
-     * <p>
-     * The region for the S3 bucket containing the S3 object must match the
-     * region you use for Amazon Rekognition operations.
-     * </p>
-     * <p>
-     * You may need to Base64-encode the image bytes depending on the language
-     * you are using and whether or not you are using the AWS SDK. For more
-     * information, see <a>example4</a>.
-     * </p>
-     * <p>
-     * If you use the Amazon CLI to call Amazon Rekognition operations, passing
-     * image bytes using the Bytes property is not supported. You must first
-     * upload the image to an Amazon S3 bucket and then call the operation using
-     * the S3Object property.
-     * </p>
-     * <p>
-     * For Amazon Rekognition to process an S3 object, the user must have
-     * permission to access the S3 object. For more information, see
-     * <a>manage-access-resource-policies</a>.
+     * The input image as base64-encoded bytes or an S3 object. If you use the
+     * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
+     * image bytes is not supported.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param image <p>
-     *            Provides the source image either as bytes or an S3 object.
-     *            </p>
-     *            <p>
-     *            The region for the S3 bucket containing the S3 object must
-     *            match the region you use for Amazon Rekognition operations.
-     *            </p>
-     *            <p>
-     *            You may need to Base64-encode the image bytes depending on the
-     *            language you are using and whether or not you are using the
-     *            AWS SDK. For more information, see <a>example4</a>.
-     *            </p>
-     *            <p>
-     *            If you use the Amazon CLI to call Amazon Rekognition
-     *            operations, passing image bytes using the Bytes property is
-     *            not supported. You must first upload the image to an Amazon S3
-     *            bucket and then call the operation using the S3Object
-     *            property.
-     *            </p>
-     *            <p>
-     *            For Amazon Rekognition to process an S3 object, the user must
-     *            have permission to access the S3 object. For more information,
-     *            see <a>manage-access-resource-policies</a>.
+     *            The input image as base64-encoded bytes or an S3 object. If
+     *            you use the AWS CLI to call Amazon Rekognition operations,
+     *            passing base64-encoded image bytes is not supported.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -465,8 +337,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A list of facial attributes that you want to be returned. This can be the
-     * default list of attributes or all attributes. If you don't specify a
+     * An array of facial attributes that you want to be returned. This can be
+     * the default list of attributes or all attributes. If you don't specify a
      * value for <code>Attributes</code> or if you specify
      * <code>["DEFAULT"]</code>, the API returns the following subset of facial
      * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
@@ -481,7 +353,7 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * </p>
      *
      * @return <p>
-     *         A list of facial attributes that you want to be returned. This
+     *         An array of facial attributes that you want to be returned. This
      *         can be the default list of attributes or all attributes. If you
      *         don't specify a value for <code>Attributes</code> or if you
      *         specify <code>["DEFAULT"]</code>, the API returns the following
@@ -503,8 +375,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A list of facial attributes that you want to be returned. This can be the
-     * default list of attributes or all attributes. If you don't specify a
+     * An array of facial attributes that you want to be returned. This can be
+     * the default list of attributes or all attributes. If you don't specify a
      * value for <code>Attributes</code> or if you specify
      * <code>["DEFAULT"]</code>, the API returns the following subset of facial
      * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
@@ -519,9 +391,9 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * </p>
      *
      * @param detectionAttributes <p>
-     *            A list of facial attributes that you want to be returned. This
-     *            can be the default list of attributes or all attributes. If
-     *            you don't specify a value for <code>Attributes</code> or if
+     *            An array of facial attributes that you want to be returned.
+     *            This can be the default list of attributes or all attributes.
+     *            If you don't specify a value for <code>Attributes</code> or if
      *            you specify <code>["DEFAULT"]</code>, the API returns the
      *            following subset of facial attributes:
      *            <code>BoundingBox</code>, <code>Confidence</code>,
@@ -547,8 +419,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A list of facial attributes that you want to be returned. This can be the
-     * default list of attributes or all attributes. If you don't specify a
+     * An array of facial attributes that you want to be returned. This can be
+     * the default list of attributes or all attributes. If you don't specify a
      * value for <code>Attributes</code> or if you specify
      * <code>["DEFAULT"]</code>, the API returns the following subset of facial
      * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
@@ -566,9 +438,9 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * together.
      *
      * @param detectionAttributes <p>
-     *            A list of facial attributes that you want to be returned. This
-     *            can be the default list of attributes or all attributes. If
-     *            you don't specify a value for <code>Attributes</code> or if
+     *            An array of facial attributes that you want to be returned.
+     *            This can be the default list of attributes or all attributes.
+     *            If you don't specify a value for <code>Attributes</code> or if
      *            you specify <code>["DEFAULT"]</code>, the API returns the
      *            following subset of facial attributes:
      *            <code>BoundingBox</code>, <code>Confidence</code>,
@@ -597,8 +469,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A list of facial attributes that you want to be returned. This can be the
-     * default list of attributes or all attributes. If you don't specify a
+     * An array of facial attributes that you want to be returned. This can be
+     * the default list of attributes or all attributes. If you don't specify a
      * value for <code>Attributes</code> or if you specify
      * <code>["DEFAULT"]</code>, the API returns the following subset of facial
      * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
@@ -616,9 +488,9 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * together.
      *
      * @param detectionAttributes <p>
-     *            A list of facial attributes that you want to be returned. This
-     *            can be the default list of attributes or all attributes. If
-     *            you don't specify a value for <code>Attributes</code> or if
+     *            An array of facial attributes that you want to be returned.
+     *            This can be the default list of attributes or all attributes.
+     *            If you don't specify a value for <code>Attributes</code> or if
      *            you specify <code>["DEFAULT"]</code>, the API returns the
      *            following subset of facial attributes:
      *            <code>BoundingBox</code>, <code>Confidence</code>,

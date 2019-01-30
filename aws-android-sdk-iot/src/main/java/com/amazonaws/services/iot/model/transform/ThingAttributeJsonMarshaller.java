@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,11 @@ class ThingAttributeJsonMarshaller {
             String thingTypeName = thingAttribute.getThingTypeName();
             jsonWriter.name("thingTypeName");
             jsonWriter.value(thingTypeName);
+        }
+        if (thingAttribute.getThingArn() != null) {
+            String thingArn = thingAttribute.getThingArn();
+            jsonWriter.name("thingArn");
+            jsonWriter.value(thingArn);
         }
         if (thingAttribute.getAttributes() != null) {
             java.util.Map<String, String> attributes = thingAttribute.getAttributes();

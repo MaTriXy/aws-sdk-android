@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ import java.util.Map;
 public enum OriginType {
 
     AWS_KMS("AWS_KMS"),
-    EXTERNAL("EXTERNAL");
+    EXTERNAL("EXTERNAL"),
+    AWS_CLOUDHSM("AWS_CLOUDHSM");
 
     private String value;
 
@@ -42,6 +43,7 @@ public enum OriginType {
         enumMap = new HashMap<String, OriginType>();
         enumMap.put("AWS_KMS", AWS_KMS);
         enumMap.put("EXTERNAL", EXTERNAL);
+        enumMap.put("AWS_CLOUDHSM", AWS_CLOUDHSM);
     }
 
     /**

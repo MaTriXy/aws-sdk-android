@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,24 +19,24 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Represents the output of a <i>DescribeTable</i> operation.
+ * Represents the output of a <code>DescribeTable</code> operation.
  * </p>
  */
 public class DescribeTableResult implements Serializable {
     /**
      * <p>
-     * Represents the properties of a table.
+     * The properties of the table.
      * </p>
      */
     private TableDescription table;
 
     /**
      * <p>
-     * Represents the properties of a table.
+     * The properties of the table.
      * </p>
      *
      * @return <p>
-     *         Represents the properties of a table.
+     *         The properties of the table.
      *         </p>
      */
     public TableDescription getTable() {
@@ -45,11 +45,11 @@ public class DescribeTableResult implements Serializable {
 
     /**
      * <p>
-     * Represents the properties of a table.
+     * The properties of the table.
      * </p>
      *
      * @param table <p>
-     *            Represents the properties of a table.
+     *            The properties of the table.
      *            </p>
      */
     public void setTable(TableDescription table) {
@@ -58,14 +58,14 @@ public class DescribeTableResult implements Serializable {
 
     /**
      * <p>
-     * Represents the properties of a table.
+     * The properties of the table.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param table <p>
-     *            Represents the properties of a table.
+     *            The properties of the table.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

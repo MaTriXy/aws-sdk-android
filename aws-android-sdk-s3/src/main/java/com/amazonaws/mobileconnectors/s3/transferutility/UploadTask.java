@@ -1,5 +1,5 @@
 /**
- * Copyright 2015-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2015-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,26 +15,26 @@
 
 package com.amazonaws.mobileconnectors.s3.transferutility;
 
-
 import com.amazonaws.AmazonClientException;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferService.NetworkInfoReceiver;
 import com.amazonaws.retry.RetryUtils;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.CompleteMultipartUploadRequest;
 import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.ObjectTagging;
 import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.SSEAwsKeyManagementParams;
+import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.services.s3.model.UploadPartRequest;
 import com.amazonaws.services.s3.util.Mimetypes;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,23 +44,34 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+/**
+ * When an upload transfer is requested through TransferUtility,
+ * a thread is created with UploadTask. Here a check is made for
+ * single-part uploads (<= 5MB) and multi-part uploads (> 5MB).
+ *
+ * For multi-part uploads, a thread is created per part (5MB)
+ * and submitted to the thread pool.
+ */
 class UploadTask implements Callable<Boolean> {
 
     private static final Log LOGGER = LogFactory.getLog(UploadTask.class);
+    private static final String OBJECT_TAGS_DELIMITER = "&";
+    private static final String OBJECT_TAG_KEY_VALUE_SEPARATOR = "=";
+    private static final String REQUESTER_PAYS = "requester";
 
     private final AmazonS3 s3;
     private final TransferRecord upload;
     private final TransferDBUtil dbUtil;
     private final TransferStatusUpdater updater;
-    private final NetworkInfoReceiver networkInfo;
 
-    public UploadTask(TransferRecord uploadInfo, AmazonS3 s3, TransferDBUtil dbUtil,
-            TransferStatusUpdater updater, NetworkInfoReceiver networkInfo) {
+    public UploadTask(TransferRecord uploadInfo,
+                      AmazonS3 s3,
+                      TransferDBUtil dbUtil,
+                      TransferStatusUpdater updater) {
         this.upload = uploadInfo;
         this.s3 = s3;
         this.dbUtil = dbUtil;
         this.updater = updater;
-        this.networkInfo = networkInfo;
     }
 
     /*
@@ -68,10 +79,17 @@ class UploadTask implements Callable<Boolean> {
      */
     @Override
     public Boolean call() throws Exception {
-        if (!networkInfo.isNetworkConnected()) {
-            updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
-            return false;
+        try {
+            if (TransferNetworkLossHandler.getInstance() != null &&
+                !TransferNetworkLossHandler.getInstance().isNetworkConnected()) {
+                LOGGER.info("Network not connected. Setting the state to WAITING_FOR_NETWORK.");
+                updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
+                return false;
+            }
+        } catch (TransferUtilityException transferUtilityException) {
+            LOGGER.error("TransferUtilityException: [" + transferUtilityException + "]");
         }
+        
         updater.updateState(upload.id, TransferState.IN_PROGRESS);
         if (upload.isMultipart == 1 && upload.partNumber == 0) {
             /*
@@ -92,10 +110,10 @@ class UploadTask implements Callable<Boolean> {
 
     private Boolean uploadMultipartAndWaitForCompletion() throws ExecutionException {
         /*
-         * For a new multipart upload, upload.mMultipartId should be null. If
-         * it's a resumed upload, upload.mMultipartId would not be null.
+         * For a new multipart upload, upload.multipartId should be null. If
+         * it's a resumed upload, upload.multipartId would not be null.
          */
-        long bytesAlreadyTransferrd = 0;
+        long bytesAlreadyTransferred = 0;
         if (upload.multipartId == null || upload.multipartId.isEmpty()) {
             final PutObjectRequest putObjectRequest = createPutObjectRequest(upload);
             TransferUtility.appendMultipartTransferServiceUserAgentString(putObjectRequest);
@@ -114,23 +132,24 @@ class UploadTask implements Callable<Boolean> {
              * For a resumed upload, we should calculate the bytes already
              * transferred.
              */
-            bytesAlreadyTransferrd = dbUtil.queryBytesTransferredByMainUploadId(upload.id);
-            if (bytesAlreadyTransferrd > 0) {
+            bytesAlreadyTransferred = dbUtil.queryBytesTransferredByMainUploadId(upload.id);
+            if (bytesAlreadyTransferred > 0) {
                 LOGGER.debug(String.format("Resume transfer %d from %d bytes",
-                        upload.id, bytesAlreadyTransferrd));
+                        upload.id, bytesAlreadyTransferred));
             }
         }
-        updater.updateProgress(upload.id, bytesAlreadyTransferrd, upload.bytesTotal);
+        updater.updateProgress(upload.id, bytesAlreadyTransferred, upload.bytesTotal);
 
         final List<UploadPartRequest> requestList = dbUtil.getNonCompletedPartRequestsFromDB(upload.id,
                 upload.multipartId);
-        LOGGER.debug("multipart upload " + upload.id + " in " + requestList.size() + " parts.");
+        LOGGER.info("Multipart upload " + upload.id + " in " + requestList.size() + " parts.");
         final ArrayList<Future<Boolean>> futures = new ArrayList<Future<Boolean>>();
         for (final UploadPartRequest request : requestList) {
             TransferUtility.appendMultipartTransferServiceUserAgentString(request);
             request.setGeneralProgressListener(updater.newProgressListener(upload.id));
-            futures.add(TransferThreadPool.submitTask(new UploadPartTask(request, s3, dbUtil, networkInfo)));
+            futures.add(TransferThreadPool.submitTask(new UploadPartTask(request, s3, dbUtil)));
         }
+
         try {
             boolean isSuccess = true;
             /*
@@ -144,6 +163,13 @@ class UploadTask implements Callable<Boolean> {
                 isSuccess &= b;
             }
             if (!isSuccess) {
+                // Set the TransferState to WAITING_FOR_NETWORK if the individual parts
+                // were waiting for network
+                boolean isNetworkInterrupted = dbUtil.checkWaitingForNetworkPartRequestsFromDB(upload.id);
+                if (isNetworkInterrupted) {
+                    LOGGER.debug("Network Connection Interrupted: Transfer " + upload.id + " waits for network");
+                    updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
+                }
                 return false;
             }
         } catch (final InterruptedException e) {
@@ -156,37 +182,40 @@ class UploadTask implements Callable<Boolean> {
             }
             // abort by user
             LOGGER.debug("Transfer " + upload.id + " is interrupted by user");
+            LOGGER.error("Error encountered during multi-part upload: " + upload.id
+                    + " due to " + e.getMessage(), e);
+            updater.updateState(upload.id, TransferState.FAILED);
+            updater.throwError(upload.id, e);
+
             return false;
         } catch (final ExecutionException ee) {
-            // handle pause, cancel, etc
-            boolean isNetworkInterrupted = false;
-            if (ee.getCause() != null && ee.getCause() instanceof Exception) {
-                // check for network interruption and pause the transfer instead of failing them
-                isNetworkInterrupted = dbUtil.checkWaitingForNetworkPartRequestsFromDB(upload.id);
-                if (isNetworkInterrupted) {
-                    LOGGER.debug("Network Connection Interrupted: Transfer " + upload.id + " waits for network");
-                    updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
-                    return false;
-                }
-                final Exception e = (Exception) ee.getCause();
-                if (RetryUtils.isInterrupted(e)) {
-                    /*
-                     * thread is interrupted by user. don't update the state as
-                     * it's set by caller who interrupted
-                     */
-                    LOGGER.debug("Transfer " + upload.id + " is interrupted by user");
-                    return false;
-                } else if (e.getCause() != null && e.getCause() instanceof IOException
-                        && !networkInfo.isNetworkConnected()) {
-                    LOGGER.debug("Transfer " + upload.id + " waits for network");
-                    updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
-                }
-                updater.throwError(upload.id, e);
+            // Set the TransferState to WAITING_FOR_NETWORK if the individual parts
+            // were waiting for network
+            boolean isNetworkInterrupted = dbUtil.checkWaitingForNetworkPartRequestsFromDB(upload.id);
+            if (isNetworkInterrupted) {
+                LOGGER.debug("Network Connection Interrupted: Transfer " + upload.id + " waits for network");
+                updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
+                return false;
             }
+
+            // If the thread that is executing the transfer is interrupted
+            // because of a user initiated pause, do not throw exception or
+            // set the state to FAILED.
+            final Exception e = (Exception) ee.getCause();
+            if (RetryUtils.isInterrupted(e) &&
+                TransferState.PAUSED.equals(upload.state)) {
+                LOGGER.debug("Transfer " + upload.id + " is interrupted by user");
+                return false;
+            }
+
+            LOGGER.error("Error encountered during multi-part upload: " + upload.id
+                    + " due to " + e.getMessage(), e);
             updater.updateState(upload.id, TransferState.FAILED);
+            updater.throwError(upload.id, e);
             return false;
         }
 
+        LOGGER.info("Completing the multi-part upload transfer for " + upload.id);
         try {
             completeMultiPartUpload(upload.id, upload.bucketName, upload.key,
                     upload.multipartId);
@@ -216,32 +245,51 @@ class UploadTask implements Callable<Boolean> {
             updater.updateState(upload.id, TransferState.COMPLETED);
             return true;
         } catch (final Exception e) {
-            if (RetryUtils.isInterrupted(e)) {
-                /*
-                 * thread is interrupted by user. don't update the state as it's
-                 * set by caller who interrupted
-                 */
-                LOGGER.debug("Transfer " + upload.id + " is interrupted by user");
-                return false;
-            } else if (e.getCause() != null && e.getCause() instanceof AmazonClientException
-                    && !networkInfo.isNetworkConnected()) {
-                // check for network interruption and pause the transfer instead of failing them
-                LOGGER.debug("Network Connection Interrupted: Transfer " + upload.id + " waits for network");
-                updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
-                return false;
-            } else if (e.getCause() != null && e.getCause() instanceof IOException
-                    && !networkInfo.isNetworkConnected()) {
-                LOGGER.debug("Transfer " + upload.id + " waits for network");
-                updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
+            // Check if network is not connected, set the state to WAITING_FOR_NETWORK.
+            try {
+                if (TransferNetworkLossHandler.getInstance() != null && 
+                    !TransferNetworkLossHandler.getInstance().isNetworkConnected()) {
+                    LOGGER.info("Thread:[" + Thread.currentThread().getId() + "]: Network wasn't available.");
+                    /*
+                     * Network connection is being interrupted. Moving the TransferState
+                     * to WAITING_FOR_NETWORK till the network availability resumes.
+                     */
+                    updater.updateState(upload.id, TransferState.WAITING_FOR_NETWORK);
+                    LOGGER.debug("Network Connection Interrupted: " +
+                            "Moving the TransferState to WAITING_FOR_NETWORK");
+                    return false;
+                }
+            } catch (TransferUtilityException transferUtilityException) {
+                LOGGER.error("TransferUtilityException: [" + transferUtilityException + "]");
             }
-            // all other exceptions
-            LOGGER.debug("Failed to upload: " + upload.id + " due to " + e.getMessage(), e);
+
+            // If the thread that is executing the transfer is interrupted
+            // because of a user initiated pause, do not throw exception or
+            // set the state to FAILED.
+            if (RetryUtils.isInterrupted(e) &&
+                TransferState.PAUSED.equals(upload.state)) {
+                // thread interrupted by user
+                LOGGER.error("Single-part Upload interrupted: " + e.getMessage());
+                return false;
+            }
+
+            // In other cases, set the transfer state to FAILED.
+            LOGGER.debug("Failed to do a single-part upload: " + upload.id + " due to " + e.getMessage());
             updater.throwError(upload.id, e);
             updater.updateState(upload.id, TransferState.FAILED);
             return false;
         }
     }
 
+    /**
+     * Completes the multi-part upload transfer.
+     *
+     * @param mainUploadId  Main ID of the multi-part transfer
+     * @param bucket        Name of the S3 bucket
+     * @param key           Name of the object stored in the bucket
+     * @param multipartId   Multi-part identifier given by S3 that
+     *                      uniquely identifies this transfer
+     */
     private void completeMultiPartUpload(int mainUploadId, String bucket,
             String key, String multipartId) {
         final List<PartETag> partETags = dbUtil.queryPartETagsOfUpload(mainUploadId);
@@ -258,8 +306,7 @@ class UploadTask implements Callable<Boolean> {
      * @return A multipart upload id
      */
     private String initiateMultipartUpload(PutObjectRequest putObjectRequest) {
-        InitiateMultipartUploadRequest initiateMultipartUploadRequest = null;
-        initiateMultipartUploadRequest = new InitiateMultipartUploadRequest(
+        InitiateMultipartUploadRequest initiateMultipartUploadRequest = new InitiateMultipartUploadRequest(
                 putObjectRequest.getBucketName(), putObjectRequest.getKey())
                 .withCannedACL(putObjectRequest.getCannedAcl())
                 .withObjectMetadata(putObjectRequest.getMetadata())
@@ -274,7 +321,6 @@ class UploadTask implements Callable<Boolean> {
     /**
      * Creates a PutObjectRequest from the data in the TransferRecord
      *
-     * @param por The request to fill
      * @param upload The data for the Object Metadata
      * @return Returns a PutObjectRequest with filled in metadata and parameters
      */
@@ -301,6 +347,9 @@ class UploadTask implements Callable<Boolean> {
         } else {
             om.setContentType(Mimetypes.getInstance().getMimetype(file));
         }
+        if (upload.headerStorageClass != null) {
+            putObjectRequest.setStorageClass(upload.headerStorageClass);
+        }
         if (upload.expirationTimeRuleId != null) {
             om.setExpirationTimeRuleId(upload.expirationTimeRuleId);
         }
@@ -312,6 +361,31 @@ class UploadTask implements Callable<Boolean> {
         }
         if (upload.userMetadata != null) {
             om.setUserMetadata(upload.userMetadata);
+            // Check Object Tag
+            String objectTag = upload.userMetadata.get(Headers.S3_TAGGING);
+            if (objectTag != null) {
+                try {
+                    String[] tags = objectTag.split(OBJECT_TAGS_DELIMITER);
+                    List<Tag> tagList = new ArrayList<Tag>();
+                    for (String tag : tags) {
+                        String[] tagParts = tag.split(OBJECT_TAG_KEY_VALUE_SEPARATOR);
+                        tagList.add(new Tag(tagParts[0], tagParts[1]));
+                    }
+                    putObjectRequest.setTagging(new ObjectTagging(tagList));
+                } catch (Exception exception) {
+                    LOGGER.error("Error in passing the object tags as request headers.", exception);
+                }
+            }
+            // Check Redirect Location
+            String redirectLocation = upload.userMetadata.get(Headers.REDIRECT_LOCATION);
+            if (redirectLocation != null) {
+                putObjectRequest.setRedirectLocation(redirectLocation);
+            }
+            // Check Requester Pays
+            String isRequesterPays = upload.userMetadata.get(Headers.REQUESTER_PAYS_HEADER);
+            if (isRequesterPays != null) {
+                putObjectRequest.setRequesterPays(REQUESTER_PAYS.equals(isRequesterPays) ? true : false);
+            }
         }
         if (upload.md5 != null) {
             om.setContentMD5(upload.md5);
@@ -327,6 +401,9 @@ class UploadTask implements Callable<Boolean> {
         return putObjectRequest;
     }
 
+    /**
+     * Convenience methods for Canned ACL.
+     */
     private static final Map<String, CannedAccessControlList> CANNED_ACL_MAP;
     static {
         CANNED_ACL_MAP = new HashMap<String, CannedAccessControlList>();

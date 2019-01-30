@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,19 @@ class APNSChannelResponseJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("CreationDate")) {
                 aPNSChannelResponse.setCreationDate(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("DefaultAuthenticationMethod")) {
+                aPNSChannelResponse.setDefaultAuthenticationMethod(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("Enabled")) {
+                aPNSChannelResponse.setEnabled(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("HasCredential")) {
+                aPNSChannelResponse.setHasCredential(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("HasTokenKey")) {
+                aPNSChannelResponse.setHasTokenKey(BooleanJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else if (name.equals("Id")) {
                 aPNSChannelResponse.setId(StringJsonUnmarshaller.getInstance()

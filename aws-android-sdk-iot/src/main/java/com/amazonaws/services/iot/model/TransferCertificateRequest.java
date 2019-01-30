@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ import com.amazonaws.AmazonWebServiceRequest;
 public class TransferCertificateRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The ID of the certificate.
+     * The ID of the certificate. (The last part of the certificate ARN contains
+     * the certificate ID.)
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -57,7 +58,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      */
     private String targetAwsAccount;
 
@@ -73,7 +75,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The ID of the certificate.
+     * The ID of the certificate. (The last part of the certificate ARN contains
+     * the certificate ID.)
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -81,7 +84,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>(0x)?[a-fA-F0-9]+<br/>
      *
      * @return <p>
-     *         The ID of the certificate.
+     *         The ID of the certificate. (The last part of the certificate ARN
+     *         contains the certificate ID.)
      *         </p>
      */
     public String getCertificateId() {
@@ -90,7 +94,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The ID of the certificate.
+     * The ID of the certificate. (The last part of the certificate ARN contains
+     * the certificate ID.)
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -98,7 +103,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>(0x)?[a-fA-F0-9]+<br/>
      *
      * @param certificateId <p>
-     *            The ID of the certificate.
+     *            The ID of the certificate. (The last part of the certificate
+     *            ARN contains the certificate ID.)
      *            </p>
      */
     public void setCertificateId(String certificateId) {
@@ -107,7 +113,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The ID of the certificate.
+     * The ID of the certificate. (The last part of the certificate ARN contains
+     * the certificate ID.)
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -118,7 +125,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>(0x)?[a-fA-F0-9]+<br/>
      *
      * @param certificateId <p>
-     *            The ID of the certificate.
+     *            The ID of the certificate. (The last part of the certificate
+     *            ARN contains the certificate ID.)
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -134,7 +142,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @return <p>
      *         The AWS account.
@@ -150,7 +159,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param targetAwsAccount <p>
      *            The AWS account.
@@ -169,7 +179,8 @@ public class TransferCertificateRequest extends AmazonWebServiceRequest implemen
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param targetAwsAccount <p>
      *            The AWS account.

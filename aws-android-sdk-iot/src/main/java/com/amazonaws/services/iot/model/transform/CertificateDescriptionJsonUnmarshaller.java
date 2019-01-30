@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,8 +63,18 @@ class CertificateDescriptionJsonUnmarshaller implements
             } else if (name.equals("lastModifiedDate")) {
                 certificateDescription.setLastModifiedDate(DateJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("customerVersion")) {
+                certificateDescription.setCustomerVersion(IntegerJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("transferData")) {
                 certificateDescription.setTransferData(TransferDataJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("generationId")) {
+                certificateDescription.setGenerationId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("validity")) {
+                certificateDescription.setValidity(CertificateValidityJsonUnmarshaller
+                        .getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

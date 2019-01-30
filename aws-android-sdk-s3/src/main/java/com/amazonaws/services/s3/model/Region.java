@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -103,6 +103,12 @@ public enum Region {
     US_GovCloud("s3-us-gov-west-1"),
 
     /**
+     * The US GovCloud Region. This region uses Amazon S3 servers located in the
+     * Eastern region of the United States.
+     */
+    US_Gov_East_1("s3-us-gov-east-1"),
+
+    /**
      * The EU (Ireland) Amazon S3 Region. This region uses Amazon S3 servers
      * located in Ireland.
      * <p>
@@ -126,6 +132,18 @@ public enum Region {
     EU_London("eu-west-2"),
 
     /**
+     * The EU (Paris) Amazon S3 Region. This region uses Amazon S3 servers
+     * located in Paris.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3.eu-west-3.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    EU_Paris("eu-west-3"),
+
+    /**
      * The EU (Frankfurt) Amazon S3 Region. This region uses Amazon S3 servers
      * located in Frankfurt.
      * <p>
@@ -137,6 +155,19 @@ public enum Region {
      * </p>
      */
     EU_Frankfurt("eu-central-1"),
+
+    /**
+     * The EU (Stockholm) Amazon S3 Region. This region uses Amazon S3 servers
+     * located in Stockholm.
+     * <p>
+     * Note that to access S3 buckets in Stockholm you must explicitly set the
+     * region on the AWS S3 Client you are working with. In Amazon S3, the EU
+     * (Stockholm) Region provides read-after-write consistency for PUTS of new
+     * objects in Amazon S3 buckets and eventual consistency for overwrite PUTS
+     * and DELETES.
+     * </p>
+     */
+    EU_Stockholm("eu-north-1"),
 
     /**
      * The Asia Pacific (Mumbai) Region. This region uses Amazon S3 servers
@@ -229,7 +260,16 @@ public enum Region {
      * When using buckets in this region, you must set the client endpoint to
      * <code>s3.cn-north-1.amazonaws.com.cn</code>.
      */
-    CN_Beijing("cn-north-1");
+    CN_Beijing("cn-north-1"),
+
+    /**
+     * The China (Ningxia) Region. This region uses Amazon S3 servers located in
+     * Ningxia.
+     * <p>
+     * When using buckets in this region, you must set the client endpoint to
+     * <code>s3.cn-northwest-1.amazonaws.com.cn</code>.
+     */
+    CN_Ningxia("cn-northwest-1");
 
     /**
      * Used to extract the S3 regional id from an S3 end point. Note this

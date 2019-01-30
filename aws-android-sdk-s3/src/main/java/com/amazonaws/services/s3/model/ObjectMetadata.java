@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -826,6 +826,15 @@ public class ObjectMetadata implements ServerSideEncryptionResult, S3RequesterCh
      */
     public Date getHttpExpiresDate() {
         return cloneDate(httpExpiresDate);
+    }
+    
+    /**
+     * Sets the Amazon S3 storage class for the stored objects.
+     * 
+     * @param storageClass The Amazon S3 storage class for the stored objects.
+     */
+    public void setStorageClass(StorageClass storageClass) {
+    	metadata.put(Headers.STORAGE_CLASS, storageClass);
     }
 
     /**

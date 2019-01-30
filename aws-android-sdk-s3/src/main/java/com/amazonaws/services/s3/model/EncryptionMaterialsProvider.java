@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2012-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ package com.amazonaws.services.s3.model;
  * any strategy for providing encryption materials, such as simply providing
  * static material that doesn't change, or more complicated implementations,
  * such as integrating with existing key management systems.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public interface EncryptionMaterialsProvider extends EncryptionMaterialsAccessor {
 
     /**

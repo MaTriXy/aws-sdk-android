@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,6 +29,11 @@ import com.amazonaws.AmazonServiceException;
 public class InvalidSnsTopicException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * <p>
+     * Indicates that the topic does not exist.
+     * </p>
+     */
     private String topic;
 
     /**
@@ -42,18 +47,26 @@ public class InvalidSnsTopicException extends AmazonServiceException {
     }
 
     /**
-     * Returns the value of the topic property for this object.
+     * <p>
+     * Indicates that the topic does not exist.
+     * </p>
      *
-     * @return The value of the topic property for this object.
+     * @return <p>
+     *         Indicates that the topic does not exist.
+     *         </p>
      */
     public String getTopic() {
         return topic;
     }
 
     /**
-     * Sets the value of topic
+     * <p>
+     * Indicates that the topic does not exist.
+     * </p>
      *
-     * @param topic The new value for the topic property for this object.
+     * @param topic <p>
+     *            Indicates that the topic does not exist.
+     *            </p>
      */
     public void setTopic(String topic) {
         this.topic = topic;

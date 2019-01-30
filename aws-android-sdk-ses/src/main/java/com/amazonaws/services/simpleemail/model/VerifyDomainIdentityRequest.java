@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,10 +21,15 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Verifies a domain.
+ * Adds a domain to the list of identities for your Amazon SES account in the
+ * current AWS Region and attempts to verify it. For more information about
+ * verifying domains, see <a href=
+ * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+ * >Verifying Email Addresses and Domains</a> in the <i>Amazon SES Developer
+ * Guide.</i>
  * </p>
  * <p>
- * This action is throttled at one request per second.
+ * You can execute this operation no more than once per second.
  * </p>
  */
 public class VerifyDomainIdentityRequest extends AmazonWebServiceRequest implements Serializable {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,8 +27,7 @@ import com.amazonaws.AmazonWebServiceRequest;
 public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The token for the next set of results, or <b>null</b> if there are no
-     * additional results.
+     * The token to retrieve the next set of results.
      * </p>
      */
     private String nextToken;
@@ -39,7 +38,7 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>1 - 10000<br/>
+     * <b>Range: </b>1 - 250<br/>
      */
     private Integer maxResults;
 
@@ -52,13 +51,11 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The token for the next set of results, or <b>null</b> if there are no
-     * additional results.
+     * The token to retrieve the next set of results.
      * </p>
      *
      * @return <p>
-     *         The token for the next set of results, or <b>null</b> if there
-     *         are no additional results.
+     *         The token to retrieve the next set of results.
      *         </p>
      */
     public String getNextToken() {
@@ -67,13 +64,11 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The token for the next set of results, or <b>null</b> if there are no
-     * additional results.
+     * The token to retrieve the next set of results.
      * </p>
      *
      * @param nextToken <p>
-     *            The token for the next set of results, or <b>null</b> if there
-     *            are no additional results.
+     *            The token to retrieve the next set of results.
      *            </p>
      */
     public void setNextToken(String nextToken) {
@@ -82,16 +77,14 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The token for the next set of results, or <b>null</b> if there are no
-     * additional results.
+     * The token to retrieve the next set of results.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param nextToken <p>
-     *            The token for the next set of results, or <b>null</b> if there
-     *            are no additional results.
+     *            The token to retrieve the next set of results.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -107,7 +100,7 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>1 - 10000<br/>
+     * <b>Range: </b>1 - 250<br/>
      *
      * @return <p>
      *         The maximum number of results to return in this operation.
@@ -123,7 +116,7 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>1 - 10000<br/>
+     * <b>Range: </b>1 - 250<br/>
      *
      * @param maxResults <p>
      *            The maximum number of results to return in this operation.
@@ -142,7 +135,7 @@ public class ListPrincipalThingsRequest extends AmazonWebServiceRequest implemen
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>1 - 10000<br/>
+     * <b>Range: </b>1 - 250<br/>
      *
      * @param maxResults <p>
      *            The maximum number of results to return in this operation.

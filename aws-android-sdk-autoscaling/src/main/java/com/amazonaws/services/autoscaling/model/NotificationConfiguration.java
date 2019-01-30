@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.io.Serializable;
 public class NotificationConfiguration implements Serializable {
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -38,7 +38,7 @@ public class NotificationConfiguration implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the Amazon Simple Notification Service
-     * (SNS) topic.
+     * (Amazon SNS) topic.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -89,7 +89,7 @@ public class NotificationConfiguration implements Serializable {
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -98,7 +98,7 @@ public class NotificationConfiguration implements Serializable {
      * <br/>
      *
      * @return <p>
-     *         The name of the group.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -107,7 +107,7 @@ public class NotificationConfiguration implements Serializable {
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -116,7 +116,7 @@ public class NotificationConfiguration implements Serializable {
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -125,7 +125,7 @@ public class NotificationConfiguration implements Serializable {
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -137,7 +137,7 @@ public class NotificationConfiguration implements Serializable {
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -150,7 +150,7 @@ public class NotificationConfiguration implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the Amazon Simple Notification Service
-     * (SNS) topic.
+     * (Amazon SNS) topic.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -160,7 +160,7 @@ public class NotificationConfiguration implements Serializable {
      *
      * @return <p>
      *         The Amazon Resource Name (ARN) of the Amazon Simple Notification
-     *         Service (SNS) topic.
+     *         Service (Amazon SNS) topic.
      *         </p>
      */
     public String getTopicARN() {
@@ -170,7 +170,7 @@ public class NotificationConfiguration implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the Amazon Simple Notification Service
-     * (SNS) topic.
+     * (Amazon SNS) topic.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -180,7 +180,7 @@ public class NotificationConfiguration implements Serializable {
      *
      * @param topicARN <p>
      *            The Amazon Resource Name (ARN) of the Amazon Simple
-     *            Notification Service (SNS) topic.
+     *            Notification Service (Amazon SNS) topic.
      *            </p>
      */
     public void setTopicARN(String topicARN) {
@@ -190,7 +190,7 @@ public class NotificationConfiguration implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the Amazon Simple Notification Service
-     * (SNS) topic.
+     * (Amazon SNS) topic.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -203,7 +203,7 @@ public class NotificationConfiguration implements Serializable {
      *
      * @param topicARN <p>
      *            The Amazon Resource Name (ARN) of the Amazon Simple
-     *            Notification Service (SNS) topic.
+     *            Notification Service (Amazon SNS) topic.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

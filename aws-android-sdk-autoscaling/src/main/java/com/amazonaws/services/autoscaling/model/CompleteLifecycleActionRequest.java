@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,23 +29,43 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Scaling group:
  * </p>
  * <ol>
- * <li>(Optional) Create a Lambda function and a rule that allows CloudWatch
- * Events to invoke your Lambda function when Auto Scaling launches or
- * terminates instances.</li>
- * <li>(Optional) Create a notification target and an IAM role. The target can
- * be either an Amazon SQS queue or an Amazon SNS topic. The role allows Auto
- * Scaling to publish lifecycle notifications to the target.</li>
- * <li>Create the lifecycle hook. Specify whether the hook is used when the
- * instances launch or terminate.</li>
- * <li>If you need more time, record the lifecycle action heartbeat to keep the
- * instance in a pending state.</li>
- * <li><b>If you finish before the timeout period ends, complete the lifecycle
- * action.</b></li>
+ * <li>
+ * <p>
+ * (Optional) Create a Lambda function and a rule that allows CloudWatch Events
+ * to invoke your Lambda function when Amazon EC2 Auto Scaling launches or
+ * terminates instances.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * (Optional) Create a notification target and an IAM role. The target can be
+ * either an Amazon SQS queue or an Amazon SNS topic. The role allows Amazon EC2
+ * Auto Scaling to publish lifecycle notifications to the target.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * Create the lifecycle hook. Specify whether the hook is used when the
+ * instances launch or terminate.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * If you need more time, record the lifecycle action heartbeat to keep the
+ * instance in a pending state.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <b>If you finish before the timeout period ends, complete the lifecycle
+ * action.</b>
+ * </p>
+ * </li>
  * </ol>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/AutoScalingGroupLifecycle.html"
- * >Auto Scaling Lifecycle</a> in the <i>Auto Scaling Developer Guide</i>.
+ * "http://docs.aws.amazon.com/autoscaling/ec2/userguide/AutoScalingGroupLifecycle.html"
+ * >Auto Scaling Lifecycle</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.
  * </p>
  */
 public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest implements Serializable {
@@ -62,7 +82,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The name of the group for the lifecycle hook.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -75,9 +95,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
     /**
      * <p>
      * A universally unique identifier (UUID) that identifies a specific
-     * lifecycle action associated with an instance. Auto Scaling sends this
-     * token to the notification target you specified when you created the
-     * lifecycle hook.
+     * lifecycle action associated with an instance. Amazon EC2 Auto Scaling
+     * sends this token to the notification target you specified when you
+     * created the lifecycle hook.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -164,7 +184,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The name of the group for the lifecycle hook.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -173,7 +193,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
      * <br/>
      *
      * @return <p>
-     *         The name of the group for the lifecycle hook.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -182,7 +202,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The name of the group for the lifecycle hook.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -191,7 +211,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group for the lifecycle hook.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -200,7 +220,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
 
     /**
      * <p>
-     * The name of the group for the lifecycle hook.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -212,7 +232,7 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group for the lifecycle hook.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -225,9 +245,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
     /**
      * <p>
      * A universally unique identifier (UUID) that identifies a specific
-     * lifecycle action associated with an instance. Auto Scaling sends this
-     * token to the notification target you specified when you created the
-     * lifecycle hook.
+     * lifecycle action associated with an instance. Amazon EC2 Auto Scaling
+     * sends this token to the notification target you specified when you
+     * created the lifecycle hook.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -235,9 +255,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
      *
      * @return <p>
      *         A universally unique identifier (UUID) that identifies a specific
-     *         lifecycle action associated with an instance. Auto Scaling sends
-     *         this token to the notification target you specified when you
-     *         created the lifecycle hook.
+     *         lifecycle action associated with an instance. Amazon EC2 Auto
+     *         Scaling sends this token to the notification target you specified
+     *         when you created the lifecycle hook.
      *         </p>
      */
     public String getLifecycleActionToken() {
@@ -247,9 +267,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
     /**
      * <p>
      * A universally unique identifier (UUID) that identifies a specific
-     * lifecycle action associated with an instance. Auto Scaling sends this
-     * token to the notification target you specified when you created the
-     * lifecycle hook.
+     * lifecycle action associated with an instance. Amazon EC2 Auto Scaling
+     * sends this token to the notification target you specified when you
+     * created the lifecycle hook.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -257,9 +277,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
      *
      * @param lifecycleActionToken <p>
      *            A universally unique identifier (UUID) that identifies a
-     *            specific lifecycle action associated with an instance. Auto
-     *            Scaling sends this token to the notification target you
-     *            specified when you created the lifecycle hook.
+     *            specific lifecycle action associated with an instance. Amazon
+     *            EC2 Auto Scaling sends this token to the notification target
+     *            you specified when you created the lifecycle hook.
      *            </p>
      */
     public void setLifecycleActionToken(String lifecycleActionToken) {
@@ -269,9 +289,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
     /**
      * <p>
      * A universally unique identifier (UUID) that identifies a specific
-     * lifecycle action associated with an instance. Auto Scaling sends this
-     * token to the notification target you specified when you created the
-     * lifecycle hook.
+     * lifecycle action associated with an instance. Amazon EC2 Auto Scaling
+     * sends this token to the notification target you specified when you
+     * created the lifecycle hook.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -282,9 +302,9 @@ public class CompleteLifecycleActionRequest extends AmazonWebServiceRequest impl
      *
      * @param lifecycleActionToken <p>
      *            A universally unique identifier (UUID) that identifies a
-     *            specific lifecycle action associated with an instance. Auto
-     *            Scaling sends this token to the notification target you
-     *            specified when you created the lifecycle hook.
+     *            specific lifecycle action associated with an instance. Amazon
+     *            EC2 Auto Scaling sends this token to the notification target
+     *            you specified when you created the lifecycle hook.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

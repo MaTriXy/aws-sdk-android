@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +56,35 @@ class SegmentDimensionsJsonMarshaller {
             SegmentLocation location = segmentDimensions.getLocation();
             jsonWriter.name("Location");
             SegmentLocationJsonMarshaller.getInstance().marshall(location, jsonWriter);
+        }
+        if (segmentDimensions.getMetrics() != null) {
+            java.util.Map<String, MetricDimension> metrics = segmentDimensions.getMetrics();
+            jsonWriter.name("Metrics");
+            jsonWriter.beginObject();
+            for (java.util.Map.Entry<String, MetricDimension> metricsEntry : metrics.entrySet()) {
+                MetricDimension metricsValue = metricsEntry.getValue();
+                if (metricsValue != null) {
+                    jsonWriter.name(metricsEntry.getKey());
+                    MetricDimensionJsonMarshaller.getInstance().marshall(metricsValue, jsonWriter);
+                }
+            }
+            jsonWriter.endObject();
+        }
+        if (segmentDimensions.getUserAttributes() != null) {
+            java.util.Map<String, AttributeDimension> userAttributes = segmentDimensions
+                    .getUserAttributes();
+            jsonWriter.name("UserAttributes");
+            jsonWriter.beginObject();
+            for (java.util.Map.Entry<String, AttributeDimension> userAttributesEntry : userAttributes
+                    .entrySet()) {
+                AttributeDimension userAttributesValue = userAttributesEntry.getValue();
+                if (userAttributesValue != null) {
+                    jsonWriter.name(userAttributesEntry.getKey());
+                    AttributeDimensionJsonMarshaller.getInstance().marshall(userAttributesValue,
+                            jsonWriter);
+                }
+            }
+            jsonWriter.endObject();
         }
         jsonWriter.endObject();
     }

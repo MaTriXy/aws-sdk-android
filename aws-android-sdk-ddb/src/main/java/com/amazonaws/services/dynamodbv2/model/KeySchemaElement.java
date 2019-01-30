@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,16 +24,16 @@ import java.io.Serializable;
  * of an index.
  * </p>
  * <p>
- * A <i>KeySchemaElement</i> represents exactly one attribute of the primary
- * key. For example, a simple primary key would be represented by one
- * <i>KeySchemaElement</i> (for the partition key). A composite primary key
- * would require one <i>KeySchemaElement</i> for the partition key, and another
- * <i>KeySchemaElement</i> for the sort key.
+ * A <code>KeySchemaElement</code> represents exactly one attribute of the
+ * primary key. For example, a simple primary key would be represented by one
+ * <code>KeySchemaElement</code> (for the partition key). A composite primary
+ * key would require one <code>KeySchemaElement</code> for the partition key,
+ * and another <code>KeySchemaElement</code> for the sort key.
  * </p>
  * <p>
- * A <i>KeySchemaElement</i> must be a scalar, top-level attribute (not a nested
- * attribute). The data type must be one of String, Number, or Binary. The
- * attribute cannot be nested within a List or a Map.
+ * A <code>KeySchemaElement</code> must be a scalar, top-level attribute (not a
+ * nested attribute). The data type must be one of String, Number, or Binary.
+ * The attribute cannot be nested within a List or a Map.
  * </p>
  */
 public class KeySchemaElement implements Serializable {

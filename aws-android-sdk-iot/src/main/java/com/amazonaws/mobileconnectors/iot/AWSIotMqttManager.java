@@ -1,5 +1,5 @@
 /**
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,10 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.util.StringUtils;
+import com.amazonaws.util.VersionInfoUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -43,9 +44,8 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.Map;
 
 import javax.net.SocketFactory;
@@ -64,14 +64,6 @@ public class AWSIotMqttManager {
     private static final Integer MILLIS_IN_ONE_SECOND = 1000;
 
     private static final Log LOGGER = LogFactory.getLog(AWSIotMqttManager.class);
-    /** Constant for number of tokens in endpoint. */
-    private static final int ENDPOINT_SPLIT_SIZE = 5;
-    /** Constant for token offset of "iot" in endpoint. */
-    private static final int ENDPOINT_IOT_OFFSET = 1;
-    /** Constant for token offset of "amazonaws" in endpoint. */
-    private static final int ENDPOINT_DOMAIN_OFFSET = 3;
-    /** Constant for token offset of "com" in endpoint. */
-    private static final int ENDPOINT_TLD_OFFSET = 4;
 
     /** Default value for starting delay in exponential backoff reconnect algorithm. */
     public static final Integer DEFAULT_MIN_RECONNECT_RETRY_TIME_SECONDS = 4;
@@ -82,7 +74,7 @@ public class AWSIotMqttManager {
     /** Default value for number of auto reconnect attempts before giving up. */
     public static final Integer DEFAULT_AUTO_RECONNECT_ATTEMPTS = 10;
     /** Default value for MQTT keep alive. */
-    public static final Integer DEFAULT_KEEP_ALIVE_SECONDS = 10;
+    public static final Integer DEFAULT_KEEP_ALIVE_SECONDS = 300;
     /** Default value for offline publish queue enabled. */
     public static final Boolean DEFAULT_OFFLINE_PUBLISH_QUEUE_ENABLED = true;
     /** Default value for offline publish queue bound. */
@@ -95,7 +87,7 @@ public class AWSIotMqttManager {
     /** The underlying Paho Java MQTT client. */
     private MqttAsyncClient mqttClient;
 
-    /** MQTT broker URL.  Built from region, customer endpoint. */
+    /** MQTT broker URL. Built from the custom endpoint. */
     private String mqttBrokerURL;
 
     /** WebSocket URL Signer object. */
@@ -106,6 +98,7 @@ public class AWSIotMqttManager {
 
     /** MQTT client ID, used for both initial connection and reconnections. */
     private final String mqttClientId;
+    
     /** AWS IoT region hosting the MQTT service. */
     private final Region region;
 
@@ -126,7 +119,7 @@ public class AWSIotMqttManager {
      * Queue for messages attempted to publish while MQTT client was offline.
      * Republished upon reconnect.
      */
-    private final List<AWSIotMqttQueueMessage> mqttMessageQueue;
+    private final ConcurrentLinkedQueue<AWSIotMqttQueueMessage> mqttMessageQueue;
     /** KeepAlive interval specified by the user. */
     private int userKeepAlive;
     /** MQTT Will parameters. */
@@ -160,6 +153,39 @@ public class AWSIotMqttManager {
     private boolean userDisconnect;
     /** Do we need to resubscribe upon reconnecting? */
     private boolean needResubscribe;
+
+    /** Is this a clean Session with no state being persisted from a prior session */
+    private boolean cleanSession = true;
+    /**
+     * Indicates whether metrics collection is enabled.
+     * When it is enabled, the sdk name and version is sent with the mqtt connect message to server.
+     */
+    private boolean metricsIsEnabled = true;
+
+    /**
+     * This is your custom endpoint that allows you to connect to AWS IoT.
+     */
+    private final String endpoint;
+
+    /**
+     * The SDK version that will be sent in the mqtt connect message if metrics collection is enabled.
+     */
+    private static final String SDK_VERSION = VersionInfoUtils.getVersion();
+
+    /**
+     * Turning on/off metrics collection. By default metrics collection is enabled.
+     * Client must call this to set metrics collection to false before calling connect in order to turn
+     * off metrics collection.
+     * @param enabled indicates whether metrics collection is enabled or disabled.
+     */
+    public void setMetricsIsEnabled(boolean enabled) {
+        metricsIsEnabled = enabled;
+        LOGGER.info("Metrics collection is " + (metricsIsEnabled ? "enabled" : "disabled"));
+    }
+
+    public boolean isMetricsEnabled() {
+        return metricsIsEnabled;
+    }
     /**
      * Holds client socket factory. Set upon initial connect then reused on
      * reconnect.
@@ -275,12 +301,25 @@ public class AWSIotMqttManager {
     }
 
     /**
-     * Set the maxium reconnects attempted automatically before quitting.
+     * Set the maximum reconnects attempted automatically before quitting.
+     *
+     * @param attempts number of reconnects attempted automatically. Retry forever =
+     *                 -1.
+     *
+     * @deprecated Please use {@link #setMaxAutoReconnectAttempts(int)} instead.
+     */
+    @Deprecated
+    public void setMaxAutoReconnectAttepts(int attempts) {
+        setMaxAutoReconnectAttempts(attempts);
+    }
+
+    /**
+     * Set the maximum reconnects attempted automatically before quitting.
      *
      * @param attempts number of reconnects attempted automatically. Retry
      *            forever = -1.
      */
-    public void setMaxAutoReconnectAttepts(int attempts) {
+    public void setMaxAutoReconnectAttempts(int attempts) {
         if (attempts <= 0 && attempts != -1) {
             throw new IllegalArgumentException("Max reconnection attempts must be postive or -1");
         }
@@ -450,7 +489,7 @@ public class AWSIotMqttManager {
      *
      * @return offline message queue.
      */
-    List<AWSIotMqttQueueMessage> getMqttMessageQueue() {
+    ConcurrentLinkedQueue<AWSIotMqttQueueMessage> getMqttMessageQueue() {
         return mqttMessageQueue;
     }
 
@@ -494,34 +533,65 @@ public class AWSIotMqttManager {
     }
 
     /**
-     * Constructs a new AWSIotMqttManager.
-     *
-     * @param mqttClientId MQTT client ID to use with this client.
-     * @param endpoint AWS IoT endpoint.
-     *                 Expected endpoint format: XXXXXX.iot.[region].amazonaws.com
+     * Enable/Disable auto resubscribe feature. When enabled, it will automatically
+     * resubscribe to previous subscribed topics after abnormal disconnect.
+     * By default, this is set to true.
+     * @param enabled Indicate whether auto resubscribe feature is enabled.
      */
-    public AWSIotMqttManager(String mqttClientId, String endpoint) {
-        if (mqttClientId == null || mqttClientId.isEmpty()) {
-            throw new IllegalArgumentException("mqttClientId is null or empty");
-        }
+    public void setAutoResubscribe(boolean enabled) {
+        needResubscribe = enabled;
+    }
 
-        this.topicListeners = new HashMap<String, AWSIotMqttTopic>();
-        this.mqttMessageQueue = new LinkedList<AWSIotMqttQueueMessage>();
-
-        this.accountEndpointPrefix = AwsIotEndpointUtility.getAccountPrefixFromEndpont(endpoint);
-        this.mqttClientId = mqttClientId;
-        this.region = AwsIotEndpointUtility.getRegionFromIotEndpoint(endpoint);
-
-        initDefaults();
+    /**
+     * Set to true if the connection should be established with a clean session, false otherwise.
+     * By default, this is set to true. AWS IoT message broker currently does not support persistent sessions
+     * (connections made with the cleanSession flag set to false). Support for persistent sessions
+     * (setting cleanSesssion to false) may be supported in the future.
+     * @param cleanSession flag to establish a clean session
+     */
+    public void setCleanSession(boolean cleanSession) {
+        this.cleanSession = cleanSession;
     }
 
     /**
      * Constructs a new AWSIotMqttManager.
      *
      * @param mqttClientId MQTT client ID to use with this client.
+     * @param endpoint AWS IoT endpoint.
+     *            Expected endpoint formats:
+     *            XXXXXXX.iot.[region].amazonaws.com or
+     *            XXXXXXX-ats.iot.[region].amazonaws.com or
+     *            XXXXXXX.ats.iot.cn-north-1.amazonaws.com.cn
+     */
+    public AWSIotMqttManager(String mqttClientId, String endpoint) {
+        if (mqttClientId == null || mqttClientId.isEmpty()) {
+            throw new IllegalArgumentException("mqttClientId is null or empty");
+        }
+
+        if (endpoint == null) {
+            throw new IllegalArgumentException("endpoint is null");
+        }
+
+        this.topicListeners = new ConcurrentHashMap<String, AWSIotMqttTopic>();
+        this.mqttMessageQueue = new ConcurrentLinkedQueue<AWSIotMqttQueueMessage>();
+        this.mqttClientId = mqttClientId;
+        this.endpoint = endpoint;
+        this.accountEndpointPrefix = null;
+        this.region = AwsIotEndpointUtility.getRegionFromIotEndpoint(endpoint);
+
+        initDefaults();
+    }
+
+    /**
+     * Constructs a new AWSIotMqttManager. This method does not support
+     * ATS enabled endpoints.
+     *
+     * @param mqttClientId MQTT client ID to use with this client.
      * @param region The AWS region to use when creating endpoint.
      * @param accountEndpointPrefix Customer specific endpont prefix XXXXXXX in
-     *            XXXXXX.iot.[region].amazonaws.com.
+     *            XXXXXXX.iot.[region].amazonaws.com or
+     *            XXXXXXX-ats.iot.[region].amazonaws.com or
+     *            XXXXXXX.ats.iot.cn-north-1.amazonaws.com.cn
      */
     public AWSIotMqttManager(String mqttClientId, Region region, String accountEndpointPrefix) {
 
@@ -537,12 +607,13 @@ public class AWSIotMqttManager {
             throw new IllegalArgumentException("accountEndpointPrefix is null");
         }
 
-        this.topicListeners = new HashMap<String, AWSIotMqttTopic>();
-        this.mqttMessageQueue = new LinkedList<AWSIotMqttQueueMessage>();
+        this.topicListeners = new ConcurrentHashMap<String, AWSIotMqttTopic>();
+        this.mqttMessageQueue = new ConcurrentLinkedQueue<AWSIotMqttQueueMessage>();
 
         this.accountEndpointPrefix = accountEndpointPrefix;
         this.mqttClientId = mqttClientId;
         this.region = region;
+        this.endpoint = null;
 
         initDefaults();
     }
@@ -564,6 +635,7 @@ public class AWSIotMqttManager {
         setFullQueueToKeepNewestMessages();
         connectionStabilityTime = DEFAULT_CONNECTION_STABILITY_TIME_SECONDS;
         unitTestMillisOverride = null;
+        needResubscribe = true;
     }
 
     /**
@@ -597,9 +669,17 @@ public class AWSIotMqttManager {
             return;
         }
 
-        mqttBrokerURL = String
-                .format("ssl://%s.iot.%s.%s:8883", accountEndpointPrefix, region.getName(),
-                        region.getDomain());
+        if (endpoint != null) {
+            mqttBrokerURL = String.format("ssl://%s:8883", endpoint);
+        } else if (accountEndpointPrefix != null) {
+            mqttBrokerURL = String
+                    .format("ssl://%s.iot.%s.%s:8883", accountEndpointPrefix, region.getName(),
+                            region.getDomain());
+        } else {
+            throw new IllegalStateException("No valid endpoint information is available. " +
+                "Please pass in a valid endpoint in AWSIotMqttManager.");
+        }
+
         isWebSocketClient = false;
         LOGGER.debug("MQTT broker: " + mqttBrokerURL);
 
@@ -619,7 +699,7 @@ public class AWSIotMqttManager {
             clientSocketFactory = socketFactory;
             options.setSocketFactory(clientSocketFactory);
 
-            mqttConnect(options, statusCallback);
+            mqttConnect(options);
         } catch (final NoSuchAlgorithmException e) {
             throw new AWSIotCertificateException("A certificate error occurred.", e);
         } catch (final KeyManagementException e) {
@@ -665,13 +745,26 @@ public class AWSIotMqttManager {
 
                 signer = new AWSIotWebSocketUrlSigner("iotdata");
 
-                final String endpoint = String.format("%s.iot.%s.%s:443", accountEndpointPrefix, region.getName(),
-                        region.getDomain());
+                String endpointWithHttpPort;
+
+                if (endpoint != null) {
+                    endpointWithHttpPort = String.format("%s:443", endpoint);
+                } else if (accountEndpointPrefix != null) {
+                    endpointWithHttpPort = String
+                            .format("%s.iot.%s.%s:443", accountEndpointPrefix, region.getName(),
+                                    region.getDomain());
+                } else {
+                    throw new IllegalStateException("No valid endpoint information is available. " +
+                        "Please pass in a valid endpoint in AWSIotMqttManager.");
+                }
+
                 isWebSocketClient = true;
-                LOGGER.debug("MQTT broker: " + endpoint);
+                LOGGER.debug("MQTT broker: " + endpointWithHttpPort);
+
                 try {
-                    final String mqttWebSocketURL = signer.getSignedUrl(endpoint, clientCredentialsProvider.getCredentials(),
-                            System.currentTimeMillis());
+                    final String mqttWebSocketURL = signer.getSignedUrl(endpointWithHttpPort, 
+                        clientCredentialsProvider.getCredentials(),
+                        System.currentTimeMillis());
 
                     final MqttConnectOptions options = new MqttConnectOptions();
 
@@ -686,13 +779,18 @@ public class AWSIotMqttManager {
                     }
 
                     if (mqttClient == null) {
-                        mqttClient = new MqttAsyncClient("wss://" + endpoint, mqttClientId,
+                        mqttClient = new MqttAsyncClient("wss://" + endpointWithHttpPort, mqttClientId,
                                 new MemoryPersistence());
                     }
-                    mqttConnect(options, statusCallback);
+
+                    mqttConnect(options);
 
                 } catch (final MqttException e) {
-                    throw new AmazonClientException("An error occurred in the MQTT client.", e);
+                    connectionState = MqttManagerConnectionState.Disconnected;
+                    userConnectionCallback(new AmazonClientException("An error occurred in the MQTT client.", e));
+                } catch (final Exception e) {
+                    connectionState = MqttManagerConnectionState.Disconnected;
+                    userConnectionCallback(e);
                 }
             }
         }, "Mqtt Connect Thread").start();
@@ -702,17 +800,19 @@ public class AWSIotMqttManager {
      * Connect to the MQTT service.
      *
      * @param options        MQTT connect options containing a TLS socket factory for authentication.
-     * @param statusCallback callback for status updates on connection.
      */
-    private void mqttConnect(MqttConnectOptions options,
-            final AWSIotMqttClientStatusCallback statusCallback) {
+    private void mqttConnect(MqttConnectOptions options) {
         LOGGER.debug("ready to do mqtt connect");
 
-        // AWS IoT does not currently support persistent sessions
-        options.setCleanSession(true);
-        // when cleanSession is added, this should mirror cleanSession
-        needResubscribe = true;
+        options.setCleanSession(cleanSession);
         options.setKeepAliveInterval(userKeepAlive);
+
+        if (isMetricsEnabled()) {
+            options.setUserName("?SDK=Android&Version=" + SDK_VERSION);
+        }
+        LOGGER.info("metrics collection is " + 
+            (isMetricsEnabled() ? "enabled" : "disabled") + 
+            ", username: " + options.getUserName());
 
         topicListeners.clear();
         mqttMessageQueue.clear();
@@ -734,9 +834,6 @@ public class AWSIotMqttManager {
 
                     lastConnackTime = getSystemTimeMs();
 
-                    if (needResubscribe) {
-                        resubscribeToTopics();
-                    }
                     if (mqttMessageQueue.size() > 0) {
                         publishMessagesFromQueue();
                     }
@@ -746,7 +843,7 @@ public class AWSIotMqttManager {
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable e) {
-                    LOGGER.warn("onFailure: connection failed.");
+                    LOGGER.warn("onFailure: connection failed.", e);
                     // Testing shows following reason codes:
                     // REASON_CODE_CLIENT_EXCEPTION = network unavailable / host unresolved
                     // REASON_CODE_CLIENT_EXCEPTION = deactivated certificate
@@ -756,7 +853,7 @@ public class AWSIotMqttManager {
 
                     if (!userDisconnect && autoReconnect) {
                         connectionState = MqttManagerConnectionState.Reconnecting;
-                        userConnectionCallback();
+                        userConnectionCallback(e);
                         scheduleReconnect();
                     } else {
                         connectionState = MqttManagerConnectionState.Disconnected;
@@ -779,6 +876,9 @@ public class AWSIotMqttManager {
                     userConnectionCallback(e);
                     break;
             }
+        } catch (final Exception exception) {
+            connectionState = MqttManagerConnectionState.Disconnected;
+            userConnectionCallback(exception);
         }
     }
 
@@ -790,6 +890,7 @@ public class AWSIotMqttManager {
     public boolean disconnect() {
         userDisconnect = true;
         reset();
+        topicListeners.clear();
         connectionState = MqttManagerConnectionState.Disconnected;
         userConnectionCallback();
         return true;
@@ -816,15 +917,15 @@ public class AWSIotMqttManager {
      * Attempts to reconnect.  If unsuccessful schedules a reconnect attempt.
      */
     void reconnectToSession() {
+        String endpointWithHttpPort;
+
         // status will be ConnectionLost if user calls disconnect() during reconnect logic
         if (null != mqttClient && connectionState != MqttManagerConnectionState.Disconnected) {
             LOGGER.info("attempting to reconnect to mqtt broker");
 
             final MqttConnectOptions options = new MqttConnectOptions();
 
-            options.setCleanSession(true);
-            // when cleanSession is added, this should mirror cleanSession
-            needResubscribe = true;
+            options.setCleanSession(cleanSession);
             options.setKeepAliveInterval(userKeepAlive);
 
             if (mqttLWT != null) {
@@ -835,25 +936,41 @@ public class AWSIotMqttManager {
             if (isWebSocketClient) {
                 signer = new AWSIotWebSocketUrlSigner("iotdata");
 
-                final String endpoint = String
-                        .format("%s.iot.%s.%s:443", accountEndpointPrefix, region.getName(),
-                                region.getDomain());
+                if (endpoint != null) {
+                    endpointWithHttpPort = String.format("%s:443", endpoint);
+                } else if (accountEndpointPrefix != null) {
+                    endpointWithHttpPort = String
+                            .format("%s.iot.%s.%s:443", accountEndpointPrefix, region.getName(),
+                                    region.getDomain());
+                } else {
+                    throw new IllegalStateException("No valid endpoint information is available. " +
+                        "Please pass in a valid endpoint in AWSIotMqttManager.");
+                }
 
-                final String mqttWebSocketURL = signer
-                        .getSignedUrl(endpoint, clientCredentialsProvider.getCredentials(),
-                                System.currentTimeMillis());
-                LOGGER.debug("Reconnect to mqtt broker: " + endpoint + " mqttWebSocketURL: " + mqttWebSocketURL);
-                // Specify the URL through the server URI array.  This is checked
-                // at connect time and allows us to specify a new URL (with new
-                // SigV4 parameters) for each connect.
-                options.setServerURIs(new String[]{mqttWebSocketURL});
-
+                try {
+                    final String mqttWebSocketURL = signer
+                            .getSignedUrl(endpointWithHttpPort, clientCredentialsProvider.getCredentials(),
+                                    System.currentTimeMillis());
+                    LOGGER.debug("Reconnect to mqtt broker: " + endpoint + " mqttWebSocketURL: " + mqttWebSocketURL);
+                    // Specify the URL through the server URI array.  This is checked
+                    // at connect time and allows us to specify a new URL (with new
+                    // SigV4 parameters) for each connect.
+                    options.setServerURIs(new String[]{mqttWebSocketURL});
+                } catch (AmazonClientException e) {
+                    LOGGER.error("Failed to get credentials. AmazonClientException: ", e);
+                    //TODO: revisit how to handle exception thrown by getCredentials() properly.
+                    if (scheduleReconnect()) {
+                        connectionState = MqttManagerConnectionState.Reconnecting;
+                    } else {
+                        connectionState = MqttManagerConnectionState.Disconnected;
+                    }
+                    userConnectionCallback(e);
+                }
             } else {
                 options.setSocketFactory(clientSocketFactory);
             }
 
             setupCallbackForMqttClient();
-
             try {
                 ++autoReconnectsAttempted;
                 LOGGER.debug("mqtt reconnecting attempt " + autoReconnectsAttempted);
@@ -877,13 +994,13 @@ public class AWSIotMqttManager {
 
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable e) {
-                        LOGGER.warn("Reconnect failed ");
+                        LOGGER.warn("Reconnect failed ", e);
                         if (scheduleReconnect()) {
                             connectionState = MqttManagerConnectionState.Reconnecting;
-                            userConnectionCallback();
+                            userConnectionCallback(e);
                         } else {
                             connectionState = MqttManagerConnectionState.Disconnected;
-                            userConnectionCallback();
+                            userConnectionCallback(e);
                         }
                     }
                 });
@@ -891,7 +1008,7 @@ public class AWSIotMqttManager {
                 LOGGER.error("Exception during reconnect, exception: ", e);
                 if (scheduleReconnect()) {
                     connectionState = MqttManagerConnectionState.Reconnecting;
-                    userConnectionCallback();
+                    userConnectionCallback(e);
                 } else {
                     connectionState = MqttManagerConnectionState.Disconnected;
                     userConnectionCallback(e);
@@ -923,6 +1040,7 @@ public class AWSIotMqttManager {
                     if (mqttClient != null && !mqttClient.isConnected()) {
                         reconnectToSession();
                     }
+                    ht.quit();
                 }
             }, MILLIS_IN_ONE_SECOND * currentReconnectRetryTime);
             currentReconnectRetryTime = Math.min(currentReconnectRetryTime * 2, maxReconnectRetryTime);
@@ -997,8 +1115,7 @@ public class AWSIotMqttManager {
      * Resubscribe to previously subscribed topics on reconnecting.
      */
     void resubscribeToTopics() {
-        needResubscribe = false;
-
+        LOGGER.info("Auto-resubscribe is enabled. Resubscribing to previous topics.");
         for (final AWSIotMqttTopic topic : topicListeners.values()) {
             if (mqttClient != null) {
                 try {
@@ -1106,35 +1223,24 @@ public class AWSIotMqttManager {
                 try {
                     mqttClient.publish(topic, data, qos.asInt(), false, publishMessageUserData, null);
                 } catch (final MqttException e) {
-                    if (callback != null) {
-                        userPublishCallback(callback,
-                                AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
-                                userData);
-                    } else {
-                        // throw an exception on publish error if the user did not set a callback
-                        throw new AmazonClientException("Client error while publishing.", e);
-                    }
+                    notifyPublishResult(callback, AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
+                            userData, new AmazonClientException("Client error while publishing.", e));
                 }
             } else {
                 // if the queue has messages we're making the assumption that offline queueing is enabled
-                if (!putMessageInQueue(data, topic, qos, publishMessageUserData)) {
-                    // queue is full (and set to hold onto the oldest messages)
-                    userPublishCallback(callback,
-                            AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
-                            userData);
-                }
+                putMessageInQueueAndNotify(data, topic, qos, publishMessageUserData);
             }
         } else if (connectionState == MqttManagerConnectionState.Reconnecting) {
             if (offlinePublishQueueEnabled) {
-                if (!putMessageInQueue(data, topic, qos, publishMessageUserData)) {
-                    // queue is full (and set to hold onto the oldest messages)
-                    userPublishCallback(callback,
-                            AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
-                            userData);
-                }
+                putMessageInQueueAndNotify(data, topic, qos, publishMessageUserData);
+            } else {
+                notifyPublishResult(callback, AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
+                        userData,
+                        new AmazonClientException("Client error while publishing : Offline publish queue is not enabled and client is not connected"));
             }
         } else {
-            throw new AmazonClientException("Client is disconnected or not yet connected.");
+            notifyPublishResult(callback, AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
+                    userData, new AmazonClientException("Client is disconnected or not yet connected."));
         }
     }
 
@@ -1151,22 +1257,23 @@ public class AWSIotMqttManager {
      * @param qos   The quality of service requested for this message.
      * @param publishMessageUserData The user supplied data for this message including a
      *                               callback and context.
-     * @return True if message is enqueued, false if queue is full and queue is set to skip on full.
      */
-    boolean putMessageInQueue(byte[] data, String topic, AWSIotMqttQos qos,
-            PublishMessageUserData publishMessageUserData) {
+    void putMessageInQueueAndNotify(byte[] data, String topic, AWSIotMqttQos qos,
+                                    PublishMessageUserData publishMessageUserData) {
         final AWSIotMqttQueueMessage message = new AWSIotMqttQueueMessage(topic, data, qos, publishMessageUserData);
 
         if (mqttMessageQueue.size() >= offlinePublishQueueBound) {
             if (fullQueueKeepsOldest) {
-                return false;
+                notifyPublishResult(publishMessageUserData.getUserCallback(), AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
+                        publishMessageUserData.getUserData(),
+                        new AmazonClientException("Failed to publish the message. Queue is full and set to hold onto the oldest messages."));
+                return;
             } else {
                 mqttMessageQueue.remove(0);
             }
         }
 
         mqttMessageQueue.add(message);
-        return true;
     }
 
     /**
@@ -1174,9 +1281,10 @@ public class AWSIotMqttManager {
      * Called to handle publishing messages accumulated in the message queue when the client was unable to publish.
      */
     void publishMessagesFromQueue() {
-        if (connectionState == MqttManagerConnectionState.Connected && mqttMessageQueue != null
-                && !mqttMessageQueue.isEmpty()) {
-            final AWSIotMqttQueueMessage message = mqttMessageQueue.remove(0);
+        if (connectionState == MqttManagerConnectionState.Connected &&
+            mqttMessageQueue != null &&
+            !mqttMessageQueue.isEmpty()) {
+            final AWSIotMqttQueueMessage message = mqttMessageQueue.poll();
             if (message != null) {
                 try {
                     if (message.getUserData() != null && message.getUserData().getUserCallback() != null) {
@@ -1197,9 +1305,10 @@ public class AWSIotMqttManager {
                     // such that publishing this message would never succeed.  It is safer to
                     // remove the message from the queue and notify failure than to block
                     // the queue indefinitely.
-                    userPublishCallback(message.getUserData().getUserCallback(),
+                    notifyPublishResult(message.getUserData().getUserCallback(),
                             AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Fail,
-                            message.getUserData().getUserData());
+                            message.getUserData().getUserData(),
+                            new AmazonClientException("Client error while publishing.", e));
                 }
             }
 
@@ -1229,19 +1338,20 @@ public class AWSIotMqttManager {
             public void connectionLost(Throwable cause) {
                 LOGGER.warn("connection is Lost");
                 if (!userDisconnect && autoReconnect) {
-                    connectionState = MqttManagerConnectionState.Reconnecting;
-                    userConnectionCallback();
-
                     // If we have been connected longer than the connectionStabilityTime then
                     // restart the reconnect logic from minimum value before scheduling reconnect.
                     if ((lastConnackTime + (connectionStabilityTime * MILLIS_IN_ONE_SECOND)) < getSystemTimeMs()) {
                         resetReconnect();
                     }
-                    scheduleReconnect();
+                    if (scheduleReconnect()) {
+                        connectionState = MqttManagerConnectionState.Reconnecting;
+                    } else {
+                        connectionState = MqttManagerConnectionState.Disconnected;
+                    }
                 } else {
                     connectionState = MqttManagerConnectionState.Disconnected;
-                    userConnectionCallback(cause);
                 }
+                userConnectionCallback(cause);
             }
 
             @Override
@@ -1268,9 +1378,9 @@ public class AWSIotMqttManager {
                     final Object o = token.getUserContext();
                     if (o instanceof PublishMessageUserData) {
                         final PublishMessageUserData pmud = (PublishMessageUserData) o;
-                        userPublishCallback(pmud.getUserCallback(),
+                        notifyPublishResult(pmud.getUserCallback(),
                                 AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus.Success,
-                                pmud.getUserData());
+                                pmud.getUserData(), null);
                     }
                 }
             }
@@ -1326,15 +1436,21 @@ public class AWSIotMqttManager {
 
     /**
      * Convenience wrapper method to notify user if they have specified a callback.
+     * If callback is not specified, it throws an exception.
      * @param cb - callback to be invoked.
      * @param status - message status to pass in the callback.
      * @param userData User defined data to be passed to the user in the callback.
+     * @param e a Throwable that may have caused publish failure or null for success
      */
-    void userPublishCallback(AWSIotMqttMessageDeliveryCallback cb,
-            AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus status,
-            Object userData) {
+    void notifyPublishResult(AWSIotMqttMessageDeliveryCallback cb,
+                             AWSIotMqttMessageDeliveryCallback.MessageDeliveryStatus status,
+                             Object userData, RuntimeException e) {
         if (cb != null) {
             cb.statusChanged(status, userData);
+        } else {
+            if (e != null) {
+                throw e;
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/AutoScaling/latest/DeveloperGuide/AutoScalingBehavior.InstanceTermination.html#instance-protection"
- * >Instance Protection</a> in the <i>Auto Scaling Developer Guide</i>.
+ * "http://docs.aws.amazon.com/autoscaling/ec2/userguide/as-instance-termination.html#instance-protection"
+ * >Instance Protection</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.
  * </p>
  */
 public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implements Serializable {
@@ -39,7 +39,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -51,8 +51,8 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      */
     private Boolean protectedFromScaleIn;
@@ -133,7 +133,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -142,7 +142,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
      * <br/>
      *
      * @return <p>
-     *         The name of the group.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -151,7 +151,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -160,7 +160,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -169,7 +169,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -181,7 +181,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -193,13 +193,13 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      *
      * @return <p>
      *         Indicates whether the instance is protected from termination by
-     *         Auto Scaling when scaling in.
+     *         Amazon EC2 Auto Scaling when scaling in.
      *         </p>
      */
     public Boolean isProtectedFromScaleIn() {
@@ -208,13 +208,13 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      *
      * @return <p>
      *         Indicates whether the instance is protected from termination by
-     *         Auto Scaling when scaling in.
+     *         Amazon EC2 Auto Scaling when scaling in.
      *         </p>
      */
     public Boolean getProtectedFromScaleIn() {
@@ -223,13 +223,13 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      *
      * @param protectedFromScaleIn <p>
      *            Indicates whether the instance is protected from termination
-     *            by Auto Scaling when scaling in.
+     *            by Amazon EC2 Auto Scaling when scaling in.
      *            </p>
      */
     public void setProtectedFromScaleIn(Boolean protectedFromScaleIn) {
@@ -238,8 +238,8 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -247,7 +247,7 @@ public class SetInstanceProtectionRequest extends AmazonWebServiceRequest implem
      *
      * @param protectedFromScaleIn <p>
      *            Indicates whether the instance is protected from termination
-     *            by Auto Scaling when scaling in.
+     *            by Amazon EC2 Auto Scaling when scaling in.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

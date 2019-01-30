@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,12 +51,9 @@ import static com.amazonaws.mobileconnectors.pinpoint.internal.core.util.Precond
  * Client to manage updating the endpoint profile
  */
 public class TargetingClient {
-    private static final String USER_AGENT =
-            PinpointManager.class.getName() + "/"
-                    + VersionInfoUtils.getVersion();
+    private static final String USER_AGENT = PinpointManager.class.getName() + "/" + VersionInfoUtils.getVersion();
 
-    private static final Log log =
-            LogFactory.getLog(TargetingClient.class);
+    private static final Log log = LogFactory.getLog(TargetingClient.class);
     private static final int MAX_EVENT_OPERATIONS = 1000;
     private static final String CUSTOM_ATTRIBUTES_KEY = "ENDPOINT_PROFILE_CUSTOM_ATTRIBUTES";
     private static final String CUSTOM_METRICS_KEY = "ENDPOINT_PROFILE_CUSTOM_METRICS";
@@ -66,8 +64,6 @@ public class TargetingClient {
     private final ExecutorService endpointRunnableQueue;
     private final EndpointProfile endpointProfile;
 
-    //For testing
-
     /**
      * Initializes a targetingClient used for testing only
      *
@@ -75,7 +71,7 @@ public class TargetingClient {
      * @param executor A thread pool executor
      */
     public TargetingClient(final PinpointContext context,
-                                  ThreadPoolExecutor executor) {
+                           ExecutorService executor) {
         checkNotNull(context, "A valid pinpointContext must be provided");
         this.endpointRunnableQueue = executor;
         this.context = context;
@@ -90,9 +86,8 @@ public class TargetingClient {
      * @param context The {@link PinpointContext}
      */
     public TargetingClient(final PinpointContext context) {
-        this(context, new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
-                                                    new LinkedBlockingQueue<Runnable>(MAX_EVENT_OPERATIONS),
-                                                    new ThreadPoolExecutor.DiscardPolicy()));
+        this(context, new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(MAX_EVENT_OPERATIONS),
+                new ThreadPoolExecutor.DiscardPolicy()));
     }
 
     /**
@@ -104,16 +99,13 @@ public class TargetingClient {
     public EndpointProfile currentEndpoint() {
         // Add global  attributes.
         if (!this.globalAttributes.isEmpty()) {
-            for (final Map.Entry<String, java.util.List<String>> pair : globalAttributes
-                                                                                .entrySet()) {
-                this.endpointProfile
-                        .addAttribute(pair.getKey(), pair.getValue());
+            for (final Map.Entry<String, java.util.List<String>> pair : globalAttributes.entrySet()) {
+                this.endpointProfile.addAttribute(pair.getKey(), pair.getValue());
             }
         }
 
         if (!this.globalMetrics.isEmpty()) {
-            for (final Map.Entry<String, Double> pair : globalMetrics
-                                                                .entrySet()) {
+            for (final Map.Entry<String, Double> pair : globalMetrics.entrySet()) {
                 this.endpointProfile.addMetric(pair.getKey(), pair.getValue());
             }
         }
@@ -138,15 +130,13 @@ public class TargetingClient {
     public void updateEndpointProfile(EndpointProfile endpointProfile) {
         // Add global  attributes.
         if (!this.globalAttributes.isEmpty()) {
-            for (final Map.Entry<String, java.util.List<String>> pair : globalAttributes
-                                                                                .entrySet()) {
+            for (final Map.Entry<String, List<String>> pair : globalAttributes.entrySet()) {
                 endpointProfile.addAttribute(pair.getKey(), pair.getValue());
             }
         }
 
         if (!this.globalMetrics.isEmpty()) {
-            for (final Map.Entry<String, Double> pair : globalMetrics
-                                                                .entrySet()) {
+            for (final Map.Entry<String, Double> pair : globalMetrics.entrySet()) {
                 endpointProfile.addMetric(pair.getKey(), pair.getValue());
             }
         }
@@ -155,105 +145,62 @@ public class TargetingClient {
 
     @SuppressWarnings("checkstyle:hiddenfield")
     private void executeUpdate(EndpointProfile endpointProfile) {
+        if (endpointProfile == null) {
+            log.error("EndpointProfile is null, failed to update profile.");
+            return;
+        }
+
         final EndpointDemographic demographic = new EndpointDemographic()
-                                                        .withAppVersion(endpointProfile
-                                                                                .getDemographic()
-                                                                                .getAppVersion())
-                                                        .withLocale(endpointProfile
-                                                                            .getDemographic()
-                                                                            .getLocale()
-                                                                            .getISO3Country())
-                                                        .withTimezone(endpointProfile
-                                                                              .getDemographic()
-                                                                              .getTimezone())
-                                                        .withMake(endpointProfile
-                                                                          .getDemographic()
-                                                                          .getMake())
-                                                        .withModel(endpointProfile
-                                                                           .getDemographic()
-                                                                           .getModel())
-                                                        .withPlatform(endpointProfile
-                                                                              .getDemographic()
-                                                                              .getPlatform())
-                                                        .withPlatformVersion(endpointProfile
-                                                                                     .getDemographic()
-                                                                                     .getPlatformVersion());
+                .withAppVersion(endpointProfile.getDemographic().getAppVersion())
+                .withLocale(endpointProfile.getDemographic().getLocale().toString())
+                .withTimezone(endpointProfile.getDemographic().getTimezone())
+                .withMake(endpointProfile.getDemographic().getMake())
+                .withModel(endpointProfile.getDemographic().getModel())
+                .withPlatform(endpointProfile.getDemographic().getPlatform())
+                .withPlatformVersion(endpointProfile.getDemographic().getPlatformVersion());
 
         final EndpointLocation location = new EndpointLocation()
-                                                  .withLatitude(endpointProfile
-                                                                        .getLocation()
-                                                                        .getLatitude())
-                                                  .withLongitude(endpointProfile
-                                                                         .getLocation()
-                                                                         .getLongitude())
-                                                  .withPostalCode(endpointProfile
-                                                                          .getLocation()
-                                                                          .getPostalCode())
-                                                  .withCity(endpointProfile
-                                                                    .getLocation()
-                                                                    .getCity())
-                                                  .withRegion(endpointProfile
-                                                                      .getLocation()
-                                                                      .getRegion())
-                                                  .withCountry(endpointProfile
-                                                                       .getLocation()
-                                                                       .getCountry());
+                .withLatitude(endpointProfile.getLocation().getLatitude())
+                .withLongitude(endpointProfile.getLocation().getLongitude())
+                .withPostalCode(endpointProfile.getLocation().getPostalCode())
+                .withCity(endpointProfile.getLocation().getCity())
+                .withRegion(endpointProfile.getLocation().getRegion())
+                .withCountry(endpointProfile.getLocation().getCountry());
 
-        final EndpointUser user = new EndpointUser();
-        user.setUserId(endpointProfile.getUser().getUserId());
+        final EndpointUser user;
+        if (endpointProfile.getUser().getUserId() == null) {
+            user = null;
+        } else {
+            user = new EndpointUser();
+            user.setUserId(endpointProfile.getUser().getUserId());
+        }
 
-        final EndpointRequest endpointRequest = new EndpointRequest().
-                                                                             withChannelType(endpointProfile
-                                                                                                     .getChannelType())
-                                                        .
-                                                                withAddress(endpointProfile
-                                                                                    .getAddress())
-                                                        .
-                                                                withLocation(location)
-                                                        .
-                                                                withDemographic(demographic)
-                                                        .
-                                                                withEffectiveDate(DateUtils
-                                                                                          .formatISO8601Date(new Date(endpointProfile
-                                                                                                                              .getEffectiveDate())))
-                                                        .
-                                                                withOptOut(endpointProfile
-                                                                                   .getOptOut())
-                                                        .
-                                                                withAttributes(endpointProfile
-                                                                                       .getAllAttributes())
-                                                        .
-                                                                withMetrics(endpointProfile
-                                                                                    .getAllMetrics())
-                                                        .
-                                                                withUser(user);
-        final UpdateEndpointRequest updateEndpointRequest = new UpdateEndpointRequest()
-                                                                    .
-                                                                            withApplicationId(endpointProfile
-                                                                                                      .getApplicationId())
-                                                                    .
-                                                                            withEndpointId(endpointProfile
-                                                                                                   .getEndpointId())
-                                                                    .
-                                                                            withEndpointRequest(endpointRequest);
+        final EndpointRequest endpointRequest = new EndpointRequest().withChannelType(endpointProfile.getChannelType())
+                .withAddress(endpointProfile.getAddress())
+                .withLocation(location)
+                .withDemographic(demographic)
+                .withEffectiveDate(DateUtils.formatISO8601Date(
+                        new Date(endpointProfile.getEffectiveDate())))
+                .withOptOut(endpointProfile.getOptOut())
+                .withAttributes(endpointProfile.getAllAttributes())
+                .withMetrics(endpointProfile.getAllMetrics())
+                .withUser(user);
+        final UpdateEndpointRequest updateEndpointRequest = new UpdateEndpointRequest().withApplicationId(
+                endpointProfile.getApplicationId()).withEndpointId(endpointProfile.getEndpointId()).withEndpointRequest(endpointRequest);
 
-        updateEndpointRequest.getRequestClientOptions()
-                .appendUserAgent(USER_AGENT);
+        updateEndpointRequest.getRequestClientOptions().appendUserAgent(USER_AGENT);
 
         endpointRunnableQueue.execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     log.info("Updating EndpointProfile.");
-                    context.getPinpointServiceClient()
-                            .updateEndpoint(updateEndpointRequest);
+                    context.getPinpointServiceClient().updateEndpoint(updateEndpointRequest);
                     log.info("EndpointProfile updated successfully.");
                 } catch (final AmazonServiceException e) {
-                    log.error("AmazonServiceException occurred during endpoint update:",
-                                     e);
+                    log.error("AmazonServiceException occurred during endpoint update:", e);
                 } catch (final AmazonClientException e) {
-                    log.info("AmazonClientException occurred during endpoint update:",
-                                    e);
+                    log.info("AmazonClientException occurred during endpoint update:", e);
                 }
             }
         });
@@ -262,15 +209,12 @@ public class TargetingClient {
     private void saveAttributes() {
         final JSONObject jsonObject = new JSONObject(globalAttributes);
         final String jsonString = jsonObject.toString();
-        this.context.getSystem().getPreferences()
-                .putString(CUSTOM_ATTRIBUTES_KEY, jsonString);
+        this.context.getSystem().getPreferences().putString(CUSTOM_ATTRIBUTES_KEY, jsonString);
     }
 
-    private Map<String, java.util.List<String>> loadAttributes() {
-        final Map<String, java.util.List<String>> outputMap = new ConcurrentHashMap<String, java.util.List<String>>();
-        final String jsonString = this.context.getSystem().getPreferences()
-                                          .getString(CUSTOM_ATTRIBUTES_KEY,
-                                                            null);
+    private Map<String, List<String>> loadAttributes() {
+        final Map<String, List<String>> outputMap = new ConcurrentHashMap<String, List<String>>();
+        final String jsonString = this.context.getSystem().getPreferences().getString(CUSTOM_ATTRIBUTES_KEY, null);
         if (StringUtils.isBlank(jsonString)) {
             return outputMap;
         }
@@ -295,14 +239,12 @@ public class TargetingClient {
     private void saveMetrics() {
         final JSONObject jsonObject = new JSONObject(globalMetrics);
         final String jsonString = jsonObject.toString();
-        this.context.getSystem().getPreferences()
-                .putString(CUSTOM_METRICS_KEY, jsonString);
+        this.context.getSystem().getPreferences().putString(CUSTOM_METRICS_KEY, jsonString);
     }
 
     private Map<String, Double> loadMetrics() {
         final Map<String, Double> outputMap = new ConcurrentHashMap<String, Double>();
-        final String jsonString = this.context.getSystem().getPreferences()
-                                          .getString(CUSTOM_METRICS_KEY, null);
+        final String jsonString = this.context.getSystem().getPreferences().getString(CUSTOM_METRICS_KEY, null);
         if (StringUtils.isBlank(jsonString)) {
             return outputMap;
         }
@@ -327,8 +269,7 @@ public class TargetingClient {
      * @param attributeName   the name of the  attribute to add
      * @param attributeValues the value of the  attribute
      */
-    public void addAttribute(final String attributeName,
-                                    final java.util.List<String> attributeValues) {
+    public void addAttribute(final String attributeName, final List<String> attributeValues) {
         if (attributeName == null) {
             log.debug("Null attribute name provided to addGlobalAttribute.");
             return;

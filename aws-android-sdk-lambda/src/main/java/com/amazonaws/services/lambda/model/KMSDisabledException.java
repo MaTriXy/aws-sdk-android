@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import com.amazonaws.AmazonServiceException;
 /**
  * <p>
  * Lambda was unable to decrypt the environment variables because the KMS key
- * used is disabled. Please check the Lambda function's KMS key settings.
+ * used is disabled. Check the Lambda function's KMS key settings.
  * </p>
  */
 public class KMSDisabledException extends AmazonServiceException {

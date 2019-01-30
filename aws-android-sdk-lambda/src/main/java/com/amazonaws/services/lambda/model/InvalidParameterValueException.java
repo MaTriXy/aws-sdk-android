@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,7 +29,9 @@ public class InvalidParameterValueException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;
 
     /**
-     * <p/>
+     * <p>
+     * The exception type.
+     * </p>
      */
     private String type;
 
@@ -44,18 +46,26 @@ public class InvalidParameterValueException extends AmazonServiceException {
     }
 
     /**
-     * <p/>
+     * <p>
+     * The exception type.
+     * </p>
      *
-     * @return <p/>
+     * @return <p>
+     *         The exception type.
+     *         </p>
      */
     public String getType() {
         return type;
     }
 
     /**
-     * <p/>
+     * <p>
+     * The exception type.
+     * </p>
      *
-     * @param type <p/>
+     * @param type <p>
+     *            The exception type.
+     *            </p>
      */
     public void setType(String type) {
         this.type = type;

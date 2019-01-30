@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,6 +43,20 @@ public class DescribeThingResult implements Serializable {
 
     /**
      * <p>
+     * The ID of the thing to describe.
+     * </p>
+     */
+    private String thingId;
+
+    /**
+     * <p>
+     * The ARN of the thing to describe.
+     * </p>
+     */
+    private String thingArn;
+
+    /**
+     * <p>
      * The thing type name.
      * </p>
      * <p>
@@ -73,6 +87,17 @@ public class DescribeThingResult implements Serializable {
      * </note>
      */
     private Long version;
+
+    /**
+     * <p>
+     * The name of the billing group the thing belongs to.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     */
+    private String billingGroupName;
 
     /**
      * <p>
@@ -173,6 +198,96 @@ public class DescribeThingResult implements Serializable {
      */
     public DescribeThingResult withThingName(String thingName) {
         this.thingName = thingName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ID of the thing to describe.
+     * </p>
+     *
+     * @return <p>
+     *         The ID of the thing to describe.
+     *         </p>
+     */
+    public String getThingId() {
+        return thingId;
+    }
+
+    /**
+     * <p>
+     * The ID of the thing to describe.
+     * </p>
+     *
+     * @param thingId <p>
+     *            The ID of the thing to describe.
+     *            </p>
+     */
+    public void setThingId(String thingId) {
+        this.thingId = thingId;
+    }
+
+    /**
+     * <p>
+     * The ID of the thing to describe.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param thingId <p>
+     *            The ID of the thing to describe.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeThingResult withThingId(String thingId) {
+        this.thingId = thingId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ARN of the thing to describe.
+     * </p>
+     *
+     * @return <p>
+     *         The ARN of the thing to describe.
+     *         </p>
+     */
+    public String getThingArn() {
+        return thingArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the thing to describe.
+     * </p>
+     *
+     * @param thingArn <p>
+     *            The ARN of the thing to describe.
+     *            </p>
+     */
+    public void setThingArn(String thingArn) {
+        this.thingArn = thingArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the thing to describe.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param thingArn <p>
+     *            The ARN of the thing to describe.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeThingResult withThingArn(String thingArn) {
+        this.thingArn = thingArn;
         return this;
     }
 
@@ -409,6 +524,63 @@ public class DescribeThingResult implements Serializable {
     }
 
     /**
+     * <p>
+     * The name of the billing group the thing belongs to.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     *
+     * @return <p>
+     *         The name of the billing group the thing belongs to.
+     *         </p>
+     */
+    public String getBillingGroupName() {
+        return billingGroupName;
+    }
+
+    /**
+     * <p>
+     * The name of the billing group the thing belongs to.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     *
+     * @param billingGroupName <p>
+     *            The name of the billing group the thing belongs to.
+     *            </p>
+     */
+    public void setBillingGroupName(String billingGroupName) {
+        this.billingGroupName = billingGroupName;
+    }
+
+    /**
+     * <p>
+     * The name of the billing group the thing belongs to.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     *
+     * @param billingGroupName <p>
+     *            The name of the billing group the thing belongs to.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeThingResult withBillingGroupName(String billingGroupName) {
+        this.billingGroupName = billingGroupName;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -423,12 +595,18 @@ public class DescribeThingResult implements Serializable {
             sb.append("defaultClientId: " + getDefaultClientId() + ",");
         if (getThingName() != null)
             sb.append("thingName: " + getThingName() + ",");
+        if (getThingId() != null)
+            sb.append("thingId: " + getThingId() + ",");
+        if (getThingArn() != null)
+            sb.append("thingArn: " + getThingArn() + ",");
         if (getThingTypeName() != null)
             sb.append("thingTypeName: " + getThingTypeName() + ",");
         if (getAttributes() != null)
             sb.append("attributes: " + getAttributes() + ",");
         if (getVersion() != null)
-            sb.append("version: " + getVersion());
+            sb.append("version: " + getVersion() + ",");
+        if (getBillingGroupName() != null)
+            sb.append("billingGroupName: " + getBillingGroupName());
         sb.append("}");
         return sb.toString();
     }
@@ -441,10 +619,14 @@ public class DescribeThingResult implements Serializable {
         hashCode = prime * hashCode
                 + ((getDefaultClientId() == null) ? 0 : getDefaultClientId().hashCode());
         hashCode = prime * hashCode + ((getThingName() == null) ? 0 : getThingName().hashCode());
+        hashCode = prime * hashCode + ((getThingId() == null) ? 0 : getThingId().hashCode());
+        hashCode = prime * hashCode + ((getThingArn() == null) ? 0 : getThingArn().hashCode());
         hashCode = prime * hashCode
                 + ((getThingTypeName() == null) ? 0 : getThingTypeName().hashCode());
         hashCode = prime * hashCode + ((getAttributes() == null) ? 0 : getAttributes().hashCode());
         hashCode = prime * hashCode + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        hashCode = prime * hashCode
+                + ((getBillingGroupName() == null) ? 0 : getBillingGroupName().hashCode());
         return hashCode;
     }
 
@@ -469,6 +651,14 @@ public class DescribeThingResult implements Serializable {
         if (other.getThingName() != null
                 && other.getThingName().equals(this.getThingName()) == false)
             return false;
+        if (other.getThingId() == null ^ this.getThingId() == null)
+            return false;
+        if (other.getThingId() != null && other.getThingId().equals(this.getThingId()) == false)
+            return false;
+        if (other.getThingArn() == null ^ this.getThingArn() == null)
+            return false;
+        if (other.getThingArn() != null && other.getThingArn().equals(this.getThingArn()) == false)
+            return false;
         if (other.getThingTypeName() == null ^ this.getThingTypeName() == null)
             return false;
         if (other.getThingTypeName() != null
@@ -482,6 +672,11 @@ public class DescribeThingResult implements Serializable {
         if (other.getVersion() == null ^ this.getVersion() == null)
             return false;
         if (other.getVersion() != null && other.getVersion().equals(this.getVersion()) == false)
+            return false;
+        if (other.getBillingGroupName() == null ^ this.getBillingGroupName() == null)
+            return false;
+        if (other.getBillingGroupName() != null
+                && other.getBillingGroupName().equals(this.getBillingGroupName()) == false)
             return false;
         return true;
     }

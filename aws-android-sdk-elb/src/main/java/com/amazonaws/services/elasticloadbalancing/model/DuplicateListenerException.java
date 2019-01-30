@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * A listener already exists for the specified <code>LoadBalancerName</code> and
- * <code>LoadBalancerPort</code>, but with a different <code>InstancePort</code>, <code>Protocol</code>, or <code>SSLCertificateId</code>.
+ * A listener already exists for the specified load balancer name and port, but
+ * with a different instance port, protocol, or SSL certificate.
  * </p>
  */
 public class DuplicateListenerException extends AmazonServiceException {

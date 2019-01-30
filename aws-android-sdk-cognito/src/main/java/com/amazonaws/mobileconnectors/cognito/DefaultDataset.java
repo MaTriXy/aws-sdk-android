@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2017 Amazon.com, 
+ * Copyright 2013-2018 Amazon.com, 
  * Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Amazon Software License (the "License"). 
@@ -46,13 +46,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 /**
  * Default implementation of {@link Dataset}. It uses {@link CognitoSyncStorage}
  * as remote storage and {@link SQLiteLocalStorage} as local storage.
+ * @deprecated The Amazon Cognito Sync SDK for Android is deprecated as of release 2.9.0. Please use the AWS AppSync SDK for Android along with AWS AppSync service instead.
  */
+@Deprecated
 class DefaultDataset implements Dataset {
 
     private static final Log LOGGER = LogFactory.getLog(DefaultDataset.class);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public enum LanguageCode {
 
+    CmnCN("cmn-CN"),
     CyGB("cy-GB"),
     DaDK("da-DK"),
     DeDE("de-DE"),
@@ -32,12 +33,15 @@ public enum LanguageCode {
     EnIN("en-IN"),
     EnUS("en-US"),
     EsES("es-ES"),
+    EsMX("es-MX"),
     EsUS("es-US"),
     FrCA("fr-CA"),
     FrFR("fr-FR"),
     IsIS("is-IS"),
     ItIT("it-IT"),
     JaJP("ja-JP"),
+    HiIN("hi-IN"),
+    KoKR("ko-KR"),
     NbNO("nb-NO"),
     NlNL("nl-NL"),
     PlPL("pl-PL"),
@@ -62,6 +66,7 @@ public enum LanguageCode {
     private static final Map<String, LanguageCode> enumMap;
     static {
         enumMap = new HashMap<String, LanguageCode>();
+        enumMap.put("cmn-CN", CmnCN);
         enumMap.put("cy-GB", CyGB);
         enumMap.put("da-DK", DaDK);
         enumMap.put("de-DE", DeDE);
@@ -71,12 +76,15 @@ public enum LanguageCode {
         enumMap.put("en-IN", EnIN);
         enumMap.put("en-US", EnUS);
         enumMap.put("es-ES", EsES);
+        enumMap.put("es-MX", EsMX);
         enumMap.put("es-US", EsUS);
         enumMap.put("fr-CA", FrCA);
         enumMap.put("fr-FR", FrFR);
         enumMap.put("is-IS", IsIS);
         enumMap.put("it-IT", ItIT);
         enumMap.put("ja-JP", JaJP);
+        enumMap.put("hi-IN", HiIN);
+        enumMap.put("ko-KR", KoKR);
         enumMap.put("nb-NO", NbNO);
         enumMap.put("nl-NL", NlNL);
         enumMap.put("pl-PL", PlPL);

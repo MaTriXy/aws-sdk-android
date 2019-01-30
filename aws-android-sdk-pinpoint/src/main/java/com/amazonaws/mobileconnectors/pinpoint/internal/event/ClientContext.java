@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ package com.amazonaws.mobileconnectors.pinpoint.internal.event;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.util.Preconditions;
@@ -73,8 +73,7 @@ public class ClientContext {
         envMap.put("networkType", networkType);
 
         // services section
-        final Map<String, JSONObject> servicesMap =
-                new HashMap<String, JSONObject>();
+        final Map<String, JSONObject> servicesMap = new HashMap<String, JSONObject>();
         final Map<String, String> analyticsServiceMap = new HashMap<String, String>();
         analyticsServiceMap.put(APP_ID_KEY, appId);
 

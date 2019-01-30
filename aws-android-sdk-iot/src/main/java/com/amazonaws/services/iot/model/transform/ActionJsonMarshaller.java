@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -85,6 +85,26 @@ class ActionJsonMarshaller {
             ElasticsearchAction elasticsearch = action.getElasticsearch();
             jsonWriter.name("elasticsearch");
             ElasticsearchActionJsonMarshaller.getInstance().marshall(elasticsearch, jsonWriter);
+        }
+        if (action.getSalesforce() != null) {
+            SalesforceAction salesforce = action.getSalesforce();
+            jsonWriter.name("salesforce");
+            SalesforceActionJsonMarshaller.getInstance().marshall(salesforce, jsonWriter);
+        }
+        if (action.getIotAnalytics() != null) {
+            IotAnalyticsAction iotAnalytics = action.getIotAnalytics();
+            jsonWriter.name("iotAnalytics");
+            IotAnalyticsActionJsonMarshaller.getInstance().marshall(iotAnalytics, jsonWriter);
+        }
+        if (action.getIotEvents() != null) {
+            IotEventsAction iotEvents = action.getIotEvents();
+            jsonWriter.name("iotEvents");
+            IotEventsActionJsonMarshaller.getInstance().marshall(iotEvents, jsonWriter);
+        }
+        if (action.getStepFunctions() != null) {
+            StepFunctionsAction stepFunctions = action.getStepFunctions();
+            jsonWriter.name("stepFunctions");
+            StepFunctionsActionJsonMarshaller.getInstance().marshall(stepFunctions, jsonWriter);
         }
         jsonWriter.endObject();
     }

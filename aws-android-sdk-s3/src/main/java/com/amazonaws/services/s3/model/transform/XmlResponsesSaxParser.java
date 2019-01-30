@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Portions copyright 2006-2009 James Murty. Please see LICENSE.txt
  * for applicable license terms and NOTICE.txt for applicable notices.
@@ -113,8 +113,8 @@ import com.amazonaws.services.s3.model.metrics.MetricsTagPredicate;
 import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -729,8 +729,8 @@ public class XmlResponsesSaxParser {
                             shouldSDKDecodeResponse));
 
                 } else if (name.equals("EncodingType")) {
-                    objectListing.setEncodingType(
-                            shouldSDKDecodeResponse ? null : checkForEmptyString(getText()));
+                    // Parsing the EncodingType from the response
+                    objectListing.setEncodingType(checkForEmptyString(getText()));
 
                 } else if (name.equals("IsTruncated")) {
                     final String isTruncatedStr =
@@ -1452,8 +1452,7 @@ public class XmlResponsesSaxParser {
                             shouldSDKDecodeResponse));
 
                 } else if (name.equals("EncodingType")) {
-                    versionListing.setEncodingType(
-                            shouldSDKDecodeResponse ? null : checkForEmptyString(getText()));
+                    versionListing.setEncodingType(checkForEmptyString(getText()));
 
                 } else if (name.equals("NextKeyMarker")) {
                     versionListing.setNextKeyMarker(decodeIfSpecified

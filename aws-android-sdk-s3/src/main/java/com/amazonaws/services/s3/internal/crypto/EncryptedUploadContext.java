@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2011-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,11 @@ import javax.crypto.SecretKey;
  * the envelope encryption key used to encrypt each individual part in a
  * multipart upload, and the next initialization vector (IV) for the next part
  * to encrypt.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public class EncryptedUploadContext extends MultipartUploadContext {
     private final SecretKey envelopeEncryptionKey;
     private byte[] firstIV;

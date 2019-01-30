@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -105,6 +105,13 @@ public class PutScalingPolicyRequestMarshaller implements
             prefix = "EstimatedInstanceWarmup";
             Integer estimatedInstanceWarmup = putScalingPolicyRequest.getEstimatedInstanceWarmup();
             request.addParameter(prefix, StringUtils.fromInteger(estimatedInstanceWarmup));
+        }
+        if (putScalingPolicyRequest.getTargetTrackingConfiguration() != null) {
+            prefix = "TargetTrackingConfiguration";
+            TargetTrackingConfiguration targetTrackingConfiguration = putScalingPolicyRequest
+                    .getTargetTrackingConfiguration();
+            TargetTrackingConfigurationStaxMarshaller.getInstance().marshall(
+                    targetTrackingConfiguration, request, prefix + ".");
         }
 
         return request;

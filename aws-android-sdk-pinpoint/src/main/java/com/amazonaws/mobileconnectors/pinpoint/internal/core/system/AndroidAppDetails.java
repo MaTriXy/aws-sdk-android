@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.internal.core.system;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -44,13 +44,10 @@ public class AndroidAppDetails {
         try {
             PackageManager packageManager = this.applicationContext
                                                     .getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(
-                                                                           this.applicationContext
-                                                                                   .getPackageName(),
-                                                                           0);
+            PackageInfo packageInfo = packageManager
+                                                .getPackageInfo(this.applicationContext.getPackageName(), 0);
             ApplicationInfo appInfo = packageManager
-                                              .getApplicationInfo(packageInfo.packageName,
-                                                                         0);
+                                              .getApplicationInfo(packageInfo.packageName, 0);
 
             appTitle = (String) packageManager.getApplicationLabel(appInfo);
             packageName = packageInfo.packageName;
@@ -67,9 +64,11 @@ public class AndroidAppDetails {
         }
     }
 
-    public AndroidAppDetails(String packageName, String versionCode,
-                                    String versionName,
-                                    String appTitle, String appId) {
+    public AndroidAppDetails(String packageName, 
+                             String versionCode,
+                             String versionName,
+                             String appTitle,
+                             String appId) {
         this.packageName = packageName;
         this.versionCode = versionCode;
         this.versionName = versionName;

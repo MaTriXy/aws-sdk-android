@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 Amazon Technologies, Inc.
+ * Copyright 2012-2019 Amazon Technologies, Inc.
  *
  * Portions copyright 2006-2009 James Murty. Please see LICENSE.txt
  * for applicable license terms and NOTICE.txt for applicable notices.
@@ -18,7 +18,7 @@
 
 package com.amazonaws.util;
 
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.LogFactory;
 
 import java.io.BufferedInputStream;
 import java.io.File;

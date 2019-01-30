@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,6 +30,11 @@ import com.amazonaws.AmazonServiceException;
 public class InvalidS3ConfigurationException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * <p>
+     * Indicated that the S3 Bucket was not found.
+     * </p>
+     */
     private String bucket;
 
     /**
@@ -43,18 +48,26 @@ public class InvalidS3ConfigurationException extends AmazonServiceException {
     }
 
     /**
-     * Returns the value of the bucket property for this object.
+     * <p>
+     * Indicated that the S3 Bucket was not found.
+     * </p>
      *
-     * @return The value of the bucket property for this object.
+     * @return <p>
+     *         Indicated that the S3 Bucket was not found.
+     *         </p>
      */
     public String getBucket() {
         return bucket;
     }
 
     /**
-     * Sets the value of bucket
+     * <p>
+     * Indicated that the S3 Bucket was not found.
+     * </p>
      *
-     * @param bucket The new value for the bucket property for this object.
+     * @param bucket <p>
+     *            Indicated that the S3 Bucket was not found.
+     *            </p>
      */
     public void setBucket(String bucket) {
         this.bucket = bucket;

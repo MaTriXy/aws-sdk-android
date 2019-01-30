@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,15 +33,23 @@ import com.amazonaws.AmazonWebServiceRequest;
  * will import key material. This CMK's <code>Origin</code> must be
  * <code>EXTERNAL</code>. You must also specify the wrapping algorithm and type
  * of wrapping key (public key) that you will use to encrypt the key material.
+ * You cannot perform this operation on a CMK in a different AWS account.
  * </p>
  * <p>
  * This operation returns a public key and an import token. Use the public key
  * to encrypt the key material. Store the import token to send with a subsequent
  * <a>ImportKeyMaterial</a> request. The public key and import token from the
- * same response must be used together. These items are valid for 24 hours,
- * after which they cannot be used for a subsequent <a>ImportKeyMaterial</a>
- * request. To retrieve new ones, send another
- * <code>GetParametersForImport</code> request.
+ * same response must be used together. These items are valid for 24 hours. When
+ * they expire, they cannot be used for a subsequent <a>ImportKeyMaterial</a>
+ * request. To get new ones, send another <code>GetParametersForImport</code>
+ * request.
+ * </p>
+ * <p>
+ * The result of this operation varies with the key state of the CMK. For
+ * details, see <a
+ * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
+ * Management Service Developer Guide</i>.
  * </p>
  */
 public class GetParametersForImportRequest extends AmazonWebServiceRequest implements Serializable {
@@ -51,13 +59,15 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
      * </p>
      * <p>
-     * A valid identifier is the unique key ID or the Amazon Resource Name (ARN)
-     * of the CMK. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
@@ -68,8 +78,12 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      */
     private String keyId;
 
@@ -105,13 +119,15 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
      * </p>
      * <p>
-     * A valid identifier is the unique key ID or the Amazon Resource Name (ARN)
-     * of the CMK. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
@@ -122,8 +138,12 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
      *         The identifier of the CMK into which you will import key
@@ -131,13 +151,15 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      *         <code>EXTERNAL</code>.
      *         </p>
      *         <p>
-     *         A valid identifier is the unique key ID or the Amazon Resource
-     *         Name (ARN) of the CMK. Examples:
+     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         </p>
+     *         <p>
+     *         For example:
      *         </p>
      *         <ul>
      *         <li>
      *         <p>
-     *         Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *         Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *         </p>
      *         </li>
      *         <li>
@@ -147,6 +169,10 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      *         </p>
      *         </li>
      *         </ul>
+     *         <p>
+     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     *         <a>DescribeKey</a>.
+     *         </p>
      */
     public String getKeyId() {
         return keyId;
@@ -158,13 +184,15 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
      * </p>
      * <p>
-     * A valid identifier is the unique key ID or the Amazon Resource Name (ARN)
-     * of the CMK. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
@@ -175,8 +203,12 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
      *            The identifier of the CMK into which you will import key
@@ -184,14 +216,16 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      *            <code>EXTERNAL</code>.
      *            </p>
      *            <p>
-     *            A valid identifier is the unique key ID or the Amazon Resource
-     *            Name (ARN) of the CMK. Examples:
+     *            Specify the key ID or the Amazon Resource Name (ARN) of the
+     *            CMK.
+     *            </p>
+     *            <p>
+     *            For example:
      *            </p>
      *            <ul>
      *            <li>
      *            <p>
-     *            Unique key ID:
-     *            <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            <li>
@@ -201,6 +235,10 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
+     *            or <a>DescribeKey</a>.
+     *            </p>
      */
     public void setKeyId(String keyId) {
         this.keyId = keyId;
@@ -212,13 +250,15 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
      * </p>
      * <p>
-     * A valid identifier is the unique key ID or the Amazon Resource Name (ARN)
-     * of the CMK. Examples:
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Unique key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
@@ -229,11 +269,15 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
      *            The identifier of the CMK into which you will import key
@@ -241,14 +285,16 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      *            <code>EXTERNAL</code>.
      *            </p>
      *            <p>
-     *            A valid identifier is the unique key ID or the Amazon Resource
-     *            Name (ARN) of the CMK. Examples:
+     *            Specify the key ID or the Amazon Resource Name (ARN) of the
+     *            CMK.
+     *            </p>
+     *            <p>
+     *            For example:
      *            </p>
      *            <ul>
      *            <li>
      *            <p>
-     *            Unique key ID:
-     *            <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            <li>
@@ -258,6 +304,10 @@ public class GetParametersForImportRequest extends AmazonWebServiceRequest imple
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
+     *            or <a>DescribeKey</a>.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */

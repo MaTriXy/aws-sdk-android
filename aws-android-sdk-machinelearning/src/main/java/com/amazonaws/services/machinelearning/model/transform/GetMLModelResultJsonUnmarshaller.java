@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -82,6 +82,15 @@ public class GetMLModelResultJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("Message")) {
                 getMLModelResult.setMessage(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("ComputeTime")) {
+                getMLModelResult.setComputeTime(LongJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("FinishedAt")) {
+                getMLModelResult.setFinishedAt(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("StartedAt")) {
+                getMLModelResult.setStartedAt(DateJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else if (name.equals("Recipe")) {
                 getMLModelResult.setRecipe(StringJsonUnmarshaller.getInstance()

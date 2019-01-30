@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,20 @@ public class UpdateAutoScalingGroupRequestMarshaller implements
             String launchConfigurationName = updateAutoScalingGroupRequest
                     .getLaunchConfigurationName();
             request.addParameter(prefix, StringUtils.fromString(launchConfigurationName));
+        }
+        if (updateAutoScalingGroupRequest.getLaunchTemplate() != null) {
+            prefix = "LaunchTemplate";
+            LaunchTemplateSpecification launchTemplate = updateAutoScalingGroupRequest
+                    .getLaunchTemplate();
+            LaunchTemplateSpecificationStaxMarshaller.getInstance().marshall(launchTemplate,
+                    request, prefix + ".");
+        }
+        if (updateAutoScalingGroupRequest.getMixedInstancesPolicy() != null) {
+            prefix = "MixedInstancesPolicy";
+            MixedInstancesPolicy mixedInstancesPolicy = updateAutoScalingGroupRequest
+                    .getMixedInstancesPolicy();
+            MixedInstancesPolicyStaxMarshaller.getInstance().marshall(mixedInstancesPolicy,
+                    request, prefix + ".");
         }
         if (updateAutoScalingGroupRequest.getMinSize() != null) {
             prefix = "MinSize";
@@ -128,6 +142,11 @@ public class UpdateAutoScalingGroupRequestMarshaller implements
             Boolean newInstancesProtectedFromScaleIn = updateAutoScalingGroupRequest
                     .getNewInstancesProtectedFromScaleIn();
             request.addParameter(prefix, StringUtils.fromBoolean(newInstancesProtectedFromScaleIn));
+        }
+        if (updateAutoScalingGroupRequest.getServiceLinkedRoleARN() != null) {
+            prefix = "ServiceLinkedRoleARN";
+            String serviceLinkedRoleARN = updateAutoScalingGroupRequest.getServiceLinkedRoleARN();
+            request.addParameter(prefix, StringUtils.fromString(serviceLinkedRoleARN));
         }
 
         return request;

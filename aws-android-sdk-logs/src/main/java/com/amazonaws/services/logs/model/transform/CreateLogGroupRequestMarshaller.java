@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,6 +63,11 @@ public class CreateLogGroupRequestMarshaller implements
                 String logGroupName = createLogGroupRequest.getLogGroupName();
                 jsonWriter.name("logGroupName");
                 jsonWriter.value(logGroupName);
+            }
+            if (createLogGroupRequest.getKmsKeyId() != null) {
+                String kmsKeyId = createLogGroupRequest.getKmsKeyId();
+                jsonWriter.name("kmsKeyId");
+                jsonWriter.value(kmsKeyId);
             }
             if (createLogGroupRequest.getTags() != null) {
                 java.util.Map<String, String> tags = createLogGroupRequest.getTags();

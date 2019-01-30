@@ -7,14 +7,16 @@ import com.amazonaws.mobileconnectors.cognito.exceptions.DataStorageException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 /**
  * A default implementation of SyncCallback. All methods but onConflict are
  * stubbed with logging. onConflict resolves conflicts using a 'last writer
  * wins' strategy
+ * @deprecated The Amazon Cognito Sync SDK for Android is deprecated as of release 2.9.0. Please use the AWS AppSync SDK for Android along with AWS AppSync service instead.
  */
+@Deprecated
 public class DefaultSyncCallback implements SyncCallback {
 
     private static final Log LOGGER = LogFactory.getLog(DefaultSyncCallback.class);

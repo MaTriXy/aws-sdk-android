@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,11 +21,12 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Verifies an email address. This action causes a confirmation email message to
- * be sent to the specified address.
+ * Adds an email address to the list of identities for your Amazon SES account
+ * in the current AWS region and attempts to verify it. As a result of executing
+ * this operation, a verification email is sent to the specified address.
  * </p>
  * <p>
- * This action is throttled at one request per second.
+ * You can execute this operation no more than once per second.
  * </p>
  */
 public class VerifyEmailIdentityRequest extends AmazonWebServiceRequest implements Serializable {

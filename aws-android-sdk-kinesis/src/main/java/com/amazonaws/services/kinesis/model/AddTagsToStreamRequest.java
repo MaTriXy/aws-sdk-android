@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,13 +21,17 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Adds or updates tags for the specified Amazon Kinesis stream. Each stream can
+ * Adds or updates tags for the specified Kinesis data stream. Each stream can
  * have up to 10 tags.
  * </p>
  * <p>
  * If tags have already been assigned to the stream,
  * <code>AddTagsToStream</code> overwrites any existing tags that correspond to
  * the specified tag keys.
+ * </p>
+ * <p>
+ * <a>AddTagsToStream</a> has a limit of five transactions per second per
+ * account.
  * </p>
  */
 public class AddTagsToStreamRequest extends AmazonWebServiceRequest implements Serializable {

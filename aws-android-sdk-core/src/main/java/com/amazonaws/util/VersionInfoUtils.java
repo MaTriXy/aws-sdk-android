@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 package com.amazonaws.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 /**
  * Utility class for accessing AWS SDK versioning information.
@@ -26,7 +26,7 @@ public class VersionInfoUtils {
     private static final int DEFAULT_STRING_LENGTH = 128;
 
     /** SDK version info */
-    private static volatile String version = "2.4.4";
+    private static volatile String version = "2.11.0";
                                                                 // changed build
                                                                 // logic
 

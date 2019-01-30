@@ -29,6 +29,7 @@ public abstract class ClientConstants {
     public static final String AUTH_RESPONSE_TYPE_CODE = "code";
     public static final String CHROME_PACKAGE = "com.android.chrome";
     public static final int CHROME_NAVIGATION_CANCELLED = 6;
+    public static final String DOMAIN_PATH_OAUTH2 = "oauth2";
     public static final String DOMAIN_PATH_SIGN_IN = "authorize";
     public static final String DOMAIN_PATH_SIGN_OUT = "logout";
     public static final String DOMAIN_PATH_TOKEN_ENDPOINT = "token";
@@ -43,6 +44,9 @@ public abstract class ClientConstants {
     public static final String DOMAIN_QUERY_PARAM_RESPONSE_TYPE = "response_type";
     public static final String DOMAIN_QUERY_PARAM_SCOPES = "scope";
     public static final String DOMAIN_QUERY_PARAM_STATE = "state";
+    public static final String DOMAIN_QUERY_PARAM_USERCONTEXTDATA = "userContextData";
+    public static final String DOMAIN_QUERY_PARAM_IDENTITY_PROVIDER = "identity_provider";
+    public static final String DOMAIN_QUERY_PARAM_IDP_IDENTIFIER = "idp_identifier";
     public static final String DOMAIN_SCHEME = "https";
     public static final String SESSION_TYPE_JWT = "JWT";
     public static final String TOKEN_AUTH_TYPE_CODE = "code";

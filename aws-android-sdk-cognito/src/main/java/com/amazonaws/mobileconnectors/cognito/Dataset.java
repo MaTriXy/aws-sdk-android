@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2017 Amazon.com, 
+ * Copyright 2013-2018 Amazon.com, 
  * Inc. or its affiliates. All Rights Reserved.
  * 
  * Licensed under the Amazon Software License (the "License"). 
@@ -42,7 +42,9 @@ import java.util.Map;
  * // push changes to remote if needed
  * dataset.synchronizesyncCallback);
  * </pre>
+ * @deprecated The Amazon Cognito Sync SDK for Android is deprecated as of release 2.9.0. Please use the AWS AppSync SDK for Android along with AWS AppSync service instead.
  */
+@Deprecated
 public interface Dataset {
 
     /**

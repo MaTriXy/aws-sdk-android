@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,13 @@ public final class S3HttpUtils {
         ENCODED_CHARACTERS_PATTERN = Pattern.compile(pattern.toString());
     }
 
+    /**
+     * Encode the URL String or part of URL
+     *
+     * @param value Entire or part of the URL
+     * @param path True if value is a path
+     * @return The encoded string
+     */
     public static String urlEncode(final String value, final boolean path) {
         if (value == null) {
             return "";
@@ -75,7 +82,7 @@ public final class S3HttpUtils {
                 String replacement = matcher.group(0);
 
                 if ("+".equals(replacement)) {
-                    replacement = "%20";
+                    replacement = " ";
                 } else if ("*".equals(replacement)) {
                     replacement = "%2A";
                 } else if ("%7E".equals(replacement)) {

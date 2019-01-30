@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,10 +17,20 @@ package com.amazonaws.services.pinpoint.model;
 
 import java.io.Serializable;
 
+/**
+ * Segment import definition.
+ */
 public class SegmentImportResource implements Serializable {
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * The number of channel types in the imported segment.
+     */
+    private java.util.Map<String, Integer> channelCounts;
+
+    /**
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      */
     private String externalId;
 
@@ -40,8 +50,7 @@ public class SegmentImportResource implements Serializable {
     private String roleArn;
 
     /**
-     * A URL that points to the Amazon S3 location from which the endpoints for
-     * this segment were imported.
+     * The URL of the S3 bucket that the segment was imported from.
      */
     private String s3Url;
 
@@ -52,36 +61,118 @@ public class SegmentImportResource implements Serializable {
     private Integer size;
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * The number of channel types in the imported segment.
      *
-     * @return A unique, custom ID assigned to the IAM role that restricts who
-     *         can assume the role.
+     * @return The number of channel types in the imported segment.
+     */
+    public java.util.Map<String, Integer> getChannelCounts() {
+        return channelCounts;
+    }
+
+    /**
+     * The number of channel types in the imported segment.
+     *
+     * @param channelCounts The number of channel types in the imported segment.
+     */
+    public void setChannelCounts(java.util.Map<String, Integer> channelCounts) {
+        this.channelCounts = channelCounts;
+    }
+
+    /**
+     * The number of channel types in the imported segment.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param channelCounts The number of channel types in the imported segment.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public SegmentImportResource withChannelCounts(java.util.Map<String, Integer> channelCounts) {
+        this.channelCounts = channelCounts;
+        return this;
+    }
+
+    /**
+     * The number of channel types in the imported segment.
+     * <p>
+     * The method adds a new key-value pair into ChannelCounts parameter, and
+     * returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param key The key of the entry to be added into ChannelCounts.
+     * @param value The corresponding value of the entry to be added into
+     *            ChannelCounts.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public SegmentImportResource addChannelCountsEntry(String key, Integer value) {
+        if (null == this.channelCounts) {
+            this.channelCounts = new java.util.HashMap<String, Integer>();
+        }
+        if (this.channelCounts.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString()
+                    + ") are provided.");
+        this.channelCounts.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into ChannelCounts.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     */
+    public SegmentImportResource clearChannelCountsEntries() {
+        this.channelCounts = null;
+        return this;
+    }
+
+    /**
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
+     *
+     * @return (Deprecated) Your AWS account ID, which you assigned to the
+     *         ExternalID key in an IAM trust policy. Used by Amazon Pinpoint to
+     *         assume an IAM role. This requirement is removed, and external IDs
+     *         are not recommended for IAM roles assumed by Amazon Pinpoint.
      */
     public String getExternalId() {
         return externalId;
     }
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      *
-     * @param externalId A unique, custom ID assigned to the IAM role that
-     *            restricts who can assume the role.
+     * @param externalId (Deprecated) Your AWS account ID, which you assigned to
+     *            the ExternalID key in an IAM trust policy. Used by Amazon
+     *            Pinpoint to assume an IAM role. This requirement is removed,
+     *            and external IDs are not recommended for IAM roles assumed by
+     *            Amazon Pinpoint.
      */
     public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param externalId A unique, custom ID assigned to the IAM role that
-     *            restricts who can assume the role.
+     * @param externalId (Deprecated) Your AWS account ID, which you assigned to
+     *            the ExternalID key in an IAM trust policy. Used by Amazon
+     *            Pinpoint to assume an IAM role. This requirement is removed,
+     *            and external IDs are not recommended for IAM roles assumed by
+     *            Amazon Pinpoint.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -217,36 +308,30 @@ public class SegmentImportResource implements Serializable {
     }
 
     /**
-     * A URL that points to the Amazon S3 location from which the endpoints for
-     * this segment were imported.
+     * The URL of the S3 bucket that the segment was imported from.
      *
-     * @return A URL that points to the Amazon S3 location from which the
-     *         endpoints for this segment were imported.
+     * @return The URL of the S3 bucket that the segment was imported from.
      */
     public String getS3Url() {
         return s3Url;
     }
 
     /**
-     * A URL that points to the Amazon S3 location from which the endpoints for
-     * this segment were imported.
+     * The URL of the S3 bucket that the segment was imported from.
      *
-     * @param s3Url A URL that points to the Amazon S3 location from which the
-     *            endpoints for this segment were imported.
+     * @param s3Url The URL of the S3 bucket that the segment was imported from.
      */
     public void setS3Url(String s3Url) {
         this.s3Url = s3Url;
     }
 
     /**
-     * A URL that points to the Amazon S3 location from which the endpoints for
-     * this segment were imported.
+     * The URL of the S3 bucket that the segment was imported from.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param s3Url A URL that points to the Amazon S3 location from which the
-     *            endpoints for this segment were imported.
+     * @param s3Url The URL of the S3 bucket that the segment was imported from.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -305,6 +390,8 @@ public class SegmentImportResource implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
+        if (getChannelCounts() != null)
+            sb.append("ChannelCounts: " + getChannelCounts() + ",");
         if (getExternalId() != null)
             sb.append("ExternalId: " + getExternalId() + ",");
         if (getFormat() != null)
@@ -324,6 +411,8 @@ public class SegmentImportResource implements Serializable {
         final int prime = 31;
         int hashCode = 1;
 
+        hashCode = prime * hashCode
+                + ((getChannelCounts() == null) ? 0 : getChannelCounts().hashCode());
         hashCode = prime * hashCode + ((getExternalId() == null) ? 0 : getExternalId().hashCode());
         hashCode = prime * hashCode + ((getFormat() == null) ? 0 : getFormat().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
@@ -343,6 +432,11 @@ public class SegmentImportResource implements Serializable {
             return false;
         SegmentImportResource other = (SegmentImportResource) obj;
 
+        if (other.getChannelCounts() == null ^ this.getChannelCounts() == null)
+            return false;
+        if (other.getChannelCounts() != null
+                && other.getChannelCounts().equals(this.getChannelCounts()) == false)
+            return false;
         if (other.getExternalId() == null ^ this.getExternalId() == null)
             return false;
         if (other.getExternalId() != null

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,79 +21,133 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Retrieves a Boolean value that indicates whether key rotation is enabled for
- * the specified key.
+ * Gets a Boolean value that indicates whether <a href=
+ * "http://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html"
+ * >automatic rotation of the key material</a> is enabled for the specified
+ * customer master key (CMK).
+ * </p>
+ * <p>
+ * The result of this operation varies with the key state of the CMK. For
+ * details, see <a
+ * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
+ * Management Service Developer Guide</i>.
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * Disabled: The key rotation status does not change when you disable a CMK.
+ * However, while the CMK is disabled, AWS KMS does not rotate the backing key.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * Pending deletion: While a CMK is pending deletion, its key rotation status is
+ * <code>false</code> and AWS KMS does not rotate the backing key. If you cancel
+ * the deletion, the original key rotation status is restored.
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * To perform this operation on a CMK in a different AWS account, specify the
+ * key ARN in the value of the <code>KeyId</code> parameter.
  * </p>
  */
 public class GetKeyRotationStatusRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * A unique identifier for the customer master key. This value can be a
-     * globally unique identifier or the fully specified ARN to a key.
+     * A unique identifier for the customer master key (CMK).
+     * </p>
+     * <p>
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Key ARN Example -
-     * arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234
-     * -1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      */
     private String keyId;
 
     /**
      * <p>
-     * A unique identifier for the customer master key. This value can be a
-     * globally unique identifier or the fully specified ARN to a key.
+     * A unique identifier for the customer master key (CMK).
+     * </p>
+     * <p>
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Key ARN Example -
-     * arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234
-     * -1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         A unique identifier for the customer master key. This value can
-     *         be a globally unique identifier or the fully specified ARN to a
-     *         key.
+     *         A unique identifier for the customer master key (CMK).
+     *         </p>
+     *         <p>
+     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         To specify a CMK in a different AWS account, you must use the key
+     *         ARN.
+     *         </p>
+     *         <p>
+     *         For example:
      *         </p>
      *         <ul>
      *         <li>
      *         <p>
-     *         Key ARN Example -
-     *         arn:aws:kms:us-east-1:123456789012:key/12345678-
-     *         1234-1234-1234-123456789012
+     *         Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         Globally Unique Key ID Example -
-     *         12345678-1234-1234-1234-123456789012
+     *         Key ARN:
+     *         <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *         </p>
      *         </li>
      *         </ul>
+     *         <p>
+     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     *         <a>DescribeKey</a>.
+     *         </p>
      */
     public String getKeyId() {
         return keyId;
@@ -101,47 +155,64 @@ public class GetKeyRotationStatusRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A unique identifier for the customer master key. This value can be a
-     * globally unique identifier or the fully specified ARN to a key.
+     * A unique identifier for the customer master key (CMK).
+     * </p>
+     * <p>
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Key ARN Example -
-     * arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234
-     * -1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
      * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key. This value
-     *            can be a globally unique identifier or the fully specified ARN
-     *            to a key.
+     *            A unique identifier for the customer master key (CMK).
+     *            </p>
+     *            <p>
+     *            Specify the key ID or the Amazon Resource Name (ARN) of the
+     *            CMK. To specify a CMK in a different AWS account, you must use
+     *            the key ARN.
+     *            </p>
+     *            <p>
+     *            For example:
      *            </p>
      *            <ul>
      *            <li>
      *            <p>
-     *            Key ARN Example -
-     *            arn:aws:kms:us-east-1:123456789012:key/12345678
-     *            -1234-1234-1234-123456789012
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            Globally Unique Key ID Example -
-     *            12345678-1234-1234-1234-123456789012
+     *            Key ARN:
+     *            <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
+     *            or <a>DescribeKey</a>.
+     *            </p>
      */
     public void setKeyId(String keyId) {
         this.keyId = keyId;
@@ -149,50 +220,67 @@ public class GetKeyRotationStatusRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A unique identifier for the customer master key. This value can be a
-     * globally unique identifier or the fully specified ARN to a key.
+     * A unique identifier for the customer master key (CMK).
+     * </p>
+     * <p>
+     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
+     * specify a CMK in a different AWS account, you must use the key ARN.
+     * </p>
+     * <p>
+     * For example:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * Key ARN Example -
-     * arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234
-     * -1234-123456789012
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * <li>
      * <p>
-     * Globally Unique Key ID Example - 12345678-1234-1234-1234-123456789012
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key. This value
-     *            can be a globally unique identifier or the fully specified ARN
-     *            to a key.
+     *            A unique identifier for the customer master key (CMK).
+     *            </p>
+     *            <p>
+     *            Specify the key ID or the Amazon Resource Name (ARN) of the
+     *            CMK. To specify a CMK in a different AWS account, you must use
+     *            the key ARN.
+     *            </p>
+     *            <p>
+     *            For example:
      *            </p>
      *            <ul>
      *            <li>
      *            <p>
-     *            Key ARN Example -
-     *            arn:aws:kms:us-east-1:123456789012:key/12345678
-     *            -1234-1234-1234-123456789012
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            Globally Unique Key ID Example -
-     *            12345678-1234-1234-1234-123456789012
+     *            Key ARN:
+     *            <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
+     *            or <a>DescribeKey</a>.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */

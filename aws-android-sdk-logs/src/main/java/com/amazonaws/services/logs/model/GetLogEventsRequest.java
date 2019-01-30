@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * By default, this operation returns as many log events as can fit in a
- * response size of 1MB (up to 10,000 log events). If the results include
- * tokens, there are more log events available. You can get additional log
+ * response size of 1MB (up to 10,000 log events). You can get additional log
  * events by specifying one of the tokens in a subsequent call.
  * </p>
  */
@@ -57,8 +56,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The start of the time range, expressed as the number of milliseconds
-     * since Jan 1, 1970 00:00:00 UTC. Events with a timestamp earlier than this
-     * time are not included.
+     * after Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to this
+     * time or later than this time are included. Events with a time stamp
+     * earlier than this time are not included.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -68,9 +68,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The end of the time range, expressed as the number of milliseconds since
-     * Jan 1, 1970 00:00:00 UTC. Events with a timestamp later than this time
-     * are not included.
+     * The end of the time range, expressed as the number of milliseconds after
+     * Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to or later than
+     * this time are not included.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -92,7 +92,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The maximum number of log events returned. If you don't specify a value,
-     * the maximum is as many log events as can fit in a response size of 1MB,
+     * the maximum is as many log events as can fit in a response size of 1 MB,
      * up to 10,000 log events.
      * </p>
      * <p>
@@ -252,8 +252,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The start of the time range, expressed as the number of milliseconds
-     * since Jan 1, 1970 00:00:00 UTC. Events with a timestamp earlier than this
-     * time are not included.
+     * after Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to this
+     * time or later than this time are included. Events with a time stamp
+     * earlier than this time are not included.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -261,8 +262,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      *
      * @return <p>
      *         The start of the time range, expressed as the number of
-     *         milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a
-     *         timestamp earlier than this time are not included.
+     *         milliseconds after Jan 1, 1970 00:00:00 UTC. Events with a time
+     *         stamp equal to this time or later than this time are included.
+     *         Events with a time stamp earlier than this time are not included.
      *         </p>
      */
     public Long getStartTime() {
@@ -272,8 +274,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The start of the time range, expressed as the number of milliseconds
-     * since Jan 1, 1970 00:00:00 UTC. Events with a timestamp earlier than this
-     * time are not included.
+     * after Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to this
+     * time or later than this time are included. Events with a time stamp
+     * earlier than this time are not included.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -281,8 +284,10 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      *
      * @param startTime <p>
      *            The start of the time range, expressed as the number of
-     *            milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a
-     *            timestamp earlier than this time are not included.
+     *            milliseconds after Jan 1, 1970 00:00:00 UTC. Events with a
+     *            time stamp equal to this time or later than this time are
+     *            included. Events with a time stamp earlier than this time are
+     *            not included.
      *            </p>
      */
     public void setStartTime(Long startTime) {
@@ -292,8 +297,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The start of the time range, expressed as the number of milliseconds
-     * since Jan 1, 1970 00:00:00 UTC. Events with a timestamp earlier than this
-     * time are not included.
+     * after Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to this
+     * time or later than this time are included. Events with a time stamp
+     * earlier than this time are not included.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -304,8 +310,10 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      *
      * @param startTime <p>
      *            The start of the time range, expressed as the number of
-     *            milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a
-     *            timestamp earlier than this time are not included.
+     *            milliseconds after Jan 1, 1970 00:00:00 UTC. Events with a
+     *            time stamp equal to this time or later than this time are
+     *            included. Events with a time stamp earlier than this time are
+     *            not included.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -317,9 +325,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The end of the time range, expressed as the number of milliseconds since
-     * Jan 1, 1970 00:00:00 UTC. Events with a timestamp later than this time
-     * are not included.
+     * The end of the time range, expressed as the number of milliseconds after
+     * Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to or later than
+     * this time are not included.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -327,8 +335,8 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      *
      * @return <p>
      *         The end of the time range, expressed as the number of
-     *         milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a
-     *         timestamp later than this time are not included.
+     *         milliseconds after Jan 1, 1970 00:00:00 UTC. Events with a time
+     *         stamp equal to or later than this time are not included.
      *         </p>
      */
     public Long getEndTime() {
@@ -337,9 +345,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The end of the time range, expressed as the number of milliseconds since
-     * Jan 1, 1970 00:00:00 UTC. Events with a timestamp later than this time
-     * are not included.
+     * The end of the time range, expressed as the number of milliseconds after
+     * Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to or later than
+     * this time are not included.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -347,8 +355,8 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      *
      * @param endTime <p>
      *            The end of the time range, expressed as the number of
-     *            milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a
-     *            timestamp later than this time are not included.
+     *            milliseconds after Jan 1, 1970 00:00:00 UTC. Events with a
+     *            time stamp equal to or later than this time are not included.
      *            </p>
      */
     public void setEndTime(Long endTime) {
@@ -357,9 +365,9 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The end of the time range, expressed as the number of milliseconds since
-     * Jan 1, 1970 00:00:00 UTC. Events with a timestamp later than this time
-     * are not included.
+     * The end of the time range, expressed as the number of milliseconds after
+     * Jan 1, 1970 00:00:00 UTC. Events with a time stamp equal to or later than
+     * this time are not included.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -370,8 +378,8 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      *
      * @param endTime <p>
      *            The end of the time range, expressed as the number of
-     *            milliseconds since Jan 1, 1970 00:00:00 UTC. Events with a
-     *            timestamp later than this time are not included.
+     *            milliseconds after Jan 1, 1970 00:00:00 UTC. Events with a
+     *            time stamp equal to or later than this time are not included.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -444,7 +452,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The maximum number of log events returned. If you don't specify a value,
-     * the maximum is as many log events as can fit in a response size of 1MB,
+     * the maximum is as many log events as can fit in a response size of 1 MB,
      * up to 10,000 log events.
      * </p>
      * <p>
@@ -454,7 +462,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      * @return <p>
      *         The maximum number of log events returned. If you don't specify a
      *         value, the maximum is as many log events as can fit in a response
-     *         size of 1MB, up to 10,000 log events.
+     *         size of 1 MB, up to 10,000 log events.
      *         </p>
      */
     public Integer getLimit() {
@@ -464,7 +472,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The maximum number of log events returned. If you don't specify a value,
-     * the maximum is as many log events as can fit in a response size of 1MB,
+     * the maximum is as many log events as can fit in a response size of 1 MB,
      * up to 10,000 log events.
      * </p>
      * <p>
@@ -474,7 +482,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      * @param limit <p>
      *            The maximum number of log events returned. If you don't
      *            specify a value, the maximum is as many log events as can fit
-     *            in a response size of 1MB, up to 10,000 log events.
+     *            in a response size of 1 MB, up to 10,000 log events.
      *            </p>
      */
     public void setLimit(Integer limit) {
@@ -484,7 +492,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
     /**
      * <p>
      * The maximum number of log events returned. If you don't specify a value,
-     * the maximum is as many log events as can fit in a response size of 1MB,
+     * the maximum is as many log events as can fit in a response size of 1 MB,
      * up to 10,000 log events.
      * </p>
      * <p>
@@ -497,7 +505,7 @@ public class GetLogEventsRequest extends AmazonWebServiceRequest implements Seri
      * @param limit <p>
      *            The maximum number of log events returned. If you don't
      *            specify a value, the maximum is as many log events as can fit
-     *            in a response size of 1MB, up to 10,000 log events.
+     *            in a response size of 1 MB, up to 10,000 log events.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

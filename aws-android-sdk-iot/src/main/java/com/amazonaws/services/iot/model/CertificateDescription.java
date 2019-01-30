@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -79,7 +79,8 @@ public class CertificateDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      */
     private String ownedBy;
 
@@ -89,7 +90,8 @@ public class CertificateDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      */
     private String previousOwnedBy;
 
@@ -109,10 +111,34 @@ public class CertificateDescription implements Serializable {
 
     /**
      * <p>
+     * The customer version of the certificate.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     */
+    private Integer customerVersion;
+
+    /**
+     * <p>
      * The transfer data.
      * </p>
      */
     private TransferData transferData;
+
+    /**
+     * <p>
+     * The generation ID of the certificate.
+     * </p>
+     */
+    private String generationId;
+
+    /**
+     * <p>
+     * When the certificate is valid.
+     * </p>
+     */
+    private CertificateValidity validity;
 
     /**
      * <p>
@@ -438,7 +464,8 @@ public class CertificateDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @return <p>
      *         The ID of the AWS account that owns the certificate.
@@ -454,7 +481,8 @@ public class CertificateDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param ownedBy <p>
      *            The ID of the AWS account that owns the certificate.
@@ -473,7 +501,8 @@ public class CertificateDescription implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param ownedBy <p>
      *            The ID of the AWS account that owns the certificate.
@@ -492,7 +521,8 @@ public class CertificateDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @return <p>
      *         The ID of the AWS account of the previous owner of the
@@ -509,7 +539,8 @@ public class CertificateDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param previousOwnedBy <p>
      *            The ID of the AWS account of the previous owner of the
@@ -529,7 +560,8 @@ public class CertificateDescription implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param previousOwnedBy <p>
      *            The ID of the AWS account of the previous owner of the
@@ -635,6 +667,60 @@ public class CertificateDescription implements Serializable {
 
     /**
      * <p>
+     * The customer version of the certificate.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     *
+     * @return <p>
+     *         The customer version of the certificate.
+     *         </p>
+     */
+    public Integer getCustomerVersion() {
+        return customerVersion;
+    }
+
+    /**
+     * <p>
+     * The customer version of the certificate.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     *
+     * @param customerVersion <p>
+     *            The customer version of the certificate.
+     *            </p>
+     */
+    public void setCustomerVersion(Integer customerVersion) {
+        this.customerVersion = customerVersion;
+    }
+
+    /**
+     * <p>
+     * The customer version of the certificate.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     *
+     * @param customerVersion <p>
+     *            The customer version of the certificate.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CertificateDescription withCustomerVersion(Integer customerVersion) {
+        this.customerVersion = customerVersion;
+        return this;
+    }
+
+    /**
+     * <p>
      * The transfer data.
      * </p>
      *
@@ -679,6 +765,96 @@ public class CertificateDescription implements Serializable {
     }
 
     /**
+     * <p>
+     * The generation ID of the certificate.
+     * </p>
+     *
+     * @return <p>
+     *         The generation ID of the certificate.
+     *         </p>
+     */
+    public String getGenerationId() {
+        return generationId;
+    }
+
+    /**
+     * <p>
+     * The generation ID of the certificate.
+     * </p>
+     *
+     * @param generationId <p>
+     *            The generation ID of the certificate.
+     *            </p>
+     */
+    public void setGenerationId(String generationId) {
+        this.generationId = generationId;
+    }
+
+    /**
+     * <p>
+     * The generation ID of the certificate.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param generationId <p>
+     *            The generation ID of the certificate.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CertificateDescription withGenerationId(String generationId) {
+        this.generationId = generationId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * When the certificate is valid.
+     * </p>
+     *
+     * @return <p>
+     *         When the certificate is valid.
+     *         </p>
+     */
+    public CertificateValidity getValidity() {
+        return validity;
+    }
+
+    /**
+     * <p>
+     * When the certificate is valid.
+     * </p>
+     *
+     * @param validity <p>
+     *            When the certificate is valid.
+     *            </p>
+     */
+    public void setValidity(CertificateValidity validity) {
+        this.validity = validity;
+    }
+
+    /**
+     * <p>
+     * When the certificate is valid.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param validity <p>
+     *            When the certificate is valid.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CertificateDescription withValidity(CertificateValidity validity) {
+        this.validity = validity;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -707,8 +883,14 @@ public class CertificateDescription implements Serializable {
             sb.append("creationDate: " + getCreationDate() + ",");
         if (getLastModifiedDate() != null)
             sb.append("lastModifiedDate: " + getLastModifiedDate() + ",");
+        if (getCustomerVersion() != null)
+            sb.append("customerVersion: " + getCustomerVersion() + ",");
         if (getTransferData() != null)
-            sb.append("transferData: " + getTransferData());
+            sb.append("transferData: " + getTransferData() + ",");
+        if (getGenerationId() != null)
+            sb.append("generationId: " + getGenerationId() + ",");
+        if (getValidity() != null)
+            sb.append("validity: " + getValidity());
         sb.append("}");
         return sb.toString();
     }
@@ -735,7 +917,12 @@ public class CertificateDescription implements Serializable {
         hashCode = prime * hashCode
                 + ((getLastModifiedDate() == null) ? 0 : getLastModifiedDate().hashCode());
         hashCode = prime * hashCode
+                + ((getCustomerVersion() == null) ? 0 : getCustomerVersion().hashCode());
+        hashCode = prime * hashCode
                 + ((getTransferData() == null) ? 0 : getTransferData().hashCode());
+        hashCode = prime * hashCode
+                + ((getGenerationId() == null) ? 0 : getGenerationId().hashCode());
+        hashCode = prime * hashCode + ((getValidity() == null) ? 0 : getValidity().hashCode());
         return hashCode;
     }
 
@@ -793,10 +980,24 @@ public class CertificateDescription implements Serializable {
         if (other.getLastModifiedDate() != null
                 && other.getLastModifiedDate().equals(this.getLastModifiedDate()) == false)
             return false;
+        if (other.getCustomerVersion() == null ^ this.getCustomerVersion() == null)
+            return false;
+        if (other.getCustomerVersion() != null
+                && other.getCustomerVersion().equals(this.getCustomerVersion()) == false)
+            return false;
         if (other.getTransferData() == null ^ this.getTransferData() == null)
             return false;
         if (other.getTransferData() != null
                 && other.getTransferData().equals(this.getTransferData()) == false)
+            return false;
+        if (other.getGenerationId() == null ^ this.getGenerationId() == null)
+            return false;
+        if (other.getGenerationId() != null
+                && other.getGenerationId().equals(this.getGenerationId()) == false)
+            return false;
+        if (other.getValidity() == null ^ this.getValidity() == null)
+            return false;
+        if (other.getValidity() != null && other.getValidity().equals(this.getValidity()) == false)
             return false;
         return true;
     }

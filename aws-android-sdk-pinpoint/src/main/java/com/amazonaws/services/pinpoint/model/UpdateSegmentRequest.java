@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,89 +20,49 @@ import java.io.Serializable;
 import com.amazonaws.AmazonWebServiceRequest;
 
 /**
- * Use to update a segment.
+ * Used to update a segment.
  */
 public class UpdateSegmentRequest extends AmazonWebServiceRequest implements Serializable {
     /**
-     * The new value for the accept property for this object.
-     */
-    private String accept;
-
-    /**
-     * The new value for the applicationId property for this object.
+     * The unique ID of your Amazon Pinpoint application.
      */
     private String applicationId;
 
     /**
-     * The new value for the segmentId property for this object.
+     * The unique ID of the segment.
      */
     private String segmentId;
 
     /**
-     * The new value for the writeSegmentRequest property for this object.
+     * Segment definition.
      */
     private WriteSegmentRequest writeSegmentRequest;
 
     /**
-     * Returns the value of the accept property for this object.
+     * The unique ID of your Amazon Pinpoint application.
      *
-     * @return The value of the accept property for this object.
-     */
-    public String getAccept() {
-        return accept;
-    }
-
-    /**
-     * Sets the value of accept
-     *
-     * @param accept The new value for the accept property for this object.
-     */
-    public void setAccept(String accept) {
-        this.accept = accept;
-    }
-
-    /**
-     * Sets the value of the accept property for this object.
-     * <p>
-     * Returns a reference to this object so that method calls can be chained
-     * together.
-     *
-     * @param accept The new value for the accept property for this object.
-     * @return A reference to this updated object so that method calls can be
-     *         chained together.
-     */
-    public UpdateSegmentRequest withAccept(String accept) {
-        this.accept = accept;
-        return this;
-    }
-
-    /**
-     * Returns the value of the applicationId property for this object.
-     *
-     * @return The value of the applicationId property for this object.
+     * @return The unique ID of your Amazon Pinpoint application.
      */
     public String getApplicationId() {
         return applicationId;
     }
 
     /**
-     * Sets the value of applicationId
+     * The unique ID of your Amazon Pinpoint application.
      *
-     * @param applicationId The new value for the applicationId property for
-     *            this object.
+     * @param applicationId The unique ID of your Amazon Pinpoint application.
      */
     public void setApplicationId(String applicationId) {
         this.applicationId = applicationId;
     }
 
     /**
-     * Sets the value of the applicationId property for this object.
+     * The unique ID of your Amazon Pinpoint application.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param applicationId The new value for the applicationId property for
-     *            this object.
+     * @param applicationId The unique ID of your Amazon Pinpoint application.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -112,32 +72,30 @@ public class UpdateSegmentRequest extends AmazonWebServiceRequest implements Ser
     }
 
     /**
-     * Returns the value of the segmentId property for this object.
+     * The unique ID of the segment.
      *
-     * @return The value of the segmentId property for this object.
+     * @return The unique ID of the segment.
      */
     public String getSegmentId() {
         return segmentId;
     }
 
     /**
-     * Sets the value of segmentId
+     * The unique ID of the segment.
      *
-     * @param segmentId The new value for the segmentId property for this
-     *            object.
+     * @param segmentId The unique ID of the segment.
      */
     public void setSegmentId(String segmentId) {
         this.segmentId = segmentId;
     }
 
     /**
-     * Sets the value of the segmentId property for this object.
+     * The unique ID of the segment.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param segmentId The new value for the segmentId property for this
-     *            object.
+     * @param segmentId The unique ID of the segment.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -147,32 +105,30 @@ public class UpdateSegmentRequest extends AmazonWebServiceRequest implements Ser
     }
 
     /**
-     * Returns the value of the writeSegmentRequest property for this object.
+     * Segment definition.
      *
-     * @return The value of the writeSegmentRequest property for this object.
+     * @return Segment definition.
      */
     public WriteSegmentRequest getWriteSegmentRequest() {
         return writeSegmentRequest;
     }
 
     /**
-     * Sets the value of writeSegmentRequest
+     * Segment definition.
      *
-     * @param writeSegmentRequest The new value for the writeSegmentRequest
-     *            property for this object.
+     * @param writeSegmentRequest Segment definition.
      */
     public void setWriteSegmentRequest(WriteSegmentRequest writeSegmentRequest) {
         this.writeSegmentRequest = writeSegmentRequest;
     }
 
     /**
-     * Sets the value of the writeSegmentRequest property for this object.
+     * Segment definition.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param writeSegmentRequest The new value for the writeSegmentRequest
-     *            property for this object.
+     * @param writeSegmentRequest Segment definition.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -192,8 +148,6 @@ public class UpdateSegmentRequest extends AmazonWebServiceRequest implements Ser
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        if (getAccept() != null)
-            sb.append("Accept: " + getAccept() + ",");
         if (getApplicationId() != null)
             sb.append("ApplicationId: " + getApplicationId() + ",");
         if (getSegmentId() != null)
@@ -209,7 +163,6 @@ public class UpdateSegmentRequest extends AmazonWebServiceRequest implements Ser
         final int prime = 31;
         int hashCode = 1;
 
-        hashCode = prime * hashCode + ((getAccept() == null) ? 0 : getAccept().hashCode());
         hashCode = prime * hashCode
                 + ((getApplicationId() == null) ? 0 : getApplicationId().hashCode());
         hashCode = prime * hashCode + ((getSegmentId() == null) ? 0 : getSegmentId().hashCode());
@@ -229,10 +182,6 @@ public class UpdateSegmentRequest extends AmazonWebServiceRequest implements Ser
             return false;
         UpdateSegmentRequest other = (UpdateSegmentRequest) obj;
 
-        if (other.getAccept() == null ^ this.getAccept() == null)
-            return false;
-        if (other.getAccept() != null && other.getAccept().equals(this.getAccept()) == false)
-            return false;
         if (other.getApplicationId() == null ^ this.getApplicationId() == null)
             return false;
         if (other.getApplicationId() != null

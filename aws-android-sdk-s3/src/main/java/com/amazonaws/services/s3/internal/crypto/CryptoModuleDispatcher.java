@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,7 +48,11 @@ import java.io.OutputStream;
 /**
  * A proxy cryptographic module used to dispatch method calls to the appropriate
  * underlying cryptographic module depending on the current configuration.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public class CryptoModuleDispatcher extends S3CryptoModule<MultipartUploadContext> {
     private final CryptoMode defaultCryptoMode;
     /** Encryption only (EO) cryptographic module. */

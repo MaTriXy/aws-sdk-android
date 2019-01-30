@@ -10,8 +10,8 @@ import com.amazonaws.services.lambda.model.LogType;
 import com.amazonaws.util.Base64;
 import com.amazonaws.util.StringUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
@@ -94,7 +94,7 @@ class LambdaInvocationHandler implements InvocationHandler {
         invokeRequest.setLogType(lambdaFunction.logType());
 
         // If the log type is other than 'None', force to be RequestResponse.
-        if (!LogType.None.equals(lambdaFunction.logType())) {
+        if (!LogType.None.toString().equals(lambdaFunction.logType())) {
             invokeRequest.setInvocationType(InvocationType.RequestResponse);
         } else {
             invokeRequest.setInvocationType(lambdaFunction.invocationType());

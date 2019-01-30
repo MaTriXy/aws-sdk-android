@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,9 @@ package com.amazonaws.services.lambda.model;
 import com.amazonaws.AmazonServiceException;
 
 /**
- * <p/>
+ * <p>
+ * Request throughput limit exceeded
+ * </p>
  */
 public class TooManyRequestsException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;
@@ -93,7 +95,9 @@ public class TooManyRequestsException extends AmazonServiceException {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>ConcurrentInvocationLimitExceeded,
-     * FunctionInvocationRateLimitExceeded, CallerRateLimitExceeded
+     * FunctionInvocationRateLimitExceeded,
+     * ReservedFunctionConcurrentInvocationLimitExceeded,
+     * ReservedFunctionInvocationRateLimitExceeded, CallerRateLimitExceeded
      *
      * @return The value of the reason property for this object.
      * @see ThrottleReason
@@ -107,7 +111,9 @@ public class TooManyRequestsException extends AmazonServiceException {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>ConcurrentInvocationLimitExceeded,
-     * FunctionInvocationRateLimitExceeded, CallerRateLimitExceeded
+     * FunctionInvocationRateLimitExceeded,
+     * ReservedFunctionConcurrentInvocationLimitExceeded,
+     * ReservedFunctionInvocationRateLimitExceeded, CallerRateLimitExceeded
      *
      * @param reason The new value for the reason property for this object.
      * @see ThrottleReason

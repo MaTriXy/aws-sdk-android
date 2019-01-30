@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/add-remove-tags.html"
- * >Tag Your Load Balancer</a> in the <i>Elastic Load Balancing Developer
+ * "http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/add-remove-tags.html"
+ * >Tag Your Classic Load Balancer</a> in the <i>Classic Load Balancers
  * Guide</i>.
  * </p>
  */

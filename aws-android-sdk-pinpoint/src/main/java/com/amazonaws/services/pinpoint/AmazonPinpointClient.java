@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import com.amazonaws.services.pinpoint.model.transform.*;
  * Client for accessing AmazonPinpoint. All service calls made using this client
  * are blocking, and will not return until the service call completes.
  * <p>
+ * Amazon Pinpoint
  */
 public class AmazonPinpointClient extends AmazonWebServiceClient implements AmazonPinpoint {
     /** Provider for AWS credentials. */
@@ -280,6 +281,55 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
     }
 
     /**
+     * Creates or updates an app.
+     * 
+     * @param createAppRequest
+     * @return createAppResult The response from the CreateApp service method,
+     *         as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public CreateAppResult createApp(CreateAppRequest createAppRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createAppRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateAppRequest> request = null;
+        Response<CreateAppResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateAppRequestMarshaller().marshall(createAppRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateAppResult, JsonUnmarshallerContext> unmarshaller = new CreateAppResultJsonUnmarshaller();
+            JsonResponseHandler<CreateAppResult> responseHandler = new JsonResponseHandler<CreateAppResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
      * Creates or updates a campaign.
      * 
      * @param createCampaignRequest
@@ -323,6 +373,56 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Creates an export job.
+     * 
+     * @param createExportJobRequest
+     * @return createExportJobResult The response from the CreateExportJob
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public CreateExportJobResult createExportJob(CreateExportJobRequest createExportJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createExportJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateExportJobRequest> request = null;
+        Response<CreateExportJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateExportJobRequestMarshaller().marshall(createExportJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateExportJobResult, JsonUnmarshallerContext> unmarshaller = new CreateExportJobResultJsonUnmarshaller();
+            JsonResponseHandler<CreateExportJobResult> responseHandler = new JsonResponseHandler<CreateExportJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -371,6 +471,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -419,6 +520,56 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an ADM channel.
+     * 
+     * @param deleteAdmChannelRequest
+     * @return deleteAdmChannelResult The response from the DeleteAdmChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteAdmChannelResult deleteAdmChannel(DeleteAdmChannelRequest deleteAdmChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteAdmChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteAdmChannelRequest> request = null;
+        Response<DeleteAdmChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteAdmChannelRequestMarshaller().marshall(deleteAdmChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteAdmChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteAdmChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteAdmChannelResult> responseHandler = new JsonResponseHandler<DeleteAdmChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -469,6 +620,263 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an APNS sandbox channel.
+     * 
+     * @param deleteApnsSandboxChannelRequest
+     * @return deleteApnsSandboxChannelResult The response from the
+     *         DeleteApnsSandboxChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteApnsSandboxChannelResult deleteApnsSandboxChannel(
+            DeleteApnsSandboxChannelRequest deleteApnsSandboxChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteApnsSandboxChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteApnsSandboxChannelRequest> request = null;
+        Response<DeleteApnsSandboxChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteApnsSandboxChannelRequestMarshaller()
+                        .marshall(deleteApnsSandboxChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteApnsSandboxChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteApnsSandboxChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteApnsSandboxChannelResult> responseHandler = new JsonResponseHandler<DeleteApnsSandboxChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an APNS VoIP channel
+     * 
+     * @param deleteApnsVoipChannelRequest
+     * @return deleteApnsVoipChannelResult The response from the
+     *         DeleteApnsVoipChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteApnsVoipChannelResult deleteApnsVoipChannel(
+            DeleteApnsVoipChannelRequest deleteApnsVoipChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteApnsVoipChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteApnsVoipChannelRequest> request = null;
+        Response<DeleteApnsVoipChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteApnsVoipChannelRequestMarshaller()
+                        .marshall(deleteApnsVoipChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteApnsVoipChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteApnsVoipChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteApnsVoipChannelResult> responseHandler = new JsonResponseHandler<DeleteApnsVoipChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an APNS VoIP sandbox channel
+     * 
+     * @param deleteApnsVoipSandboxChannelRequest
+     * @return deleteApnsVoipSandboxChannelResult The response from the
+     *         DeleteApnsVoipSandboxChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteApnsVoipSandboxChannelResult deleteApnsVoipSandboxChannel(
+            DeleteApnsVoipSandboxChannelRequest deleteApnsVoipSandboxChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteApnsVoipSandboxChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteApnsVoipSandboxChannelRequest> request = null;
+        Response<DeleteApnsVoipSandboxChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteApnsVoipSandboxChannelRequestMarshaller()
+                        .marshall(deleteApnsVoipSandboxChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteApnsVoipSandboxChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteApnsVoipSandboxChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteApnsVoipSandboxChannelResult> responseHandler = new JsonResponseHandler<DeleteApnsVoipSandboxChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Deletes an app.
+     * 
+     * @param deleteAppRequest
+     * @return deleteAppResult The response from the DeleteApp service method,
+     *         as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteAppResult deleteApp(DeleteAppRequest deleteAppRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteAppRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteAppRequest> request = null;
+        Response<DeleteAppResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteAppRequestMarshaller().marshall(deleteAppRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteAppResult, JsonUnmarshallerContext> unmarshaller = new DeleteAppResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteAppResult> responseHandler = new JsonResponseHandler<DeleteAppResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete a BAIDU GCM channel
+     * 
+     * @param deleteBaiduChannelRequest
+     * @return deleteBaiduChannelResult The response from the DeleteBaiduChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteBaiduChannelResult deleteBaiduChannel(
+            DeleteBaiduChannelRequest deleteBaiduChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteBaiduChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteBaiduChannelRequest> request = null;
+        Response<DeleteBaiduChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteBaiduChannelRequestMarshaller()
+                        .marshall(deleteBaiduChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteBaiduChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteBaiduChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteBaiduChannelResult> responseHandler = new JsonResponseHandler<DeleteBaiduChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -517,6 +925,158 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an email channel.
+     * 
+     * @param deleteEmailChannelRequest
+     * @return deleteEmailChannelResult The response from the DeleteEmailChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteEmailChannelResult deleteEmailChannel(
+            DeleteEmailChannelRequest deleteEmailChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteEmailChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteEmailChannelRequest> request = null;
+        Response<DeleteEmailChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteEmailChannelRequestMarshaller()
+                        .marshall(deleteEmailChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteEmailChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteEmailChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteEmailChannelResult> responseHandler = new JsonResponseHandler<DeleteEmailChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Deletes an endpoint.
+     * 
+     * @param deleteEndpointRequest
+     * @return deleteEndpointResult The response from the DeleteEndpoint service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteEndpointResult deleteEndpoint(DeleteEndpointRequest deleteEndpointRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteEndpointRequest> request = null;
+        Response<DeleteEndpointResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteEndpointRequestMarshaller().marshall(deleteEndpointRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteEndpointResult, JsonUnmarshallerContext> unmarshaller = new DeleteEndpointResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteEndpointResult> responseHandler = new JsonResponseHandler<DeleteEndpointResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Deletes the event stream for an app.
+     * 
+     * @param deleteEventStreamRequest
+     * @return deleteEventStreamResult The response from the DeleteEventStream
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteEventStreamResult deleteEventStream(
+            DeleteEventStreamRequest deleteEventStreamRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteEventStreamRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteEventStreamRequest> request = null;
+        Response<DeleteEventStreamResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteEventStreamRequestMarshaller()
+                        .marshall(deleteEventStreamRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteEventStreamResult, JsonUnmarshallerContext> unmarshaller = new DeleteEventStreamResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteEventStreamResult> responseHandler = new JsonResponseHandler<DeleteEventStreamResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -565,6 +1125,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -613,6 +1174,208 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an SMS channel.
+     * 
+     * @param deleteSmsChannelRequest
+     * @return deleteSmsChannelResult The response from the DeleteSmsChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteSmsChannelResult deleteSmsChannel(DeleteSmsChannelRequest deleteSmsChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteSmsChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteSmsChannelRequest> request = null;
+        Response<DeleteSmsChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteSmsChannelRequestMarshaller().marshall(deleteSmsChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteSmsChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteSmsChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteSmsChannelResult> responseHandler = new JsonResponseHandler<DeleteSmsChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Deletes endpoints that are associated with a User ID.
+     * 
+     * @param deleteUserEndpointsRequest
+     * @return deleteUserEndpointsResult The response from the
+     *         DeleteUserEndpoints service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteUserEndpointsResult deleteUserEndpoints(
+            DeleteUserEndpointsRequest deleteUserEndpointsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteUserEndpointsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteUserEndpointsRequest> request = null;
+        Response<DeleteUserEndpointsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteUserEndpointsRequestMarshaller()
+                        .marshall(deleteUserEndpointsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteUserEndpointsResult, JsonUnmarshallerContext> unmarshaller = new DeleteUserEndpointsResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteUserEndpointsResult> responseHandler = new JsonResponseHandler<DeleteUserEndpointsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Delete an Voice channel
+     * 
+     * @param deleteVoiceChannelRequest
+     * @return deleteVoiceChannelResult The response from the DeleteVoiceChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public DeleteVoiceChannelResult deleteVoiceChannel(
+            DeleteVoiceChannelRequest deleteVoiceChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteVoiceChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteVoiceChannelRequest> request = null;
+        Response<DeleteVoiceChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteVoiceChannelRequestMarshaller()
+                        .marshall(deleteVoiceChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteVoiceChannelResult, JsonUnmarshallerContext> unmarshaller = new DeleteVoiceChannelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteVoiceChannelResult> responseHandler = new JsonResponseHandler<DeleteVoiceChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get an ADM channel.
+     * 
+     * @param getAdmChannelRequest
+     * @return getAdmChannelResult The response from the GetAdmChannel service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetAdmChannelResult getAdmChannel(GetAdmChannelRequest getAdmChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getAdmChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetAdmChannelRequest> request = null;
+        Response<GetAdmChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetAdmChannelRequestMarshaller().marshall(getAdmChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetAdmChannelResult, JsonUnmarshallerContext> unmarshaller = new GetAdmChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetAdmChannelResult> responseHandler = new JsonResponseHandler<GetAdmChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -661,6 +1424,211 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get an APNS sandbox channel.
+     * 
+     * @param getApnsSandboxChannelRequest
+     * @return getApnsSandboxChannelResult The response from the
+     *         GetApnsSandboxChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetApnsSandboxChannelResult getApnsSandboxChannel(
+            GetApnsSandboxChannelRequest getApnsSandboxChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getApnsSandboxChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetApnsSandboxChannelRequest> request = null;
+        Response<GetApnsSandboxChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetApnsSandboxChannelRequestMarshaller()
+                        .marshall(getApnsSandboxChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetApnsSandboxChannelResult, JsonUnmarshallerContext> unmarshaller = new GetApnsSandboxChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetApnsSandboxChannelResult> responseHandler = new JsonResponseHandler<GetApnsSandboxChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get an APNS VoIP channel
+     * 
+     * @param getApnsVoipChannelRequest
+     * @return getApnsVoipChannelResult The response from the GetApnsVoipChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetApnsVoipChannelResult getApnsVoipChannel(
+            GetApnsVoipChannelRequest getApnsVoipChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getApnsVoipChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetApnsVoipChannelRequest> request = null;
+        Response<GetApnsVoipChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetApnsVoipChannelRequestMarshaller()
+                        .marshall(getApnsVoipChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetApnsVoipChannelResult, JsonUnmarshallerContext> unmarshaller = new GetApnsVoipChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetApnsVoipChannelResult> responseHandler = new JsonResponseHandler<GetApnsVoipChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get an APNS VoIPSandbox channel
+     * 
+     * @param getApnsVoipSandboxChannelRequest
+     * @return getApnsVoipSandboxChannelResult The response from the
+     *         GetApnsVoipSandboxChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetApnsVoipSandboxChannelResult getApnsVoipSandboxChannel(
+            GetApnsVoipSandboxChannelRequest getApnsVoipSandboxChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getApnsVoipSandboxChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetApnsVoipSandboxChannelRequest> request = null;
+        Response<GetApnsVoipSandboxChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetApnsVoipSandboxChannelRequestMarshaller()
+                        .marshall(getApnsVoipSandboxChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetApnsVoipSandboxChannelResult, JsonUnmarshallerContext> unmarshaller = new GetApnsVoipSandboxChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetApnsVoipSandboxChannelResult> responseHandler = new JsonResponseHandler<GetApnsVoipSandboxChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns information about an app.
+     * 
+     * @param getAppRequest
+     * @return getAppResult The response from the GetApp service method, as
+     *         returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetAppResult getApp(GetAppRequest getAppRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getAppRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetAppRequest> request = null;
+        Response<GetAppResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetAppRequestMarshaller().marshall(getAppRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetAppResult, JsonUnmarshallerContext> unmarshaller = new GetAppResultJsonUnmarshaller();
+            JsonResponseHandler<GetAppResult> responseHandler = new JsonResponseHandler<GetAppResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -712,6 +1680,105 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns information about your apps.
+     * 
+     * @param getAppsRequest
+     * @return getAppsResult The response from the GetApps service method, as
+     *         returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetAppsResult getApps(GetAppsRequest getAppsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getAppsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetAppsRequest> request = null;
+        Response<GetAppsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetAppsRequestMarshaller().marshall(getAppsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetAppsResult, JsonUnmarshallerContext> unmarshaller = new GetAppsResultJsonUnmarshaller();
+            JsonResponseHandler<GetAppsResult> responseHandler = new JsonResponseHandler<GetAppsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get a BAIDU GCM channel
+     * 
+     * @param getBaiduChannelRequest
+     * @return getBaiduChannelResult The response from the GetBaiduChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetBaiduChannelResult getBaiduChannel(GetBaiduChannelRequest getBaiduChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getBaiduChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetBaiduChannelRequest> request = null;
+        Response<GetBaiduChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetBaiduChannelRequestMarshaller().marshall(getBaiduChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetBaiduChannelResult, JsonUnmarshallerContext> unmarshaller = new GetBaiduChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetBaiduChannelResult> responseHandler = new JsonResponseHandler<GetBaiduChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -760,6 +1827,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -811,12 +1879,13 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
 
     /**
-     * Returns information about your campaign versions.
+     * Returns information about a specific version of a campaign.
      * 
      * @param getCampaignVersionRequest
      * @return getCampaignVersionResult The response from the GetCampaignVersion
@@ -861,6 +1930,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -912,6 +1982,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -960,6 +2031,105 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get all channels.
+     * 
+     * @param getChannelsRequest
+     * @return getChannelsResult The response from the GetChannels service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetChannelsResult getChannels(GetChannelsRequest getChannelsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getChannelsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetChannelsRequest> request = null;
+        Response<GetChannelsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetChannelsRequestMarshaller().marshall(getChannelsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetChannelsResult, JsonUnmarshallerContext> unmarshaller = new GetChannelsResultJsonUnmarshaller();
+            JsonResponseHandler<GetChannelsResult> responseHandler = new JsonResponseHandler<GetChannelsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get an email channel.
+     * 
+     * @param getEmailChannelRequest
+     * @return getEmailChannelResult The response from the GetEmailChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetEmailChannelResult getEmailChannel(GetEmailChannelRequest getEmailChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getEmailChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetEmailChannelRequest> request = null;
+        Response<GetEmailChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetEmailChannelRequestMarshaller().marshall(getEmailChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetEmailChannelResult, JsonUnmarshallerContext> unmarshaller = new GetEmailChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetEmailChannelResult> responseHandler = new JsonResponseHandler<GetEmailChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1008,6 +2178,154 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns the event stream for an app.
+     * 
+     * @param getEventStreamRequest
+     * @return getEventStreamResult The response from the GetEventStream service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetEventStreamResult getEventStream(GetEventStreamRequest getEventStreamRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getEventStreamRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetEventStreamRequest> request = null;
+        Response<GetEventStreamResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetEventStreamRequestMarshaller().marshall(getEventStreamRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetEventStreamResult, JsonUnmarshallerContext> unmarshaller = new GetEventStreamResultJsonUnmarshaller();
+            JsonResponseHandler<GetEventStreamResult> responseHandler = new JsonResponseHandler<GetEventStreamResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns information about an export job.
+     * 
+     * @param getExportJobRequest
+     * @return getExportJobResult The response from the GetExportJob service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetExportJobResult getExportJob(GetExportJobRequest getExportJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getExportJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetExportJobRequest> request = null;
+        Response<GetExportJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetExportJobRequestMarshaller().marshall(getExportJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetExportJobResult, JsonUnmarshallerContext> unmarshaller = new GetExportJobResultJsonUnmarshaller();
+            JsonResponseHandler<GetExportJobResult> responseHandler = new JsonResponseHandler<GetExportJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns information about your export jobs.
+     * 
+     * @param getExportJobsRequest
+     * @return getExportJobsResult The response from the GetExportJobs service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetExportJobsResult getExportJobs(GetExportJobsRequest getExportJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getExportJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetExportJobsRequest> request = null;
+        Response<GetExportJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetExportJobsRequestMarshaller().marshall(getExportJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetExportJobsResult, JsonUnmarshallerContext> unmarshaller = new GetExportJobsResultJsonUnmarshaller();
+            JsonResponseHandler<GetExportJobsResult> responseHandler = new JsonResponseHandler<GetExportJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1056,6 +2374,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1104,6 +2423,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1152,6 +2472,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1200,6 +2521,59 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns a list of export jobs for a specific segment.
+     * 
+     * @param getSegmentExportJobsRequest
+     * @return getSegmentExportJobsResult The response from the
+     *         GetSegmentExportJobs service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetSegmentExportJobsResult getSegmentExportJobs(
+            GetSegmentExportJobsRequest getSegmentExportJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getSegmentExportJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetSegmentExportJobsRequest> request = null;
+        Response<GetSegmentExportJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetSegmentExportJobsRequestMarshaller()
+                        .marshall(getSegmentExportJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetSegmentExportJobsResult, JsonUnmarshallerContext> unmarshaller = new GetSegmentExportJobsResultJsonUnmarshaller();
+            JsonResponseHandler<GetSegmentExportJobsResult> responseHandler = new JsonResponseHandler<GetSegmentExportJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1251,6 +2625,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1301,6 +2676,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1351,6 +2727,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1399,6 +2776,504 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get an SMS channel.
+     * 
+     * @param getSmsChannelRequest
+     * @return getSmsChannelResult The response from the GetSmsChannel service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetSmsChannelResult getSmsChannel(GetSmsChannelRequest getSmsChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getSmsChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetSmsChannelRequest> request = null;
+        Response<GetSmsChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetSmsChannelRequestMarshaller().marshall(getSmsChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetSmsChannelResult, JsonUnmarshallerContext> unmarshaller = new GetSmsChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetSmsChannelResult> responseHandler = new JsonResponseHandler<GetSmsChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns information about the endpoints that are associated with a User
+     * ID.
+     * 
+     * @param getUserEndpointsRequest
+     * @return getUserEndpointsResult The response from the GetUserEndpoints
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetUserEndpointsResult getUserEndpoints(GetUserEndpointsRequest getUserEndpointsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getUserEndpointsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetUserEndpointsRequest> request = null;
+        Response<GetUserEndpointsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetUserEndpointsRequestMarshaller().marshall(getUserEndpointsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetUserEndpointsResult, JsonUnmarshallerContext> unmarshaller = new GetUserEndpointsResultJsonUnmarshaller();
+            JsonResponseHandler<GetUserEndpointsResult> responseHandler = new JsonResponseHandler<GetUserEndpointsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Get a Voice Channel
+     * 
+     * @param getVoiceChannelRequest
+     * @return getVoiceChannelResult The response from the GetVoiceChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public GetVoiceChannelResult getVoiceChannel(GetVoiceChannelRequest getVoiceChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getVoiceChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetVoiceChannelRequest> request = null;
+        Response<GetVoiceChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetVoiceChannelRequestMarshaller().marshall(getVoiceChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetVoiceChannelResult, JsonUnmarshallerContext> unmarshaller = new GetVoiceChannelResultJsonUnmarshaller();
+            JsonResponseHandler<GetVoiceChannelResult> responseHandler = new JsonResponseHandler<GetVoiceChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Returns information about the specified phone number.
+     * 
+     * @param phoneNumberValidateRequest
+     * @return phoneNumberValidateResult The response from the
+     *         PhoneNumberValidate service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public PhoneNumberValidateResult phoneNumberValidate(
+            PhoneNumberValidateRequest phoneNumberValidateRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(phoneNumberValidateRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PhoneNumberValidateRequest> request = null;
+        Response<PhoneNumberValidateResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PhoneNumberValidateRequestMarshaller()
+                        .marshall(phoneNumberValidateRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<PhoneNumberValidateResult, JsonUnmarshallerContext> unmarshaller = new PhoneNumberValidateResultJsonUnmarshaller();
+            JsonResponseHandler<PhoneNumberValidateResult> responseHandler = new JsonResponseHandler<PhoneNumberValidateResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Use to create or update the event stream for an app.
+     * 
+     * @param putEventStreamRequest
+     * @return putEventStreamResult The response from the PutEventStream service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public PutEventStreamResult putEventStream(PutEventStreamRequest putEventStreamRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(putEventStreamRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PutEventStreamRequest> request = null;
+        Response<PutEventStreamResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PutEventStreamRequestMarshaller().marshall(putEventStreamRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<PutEventStreamResult, JsonUnmarshallerContext> unmarshaller = new PutEventStreamResultJsonUnmarshaller();
+            JsonResponseHandler<PutEventStreamResult> responseHandler = new JsonResponseHandler<PutEventStreamResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Use to record events for endpoints. This method creates events and
+     * creates or updates the endpoints that those events are associated with.
+     * 
+     * @param putEventsRequest
+     * @return putEventsResult The response from the PutEvents service method,
+     *         as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public PutEventsResult putEvents(PutEventsRequest putEventsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(putEventsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PutEventsRequest> request = null;
+        Response<PutEventsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PutEventsRequestMarshaller().marshall(putEventsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<PutEventsResult, JsonUnmarshallerContext> unmarshaller = new PutEventsResultJsonUnmarshaller();
+            JsonResponseHandler<PutEventsResult> responseHandler = new JsonResponseHandler<PutEventsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Used to remove the attributes for an app
+     * 
+     * @param removeAttributesRequest
+     * @return removeAttributesResult The response from the RemoveAttributes
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public RemoveAttributesResult removeAttributes(RemoveAttributesRequest removeAttributesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(removeAttributesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<RemoveAttributesRequest> request = null;
+        Response<RemoveAttributesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new RemoveAttributesRequestMarshaller().marshall(removeAttributesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<RemoveAttributesResult, JsonUnmarshallerContext> unmarshaller = new RemoveAttributesResultJsonUnmarshaller();
+            JsonResponseHandler<RemoveAttributesResult> responseHandler = new JsonResponseHandler<RemoveAttributesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Used to send a direct message.
+     * 
+     * @param sendMessagesRequest
+     * @return sendMessagesResult The response from the SendMessages service
+     *         method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public SendMessagesResult sendMessages(SendMessagesRequest sendMessagesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(sendMessagesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<SendMessagesRequest> request = null;
+        Response<SendMessagesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new SendMessagesRequestMarshaller().marshall(sendMessagesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<SendMessagesResult, JsonUnmarshallerContext> unmarshaller = new SendMessagesResultJsonUnmarshaller();
+            JsonResponseHandler<SendMessagesResult> responseHandler = new JsonResponseHandler<SendMessagesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Used to send a message to a list of users.
+     * 
+     * @param sendUsersMessagesRequest
+     * @return sendUsersMessagesResult The response from the SendUsersMessages
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public SendUsersMessagesResult sendUsersMessages(
+            SendUsersMessagesRequest sendUsersMessagesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(sendUsersMessagesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<SendUsersMessagesRequest> request = null;
+        Response<SendUsersMessagesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new SendUsersMessagesRequestMarshaller()
+                        .marshall(sendUsersMessagesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<SendUsersMessagesResult, JsonUnmarshallerContext> unmarshaller = new SendUsersMessagesResultJsonUnmarshaller();
+            JsonResponseHandler<SendUsersMessagesResult> responseHandler = new JsonResponseHandler<SendUsersMessagesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update an ADM channel.
+     * 
+     * @param updateAdmChannelRequest
+     * @return updateAdmChannelResult The response from the UpdateAdmChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateAdmChannelResult updateAdmChannel(UpdateAdmChannelRequest updateAdmChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateAdmChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateAdmChannelRequest> request = null;
+        Response<UpdateAdmChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateAdmChannelRequestMarshaller().marshall(updateAdmChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateAdmChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateAdmChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateAdmChannelResult> responseHandler = new JsonResponseHandler<UpdateAdmChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1449,6 +3324,163 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update an APNS sandbox channel.
+     * 
+     * @param updateApnsSandboxChannelRequest
+     * @return updateApnsSandboxChannelResult The response from the
+     *         UpdateApnsSandboxChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateApnsSandboxChannelResult updateApnsSandboxChannel(
+            UpdateApnsSandboxChannelRequest updateApnsSandboxChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateApnsSandboxChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateApnsSandboxChannelRequest> request = null;
+        Response<UpdateApnsSandboxChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateApnsSandboxChannelRequestMarshaller()
+                        .marshall(updateApnsSandboxChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateApnsSandboxChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateApnsSandboxChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateApnsSandboxChannelResult> responseHandler = new JsonResponseHandler<UpdateApnsSandboxChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update an APNS VoIP channel
+     * 
+     * @param updateApnsVoipChannelRequest
+     * @return updateApnsVoipChannelResult The response from the
+     *         UpdateApnsVoipChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateApnsVoipChannelResult updateApnsVoipChannel(
+            UpdateApnsVoipChannelRequest updateApnsVoipChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateApnsVoipChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateApnsVoipChannelRequest> request = null;
+        Response<UpdateApnsVoipChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateApnsVoipChannelRequestMarshaller()
+                        .marshall(updateApnsVoipChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateApnsVoipChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateApnsVoipChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateApnsVoipChannelResult> responseHandler = new JsonResponseHandler<UpdateApnsVoipChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update an APNS VoIP sandbox channel
+     * 
+     * @param updateApnsVoipSandboxChannelRequest
+     * @return updateApnsVoipSandboxChannelResult The response from the
+     *         UpdateApnsVoipSandboxChannel service method, as returned by
+     *         AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateApnsVoipSandboxChannelResult updateApnsVoipSandboxChannel(
+            UpdateApnsVoipSandboxChannelRequest updateApnsVoipSandboxChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateApnsVoipSandboxChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateApnsVoipSandboxChannelRequest> request = null;
+        Response<UpdateApnsVoipSandboxChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateApnsVoipSandboxChannelRequestMarshaller()
+                        .marshall(updateApnsVoipSandboxChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateApnsVoipSandboxChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateApnsVoipSandboxChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateApnsVoipSandboxChannelResult> responseHandler = new JsonResponseHandler<UpdateApnsVoipSandboxChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1500,6 +3532,58 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update a BAIDU GCM channel
+     * 
+     * @param updateBaiduChannelRequest
+     * @return updateBaiduChannelResult The response from the UpdateBaiduChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateBaiduChannelResult updateBaiduChannel(
+            UpdateBaiduChannelRequest updateBaiduChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateBaiduChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateBaiduChannelRequest> request = null;
+        Response<UpdateBaiduChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateBaiduChannelRequestMarshaller()
+                        .marshall(updateBaiduChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateBaiduChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateBaiduChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateBaiduChannelResult> responseHandler = new JsonResponseHandler<UpdateBaiduChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1548,12 +3632,64 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
 
     /**
-     * Use to update an endpoint.
+     * Update an email channel.
+     * 
+     * @param updateEmailChannelRequest
+     * @return updateEmailChannelResult The response from the UpdateEmailChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateEmailChannelResult updateEmailChannel(
+            UpdateEmailChannelRequest updateEmailChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateEmailChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateEmailChannelRequest> request = null;
+        Response<UpdateEmailChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateEmailChannelRequestMarshaller()
+                        .marshall(updateEmailChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateEmailChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateEmailChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateEmailChannelResult> responseHandler = new JsonResponseHandler<UpdateEmailChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Creates or updates an endpoint.
      * 
      * @param updateEndpointRequest
      * @return updateEndpointResult The response from the UpdateEndpoint service
@@ -1596,12 +3732,13 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
 
     /**
-     * Use to update your endpoints.
+     * Use to update a batch of endpoints.
      * 
      * @param updateEndpointsBatchRequest
      * @return updateEndpointsBatchResult The response from the
@@ -1647,6 +3784,7 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
@@ -1695,12 +3833,13 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }
 
     /**
-     * Use to update a segment.
+     * Used to update a segment.
      * 
      * @param updateSegmentRequest
      * @return updateSegmentResult The response from the UpdateSegment service
@@ -1743,6 +3882,107 @@ public class AmazonPinpointClient extends AmazonWebServiceClient implements Amaz
 
             return response.getAwsResponse();
         } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update an SMS channel.
+     * 
+     * @param updateSmsChannelRequest
+     * @return updateSmsChannelResult The response from the UpdateSmsChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateSmsChannelResult updateSmsChannel(UpdateSmsChannelRequest updateSmsChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateSmsChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateSmsChannelRequest> request = null;
+        Response<UpdateSmsChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateSmsChannelRequestMarshaller().marshall(updateSmsChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateSmsChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateSmsChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateSmsChannelResult> responseHandler = new JsonResponseHandler<UpdateSmsChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * Update an Voice channel
+     * 
+     * @param updateVoiceChannelRequest
+     * @return updateVoiceChannelResult The response from the UpdateVoiceChannel
+     *         service method, as returned by AmazonPinpoint.
+     * @throws BadRequestException 400 response
+     * @throws InternalServerErrorException 500 response
+     * @throws ForbiddenException 403 response
+     * @throws NotFoundException 404 response
+     * @throws MethodNotAllowedException 405 response
+     * @throws TooManyRequestsException 429 response
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AmazonPinpoint indicating either a problem with the data in
+     *             the request, or a server side issue.
+     */
+    public UpdateVoiceChannelResult updateVoiceChannel(
+            UpdateVoiceChannelRequest updateVoiceChannelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateVoiceChannelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateVoiceChannelRequest> request = null;
+        Response<UpdateVoiceChannelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateVoiceChannelRequestMarshaller()
+                        .marshall(updateVoiceChannelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateVoiceChannelResult, JsonUnmarshallerContext> unmarshaller = new UpdateVoiceChannelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateVoiceChannelResult> responseHandler = new JsonResponseHandler<UpdateVoiceChannelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
             endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
         }
     }

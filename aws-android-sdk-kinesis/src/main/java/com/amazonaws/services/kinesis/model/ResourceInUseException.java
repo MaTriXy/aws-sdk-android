@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import com.amazonaws.AmazonServiceException;
 /**
  * <p>
  * The resource is not available for this operation. For successful operation,
- * the resource needs to be in the <code>ACTIVE</code> state.
+ * the resource must be in the <code>ACTIVE</code> state.
  * </p>
  */
 public class ResourceInUseException extends AmazonServiceException {

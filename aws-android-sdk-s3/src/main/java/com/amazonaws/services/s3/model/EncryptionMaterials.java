@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,11 @@ import javax.crypto.SecretKey;
  * The "key encrypting key" materials used in encrypt/decryption. These
  * materials may be either an asymmetric key pair or a symmetric key but not
  * both.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public class EncryptionMaterials implements Serializable {
     private final KeyPair keyPair;
     private final SecretKey symmetricKey;

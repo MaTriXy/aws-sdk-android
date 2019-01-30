@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * <p>
  * Describes the face properties such as the bounding box, face ID, image ID of
- * the source image, and external image ID that you assigned.
+ * the input image, and external image ID that you assigned.
  * </p>
  */
 public class Face implements Serializable {
@@ -37,40 +37,14 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Identifies the bounding box around the object or face. The
-     * <code>left</code> (x-coordinate) and <code>top</code> (y-coordinate) are
-     * coordinates representing the top and left sides of the bounding box. Note
-     * that the upper-left corner of the image is the origin (0,0).
+     * Bounding box of the face.
      * </p>
-     * <p>
-     * The <code>top</code> and <code>left</code> values returned are ratios of
-     * the overall image size. For example, if the input image is 700x200
-     * pixels, and the top-left coordinate of the bounding box is 350x50 pixels,
-     * the API returns a <code>left</code> value of 0.5 (350/700) and a
-     * <code>top</code> value of 0.25 (50/200).
-     * </p>
-     * <p>
-     * The <code>width</code> and <code>height</code> values represent the
-     * dimensions of the bounding box as a ratio of the overall image dimension.
-     * For example, if the input image is 700x200 pixels, and the bounding box
-     * width is 70 pixels, the width returned is 0.1.
-     * </p>
-     * <note>
-     * <p>
-     * The bounding box coordinates can have negative values. For example, if
-     * Amazon Rekognition is able to detect a face that is at the image edge and
-     * is only partially visible, the service can return coordinates that are
-     * outside the image bounds and, depending on the image edge, you might get
-     * negative values or values greater than 1 for the <code>left</code> or
-     * <code>top</code> values.
-     * </p>
-     * </note>
      */
     private BoundingBox boundingBox;
 
     /**
      * <p>
-     * Unique identifier that Amazon Rekognition assigns to the source image.
+     * Unique identifier that Amazon Rekognition assigns to the input image.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -100,6 +74,14 @@ public class Face implements Serializable {
      * <b>Length: </b>0 - 100<br/>
      */
     private Float confidence;
+
+    /**
+     * The new value for the associationScore property for this object.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 100<br/>
+     */
+    private Float associationScore;
 
     /**
      * <p>
@@ -160,67 +142,12 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Identifies the bounding box around the object or face. The
-     * <code>left</code> (x-coordinate) and <code>top</code> (y-coordinate) are
-     * coordinates representing the top and left sides of the bounding box. Note
-     * that the upper-left corner of the image is the origin (0,0).
+     * Bounding box of the face.
      * </p>
-     * <p>
-     * The <code>top</code> and <code>left</code> values returned are ratios of
-     * the overall image size. For example, if the input image is 700x200
-     * pixels, and the top-left coordinate of the bounding box is 350x50 pixels,
-     * the API returns a <code>left</code> value of 0.5 (350/700) and a
-     * <code>top</code> value of 0.25 (50/200).
-     * </p>
-     * <p>
-     * The <code>width</code> and <code>height</code> values represent the
-     * dimensions of the bounding box as a ratio of the overall image dimension.
-     * For example, if the input image is 700x200 pixels, and the bounding box
-     * width is 70 pixels, the width returned is 0.1.
-     * </p>
-     * <note>
-     * <p>
-     * The bounding box coordinates can have negative values. For example, if
-     * Amazon Rekognition is able to detect a face that is at the image edge and
-     * is only partially visible, the service can return coordinates that are
-     * outside the image bounds and, depending on the image edge, you might get
-     * negative values or values greater than 1 for the <code>left</code> or
-     * <code>top</code> values.
-     * </p>
-     * </note>
      *
      * @return <p>
-     *         Identifies the bounding box around the object or face. The
-     *         <code>left</code> (x-coordinate) and <code>top</code>
-     *         (y-coordinate) are coordinates representing the top and left
-     *         sides of the bounding box. Note that the upper-left corner of the
-     *         image is the origin (0,0).
+     *         Bounding box of the face.
      *         </p>
-     *         <p>
-     *         The <code>top</code> and <code>left</code> values returned are
-     *         ratios of the overall image size. For example, if the input image
-     *         is 700x200 pixels, and the top-left coordinate of the bounding
-     *         box is 350x50 pixels, the API returns a <code>left</code> value
-     *         of 0.5 (350/700) and a <code>top</code> value of 0.25 (50/200).
-     *         </p>
-     *         <p>
-     *         The <code>width</code> and <code>height</code> values represent
-     *         the dimensions of the bounding box as a ratio of the overall
-     *         image dimension. For example, if the input image is 700x200
-     *         pixels, and the bounding box width is 70 pixels, the width
-     *         returned is 0.1.
-     *         </p>
-     *         <note>
-     *         <p>
-     *         The bounding box coordinates can have negative values. For
-     *         example, if Amazon Rekognition is able to detect a face that is
-     *         at the image edge and is only partially visible, the service can
-     *         return coordinates that are outside the image bounds and,
-     *         depending on the image edge, you might get negative values or
-     *         values greater than 1 for the <code>left</code> or
-     *         <code>top</code> values.
-     *         </p>
-     *         </note>
      */
     public BoundingBox getBoundingBox() {
         return boundingBox;
@@ -228,68 +155,12 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Identifies the bounding box around the object or face. The
-     * <code>left</code> (x-coordinate) and <code>top</code> (y-coordinate) are
-     * coordinates representing the top and left sides of the bounding box. Note
-     * that the upper-left corner of the image is the origin (0,0).
+     * Bounding box of the face.
      * </p>
-     * <p>
-     * The <code>top</code> and <code>left</code> values returned are ratios of
-     * the overall image size. For example, if the input image is 700x200
-     * pixels, and the top-left coordinate of the bounding box is 350x50 pixels,
-     * the API returns a <code>left</code> value of 0.5 (350/700) and a
-     * <code>top</code> value of 0.25 (50/200).
-     * </p>
-     * <p>
-     * The <code>width</code> and <code>height</code> values represent the
-     * dimensions of the bounding box as a ratio of the overall image dimension.
-     * For example, if the input image is 700x200 pixels, and the bounding box
-     * width is 70 pixels, the width returned is 0.1.
-     * </p>
-     * <note>
-     * <p>
-     * The bounding box coordinates can have negative values. For example, if
-     * Amazon Rekognition is able to detect a face that is at the image edge and
-     * is only partially visible, the service can return coordinates that are
-     * outside the image bounds and, depending on the image edge, you might get
-     * negative values or values greater than 1 for the <code>left</code> or
-     * <code>top</code> values.
-     * </p>
-     * </note>
      *
      * @param boundingBox <p>
-     *            Identifies the bounding box around the object or face. The
-     *            <code>left</code> (x-coordinate) and <code>top</code>
-     *            (y-coordinate) are coordinates representing the top and left
-     *            sides of the bounding box. Note that the upper-left corner of
-     *            the image is the origin (0,0).
+     *            Bounding box of the face.
      *            </p>
-     *            <p>
-     *            The <code>top</code> and <code>left</code> values returned are
-     *            ratios of the overall image size. For example, if the input
-     *            image is 700x200 pixels, and the top-left coordinate of the
-     *            bounding box is 350x50 pixels, the API returns a
-     *            <code>left</code> value of 0.5 (350/700) and a
-     *            <code>top</code> value of 0.25 (50/200).
-     *            </p>
-     *            <p>
-     *            The <code>width</code> and <code>height</code> values
-     *            represent the dimensions of the bounding box as a ratio of the
-     *            overall image dimension. For example, if the input image is
-     *            700x200 pixels, and the bounding box width is 70 pixels, the
-     *            width returned is 0.1.
-     *            </p>
-     *            <note>
-     *            <p>
-     *            The bounding box coordinates can have negative values. For
-     *            example, if Amazon Rekognition is able to detect a face that
-     *            is at the image edge and is only partially visible, the
-     *            service can return coordinates that are outside the image
-     *            bounds and, depending on the image edge, you might get
-     *            negative values or values greater than 1 for the
-     *            <code>left</code> or <code>top</code> values.
-     *            </p>
-     *            </note>
      */
     public void setBoundingBox(BoundingBox boundingBox) {
         this.boundingBox = boundingBox;
@@ -297,71 +168,15 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Identifies the bounding box around the object or face. The
-     * <code>left</code> (x-coordinate) and <code>top</code> (y-coordinate) are
-     * coordinates representing the top and left sides of the bounding box. Note
-     * that the upper-left corner of the image is the origin (0,0).
+     * Bounding box of the face.
      * </p>
-     * <p>
-     * The <code>top</code> and <code>left</code> values returned are ratios of
-     * the overall image size. For example, if the input image is 700x200
-     * pixels, and the top-left coordinate of the bounding box is 350x50 pixels,
-     * the API returns a <code>left</code> value of 0.5 (350/700) and a
-     * <code>top</code> value of 0.25 (50/200).
-     * </p>
-     * <p>
-     * The <code>width</code> and <code>height</code> values represent the
-     * dimensions of the bounding box as a ratio of the overall image dimension.
-     * For example, if the input image is 700x200 pixels, and the bounding box
-     * width is 70 pixels, the width returned is 0.1.
-     * </p>
-     * <note>
-     * <p>
-     * The bounding box coordinates can have negative values. For example, if
-     * Amazon Rekognition is able to detect a face that is at the image edge and
-     * is only partially visible, the service can return coordinates that are
-     * outside the image bounds and, depending on the image edge, you might get
-     * negative values or values greater than 1 for the <code>left</code> or
-     * <code>top</code> values.
-     * </p>
-     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param boundingBox <p>
-     *            Identifies the bounding box around the object or face. The
-     *            <code>left</code> (x-coordinate) and <code>top</code>
-     *            (y-coordinate) are coordinates representing the top and left
-     *            sides of the bounding box. Note that the upper-left corner of
-     *            the image is the origin (0,0).
+     *            Bounding box of the face.
      *            </p>
-     *            <p>
-     *            The <code>top</code> and <code>left</code> values returned are
-     *            ratios of the overall image size. For example, if the input
-     *            image is 700x200 pixels, and the top-left coordinate of the
-     *            bounding box is 350x50 pixels, the API returns a
-     *            <code>left</code> value of 0.5 (350/700) and a
-     *            <code>top</code> value of 0.25 (50/200).
-     *            </p>
-     *            <p>
-     *            The <code>width</code> and <code>height</code> values
-     *            represent the dimensions of the bounding box as a ratio of the
-     *            overall image dimension. For example, if the input image is
-     *            700x200 pixels, and the bounding box width is 70 pixels, the
-     *            width returned is 0.1.
-     *            </p>
-     *            <note>
-     *            <p>
-     *            The bounding box coordinates can have negative values. For
-     *            example, if Amazon Rekognition is able to detect a face that
-     *            is at the image edge and is only partially visible, the
-     *            service can return coordinates that are outside the image
-     *            bounds and, depending on the image edge, you might get
-     *            negative values or values greater than 1 for the
-     *            <code>left</code> or <code>top</code> values.
-     *            </p>
-     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -372,7 +187,7 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Unique identifier that Amazon Rekognition assigns to the source image.
+     * Unique identifier that Amazon Rekognition assigns to the input image.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -380,7 +195,7 @@ public class Face implements Serializable {
      * </b>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br/>
      *
      * @return <p>
-     *         Unique identifier that Amazon Rekognition assigns to the source
+     *         Unique identifier that Amazon Rekognition assigns to the input
      *         image.
      *         </p>
      */
@@ -390,7 +205,7 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Unique identifier that Amazon Rekognition assigns to the source image.
+     * Unique identifier that Amazon Rekognition assigns to the input image.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -398,8 +213,8 @@ public class Face implements Serializable {
      * </b>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br/>
      *
      * @param imageId <p>
-     *            Unique identifier that Amazon Rekognition assigns to the
-     *            source image.
+     *            Unique identifier that Amazon Rekognition assigns to the input
+     *            image.
      *            </p>
      */
     public void setImageId(String imageId) {
@@ -408,7 +223,7 @@ public class Face implements Serializable {
 
     /**
      * <p>
-     * Unique identifier that Amazon Rekognition assigns to the source image.
+     * Unique identifier that Amazon Rekognition assigns to the input image.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -419,8 +234,8 @@ public class Face implements Serializable {
      * </b>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}<br/>
      *
      * @param imageId <p>
-     *            Unique identifier that Amazon Rekognition assigns to the
-     *            source image.
+     *            Unique identifier that Amazon Rekognition assigns to the input
+     *            image.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -550,6 +365,50 @@ public class Face implements Serializable {
     }
 
     /**
+     * Returns the value of the associationScore property for this object.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 100<br/>
+     *
+     * @return The value of the associationScore property for this object.
+     */
+    public Float getAssociationScore() {
+        return associationScore;
+    }
+
+    /**
+     * Sets the value of associationScore
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 100<br/>
+     *
+     * @param associationScore The new value for the associationScore property
+     *            for this object.
+     */
+    public void setAssociationScore(Float associationScore) {
+        this.associationScore = associationScore;
+    }
+
+    /**
+     * Sets the value of the associationScore property for this object.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 100<br/>
+     *
+     * @param associationScore The new value for the associationScore property
+     *            for this object.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Face withAssociationScore(Float associationScore) {
+        this.associationScore = associationScore;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -569,7 +428,9 @@ public class Face implements Serializable {
         if (getExternalImageId() != null)
             sb.append("ExternalImageId: " + getExternalImageId() + ",");
         if (getConfidence() != null)
-            sb.append("Confidence: " + getConfidence());
+            sb.append("Confidence: " + getConfidence() + ",");
+        if (getAssociationScore() != null)
+            sb.append("AssociationScore: " + getAssociationScore());
         sb.append("}");
         return sb.toString();
     }
@@ -586,6 +447,8 @@ public class Face implements Serializable {
         hashCode = prime * hashCode
                 + ((getExternalImageId() == null) ? 0 : getExternalImageId().hashCode());
         hashCode = prime * hashCode + ((getConfidence() == null) ? 0 : getConfidence().hashCode());
+        hashCode = prime * hashCode
+                + ((getAssociationScore() == null) ? 0 : getAssociationScore().hashCode());
         return hashCode;
     }
 
@@ -622,6 +485,11 @@ public class Face implements Serializable {
             return false;
         if (other.getConfidence() != null
                 && other.getConfidence().equals(this.getConfidence()) == false)
+            return false;
+        if (other.getAssociationScore() == null ^ this.getAssociationScore() == null)
+            return false;
+        if (other.getAssociationScore() != null
+                && other.getAssociationScore().equals(this.getAssociationScore()) == false)
             return false;
         return true;
     }

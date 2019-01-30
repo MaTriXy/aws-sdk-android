@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The Auto Scaling group or launch configuration can't be deleted because it is
- * in use.
+ * The operation can't be performed because the resource is in use.
  * </p>
  */
 public class ResourceInUseException extends AmazonServiceException {

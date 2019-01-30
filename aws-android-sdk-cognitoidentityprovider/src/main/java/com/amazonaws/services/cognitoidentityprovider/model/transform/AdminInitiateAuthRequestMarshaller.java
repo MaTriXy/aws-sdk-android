@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -104,6 +104,18 @@ public class AdminInitiateAuthRequestMarshaller implements
                     }
                 }
                 jsonWriter.endObject();
+            }
+            if (adminInitiateAuthRequest.getAnalyticsMetadata() != null) {
+                AnalyticsMetadataType analyticsMetadata = adminInitiateAuthRequest
+                        .getAnalyticsMetadata();
+                jsonWriter.name("AnalyticsMetadata");
+                AnalyticsMetadataTypeJsonMarshaller.getInstance().marshall(analyticsMetadata,
+                        jsonWriter);
+            }
+            if (adminInitiateAuthRequest.getContextData() != null) {
+                ContextDataType contextData = adminInitiateAuthRequest.getContextData();
+                jsonWriter.name("ContextData");
+                ContextDataTypeJsonMarshaller.getInstance().marshall(contextData, jsonWriter);
             }
 
             jsonWriter.endObject();

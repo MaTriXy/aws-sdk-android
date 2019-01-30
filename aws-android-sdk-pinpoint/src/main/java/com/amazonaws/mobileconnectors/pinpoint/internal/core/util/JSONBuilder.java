@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.internal.core.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,15 +28,13 @@ public class JSONBuilder implements JSONSerializable {
     public JSONBuilder(Object component) {
         if (null != component) {
             this.withAttribute("class", component.getClass().getName());
-            this.withAttribute("hashCode", Integer.toHexString(component
-                                                                       .hashCode()));
+            this.withAttribute("hashCode", Integer.toHexString(component.hashCode()));
         }
     }
 
     public JSONBuilder withAttribute(String key, Object value) {
         final Object jsonValue = value instanceof JSONSerializable
-                                         ? ((JSONSerializable) value)
-                                                   .toJSONObject()
+                                         ? ((JSONSerializable) value).toJSONObject()
                                          : value;
         try {
             json.putOpt(key, jsonValue);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,15 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates a thing record in the thing registry.
+ * Creates a thing record in the registry.
  * </p>
+ * <note>
+ * <p>
+ * This is a control plane operation. See <a href=
+ * "http://docs.aws.amazon.com/iot/latest/developerguide/authorization.html"
+ * >Authorization</a> for information about authorizing control plane actions.
+ * </p>
+ * </note>
  */
 public class CreateThingRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -53,10 +60,21 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      * a JSON document. For example:
      * </p>
      * <p>
-     * <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     * <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      * </p>
      */
     private AttributePayload attributePayload;
+
+    /**
+     * <p>
+     * The name of the billing group the thing will be added to.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     */
+    private String billingGroupName;
 
     /**
      * <p>
@@ -178,7 +196,7 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      * a JSON document. For example:
      * </p>
      * <p>
-     * <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     * <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      * </p>
      *
      * @return <p>
@@ -186,7 +204,7 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      *         pairs in a JSON document. For example:
      *         </p>
      *         <p>
-     *         <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     *         <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      *         </p>
      */
     public AttributePayload getAttributePayload() {
@@ -199,7 +217,7 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      * a JSON document. For example:
      * </p>
      * <p>
-     * <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     * <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      * </p>
      *
      * @param attributePayload <p>
@@ -207,7 +225,7 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      *            name/value pairs in a JSON document. For example:
      *            </p>
      *            <p>
-     *            <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     *            <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      *            </p>
      */
     public void setAttributePayload(AttributePayload attributePayload) {
@@ -220,7 +238,7 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      * a JSON document. For example:
      * </p>
      * <p>
-     * <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     * <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -231,13 +249,70 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
      *            name/value pairs in a JSON document. For example:
      *            </p>
      *            <p>
-     *            <code>{\"attributes\":{\"string1\":\"string2\"}})</code>
+     *            <code>{\"attributes\":{\"string1\":\"string2\"}}</code>
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public CreateThingRequest withAttributePayload(AttributePayload attributePayload) {
         this.attributePayload = attributePayload;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The name of the billing group the thing will be added to.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     *
+     * @return <p>
+     *         The name of the billing group the thing will be added to.
+     *         </p>
+     */
+    public String getBillingGroupName() {
+        return billingGroupName;
+    }
+
+    /**
+     * <p>
+     * The name of the billing group the thing will be added to.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     *
+     * @param billingGroupName <p>
+     *            The name of the billing group the thing will be added to.
+     *            </p>
+     */
+    public void setBillingGroupName(String billingGroupName) {
+        this.billingGroupName = billingGroupName;
+    }
+
+    /**
+     * <p>
+     * The name of the billing group the thing will be added to.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
+     *
+     * @param billingGroupName <p>
+     *            The name of the billing group the thing will be added to.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateThingRequest withBillingGroupName(String billingGroupName) {
+        this.billingGroupName = billingGroupName;
         return this;
     }
 
@@ -257,7 +332,9 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
         if (getThingTypeName() != null)
             sb.append("thingTypeName: " + getThingTypeName() + ",");
         if (getAttributePayload() != null)
-            sb.append("attributePayload: " + getAttributePayload());
+            sb.append("attributePayload: " + getAttributePayload() + ",");
+        if (getBillingGroupName() != null)
+            sb.append("billingGroupName: " + getBillingGroupName());
         sb.append("}");
         return sb.toString();
     }
@@ -272,6 +349,8 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
                 + ((getThingTypeName() == null) ? 0 : getThingTypeName().hashCode());
         hashCode = prime * hashCode
                 + ((getAttributePayload() == null) ? 0 : getAttributePayload().hashCode());
+        hashCode = prime * hashCode
+                + ((getBillingGroupName() == null) ? 0 : getBillingGroupName().hashCode());
         return hashCode;
     }
 
@@ -300,6 +379,11 @@ public class CreateThingRequest extends AmazonWebServiceRequest implements Seria
             return false;
         if (other.getAttributePayload() != null
                 && other.getAttributePayload().equals(this.getAttributePayload()) == false)
+            return false;
+        if (other.getBillingGroupName() == null ^ this.getBillingGroupName() == null)
+            return false;
+        if (other.getBillingGroupName() != null
+                && other.getBillingGroupName().equals(this.getBillingGroupName()) == false)
             return false;
         return true;
     }

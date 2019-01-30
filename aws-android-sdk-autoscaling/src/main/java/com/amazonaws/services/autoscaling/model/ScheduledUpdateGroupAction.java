@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,13 +19,14 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Describes a scheduled update to an Auto Scaling group.
+ * Describes a scheduled scaling action. Used in response to
+ * <a>DescribeScheduledActions</a>.
  * </p>
  */
 public class ScheduledUpdateGroupAction implements Serializable {
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -74,7 +75,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <p>
      * When <code>StartTime</code> and <code>EndTime</code> are specified with
      * <code>Recurrence</code>, they form the boundaries of when the recurring
-     * action will start and stop.
+     * action starts and stops.
      * </p>
      */
     private java.util.Date startTime;
@@ -122,7 +123,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -131,7 +132,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <br/>
      *
      * @return <p>
-     *         The name of the group.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -140,7 +141,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -149,7 +150,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -158,7 +159,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -170,7 +171,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -353,7 +354,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <p>
      * When <code>StartTime</code> and <code>EndTime</code> are specified with
      * <code>Recurrence</code>, they form the boundaries of when the recurring
-     * action will start and stop.
+     * action starts and stops.
      * </p>
      *
      * @return <p>
@@ -363,7 +364,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      *         <p>
      *         When <code>StartTime</code> and <code>EndTime</code> are
      *         specified with <code>Recurrence</code>, they form the boundaries
-     *         of when the recurring action will start and stop.
+     *         of when the recurring action starts and stops.
      *         </p>
      */
     public java.util.Date getStartTime() {
@@ -378,7 +379,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <p>
      * When <code>StartTime</code> and <code>EndTime</code> are specified with
      * <code>Recurrence</code>, they form the boundaries of when the recurring
-     * action will start and stop.
+     * action starts and stops.
      * </p>
      *
      * @param startTime <p>
@@ -388,7 +389,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      *            <p>
      *            When <code>StartTime</code> and <code>EndTime</code> are
      *            specified with <code>Recurrence</code>, they form the
-     *            boundaries of when the recurring action will start and stop.
+     *            boundaries of when the recurring action starts and stops.
      *            </p>
      */
     public void setStartTime(java.util.Date startTime) {
@@ -403,7 +404,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      * <p>
      * When <code>StartTime</code> and <code>EndTime</code> are specified with
      * <code>Recurrence</code>, they form the boundaries of when the recurring
-     * action will start and stop.
+     * action starts and stops.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -416,7 +417,7 @@ public class ScheduledUpdateGroupAction implements Serializable {
      *            <p>
      *            When <code>StartTime</code> and <code>EndTime</code> are
      *            specified with <code>Recurrence</code>, they form the
-     *            boundaries of when the recurring action will start and stop.
+     *            boundaries of when the recurring action starts and stops.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

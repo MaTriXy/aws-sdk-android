@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class ReceiptRuleSetMetadata implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.),
+     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9),
      * underscores (_), or dashes (-).
      * </p>
      * </li>
@@ -71,7 +71,7 @@ public class ReceiptRuleSetMetadata implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.),
+     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9),
      * underscores (_), or dashes (-).
      * </p>
      * </li>
@@ -93,8 +93,8 @@ public class ReceiptRuleSetMetadata implements Serializable {
      *         <ul>
      *         <li>
      *         <p>
-     *         Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods
-     *         (.), underscores (_), or dashes (-).
+     *         This value can only contain ASCII letters (a-z, A-Z), numbers
+     *         (0-9), underscores (_), or dashes (-).
      *         </p>
      *         </li>
      *         <li>
@@ -120,7 +120,7 @@ public class ReceiptRuleSetMetadata implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.),
+     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9),
      * underscores (_), or dashes (-).
      * </p>
      * </li>
@@ -142,8 +142,8 @@ public class ReceiptRuleSetMetadata implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods
-     *            (.), underscores (_), or dashes (-).
+     *            This value can only contain ASCII letters (a-z, A-Z), numbers
+     *            (0-9), underscores (_), or dashes (-).
      *            </p>
      *            </li>
      *            <li>
@@ -169,7 +169,7 @@ public class ReceiptRuleSetMetadata implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.),
+     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9),
      * underscores (_), or dashes (-).
      * </p>
      * </li>
@@ -194,8 +194,8 @@ public class ReceiptRuleSetMetadata implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods
-     *            (.), underscores (_), or dashes (-).
+     *            This value can only contain ASCII letters (a-z, A-Z), numbers
+     *            (0-9), underscores (_), or dashes (-).
      *            </p>
      *            </li>
      *            <li>

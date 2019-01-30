@@ -19,6 +19,7 @@ package com.amazonaws.mobileconnectors.cognitoauth;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Patterns;
 
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthInvalidParameterException;
@@ -43,6 +44,31 @@ public final class Auth {
      * The host application {@link Context}.
      */
     private final Context context;
+
+    /**
+     * Cognito user pool Id
+     */
+    private final String userPoolId;
+
+    /**
+     * Identity Provider for social login
+     */
+    private final String identityProvider;
+
+    /**
+     * Identity provider (idp) identifier, works as an alias to the real idp
+     */
+    private final String idpIdentifier;
+
+    /**
+     * Bundle containing customization flags for chrome custom tab
+     */
+    private final Bundle customTabExtras;
+
+    /**
+     * This identifies the settings for additional userPool features.
+     */
+    private boolean advancedSecurityDataCollectionFlag;
 
     /**
      * This is the  hostname for the app/user-pool.
@@ -81,10 +107,26 @@ public final class Auth {
     private AuthClient user;
 
     /**
+     * It enables user context data collection for frontline.
+     */
+    public void setAdvancedSecurityDataCollection(boolean isEnabled) {
+            this.advancedSecurityDataCollectionFlag = isEnabled;
+    }
+ 
+    /**
+     * @return It identifies if the data collection is enabled. By default, we
+     *         do collect user context data.
+     */
+    public boolean isAdvancedSecurityDataCollectionEnabled() {
+        return advancedSecurityDataCollectionFlag;
+    }
+
+    /**
      * Instantiates {@link Auth}.
      * <p><b>Note: </b>This SDK not obfuscate the App Secret. When using App Secret in the production
      * app's, you must take precautions to properly hide the Secret.</p>
      * @param context Required: The Android application {@link Context}.
+     * @param userPoolId : Id for cognito user pool used by application.
      * @param appWebDomain Required: The application/user-pools Cognito web hostname,
      *                     this is set at the Cognito console.
      * @param appId Required: The Cognito App/Client Id.
@@ -93,16 +135,22 @@ public final class Auth {
      * @param signOutRedirectUri Required: The callback Uri after sign-out.
      * @param scopes Required: Scopes requested for the tokens.
      * @param userHandler Required: An instance of the callback handler.
+     * @param advancedSecurityDataCollectionFlag : Flag identifying if user context data should be collected.
      */
     @SuppressWarnings("checkstyle:hiddenfield")
     private Auth(final Context context,
+                 final String userPoolId,
                  final String appWebDomain,
                  final String appId,
                  final String appSecret,
                  final String signInRedirectUri,
                  final String signOutRedirectUri,
                  final Set<String> scopes,
-                 final AuthHandler userHandler) {
+                 final AuthHandler userHandler,
+                 final boolean advancedSecurityDataCollectionFlag,
+                 final String identityProvider,
+                 final String idpIdentifier,
+                 final Bundle customTabExtras) {
         this.context = context;
         this.appWebDomain = appWebDomain;
         this.appId = appId;
@@ -113,6 +161,11 @@ public final class Auth {
         this.user = new AuthClient(context, this);
         this.user = new AuthClient(context, this);
         this.user.setUserHandler(userHandler);
+        this.userPoolId = userPoolId;
+        this.advancedSecurityDataCollectionFlag = advancedSecurityDataCollectionFlag;
+        this.identityProvider = identityProvider;
+        this.idpIdentifier = idpIdentifier;
+        this.customTabExtras = customTabExtras;
         getCurrentUser();
     }
 
@@ -161,6 +214,57 @@ public final class Auth {
          * Callback handler.
          */
         private AuthHandler mUserHandler;
+
+        /**
+         * User Pool id for the userPool.
+         */
+        private String mUserPoolId;
+
+        /**
+         * Identity Provider for the userPool.
+         */
+        private String mIdentityProvider;
+
+        /**
+         * Idp identifier for the userPool.
+         */
+        private String mIdpIdentifier;
+
+        /**
+         * Bundle of flags to customize chrome custom tab UI
+         */
+        private Bundle mCustomTabsExtras;
+
+        /**
+         * Flag indicating if data collection for advanced security mode is enabled.
+         * By default this is enabled.
+         */
+        private boolean mAdvancedSecurityDataCollectionFlag = true;
+
+        /**
+         * Sets flag to enable user context data collection. By
+         * default, the flag is set to true.
+         * <p>
+         *     Flag identifying if user context data should be collected for
+         *     advanced security evaluation.
+         * </p>
+         * @param flag value for data collection
+         * @return A reference to this builder.
+         */
+        public Builder setAdvancedSecurityDataCollection(final boolean advancedSecurityDataCollectionFlag) {
+            this.mAdvancedSecurityDataCollectionFlag = advancedSecurityDataCollectionFlag;
+            return this;
+        }
+ 
+        /**
+         * Sets cognito user pool Id used by the application. 
+         * @param userPoolId pool id for cognito user pool.
+         * @return A reference to this builder.
+         */
+        public Builder setUserPoolId(final String userPoolId) {
+            this.mUserPoolId = userPoolId;
+            return this;
+        }
 
         /**
          * Sets the Cognito App-Client Id.
@@ -281,20 +385,69 @@ public final class Auth {
         }
 
         /**
+         * Sets the identity provider. This will change the hosted UI behavior to go directly to the specified social provider
+         * <p>
+         *     Optional. Set identity provider for social sign in.
+         * </p>
+         * @param mIdentityProvider Optional: Will change the hosted UI behavior to go directly to the specified social provider
+         * @return A reference to this builder.
+         */
+        @SuppressWarnings("checkstyle:hiddenfield")
+        public Builder setIdentityProvider(final String mIdentityProvider) {
+            this.mIdentityProvider = mIdentityProvider;
+            return this;
+        }
+
+        /**
+         * Sets the identity provider (idp) identifier. This will change the hosted UI behavior to go directly to the corresponding provider
+         * Used by the developer to map to a identity provider name without exposing the provider name.
+         * <p>
+         *     Optional. Set idp identifier for provider mapping.
+         * </p>
+         * @param mIdpIdentifier Optional: Will change the hosted UI behavior to go directly to the corresponding provider
+         * @return A reference to this builder.
+         */
+        @SuppressWarnings("checkstyle:hiddenfield")
+        public Builder setIdpIdentifier(final String mIdpIdentifier) {
+            this.mIdpIdentifier = mIdpIdentifier;
+            return this;
+        }
+
+        /**
+         * Sets customization bundle. This allow to customize chrome custom tab.
+         * <p>
+         *     Optional. Set a bundle to customize UI
+         * </p>
+         * @param mCustomTabsExtras Optional: Pass to chrome custom tab a bundle of customization flags
+         * @return A reference to this builder.
+         */
+        @SuppressWarnings("checkstyle:hiddenfield")
+        public Builder setCustomTabsExtras(final Bundle mCustomTabsExtras) {
+            this.mCustomTabsExtras = mCustomTabsExtras;
+            return this;
+        }
+
+        /**
          * Instantiates {@link Auth} with the set options.
          * @return {@link Auth}.
          */
         public Auth build() {
             validateCognitoAuthParameters();
             return new Auth(this.mAppContext,
+                    this.mUserPoolId,
                     this.mAppWebDomain,
                     this.mAppClientId,
                     this.mAppSecret,
                     this.mSignInRedirect,
                     this.mSignOutRedirect,
                     this.mScopes,
-                    this.mUserHandler);
+                    this.mUserHandler,
+                    this.mAdvancedSecurityDataCollectionFlag,
+                    this.mIdentityProvider,
+                    this.mIdpIdentifier,
+                    this.mCustomTabsExtras);
         }
+
 
         /**
          * Checks if all required parameters are available to instantiate {@link Auth}.
@@ -365,6 +518,13 @@ public final class Auth {
     }
 
     /**
+     * @return Id for the cognito user pool used by the application.
+     */
+    public String getUserPoolId() {
+        return userPoolId;
+    }
+
+    /**
      * @return the web domain set for this application.
      */
     public String getAppWebDomain() {
@@ -411,6 +571,27 @@ public final class Auth {
      */
     public String getSignOutRedirectUri() {
         return signOutRedirectUri;
+    }
+
+    /**
+     * @return Identity Provider set for this {@link Auth} instance.
+     */
+    public String getIdentityProvider() {
+        return identityProvider;
+    }
+
+    /**
+     * @return Identity Provider identifier set for this {@link Auth} instance.
+     */
+    public String getIdpIdentifier() {
+        return idpIdentifier;
+    }
+
+    /**
+     * @return Extra customization bundle for this {@link Auth} instance.
+     */
+    public Bundle getCustomTabExtras() {
+        return customTabExtras;
     }
 
     /**

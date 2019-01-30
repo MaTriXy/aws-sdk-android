@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.analytics.monetization;
 
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsClient;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.util.StringUtil;
@@ -56,8 +57,7 @@ public abstract class MonetizationEventBuilder {
     static final String AMAZON_STORE = "Amazon";
     static final String GOOGLE_PLAY_STORE = "Google Play";
     static final String VIRTUAL_STORE = "Virtual";
-    private static final org.apache.commons.logging.Log log =
-            LogFactory.getLog(MonetizationEventBuilder.class);
+    private static final Log log = LogFactory.getLog(MonetizationEventBuilder.class);
     private final AnalyticsClient analyticsClient;
     private String productId;
     private String store;
@@ -86,30 +86,24 @@ public abstract class MonetizationEventBuilder {
         AnalyticsEvent purchaseEvent = null;
         if (isValid() && doBaseValidation()) {
             purchaseEvent = analyticsClient.createEvent(PURCHASE_EVENT_NAME);
-
-            purchaseEvent
-                    .addAttribute(PURCHASE_EVENT_PRODUCT_ID_ATTR, productId);
+            purchaseEvent.addAttribute(PURCHASE_EVENT_PRODUCT_ID_ATTR, productId);
             purchaseEvent.addAttribute(PURCHASE_EVENT_STORE_ATTR, store);
             purchaseEvent.addMetric(PURCHASE_EVENT_QUANTITY_METRIC, quantity);
 
             if (formattedItemPrice != null) {
-                purchaseEvent.addAttribute(PURCHASE_EVENT_PRICE_FORMATTED_ATTR,
-                                                  formattedItemPrice);
+                purchaseEvent.addAttribute(PURCHASE_EVENT_PRICE_FORMATTED_ATTR, formattedItemPrice);
             }
 
             if (itemPrice != null) {
-                purchaseEvent
-                        .addMetric(PURCHASE_EVENT_ITEM_PRICE_METRIC, itemPrice);
+                purchaseEvent.addMetric(PURCHASE_EVENT_ITEM_PRICE_METRIC, itemPrice);
             }
 
             if (transactionId != null) {
-                purchaseEvent.addAttribute(PURCHASE_EVENT_TRANSACTION_ID_ATTR,
-                                                  transactionId);
+                purchaseEvent.addAttribute(PURCHASE_EVENT_TRANSACTION_ID_ATTR, transactionId);
             }
 
             if (currency != null) {
-                purchaseEvent
-                        .addAttribute(PURCHASE_EVENT_CURRENCY_ATTR, currency);
+                purchaseEvent.addAttribute(PURCHASE_EVENT_CURRENCY_ATTR, currency);
             }
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,19 +21,24 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Removes one or more load balancers from the specified Auto Scaling group.
+ * Detaches one or more Classic Load Balancers from the specified Auto Scaling
+ * group.
+ * </p>
+ * <p>
+ * This operation detaches only Classic Load Balancers. If you have Application
+ * Load Balancers, use <a>DetachLoadBalancerTargetGroups</a> instead.
  * </p>
  * <p>
  * When you detach a load balancer, it enters the <code>Removing</code> state
  * while deregistering the instances in the group. When all instances are
  * deregistered, then you can no longer describe the load balancer using
- * <a>DescribeLoadBalancers</a>. Note that the instances remain running.
+ * <a>DescribeLoadBalancers</a>. The instances remain running.
  * </p>
  */
 public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -45,14 +50,14 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * One or more load balancer names.
+     * The names of the load balancers. You can specify up to 10 load balancers.
      * </p>
      */
     private java.util.List<String> loadBalancerNames = new java.util.ArrayList<String>();
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -61,7 +66,7 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
      * <br/>
      *
      * @return <p>
-     *         The name of the group.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -70,7 +75,7 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -79,7 +84,7 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -88,7 +93,7 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -100,7 +105,7 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -112,11 +117,12 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * One or more load balancer names.
+     * The names of the load balancers. You can specify up to 10 load balancers.
      * </p>
      *
      * @return <p>
-     *         One or more load balancer names.
+     *         The names of the load balancers. You can specify up to 10 load
+     *         balancers.
      *         </p>
      */
     public java.util.List<String> getLoadBalancerNames() {
@@ -125,11 +131,12 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * One or more load balancer names.
+     * The names of the load balancers. You can specify up to 10 load balancers.
      * </p>
      *
      * @param loadBalancerNames <p>
-     *            One or more load balancer names.
+     *            The names of the load balancers. You can specify up to 10 load
+     *            balancers.
      *            </p>
      */
     public void setLoadBalancerNames(java.util.Collection<String> loadBalancerNames) {
@@ -143,14 +150,15 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * One or more load balancer names.
+     * The names of the load balancers. You can specify up to 10 load balancers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param loadBalancerNames <p>
-     *            One or more load balancer names.
+     *            The names of the load balancers. You can specify up to 10 load
+     *            balancers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -167,14 +175,15 @@ public class DetachLoadBalancersRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * One or more load balancer names.
+     * The names of the load balancers. You can specify up to 10 load balancers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param loadBalancerNames <p>
-     *            One or more load balancer names.
+     *            The names of the load balancers. You can specify up to 10 load
+     *            balancers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

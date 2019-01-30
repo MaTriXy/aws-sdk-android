@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,6 +47,15 @@ public class GetPolicyVersionResultJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("isDefaultVersion")) {
                 getPolicyVersionResult.setIsDefaultVersion(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("creationDate")) {
+                getPolicyVersionResult.setCreationDate(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("lastModifiedDate")) {
+                getPolicyVersionResult.setLastModifiedDate(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("generationId")) {
+                getPolicyVersionResult.setGenerationId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

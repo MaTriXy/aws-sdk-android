@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,6 +63,11 @@ class CampaignResponseJsonMarshaller {
             Integer holdoutPercent = campaignResponse.getHoldoutPercent();
             jsonWriter.name("HoldoutPercent");
             jsonWriter.value(holdoutPercent);
+        }
+        if (campaignResponse.getHook() != null) {
+            CampaignHook hook = campaignResponse.getHook();
+            jsonWriter.name("Hook");
+            CampaignHookJsonMarshaller.getInstance().marshall(hook, jsonWriter);
         }
         if (campaignResponse.getId() != null) {
             String id = campaignResponse.getId();

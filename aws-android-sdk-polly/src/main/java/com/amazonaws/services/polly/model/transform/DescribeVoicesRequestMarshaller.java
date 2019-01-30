@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,6 +54,10 @@ public class DescribeVoicesRequestMarshaller implements
         if (describeVoicesRequest.getLanguageCode() != null) {
             request.addParameter("LanguageCode",
                     StringUtils.fromString(describeVoicesRequest.getLanguageCode()));
+        }
+        if (describeVoicesRequest.getIncludeAdditionalLanguageCodes() != null) {
+            request.addParameter("IncludeAdditionalLanguageCodes", StringUtils
+                    .fromBoolean(describeVoicesRequest.getIncludeAdditionalLanguageCodes()));
         }
         if (describeVoicesRequest.getNextToken() != null) {
             request.addParameter("NextToken",

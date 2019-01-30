@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,6 +29,10 @@ public class UpdateUserAttributesRequest extends AmazonWebServiceRequest impleme
      * <p>
      * An array of name-value pairs representing user attributes.
      * </p>
+     * <p>
+     * For custom attributes, you must prepend the <code>custom:</code> prefix
+     * to the attribute name.
+     * </p>
      */
     private java.util.List<AttributeType> userAttributes;
 
@@ -46,9 +50,17 @@ public class UpdateUserAttributesRequest extends AmazonWebServiceRequest impleme
      * <p>
      * An array of name-value pairs representing user attributes.
      * </p>
+     * <p>
+     * For custom attributes, you must prepend the <code>custom:</code> prefix
+     * to the attribute name.
+     * </p>
      *
      * @return <p>
      *         An array of name-value pairs representing user attributes.
+     *         </p>
+     *         <p>
+     *         For custom attributes, you must prepend the <code>custom:</code>
+     *         prefix to the attribute name.
      *         </p>
      */
     public java.util.List<AttributeType> getUserAttributes() {
@@ -59,9 +71,17 @@ public class UpdateUserAttributesRequest extends AmazonWebServiceRequest impleme
      * <p>
      * An array of name-value pairs representing user attributes.
      * </p>
+     * <p>
+     * For custom attributes, you must prepend the <code>custom:</code> prefix
+     * to the attribute name.
+     * </p>
      *
      * @param userAttributes <p>
      *            An array of name-value pairs representing user attributes.
+     *            </p>
+     *            <p>
+     *            For custom attributes, you must prepend the
+     *            <code>custom:</code> prefix to the attribute name.
      *            </p>
      */
     public void setUserAttributes(java.util.Collection<AttributeType> userAttributes) {
@@ -78,11 +98,19 @@ public class UpdateUserAttributesRequest extends AmazonWebServiceRequest impleme
      * An array of name-value pairs representing user attributes.
      * </p>
      * <p>
+     * For custom attributes, you must prepend the <code>custom:</code> prefix
+     * to the attribute name.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param userAttributes <p>
      *            An array of name-value pairs representing user attributes.
+     *            </p>
+     *            <p>
+     *            For custom attributes, you must prepend the
+     *            <code>custom:</code> prefix to the attribute name.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -102,11 +130,19 @@ public class UpdateUserAttributesRequest extends AmazonWebServiceRequest impleme
      * An array of name-value pairs representing user attributes.
      * </p>
      * <p>
+     * For custom attributes, you must prepend the <code>custom:</code> prefix
+     * to the attribute name.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param userAttributes <p>
      *            An array of name-value pairs representing user attributes.
+     *            </p>
+     *            <p>
+     *            For custom attributes, you must prepend the
+     *            <code>custom:</code> prefix to the attribute name.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,31 +19,31 @@ import java.io.Serializable;
 
 /**
  * <p>
- * The type of constraints associated with an attribute of the string type.
+ * The constraints associated with a string attribute.
  * </p>
  */
 public class StringAttributeConstraintsType implements Serializable {
     /**
      * <p>
-     * The minimum length of an attribute value of the string type.
+     * The minimum length.
      * </p>
      */
     private String minLength;
 
     /**
      * <p>
-     * The maximum length of an attribute value of the string type.
+     * The maximum length.
      * </p>
      */
     private String maxLength;
 
     /**
      * <p>
-     * The minimum length of an attribute value of the string type.
+     * The minimum length.
      * </p>
      *
      * @return <p>
-     *         The minimum length of an attribute value of the string type.
+     *         The minimum length.
      *         </p>
      */
     public String getMinLength() {
@@ -52,11 +52,11 @@ public class StringAttributeConstraintsType implements Serializable {
 
     /**
      * <p>
-     * The minimum length of an attribute value of the string type.
+     * The minimum length.
      * </p>
      *
      * @param minLength <p>
-     *            The minimum length of an attribute value of the string type.
+     *            The minimum length.
      *            </p>
      */
     public void setMinLength(String minLength) {
@@ -65,14 +65,14 @@ public class StringAttributeConstraintsType implements Serializable {
 
     /**
      * <p>
-     * The minimum length of an attribute value of the string type.
+     * The minimum length.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param minLength <p>
-     *            The minimum length of an attribute value of the string type.
+     *            The minimum length.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -84,11 +84,11 @@ public class StringAttributeConstraintsType implements Serializable {
 
     /**
      * <p>
-     * The maximum length of an attribute value of the string type.
+     * The maximum length.
      * </p>
      *
      * @return <p>
-     *         The maximum length of an attribute value of the string type.
+     *         The maximum length.
      *         </p>
      */
     public String getMaxLength() {
@@ -97,11 +97,11 @@ public class StringAttributeConstraintsType implements Serializable {
 
     /**
      * <p>
-     * The maximum length of an attribute value of the string type.
+     * The maximum length.
      * </p>
      *
      * @param maxLength <p>
-     *            The maximum length of an attribute value of the string type.
+     *            The maximum length.
      *            </p>
      */
     public void setMaxLength(String maxLength) {
@@ -110,14 +110,14 @@ public class StringAttributeConstraintsType implements Serializable {
 
     /**
      * <p>
-     * The maximum length of an attribute value of the string type.
+     * The maximum length.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param maxLength <p>
-     *            The maximum length of an attribute value of the string type.
+     *            The maximum length.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

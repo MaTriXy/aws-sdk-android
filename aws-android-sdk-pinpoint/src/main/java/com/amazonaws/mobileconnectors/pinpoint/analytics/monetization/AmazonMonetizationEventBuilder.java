@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.analytics.monetization;
 
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.LogFactory;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsClient;
 
 /**
@@ -44,8 +44,7 @@ import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsClient;
  */
 public class AmazonMonetizationEventBuilder extends MonetizationEventBuilder {
 
-    private static final org.apache.commons.logging.Log log =
-            LogFactory.getLog(AmazonMonetizationEventBuilder.class);
+    private static final com.amazonaws.logging.Log log = LogFactory.getLog(AmazonMonetizationEventBuilder.class);
 
     /**
      * Construct a AmazonMonetizationEventBuilder with the specified EventClient
@@ -145,12 +144,10 @@ public class AmazonMonetizationEventBuilder extends MonetizationEventBuilder {
 
         if (getFormattedItemPrice() == null) {
             if (getCurrency() == null) {
-                log.warn(
-                                "Amazon Monetization event is not valid: it is missing the localized currency");
+                log.warn("Amazon Monetization event is not valid: it is missing the localized currency");
                 return false;
             } else if (getItemPrice() == null) {
-                log.warn(
-                                "Amazon Monetization event is not valid: it is missing the localized item price");
+                log.warn("Amazon Monetization event is not valid: it is missing the localized item price");
                 return false;
             }
         }

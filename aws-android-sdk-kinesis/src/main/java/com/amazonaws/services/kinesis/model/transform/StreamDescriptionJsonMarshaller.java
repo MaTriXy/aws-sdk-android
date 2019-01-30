@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,6 +62,11 @@ class StreamDescriptionJsonMarshaller {
             jsonWriter.name("RetentionPeriodHours");
             jsonWriter.value(retentionPeriodHours);
         }
+        if (streamDescription.getStreamCreationTimestamp() != null) {
+            java.util.Date streamCreationTimestamp = streamDescription.getStreamCreationTimestamp();
+            jsonWriter.name("StreamCreationTimestamp");
+            jsonWriter.value(streamCreationTimestamp);
+        }
         if (streamDescription.getEnhancedMonitoring() != null) {
             java.util.List<EnhancedMetrics> enhancedMonitoring = streamDescription
                     .getEnhancedMonitoring();
@@ -74,6 +79,16 @@ class StreamDescriptionJsonMarshaller {
                 }
             }
             jsonWriter.endArray();
+        }
+        if (streamDescription.getEncryptionType() != null) {
+            String encryptionType = streamDescription.getEncryptionType();
+            jsonWriter.name("EncryptionType");
+            jsonWriter.value(encryptionType);
+        }
+        if (streamDescription.getKeyId() != null) {
+            String keyId = streamDescription.getKeyId();
+            jsonWriter.name("KeyId");
+            jsonWriter.value(keyId);
         }
         jsonWriter.endObject();
     }

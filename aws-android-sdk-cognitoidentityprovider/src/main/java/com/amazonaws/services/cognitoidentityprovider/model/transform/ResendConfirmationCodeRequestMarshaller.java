@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -70,10 +70,24 @@ public class ResendConfirmationCodeRequestMarshaller implements
                 jsonWriter.name("SecretHash");
                 jsonWriter.value(secretHash);
             }
+            if (resendConfirmationCodeRequest.getUserContextData() != null) {
+                UserContextDataType userContextData = resendConfirmationCodeRequest
+                        .getUserContextData();
+                jsonWriter.name("UserContextData");
+                UserContextDataTypeJsonMarshaller.getInstance().marshall(userContextData,
+                        jsonWriter);
+            }
             if (resendConfirmationCodeRequest.getUsername() != null) {
                 String username = resendConfirmationCodeRequest.getUsername();
                 jsonWriter.name("Username");
                 jsonWriter.value(username);
+            }
+            if (resendConfirmationCodeRequest.getAnalyticsMetadata() != null) {
+                AnalyticsMetadataType analyticsMetadata = resendConfirmationCodeRequest
+                        .getAnalyticsMetadata();
+                jsonWriter.name("AnalyticsMetadata");
+                AnalyticsMetadataTypeJsonMarshaller.getInstance().marshall(analyticsMetadata,
+                        jsonWriter);
             }
 
             jsonWriter.endObject();

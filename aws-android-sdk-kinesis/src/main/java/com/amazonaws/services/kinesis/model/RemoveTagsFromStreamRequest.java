@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,11 +21,15 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Removes tags from the specified Amazon Kinesis stream. Removed tags are
- * deleted and cannot be recovered after this operation successfully completes.
+ * Removes tags from the specified Kinesis data stream. Removed tags are deleted
+ * and cannot be recovered after this operation successfully completes.
  * </p>
  * <p>
  * If you specify a tag that does not exist, it is ignored.
+ * </p>
+ * <p>
+ * <a>RemoveTagsFromStream</a> has a limit of five transactions per second per
+ * account.
  * </p>
  */
 public class RemoveTagsFromStreamRequest extends AmazonWebServiceRequest implements Serializable {

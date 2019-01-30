@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,7 +37,15 @@ class WriteApplicationSettingsRequestJsonUnmarshaller implements
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if (name.equals("Limits")) {
+            if (name.equals("CampaignHook")) {
+                writeApplicationSettingsRequest.setCampaignHook(CampaignHookJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("CloudWatchMetricsEnabled")) {
+                writeApplicationSettingsRequest.setCloudWatchMetricsEnabled(BooleanJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("Limits")) {
                 writeApplicationSettingsRequest.setLimits(CampaignLimitsJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));

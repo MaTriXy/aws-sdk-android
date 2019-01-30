@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@ package com.amazonaws.services.pinpoint.model;
 
 import java.io.Serializable;
 
+/**
+ * Import job resource
+ */
 public class ImportJobResource implements Serializable {
     /**
      * Sets whether the endpoints create a segment when they are imported.
@@ -24,8 +27,10 @@ public class ImportJobResource implements Serializable {
     private Boolean defineSegment;
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      */
     private String externalId;
 
@@ -51,11 +56,10 @@ public class ImportJobResource implements Serializable {
     private String roleArn;
 
     /**
-     * A URL that points to the location within an Amazon S3 bucket that
-     * contains the endpoints to import. The location can be a folder or a
-     * single file. The URL should follow this format:
-     * s3://bucket-name/folder-name/file-name Amazon Pinpoint will import
-     * endpoints from this location and any subfolders it contains.
+     * The URL of the S3 bucket that contains the segment information to import.
+     * The location can be a folder or a single file. The URL should use the
+     * following format: s3://bucket-name/folder-name/file-name Amazon Pinpoint
+     * imports endpoints from this location and any subfolders it contains.
      */
     private String s3Url;
 
@@ -118,36 +122,50 @@ public class ImportJobResource implements Serializable {
     }
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      *
-     * @return A unique, custom ID assigned to the IAM role that restricts who
-     *         can assume the role.
+     * @return (Deprecated) Your AWS account ID, which you assigned to the
+     *         ExternalID key in an IAM trust policy. Used by Amazon Pinpoint to
+     *         assume an IAM role. This requirement is removed, and external IDs
+     *         are not recommended for IAM roles assumed by Amazon Pinpoint.
      */
     public String getExternalId() {
         return externalId;
     }
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      *
-     * @param externalId A unique, custom ID assigned to the IAM role that
-     *            restricts who can assume the role.
+     * @param externalId (Deprecated) Your AWS account ID, which you assigned to
+     *            the ExternalID key in an IAM trust policy. Used by Amazon
+     *            Pinpoint to assume an IAM role. This requirement is removed,
+     *            and external IDs are not recommended for IAM roles assumed by
+     *            Amazon Pinpoint.
      */
     public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
 
     /**
-     * A unique, custom ID assigned to the IAM role that restricts who can
-     * assume the role.
+     * (Deprecated) Your AWS account ID, which you assigned to the ExternalID
+     * key in an IAM trust policy. Used by Amazon Pinpoint to assume an IAM
+     * role. This requirement is removed, and external IDs are not recommended
+     * for IAM roles assumed by Amazon Pinpoint.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param externalId A unique, custom ID assigned to the IAM role that
-     *            restricts who can assume the role.
+     * @param externalId (Deprecated) Your AWS account ID, which you assigned to
+     *            the ExternalID key in an IAM trust policy. Used by Amazon
+     *            Pinpoint to assume an IAM role. This requirement is removed,
+     *            and external IDs are not recommended for IAM roles assumed by
+     *            Amazon Pinpoint.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -336,57 +354,51 @@ public class ImportJobResource implements Serializable {
     }
 
     /**
-     * A URL that points to the location within an Amazon S3 bucket that
-     * contains the endpoints to import. The location can be a folder or a
-     * single file. The URL should follow this format:
-     * s3://bucket-name/folder-name/file-name Amazon Pinpoint will import
-     * endpoints from this location and any subfolders it contains.
+     * The URL of the S3 bucket that contains the segment information to import.
+     * The location can be a folder or a single file. The URL should use the
+     * following format: s3://bucket-name/folder-name/file-name Amazon Pinpoint
+     * imports endpoints from this location and any subfolders it contains.
      *
-     * @return A URL that points to the location within an Amazon S3 bucket that
-     *         contains the endpoints to import. The location can be a folder or
-     *         a single file. The URL should follow this format:
-     *         s3://bucket-name/folder-name/file-name Amazon Pinpoint will
-     *         import endpoints from this location and any subfolders it
-     *         contains.
+     * @return The URL of the S3 bucket that contains the segment information to
+     *         import. The location can be a folder or a single file. The URL
+     *         should use the following format:
+     *         s3://bucket-name/folder-name/file-name Amazon Pinpoint imports
+     *         endpoints from this location and any subfolders it contains.
      */
     public String getS3Url() {
         return s3Url;
     }
 
     /**
-     * A URL that points to the location within an Amazon S3 bucket that
-     * contains the endpoints to import. The location can be a folder or a
-     * single file. The URL should follow this format:
-     * s3://bucket-name/folder-name/file-name Amazon Pinpoint will import
-     * endpoints from this location and any subfolders it contains.
+     * The URL of the S3 bucket that contains the segment information to import.
+     * The location can be a folder or a single file. The URL should use the
+     * following format: s3://bucket-name/folder-name/file-name Amazon Pinpoint
+     * imports endpoints from this location and any subfolders it contains.
      *
-     * @param s3Url A URL that points to the location within an Amazon S3 bucket
-     *            that contains the endpoints to import. The location can be a
-     *            folder or a single file. The URL should follow this format:
-     *            s3://bucket-name/folder-name/file-name Amazon Pinpoint will
-     *            import endpoints from this location and any subfolders it
-     *            contains.
+     * @param s3Url The URL of the S3 bucket that contains the segment
+     *            information to import. The location can be a folder or a
+     *            single file. The URL should use the following format:
+     *            s3://bucket-name/folder-name/file-name Amazon Pinpoint imports
+     *            endpoints from this location and any subfolders it contains.
      */
     public void setS3Url(String s3Url) {
         this.s3Url = s3Url;
     }
 
     /**
-     * A URL that points to the location within an Amazon S3 bucket that
-     * contains the endpoints to import. The location can be a folder or a
-     * single file. The URL should follow this format:
-     * s3://bucket-name/folder-name/file-name Amazon Pinpoint will import
-     * endpoints from this location and any subfolders it contains.
+     * The URL of the S3 bucket that contains the segment information to import.
+     * The location can be a folder or a single file. The URL should use the
+     * following format: s3://bucket-name/folder-name/file-name Amazon Pinpoint
+     * imports endpoints from this location and any subfolders it contains.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param s3Url A URL that points to the location within an Amazon S3 bucket
-     *            that contains the endpoints to import. The location can be a
-     *            folder or a single file. The URL should follow this format:
-     *            s3://bucket-name/folder-name/file-name Amazon Pinpoint will
-     *            import endpoints from this location and any subfolders it
-     *            contains.
+     * @param s3Url The URL of the S3 bucket that contains the segment
+     *            information to import. The location can be a folder or a
+     *            single file. The URL should use the following format:
+     *            s3://bucket-name/folder-name/file-name Amazon Pinpoint imports
+     *            endpoints from this location and any subfolders it contains.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */

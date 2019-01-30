@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,6 +35,27 @@ class APNSChannelResponseJsonMarshaller {
             String creationDate = aPNSChannelResponse.getCreationDate();
             jsonWriter.name("CreationDate");
             jsonWriter.value(creationDate);
+        }
+        if (aPNSChannelResponse.getDefaultAuthenticationMethod() != null) {
+            String defaultAuthenticationMethod = aPNSChannelResponse
+                    .getDefaultAuthenticationMethod();
+            jsonWriter.name("DefaultAuthenticationMethod");
+            jsonWriter.value(defaultAuthenticationMethod);
+        }
+        if (aPNSChannelResponse.getEnabled() != null) {
+            Boolean enabled = aPNSChannelResponse.getEnabled();
+            jsonWriter.name("Enabled");
+            jsonWriter.value(enabled);
+        }
+        if (aPNSChannelResponse.getHasCredential() != null) {
+            Boolean hasCredential = aPNSChannelResponse.getHasCredential();
+            jsonWriter.name("HasCredential");
+            jsonWriter.value(hasCredential);
+        }
+        if (aPNSChannelResponse.getHasTokenKey() != null) {
+            Boolean hasTokenKey = aPNSChannelResponse.getHasTokenKey();
+            jsonWriter.name("HasTokenKey");
+            jsonWriter.value(hasTokenKey);
         }
         if (aPNSChannelResponse.getId() != null) {
             String id = aPNSChannelResponse.getId();

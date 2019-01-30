@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,15 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Describes the load balancers for the specified Auto Scaling group.
  * </p>
+ * <p>
+ * This operation describes only Classic Load Balancers. If you have Application
+ * Load Balancers, use <a>DescribeLoadBalancerTargetGroups</a> instead.
+ * </p>
  */
 public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -51,14 +55,15 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 100 and the maximum value is 100.
      * </p>
      */
     private Integer maxRecords;
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -67,7 +72,7 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
      * <br/>
      *
      * @return <p>
-     *         The name of the group.
+     *         The name of the Auto Scaling group.
      *         </p>
      */
     public String getAutoScalingGroupName() {
@@ -76,7 +81,7 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -85,7 +90,7 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      */
     public void setAutoScalingGroupName(String autoScalingGroupName) {
@@ -94,7 +99,7 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The name of the group.
+     * The name of the Auto Scaling group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -106,7 +111,7 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
      * <br/>
      *
      * @param autoScalingGroupName <p>
-     *            The name of the group.
+     *            The name of the Auto Scaling group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -181,11 +186,13 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 100 and the maximum value is 100.
      * </p>
      *
      * @return <p>
-     *         The maximum number of items to return with this call.
+     *         The maximum number of items to return with this call. The default
+     *         value is 100 and the maximum value is 100.
      *         </p>
      */
     public Integer getMaxRecords() {
@@ -194,11 +201,13 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 100 and the maximum value is 100.
      * </p>
      *
      * @param maxRecords <p>
-     *            The maximum number of items to return with this call.
+     *            The maximum number of items to return with this call. The
+     *            default value is 100 and the maximum value is 100.
      *            </p>
      */
     public void setMaxRecords(Integer maxRecords) {
@@ -207,14 +216,16 @@ public class DescribeLoadBalancersRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * The maximum number of items to return with this call.
+     * The maximum number of items to return with this call. The default value
+     * is 100 and the maximum value is 100.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param maxRecords <p>
-     *            The maximum number of items to return with this call.
+     *            The maximum number of items to return with this call. The
+     *            default value is 100 and the maximum value is 100.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

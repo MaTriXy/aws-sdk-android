@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,8 +40,7 @@ public final class SDKInfoHandler extends RequestHandler2 {
     @Override
     public void beforeRequest(Request<?> request) {
         if (null != request) {
-            request.addHeader(CLIENT_SDK_VERSION_HEADER_NAME,
-                                     String.format("%s", sdkInfo.toString()));
+            request.addHeader(CLIENT_SDK_VERSION_HEADER_NAME, String.format("%s", sdkInfo.toString()));
         }
 
     }

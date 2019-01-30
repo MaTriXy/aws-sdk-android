@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon Technologies, Inc.
+ * Copyright 2013-2019 Amazon Technologies, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,9 @@ public enum Regions {
     /** us-gov-west-1. */
     GovCloud("us-gov-west-1"),
 
+    /** us-gov-east-1. */
+    US_GOV_EAST_1("us-gov-east-1"),
+
     /** us-east-1. */
     US_EAST_1("us-east-1"),
 
@@ -32,7 +35,7 @@ public enum Regions {
     /** us-west-1. */
     US_WEST_1("us-west-1"),
 
-    /** eu-west-1. */
+    /** us-west-2. */
     US_WEST_2("us-west-2"),
 
     /** eu-west-1/ */
@@ -41,8 +44,14 @@ public enum Regions {
     /** eu-west-2. */
     EU_WEST_2("eu-west-2"),
 
+    /** eu-west-3. */
+    EU_WEST_3("eu-west-3"),
+
     /** eu-central-1. */
     EU_CENTRAL_1("eu-central-1"),
+
+    /** eu-north-1. */
+    EU_NORTH_1("eu-north-1"),
 
     /** ap-south-1. */
     AP_SOUTH_1("ap-south-1"),
@@ -66,7 +75,10 @@ public enum Regions {
     CA_CENTRAL_1("ca-central-1"),
 
     /** cn-north-1. */
-    CN_NORTH_1("cn-north-1");
+    CN_NORTH_1("cn-north-1"),
+    
+    /** cn-northwest-1. */
+    CN_NORTHWEST_1("cn-northwest-1");
 
     /**
      * The default region that new customers in the US are encouraged to use

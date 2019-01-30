@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ package com.amazonaws.internal.config;
 
 import com.amazonaws.regions.Regions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -108,6 +108,7 @@ public class InternalConfig {
         // map from service client name to sigv4 service name
         final Map<String, HttpClientConfig> ret = new HashMap<String, HttpClientConfig>();
         ret.put("AmazonCloudWatchClient", new HttpClientConfig("monitoring"));
+        ret.put("AmazonCloudWatchLogsClient", new HttpClientConfig("logs"));
         ret.put("AmazonSimpleDBClient", new HttpClientConfig("sdb"));
         ret.put("AmazonSimpleEmailServiceClient", new HttpClientConfig("email"));
         ret.put("AWSSecurityTokenServiceClient", new HttpClientConfig("sts"));
@@ -119,6 +120,10 @@ public class InternalConfig {
         ret.put("AmazonLexRuntimeClient", new HttpClientConfig("runtime.lex"));
         ret.put("AmazonPinpointClient", new HttpClientConfig("mobiletargeting"));
         ret.put("AmazonPinpointAnalyticsClient", new HttpClientConfig("mobileanalytics"));
+        ret.put("AmazonTranscribeClient", new HttpClientConfig("transcribe"));
+        ret.put("AmazonTranslateClient", new HttpClientConfig("translate"));
+        ret.put("AmazonComprehendClient", new HttpClientConfig("comprehend"));
+        ret.put("AWSKinesisVideoArchivedMediaClient", new HttpClientConfig("kinesisvideo"));
         return ret;
     }
 

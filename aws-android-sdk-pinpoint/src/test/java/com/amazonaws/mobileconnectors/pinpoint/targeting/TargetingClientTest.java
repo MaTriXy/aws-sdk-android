@@ -15,9 +15,14 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.targeting;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.MobileAnalyticsTestBase;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.utils.AnalyticsContextBuilder;
+import com.amazonaws.mobileconnectors.pinpoint.internal.core.PinpointContext;
+import com.amazonaws.mobileconnectors.pinpoint.internal.core.system.MockDeviceDetails;
+import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfile;
+import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfileUser;
+import com.amazonaws.services.pinpoint.AmazonPinpointClient;
+import com.amazonaws.services.pinpoint.model.UpdateEndpointRequest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,19 +30,17 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import com.amazonaws.mobileconnectors.pinpoint.analytics.MobileAnalyticsTestBase;
-import com.amazonaws.mobileconnectors.pinpoint.analytics.utils.AnalyticsContextBuilder;
-import com.amazonaws.mobileconnectors.pinpoint.internal.core.PinpointContext;
-import com.amazonaws.mobileconnectors.pinpoint.internal.core.system.MockDeviceDetails;
-import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfile;
-import com.amazonaws.services.pinpoint.AmazonPinpointClient;
-import com.amazonaws.services.pinpoint.model.UpdateEndpointRequest;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -64,16 +67,16 @@ public class TargetingClientTest extends MobileAnalyticsTestBase {
         testDeviceDetails = new MockDeviceDetails();
 
         mockContext = new AnalyticsContextBuilder()
-                              .withSdkInfo(SDK_NAME, SDK_VERSION)
-                              .withUniqueIdValue(UNIQUE_ID)
-                              .withDeviceDetails(testDeviceDetails)
-                              .withPinpointServiceClient(mockPinpointServiceClient)
-                              .withContext(Robolectric.application
-                                                   .getApplicationContext())
-                              .build();
+                .withSdkInfo(SDK_NAME, SDK_VERSION)
+                .withUniqueIdValue(UNIQUE_ID)
+                .withDeviceDetails(testDeviceDetails)
+                .withPinpointServiceClient(mockPinpointServiceClient)
+                .withContext(RuntimeEnvironment.application
+                        .getApplicationContext())
+                .build();
 
         targetingClient = new TargetingClient(mockContext,
-                                                     mockPinpointExecutor);
+                mockPinpointExecutor);
     }
 
     @After
@@ -85,7 +88,7 @@ public class TargetingClientTest extends MobileAnalyticsTestBase {
     public void endpoint_globalAttributeAndMetricsAddedAfterEndpointCreation() {
 
         final EndpointProfile endpointProfile = targetingClient
-                                                        .currentEndpoint();
+                .currentEndpoint();
         final List attrVals = Arrays.asList(new String[] { "attr1", "attr2" });
         endpointProfile.withAttribute(null, null).withMetric(null, null)
                 .withAttribute("attr", attrVals).withMetric("metric", 1.0);
@@ -101,21 +104,21 @@ public class TargetingClientTest extends MobileAnalyticsTestBase {
 
         targetingClient.currentEndpoint();
         assertThat(targetingClient.currentEndpoint().getAllAttributes().size(),
-                          is(1));
+                is(1));
         assertThat(targetingClient.currentEndpoint().getAllMetrics().size(),
-                          is(1));
+                is(1));
         assertThat(targetingClient.currentEndpoint().getAttribute("globalAttr"),
-                          is(attrVals));
+                is(attrVals));
         assertThat(targetingClient.currentEndpoint().getMetric("globalMetric")
-                           .intValue(), is(100));
+                .intValue(), is(100));
         targetingClient.removeMetric(null);
         targetingClient.removeMetric("globalMetric");
         targetingClient.removeAttribute(null);
         targetingClient.removeAttribute("globalAttr");
         assertThat(targetingClient.currentEndpoint().getAllAttributes().size(),
-                          is(0));
+                is(0));
         assertThat(targetingClient.currentEndpoint().getAllMetrics().size(),
-                          is(0));
+                is(0));
     }
 
     @Test
@@ -127,11 +130,11 @@ public class TargetingClientTest extends MobileAnalyticsTestBase {
         targetingClient.addMetric("metric", 3.0);
 
         final EndpointProfile endpointProfile = targetingClient
-                                                        .currentEndpoint()
-                                                        .withAttribute("c",
-                                                                              attrVals2)
-                                                        .withMetric("metric",
-                                                                           1.0);
+                .currentEndpoint()
+                .withAttribute("c",
+                        attrVals2)
+                .withMetric("metric",
+                        1.0);
 
         assertThat(endpointProfile.getAttribute("c"), is(attrVals2));
         assertThat(endpointProfile.getMetric("metric"), is(1.0));
@@ -147,12 +150,69 @@ public class TargetingClientTest extends MobileAnalyticsTestBase {
 
     private void verifyAndRunExecutorService(int numExpectedRunnables) {
         final ArgumentCaptor<Runnable> runnableCaptor = ArgumentCaptor
-                                                                .forClass(Runnable.class);
+                .forClass(Runnable.class);
         verify(mockPinpointExecutor, times(numExpectedRunnables))
                 .execute(runnableCaptor.capture());
 
         for (final Runnable enqueueRunnable : runnableCaptor.getAllValues()) {
             enqueueRunnable.run();
+        }
+    }
+
+    @Test
+    public void updateEndpointCallNullSetters() {
+        //Verify null checks on setters should not throw a null pointer exception
+        EndpointProfile profile = new EndpointProfile(mockContext);
+        profile.getDemographic().setLocale(null);
+        profile.getDemographic().setAppVersion(null);
+        profile.getDemographic().setMake(null);
+        profile.getDemographic().setModel(null);
+        profile.getDemographic().setPlatform(null);
+        profile.getDemographic().setPlatformVersion(null);
+        profile.getDemographic().setTimezone(null);
+
+        profile.getLocation().setCountry(null);
+        profile.getLocation().setCity(null);
+        profile.getLocation().setLatitude(null);
+        profile.getLocation().setLongitude(null);
+        profile.getLocation().setPostalCode(null);
+        profile.getLocation().setRegion(null);
+
+        targetingClient.updateEndpointProfile(profile);
+    }
+
+    @Test
+    public void updateEndpointNullUserId() {
+        final ArgumentCaptor<UpdateEndpointRequest> requestArgumentCaptor = ArgumentCaptor.forClass(UpdateEndpointRequest.class);
+
+        targetingClient.updateEndpointProfile();
+
+        verifyAndRunExecutorService(1);
+        verify(mockPinpointServiceClient, times(1))
+                .updateEndpoint(requestArgumentCaptor.capture());
+
+        for (final UpdateEndpointRequest request : requestArgumentCaptor.getAllValues()) {
+            assertNull(request.getEndpointRequest().getUser());
+        }
+    }
+
+    @Test
+    public void updateEndpointEmptyUserId() {
+        final ArgumentCaptor<UpdateEndpointRequest> requestArgumentCaptor = ArgumentCaptor.forClass(UpdateEndpointRequest.class);
+
+        EndpointProfile endpointProfile = new EndpointProfile(mockContext);
+        EndpointProfileUser user = new EndpointProfileUser();
+        user.setUserId("");
+        endpointProfile.setUser(user);
+
+        targetingClient.updateEndpointProfile(endpointProfile);
+        verifyAndRunExecutorService(1);
+        verify(mockPinpointServiceClient, times(1))
+                .updateEndpoint(requestArgumentCaptor.capture());
+
+        for (final UpdateEndpointRequest request : requestArgumentCaptor.getAllValues()) {
+            assertNotNull(request.getEndpointRequest().getUser());
+            assertEquals(request.getEndpointRequest().getUser().getUserId(), "");
         }
     }
 }

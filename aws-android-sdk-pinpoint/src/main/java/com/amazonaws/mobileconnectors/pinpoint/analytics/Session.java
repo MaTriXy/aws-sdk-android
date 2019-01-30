@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.TimeZone;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.PinpointContext;
@@ -67,13 +67,8 @@ public class Session implements JSONSerializable {
     protected Session(final PinpointContext context) {
         checkNotNull(context, "A valid PinpointContext must be provided!");
 
-        this.sessionIdTimeFormat = new SimpleDateFormat(SESSION_ID_DATE_FORMAT
-                                                                +
-                                                                SESSION_ID_DELIMITER +
-                                                                SESSION_ID_TIME_FORMAT,
-                                                               Locale.US);
+        this.sessionIdTimeFormat = new SimpleDateFormat(SESSION_ID_DATE_FORMAT + SESSION_ID_DELIMITER + SESSION_ID_TIME_FORMAT, Locale.US);
         this.sessionIdTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
         this.startTime = System.currentTimeMillis();
         this.stopTime = null;
         this.sessionID = this.generateSessionID(context);
@@ -86,13 +81,8 @@ public class Session implements JSONSerializable {
      * @param startTime
      * @param stopTime
      */
-    protected Session(final String sessionID, final String startTime,
-                             final String stopTime) {
-        this.sessionIdTimeFormat = new SimpleDateFormat(SESSION_ID_DATE_FORMAT
-                                                                +
-                                                                SESSION_ID_DELIMITER +
-                                                                SESSION_ID_TIME_FORMAT,
-                                                               Locale.US);
+    protected Session(final String sessionID, final String startTime, final String stopTime) {
+        this.sessionIdTimeFormat = new SimpleDateFormat(SESSION_ID_DATE_FORMAT + SESSION_ID_DELIMITER + SESSION_ID_TIME_FORMAT, Locale.US);
         this.sessionIdTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         Scanner s = new Scanner(startTime);
@@ -203,10 +193,7 @@ public class Session implements JSONSerializable {
     public String generateSessionID(final PinpointContext context) {
         final String uniqID = context.getUniqueId();
         final String time = this.sessionIdTimeFormat.format(this.startTime);
-        return StringUtil.trimOrPadString(uniqID, SESSION_ID_UNIQID_LENGTH,
-                                                 SESSION_ID_PAD_CHAR)
-                       + SESSION_ID_DELIMITER
-                       + time;
+        return StringUtil.trimOrPadString(uniqID, SESSION_ID_UNIQID_LENGTH, SESSION_ID_PAD_CHAR) + SESSION_ID_DELIMITER + time;
     }
 
     @Override

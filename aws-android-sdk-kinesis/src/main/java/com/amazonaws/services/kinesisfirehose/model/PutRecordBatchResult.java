@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,15 +17,13 @@ package com.amazonaws.services.kinesisfirehose.model;
 
 import java.io.Serializable;
 
-/**
- * <p>
- * Contains the output of <a>PutRecordBatch</a>.
- * </p>
- */
 public class PutRecordBatchResult implements Serializable {
     /**
      * <p>
-     * The number of unsuccessfully written records.
+     * The number of records that might have failed processing. This number
+     * might be greater than 0 even if the <a>PutRecordBatch</a> call succeeds.
+     * Check <code>FailedPutCount</code> to determine whether there are records
+     * that you need to resend.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -35,22 +33,36 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The results for the individual records. The index of each element matches
-     * the same index in which records were sent.
+     * Indicates whether server-side encryption (SSE) was enabled during this
+     * operation.
+     * </p>
+     */
+    private Boolean encrypted;
+
+    /**
+     * <p>
+     * The results array. For each record, the index of the response element is
+     * the same as the index used in the request array.
      * </p>
      */
     private java.util.List<PutRecordBatchResponseEntry> requestResponses;
 
     /**
      * <p>
-     * The number of unsuccessfully written records.
+     * The number of records that might have failed processing. This number
+     * might be greater than 0 even if the <a>PutRecordBatch</a> call succeeds.
+     * Check <code>FailedPutCount</code> to determine whether there are records
+     * that you need to resend.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Range: </b>0 - <br/>
      *
      * @return <p>
-     *         The number of unsuccessfully written records.
+     *         The number of records that might have failed processing. This
+     *         number might be greater than 0 even if the <a>PutRecordBatch</a>
+     *         call succeeds. Check <code>FailedPutCount</code> to determine
+     *         whether there are records that you need to resend.
      *         </p>
      */
     public Integer getFailedPutCount() {
@@ -59,14 +71,21 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The number of unsuccessfully written records.
+     * The number of records that might have failed processing. This number
+     * might be greater than 0 even if the <a>PutRecordBatch</a> call succeeds.
+     * Check <code>FailedPutCount</code> to determine whether there are records
+     * that you need to resend.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Range: </b>0 - <br/>
      *
      * @param failedPutCount <p>
-     *            The number of unsuccessfully written records.
+     *            The number of records that might have failed processing. This
+     *            number might be greater than 0 even if the
+     *            <a>PutRecordBatch</a> call succeeds. Check
+     *            <code>FailedPutCount</code> to determine whether there are
+     *            records that you need to resend.
      *            </p>
      */
     public void setFailedPutCount(Integer failedPutCount) {
@@ -75,7 +94,10 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The number of unsuccessfully written records.
+     * The number of records that might have failed processing. This number
+     * might be greater than 0 even if the <a>PutRecordBatch</a> call succeeds.
+     * Check <code>FailedPutCount</code> to determine whether there are records
+     * that you need to resend.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -85,7 +107,11 @@ public class PutRecordBatchResult implements Serializable {
      * <b>Range: </b>0 - <br/>
      *
      * @param failedPutCount <p>
-     *            The number of unsuccessfully written records.
+     *            The number of records that might have failed processing. This
+     *            number might be greater than 0 even if the
+     *            <a>PutRecordBatch</a> call succeeds. Check
+     *            <code>FailedPutCount</code> to determine whether there are
+     *            records that you need to resend.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -97,13 +123,79 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The results for the individual records. The index of each element matches
-     * the same index in which records were sent.
+     * Indicates whether server-side encryption (SSE) was enabled during this
+     * operation.
      * </p>
      *
      * @return <p>
-     *         The results for the individual records. The index of each element
-     *         matches the same index in which records were sent.
+     *         Indicates whether server-side encryption (SSE) was enabled during
+     *         this operation.
+     *         </p>
+     */
+    public Boolean isEncrypted() {
+        return encrypted;
+    }
+
+    /**
+     * <p>
+     * Indicates whether server-side encryption (SSE) was enabled during this
+     * operation.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether server-side encryption (SSE) was enabled during
+     *         this operation.
+     *         </p>
+     */
+    public Boolean getEncrypted() {
+        return encrypted;
+    }
+
+    /**
+     * <p>
+     * Indicates whether server-side encryption (SSE) was enabled during this
+     * operation.
+     * </p>
+     *
+     * @param encrypted <p>
+     *            Indicates whether server-side encryption (SSE) was enabled
+     *            during this operation.
+     *            </p>
+     */
+    public void setEncrypted(Boolean encrypted) {
+        this.encrypted = encrypted;
+    }
+
+    /**
+     * <p>
+     * Indicates whether server-side encryption (SSE) was enabled during this
+     * operation.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param encrypted <p>
+     *            Indicates whether server-side encryption (SSE) was enabled
+     *            during this operation.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PutRecordBatchResult withEncrypted(Boolean encrypted) {
+        this.encrypted = encrypted;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The results array. For each record, the index of the response element is
+     * the same as the index used in the request array.
+     * </p>
+     *
+     * @return <p>
+     *         The results array. For each record, the index of the response
+     *         element is the same as the index used in the request array.
      *         </p>
      */
     public java.util.List<PutRecordBatchResponseEntry> getRequestResponses() {
@@ -112,13 +204,13 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The results for the individual records. The index of each element matches
-     * the same index in which records were sent.
+     * The results array. For each record, the index of the response element is
+     * the same as the index used in the request array.
      * </p>
      *
      * @param requestResponses <p>
-     *            The results for the individual records. The index of each
-     *            element matches the same index in which records were sent.
+     *            The results array. For each record, the index of the response
+     *            element is the same as the index used in the request array.
      *            </p>
      */
     public void setRequestResponses(
@@ -134,16 +226,16 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The results for the individual records. The index of each element matches
-     * the same index in which records were sent.
+     * The results array. For each record, the index of the response element is
+     * the same as the index used in the request array.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param requestResponses <p>
-     *            The results for the individual records. The index of each
-     *            element matches the same index in which records were sent.
+     *            The results array. For each record, the index of the response
+     *            element is the same as the index used in the request array.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -162,16 +254,16 @@ public class PutRecordBatchResult implements Serializable {
 
     /**
      * <p>
-     * The results for the individual records. The index of each element matches
-     * the same index in which records were sent.
+     * The results array. For each record, the index of the response element is
+     * the same as the index used in the request array.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param requestResponses <p>
-     *            The results for the individual records. The index of each
-     *            element matches the same index in which records were sent.
+     *            The results array. For each record, the index of the response
+     *            element is the same as the index used in the request array.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -195,6 +287,8 @@ public class PutRecordBatchResult implements Serializable {
         sb.append("{");
         if (getFailedPutCount() != null)
             sb.append("FailedPutCount: " + getFailedPutCount() + ",");
+        if (getEncrypted() != null)
+            sb.append("Encrypted: " + getEncrypted() + ",");
         if (getRequestResponses() != null)
             sb.append("RequestResponses: " + getRequestResponses());
         sb.append("}");
@@ -208,6 +302,7 @@ public class PutRecordBatchResult implements Serializable {
 
         hashCode = prime * hashCode
                 + ((getFailedPutCount() == null) ? 0 : getFailedPutCount().hashCode());
+        hashCode = prime * hashCode + ((getEncrypted() == null) ? 0 : getEncrypted().hashCode());
         hashCode = prime * hashCode
                 + ((getRequestResponses() == null) ? 0 : getRequestResponses().hashCode());
         return hashCode;
@@ -228,6 +323,11 @@ public class PutRecordBatchResult implements Serializable {
             return false;
         if (other.getFailedPutCount() != null
                 && other.getFailedPutCount().equals(this.getFailedPutCount()) == false)
+            return false;
+        if (other.getEncrypted() == null ^ this.getEncrypted() == null)
+            return false;
+        if (other.getEncrypted() != null
+                && other.getEncrypted().equals(this.getEncrypted()) == false)
             return false;
         if (other.getRequestResponses() == null ^ this.getRequestResponses() == null)
             return false;

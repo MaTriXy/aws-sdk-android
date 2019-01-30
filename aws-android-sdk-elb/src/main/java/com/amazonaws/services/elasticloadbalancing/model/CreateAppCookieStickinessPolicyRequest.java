@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,9 +39,9 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/elb-sticky-sessions.html#enable-sticky-sessions-application"
- * >Application-Controlled Session Stickiness</a> in the <i>Elastic Load
- * Balancing Developer Guide</i>.
+ * "http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-sticky-sessions.html#enable-sticky-sessions-application"
+ * >Application-Controlled Session Stickiness</a> in the <i>Classic Load
+ * Balancers Guide</i>.
  * </p>
  */
 public class CreateAppCookieStickinessPolicyRequest extends AmazonWebServiceRequest implements

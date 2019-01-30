@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,16 +21,8 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Deletes the specified email address from the list of verified addresses.
- * </p>
- * <important>
- * <p>
- * The DeleteVerifiedEmailAddress action is deprecated as of the May 15, 2012
- * release of Domain Verification. The DeleteIdentity action is now preferred.
- * </p>
- * </important>
- * <p>
- * This action is throttled at one request per second.
+ * Deprecated. Use the <code>DeleteIdentity</code> operation to delete email
+ * addresses and domains.
  * </p>
  */
 public class DeleteVerifiedEmailAddressRequest extends AmazonWebServiceRequest implements

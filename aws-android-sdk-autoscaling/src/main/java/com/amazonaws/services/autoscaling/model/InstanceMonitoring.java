@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,24 +19,28 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Describes whether instance monitoring is enabled.
+ * Describes whether detailed monitoring is enabled for the Auto Scaling
+ * instances.
  * </p>
  */
 public class InstanceMonitoring implements Serializable {
     /**
      * <p>
-     * If <code>True</code>, instance monitoring is enabled.
+     * If <code>true</code>, detailed monitoring is enabled. Otherwise, basic
+     * monitoring is enabled.
      * </p>
      */
     private Boolean enabled;
 
     /**
      * <p>
-     * If <code>True</code>, instance monitoring is enabled.
+     * If <code>true</code>, detailed monitoring is enabled. Otherwise, basic
+     * monitoring is enabled.
      * </p>
      *
      * @return <p>
-     *         If <code>True</code>, instance monitoring is enabled.
+     *         If <code>true</code>, detailed monitoring is enabled. Otherwise,
+     *         basic monitoring is enabled.
      *         </p>
      */
     public Boolean isEnabled() {
@@ -45,11 +49,13 @@ public class InstanceMonitoring implements Serializable {
 
     /**
      * <p>
-     * If <code>True</code>, instance monitoring is enabled.
+     * If <code>true</code>, detailed monitoring is enabled. Otherwise, basic
+     * monitoring is enabled.
      * </p>
      *
      * @return <p>
-     *         If <code>True</code>, instance monitoring is enabled.
+     *         If <code>true</code>, detailed monitoring is enabled. Otherwise,
+     *         basic monitoring is enabled.
      *         </p>
      */
     public Boolean getEnabled() {
@@ -58,11 +64,13 @@ public class InstanceMonitoring implements Serializable {
 
     /**
      * <p>
-     * If <code>True</code>, instance monitoring is enabled.
+     * If <code>true</code>, detailed monitoring is enabled. Otherwise, basic
+     * monitoring is enabled.
      * </p>
      *
      * @param enabled <p>
-     *            If <code>True</code>, instance monitoring is enabled.
+     *            If <code>true</code>, detailed monitoring is enabled.
+     *            Otherwise, basic monitoring is enabled.
      *            </p>
      */
     public void setEnabled(Boolean enabled) {
@@ -71,14 +79,16 @@ public class InstanceMonitoring implements Serializable {
 
     /**
      * <p>
-     * If <code>True</code>, instance monitoring is enabled.
+     * If <code>true</code>, detailed monitoring is enabled. Otherwise, basic
+     * monitoring is enabled.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param enabled <p>
-     *            If <code>True</code>, instance monitoring is enabled.
+     *            If <code>true</code>, detailed monitoring is enabled.
+     *            Otherwise, basic monitoring is enabled.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

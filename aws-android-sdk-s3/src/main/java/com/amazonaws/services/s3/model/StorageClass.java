@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,6 +62,11 @@ public enum StorageClass {
      */
     StandardInfrequentAccess("STANDARD_IA"),
 
+    /**
+     * One Zone Infrequent Access storage class stores object data in only one Availability Zone at a lower price than
+     * STANDARD_IA.
+     */
+    OneZoneInfrequentAccess("ONEZONE_IA")
     ;
 
     /**

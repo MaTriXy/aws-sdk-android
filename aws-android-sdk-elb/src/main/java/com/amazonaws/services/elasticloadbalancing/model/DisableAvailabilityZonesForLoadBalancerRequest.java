@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Removes the specified Availability Zones from the set of Availability Zones
- * for the specified load balancer.
+ * for the specified load balancer in EC2-Classic or a default VPC.
+ * </p>
+ * <p>
+ * For load balancers in a non-default VPC, use
+ * <a>DetachLoadBalancerFromSubnets</a>.
  * </p>
  * <p>
  * There must be at least one Availability Zone registered with a load balancer
@@ -33,9 +37,9 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * For more information, see <a href=
- * "http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/US_ShrinkLBApp04.html"
- * >Disable an Availability Zone from a Load-Balanced Application</a> in the
- * <i>Elastic Load Balancing Developer Guide</i>.
+ * "http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/enable-disable-az.html"
+ * >Add or Remove Availability Zones</a> in the <i>Classic Load Balancers
+ * Guide</i>.
  * </p>
  */
 public class DisableAvailabilityZonesForLoadBalancerRequest extends AmazonWebServiceRequest

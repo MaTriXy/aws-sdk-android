@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,11 @@ class MessageJsonMarshaller {
             jsonWriter.name("ImageIconUrl");
             jsonWriter.value(imageIconUrl);
         }
+        if (message.getImageSmallIconUrl() != null) {
+            String imageSmallIconUrl = message.getImageSmallIconUrl();
+            jsonWriter.name("ImageSmallIconUrl");
+            jsonWriter.value(imageSmallIconUrl);
+        }
         if (message.getImageUrl() != null) {
             String imageUrl = message.getImageUrl();
             jsonWriter.name("ImageUrl");
@@ -55,10 +60,20 @@ class MessageJsonMarshaller {
             jsonWriter.name("MediaUrl");
             jsonWriter.value(mediaUrl);
         }
+        if (message.getRawContent() != null) {
+            String rawContent = message.getRawContent();
+            jsonWriter.name("RawContent");
+            jsonWriter.value(rawContent);
+        }
         if (message.getSilentPush() != null) {
             Boolean silentPush = message.getSilentPush();
             jsonWriter.name("SilentPush");
             jsonWriter.value(silentPush);
+        }
+        if (message.getTimeToLive() != null) {
+            Integer timeToLive = message.getTimeToLive();
+            jsonWriter.name("TimeToLive");
+            jsonWriter.value(timeToLive);
         }
         if (message.getTitle() != null) {
             String title = message.getTitle();

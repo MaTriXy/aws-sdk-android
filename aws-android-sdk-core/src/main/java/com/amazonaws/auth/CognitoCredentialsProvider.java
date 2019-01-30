@@ -15,10 +15,13 @@
 
 package com.amazonaws.auth;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.AmazonWebServiceClient;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.SDKGlobalConfiguration;
+import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
@@ -32,6 +35,10 @@ import com.amazonaws.services.securitytoken.model.AssumeRoleWithWebIdentityReque
 import com.amazonaws.services.securitytoken.model.AssumeRoleWithWebIdentityResult;
 import com.amazonaws.services.securitytoken.model.Credentials;
 
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
+import org.json.JSONObject;
+
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,7 +50,9 @@ import java.util.Map;
  * sessions to use for authentication
  */
 public class CognitoCredentialsProvider implements AWSCredentialsProvider {
+    private static final Log log = LogFactory.getLog(AWSCredentialsProviderChain.class);
 
+    private final String region;
     /** Used in the enhanced get credentials flow */
     private AmazonCognitoIdentity cib;
 
@@ -78,7 +87,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
     protected String customRoleArn;
 
     protected boolean useEnhancedFlow;
-    
+
     protected ReentrantReadWriteLock credentialsLock;
 
     /**
@@ -97,7 +106,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * @param region The region to use when contacting Cognito Identity
      */
     public CognitoCredentialsProvider(String accountId, String identityPoolId,
-            String unauthRoleArn, String authRoleArn, Regions region) {
+                                      String unauthRoleArn, String authRoleArn, Regions region) {
         this(accountId, identityPoolId, unauthRoleArn, authRoleArn, region,
                 new ClientConfiguration());
     }
@@ -124,13 +133,73 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      *            created
      */
     public CognitoCredentialsProvider(String accountId, String identityPoolId,
-            String unauthRoleArn, String authRoleArn, Regions region,
-            ClientConfiguration clientConfiguration) {
-        this(accountId, identityPoolId, unauthRoleArn, authRoleArn, 
-                new AmazonCognitoIdentityClient(new AnonymousAWSCredentials(), clientConfiguration),
-                (unauthRoleArn == null && authRoleArn == null) ? 
+                                      String unauthRoleArn, String authRoleArn, Regions region,
+                                      ClientConfiguration clientConfiguration) {
+        this(accountId, identityPoolId, unauthRoleArn, authRoleArn,
+                createIdentityClient(clientConfiguration, region),
+                (unauthRoleArn == null && authRoleArn == null) ?
                         null : new AWSSecurityTokenServiceClient(new AnonymousAWSCredentials(), clientConfiguration));
-        this.cib.setRegion(Region.getRegion(region));
+    }
+
+    private static AmazonCognitoIdentityClient createIdentityClient(ClientConfiguration clientConfiguration,
+                                                                    final Regions region) {
+        AmazonCognitoIdentityClient identityClient = new AmazonCognitoIdentityClient(new AnonymousAWSCredentials(), clientConfiguration);
+        identityClient.setRegion(Region.getRegion(region));
+        return identityClient;
+    }
+
+    /**
+     * Constructs a new {@link CognitoCredentialsProvider}, which will use the
+     * specified Amazon Cognito identity pool to make a request to Cognito,
+     * using the enhanced flow, to get short lived session credentials, which
+     * will then be returned by this class's {@link #getCredentials()} method.
+     *
+     * Example json file:
+     * {
+     *     "CredentialsProvider": {
+     *         "CognitoIdentity": {
+     *             "Default": {
+     *                 "PoolId": "us-east-1:example-pool-id1234",
+     *                 "Region": "us-east-1"
+     *             }
+     *         }
+     *     }
+     * }
+     *
+     * @param awsConfiguration The configuration holding you identity pool id
+     *                         and the region to use when contacting
+     *                         Cognito Identity
+     */
+    public CognitoCredentialsProvider(AWSConfiguration awsConfiguration) {
+        this(null, getIdentityPoolId(awsConfiguration), null, null, getRegions(awsConfiguration), getClientConfiguration(awsConfiguration));
+    }
+
+    private static String getIdentityPoolId(AWSConfiguration awsConfiguration) {
+        try {
+            final JSONObject ccpConfig = awsConfiguration.optJsonObject("CredentialsProvider")
+                    .optJSONObject("CognitoIdentity")
+                    .getJSONObject(awsConfiguration.getConfiguration());
+            return ccpConfig.getString("PoolId");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to read CognitoIdentity please check your setup or awsconfiguration.json file", e);
+        }
+    }
+
+    private static Regions getRegions(AWSConfiguration awsConfiguration) {
+        try {
+            final JSONObject ccpConfig = awsConfiguration.optJsonObject("CredentialsProvider")
+                    .optJSONObject("CognitoIdentity")
+                    .getJSONObject(awsConfiguration.getConfiguration());
+            return Regions.fromName(ccpConfig.getString("Region"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to read CognitoIdentity please check your setup or awsconfiguration.json file", e);
+        }
+    }
+
+    private static ClientConfiguration getClientConfiguration(AWSConfiguration awsConfiguration) {
+        final ClientConfiguration clientConfig = new ClientConfiguration();
+        clientConfig.setUserAgent(awsConfiguration.getUserAgent());
+        return clientConfig;
     }
 
     /**
@@ -162,7 +231,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      *            created
      */
     public CognitoCredentialsProvider(String identityPoolId, Regions region,
-            ClientConfiguration clientConfiguration) {
+                                      ClientConfiguration clientConfiguration) {
         this(null, identityPoolId, null, null, region, clientConfiguration);
     }
 
@@ -192,12 +261,13 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * @param stsClient Preconfigured STS client to make requests with
      */
     public CognitoCredentialsProvider(String accountId, String identityPoolId,
-            String unauthRoleArn, String authRoleArn, AmazonCognitoIdentityClient cibClient,
-            AWSSecurityTokenService stsClient) {
+                                      String unauthRoleArn, String authRoleArn, AmazonCognitoIdentityClient cibClient,
+                                      AWSSecurityTokenService stsClient) {
 
         // No need to specify parameters for Region and ClientConfig because we
         // don't create the clients
         this.cib = cibClient;
+        this.region = cibClient.getRegions().getName();
         this.securityTokenService = stsClient;
 
         this.unauthRoleArn = unauthRoleArn;
@@ -234,7 +304,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * @param authArn the authArn, for use with the STS call
      */
     public CognitoCredentialsProvider(AWSCognitoIdentityProvider provider,
-            String unauthArn, String authArn) {
+                                      String unauthArn, String authArn) {
         this(provider, unauthArn, authArn, new AWSSecurityTokenServiceClient(
                 new AnonymousAWSCredentials(), new ClientConfiguration()));
     }
@@ -256,8 +326,17 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * @param stsClient the sts endpoint to get session credentials from
      */
     public CognitoCredentialsProvider(AWSCognitoIdentityProvider provider,
-            String unauthArn, String authArn, AWSSecurityTokenService stsClient) {
+                                      String unauthArn, String authArn, AWSSecurityTokenService stsClient) {
         this.identityProvider = provider;
+
+        if (provider instanceof AWSAbstractCognitoIdentityProvider
+                && ((AWSAbstractCognitoIdentityProvider) provider).cib instanceof AmazonWebServiceClient
+                && ((AmazonWebServiceClient) ((AWSAbstractCognitoIdentityProvider) provider).cib).getRegions() != null) {
+            this.region = ((AmazonWebServiceClient) ((AWSAbstractCognitoIdentityProvider) provider).cib).getRegions().getName();
+        } else {
+            log.warn("Could not determine region of the Cognito Identity client, using default us-east-1");
+            this.region = Regions.US_EAST_1.getName();
+        }
         this.unauthRoleArn = unauthArn;
         this.authRoleArn = authArn;
         this.securityTokenService = stsClient;
@@ -304,12 +383,10 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * @param region The region to use when contacting Cognito Identity
      */
     public CognitoCredentialsProvider(AWSCognitoIdentityProvider provider,
-            Regions region, ClientConfiguration clientConfiguration) {
-        this(provider, new AmazonCognitoIdentityClient(
-                new AnonymousAWSCredentials(), clientConfiguration));
-        this.cib.setRegion(Region.getRegion(region));
+                                      Regions region, ClientConfiguration clientConfiguration) {
+        this(provider, createIdentityClient(clientConfiguration, region));
     }
-    
+
     /**
      * Constructs a new CognitoCredentialsProvider, which will set up a link to
      * the provider passed in using the enhanced authentication flow to get
@@ -325,12 +402,12 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      *            Cognito
      * @param cibClient Preconfigured CognitoIdentity client to make requests
      *            with
-     * @param region The region to use when contacting Cognito Identity
      */
     public CognitoCredentialsProvider(AWSCognitoIdentityProvider provider,
-            AmazonCognitoIdentityClient cib) {
+                                      AmazonCognitoIdentityClient cibClient) {
 
-        this.cib = cib;
+        this.cib = cibClient;
+        this.region = cibClient.getRegions().getName();
         this.identityProvider = provider;
         this.unauthRoleArn = null;
         this.authRoleArn = null;
@@ -354,21 +431,21 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
     }
 
     public void setSessionCredentialsExpiration(Date expiration) {
-    	credentialsLock.writeLock().lock();
-    	try {
-    		sessionCredentialsExpiration = expiration;
-    	} finally {
-    		credentialsLock.writeLock().unlock();
-    	}
+        credentialsLock.writeLock().lock();
+        try {
+            sessionCredentialsExpiration = expiration;
+        } finally {
+            credentialsLock.writeLock().unlock();
+        }
     }
 
     public Date getSessionCredentitalsExpiration() {
-    	credentialsLock.readLock().lock();
-    	try {
-    		return sessionCredentialsExpiration;
-    	} finally {
-    		credentialsLock.readLock().unlock();
-    	}
+        credentialsLock.readLock().lock();
+        try {
+            return sessionCredentialsExpiration;
+        } finally {
+            credentialsLock.readLock().unlock();
+        }
     }
 
     public String getIdentityPoolId() {
@@ -382,15 +459,15 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      */
     @Override
     public AWSSessionCredentials getCredentials() {
-    	credentialsLock.writeLock().lock();
-    	try {
-    		if (needsNewSession()) {
-    			startSession();
-    		}
-    		return sessionCredentials;
-    	} finally {
-    		credentialsLock.writeLock().unlock();
-    	}
+        credentialsLock.writeLock().lock();
+        try {
+            if (needsNewSession()) {
+                startSession();
+            }
+            return sessionCredentials;
+        } finally {
+            credentialsLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -488,19 +565,19 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      *            communicate with Amazon Cognito
      */
     public void setLogins(Map<String, String> logins) {
-    	credentialsLock.writeLock().lock();
-    	try {
-    		identityProvider.setLogins(logins);
-    		clearCredentials();
-    	} finally {
-    		credentialsLock.writeLock().unlock();
-    	}
+        credentialsLock.writeLock().lock();
+        try {
+            identityProvider.setLogins(logins);
+            clearCredentials();
+        } finally {
+            credentialsLock.writeLock().unlock();
+        }
     }
 
-        
+
     /**
      * Get the custom role arn associated with the credentials provider.
-     * 
+     *
      * @return Custom role arn.
      */
     public String getCustomRoleArn() {
@@ -513,14 +590,14 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * token (eg: SAML Assertion) and there are multiple roles. Roles set by the
      * method will be assumed when it matches with the roles received in the
      * token from IdP.
-     * 
+     *
      * @param customRoleArn The role arn to be used to get the credentials.
      */
     public void setCustomRoleArn(String customRoleArn) {
         this.customRoleArn = customRoleArn;
     }
 
-	/**
+    /**
      * Set the logins map used to authenticated with Amazon Cognito. Returns a
      * reference to the object so methods can be chained. Note: You should
      * manually call refresh on on the credentials provider after adding logins
@@ -549,12 +626,12 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
 
     @Override
     public void refresh() {
-    	credentialsLock.writeLock().lock();
-    	try {
-    		startSession();
-    	} finally {
-    		credentialsLock.writeLock().unlock();
-    	}
+        credentialsLock.writeLock().lock();
+        try {
+            startSession();
+        } finally {
+            credentialsLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -563,14 +640,14 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * credentials.
      */
     public void clear() {
-    	credentialsLock.writeLock().lock();
-    	try {
-    		clearCredentials();
-    		setIdentityId(null);
-    		identityProvider.setLogins(new HashMap<String, String>());
-    	} finally {
-    		credentialsLock.writeLock().unlock();
-    	}
+        credentialsLock.writeLock().lock();
+        try {
+            clearCredentials();
+            setIdentityId(null);
+            identityProvider.setLogins(new HashMap<String, String>());
+        } finally {
+            credentialsLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -578,13 +655,13 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * not the identity Id.
      */
     public void clearCredentials() {
-    	credentialsLock.writeLock().lock();
-    	try {
-    		sessionCredentials = null;
-    		sessionCredentialsExpiration = null;
-    	} finally {
-    		credentialsLock.writeLock().unlock();
-    	}
+        credentialsLock.writeLock().lock();
+        try {
+            sessionCredentials = null;
+            sessionCredentialsExpiration = null;
+        } finally {
+            credentialsLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -639,6 +716,20 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
     }
 
     /**
+     * Determines the logins key for the token.
+     * This currently varies for cn-north-1 region only.
+     *
+     * @return logins key used in the logins map
+     */
+    protected String getLoginsKey() {
+        if (Regions.CN_NORTH_1.getName().equals(this.region)) {
+            return "cognito-identity.cn-north-1.amazonaws.com.cn";
+        } else {
+            return "cognito-identity.amazonaws.com";
+        }
+    }
+
+    /**
      * To be used to help the calling of the 2hop flow in event of the identity
      * id being either missing or deleted. Once that is caught as having
      * happened, this call is made, which will clear the old id, get a new
@@ -652,7 +743,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
         Map<String, String> logins;
         if (token != null && !token.isEmpty()) {
             logins = new HashMap<String, String>();
-            logins.put("cognito-identity.amazonaws.com", token);
+            logins.put(getLoginsKey(), token);
         } else {
             logins = getLogins();
         }
@@ -676,7 +767,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
         Map<String, String> logins;
         if (token != null && !token.isEmpty()) {
             logins = new HashMap<String, String>();
-            logins.put("cognito-identity.amazonaws.com", token);
+            logins.put(getLoginsKey(), token);
         } else {
             logins = getLogins();
         }
@@ -747,11 +838,11 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * Returns true if a new STS session needs to be started. A new STS session
      * is needed when no session has been started yet, or if the last session is
      * within the configured refresh threshold.
-     * 
+     *
      * @return True if a new STS session needs to be started.
      */
     protected boolean needsNewSession() {
-    	// NOTE: Do not try to acquire a lock in this method. A thread calling this 
+        // NOTE: Do not try to acquire a lock in this method. A thread calling this
         // method can already have a read or a write lock.
         if (sessionCredentials == null) {
             return true;
@@ -771,13 +862,15 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
      * @param userAgent additional user agent string to append
      */
     private void appendUserAgent(AmazonWebServiceRequest request,
-            String userAgent) {
+                                 String userAgent) {
         request.getRequestClientOptions().appendUserAgent(userAgent);
     }
 
     /**
      * Gets the user agent string to append to all requests made by this
      * provider. Default is an empty string.
+     *
+     * @return the user agent string
      */
     protected String getUserAgent() {
         return "";
@@ -786,7 +879,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
     /**
      * Adds a new identity changed listener to process some event when the 
      * identity has changed. 
-     * 
+     *
      * @param listener the listener to be triggered on id change
      */
     public void registerIdentityChangedListener(IdentityChangedListener listener) {
@@ -796,7 +889,7 @@ public class CognitoCredentialsProvider implements AWSCredentialsProvider {
     /**
      * Removes an identity changed listener from being triggered when the 
      * identity has changed. 
-     * 
+     *
      * @param listener the listener to be removed
      */
     public void unregisterIdentityChangedListener(IdentityChangedListener listener) {

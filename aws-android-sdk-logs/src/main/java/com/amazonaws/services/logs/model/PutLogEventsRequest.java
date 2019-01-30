@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,9 @@ import com.amazonaws.AmazonWebServiceRequest;
  * You must include the sequence token obtained from the response of the
  * previous call. An upload in a newly created log stream does not require a
  * sequence token. You can also get the sequence token using
- * <a>DescribeLogStreams</a>.
+ * <a>DescribeLogStreams</a>. If you call <code>PutLogEvents</code> twice within
+ * a narrow time period using the same value for <code>sequenceToken</code>,
+ * both calls may be successful, or one may be rejected.
  * </p>
  * <p>
  * The batch of events must satisfy the following constraints:
@@ -52,9 +54,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </li>
  * <li>
  * <p>
- * The log events in the batch must be in chronological ordered by their
- * timestamp (the time the event occurred, expressed as the number of
- * milliseconds since Jan 1, 1970 00:00:00 UTC).
+ * The log events in the batch must be in chronological ordered by their time
+ * stamp. The time stamp is the time the event occurred, expressed as the number
+ * of milliseconds after Jan 1, 1970 00:00:00 UTC. (In AWS Tools for PowerShell
+ * and the AWS SDK for .NET, the timestamp is specified in .NET format:
+ * yyyy-mm-ddThh:mm:ss. For example, 2017-09-15T13:45:30.)
  * </p>
  * </li>
  * <li>
@@ -69,6 +73,10 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * </li>
  * </ul>
+ * <p>
+ * If a call to PutLogEvents returns "UnrecognizedClientException" the most
+ * likely cause is an invalid AWS access key ID or secret key.
+ * </p>
  */
 public class PutLogEventsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -102,7 +110,13 @@ public class PutLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The sequence token.
+     * The sequence token obtained from the response of the previous
+     * <code>PutLogEvents</code> call. An upload in a newly created log stream
+     * does not require a sequence token. You can also get the sequence token
+     * using <a>DescribeLogStreams</a>. If you call <code>PutLogEvents</code>
+     * twice within a narrow time period using the same value for
+     * <code>sequenceToken</code>, both calls may be successful, or one may be
+     * rejected.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -330,14 +344,26 @@ public class PutLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The sequence token.
+     * The sequence token obtained from the response of the previous
+     * <code>PutLogEvents</code> call. An upload in a newly created log stream
+     * does not require a sequence token. You can also get the sequence token
+     * using <a>DescribeLogStreams</a>. If you call <code>PutLogEvents</code>
+     * twice within a narrow time period using the same value for
+     * <code>sequenceToken</code>, both calls may be successful, or one may be
+     * rejected.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - <br/>
      *
      * @return <p>
-     *         The sequence token.
+     *         The sequence token obtained from the response of the previous
+     *         <code>PutLogEvents</code> call. An upload in a newly created log
+     *         stream does not require a sequence token. You can also get the
+     *         sequence token using <a>DescribeLogStreams</a>. If you call
+     *         <code>PutLogEvents</code> twice within a narrow time period using
+     *         the same value for <code>sequenceToken</code>, both calls may be
+     *         successful, or one may be rejected.
      *         </p>
      */
     public String getSequenceToken() {
@@ -346,14 +372,26 @@ public class PutLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The sequence token.
+     * The sequence token obtained from the response of the previous
+     * <code>PutLogEvents</code> call. An upload in a newly created log stream
+     * does not require a sequence token. You can also get the sequence token
+     * using <a>DescribeLogStreams</a>. If you call <code>PutLogEvents</code>
+     * twice within a narrow time period using the same value for
+     * <code>sequenceToken</code>, both calls may be successful, or one may be
+     * rejected.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - <br/>
      *
      * @param sequenceToken <p>
-     *            The sequence token.
+     *            The sequence token obtained from the response of the previous
+     *            <code>PutLogEvents</code> call. An upload in a newly created
+     *            log stream does not require a sequence token. You can also get
+     *            the sequence token using <a>DescribeLogStreams</a>. If you
+     *            call <code>PutLogEvents</code> twice within a narrow time
+     *            period using the same value for <code>sequenceToken</code>,
+     *            both calls may be successful, or one may be rejected.
      *            </p>
      */
     public void setSequenceToken(String sequenceToken) {
@@ -362,7 +400,13 @@ public class PutLogEventsRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The sequence token.
+     * The sequence token obtained from the response of the previous
+     * <code>PutLogEvents</code> call. An upload in a newly created log stream
+     * does not require a sequence token. You can also get the sequence token
+     * using <a>DescribeLogStreams</a>. If you call <code>PutLogEvents</code>
+     * twice within a narrow time period using the same value for
+     * <code>sequenceToken</code>, both calls may be successful, or one may be
+     * rejected.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -372,7 +416,13 @@ public class PutLogEventsRequest extends AmazonWebServiceRequest implements Seri
      * <b>Length: </b>1 - <br/>
      *
      * @param sequenceToken <p>
-     *            The sequence token.
+     *            The sequence token obtained from the response of the previous
+     *            <code>PutLogEvents</code> call. An upload in a newly created
+     *            log stream does not require a sequence token. You can also get
+     *            the sequence token using <a>DescribeLogStreams</a>. If you
+     *            call <code>PutLogEvents</code> twice within a narrow time
+     *            period using the same value for <code>sequenceToken</code>,
+     *            both calls may be successful, or one may be rejected.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

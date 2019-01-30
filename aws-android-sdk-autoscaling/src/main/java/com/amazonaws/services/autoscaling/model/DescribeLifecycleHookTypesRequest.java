@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,21 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Describes the available types of lifecycle hooks.
  * </p>
+ * <p>
+ * The following hook types are supported:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * autoscaling:EC2_INSTANCE_LAUNCHING
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * autoscaling:EC2_INSTANCE_TERMINATING
+ * </p>
+ * </li>
+ * </ul>
  */
 public class DescribeLifecycleHookTypesRequest extends AmazonWebServiceRequest implements
         Serializable {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,32 +27,116 @@ import com.amazonaws.AmazonWebServiceRequest;
 public class InitiateAuthRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The authentication flow.
+     * The authentication flow for this call to execute. The API action will
+     * depend on this value. For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and
+     * return new tokens.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>SRP_A</code> and return the SRP variables to be used for next
+     * challenge execution.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>PASSWORD</code> and return the next challenge or tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote
+     * Password (SRP) protocol.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     * Authentication flow for refreshing the access token and ID token by
+     * supplying a valid refresh token.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME
+     * and PASSWORD are passed directly. If a user migration Lambda trigger is
+     * set, this flow will invoke the user migration Lambda if the USERNAME is
+     * not found in the user pool.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN,
-     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH
+     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH
      */
     private String authFlow;
 
     /**
      * <p>
-     * The authentication parameters.
+     * The authentication parameters. These are inputs corresponding to the
+     * <code>AuthFlow</code> that you are invoking. The required values depend
+     * on the value of <code>AuthFlow</code>:
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the
+     * app client is configured with a client secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     * <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required
+     * if the app client is configured with a client secret),
+     * <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SECRET_HASH</code> (if app client is configured with client
+     * secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * </ul>
      */
     private java.util.Map<String, String> authParameters;
 
     /**
      * <p>
-     * The client app's metadata.
+     * This is a random key-value pair map which can contain any key and will be
+     * passed to your PreAuthentication Lambda trigger as-is. It can be used to
+     * implement additional validations around authentication.
      * </p>
      */
     private java.util.Map<String, String> clientMetadata;
 
     /**
      * <p>
-     * The client ID.
+     * The app client ID.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -63,15 +147,145 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication flow.
+     * The Amazon Pinpoint analytics metadata for collecting metrics for
+     * <code>InitiateAuth</code> calls.
+     * </p>
+     */
+    private AnalyticsMetadataType analyticsMetadata;
+
+    /**
+     * <p>
+     * Contextual data such as the user's device fingerprint, IP address, or
+     * location used for evaluating the risk of an unexpected event by Amazon
+     * Cognito advanced security.
+     * </p>
+     */
+    private UserContextDataType userContextData;
+
+    /**
+     * <p>
+     * The authentication flow for this call to execute. The API action will
+     * depend on this value. For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and
+     * return new tokens.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>SRP_A</code> and return the SRP variables to be used for next
+     * challenge execution.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>PASSWORD</code> and return the next challenge or tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote
+     * Password (SRP) protocol.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     * Authentication flow for refreshing the access token and ID token by
+     * supplying a valid refresh token.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME
+     * and PASSWORD are passed directly. If a user migration Lambda trigger is
+     * set, this flow will invoke the user migration Lambda if the USERNAME is
+     * not found in the user pool.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN,
-     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH
+     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH
      *
      * @return <p>
-     *         The authentication flow.
+     *         The authentication flow for this call to execute. The API action
+     *         will depend on this value. For example:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh
+     *         token and return new tokens.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     *         <code>SRP_A</code> and return the SRP variables to be used for
+     *         next challenge execution.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>USER_PASSWORD_AUTH</code> will take in
+     *         <code>USERNAME</code> and <code>PASSWORD</code> and return the
+     *         next challenge or tokens.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         Valid values include:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>USER_SRP_AUTH</code>: Authentication flow for the Secure
+     *         Remote Password (SRP) protocol.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     *         Authentication flow for refreshing the access token and ID token
+     *         by supplying a valid refresh token.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow;
+     *         USERNAME and PASSWORD are passed directly. If a user migration
+     *         Lambda trigger is set, this flow will invoke the user migration
+     *         Lambda if the USERNAME is not found in the user pool.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      *         </p>
      * @see AuthFlowType
      */
@@ -81,15 +295,129 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication flow.
+     * The authentication flow for this call to execute. The API action will
+     * depend on this value. For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and
+     * return new tokens.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>SRP_A</code> and return the SRP variables to be used for next
+     * challenge execution.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>PASSWORD</code> and return the next challenge or tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote
+     * Password (SRP) protocol.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     * Authentication flow for refreshing the access token and ID token by
+     * supplying a valid refresh token.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME
+     * and PASSWORD are passed directly. If a user migration Lambda trigger is
+     * set, this flow will invoke the user migration Lambda if the USERNAME is
+     * not found in the user pool.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN,
-     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH
+     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH
      *
      * @param authFlow <p>
-     *            The authentication flow.
+     *            The authentication flow for this call to execute. The API
+     *            action will depend on this value. For example:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh
+     *            token and return new tokens.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code>
+     *            and <code>SRP_A</code> and return the SRP variables to be used
+     *            for next challenge execution.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code> will take in
+     *            <code>USERNAME</code> and <code>PASSWORD</code> and return the
+     *            next challenge or tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code>: Authentication flow for the Secure
+     *            Remote Password (SRP) protocol.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     *            Authentication flow for refreshing the access token and ID
+     *            token by supplying a valid refresh token.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow;
+     *            USERNAME and PASSWORD are passed directly. If a user migration
+     *            Lambda trigger is set, this flow will invoke the user
+     *            migration Lambda if the USERNAME is not found in the user
+     *            pool.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      *            </p>
      * @see AuthFlowType
      */
@@ -99,7 +427,63 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication flow.
+     * The authentication flow for this call to execute. The API action will
+     * depend on this value. For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and
+     * return new tokens.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>SRP_A</code> and return the SRP variables to be used for next
+     * challenge execution.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>PASSWORD</code> and return the next challenge or tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote
+     * Password (SRP) protocol.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     * Authentication flow for refreshing the access token and ID token by
+     * supplying a valid refresh token.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME
+     * and PASSWORD are passed directly. If a user migration Lambda trigger is
+     * set, this flow will invoke the user migration Lambda if the USERNAME is
+     * not found in the user pool.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -107,10 +491,68 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN,
-     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH
+     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH
      *
      * @param authFlow <p>
-     *            The authentication flow.
+     *            The authentication flow for this call to execute. The API
+     *            action will depend on this value. For example:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh
+     *            token and return new tokens.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code>
+     *            and <code>SRP_A</code> and return the SRP variables to be used
+     *            for next challenge execution.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code> will take in
+     *            <code>USERNAME</code> and <code>PASSWORD</code> and return the
+     *            next challenge or tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code>: Authentication flow for the Secure
+     *            Remote Password (SRP) protocol.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     *            Authentication flow for refreshing the access token and ID
+     *            token by supplying a valid refresh token.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow;
+     *            USERNAME and PASSWORD are passed directly. If a user migration
+     *            Lambda trigger is set, this flow will invoke the user
+     *            migration Lambda if the USERNAME is not found in the user
+     *            pool.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -123,15 +565,129 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication flow.
+     * The authentication flow for this call to execute. The API action will
+     * depend on this value. For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and
+     * return new tokens.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>SRP_A</code> and return the SRP variables to be used for next
+     * challenge execution.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>PASSWORD</code> and return the next challenge or tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote
+     * Password (SRP) protocol.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     * Authentication flow for refreshing the access token and ID token by
+     * supplying a valid refresh token.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME
+     * and PASSWORD are passed directly. If a user migration Lambda trigger is
+     * set, this flow will invoke the user migration Lambda if the USERNAME is
+     * not found in the user pool.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN,
-     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH
+     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH
      *
      * @param authFlow <p>
-     *            The authentication flow.
+     *            The authentication flow for this call to execute. The API
+     *            action will depend on this value. For example:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh
+     *            token and return new tokens.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code>
+     *            and <code>SRP_A</code> and return the SRP variables to be used
+     *            for next challenge execution.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code> will take in
+     *            <code>USERNAME</code> and <code>PASSWORD</code> and return the
+     *            next challenge or tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code>: Authentication flow for the Secure
+     *            Remote Password (SRP) protocol.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     *            Authentication flow for refreshing the access token and ID
+     *            token by supplying a valid refresh token.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow;
+     *            USERNAME and PASSWORD are passed directly. If a user migration
+     *            Lambda trigger is set, this flow will invoke the user
+     *            migration Lambda if the USERNAME is not found in the user
+     *            pool.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      *            </p>
      * @see AuthFlowType
      */
@@ -141,7 +697,63 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication flow.
+     * The authentication flow for this call to execute. The API action will
+     * depend on this value. For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and
+     * return new tokens.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>SRP_A</code> and return the SRP variables to be used for next
+     * challenge execution.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and
+     * <code>PASSWORD</code> and return the next challenge or tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote
+     * Password (SRP) protocol.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     * Authentication flow for refreshing the access token and ID token by
+     * supplying a valid refresh token.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME
+     * and PASSWORD are passed directly. If a user migration Lambda trigger is
+     * set, this flow will invoke the user migration Lambda if the USERNAME is
+     * not found in the user pool.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -149,10 +761,68 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN,
-     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH
+     * CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH
      *
      * @param authFlow <p>
-     *            The authentication flow.
+     *            The authentication flow for this call to execute. The API
+     *            action will depend on this value. For example:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh
+     *            token and return new tokens.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code>
+     *            and <code>SRP_A</code> and return the SRP variables to be used
+     *            for next challenge execution.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code> will take in
+     *            <code>USERNAME</code> and <code>PASSWORD</code> and return the
+     *            next challenge or tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>USER_SRP_AUTH</code>: Authentication flow for the Secure
+     *            Remote Password (SRP) protocol.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>:
+     *            Authentication flow for refreshing the access token and ID
+     *            token by supplying a valid refresh token.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>CUSTOM_AUTH</code>: Custom authentication flow.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow;
+     *            USERNAME and PASSWORD are passed directly. If a user migration
+     *            Lambda trigger is set, this flow will invoke the user
+     *            migration Lambda if the USERNAME is not found in the user
+     *            pool.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -165,12 +835,65 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication parameters.
+     * The authentication parameters. These are inputs corresponding to the
+     * <code>AuthFlow</code> that you are invoking. The required values depend
+     * on the value of <code>AuthFlow</code>:
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the
+     * app client is configured with a client secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     * <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required
+     * if the app client is configured with a client secret),
+     * <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SECRET_HASH</code> (if app client is configured with client
+     * secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * </ul>
      *
      * @return <p>
-     *         The authentication parameters.
+     *         The authentication parameters. These are inputs corresponding to
+     *         the <code>AuthFlow</code> that you are invoking. The required
+     *         values depend on the value of <code>AuthFlow</code>:
      *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required),
+     *         <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required
+     *         if the app client is configured with a client secret),
+     *         <code>DEVICE_KEY</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     *         <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code>
+     *         (required if the app client is configured with a client secret),
+     *         <code>DEVICE_KEY</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required),
+     *         <code>SECRET_HASH</code> (if app client is configured with client
+     *         secret), <code>DEVICE_KEY</code>
+     *         </p>
+     *         </li>
+     *         </ul>
      */
     public java.util.Map<String, String> getAuthParameters() {
         return authParameters;
@@ -178,12 +901,65 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication parameters.
+     * The authentication parameters. These are inputs corresponding to the
+     * <code>AuthFlow</code> that you are invoking. The required values depend
+     * on the value of <code>AuthFlow</code>:
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the
+     * app client is configured with a client secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     * <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required
+     * if the app client is configured with a client secret),
+     * <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SECRET_HASH</code> (if app client is configured with client
+     * secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * </ul>
      *
      * @param authParameters <p>
-     *            The authentication parameters.
+     *            The authentication parameters. These are inputs corresponding
+     *            to the <code>AuthFlow</code> that you are invoking. The
+     *            required values depend on the value of <code>AuthFlow</code>:
      *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            For <code>USER_SRP_AUTH</code>: <code>USERNAME</code>
+     *            (required), <code>SRP_A</code> (required),
+     *            <code>SECRET_HASH</code> (required if the app client is
+     *            configured with a client secret), <code>DEVICE_KEY</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     *            <code>REFRESH_TOKEN</code> (required),
+     *            <code>SECRET_HASH</code> (required if the app client is
+     *            configured with a client secret), <code>DEVICE_KEY</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For <code>CUSTOM_AUTH</code>: <code>USERNAME</code>
+     *            (required), <code>SECRET_HASH</code> (if app client is
+     *            configured with client secret), <code>DEVICE_KEY</code>
+     *            </p>
+     *            </li>
+     *            </ul>
      */
     public void setAuthParameters(java.util.Map<String, String> authParameters) {
         this.authParameters = authParameters;
@@ -191,15 +967,68 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication parameters.
+     * The authentication parameters. These are inputs corresponding to the
+     * <code>AuthFlow</code> that you are invoking. The required values depend
+     * on the value of <code>AuthFlow</code>:
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the
+     * app client is configured with a client secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     * <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required
+     * if the app client is configured with a client secret),
+     * <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SECRET_HASH</code> (if app client is configured with client
+     * secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param authParameters <p>
-     *            The authentication parameters.
+     *            The authentication parameters. These are inputs corresponding
+     *            to the <code>AuthFlow</code> that you are invoking. The
+     *            required values depend on the value of <code>AuthFlow</code>:
      *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            For <code>USER_SRP_AUTH</code>: <code>USERNAME</code>
+     *            (required), <code>SRP_A</code> (required),
+     *            <code>SECRET_HASH</code> (required if the app client is
+     *            configured with a client secret), <code>DEVICE_KEY</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     *            <code>REFRESH_TOKEN</code> (required),
+     *            <code>SECRET_HASH</code> (required if the app client is
+     *            configured with a client secret), <code>DEVICE_KEY</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For <code>CUSTOM_AUTH</code>: <code>USERNAME</code>
+     *            (required), <code>SECRET_HASH</code> (if app client is
+     *            configured with client secret), <code>DEVICE_KEY</code>
+     *            </p>
+     *            </li>
+     *            </ul>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -210,8 +1039,34 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The authentication parameters.
+     * The authentication parameters. These are inputs corresponding to the
+     * <code>AuthFlow</code> that you are invoking. The required values depend
+     * on the value of <code>AuthFlow</code>:
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the
+     * app client is configured with a client secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>:
+     * <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required
+     * if the app client is configured with a client secret),
+     * <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required),
+     * <code>SECRET_HASH</code> (if app client is configured with client
+     * secret), <code>DEVICE_KEY</code>
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * The method adds a new key-value pair into AuthParameters parameter, and
      * returns a reference to this object so that method calls can be chained
@@ -247,11 +1102,16 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client app's metadata.
+     * This is a random key-value pair map which can contain any key and will be
+     * passed to your PreAuthentication Lambda trigger as-is. It can be used to
+     * implement additional validations around authentication.
      * </p>
      *
      * @return <p>
-     *         The client app's metadata.
+     *         This is a random key-value pair map which can contain any key and
+     *         will be passed to your PreAuthentication Lambda trigger as-is. It
+     *         can be used to implement additional validations around
+     *         authentication.
      *         </p>
      */
     public java.util.Map<String, String> getClientMetadata() {
@@ -260,11 +1120,16 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client app's metadata.
+     * This is a random key-value pair map which can contain any key and will be
+     * passed to your PreAuthentication Lambda trigger as-is. It can be used to
+     * implement additional validations around authentication.
      * </p>
      *
      * @param clientMetadata <p>
-     *            The client app's metadata.
+     *            This is a random key-value pair map which can contain any key
+     *            and will be passed to your PreAuthentication Lambda trigger
+     *            as-is. It can be used to implement additional validations
+     *            around authentication.
      *            </p>
      */
     public void setClientMetadata(java.util.Map<String, String> clientMetadata) {
@@ -273,14 +1138,19 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client app's metadata.
+     * This is a random key-value pair map which can contain any key and will be
+     * passed to your PreAuthentication Lambda trigger as-is. It can be used to
+     * implement additional validations around authentication.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param clientMetadata <p>
-     *            The client app's metadata.
+     *            This is a random key-value pair map which can contain any key
+     *            and will be passed to your PreAuthentication Lambda trigger
+     *            as-is. It can be used to implement additional validations
+     *            around authentication.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -292,7 +1162,9 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client app's metadata.
+     * This is a random key-value pair map which can contain any key and will be
+     * passed to your PreAuthentication Lambda trigger as-is. It can be used to
+     * implement additional validations around authentication.
      * </p>
      * <p>
      * The method adds a new key-value pair into ClientMetadata parameter, and
@@ -329,7 +1201,7 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client ID.
+     * The app client ID.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -337,7 +1209,7 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
      * <b>Pattern: </b>[\w+]+<br/>
      *
      * @return <p>
-     *         The client ID.
+     *         The app client ID.
      *         </p>
      */
     public String getClientId() {
@@ -346,7 +1218,7 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client ID.
+     * The app client ID.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -354,7 +1226,7 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
      * <b>Pattern: </b>[\w+]+<br/>
      *
      * @param clientId <p>
-     *            The client ID.
+     *            The app client ID.
      *            </p>
      */
     public void setClientId(String clientId) {
@@ -363,7 +1235,7 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * The client ID.
+     * The app client ID.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -374,13 +1246,121 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
      * <b>Pattern: </b>[\w+]+<br/>
      *
      * @param clientId <p>
-     *            The client ID.
+     *            The app client ID.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public InitiateAuthRequest withClientId(String clientId) {
         this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Pinpoint analytics metadata for collecting metrics for
+     * <code>InitiateAuth</code> calls.
+     * </p>
+     *
+     * @return <p>
+     *         The Amazon Pinpoint analytics metadata for collecting metrics for
+     *         <code>InitiateAuth</code> calls.
+     *         </p>
+     */
+    public AnalyticsMetadataType getAnalyticsMetadata() {
+        return analyticsMetadata;
+    }
+
+    /**
+     * <p>
+     * The Amazon Pinpoint analytics metadata for collecting metrics for
+     * <code>InitiateAuth</code> calls.
+     * </p>
+     *
+     * @param analyticsMetadata <p>
+     *            The Amazon Pinpoint analytics metadata for collecting metrics
+     *            for <code>InitiateAuth</code> calls.
+     *            </p>
+     */
+    public void setAnalyticsMetadata(AnalyticsMetadataType analyticsMetadata) {
+        this.analyticsMetadata = analyticsMetadata;
+    }
+
+    /**
+     * <p>
+     * The Amazon Pinpoint analytics metadata for collecting metrics for
+     * <code>InitiateAuth</code> calls.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param analyticsMetadata <p>
+     *            The Amazon Pinpoint analytics metadata for collecting metrics
+     *            for <code>InitiateAuth</code> calls.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public InitiateAuthRequest withAnalyticsMetadata(AnalyticsMetadataType analyticsMetadata) {
+        this.analyticsMetadata = analyticsMetadata;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Contextual data such as the user's device fingerprint, IP address, or
+     * location used for evaluating the risk of an unexpected event by Amazon
+     * Cognito advanced security.
+     * </p>
+     *
+     * @return <p>
+     *         Contextual data such as the user's device fingerprint, IP
+     *         address, or location used for evaluating the risk of an
+     *         unexpected event by Amazon Cognito advanced security.
+     *         </p>
+     */
+    public UserContextDataType getUserContextData() {
+        return userContextData;
+    }
+
+    /**
+     * <p>
+     * Contextual data such as the user's device fingerprint, IP address, or
+     * location used for evaluating the risk of an unexpected event by Amazon
+     * Cognito advanced security.
+     * </p>
+     *
+     * @param userContextData <p>
+     *            Contextual data such as the user's device fingerprint, IP
+     *            address, or location used for evaluating the risk of an
+     *            unexpected event by Amazon Cognito advanced security.
+     *            </p>
+     */
+    public void setUserContextData(UserContextDataType userContextData) {
+        this.userContextData = userContextData;
+    }
+
+    /**
+     * <p>
+     * Contextual data such as the user's device fingerprint, IP address, or
+     * location used for evaluating the risk of an unexpected event by Amazon
+     * Cognito advanced security.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param userContextData <p>
+     *            Contextual data such as the user's device fingerprint, IP
+     *            address, or location used for evaluating the risk of an
+     *            unexpected event by Amazon Cognito advanced security.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public InitiateAuthRequest withUserContextData(UserContextDataType userContextData) {
+        this.userContextData = userContextData;
         return this;
     }
 
@@ -402,7 +1382,11 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
         if (getClientMetadata() != null)
             sb.append("ClientMetadata: " + getClientMetadata() + ",");
         if (getClientId() != null)
-            sb.append("ClientId: " + getClientId());
+            sb.append("ClientId: " + getClientId() + ",");
+        if (getAnalyticsMetadata() != null)
+            sb.append("AnalyticsMetadata: " + getAnalyticsMetadata() + ",");
+        if (getUserContextData() != null)
+            sb.append("UserContextData: " + getUserContextData());
         sb.append("}");
         return sb.toString();
     }
@@ -418,6 +1402,10 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
         hashCode = prime * hashCode
                 + ((getClientMetadata() == null) ? 0 : getClientMetadata().hashCode());
         hashCode = prime * hashCode + ((getClientId() == null) ? 0 : getClientId().hashCode());
+        hashCode = prime * hashCode
+                + ((getAnalyticsMetadata() == null) ? 0 : getAnalyticsMetadata().hashCode());
+        hashCode = prime * hashCode
+                + ((getUserContextData() == null) ? 0 : getUserContextData().hashCode());
         return hashCode;
     }
 
@@ -449,6 +1437,16 @@ public class InitiateAuthRequest extends AmazonWebServiceRequest implements Seri
         if (other.getClientId() == null ^ this.getClientId() == null)
             return false;
         if (other.getClientId() != null && other.getClientId().equals(this.getClientId()) == false)
+            return false;
+        if (other.getAnalyticsMetadata() == null ^ this.getAnalyticsMetadata() == null)
+            return false;
+        if (other.getAnalyticsMetadata() != null
+                && other.getAnalyticsMetadata().equals(this.getAnalyticsMetadata()) == false)
+            return false;
+        if (other.getUserContextData() == null ^ this.getUserContextData() == null)
+            return false;
+        if (other.getUserContextData() != null
+                && other.getUserContextData().equals(this.getUserContextData()) == false)
             return false;
         return true;
     }

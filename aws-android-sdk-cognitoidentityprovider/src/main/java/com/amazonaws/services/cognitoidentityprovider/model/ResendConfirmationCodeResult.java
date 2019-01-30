@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,25 +19,28 @@ import java.io.Serializable;
 
 /**
  * <p>
- * The response from the server when the Amazon Cognito service makes the
- * request to resend a confirmation code.
+ * The response from the server when the Amazon Cognito Your User Pools service
+ * makes the request to resend a confirmation code.
  * </p>
  */
 public class ResendConfirmationCodeResult implements Serializable {
     /**
      * <p>
-     * The type of code delivery details being returned from the server.
+     * The code delivery details returned by the server in response to the
+     * request to resend the confirmation code.
      * </p>
      */
     private CodeDeliveryDetailsType codeDeliveryDetails;
 
     /**
      * <p>
-     * The type of code delivery details being returned from the server.
+     * The code delivery details returned by the server in response to the
+     * request to resend the confirmation code.
      * </p>
      *
      * @return <p>
-     *         The type of code delivery details being returned from the server.
+     *         The code delivery details returned by the server in response to
+     *         the request to resend the confirmation code.
      *         </p>
      */
     public CodeDeliveryDetailsType getCodeDeliveryDetails() {
@@ -46,12 +49,13 @@ public class ResendConfirmationCodeResult implements Serializable {
 
     /**
      * <p>
-     * The type of code delivery details being returned from the server.
+     * The code delivery details returned by the server in response to the
+     * request to resend the confirmation code.
      * </p>
      *
      * @param codeDeliveryDetails <p>
-     *            The type of code delivery details being returned from the
-     *            server.
+     *            The code delivery details returned by the server in response
+     *            to the request to resend the confirmation code.
      *            </p>
      */
     public void setCodeDeliveryDetails(CodeDeliveryDetailsType codeDeliveryDetails) {
@@ -60,15 +64,16 @@ public class ResendConfirmationCodeResult implements Serializable {
 
     /**
      * <p>
-     * The type of code delivery details being returned from the server.
+     * The code delivery details returned by the server in response to the
+     * request to resend the confirmation code.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param codeDeliveryDetails <p>
-     *            The type of code delivery details being returned from the
-     *            server.
+     *            The code delivery details returned by the server in response
+     *            to the request to resend the confirmation code.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

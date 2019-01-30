@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2014-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Portions copyright 2006-2009 James Murty. Please see LICENSE.txt
  * for applicable license terms and NOTICE.txt for applicable notices.
@@ -25,7 +25,11 @@ import java.util.TreeMap;
  * Internal class used to carry both the secured CEK and the key wrapping
  * algorithm, if any. Byte array cloning is intentionally skipped for
  * performance reasons.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 class SecuredCEK {
     /**
      * The encrypted CEK either via key wrapping or simple encryption.

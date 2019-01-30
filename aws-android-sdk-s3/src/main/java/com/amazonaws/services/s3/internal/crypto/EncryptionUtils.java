@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -62,7 +62,11 @@ import javax.crypto.spec.SecretKeySpec;
  * The EncryptionUtils class encrypts and decrypts data stored in S3. It can be
  * used to prepare requests for encryption before they are stored in S3 and to
  * decrypt objects that are retrieved from S3.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public class EncryptionUtils {
 
     /** Suffix appended to the end of instruction file names */

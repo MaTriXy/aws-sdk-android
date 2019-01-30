@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,6 +26,10 @@ import com.amazonaws.AmazonWebServiceRequest;
  * "http://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_GetCredentialsForIdentity.html#API_GetCredentialsForIdentity_RequestSyntax"
  * >AmazonCognito Identity format</a>.
  * </p>
+ * <p>
+ * <b>Note:</b> This API is deprecated. Please use <a>ListAttachedPolicies</a>
+ * instead.
+ * </p>
  */
 public class ListPrincipalPoliciesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -39,6 +43,9 @@ public class ListPrincipalPoliciesRequest extends AmazonWebServiceRequest implem
      * <p>
      * The marker for the next set of results.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      */
     private String marker;
 
@@ -109,6 +116,9 @@ public class ListPrincipalPoliciesRequest extends AmazonWebServiceRequest implem
      * <p>
      * The marker for the next set of results.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @return <p>
      *         The marker for the next set of results.
@@ -122,6 +132,9 @@ public class ListPrincipalPoliciesRequest extends AmazonWebServiceRequest implem
      * <p>
      * The marker for the next set of results.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
      *            The marker for the next set of results.
@@ -138,6 +151,9 @@ public class ListPrincipalPoliciesRequest extends AmazonWebServiceRequest implem
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
      *            The marker for the next set of results.

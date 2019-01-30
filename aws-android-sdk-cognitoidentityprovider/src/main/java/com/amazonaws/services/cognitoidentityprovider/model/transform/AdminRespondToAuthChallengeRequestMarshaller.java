@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -94,6 +94,18 @@ public class AdminRespondToAuthChallengeRequestMarshaller implements
                 String session = adminRespondToAuthChallengeRequest.getSession();
                 jsonWriter.name("Session");
                 jsonWriter.value(session);
+            }
+            if (adminRespondToAuthChallengeRequest.getAnalyticsMetadata() != null) {
+                AnalyticsMetadataType analyticsMetadata = adminRespondToAuthChallengeRequest
+                        .getAnalyticsMetadata();
+                jsonWriter.name("AnalyticsMetadata");
+                AnalyticsMetadataTypeJsonMarshaller.getInstance().marshall(analyticsMetadata,
+                        jsonWriter);
+            }
+            if (adminRespondToAuthChallengeRequest.getContextData() != null) {
+                ContextDataType contextData = adminRespondToAuthChallengeRequest.getContextData();
+                jsonWriter.name("ContextData");
+                ContextDataTypeJsonMarshaller.getInstance().marshall(contextData, jsonWriter);
             }
 
             jsonWriter.endObject();

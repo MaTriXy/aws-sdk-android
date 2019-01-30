@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,7 +17,10 @@ package com.amazonaws.mobileconnectors.amazonmobileanalytics.internal.delivery;
 
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.internal.event.EventObserver;
 import com.amazonaws.mobileconnectors.amazonmobileanalytics.internal.event.InternalEvent;
-
+/**
+ * @deprecated The Amazon Mobile Analytics SDK for Android is deprecated as of release 2.9.0. Please use the Amazon Pinpoint SDK for Android along with Amazon Pinpoint service instead.
+ */
+@Deprecated
 public interface DeliveryClient extends EventObserver {
     public void enqueueEventForDelivery(InternalEvent event);
 

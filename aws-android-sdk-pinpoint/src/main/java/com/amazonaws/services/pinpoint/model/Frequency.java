@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ public enum Frequency {
     HOURLY("HOURLY"),
     DAILY("DAILY"),
     WEEKLY("WEEKLY"),
-    MONTHLY("MONTHLY");
+    MONTHLY("MONTHLY"),
+    EVENT("EVENT");
 
     private String value;
 
@@ -48,6 +49,7 @@ public enum Frequency {
         enumMap.put("DAILY", DAILY);
         enumMap.put("WEEKLY", WEEKLY);
         enumMap.put("MONTHLY", MONTHLY);
+        enumMap.put("EVENT", EVENT);
     }
 
     /**

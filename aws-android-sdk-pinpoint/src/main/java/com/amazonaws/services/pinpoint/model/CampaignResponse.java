@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@ package com.amazonaws.services.pinpoint.model;
 
 import java.io.Serializable;
 
+/**
+ * Campaign definition
+ */
 public class CampaignResponse implements Serializable {
     /**
      * Treatments that are defined in addition to the default treatment.
@@ -49,6 +52,11 @@ public class CampaignResponse implements Serializable {
      * this campaign.
      */
     private Integer holdoutPercent;
+
+    /**
+     * Campaign hook information.
+     */
+    private CampaignHook hook;
 
     /**
      * The unique campaign ID.
@@ -356,6 +364,39 @@ public class CampaignResponse implements Serializable {
      */
     public CampaignResponse withHoldoutPercent(Integer holdoutPercent) {
         this.holdoutPercent = holdoutPercent;
+        return this;
+    }
+
+    /**
+     * Campaign hook information.
+     *
+     * @return Campaign hook information.
+     */
+    public CampaignHook getHook() {
+        return hook;
+    }
+
+    /**
+     * Campaign hook information.
+     *
+     * @param hook Campaign hook information.
+     */
+    public void setHook(CampaignHook hook) {
+        this.hook = hook;
+    }
+
+    /**
+     * Campaign hook information.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param hook Campaign hook information.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CampaignResponse withHook(CampaignHook hook) {
+        this.hook = hook;
         return this;
     }
 
@@ -849,6 +890,8 @@ public class CampaignResponse implements Serializable {
             sb.append("Description: " + getDescription() + ",");
         if (getHoldoutPercent() != null)
             sb.append("HoldoutPercent: " + getHoldoutPercent() + ",");
+        if (getHook() != null)
+            sb.append("Hook: " + getHook() + ",");
         if (getId() != null)
             sb.append("Id: " + getId() + ",");
         if (getIsPaused() != null)
@@ -896,6 +939,7 @@ public class CampaignResponse implements Serializable {
                 + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode
                 + ((getHoldoutPercent() == null) ? 0 : getHoldoutPercent().hashCode());
+        hashCode = prime * hashCode + ((getHook() == null) ? 0 : getHook().hashCode());
         hashCode = prime * hashCode + ((getId() == null) ? 0 : getId().hashCode());
         hashCode = prime * hashCode + ((getIsPaused() == null) ? 0 : getIsPaused().hashCode());
         hashCode = prime * hashCode
@@ -957,6 +1001,10 @@ public class CampaignResponse implements Serializable {
             return false;
         if (other.getHoldoutPercent() != null
                 && other.getHoldoutPercent().equals(this.getHoldoutPercent()) == false)
+            return false;
+        if (other.getHook() == null ^ this.getHook() == null)
+            return false;
+        if (other.getHook() != null && other.getHook().equals(this.getHook()) == false)
             return false;
         if (other.getId() == null ^ this.getId() == null)
             return false;

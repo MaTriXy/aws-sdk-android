@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -56,6 +56,10 @@ public class DeleteCertificateRequestMarshaller implements
                 "{certificateId}",
                 (deleteCertificateRequest.getCertificateId() == null) ? "" : StringUtils
                         .fromString(deleteCertificateRequest.getCertificateId()));
+        if (deleteCertificateRequest.getForceDelete() != null) {
+            request.addParameter("forceDelete",
+                    StringUtils.fromBoolean(deleteCertificateRequest.getForceDelete()));
+        }
         request.setResourcePath(uriResourcePath);
         if (!request.getHeaders().containsKey("Content-Type")) {
             request.addHeader("Content-Type", "application/x-amz-json-1.0");

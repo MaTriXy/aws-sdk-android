@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,7 +42,11 @@ import java.io.OutputStream;
  * An internal SPI used to implement different cryptographic modules
  * for use with the S3 encryption client.
  * @param <T> the class type.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public abstract class S3CryptoModule<T extends MultipartUploadContext> {
     /**
      * @param req the PutObjectRequest.

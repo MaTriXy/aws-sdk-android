@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * A description of the current lifecycle state. Note that the
+     * A description of the current lifecycle state. The
      * <code>Quarantined</code> state is not used.
      * </p>
      * <p>
@@ -63,9 +63,10 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * The health status of the instance. "Healthy" means that the instance is
-     * healthy and should remain in service. "Unhealthy" means that the instance
-     * is unhealthy and Auto Scaling should terminate and replace it.
+     * The last reported health status of the instance. "Healthy" means that the
+     * instance is healthy and should remain in service. "Unhealthy" means that
+     * the instance is unhealthy and that Amazon EC2 Auto Scaling should
+     * terminate and replace it.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -89,8 +90,15 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * The launch template for the instance.
+     * </p>
+     */
+    private LaunchTemplateSpecification launchTemplate;
+
+    /**
+     * <p>
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      */
     private Boolean protectedFromScaleIn;
@@ -217,7 +225,7 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * A description of the current lifecycle state. Note that the
+     * A description of the current lifecycle state. The
      * <code>Quarantined</code> state is not used.
      * </p>
      * <p>
@@ -228,7 +236,7 @@ public class Instance implements Serializable {
      * Standby
      *
      * @return <p>
-     *         A description of the current lifecycle state. Note that the
+     *         A description of the current lifecycle state. The
      *         <code>Quarantined</code> state is not used.
      *         </p>
      * @see LifecycleState
@@ -239,7 +247,7 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * A description of the current lifecycle state. Note that the
+     * A description of the current lifecycle state. The
      * <code>Quarantined</code> state is not used.
      * </p>
      * <p>
@@ -250,7 +258,7 @@ public class Instance implements Serializable {
      * Standby
      *
      * @param lifecycleState <p>
-     *            A description of the current lifecycle state. Note that the
+     *            A description of the current lifecycle state. The
      *            <code>Quarantined</code> state is not used.
      *            </p>
      * @see LifecycleState
@@ -261,7 +269,7 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * A description of the current lifecycle state. Note that the
+     * A description of the current lifecycle state. The
      * <code>Quarantined</code> state is not used.
      * </p>
      * <p>
@@ -275,7 +283,7 @@ public class Instance implements Serializable {
      * Standby
      *
      * @param lifecycleState <p>
-     *            A description of the current lifecycle state. Note that the
+     *            A description of the current lifecycle state. The
      *            <code>Quarantined</code> state is not used.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -289,7 +297,7 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * A description of the current lifecycle state. Note that the
+     * A description of the current lifecycle state. The
      * <code>Quarantined</code> state is not used.
      * </p>
      * <p>
@@ -300,7 +308,7 @@ public class Instance implements Serializable {
      * Standby
      *
      * @param lifecycleState <p>
-     *            A description of the current lifecycle state. Note that the
+     *            A description of the current lifecycle state. The
      *            <code>Quarantined</code> state is not used.
      *            </p>
      * @see LifecycleState
@@ -311,7 +319,7 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * A description of the current lifecycle state. Note that the
+     * A description of the current lifecycle state. The
      * <code>Quarantined</code> state is not used.
      * </p>
      * <p>
@@ -325,7 +333,7 @@ public class Instance implements Serializable {
      * Standby
      *
      * @param lifecycleState <p>
-     *            A description of the current lifecycle state. Note that the
+     *            A description of the current lifecycle state. The
      *            <code>Quarantined</code> state is not used.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -339,9 +347,10 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * The health status of the instance. "Healthy" means that the instance is
-     * healthy and should remain in service. "Unhealthy" means that the instance
-     * is unhealthy and Auto Scaling should terminate and replace it.
+     * The last reported health status of the instance. "Healthy" means that the
+     * instance is healthy and should remain in service. "Unhealthy" means that
+     * the instance is unhealthy and that Amazon EC2 Auto Scaling should
+     * terminate and replace it.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -350,10 +359,10 @@ public class Instance implements Serializable {
      * <br/>
      *
      * @return <p>
-     *         The health status of the instance. "Healthy" means that the
-     *         instance is healthy and should remain in service. "Unhealthy"
-     *         means that the instance is unhealthy and Auto Scaling should
-     *         terminate and replace it.
+     *         The last reported health status of the instance. "Healthy" means
+     *         that the instance is healthy and should remain in service.
+     *         "Unhealthy" means that the instance is unhealthy and that Amazon
+     *         EC2 Auto Scaling should terminate and replace it.
      *         </p>
      */
     public String getHealthStatus() {
@@ -362,9 +371,10 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * The health status of the instance. "Healthy" means that the instance is
-     * healthy and should remain in service. "Unhealthy" means that the instance
-     * is unhealthy and Auto Scaling should terminate and replace it.
+     * The last reported health status of the instance. "Healthy" means that the
+     * instance is healthy and should remain in service. "Unhealthy" means that
+     * the instance is unhealthy and that Amazon EC2 Auto Scaling should
+     * terminate and replace it.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -373,10 +383,10 @@ public class Instance implements Serializable {
      * <br/>
      *
      * @param healthStatus <p>
-     *            The health status of the instance. "Healthy" means that the
-     *            instance is healthy and should remain in service. "Unhealthy"
-     *            means that the instance is unhealthy and Auto Scaling should
-     *            terminate and replace it.
+     *            The last reported health status of the instance. "Healthy"
+     *            means that the instance is healthy and should remain in
+     *            service. "Unhealthy" means that the instance is unhealthy and
+     *            that Amazon EC2 Auto Scaling should terminate and replace it.
      *            </p>
      */
     public void setHealthStatus(String healthStatus) {
@@ -385,9 +395,10 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * The health status of the instance. "Healthy" means that the instance is
-     * healthy and should remain in service. "Unhealthy" means that the instance
-     * is unhealthy and Auto Scaling should terminate and replace it.
+     * The last reported health status of the instance. "Healthy" means that the
+     * instance is healthy and should remain in service. "Unhealthy" means that
+     * the instance is unhealthy and that Amazon EC2 Auto Scaling should
+     * terminate and replace it.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -399,10 +410,10 @@ public class Instance implements Serializable {
      * <br/>
      *
      * @param healthStatus <p>
-     *            The health status of the instance. "Healthy" means that the
-     *            instance is healthy and should remain in service. "Unhealthy"
-     *            means that the instance is unhealthy and Auto Scaling should
-     *            terminate and replace it.
+     *            The last reported health status of the instance. "Healthy"
+     *            means that the instance is healthy and should remain in
+     *            service. "Unhealthy" means that the instance is unhealthy and
+     *            that Amazon EC2 Auto Scaling should terminate and replace it.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -474,13 +485,58 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * The launch template for the instance.
+     * </p>
+     *
+     * @return <p>
+     *         The launch template for the instance.
+     *         </p>
+     */
+    public LaunchTemplateSpecification getLaunchTemplate() {
+        return launchTemplate;
+    }
+
+    /**
+     * <p>
+     * The launch template for the instance.
+     * </p>
+     *
+     * @param launchTemplate <p>
+     *            The launch template for the instance.
+     *            </p>
+     */
+    public void setLaunchTemplate(LaunchTemplateSpecification launchTemplate) {
+        this.launchTemplate = launchTemplate;
+    }
+
+    /**
+     * <p>
+     * The launch template for the instance.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param launchTemplate <p>
+     *            The launch template for the instance.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Instance withLaunchTemplate(LaunchTemplateSpecification launchTemplate) {
+        this.launchTemplate = launchTemplate;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      *
      * @return <p>
      *         Indicates whether the instance is protected from termination by
-     *         Auto Scaling when scaling in.
+     *         Amazon EC2 Auto Scaling when scaling in.
      *         </p>
      */
     public Boolean isProtectedFromScaleIn() {
@@ -489,13 +545,13 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      *
      * @return <p>
      *         Indicates whether the instance is protected from termination by
-     *         Auto Scaling when scaling in.
+     *         Amazon EC2 Auto Scaling when scaling in.
      *         </p>
      */
     public Boolean getProtectedFromScaleIn() {
@@ -504,13 +560,13 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      *
      * @param protectedFromScaleIn <p>
      *            Indicates whether the instance is protected from termination
-     *            by Auto Scaling when scaling in.
+     *            by Amazon EC2 Auto Scaling when scaling in.
      *            </p>
      */
     public void setProtectedFromScaleIn(Boolean protectedFromScaleIn) {
@@ -519,8 +575,8 @@ public class Instance implements Serializable {
 
     /**
      * <p>
-     * Indicates whether the instance is protected from termination by Auto
-     * Scaling when scaling in.
+     * Indicates whether the instance is protected from termination by Amazon
+     * EC2 Auto Scaling when scaling in.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -528,7 +584,7 @@ public class Instance implements Serializable {
      *
      * @param protectedFromScaleIn <p>
      *            Indicates whether the instance is protected from termination
-     *            by Auto Scaling when scaling in.
+     *            by Amazon EC2 Auto Scaling when scaling in.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -559,6 +615,8 @@ public class Instance implements Serializable {
             sb.append("HealthStatus: " + getHealthStatus() + ",");
         if (getLaunchConfigurationName() != null)
             sb.append("LaunchConfigurationName: " + getLaunchConfigurationName() + ",");
+        if (getLaunchTemplate() != null)
+            sb.append("LaunchTemplate: " + getLaunchTemplate() + ",");
         if (getProtectedFromScaleIn() != null)
             sb.append("ProtectedFromScaleIn: " + getProtectedFromScaleIn());
         sb.append("}");
@@ -581,6 +639,8 @@ public class Instance implements Serializable {
                 * hashCode
                 + ((getLaunchConfigurationName() == null) ? 0 : getLaunchConfigurationName()
                         .hashCode());
+        hashCode = prime * hashCode
+                + ((getLaunchTemplate() == null) ? 0 : getLaunchTemplate().hashCode());
         hashCode = prime * hashCode
                 + ((getProtectedFromScaleIn() == null) ? 0 : getProtectedFromScaleIn().hashCode());
         return hashCode;
@@ -621,6 +681,11 @@ public class Instance implements Serializable {
             return false;
         if (other.getLaunchConfigurationName() != null
                 && other.getLaunchConfigurationName().equals(this.getLaunchConfigurationName()) == false)
+            return false;
+        if (other.getLaunchTemplate() == null ^ this.getLaunchTemplate() == null)
+            return false;
+        if (other.getLaunchTemplate() != null
+                && other.getLaunchTemplate().equals(this.getLaunchTemplate()) == false)
             return false;
         if (other.getProtectedFromScaleIn() == null ^ this.getProtectedFromScaleIn() == null)
             return false;

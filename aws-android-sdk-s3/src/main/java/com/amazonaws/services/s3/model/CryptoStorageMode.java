@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,7 +31,11 @@ package com.amazonaws.services.s3.model;
  * placed in a separate instruction file that will be stored in the same bucket
  * as the encrypted object in S3. No metadata will be used for storing
  * encryption information.
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 public enum CryptoStorageMode {
     InstructionFile,
     ObjectMetadata

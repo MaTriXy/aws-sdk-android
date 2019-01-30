@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -46,6 +46,9 @@ class RecordJsonUnmarshaller implements Unmarshaller<Record, JsonUnmarshallerCon
                         .unmarshall(context));
             } else if (name.equals("PartitionKey")) {
                 record.setPartitionKey(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("EncryptionType")) {
+                record.setEncryptionType(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

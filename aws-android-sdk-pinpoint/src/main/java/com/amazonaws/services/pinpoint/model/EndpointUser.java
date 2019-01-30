@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,9 +17,19 @@ package com.amazonaws.services.pinpoint.model;
 
 import java.io.Serializable;
 
+/**
+ * Endpoint user specific custom userAttributes
+ */
 public class EndpointUser implements Serializable {
     /**
-     * Custom attributesd specific to the user.
+     * Custom attributes that describe the user by associating a name with an
+     * array of values. For example, an attribute named "interests" might have
+     * the following values: ["science", "politics", "travel"]. You can use
+     * these attributes as selection criteria when you create segments. The
+     * Amazon Pinpoint console can't display attribute names that include the
+     * following characters: hash/pound sign (#), colon (:), question mark (?),
+     * backslash (\), and forward slash (/). For this reason, you should avoid
+     * using these characters in the names of custom attributes.
      */
     private java.util.Map<String, java.util.List<String>> userAttributes;
 
@@ -29,30 +39,77 @@ public class EndpointUser implements Serializable {
     private String userId;
 
     /**
-     * Custom attributesd specific to the user.
+     * Custom attributes that describe the user by associating a name with an
+     * array of values. For example, an attribute named "interests" might have
+     * the following values: ["science", "politics", "travel"]. You can use
+     * these attributes as selection criteria when you create segments. The
+     * Amazon Pinpoint console can't display attribute names that include the
+     * following characters: hash/pound sign (#), colon (:), question mark (?),
+     * backslash (\), and forward slash (/). For this reason, you should avoid
+     * using these characters in the names of custom attributes.
      *
-     * @return Custom attributesd specific to the user.
+     * @return Custom attributes that describe the user by associating a name
+     *         with an array of values. For example, an attribute named
+     *         "interests" might have the following values: ["science",
+     *         "politics", "travel"]. You can use these attributes as selection
+     *         criteria when you create segments. The Amazon Pinpoint console
+     *         can't display attribute names that include the following
+     *         characters: hash/pound sign (#), colon (:), question mark (?),
+     *         backslash (\), and forward slash (/). For this reason, you should
+     *         avoid using these characters in the names of custom attributes.
      */
     public java.util.Map<String, java.util.List<String>> getUserAttributes() {
         return userAttributes;
     }
 
     /**
-     * Custom attributesd specific to the user.
+     * Custom attributes that describe the user by associating a name with an
+     * array of values. For example, an attribute named "interests" might have
+     * the following values: ["science", "politics", "travel"]. You can use
+     * these attributes as selection criteria when you create segments. The
+     * Amazon Pinpoint console can't display attribute names that include the
+     * following characters: hash/pound sign (#), colon (:), question mark (?),
+     * backslash (\), and forward slash (/). For this reason, you should avoid
+     * using these characters in the names of custom attributes.
      *
-     * @param userAttributes Custom attributesd specific to the user.
+     * @param userAttributes Custom attributes that describe the user by
+     *            associating a name with an array of values. For example, an
+     *            attribute named "interests" might have the following values:
+     *            ["science", "politics", "travel"]. You can use these
+     *            attributes as selection criteria when you create segments. The
+     *            Amazon Pinpoint console can't display attribute names that
+     *            include the following characters: hash/pound sign (#), colon
+     *            (:), question mark (?), backslash (\), and forward slash (/).
+     *            For this reason, you should avoid using these characters in
+     *            the names of custom attributes.
      */
     public void setUserAttributes(java.util.Map<String, java.util.List<String>> userAttributes) {
         this.userAttributes = userAttributes;
     }
 
     /**
-     * Custom attributesd specific to the user.
+     * Custom attributes that describe the user by associating a name with an
+     * array of values. For example, an attribute named "interests" might have
+     * the following values: ["science", "politics", "travel"]. You can use
+     * these attributes as selection criteria when you create segments. The
+     * Amazon Pinpoint console can't display attribute names that include the
+     * following characters: hash/pound sign (#), colon (:), question mark (?),
+     * backslash (\), and forward slash (/). For this reason, you should avoid
+     * using these characters in the names of custom attributes.
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param userAttributes Custom attributesd specific to the user.
+     * @param userAttributes Custom attributes that describe the user by
+     *            associating a name with an array of values. For example, an
+     *            attribute named "interests" might have the following values:
+     *            ["science", "politics", "travel"]. You can use these
+     *            attributes as selection criteria when you create segments. The
+     *            Amazon Pinpoint console can't display attribute names that
+     *            include the following characters: hash/pound sign (#), colon
+     *            (:), question mark (?), backslash (\), and forward slash (/).
+     *            For this reason, you should avoid using these characters in
+     *            the names of custom attributes.
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -63,7 +120,14 @@ public class EndpointUser implements Serializable {
     }
 
     /**
-     * Custom attributesd specific to the user.
+     * Custom attributes that describe the user by associating a name with an
+     * array of values. For example, an attribute named "interests" might have
+     * the following values: ["science", "politics", "travel"]. You can use
+     * these attributes as selection criteria when you create segments. The
+     * Amazon Pinpoint console can't display attribute names that include the
+     * following characters: hash/pound sign (#), colon (:), question mark (?),
+     * backslash (\), and forward slash (/). For this reason, you should avoid
+     * using these characters in the names of custom attributes.
      * <p>
      * The method adds a new key-value pair into UserAttributes parameter, and
      * returns a reference to this object so that method calls can be chained

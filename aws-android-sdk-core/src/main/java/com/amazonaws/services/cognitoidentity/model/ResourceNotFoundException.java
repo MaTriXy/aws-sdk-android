@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@ package com.amazonaws.services.cognitoidentity.model;
 import com.amazonaws.AmazonServiceException;
 
 /**
+ * <p>
  * Thrown when the requested resource (for example, a dataset or record) does
  * not exist.
+ * </p>
  */
 public class ResourceNotFoundException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;

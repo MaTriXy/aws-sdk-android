@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,9 @@ public class ListCertificatesByCARequest extends AmazonWebServiceRequest impleme
      * <p>
      * The marker for the next set of results.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      */
     private String marker;
 
@@ -186,6 +189,9 @@ public class ListCertificatesByCARequest extends AmazonWebServiceRequest impleme
      * <p>
      * The marker for the next set of results.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @return <p>
      *         The marker for the next set of results.
@@ -199,6 +205,9 @@ public class ListCertificatesByCARequest extends AmazonWebServiceRequest impleme
      * <p>
      * The marker for the next set of results.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
      *            The marker for the next set of results.
@@ -215,6 +224,9 @@ public class ListCertificatesByCARequest extends AmazonWebServiceRequest impleme
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
      *            The marker for the next set of results.

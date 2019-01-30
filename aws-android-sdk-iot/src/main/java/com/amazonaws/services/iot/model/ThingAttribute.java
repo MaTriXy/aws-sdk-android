@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,6 +45,13 @@ public class ThingAttribute implements Serializable {
      * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      */
     private String thingTypeName;
+
+    /**
+     * <p>
+     * The thing ARN.
+     * </p>
+     */
+    private String thingArn;
 
     /**
      * <p>
@@ -174,6 +181,51 @@ public class ThingAttribute implements Serializable {
      */
     public ThingAttribute withThingTypeName(String thingTypeName) {
         this.thingTypeName = thingTypeName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The thing ARN.
+     * </p>
+     *
+     * @return <p>
+     *         The thing ARN.
+     *         </p>
+     */
+    public String getThingArn() {
+        return thingArn;
+    }
+
+    /**
+     * <p>
+     * The thing ARN.
+     * </p>
+     *
+     * @param thingArn <p>
+     *            The thing ARN.
+     *            </p>
+     */
+    public void setThingArn(String thingArn) {
+        this.thingArn = thingArn;
+    }
+
+    /**
+     * <p>
+     * The thing ARN.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param thingArn <p>
+     *            The thing ARN.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingAttribute withThingArn(String thingArn) {
+        this.thingArn = thingArn;
         return this;
     }
 
@@ -319,6 +371,8 @@ public class ThingAttribute implements Serializable {
             sb.append("thingName: " + getThingName() + ",");
         if (getThingTypeName() != null)
             sb.append("thingTypeName: " + getThingTypeName() + ",");
+        if (getThingArn() != null)
+            sb.append("thingArn: " + getThingArn() + ",");
         if (getAttributes() != null)
             sb.append("attributes: " + getAttributes() + ",");
         if (getVersion() != null)
@@ -335,6 +389,7 @@ public class ThingAttribute implements Serializable {
         hashCode = prime * hashCode + ((getThingName() == null) ? 0 : getThingName().hashCode());
         hashCode = prime * hashCode
                 + ((getThingTypeName() == null) ? 0 : getThingTypeName().hashCode());
+        hashCode = prime * hashCode + ((getThingArn() == null) ? 0 : getThingArn().hashCode());
         hashCode = prime * hashCode + ((getAttributes() == null) ? 0 : getAttributes().hashCode());
         hashCode = prime * hashCode + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return hashCode;
@@ -360,6 +415,10 @@ public class ThingAttribute implements Serializable {
             return false;
         if (other.getThingTypeName() != null
                 && other.getThingTypeName().equals(this.getThingTypeName()) == false)
+            return false;
+        if (other.getThingArn() == null ^ this.getThingArn() == null)
+            return false;
+        if (other.getThingArn() != null && other.getThingArn().equals(this.getThingArn()) == false)
             return false;
         if (other.getAttributes() == null ^ this.getAttributes() == null)
             return false;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -78,11 +78,27 @@ public class CreateKeyRequestMarshaller implements
                 jsonWriter.name("Origin");
                 jsonWriter.value(origin);
             }
+            if (createKeyRequest.getCustomKeyStoreId() != null) {
+                String customKeyStoreId = createKeyRequest.getCustomKeyStoreId();
+                jsonWriter.name("CustomKeyStoreId");
+                jsonWriter.value(customKeyStoreId);
+            }
             if (createKeyRequest.getBypassPolicyLockoutSafetyCheck() != null) {
                 Boolean bypassPolicyLockoutSafetyCheck = createKeyRequest
                         .getBypassPolicyLockoutSafetyCheck();
                 jsonWriter.name("BypassPolicyLockoutSafetyCheck");
                 jsonWriter.value(bypassPolicyLockoutSafetyCheck);
+            }
+            if (createKeyRequest.getTags() != null) {
+                java.util.List<Tag> tags = createKeyRequest.getTags();
+                jsonWriter.name("Tags");
+                jsonWriter.beginArray();
+                for (Tag tagsItem : tags) {
+                    if (tagsItem != null) {
+                        TagJsonMarshaller.getInstance().marshall(tagsItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
             }
 
             jsonWriter.endObject();

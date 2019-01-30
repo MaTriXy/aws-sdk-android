@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@ package com.amazonaws.services.pinpoint.model;
 
 import java.io.Serializable;
 
+/**
+ * State of the Campaign
+ */
 public class CampaignState implements Serializable {
     /**
      * The status of the campaign, or the status of a treatment that belongs to
@@ -25,7 +28,7 @@ public class CampaignState implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>SCHEDULED, EXECUTING, PENDING_NEXT_RUN, COMPLETED,
-     * PAUSED
+     * PAUSED, DELETED
      */
     private String campaignStatus;
 
@@ -36,7 +39,7 @@ public class CampaignState implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>SCHEDULED, EXECUTING, PENDING_NEXT_RUN, COMPLETED,
-     * PAUSED
+     * PAUSED, DELETED
      *
      * @return The status of the campaign, or the status of a treatment that
      *         belongs to an A/B test campaign. Valid values: SCHEDULED,
@@ -54,7 +57,7 @@ public class CampaignState implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>SCHEDULED, EXECUTING, PENDING_NEXT_RUN, COMPLETED,
-     * PAUSED
+     * PAUSED, DELETED
      *
      * @param campaignStatus The status of the campaign, or the status of a
      *            treatment that belongs to an A/B test campaign. Valid values:
@@ -75,7 +78,7 @@ public class CampaignState implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>SCHEDULED, EXECUTING, PENDING_NEXT_RUN, COMPLETED,
-     * PAUSED
+     * PAUSED, DELETED
      *
      * @param campaignStatus The status of the campaign, or the status of a
      *            treatment that belongs to an A/B test campaign. Valid values:
@@ -96,7 +99,7 @@ public class CampaignState implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>SCHEDULED, EXECUTING, PENDING_NEXT_RUN, COMPLETED,
-     * PAUSED
+     * PAUSED, DELETED
      *
      * @param campaignStatus The status of the campaign, or the status of a
      *            treatment that belongs to an A/B test campaign. Valid values:
@@ -117,7 +120,7 @@ public class CampaignState implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>SCHEDULED, EXECUTING, PENDING_NEXT_RUN, COMPLETED,
-     * PAUSED
+     * PAUSED, DELETED
      *
      * @param campaignStatus The status of the campaign, or the status of a
      *            treatment that belongs to an A/B test campaign. Valid values:

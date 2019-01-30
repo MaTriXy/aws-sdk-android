@@ -1,5 +1,5 @@
 /**
- * Copyright 2015-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2015-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.UploadPartRequest;
 import com.amazonaws.util.json.JsonUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,6 +42,8 @@ class TransferDBUtil {
 
     private static final String QUERY_PLACE_HOLDER_STRING = ",?";
 
+    private static final Object LOCK = new Object();
+
     /**
      * transferDBBase is a basic helper for accessing the database
      */
@@ -53,8 +55,10 @@ class TransferDBUtil {
      * @param context An instance of Context.
      */
     public TransferDBUtil(Context context) {
-        if (transferDBBase == null) {
-            transferDBBase = new TransferDBBase(context);
+        synchronized (LOCK) {
+            if (transferDBBase == null) {
+                transferDBBase = new TransferDBBase(context);
+            }
         }
     }
 
@@ -62,8 +66,10 @@ class TransferDBUtil {
      * Closes the DB Connection
      */
     public void closeDB() {
-        if (transferDBBase != null) {
-            transferDBBase.closeDBHelper();
+        synchronized (LOCK) {
+            if (transferDBBase != null) {
+                transferDBBase.closeDBHelper();
+            }
         }
     }
 
@@ -325,7 +331,7 @@ class TransferDBUtil {
      * Updates states of all transfer records with the specified type which are
      * "running" and "waiting" to "pending pause".
      *
-     * @param TransferType The type of transfers to query for.
+     * @param type The type of transfers to query for.
      * @return Number of rows updated.
      */
     public int pauseAllWithType(TransferType type) {
@@ -358,7 +364,7 @@ class TransferDBUtil {
      * Updates states of all transfer records with the specified which are
      * "running" and "waiting" to "pending cancel"
      *
-     * @param TransferType The type of transfers to cancel
+     * @param type The type of transfers to cancel
      * @return Number of rows updated.
      */
     public int cancelAllWithType(TransferType type) {
@@ -394,7 +400,7 @@ class TransferDBUtil {
     /**
      * Queries all the records which have the given type.
      *
-     * @param TransferType The type of transfers to query for.
+     * @param type The type of transfers to query for.
      * @return A Cursor pointing to records in the database with the given type.
      */
     public Cursor queryAllTransfersWithType(TransferType type) {
@@ -411,8 +417,8 @@ class TransferDBUtil {
     /**
      * Queries all the records which have the given type and state.
      *
-     * @param TransferType The type of transfers to query for.
-     * @param TransferState The state of the transfer.
+     * @param type The type of transfers to query for.
+     * @param state The state of the transfer.
      * @return A Cursor pointing to records in the database with the given type
      *         and state.
      */
@@ -431,9 +437,8 @@ class TransferDBUtil {
     /**
      * Queries all the records which have the given type and states.
      *
-     * @param projections The list of columns to be projected
-     * @param type The type of Transfer
-     * @param String[] The list of Transfer States whose Transfer Records are required.
+     * @param type   The type of Transfer
+     * @param states The list of Transfer States whose Transfer Records are required.
      * @return A Cursor pointing to records in the database in any of the given states.
      */
     public Cursor queryTransfersWithTypeAndStates(TransferType type,
@@ -515,7 +520,7 @@ class TransferDBUtil {
     /**
      * Queries all the PartETags of completed parts from the multipart upload
      * specified by the mainUploadId. The list of PartETags is used to complete
-     * a multiart upload, so it's usually called after all partUpload tasks are
+     * a multipart upload, so it's usually called after all partUpload tasks are
      * finished.
      *
      * @param mainUploadId The mainUploadId of a multipart upload task
@@ -623,7 +628,7 @@ class TransferDBUtil {
     /**
      * Create a string with the required number of placeholders
      *
-     * @param length Number of placeholders needed
+     * @param numPlaceHolders Number of placeholders needed
      * @return String with the required placeholders
      */
     private String createPlaceholders(int numPlaceHolders) {
@@ -704,10 +709,14 @@ class TransferDBUtil {
                 metadata.getContentDisposition());
         values.put(TransferTable.COLUMN_SSE_ALGORITHM, metadata.getSSEAlgorithm());
         values.put(TransferTable.COLUMN_SSE_KMS_KEY, metadata.getSSEAwsKmsKeyId());
-        values.put(TransferTable.COLUMN_EXPIRATION_TIME_RULE_ID, metadata.getExpirationTimeRuleId());
+        values.put(TransferTable.COLUMN_EXPIRATION_TIME_RULE_ID,
+                metadata.getExpirationTimeRuleId());
         if (metadata.getHttpExpiresDate() != null) {
             values.put(TransferTable.COLUMN_HTTP_EXPIRES_DATE,
                     String.valueOf(metadata.getHttpExpiresDate().getTime()));
+        }
+        if (metadata.getStorageClass() != null) {
+            values.put(TransferTable.COLUMN_HEADER_STORAGE_CLASS, metadata.getStorageClass());
         }
 
         return values;
@@ -802,7 +811,7 @@ class TransferDBUtil {
         try {
             c = queryTransferById(id);
             if (c.moveToFirst()) {
-                transfer = new TransferRecord(0);
+                transfer = new TransferRecord(id);
                 transfer.updateFromDB(c);
             }
         } finally {
@@ -813,8 +822,17 @@ class TransferDBUtil {
         return transfer;
     }
 
-    static TransferDBBase getTransferDBBase() {
-        return transferDBBase;
+    /**
+     * Retrieve the underlying TransferDBBase object.
+     *
+     * @return TransferDBBase
+     */
+    static TransferDBBase getTransferDBBase(Context context) {
+        synchronized (LOCK) {
+            if (transferDBBase == null) {
+                transferDBBase = new TransferDBBase(context);
+            }
+            return transferDBBase;
+        }
     }
 }
-

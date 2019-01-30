@@ -28,8 +28,10 @@ import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.customtabs.CustomTabsServiceConnection;
 import android.support.customtabs.CustomTabsSession;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.amazonaws.cognito.clientcontext.data.UserContextDataProvider;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthInvalidGrantException;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthNavigationException;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthServiceException;
@@ -203,7 +205,7 @@ public class AuthClient {
     @SuppressWarnings("checkstyle:hiddenfield")
     public boolean isAuthenticated() {
         AuthUserSession session =
-                LocalDataManager.getCachedSession(context, pool.getAppWebDomain(), userId, pool.getScopes());
+                LocalDataManager.getCachedSession(context, pool.getAppId(), userId, pool.getScopes());
         return session.isValidForThreshold();
     }
 
@@ -252,6 +254,7 @@ public class AuthClient {
                 final Uri fqdn = new Uri.Builder()
                         .scheme(ClientConstants.DOMAIN_SCHEME)
                         .authority(pool.getAppWebDomain())
+                        .appendPath(ClientConstants.DOMAIN_PATH_OAUTH2)
                         .appendPath(ClientConstants.DOMAIN_PATH_TOKEN_ENDPOINT)
                         .build();
 
@@ -287,10 +290,10 @@ public class AuthClient {
                             String response =
                                     httpClient.httpPost(new URL(fqdn.toString()), httpHeaderParams, httpBodyParams);
                             final AuthUserSession session = AuthHttpResponseParser.parseHttpResponse(response);
-                            final String username = session.getUsername();
+                            userId = session.getUsername();
 
                             // Cache tokens if successful
-                            LocalDataManager.cacheSession(context, pool.getAppId(), username, session, tokenScopes);
+                            LocalDataManager.cacheSession(context, pool.getAppId(), userId, session, tokenScopes);
 
                             // Return tokens
                             returnCallback = new Runnable() {
@@ -350,6 +353,7 @@ public class AuthClient {
                 final Uri fqdn = new Uri.Builder()
                         .scheme(ClientConstants.DOMAIN_SCHEME)
                         .authority(pool.getAppWebDomain())
+                        .appendPath(ClientConstants.DOMAIN_PATH_OAUTH2)
                         .appendPath(ClientConstants.DOMAIN_PATH_TOKEN_ENDPOINT)
                         .build();
 
@@ -449,6 +453,7 @@ public class AuthClient {
         httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_REDIRECT_URI, redirectUri);
         httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_CLIENT_ID, pool.getAppId());
         httpBodyParams.put(ClientConstants.HTTP_REQUEST_REFRESH_TOKEN, session.getRefreshToken().getToken());
+        httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_USERCONTEXTDATA, getUserContextData());
         return  httpBodyParams;
     }
 
@@ -461,7 +466,9 @@ public class AuthClient {
         // Build the complete web domain to launch the login screen
         Uri.Builder builder = new Uri.Builder()
                 .scheme(ClientConstants.DOMAIN_SCHEME)
-                .authority(pool.getAppWebDomain()).appendPath(ClientConstants.DOMAIN_PATH_SIGN_IN)
+                .authority(pool.getAppWebDomain())
+                .appendPath(ClientConstants.DOMAIN_PATH_OAUTH2)
+                .appendPath(ClientConstants.DOMAIN_PATH_SIGN_IN)
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_CLIENT_ID, pool.getAppId())
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_REDIRECT_URI, redirectUri)
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_RESPONSE_TYPE,
@@ -469,7 +476,17 @@ public class AuthClient {
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_CODE_CHALLENGE, proofKeyHash)
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_CODE_CHALLENGE_METHOD,
                         ClientConstants.DOMAIN_QUERY_PARAM_CODE_CHALLENGE_METHOD_SHA256)
-                .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_STATE, state);
+                .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_STATE, state)
+                .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_USERCONTEXTDATA, getUserContextData());;
+
+        //check if identity provider set as param.
+        if (!TextUtils.isEmpty(pool.getIdentityProvider())) {
+            builder.appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_IDENTITY_PROVIDER, pool.getIdentityProvider());
+        }
+        //check if idp identifier set as param.
+        if (!TextUtils.isEmpty(pool.getIdpIdentifier())) {
+            builder.appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_IDP_IDENTIFIER, pool.getIdpIdentifier());
+        }
 
         // Convert scopes into a string of comma separated values.
         final int noOfScopes = tokenScopes.size();
@@ -514,6 +531,8 @@ public class AuthClient {
     	try {
 	        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(mCustomTabsSession);
 	        mCustomTabsIntent = builder.build();
+	        if(pool.getCustomTabExtras() != null)
+	            mCustomTabsIntent.intent.putExtras(pool.getCustomTabExtras());
 	        mCustomTabsIntent.intent.setPackage(ClientConstants.CHROME_PACKAGE);
 	        mCustomTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	        mCustomTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -521,6 +540,16 @@ public class AuthClient {
     	} catch (final Exception e) {
     		userHandler.onFailure(e);
     	}
+    }
+
+    private String getUserContextData() {
+        String userContextData = null;
+        if (pool.isAdvancedSecurityDataCollectionEnabled()) {
+            UserContextDataProvider dataProvider = UserContextDataProvider.getInstance();
+            userContextData = dataProvider.getEncodedContextData(this.context, userId, pool.getUserPoolId(),
+                    pool.getAppId());
+        }
+        return userContextData;
     }
 
     /**

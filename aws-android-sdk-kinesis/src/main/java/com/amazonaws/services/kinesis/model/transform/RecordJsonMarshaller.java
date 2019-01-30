@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,6 +44,11 @@ class RecordJsonMarshaller {
             String partitionKey = record.getPartitionKey();
             jsonWriter.name("PartitionKey");
             jsonWriter.value(partitionKey);
+        }
+        if (record.getEncryptionType() != null) {
+            String encryptionType = record.getEncryptionType();
+            jsonWriter.name("EncryptionType");
+            jsonWriter.value(encryptionType);
         }
         jsonWriter.endObject();
     }

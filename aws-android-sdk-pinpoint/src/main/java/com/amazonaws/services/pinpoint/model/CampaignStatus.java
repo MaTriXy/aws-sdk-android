@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ public enum CampaignStatus {
     EXECUTING("EXECUTING"),
     PENDING_NEXT_RUN("PENDING_NEXT_RUN"),
     COMPLETED("COMPLETED"),
-    PAUSED("PAUSED");
+    PAUSED("PAUSED"),
+    DELETED("DELETED");
 
     private String value;
 
@@ -48,6 +49,7 @@ public enum CampaignStatus {
         enumMap.put("PENDING_NEXT_RUN", PENDING_NEXT_RUN);
         enumMap.put("COMPLETED", COMPLETED);
         enumMap.put("PAUSED", PAUSED);
+        enumMap.put("DELETED", DELETED);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,14 +29,15 @@ import com.amazonaws.http.UrlHttpClient;
 import com.amazonaws.metrics.AwsSdkMetrics;
 import com.amazonaws.metrics.RequestMetricCollector;
 import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.util.AWSRequestMetrics;
 import com.amazonaws.util.AWSRequestMetrics.Field;
 import com.amazonaws.util.AwsHostNameUtils;
 import com.amazonaws.util.Classes;
 import com.amazonaws.util.StringUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -107,6 +108,7 @@ public abstract class AmazonWebServiceClient {
     private volatile String serviceName;
 
     protected volatile String endpointPrefix;
+    private volatile Region region;
 
     /**
      * Constructs a new AmazonWebServiceClient object using the specified
@@ -197,11 +199,10 @@ public abstract class AmazonWebServiceClient {
      * {@link ClientConfiguration} will be used, which by default is HTTPS.
      * <p>
      * For more information on using AWS regions with the AWS SDK for Java, and
-     * a complete list of all available endpoints for all AWS services, see: <a
-     * href=
-     * "http://developer.amazonwebservices.com/connect/entry.jspa?externalID=3912"
-     * > http://developer.amazonwebservices.com/connect/entry.jspa?externalID=
-     * 3912</a>
+     * a complete list of all available endpoints for all AWS services, see: 
+     * <a href= "https://docs.aws.amazon.com/general/latest/gr/rande.html">
+     * https://docs.aws.amazon.com/general/latest/gr/rande.html
+     * </a>
      *
      * @param endpoint The endpoint (ex: "ec2.amazonaws.com") or a full URL,
      *            including the protocol (ex: "https://ec2.amazonaws.com") of
@@ -412,6 +413,10 @@ public abstract class AmazonWebServiceClient {
                 regionAwareSigner.setRegionName(regionId);
             }
         }
+
+        synchronized (this) {
+            this.region = Region.getRegion(regionId);
+        }
         return signer;
     }
 
@@ -472,7 +477,16 @@ public abstract class AmazonWebServiceClient {
         }
     }
 
-
+    /**
+     * Returns the region that the client is set to operate in.
+     * Note: This may be different from the region the client uses in its signature.
+     * @return the region that the client is set to operate in
+     */
+    public Regions getRegions() {
+        synchronized (this) {
+            return Regions.fromName(this.region.getName());
+        }
+    }
 
     /**
      * @deprecated by client configuration via the constructor. This method will

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * A certificate that has been transfered but not yet accepted.
+ * A certificate that has been transferred but not yet accepted.
  * </p>
  */
 public class OutgoingCertificate implements Serializable {
@@ -47,7 +47,8 @@ public class OutgoingCertificate implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      */
     private String transferredTo;
 
@@ -183,7 +184,8 @@ public class OutgoingCertificate implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @return <p>
      *         The AWS account to which the transfer was made.
@@ -199,7 +201,8 @@ public class OutgoingCertificate implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param transferredTo <p>
      *            The AWS account to which the transfer was made.
@@ -218,7 +221,8 @@ public class OutgoingCertificate implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>[0-9]{12}<br/>
+     * <b>Length: </b>12 - 12<br/>
+     * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param transferredTo <p>
      *            The AWS account to which the transfer was made.

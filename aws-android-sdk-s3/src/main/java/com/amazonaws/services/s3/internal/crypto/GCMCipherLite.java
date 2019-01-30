@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2013-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,7 +28,11 @@ import javax.crypto.SecretKey;
  *
  * @author Hanson Char
  * @see CipherLite
+ *
+ * @deprecated See {@link com.amazonaws.services.s3.AmazonS3EncryptionClient}
+ *             for further details.
  */
+@Deprecated
 final class GCMCipherLite extends CipherLite {
     private static final int BITS = 8;
     private static final int TAG_LENGTH = ContentCryptoScheme.AES_GCM

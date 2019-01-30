@@ -25,8 +25,10 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.utils.AnalyticsContextBuilder;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.PinpointContext;
@@ -46,7 +48,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE, sdk=23)
 public class AnalyticsClientTest extends MobileAnalyticsTestBase {
 
     private static final String SDK_NAME = "AppIntelligenceSDK-Analytics";
@@ -75,7 +77,7 @@ public class AnalyticsClientTest extends MobileAnalyticsTestBase {
                                                                   SDK_VERSION)
                                               .withUniqueIdValue(UNIQUE_ID)
                                               .withConfiguration(mockConfiguration)
-                                              .withContext(Robolectric.application
+                                              .withContext(RuntimeEnvironment.application
                                                                    .getApplicationContext())
                                               .build();
 

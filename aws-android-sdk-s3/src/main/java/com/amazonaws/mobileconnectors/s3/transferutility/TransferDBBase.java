@@ -1,5 +1,5 @@
 /**
- * Copyright 2015-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2015-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 
 /**
  * Provides methods to access database through which applications can interact
@@ -44,9 +44,10 @@ class TransferDBBase {
     private final UriMatcher uriMatcher;
     private final TransferDatabaseHelper databaseHelper;
     private SQLiteDatabase database;
+    private static final Object LOCK = new Object();
 
     /**
-     * Constructs TransferdatabaseBase with the given Context.
+     * Constructs TransferDatabaseBase with the given Context.
      *
      * @param context A Context instance.
      */
@@ -109,7 +110,7 @@ class TransferDBBase {
      */
     public Uri insert(Uri uri, ContentValues values) {
         final int uriType = uriMatcher.match(uri);
-        long id = 0;
+        long id;
         ensureDatabaseOpen();
 
         switch (uriType) {
@@ -130,7 +131,6 @@ class TransferDBBase {
      * @param selection The "where" clause of sql.
      * @param selectionArgs Strings in the "where" clause.
      * @param sortOrder Sorting order of the query.
-     * @param type Type of transfers to query.
      * @return A Cursor pointing to records.
      */
     public Cursor query(Uri uri, String[] projection, String selection,
@@ -240,7 +240,7 @@ class TransferDBBase {
     /**
      * @param uri The Uri of a table.
      * @param valuesArray A array of values to insert.
-     * @return Number of rows inserted.
+     * @return The mainUploadId of the multipart transfer records
      */
     public int bulkInsert(Uri uri, ContentValues[] valuesArray) {
         final int uriType = uriMatcher.match(uri);
@@ -271,15 +271,16 @@ class TransferDBBase {
 
     private void ensureDatabaseOpen() {
         // close and reopen database.
-        if (!database.isOpen()) {
-            database = databaseHelper.getWritableDatabase();
+        synchronized (LOCK) {
+            if (!database.isOpen()) {
+                database = databaseHelper.getWritableDatabase();
+            }
         }
     }
 
     SQLiteDatabase getDatabase() {
-        return database;
+        synchronized (LOCK) {
+            return database;
+        }
     }
-
 }
-
-
