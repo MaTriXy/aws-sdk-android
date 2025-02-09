@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -73,6 +74,13 @@ class DocumentClassifierPropertiesJsonMarshaller {
             DocumentClassifierInputDataConfigJsonMarshaller.getInstance().marshall(inputDataConfig,
                     jsonWriter);
         }
+        if (documentClassifierProperties.getOutputDataConfig() != null) {
+            DocumentClassifierOutputDataConfig outputDataConfig = documentClassifierProperties
+                    .getOutputDataConfig();
+            jsonWriter.name("OutputDataConfig");
+            DocumentClassifierOutputDataConfigJsonMarshaller.getInstance().marshall(
+                    outputDataConfig, jsonWriter);
+        }
         if (documentClassifierProperties.getClassifierMetadata() != null) {
             ClassifierMetadata classifierMetadata = documentClassifierProperties
                     .getClassifierMetadata();
@@ -83,6 +91,41 @@ class DocumentClassifierPropertiesJsonMarshaller {
             String dataAccessRoleArn = documentClassifierProperties.getDataAccessRoleArn();
             jsonWriter.name("DataAccessRoleArn");
             jsonWriter.value(dataAccessRoleArn);
+        }
+        if (documentClassifierProperties.getVolumeKmsKeyId() != null) {
+            String volumeKmsKeyId = documentClassifierProperties.getVolumeKmsKeyId();
+            jsonWriter.name("VolumeKmsKeyId");
+            jsonWriter.value(volumeKmsKeyId);
+        }
+        if (documentClassifierProperties.getVpcConfig() != null) {
+            VpcConfig vpcConfig = documentClassifierProperties.getVpcConfig();
+            jsonWriter.name("VpcConfig");
+            VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
+        }
+        if (documentClassifierProperties.getMode() != null) {
+            String mode = documentClassifierProperties.getMode();
+            jsonWriter.name("Mode");
+            jsonWriter.value(mode);
+        }
+        if (documentClassifierProperties.getModelKmsKeyId() != null) {
+            String modelKmsKeyId = documentClassifierProperties.getModelKmsKeyId();
+            jsonWriter.name("ModelKmsKeyId");
+            jsonWriter.value(modelKmsKeyId);
+        }
+        if (documentClassifierProperties.getVersionName() != null) {
+            String versionName = documentClassifierProperties.getVersionName();
+            jsonWriter.name("VersionName");
+            jsonWriter.value(versionName);
+        }
+        if (documentClassifierProperties.getSourceModelArn() != null) {
+            String sourceModelArn = documentClassifierProperties.getSourceModelArn();
+            jsonWriter.name("SourceModelArn");
+            jsonWriter.value(sourceModelArn);
+        }
+        if (documentClassifierProperties.getFlywheelArn() != null) {
+            String flywheelArn = documentClassifierProperties.getFlywheelArn();
+            jsonWriter.name("FlywheelArn");
+            jsonWriter.value(flywheelArn);
         }
         jsonWriter.endObject();
     }

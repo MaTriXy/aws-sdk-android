@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ import com.amazonaws.services.comprehend.model.*;
 /**
  * Interface for accessing Amazon Comprehend
  * <p>
- * Amazon Comprehend is an AWS service for gaining insight into the content of
- * documents. Use these actions to determine the topics contained in your
- * documents, the topics they discuss, the predominant sentiment expressed in
- * them, the predominant language used, and more.
+ * Amazon Comprehend is an Amazon Web Services service for gaining insight into
+ * the content of documents. Use these actions to determine the topics contained
+ * in your documents, the topics they discuss, the predominant sentiment
+ * expressed in them, the predominant language used, and more.
  * </p>
  **/
 public interface AmazonComprehend {
@@ -93,7 +93,7 @@ public interface AmazonComprehend {
      * Determines the dominant language of the input text for a batch of
      * documents. For a list of languages that Amazon Comprehend can detect, see
      * <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -120,8 +120,10 @@ public interface AmazonComprehend {
     /**
      * <p>
      * Inspects the text of a batch of documents for named entities and returns
-     * information about them. For more information about named entities, see
-     * <a>how-entities</a>
+     * information about them. For more information about named entities, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html">
+     * Entities</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectEntitiesRequest
@@ -203,7 +205,9 @@ public interface AmazonComprehend {
      * <p>
      * Inspects the text of a batch of documents for the syntax and part of
      * speech of the words in the document and returns information about them.
-     * For more information, see <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectSyntaxRequest
@@ -227,11 +231,142 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Inspects a batch of documents and returns a sentiment analysis for each
+     * entity identified in the documents.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param batchDetectTargetedSentimentRequest
+     * @return batchDetectTargetedSentimentResult The response from the
+     *         BatchDetectTargetedSentiment service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws BatchSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    BatchDetectTargetedSentimentResult batchDetectTargetedSentiment(
+            BatchDetectTargetedSentimentRequest batchDetectTargetedSentimentRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Creates a new document classification request to analyze a single
+     * document in real-time, using a previously created and trained custom
+     * model and an endpoint.
+     * </p>
+     * <p>
+     * You can input plain text or you can upload a single-page input document
+     * (text, PDF, Word, or image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> that
+     * describes the errors.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
+     * </p>
+     * 
+     * @param classifyDocumentRequest
+     * @return classifyDocumentResult The response from the ClassifyDocument
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
+     * @throws TextSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ClassifyDocumentResult classifyDocument(ClassifyDocumentRequest classifyDocumentRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Analyzes input text for the presence of personally identifiable
+     * information (PII) and returns the labels of identified PII entity types
+     * such as name, address, bank account number, or phone number.
+     * </p>
+     * 
+     * @param containsPiiEntitiesRequest
+     * @return containsPiiEntitiesResult The response from the
+     *         ContainsPiiEntities service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ContainsPiiEntitiesResult containsPiiEntities(
+            ContainsPiiEntitiesRequest containsPiiEntitiesRequest) throws AmazonClientException,
+            AmazonServiceException;
+
+    /**
+     * <p>
+     * Creates a dataset to upload training or test data for a model associated
+     * with a flywheel. For more information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createDatasetRequest
+     * @return createDatasetResult The response from the CreateDataset service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    CreateDatasetResult createDataset(CreateDatasetRequest createDatasetRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Creates a new document classifier that you can use to categorize
-     * documents. To create a classifier you provide a set of training documents
-     * that labeled with the categories that you want to use. After the
-     * classifier is trained you can use it to categorize a set of labeled
-     * documents into the categories.
+     * documents. To create a classifier, you provide a set of training
+     * documents that are labeled with the categories that you want to use. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/training-classifier-model.html"
+     * >Training classifier models</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param createDocumentClassifierRequest
@@ -240,9 +375,11 @@ public interface AmazonComprehend {
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -258,9 +395,40 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Creates a model-specific endpoint for synchronous inference for a
+     * previously trained custom model For information about endpoints, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param createEndpointRequest
+     * @return createEndpointResult The response from the CreateEndpoint service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws TooManyRequestsException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    CreateEndpointResult createEndpoint(CreateEndpointRequest createEndpointRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Creates an entity recognizer using submitted files. After your
      * <code>CreateEntityRecognizer</code> request is submitted, you can check
-     * job status using the API.
+     * job status using the <code>DescribeEntityRecognizer</code> API.
      * </p>
      * 
      * @param createEntityRecognizerRequest
@@ -269,9 +437,11 @@ public interface AmazonComprehend {
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -283,6 +453,57 @@ public interface AmazonComprehend {
      */
     CreateEntityRecognizerResult createEntityRecognizer(
             CreateEntityRecognizerRequest createEntityRecognizerRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * A flywheel is an Amazon Web Services resource that orchestrates the
+     * ongoing training of a model for custom classification or custom entity
+     * recognition. You can create a flywheel to start with an existing trained
+     * model, or Comprehend can create and train a new model.
+     * </p>
+     * <p>
+     * When you create the flywheel, Comprehend creates a data lake in your
+     * account. The data lake holds the training data and test data for all
+     * versions of the model.
+     * </p>
+     * <p>
+     * To use a flywheel with an existing trained model, you specify the active
+     * model version. Comprehend copies the model's training data and test data
+     * into the flywheel's data lake.
+     * </p>
+     * <p>
+     * To use the flywheel with a new model, you need to provide a dataset for
+     * training data (and optional test data) when you create the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createFlywheelRequest
+     * @return createFlywheelResult The response from the CreateFlywheel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    CreateFlywheelResult createFlywheel(CreateFlywheelRequest createFlywheelRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -325,6 +546,34 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Deletes a model-specific endpoint for a previously-trained custom model.
+     * All endpoints must be deleted in order for the model to be deleted. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param deleteEndpointRequest
+     * @return deleteEndpointResult The response from the DeleteEndpoint service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DeleteEndpointResult deleteEndpoint(DeleteEndpointRequest deleteEndpointRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Deletes an entity recognizer.
      * </p>
      * <p>
@@ -359,6 +608,87 @@ public interface AmazonComprehend {
      */
     DeleteEntityRecognizerResult deleteEntityRecognizer(
             DeleteEntityRecognizerRequest deleteEntityRecognizerRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Deletes a flywheel. When you delete the flywheel, Amazon Comprehend does
+     * not delete the data lake or the model associated with the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param deleteFlywheelRequest
+     * @return deleteFlywheelResult The response from the DeleteFlywheel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DeleteFlywheelResult deleteFlywheel(DeleteFlywheelRequest deleteFlywheelRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Deletes a resource-based policy that is attached to a custom model.
+     * </p>
+     * 
+     * @param deleteResourcePolicyRequest
+     * @return deleteResourcePolicyResult The response from the
+     *         DeleteResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DeleteResourcePolicyResult deleteResourcePolicy(
+            DeleteResourcePolicyRequest deleteResourcePolicyRequest) throws AmazonClientException,
+            AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns information about the dataset that you specify. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeDatasetRequest
+     * @return describeDatasetResult The response from the DescribeDataset
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeDatasetResult describeDataset(DescribeDatasetRequest describeDatasetRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -440,6 +770,33 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Gets the properties associated with a specific endpoint. Use this
+     * operation to get the status of an endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param describeEndpointRequest
+     * @return describeEndpointResult The response from the DescribeEndpoint
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeEndpointResult describeEndpoint(DescribeEndpointRequest describeEndpointRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Gets the properties associated with an entities detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -492,6 +849,85 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Gets the status and details of an events detection job.
+     * </p>
+     * 
+     * @param describeEventsDetectionJobRequest
+     * @return describeEventsDetectionJobResult The response from the
+     *         DescribeEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeEventsDetectionJobResult describeEventsDetectionJob(
+            DescribeEventsDetectionJobRequest describeEventsDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Provides configuration information about the flywheel. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelRequest
+     * @return describeFlywheelResult The response from the DescribeFlywheel
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeFlywheelResult describeFlywheel(DescribeFlywheelRequest describeFlywheelRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Retrieve the configuration properties of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelIterationRequest
+     * @return describeFlywheelIterationResult The response from the
+     *         DescribeFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeFlywheelIterationResult describeFlywheelIteration(
+            DescribeFlywheelIterationRequest describeFlywheelIterationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Gets the properties associated with a key phrases detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -518,6 +954,57 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Gets the properties associated with a PII entities detection job. For
+     * example, you can use this operation to get the job status.
+     * </p>
+     * 
+     * @param describePiiEntitiesDetectionJobRequest
+     * @return describePiiEntitiesDetectionJobResult The response from the
+     *         DescribePiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribePiiEntitiesDetectionJobResult describePiiEntitiesDetectionJob(
+            DescribePiiEntitiesDetectionJobRequest describePiiEntitiesDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets the details of a resource-based policy that is attached to a custom
+     * model, including the JSON body of the policy.
+     * </p>
+     * 
+     * @param describeResourcePolicyRequest
+     * @return describeResourcePolicyResult The response from the
+     *         DescribeResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeResourcePolicyResult describeResourcePolicy(
+            DescribeResourcePolicyRequest describeResourcePolicyRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Gets the properties associated with a sentiment detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -540,6 +1027,32 @@ public interface AmazonComprehend {
      */
     DescribeSentimentDetectionJobResult describeSentimentDetectionJob(
             DescribeSentimentDetectionJobRequest describeSentimentDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets the properties associated with a targeted sentiment detection job.
+     * Use this operation to get the status of the job.
+     * </p>
+     * 
+     * @param describeTargetedSentimentDetectionJobRequest
+     * @return describeTargetedSentimentDetectionJobResult The response from the
+     *         DescribeTargetedSentimentDetectionJob service method, as returned
+     *         by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DescribeTargetedSentimentDetectionJobResult describeTargetedSentimentDetectionJob(
+            DescribeTargetedSentimentDetectionJobRequest describeTargetedSentimentDetectionJobRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -572,7 +1085,7 @@ public interface AmazonComprehend {
      * <p>
      * Determines the dominant language of the input text. For a list of
      * languages that Amazon Comprehend can detect, see <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -597,14 +1110,39 @@ public interface AmazonComprehend {
 
     /**
      * <p>
-     * Inspects text for named entities, and returns information about them. For
-     * more information, about named entities, see <a>how-entities</a>.
+     * Detects named entities in input text when you use the pre-trained model.
+     * Detects custom entities if you have a custom entity recognition model.
+     * </p>
+     * <p>
+     * When detecting named entities using the pre-trained model, use plain text
+     * as the input. For more information about named entities, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html"
+     * >Entities</a> in the Comprehend Developer Guide.
+     * </p>
+     * <p>
+     * When you use a custom entity recognition model, you can input plain text
+     * or you can upload a single-page input document (text, PDF, Word, or
+     * image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> for
+     * each error.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
      * </p>
      * 
      * @param detectEntitiesRequest
      * @return detectEntitiesResult The response from the DetectEntities service
      *         method, as returned by Amazon Comprehend.
      * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
      * @throws TextSizeLimitExceededException
      * @throws UnsupportedLanguageException
      * @throws InternalServerException
@@ -644,6 +1182,30 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Inspects the input text for entities that contain personally identifiable
+     * information (PII) and returns information about them.
+     * </p>
+     * 
+     * @param detectPiiEntitiesRequest
+     * @return detectPiiEntitiesResult The response from the DetectPiiEntities
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DetectPiiEntitiesResult detectPiiEntities(DetectPiiEntitiesRequest detectPiiEntitiesRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Inspects text and returns an inference of the prevailing sentiment (
      * <code>POSITIVE</code>, <code>NEUTRAL</code>, <code>MIXED</code>, or
      * <code>NEGATIVE</code>).
@@ -670,7 +1232,9 @@ public interface AmazonComprehend {
     /**
      * <p>
      * Inspects text for syntax and the part of speech of words in the document.
-     * For more information, <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param detectSyntaxRequest
@@ -689,6 +1253,103 @@ public interface AmazonComprehend {
      *             request, or a server side issue.
      */
     DetectSyntaxResult detectSyntax(DetectSyntaxRequest detectSyntaxRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Inspects the input text and returns a sentiment analysis for each entity
+     * identified in the text.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param detectTargetedSentimentRequest
+     * @return detectTargetedSentimentResult The response from the
+     *         DetectTargetedSentiment service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    DetectTargetedSentimentResult detectTargetedSentiment(
+            DetectTargetedSentimentRequest detectTargetedSentimentRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Creates a new custom model that replicates a source custom model that you
+     * import. The source model can be in your Amazon Web Services account or
+     * another one.
+     * </p>
+     * <p>
+     * If the source model is in another Amazon Web Services account, then it
+     * must have a resource-based policy that authorizes you to import it.
+     * </p>
+     * <p>
+     * The source model must be in the same Amazon Web Services Region that
+     * you're using when you import. You can't import a model that's in a
+     * different Region.
+     * </p>
+     * 
+     * @param importModelRequest
+     * @return importModelResult The response from the ImportModel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws ResourceInUseException
+     * @throws ResourceUnavailableException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws KmsKeyValidationException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ImportModelResult importModel(ImportModelRequest importModelRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * List the datasets that you have configured in this Region. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listDatasetsRequest
+     * @return listDatasetsResult The response from the ListDatasets service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListDatasetsResult listDatasets(ListDatasetsRequest listDatasetsRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -715,6 +1376,31 @@ public interface AmazonComprehend {
      */
     ListDocumentClassificationJobsResult listDocumentClassificationJobs(
             ListDocumentClassificationJobsRequest listDocumentClassificationJobsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets a list of summaries of the document classifiers that you have
+     * created
+     * </p>
+     * 
+     * @param listDocumentClassifierSummariesRequest
+     * @return listDocumentClassifierSummariesResult The response from the
+     *         ListDocumentClassifierSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListDocumentClassifierSummariesResult listDocumentClassifierSummaries(
+            ListDocumentClassifierSummariesRequest listDocumentClassifierSummariesRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -770,6 +1456,31 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Gets a list of all existing endpoints that you've created. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param listEndpointsRequest
+     * @return listEndpointsResult The response from the ListEndpoints service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListEndpointsResult listEndpoints(ListEndpointsRequest listEndpointsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Gets a list of the entity detection jobs that you have submitted.
      * </p>
      * 
@@ -791,6 +1502,31 @@ public interface AmazonComprehend {
      */
     ListEntitiesDetectionJobsResult listEntitiesDetectionJobs(
             ListEntitiesDetectionJobsRequest listEntitiesDetectionJobsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets a list of summaries for the entity recognizers that you have
+     * created.
+     * </p>
+     * 
+     * @param listEntityRecognizerSummariesRequest
+     * @return listEntityRecognizerSummariesResult The response from the
+     *         ListEntityRecognizerSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListEntityRecognizerSummariesResult listEntityRecognizerSummaries(
+            ListEntityRecognizerSummariesRequest listEntityRecognizerSummariesRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -828,6 +1564,83 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Gets a list of the events detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listEventsDetectionJobsRequest
+     * @return listEventsDetectionJobsResult The response from the
+     *         ListEventsDetectionJobs service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListEventsDetectionJobsResult listEventsDetectionJobs(
+            ListEventsDetectionJobsRequest listEventsDetectionJobsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Information about the history of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listFlywheelIterationHistoryRequest
+     * @return listFlywheelIterationHistoryResult The response from the
+     *         ListFlywheelIterationHistory service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListFlywheelIterationHistoryResult listFlywheelIterationHistory(
+            ListFlywheelIterationHistoryRequest listFlywheelIterationHistoryRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets a list of the flywheels that you have created.
+     * </p>
+     * 
+     * @param listFlywheelsRequest
+     * @return listFlywheelsResult The response from the ListFlywheels service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListFlywheelsResult listFlywheels(ListFlywheelsRequest listFlywheelsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Get a list of key phrase detection jobs that you have submitted.
      * </p>
      * 
@@ -849,6 +1662,31 @@ public interface AmazonComprehend {
      */
     ListKeyPhrasesDetectionJobsResult listKeyPhrasesDetectionJobs(
             ListKeyPhrasesDetectionJobsRequest listKeyPhrasesDetectionJobsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets a list of the PII entity detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listPiiEntitiesDetectionJobsRequest
+     * @return listPiiEntitiesDetectionJobsResult The response from the
+     *         ListPiiEntitiesDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListPiiEntitiesDetectionJobsResult listPiiEntitiesDetectionJobs(
+            ListPiiEntitiesDetectionJobsRequest listPiiEntitiesDetectionJobsRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -878,6 +1716,55 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Lists all tags associated with a given Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return listTagsForResourceResult The response from the
+     *         ListTagsForResource service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListTagsForResourceResult listTagsForResource(
+            ListTagsForResourceRequest listTagsForResourceRequest) throws AmazonClientException,
+            AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets a list of targeted sentiment detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listTargetedSentimentDetectionJobsRequest
+     * @return listTargetedSentimentDetectionJobsResult The response from the
+     *         ListTargetedSentimentDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    ListTargetedSentimentDetectionJobsResult listTargetedSentimentDetectionJobs(
+            ListTargetedSentimentDetectionJobsRequest listTargetedSentimentDetectionJobsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Gets a list of the topic detection jobs that you have submitted.
      * </p>
      * 
@@ -903,8 +1790,34 @@ public interface AmazonComprehend {
 
     /**
      * <p>
-     * Starts an asynchronous document classification job. Use the operation to
-     * track the progress of the job.
+     * Attaches a resource-based policy to a custom model. You can use this
+     * policy to authorize an entity in another Amazon Web Services account to
+     * import the custom model, which replicates it in Amazon Comprehend in
+     * their account.
+     * </p>
+     * 
+     * @param putResourcePolicyRequest
+     * @return putResourcePolicyResult The response from the PutResourcePolicy
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    PutResourcePolicyResult putResourcePolicy(PutResourcePolicyRequest putResourcePolicyRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Starts an asynchronous document classification job. Use the
+     * <code>DescribeDocumentClassificationJob</code> operation to track the
+     * progress of the job.
      * </p>
      * 
      * @param startDocumentClassificationJobRequest
@@ -915,6 +1828,9 @@ public interface AmazonComprehend {
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -940,6 +1856,9 @@ public interface AmazonComprehend {
      *         Amazon Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -973,6 +1892,9 @@ public interface AmazonComprehend {
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -988,6 +1910,63 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Starts an asynchronous event detection job for a collection of documents.
+     * </p>
+     * 
+     * @param startEventsDetectionJobRequest
+     * @return startEventsDetectionJobResult The response from the
+     *         StartEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StartEventsDetectionJobResult startEventsDetectionJob(
+            StartEventsDetectionJobRequest startEventsDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Start the flywheel iteration.This operation uses any new datasets to
+     * train a new model version. For more information about flywheels, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param startFlywheelIterationRequest
+     * @return startFlywheelIterationResult The response from the
+     *         StartFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StartFlywheelIterationResult startFlywheelIteration(
+            StartFlywheelIterationRequest startFlywheelIterationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Starts an asynchronous key phrase detection job for a collection of
      * documents. Use the operation to track the status of a job.
      * </p>
@@ -998,6 +1977,9 @@ public interface AmazonComprehend {
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -1013,8 +1995,36 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Starts an asynchronous PII entity detection job for a collection of
+     * documents.
+     * </p>
+     * 
+     * @param startPiiEntitiesDetectionJobRequest
+     * @return startPiiEntitiesDetectionJobResult The response from the
+     *         StartPiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StartPiiEntitiesDetectionJobResult startPiiEntitiesDetectionJob(
+            StartPiiEntitiesDetectionJobRequest startPiiEntitiesDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Starts an asynchronous sentiment detection job for a collection of
-     * documents. use the operation to track the status of a job.
+     * documents. Use the operation to track the status of a job.
      * </p>
      * 
      * @param startSentimentDetectionJobRequest
@@ -1023,6 +2033,9 @@ public interface AmazonComprehend {
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -1038,6 +2051,35 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Starts an asynchronous targeted sentiment detection job for a collection
+     * of documents. Use the <code>DescribeTargetedSentimentDetectionJob</code>
+     * operation to track the status of a job.
+     * </p>
+     * 
+     * @param startTargetedSentimentDetectionJobRequest
+     * @return startTargetedSentimentDetectionJobResult The response from the
+     *         StartTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StartTargetedSentimentDetectionJobResult startTargetedSentimentDetectionJob(
+            StartTargetedSentimentDetectionJobRequest startTargetedSentimentDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Starts an asynchronous topic detection job. Use the
      * <code>DescribeTopicDetectionJob</code> operation to track the status of a
      * job.
@@ -1049,6 +2091,9 @@ public interface AmazonComprehend {
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -1144,6 +2189,30 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Stops an events detection job in progress.
+     * </p>
+     * 
+     * @param stopEventsDetectionJobRequest
+     * @return stopEventsDetectionJobResult The response from the
+     *         StopEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StopEventsDetectionJobResult stopEventsDetectionJob(
+            StopEventsDetectionJobRequest stopEventsDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Stops a key phrases detection job in progress.
      * </p>
      * <p>
@@ -1184,10 +2253,34 @@ public interface AmazonComprehend {
 
     /**
      * <p>
+     * Stops a PII entities detection job in progress.
+     * </p>
+     * 
+     * @param stopPiiEntitiesDetectionJobRequest
+     * @return stopPiiEntitiesDetectionJobResult The response from the
+     *         StopPiiEntitiesDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StopPiiEntitiesDetectionJobResult stopPiiEntitiesDetectionJob(
+            StopPiiEntitiesDetectionJobRequest stopPiiEntitiesDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Stops a sentiment detection job in progress.
      * </p>
      * <p>
-     * If the job state is <code>IN_PROGRESS</code> the job is marked for
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
      * termination and put into the <code>STOP_REQUESTED</code> state. If the
      * job completes before it can be stopped, it is put into the
      * <code>COMPLETED</code> state; otherwise the job is be stopped and put
@@ -1220,6 +2313,216 @@ public interface AmazonComprehend {
      */
     StopSentimentDetectionJobResult stopSentimentDetectionJob(
             StopSentimentDetectionJobRequest stopSentimentDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Stops a targeted sentiment detection job in progress.
+     * </p>
+     * <p>
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * job completes before it can be stopped, it is put into the
+     * <code>COMPLETED</code> state; otherwise the job is be stopped and put
+     * into the <code>STOPPED</code> state.
+     * </p>
+     * <p>
+     * If the job is in the <code>COMPLETED</code> or <code>FAILED</code> state
+     * when you call the <code>StopDominantLanguageDetectionJob</code>
+     * operation, the operation returns a 400 Internal Request Exception.
+     * </p>
+     * <p>
+     * When a job is stopped, any documents already processed are written to the
+     * output location.
+     * </p>
+     * 
+     * @param stopTargetedSentimentDetectionJobRequest
+     * @return stopTargetedSentimentDetectionJobResult The response from the
+     *         StopTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StopTargetedSentimentDetectionJobResult stopTargetedSentimentDetectionJob(
+            StopTargetedSentimentDetectionJobRequest stopTargetedSentimentDetectionJobRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Stops a document classifier training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and put into
+     * the <code>STOPPED</code> state and the service sends back an HTTP 200
+     * response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingDocumentClassifierRequest
+     * @return stopTrainingDocumentClassifierResult The response from the
+     *         StopTrainingDocumentClassifier service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StopTrainingDocumentClassifierResult stopTrainingDocumentClassifier(
+            StopTrainingDocumentClassifierRequest stopTrainingDocumentClassifierRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Stops an entity recognizer training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and putted
+     * into the <code>STOPPED</code> state and the service sends back an HTTP
+     * 200 response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingEntityRecognizerRequest
+     * @return stopTrainingEntityRecognizerResult The response from the
+     *         StopTrainingEntityRecognizer service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    StopTrainingEntityRecognizerResult stopTrainingEntityRecognizer(
+            StopTrainingEntityRecognizerRequest stopTrainingEntityRecognizerRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Associates a specific tag with an Amazon Comprehend resource. A tag is a
+     * key-value pair that adds as a metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return tagResourceResult The response from the TagResource service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    TagResourceResult tagResource(TagResourceRequest tagResourceRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Removes a specific tag associated with an Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return untagResourceResult The response from the UntagResource service
+     *         method, as returned by Amazon Comprehend.
+     * @throws TooManyTagKeysException
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    UntagResourceResult untagResource(UntagResourceRequest untagResourceRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Updates information about the specified endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param updateEndpointRequest
+     * @return updateEndpointResult The response from the UpdateEndpoint service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    UpdateEndpointResult updateEndpoint(UpdateEndpointRequest updateEndpointRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Update the configuration information for an existing flywheel.
+     * </p>
+     * 
+     * @param updateFlywheelRequest
+     * @return updateFlywheelResult The response from the UpdateFlywheel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    UpdateFlywheelResult updateFlywheel(UpdateFlywheelRequest updateFlywheelRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**

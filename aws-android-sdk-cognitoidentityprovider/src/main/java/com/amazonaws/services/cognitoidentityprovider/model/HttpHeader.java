@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,11 @@ import java.io.Serializable;
 public class HttpHeader implements Serializable {
     /**
      * <p>
-     * The header name
+     * The header name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String headerName;
 
@@ -34,16 +37,22 @@ public class HttpHeader implements Serializable {
      * <p>
      * The header value.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String headerValue;
 
     /**
      * <p>
-     * The header name
+     * The header name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
-     *         The header name
+     *         The header name.
      *         </p>
      */
     public String getHeaderName() {
@@ -52,11 +61,14 @@ public class HttpHeader implements Serializable {
 
     /**
      * <p>
-     * The header name
+     * The header name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param headerName <p>
-     *            The header name
+     *            The header name.
      *            </p>
      */
     public void setHeaderName(String headerName) {
@@ -65,14 +77,17 @@ public class HttpHeader implements Serializable {
 
     /**
      * <p>
-     * The header name
+     * The header name.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param headerName <p>
-     *            The header name
+     *            The header name.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -86,6 +101,9 @@ public class HttpHeader implements Serializable {
      * <p>
      * The header value.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The header value.
@@ -99,6 +117,9 @@ public class HttpHeader implements Serializable {
      * <p>
      * The header value.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param headerValue <p>
      *            The header value.
@@ -115,6 +136,9 @@ public class HttpHeader implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param headerValue <p>
      *            The header value.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Sends user input (text-only) to Amazon Lex. Client applications can use this
- * API to send requests to Amazon Lex at runtime. Amazon Lex then interprets the
- * user input using the machine learning model it built for the bot.
+ * Sends user input to Amazon Lex. Client applications can use this API to send
+ * requests to Amazon Lex at runtime. Amazon Lex then interprets the user input
+ * using the machine learning model it built for the bot.
  * </p>
  * <p>
  * In response, Amazon Lex returns the next <code>message</code> to convey to
@@ -111,7 +111,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * In addition, Amazon Lex also returns your application-specific
  * <code>sessionAttributes</code>. For more information, see <a
- * href="http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html">Managing
+ * href="https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html">Managing
  * Conversation Context</a>.
  * </p>
  */
@@ -186,7 +186,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      * >Setting Session Attributes</a>.
      * </p>
      */
@@ -204,7 +204,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      * >Setting Request Attributes</a>.
      * </p>
      */
@@ -219,6 +219,20 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * <b>Length: </b>1 - 1024<br/>
      */
     private String inputText;
+
+    /**
+     * <p>
+     * A list of contexts active for the request. A context can be activated
+     * when a previous intent is fulfilled, or by including the context in the
+     * request,
+     * </p>
+     * <p>
+     * If you don't specify a list of contexts, Amazon Lex will use the current
+     * list of contexts for the session. If you specify an empty list, all
+     * contexts for the session are cleared.
+     * </p>
+     */
+    private java.util.List<ActiveContext> activeContexts;
 
     /**
      * <p>
@@ -606,7 +620,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      * >Setting Session Attributes</a>.
      * </p>
      *
@@ -616,7 +630,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      *         </p>
      *         <p>
      *         For more information, see <a href=
-     *         "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     *         "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      *         >Setting Session Attributes</a>.
      *         </p>
      */
@@ -631,7 +645,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      * >Setting Session Attributes</a>.
      * </p>
      *
@@ -641,7 +655,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      *            </p>
      *            <p>
      *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     *            "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      *            >Setting Session Attributes</a>.
      *            </p>
      */
@@ -656,7 +670,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      * >Setting Session Attributes</a>.
      * </p>
      * <p>
@@ -669,7 +683,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      *            </p>
      *            <p>
      *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     *            "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      *            >Setting Session Attributes</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -687,7 +701,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-session-attribs"
      * >Setting Session Attributes</a>.
      * </p>
      * <p>
@@ -735,7 +749,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      * >Setting Request Attributes</a>.
      * </p>
      *
@@ -750,7 +764,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      *         </p>
      *         <p>
      *         For more information, see <a href=
-     *         "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     *         "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      *         >Setting Request Attributes</a>.
      *         </p>
      */
@@ -770,7 +784,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      * >Setting Request Attributes</a>.
      * </p>
      *
@@ -785,7 +799,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      *            </p>
      *            <p>
      *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     *            "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      *            >Setting Request Attributes</a>.
      *            </p>
      */
@@ -805,7 +819,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      * >Setting Request Attributes</a>.
      * </p>
      * <p>
@@ -823,7 +837,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      *            </p>
      *            <p>
      *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     *            "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      *            >Setting Request Attributes</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -846,7 +860,7 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
+     * "https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html#context-mgmt-request-attribs"
      * >Setting Request Attributes</a>.
      * </p>
      * <p>
@@ -939,6 +953,136 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
     }
 
     /**
+     * <p>
+     * A list of contexts active for the request. A context can be activated
+     * when a previous intent is fulfilled, or by including the context in the
+     * request,
+     * </p>
+     * <p>
+     * If you don't specify a list of contexts, Amazon Lex will use the current
+     * list of contexts for the session. If you specify an empty list, all
+     * contexts for the session are cleared.
+     * </p>
+     *
+     * @return <p>
+     *         A list of contexts active for the request. A context can be
+     *         activated when a previous intent is fulfilled, or by including
+     *         the context in the request,
+     *         </p>
+     *         <p>
+     *         If you don't specify a list of contexts, Amazon Lex will use the
+     *         current list of contexts for the session. If you specify an empty
+     *         list, all contexts for the session are cleared.
+     *         </p>
+     */
+    public java.util.List<ActiveContext> getActiveContexts() {
+        return activeContexts;
+    }
+
+    /**
+     * <p>
+     * A list of contexts active for the request. A context can be activated
+     * when a previous intent is fulfilled, or by including the context in the
+     * request,
+     * </p>
+     * <p>
+     * If you don't specify a list of contexts, Amazon Lex will use the current
+     * list of contexts for the session. If you specify an empty list, all
+     * contexts for the session are cleared.
+     * </p>
+     *
+     * @param activeContexts <p>
+     *            A list of contexts active for the request. A context can be
+     *            activated when a previous intent is fulfilled, or by including
+     *            the context in the request,
+     *            </p>
+     *            <p>
+     *            If you don't specify a list of contexts, Amazon Lex will use
+     *            the current list of contexts for the session. If you specify
+     *            an empty list, all contexts for the session are cleared.
+     *            </p>
+     */
+    public void setActiveContexts(java.util.Collection<ActiveContext> activeContexts) {
+        if (activeContexts == null) {
+            this.activeContexts = null;
+            return;
+        }
+
+        this.activeContexts = new java.util.ArrayList<ActiveContext>(activeContexts);
+    }
+
+    /**
+     * <p>
+     * A list of contexts active for the request. A context can be activated
+     * when a previous intent is fulfilled, or by including the context in the
+     * request,
+     * </p>
+     * <p>
+     * If you don't specify a list of contexts, Amazon Lex will use the current
+     * list of contexts for the session. If you specify an empty list, all
+     * contexts for the session are cleared.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param activeContexts <p>
+     *            A list of contexts active for the request. A context can be
+     *            activated when a previous intent is fulfilled, or by including
+     *            the context in the request,
+     *            </p>
+     *            <p>
+     *            If you don't specify a list of contexts, Amazon Lex will use
+     *            the current list of contexts for the session. If you specify
+     *            an empty list, all contexts for the session are cleared.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PostTextRequest withActiveContexts(ActiveContext... activeContexts) {
+        if (getActiveContexts() == null) {
+            this.activeContexts = new java.util.ArrayList<ActiveContext>(activeContexts.length);
+        }
+        for (ActiveContext value : activeContexts) {
+            this.activeContexts.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of contexts active for the request. A context can be activated
+     * when a previous intent is fulfilled, or by including the context in the
+     * request,
+     * </p>
+     * <p>
+     * If you don't specify a list of contexts, Amazon Lex will use the current
+     * list of contexts for the session. If you specify an empty list, all
+     * contexts for the session are cleared.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param activeContexts <p>
+     *            A list of contexts active for the request. A context can be
+     *            activated when a previous intent is fulfilled, or by including
+     *            the context in the request,
+     *            </p>
+     *            <p>
+     *            If you don't specify a list of contexts, Amazon Lex will use
+     *            the current list of contexts for the session. If you specify
+     *            an empty list, all contexts for the session are cleared.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PostTextRequest withActiveContexts(java.util.Collection<ActiveContext> activeContexts) {
+        setActiveContexts(activeContexts);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -960,7 +1104,9 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
         if (getRequestAttributes() != null)
             sb.append("requestAttributes: " + getRequestAttributes() + ",");
         if (getInputText() != null)
-            sb.append("inputText: " + getInputText());
+            sb.append("inputText: " + getInputText() + ",");
+        if (getActiveContexts() != null)
+            sb.append("activeContexts: " + getActiveContexts());
         sb.append("}");
         return sb.toString();
     }
@@ -978,6 +1124,8 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
         hashCode = prime * hashCode
                 + ((getRequestAttributes() == null) ? 0 : getRequestAttributes().hashCode());
         hashCode = prime * hashCode + ((getInputText() == null) ? 0 : getInputText().hashCode());
+        hashCode = prime * hashCode
+                + ((getActiveContexts() == null) ? 0 : getActiveContexts().hashCode());
         return hashCode;
     }
 
@@ -1018,6 +1166,11 @@ public class PostTextRequest extends AmazonWebServiceRequest implements Serializ
             return false;
         if (other.getInputText() != null
                 && other.getInputText().equals(this.getInputText()) == false)
+            return false;
+        if (other.getActiveContexts() == null ^ this.getActiveContexts() == null)
+            return false;
+        if (other.getActiveContexts() != null
+                && other.getActiveContexts().equals(this.getActiveContexts()) == false)
             return false;
         return true;
     }

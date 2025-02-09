@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,50 +20,56 @@ import java.io.Serializable;
 public class ListVocabulariesResult implements Serializable {
     /**
      * <p>
-     * The requested vocabulary state.
+     * Lists all custom vocabularies that have the status specified in your
+     * request. Vocabularies are ordered by creation date, with the newest
+     * vocabulary first.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>IN_PROGRESS, FAILED, COMPLETED
+     * <b>Allowed Values: </b>PENDING, READY, FAILED
      */
     private String status;
 
     /**
      * <p>
-     * The <code>ListVocabularies</code> operation returns a page of
-     * vocabularies at a time. The maximum size of the page is set by the
-     * <code>MaxResults</code> parameter. If there are more jobs in the list
-     * than the page size, Amazon Transcribe returns the <code>NextPage</code>
-     * token. Include the token in the next request to the
-     * <code>ListVocabularies</code> operation to return in the next page of
-     * jobs.
+     * If <code>NextToken</code> is present in your response, it indicates that
+     * not all results are displayed. To view the next set of results, copy the
+     * string associated with the <code>NextToken</code> parameter in your
+     * results output, then run your request again including
+     * <code>NextToken</code> with the value of the copied string. Repeat as
+     * needed to view all your results.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 8192<br/>
+     * <b>Pattern: </b>.+<br/>
      */
     private String nextToken;
 
     /**
      * <p>
-     * A list of objects that describe the vocabularies that match the search
-     * criteria in the request.
+     * Provides information about the custom vocabularies that match the
+     * criteria specified in your request.
      * </p>
      */
     private java.util.List<VocabularyInfo> vocabularies;
 
     /**
      * <p>
-     * The requested vocabulary state.
+     * Lists all custom vocabularies that have the status specified in your
+     * request. Vocabularies are ordered by creation date, with the newest
+     * vocabulary first.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>IN_PROGRESS, FAILED, COMPLETED
+     * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @return <p>
-     *         The requested vocabulary state.
+     *         Lists all custom vocabularies that have the status specified in
+     *         your request. Vocabularies are ordered by creation date, with the
+     *         newest vocabulary first.
      *         </p>
-     * @see TranscriptionJobStatus
+     * @see VocabularyState
      */
     public String getStatus() {
         return status;
@@ -71,16 +77,20 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * The requested vocabulary state.
+     * Lists all custom vocabularies that have the status specified in your
+     * request. Vocabularies are ordered by creation date, with the newest
+     * vocabulary first.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>IN_PROGRESS, FAILED, COMPLETED
+     * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param status <p>
-     *            The requested vocabulary state.
+     *            Lists all custom vocabularies that have the status specified
+     *            in your request. Vocabularies are ordered by creation date,
+     *            with the newest vocabulary first.
      *            </p>
-     * @see TranscriptionJobStatus
+     * @see VocabularyState
      */
     public void setStatus(String status) {
         this.status = status;
@@ -88,21 +98,25 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * The requested vocabulary state.
+     * Lists all custom vocabularies that have the status specified in your
+     * request. Vocabularies are ordered by creation date, with the newest
+     * vocabulary first.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>IN_PROGRESS, FAILED, COMPLETED
+     * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param status <p>
-     *            The requested vocabulary state.
+     *            Lists all custom vocabularies that have the status specified
+     *            in your request. Vocabularies are ordered by creation date,
+     *            with the newest vocabulary first.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
-     * @see TranscriptionJobStatus
+     * @see VocabularyState
      */
     public ListVocabulariesResult withStatus(String status) {
         this.status = status;
@@ -111,66 +125,74 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * The requested vocabulary state.
+     * Lists all custom vocabularies that have the status specified in your
+     * request. Vocabularies are ordered by creation date, with the newest
+     * vocabulary first.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>IN_PROGRESS, FAILED, COMPLETED
+     * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param status <p>
-     *            The requested vocabulary state.
+     *            Lists all custom vocabularies that have the status specified
+     *            in your request. Vocabularies are ordered by creation date,
+     *            with the newest vocabulary first.
      *            </p>
-     * @see TranscriptionJobStatus
+     * @see VocabularyState
      */
-    public void setStatus(TranscriptionJobStatus status) {
+    public void setStatus(VocabularyState status) {
         this.status = status.toString();
     }
 
     /**
      * <p>
-     * The requested vocabulary state.
+     * Lists all custom vocabularies that have the status specified in your
+     * request. Vocabularies are ordered by creation date, with the newest
+     * vocabulary first.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>IN_PROGRESS, FAILED, COMPLETED
+     * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param status <p>
-     *            The requested vocabulary state.
+     *            Lists all custom vocabularies that have the status specified
+     *            in your request. Vocabularies are ordered by creation date,
+     *            with the newest vocabulary first.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
-     * @see TranscriptionJobStatus
+     * @see VocabularyState
      */
-    public ListVocabulariesResult withStatus(TranscriptionJobStatus status) {
+    public ListVocabulariesResult withStatus(VocabularyState status) {
         this.status = status.toString();
         return this;
     }
 
     /**
      * <p>
-     * The <code>ListVocabularies</code> operation returns a page of
-     * vocabularies at a time. The maximum size of the page is set by the
-     * <code>MaxResults</code> parameter. If there are more jobs in the list
-     * than the page size, Amazon Transcribe returns the <code>NextPage</code>
-     * token. Include the token in the next request to the
-     * <code>ListVocabularies</code> operation to return in the next page of
-     * jobs.
+     * If <code>NextToken</code> is present in your response, it indicates that
+     * not all results are displayed. To view the next set of results, copy the
+     * string associated with the <code>NextToken</code> parameter in your
+     * results output, then run your request again including
+     * <code>NextToken</code> with the value of the copied string. Repeat as
+     * needed to view all your results.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 8192<br/>
+     * <b>Pattern: </b>.+<br/>
      *
      * @return <p>
-     *         The <code>ListVocabularies</code> operation returns a page of
-     *         vocabularies at a time. The maximum size of the page is set by
-     *         the <code>MaxResults</code> parameter. If there are more jobs in
-     *         the list than the page size, Amazon Transcribe returns the
-     *         <code>NextPage</code> token. Include the token in the next
-     *         request to the <code>ListVocabularies</code> operation to return
-     *         in the next page of jobs.
+     *         If <code>NextToken</code> is present in your response, it
+     *         indicates that not all results are displayed. To view the next
+     *         set of results, copy the string associated with the
+     *         <code>NextToken</code> parameter in your results output, then run
+     *         your request again including <code>NextToken</code> with the
+     *         value of the copied string. Repeat as needed to view all your
+     *         results.
      *         </p>
      */
     public String getNextToken() {
@@ -179,26 +201,26 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * The <code>ListVocabularies</code> operation returns a page of
-     * vocabularies at a time. The maximum size of the page is set by the
-     * <code>MaxResults</code> parameter. If there are more jobs in the list
-     * than the page size, Amazon Transcribe returns the <code>NextPage</code>
-     * token. Include the token in the next request to the
-     * <code>ListVocabularies</code> operation to return in the next page of
-     * jobs.
+     * If <code>NextToken</code> is present in your response, it indicates that
+     * not all results are displayed. To view the next set of results, copy the
+     * string associated with the <code>NextToken</code> parameter in your
+     * results output, then run your request again including
+     * <code>NextToken</code> with the value of the copied string. Repeat as
+     * needed to view all your results.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 8192<br/>
+     * <b>Pattern: </b>.+<br/>
      *
      * @param nextToken <p>
-     *            The <code>ListVocabularies</code> operation returns a page of
-     *            vocabularies at a time. The maximum size of the page is set by
-     *            the <code>MaxResults</code> parameter. If there are more jobs
-     *            in the list than the page size, Amazon Transcribe returns the
-     *            <code>NextPage</code> token. Include the token in the next
-     *            request to the <code>ListVocabularies</code> operation to
-     *            return in the next page of jobs.
+     *            If <code>NextToken</code> is present in your response, it
+     *            indicates that not all results are displayed. To view the next
+     *            set of results, copy the string associated with the
+     *            <code>NextToken</code> parameter in your results output, then
+     *            run your request again including <code>NextToken</code> with
+     *            the value of the copied string. Repeat as needed to view all
+     *            your results.
      *            </p>
      */
     public void setNextToken(String nextToken) {
@@ -207,13 +229,12 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * The <code>ListVocabularies</code> operation returns a page of
-     * vocabularies at a time. The maximum size of the page is set by the
-     * <code>MaxResults</code> parameter. If there are more jobs in the list
-     * than the page size, Amazon Transcribe returns the <code>NextPage</code>
-     * token. Include the token in the next request to the
-     * <code>ListVocabularies</code> operation to return in the next page of
-     * jobs.
+     * If <code>NextToken</code> is present in your response, it indicates that
+     * not all results are displayed. To view the next set of results, copy the
+     * string associated with the <code>NextToken</code> parameter in your
+     * results output, then run your request again including
+     * <code>NextToken</code> with the value of the copied string. Repeat as
+     * needed to view all your results.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -221,15 +242,16 @@ public class ListVocabulariesResult implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 8192<br/>
+     * <b>Pattern: </b>.+<br/>
      *
      * @param nextToken <p>
-     *            The <code>ListVocabularies</code> operation returns a page of
-     *            vocabularies at a time. The maximum size of the page is set by
-     *            the <code>MaxResults</code> parameter. If there are more jobs
-     *            in the list than the page size, Amazon Transcribe returns the
-     *            <code>NextPage</code> token. Include the token in the next
-     *            request to the <code>ListVocabularies</code> operation to
-     *            return in the next page of jobs.
+     *            If <code>NextToken</code> is present in your response, it
+     *            indicates that not all results are displayed. To view the next
+     *            set of results, copy the string associated with the
+     *            <code>NextToken</code> parameter in your results output, then
+     *            run your request again including <code>NextToken</code> with
+     *            the value of the copied string. Repeat as needed to view all
+     *            your results.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -241,13 +263,13 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * A list of objects that describe the vocabularies that match the search
-     * criteria in the request.
+     * Provides information about the custom vocabularies that match the
+     * criteria specified in your request.
      * </p>
      *
      * @return <p>
-     *         A list of objects that describe the vocabularies that match the
-     *         search criteria in the request.
+     *         Provides information about the custom vocabularies that match the
+     *         criteria specified in your request.
      *         </p>
      */
     public java.util.List<VocabularyInfo> getVocabularies() {
@@ -256,13 +278,13 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * A list of objects that describe the vocabularies that match the search
-     * criteria in the request.
+     * Provides information about the custom vocabularies that match the
+     * criteria specified in your request.
      * </p>
      *
      * @param vocabularies <p>
-     *            A list of objects that describe the vocabularies that match
-     *            the search criteria in the request.
+     *            Provides information about the custom vocabularies that match
+     *            the criteria specified in your request.
      *            </p>
      */
     public void setVocabularies(java.util.Collection<VocabularyInfo> vocabularies) {
@@ -276,16 +298,16 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * A list of objects that describe the vocabularies that match the search
-     * criteria in the request.
+     * Provides information about the custom vocabularies that match the
+     * criteria specified in your request.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param vocabularies <p>
-     *            A list of objects that describe the vocabularies that match
-     *            the search criteria in the request.
+     *            Provides information about the custom vocabularies that match
+     *            the criteria specified in your request.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -302,16 +324,16 @@ public class ListVocabulariesResult implements Serializable {
 
     /**
      * <p>
-     * A list of objects that describe the vocabularies that match the search
-     * criteria in the request.
+     * Provides information about the custom vocabularies that match the
+     * criteria specified in your request.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param vocabularies <p>
-     *            A list of objects that describe the vocabularies that match
-     *            the search criteria in the request.
+     *            Provides information about the custom vocabularies that match
+     *            the criteria specified in your request.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

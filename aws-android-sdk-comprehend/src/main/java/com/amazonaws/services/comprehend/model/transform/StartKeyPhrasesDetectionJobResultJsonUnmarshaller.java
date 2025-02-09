@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,9 @@ public class StartKeyPhrasesDetectionJobResultJsonUnmarshaller implements
             String name = reader.nextName();
             if (name.equals("JobId")) {
                 startKeyPhrasesDetectionJobResult.setJobId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                startKeyPhrasesDetectionJobResult.setJobArn(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else if (name.equals("JobStatus")) {
                 startKeyPhrasesDetectionJobResult.setJobStatus(StringJsonUnmarshaller.getInstance()

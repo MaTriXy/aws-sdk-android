@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -30,6 +31,11 @@ class TopicsDetectionJobPropertiesJsonMarshaller {
             String jobId = topicsDetectionJobProperties.getJobId();
             jsonWriter.name("JobId");
             jsonWriter.value(jobId);
+        }
+        if (topicsDetectionJobProperties.getJobArn() != null) {
+            String jobArn = topicsDetectionJobProperties.getJobArn();
+            jsonWriter.name("JobArn");
+            jsonWriter.value(jobArn);
         }
         if (topicsDetectionJobProperties.getJobName() != null) {
             String jobName = topicsDetectionJobProperties.getJobName();
@@ -70,6 +76,21 @@ class TopicsDetectionJobPropertiesJsonMarshaller {
             Integer numberOfTopics = topicsDetectionJobProperties.getNumberOfTopics();
             jsonWriter.name("NumberOfTopics");
             jsonWriter.value(numberOfTopics);
+        }
+        if (topicsDetectionJobProperties.getDataAccessRoleArn() != null) {
+            String dataAccessRoleArn = topicsDetectionJobProperties.getDataAccessRoleArn();
+            jsonWriter.name("DataAccessRoleArn");
+            jsonWriter.value(dataAccessRoleArn);
+        }
+        if (topicsDetectionJobProperties.getVolumeKmsKeyId() != null) {
+            String volumeKmsKeyId = topicsDetectionJobProperties.getVolumeKmsKeyId();
+            jsonWriter.name("VolumeKmsKeyId");
+            jsonWriter.value(volumeKmsKeyId);
+        }
+        if (topicsDetectionJobProperties.getVpcConfig() != null) {
+            VpcConfig vpcConfig = topicsDetectionJobProperties.getVpcConfig();
+            jsonWriter.name("VpcConfig");
+            VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
         }
         jsonWriter.endObject();
     }

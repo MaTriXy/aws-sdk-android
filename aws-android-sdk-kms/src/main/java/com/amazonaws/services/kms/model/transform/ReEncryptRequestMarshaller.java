@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.kms.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -78,6 +81,11 @@ public class ReEncryptRequestMarshaller implements
                 }
                 jsonWriter.endObject();
             }
+            if (reEncryptRequest.getSourceKeyId() != null) {
+                String sourceKeyId = reEncryptRequest.getSourceKeyId();
+                jsonWriter.name("SourceKeyId");
+                jsonWriter.value(sourceKeyId);
+            }
             if (reEncryptRequest.getDestinationKeyId() != null) {
                 String destinationKeyId = reEncryptRequest.getDestinationKeyId();
                 jsonWriter.name("DestinationKeyId");
@@ -99,6 +107,17 @@ public class ReEncryptRequestMarshaller implements
                 }
                 jsonWriter.endObject();
             }
+            if (reEncryptRequest.getSourceEncryptionAlgorithm() != null) {
+                String sourceEncryptionAlgorithm = reEncryptRequest.getSourceEncryptionAlgorithm();
+                jsonWriter.name("SourceEncryptionAlgorithm");
+                jsonWriter.value(sourceEncryptionAlgorithm);
+            }
+            if (reEncryptRequest.getDestinationEncryptionAlgorithm() != null) {
+                String destinationEncryptionAlgorithm = reEncryptRequest
+                        .getDestinationEncryptionAlgorithm();
+                jsonWriter.name("DestinationEncryptionAlgorithm");
+                jsonWriter.value(destinationEncryptionAlgorithm);
+            }
             if (reEncryptRequest.getGrantTokens() != null) {
                 java.util.List<String> grantTokens = reEncryptRequest.getGrantTokens();
                 jsonWriter.name("GrantTokens");
@@ -109,6 +128,11 @@ public class ReEncryptRequestMarshaller implements
                     }
                 }
                 jsonWriter.endArray();
+            }
+            if (reEncryptRequest.getDryRun() != null) {
+                Boolean dryRun = reEncryptRequest.getDryRun();
+                jsonWriter.name("DryRun");
+                jsonWriter.value(dryRun);
             }
 
             jsonWriter.endObject();

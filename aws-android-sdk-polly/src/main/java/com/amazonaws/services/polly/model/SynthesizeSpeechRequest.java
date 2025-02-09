@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,18 +25,72 @@ import com.amazonaws.AmazonWebServiceRequest;
  * must be valid, well-formed SSML. Some alphabets might not be available with
  * all the voices (for example, Cyrillic might not be read at all by English
  * voices) unless phoneme mapping is used. For more information, see <a href=
- * "http://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html"
+ * "https://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html"
  * >How it Works</a>.
  * </p>
  */
 public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code>, or <code>generative</code>) for Amazon Polly to
+     * use when processing input text for speech synthesis. Provide an engine
+     * that is supported by the voice you select. If you don't provide an
+     * engine, the standard engine is selected by default. If a chosen voice
+     * isn't supported by the standard engine, this will result in an error. For
+     * information on Amazon Polly voices and which voices are available for
+     * each engine, see <a
+     * href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     * >Available Voices</a>.
+     * </p>
+     * <p>
+     * Type: String
+     * </p>
+     * <p>
+     * Valid Values: <code>standard</code> | <code>neural</code> |
+     * <code>long-form</code> | <code>generative</code>
+     * </p>
+     * <p>
+     * Required: Yes
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     */
+    private String engine;
+
+    /**
+     * <p>
+     * Optional language code for the Synthesize Speech request. This is only
+     * necessary if using a bilingual voice, such as Aditi, which can be used
+     * for either Indian English (en-IN) or Hindi (hi-IN).
+     * </p>
+     * <p>
+     * If a bilingual voice is used and no language code is specified, Amazon
+     * Polly uses the default language of the bilingual voice. The default
+     * language for any voice is the one returned by the <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
+     * parameter. For example, if no language code is specified, Aditi will use
+     * Indian English rather than Hindi.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
+     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
+     */
+    private String languageCode;
+
+    /**
+     * <p>
      * List of one or more pronunciation lexicon names you want the service to
      * apply during synthesis. Lexicons are applied only if the language of the
      * lexicon is the same as the language of the voice. For information about
      * storing lexicons, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     * href="https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      * >PutLexicon</a>.
      * </p>
      */
@@ -63,12 +117,13 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * The audio frequency specified in Hz.
      * </p>
      * <p>
-     * The valid values for <code>mp3</code> and <code>ogg_vorbis</code> are
-     * "8000", "16000", and "22050". The default value is "22050".
+     * The valid values for mp3 and ogg_vorbis are "8000", "16000", "22050", and
+     * "24000". The default value for standard voices is "22050". The default
+     * value for neural voices is "24000". The default value for long-form
+     * voices is "24000". The default value for generative voices is "24000".
      * </p>
      * <p>
-     * Valid values for <code>pcm</code> are "8000" and "16000" The default
-     * value is "16000".
+     * Valid values for pcm are "8000" and "16000" The default value is "16000".
      * </p>
      */
     private String sampleRate;
@@ -92,7 +147,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Specifies whether the input text is plain text or SSML. The default value
      * is plain text. For more information, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     * href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      * SSML</a>.
      * </p>
      * <p>
@@ -105,20 +160,320 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Voice ID to use for the synthesis. You can get a list of available voice
      * IDs by calling the <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      */
     private String voiceId;
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code>, or <code>generative</code>) for Amazon Polly to
+     * use when processing input text for speech synthesis. Provide an engine
+     * that is supported by the voice you select. If you don't provide an
+     * engine, the standard engine is selected by default. If a chosen voice
+     * isn't supported by the standard engine, this will result in an error. For
+     * information on Amazon Polly voices and which voices are available for
+     * each engine, see <a
+     * href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     * >Available Voices</a>.
+     * </p>
+     * <p>
+     * Type: String
+     * </p>
+     * <p>
+     * Valid Values: <code>standard</code> | <code>neural</code> |
+     * <code>long-form</code> | <code>generative</code>
+     * </p>
+     * <p>
+     * Required: Yes
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @return <p>
+     *         Specifies the engine (<code>standard</code>, <code>neural</code>,
+     *         <code>long-form</code>, or <code>generative</code>) for Amazon
+     *         Polly to use when processing input text for speech synthesis.
+     *         Provide an engine that is supported by the voice you select. If
+     *         you don't provide an engine, the standard engine is selected by
+     *         default. If a chosen voice isn't supported by the standard
+     *         engine, this will result in an error. For information on Amazon
+     *         Polly voices and which voices are available for each engine, see
+     *         <a href=
+     *         "https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     *         >Available Voices</a>.
+     *         </p>
+     *         <p>
+     *         Type: String
+     *         </p>
+     *         <p>
+     *         Valid Values: <code>standard</code> | <code>neural</code> |
+     *         <code>long-form</code> | <code>generative</code>
+     *         </p>
+     *         <p>
+     *         Required: Yes
+     *         </p>
+     * @see Engine
+     */
+    public String getEngine() {
+        return engine;
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code>, or <code>generative</code>) for Amazon Polly to
+     * use when processing input text for speech synthesis. Provide an engine
+     * that is supported by the voice you select. If you don't provide an
+     * engine, the standard engine is selected by default. If a chosen voice
+     * isn't supported by the standard engine, this will result in an error. For
+     * information on Amazon Polly voices and which voices are available for
+     * each engine, see <a
+     * href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     * >Available Voices</a>.
+     * </p>
+     * <p>
+     * Type: String
+     * </p>
+     * <p>
+     * Valid Values: <code>standard</code> | <code>neural</code> |
+     * <code>long-form</code> | <code>generative</code>
+     * </p>
+     * <p>
+     * Required: Yes
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code>, or
+     *            <code>generative</code>) for Amazon Polly to use when
+     *            processing input text for speech synthesis. Provide an engine
+     *            that is supported by the voice you select. If you don't
+     *            provide an engine, the standard engine is selected by default.
+     *            If a chosen voice isn't supported by the standard engine, this
+     *            will result in an error. For information on Amazon Polly
+     *            voices and which voices are available for each engine, see <a
+     *            href
+     *            ="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     *            >Available Voices</a>.
+     *            </p>
+     *            <p>
+     *            Type: String
+     *            </p>
+     *            <p>
+     *            Valid Values: <code>standard</code> | <code>neural</code> |
+     *            <code>long-form</code> | <code>generative</code>
+     *            </p>
+     *            <p>
+     *            Required: Yes
+     *            </p>
+     * @see Engine
+     */
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code>, or <code>generative</code>) for Amazon Polly to
+     * use when processing input text for speech synthesis. Provide an engine
+     * that is supported by the voice you select. If you don't provide an
+     * engine, the standard engine is selected by default. If a chosen voice
+     * isn't supported by the standard engine, this will result in an error. For
+     * information on Amazon Polly voices and which voices are available for
+     * each engine, see <a
+     * href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     * >Available Voices</a>.
+     * </p>
+     * <p>
+     * Type: String
+     * </p>
+     * <p>
+     * Valid Values: <code>standard</code> | <code>neural</code> |
+     * <code>long-form</code> | <code>generative</code>
+     * </p>
+     * <p>
+     * Required: Yes
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code>, or
+     *            <code>generative</code>) for Amazon Polly to use when
+     *            processing input text for speech synthesis. Provide an engine
+     *            that is supported by the voice you select. If you don't
+     *            provide an engine, the standard engine is selected by default.
+     *            If a chosen voice isn't supported by the standard engine, this
+     *            will result in an error. For information on Amazon Polly
+     *            voices and which voices are available for each engine, see <a
+     *            href
+     *            ="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     *            >Available Voices</a>.
+     *            </p>
+     *            <p>
+     *            Type: String
+     *            </p>
+     *            <p>
+     *            Valid Values: <code>standard</code> | <code>neural</code> |
+     *            <code>long-form</code> | <code>generative</code>
+     *            </p>
+     *            <p>
+     *            Required: Yes
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see Engine
+     */
+    public SynthesizeSpeechRequest withEngine(String engine) {
+        this.engine = engine;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code>, or <code>generative</code>) for Amazon Polly to
+     * use when processing input text for speech synthesis. Provide an engine
+     * that is supported by the voice you select. If you don't provide an
+     * engine, the standard engine is selected by default. If a chosen voice
+     * isn't supported by the standard engine, this will result in an error. For
+     * information on Amazon Polly voices and which voices are available for
+     * each engine, see <a
+     * href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     * >Available Voices</a>.
+     * </p>
+     * <p>
+     * Type: String
+     * </p>
+     * <p>
+     * Valid Values: <code>standard</code> | <code>neural</code> |
+     * <code>long-form</code> | <code>generative</code>
+     * </p>
+     * <p>
+     * Required: Yes
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code>, or
+     *            <code>generative</code>) for Amazon Polly to use when
+     *            processing input text for speech synthesis. Provide an engine
+     *            that is supported by the voice you select. If you don't
+     *            provide an engine, the standard engine is selected by default.
+     *            If a chosen voice isn't supported by the standard engine, this
+     *            will result in an error. For information on Amazon Polly
+     *            voices and which voices are available for each engine, see <a
+     *            href
+     *            ="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     *            >Available Voices</a>.
+     *            </p>
+     *            <p>
+     *            Type: String
+     *            </p>
+     *            <p>
+     *            Valid Values: <code>standard</code> | <code>neural</code> |
+     *            <code>long-form</code> | <code>generative</code>
+     *            </p>
+     *            <p>
+     *            Required: Yes
+     *            </p>
+     * @see Engine
+     */
+    public void setEngine(Engine engine) {
+        this.engine = engine.toString();
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code>, or <code>generative</code>) for Amazon Polly to
+     * use when processing input text for speech synthesis. Provide an engine
+     * that is supported by the voice you select. If you don't provide an
+     * engine, the standard engine is selected by default. If a chosen voice
+     * isn't supported by the standard engine, this will result in an error. For
+     * information on Amazon Polly voices and which voices are available for
+     * each engine, see <a
+     * href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     * >Available Voices</a>.
+     * </p>
+     * <p>
+     * Type: String
+     * </p>
+     * <p>
+     * Valid Values: <code>standard</code> | <code>neural</code> |
+     * <code>long-form</code> | <code>generative</code>
+     * </p>
+     * <p>
+     * Required: Yes
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code>, or
+     *            <code>generative</code>) for Amazon Polly to use when
+     *            processing input text for speech synthesis. Provide an engine
+     *            that is supported by the voice you select. If you don't
+     *            provide an engine, the standard engine is selected by default.
+     *            If a chosen voice isn't supported by the standard engine, this
+     *            will result in an error. For information on Amazon Polly
+     *            voices and which voices are available for each engine, see <a
+     *            href
+     *            ="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html"
+     *            >Available Voices</a>.
+     *            </p>
+     *            <p>
+     *            Type: String
+     *            </p>
+     *            <p>
+     *            Valid Values: <code>standard</code> | <code>neural</code> |
+     *            <code>long-form</code> | <code>generative</code>
+     *            </p>
+     *            <p>
+     *            Required: Yes
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see Engine
+     */
+    public SynthesizeSpeechRequest withEngine(Engine engine) {
+        this.engine = engine.toString();
+        return this;
+    }
 
     /**
      * <p>
@@ -128,7 +483,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * </p>
      * <p>
      * If a bilingual voice is used and no language code is specified, Amazon
-     * Polly will use the default language of the bilingual voice. The default
+     * Polly uses the default language of the bilingual voice. The default
      * language for any voice is the one returned by the <a href=
      * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation for the <code>LanguageCode</code>
@@ -137,12 +492,228 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
+     *
+     * @return <p>
+     *         Optional language code for the Synthesize Speech request. This is
+     *         only necessary if using a bilingual voice, such as Aditi, which
+     *         can be used for either Indian English (en-IN) or Hindi (hi-IN).
+     *         </p>
+     *         <p>
+     *         If a bilingual voice is used and no language code is specified,
+     *         Amazon Polly uses the default language of the bilingual voice.
+     *         The default language for any voice is the one returned by the <a
+     *         href=
+     *         "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *         >DescribeVoices</a> operation for the <code>LanguageCode</code>
+     *         parameter. For example, if no language code is specified, Aditi
+     *         will use Indian English rather than Hindi.
+     *         </p>
+     * @see LanguageCode
      */
-    private String languageCode;
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    /**
+     * <p>
+     * Optional language code for the Synthesize Speech request. This is only
+     * necessary if using a bilingual voice, such as Aditi, which can be used
+     * for either Indian English (en-IN) or Hindi (hi-IN).
+     * </p>
+     * <p>
+     * If a bilingual voice is used and no language code is specified, Amazon
+     * Polly uses the default language of the bilingual voice. The default
+     * language for any voice is the one returned by the <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
+     * parameter. For example, if no language code is specified, Aditi will use
+     * Indian English rather than Hindi.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
+     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
+     *
+     * @param languageCode <p>
+     *            Optional language code for the Synthesize Speech request. This
+     *            is only necessary if using a bilingual voice, such as Aditi,
+     *            which can be used for either Indian English (en-IN) or Hindi
+     *            (hi-IN).
+     *            </p>
+     *            <p>
+     *            If a bilingual voice is used and no language code is
+     *            specified, Amazon Polly uses the default language of the
+     *            bilingual voice. The default language for any voice is the one
+     *            returned by the <a href=
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            >DescribeVoices</a> operation for the
+     *            <code>LanguageCode</code> parameter. For example, if no
+     *            language code is specified, Aditi will use Indian English
+     *            rather than Hindi.
+     *            </p>
+     * @see LanguageCode
+     */
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+    }
+
+    /**
+     * <p>
+     * Optional language code for the Synthesize Speech request. This is only
+     * necessary if using a bilingual voice, such as Aditi, which can be used
+     * for either Indian English (en-IN) or Hindi (hi-IN).
+     * </p>
+     * <p>
+     * If a bilingual voice is used and no language code is specified, Amazon
+     * Polly uses the default language of the bilingual voice. The default
+     * language for any voice is the one returned by the <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
+     * parameter. For example, if no language code is specified, Aditi will use
+     * Indian English rather than Hindi.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
+     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
+     *
+     * @param languageCode <p>
+     *            Optional language code for the Synthesize Speech request. This
+     *            is only necessary if using a bilingual voice, such as Aditi,
+     *            which can be used for either Indian English (en-IN) or Hindi
+     *            (hi-IN).
+     *            </p>
+     *            <p>
+     *            If a bilingual voice is used and no language code is
+     *            specified, Amazon Polly uses the default language of the
+     *            bilingual voice. The default language for any voice is the one
+     *            returned by the <a href=
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            >DescribeVoices</a> operation for the
+     *            <code>LanguageCode</code> parameter. For example, if no
+     *            language code is specified, Aditi will use Indian English
+     *            rather than Hindi.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see LanguageCode
+     */
+    public SynthesizeSpeechRequest withLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Optional language code for the Synthesize Speech request. This is only
+     * necessary if using a bilingual voice, such as Aditi, which can be used
+     * for either Indian English (en-IN) or Hindi (hi-IN).
+     * </p>
+     * <p>
+     * If a bilingual voice is used and no language code is specified, Amazon
+     * Polly uses the default language of the bilingual voice. The default
+     * language for any voice is the one returned by the <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
+     * parameter. For example, if no language code is specified, Aditi will use
+     * Indian English rather than Hindi.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
+     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
+     *
+     * @param languageCode <p>
+     *            Optional language code for the Synthesize Speech request. This
+     *            is only necessary if using a bilingual voice, such as Aditi,
+     *            which can be used for either Indian English (en-IN) or Hindi
+     *            (hi-IN).
+     *            </p>
+     *            <p>
+     *            If a bilingual voice is used and no language code is
+     *            specified, Amazon Polly uses the default language of the
+     *            bilingual voice. The default language for any voice is the one
+     *            returned by the <a href=
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            >DescribeVoices</a> operation for the
+     *            <code>LanguageCode</code> parameter. For example, if no
+     *            language code is specified, Aditi will use Indian English
+     *            rather than Hindi.
+     *            </p>
+     * @see LanguageCode
+     */
+    public void setLanguageCode(LanguageCode languageCode) {
+        this.languageCode = languageCode.toString();
+    }
+
+    /**
+     * <p>
+     * Optional language code for the Synthesize Speech request. This is only
+     * necessary if using a bilingual voice, such as Aditi, which can be used
+     * for either Indian English (en-IN) or Hindi (hi-IN).
+     * </p>
+     * <p>
+     * If a bilingual voice is used and no language code is specified, Amazon
+     * Polly uses the default language of the bilingual voice. The default
+     * language for any voice is the one returned by the <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
+     * parameter. For example, if no language code is specified, Aditi will use
+     * Indian English rather than Hindi.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
+     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
+     *
+     * @param languageCode <p>
+     *            Optional language code for the Synthesize Speech request. This
+     *            is only necessary if using a bilingual voice, such as Aditi,
+     *            which can be used for either Indian English (en-IN) or Hindi
+     *            (hi-IN).
+     *            </p>
+     *            <p>
+     *            If a bilingual voice is used and no language code is
+     *            specified, Amazon Polly uses the default language of the
+     *            bilingual voice. The default language for any voice is the one
+     *            returned by the <a href=
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            >DescribeVoices</a> operation for the
+     *            <code>LanguageCode</code> parameter. For example, if no
+     *            language code is specified, Aditi will use Indian English
+     *            rather than Hindi.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see LanguageCode
+     */
+    public SynthesizeSpeechRequest withLanguageCode(LanguageCode languageCode) {
+        this.languageCode = languageCode.toString();
+        return this;
+    }
 
     /**
      * <p>
@@ -150,7 +721,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * apply during synthesis. Lexicons are applied only if the language of the
      * lexicon is the same as the language of the voice. For information about
      * storing lexicons, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     * href="https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      * >PutLexicon</a>.
      * </p>
      *
@@ -159,7 +730,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *         service to apply during synthesis. Lexicons are applied only if
      *         the language of the lexicon is the same as the language of the
      *         voice. For information about storing lexicons, see <a href=
-     *         "http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     *         "https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      *         >PutLexicon</a>.
      *         </p>
      */
@@ -173,7 +744,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * apply during synthesis. Lexicons are applied only if the language of the
      * lexicon is the same as the language of the voice. For information about
      * storing lexicons, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     * href="https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      * >PutLexicon</a>.
      * </p>
      *
@@ -183,7 +754,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            if the language of the lexicon is the same as the language of
      *            the voice. For information about storing lexicons, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      *            >PutLexicon</a>.
      *            </p>
      */
@@ -202,7 +773,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * apply during synthesis. Lexicons are applied only if the language of the
      * lexicon is the same as the language of the voice. For information about
      * storing lexicons, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     * href="https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      * >PutLexicon</a>.
      * </p>
      * <p>
@@ -215,7 +786,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            if the language of the lexicon is the same as the language of
      *            the voice. For information about storing lexicons, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      *            >PutLexicon</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -237,7 +808,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * apply during synthesis. Lexicons are applied only if the language of the
      * lexicon is the same as the language of the voice. For information about
      * storing lexicons, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     * href="https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      * >PutLexicon</a>.
      * </p>
      * <p>
@@ -250,7 +821,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            if the language of the lexicon is the same as the language of
      *            the voice. For information about storing lexicons, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_PutLexicon.html"
      *            >PutLexicon</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -423,24 +994,28 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * The audio frequency specified in Hz.
      * </p>
      * <p>
-     * The valid values for <code>mp3</code> and <code>ogg_vorbis</code> are
-     * "8000", "16000", and "22050". The default value is "22050".
+     * The valid values for mp3 and ogg_vorbis are "8000", "16000", "22050", and
+     * "24000". The default value for standard voices is "22050". The default
+     * value for neural voices is "24000". The default value for long-form
+     * voices is "24000". The default value for generative voices is "24000".
      * </p>
      * <p>
-     * Valid values for <code>pcm</code> are "8000" and "16000" The default
-     * value is "16000".
+     * Valid values for pcm are "8000" and "16000" The default value is "16000".
      * </p>
      *
      * @return <p>
      *         The audio frequency specified in Hz.
      *         </p>
      *         <p>
-     *         The valid values for <code>mp3</code> and <code>ogg_vorbis</code>
-     *         are "8000", "16000", and "22050". The default value is "22050".
+     *         The valid values for mp3 and ogg_vorbis are "8000", "16000",
+     *         "22050", and "24000". The default value for standard voices is
+     *         "22050". The default value for neural voices is "24000". The
+     *         default value for long-form voices is "24000". The default value
+     *         for generative voices is "24000".
      *         </p>
      *         <p>
-     *         Valid values for <code>pcm</code> are "8000" and "16000" The
-     *         default value is "16000".
+     *         Valid values for pcm are "8000" and "16000" The default value is
+     *         "16000".
      *         </p>
      */
     public String getSampleRate() {
@@ -452,25 +1027,28 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * The audio frequency specified in Hz.
      * </p>
      * <p>
-     * The valid values for <code>mp3</code> and <code>ogg_vorbis</code> are
-     * "8000", "16000", and "22050". The default value is "22050".
+     * The valid values for mp3 and ogg_vorbis are "8000", "16000", "22050", and
+     * "24000". The default value for standard voices is "22050". The default
+     * value for neural voices is "24000". The default value for long-form
+     * voices is "24000". The default value for generative voices is "24000".
      * </p>
      * <p>
-     * Valid values for <code>pcm</code> are "8000" and "16000" The default
-     * value is "16000".
+     * Valid values for pcm are "8000" and "16000" The default value is "16000".
      * </p>
      *
      * @param sampleRate <p>
      *            The audio frequency specified in Hz.
      *            </p>
      *            <p>
-     *            The valid values for <code>mp3</code> and
-     *            <code>ogg_vorbis</code> are "8000", "16000", and "22050". The
-     *            default value is "22050".
+     *            The valid values for mp3 and ogg_vorbis are "8000", "16000",
+     *            "22050", and "24000". The default value for standard voices is
+     *            "22050". The default value for neural voices is "24000". The
+     *            default value for long-form voices is "24000". The default
+     *            value for generative voices is "24000".
      *            </p>
      *            <p>
-     *            Valid values for <code>pcm</code> are "8000" and "16000" The
-     *            default value is "16000".
+     *            Valid values for pcm are "8000" and "16000" The default value
+     *            is "16000".
      *            </p>
      */
     public void setSampleRate(String sampleRate) {
@@ -482,12 +1060,13 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * The audio frequency specified in Hz.
      * </p>
      * <p>
-     * The valid values for <code>mp3</code> and <code>ogg_vorbis</code> are
-     * "8000", "16000", and "22050". The default value is "22050".
+     * The valid values for mp3 and ogg_vorbis are "8000", "16000", "22050", and
+     * "24000". The default value for standard voices is "22050". The default
+     * value for neural voices is "24000". The default value for long-form
+     * voices is "24000". The default value for generative voices is "24000".
      * </p>
      * <p>
-     * Valid values for <code>pcm</code> are "8000" and "16000" The default
-     * value is "16000".
+     * Valid values for pcm are "8000" and "16000" The default value is "16000".
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -497,13 +1076,15 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            The audio frequency specified in Hz.
      *            </p>
      *            <p>
-     *            The valid values for <code>mp3</code> and
-     *            <code>ogg_vorbis</code> are "8000", "16000", and "22050". The
-     *            default value is "22050".
+     *            The valid values for mp3 and ogg_vorbis are "8000", "16000",
+     *            "22050", and "24000". The default value for standard voices is
+     *            "22050". The default value for neural voices is "24000". The
+     *            default value for long-form voices is "24000". The default
+     *            value for generative voices is "24000".
      *            </p>
      *            <p>
-     *            Valid values for <code>pcm</code> are "8000" and "16000" The
-     *            default value is "16000".
+     *            Valid values for pcm are "8000" and "16000" The default value
+     *            is "16000".
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -644,7 +1225,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Specifies whether the input text is plain text or SSML. The default value
      * is plain text. For more information, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     * href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      * SSML</a>.
      * </p>
      * <p>
@@ -654,8 +1235,8 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * @return <p>
      *         Specifies whether the input text is plain text or SSML. The
      *         default value is plain text. For more information, see <a
-     *         href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
-     *         SSML</a>.
+     *         href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html"
+     *         >Using SSML</a>.
      *         </p>
      * @see TextType
      */
@@ -667,7 +1248,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Specifies whether the input text is plain text or SSML. The default value
      * is plain text. For more information, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     * href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      * SSML</a>.
      * </p>
      * <p>
@@ -678,7 +1259,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            Specifies whether the input text is plain text or SSML. The
      *            default value is plain text. For more information, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     *            "https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      *            SSML</a>.
      *            </p>
      * @see TextType
@@ -691,7 +1272,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Specifies whether the input text is plain text or SSML. The default value
      * is plain text. For more information, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     * href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      * SSML</a>.
      * </p>
      * <p>
@@ -705,7 +1286,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            Specifies whether the input text is plain text or SSML. The
      *            default value is plain text. For more information, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     *            "https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      *            SSML</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -721,7 +1302,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Specifies whether the input text is plain text or SSML. The default value
      * is plain text. For more information, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     * href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      * SSML</a>.
      * </p>
      * <p>
@@ -732,7 +1313,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            Specifies whether the input text is plain text or SSML. The
      *            default value is plain text. For more information, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     *            "https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      *            SSML</a>.
      *            </p>
      * @see TextType
@@ -745,7 +1326,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Specifies whether the input text is plain text or SSML. The default value
      * is plain text. For more information, see <a
-     * href="http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     * href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      * SSML</a>.
      * </p>
      * <p>
@@ -759,7 +1340,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      *            Specifies whether the input text is plain text or SSML. The
      *            default value is plain text. For more information, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
+     *            "https://docs.aws.amazon.com/polly/latest/dg/ssml.html">Using
      *            SSML</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -775,23 +1356,27 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Voice ID to use for the synthesis. You can get a list of available voice
      * IDs by calling the <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @return <p>
      *         Voice ID to use for the synthesis. You can get a list of
      *         available voice IDs by calling the <a href=
-     *         "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *         "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      *         >DescribeVoices</a> operation.
      *         </p>
      * @see VoiceId
@@ -804,23 +1389,27 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Voice ID to use for the synthesis. You can get a list of available voice
      * IDs by calling the <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param voiceId <p>
      *            Voice ID to use for the synthesis. You can get a list of
      *            available voice IDs by calling the <a href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      *            >DescribeVoices</a> operation.
      *            </p>
      * @see VoiceId
@@ -833,7 +1422,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Voice ID to use for the synthesis. You can get a list of available voice
      * IDs by calling the <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation.
      * </p>
      * <p>
@@ -841,18 +1430,22 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param voiceId <p>
      *            Voice ID to use for the synthesis. You can get a list of
      *            available voice IDs by calling the <a href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      *            >DescribeVoices</a> operation.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -868,23 +1461,27 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Voice ID to use for the synthesis. You can get a list of available voice
      * IDs by calling the <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param voiceId <p>
      *            Voice ID to use for the synthesis. You can get a list of
      *            available voice IDs by calling the <a href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      *            >DescribeVoices</a> operation.
      *            </p>
      * @see VoiceId
@@ -897,7 +1494,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Voice ID to use for the synthesis. You can get a list of available voice
      * IDs by calling the <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      * >DescribeVoices</a> operation.
      * </p>
      * <p>
@@ -905,18 +1502,22 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param voiceId <p>
      *            Voice ID to use for the synthesis. You can get a list of
      *            available voice IDs by calling the <a href=
-     *            "http://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
+     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
      *            >DescribeVoices</a> operation.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -925,241 +1526,6 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
      */
     public SynthesizeSpeechRequest withVoiceId(VoiceId voiceId) {
         this.voiceId = voiceId.toString();
-        return this;
-    }
-
-    /**
-     * <p>
-     * Optional language code for the Synthesize Speech request. This is only
-     * necessary if using a bilingual voice, such as Aditi, which can be used
-     * for either Indian English (en-IN) or Hindi (hi-IN).
-     * </p>
-     * <p>
-     * If a bilingual voice is used and no language code is specified, Amazon
-     * Polly will use the default language of the bilingual voice. The default
-     * language for any voice is the one returned by the <a href=
-     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
-     * parameter. For example, if no language code is specified, Aditi will use
-     * Indian English rather than Hindi.
-     * </p>
-     * <p>
-     * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
-     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
-     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
-     *
-     * @return <p>
-     *         Optional language code for the Synthesize Speech request. This is
-     *         only necessary if using a bilingual voice, such as Aditi, which
-     *         can be used for either Indian English (en-IN) or Hindi (hi-IN).
-     *         </p>
-     *         <p>
-     *         If a bilingual voice is used and no language code is specified,
-     *         Amazon Polly will use the default language of the bilingual
-     *         voice. The default language for any voice is the one returned by
-     *         the <a href=
-     *         "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     *         >DescribeVoices</a> operation for the <code>LanguageCode</code>
-     *         parameter. For example, if no language code is specified, Aditi
-     *         will use Indian English rather than Hindi.
-     *         </p>
-     * @see LanguageCode
-     */
-    public String getLanguageCode() {
-        return languageCode;
-    }
-
-    /**
-     * <p>
-     * Optional language code for the Synthesize Speech request. This is only
-     * necessary if using a bilingual voice, such as Aditi, which can be used
-     * for either Indian English (en-IN) or Hindi (hi-IN).
-     * </p>
-     * <p>
-     * If a bilingual voice is used and no language code is specified, Amazon
-     * Polly will use the default language of the bilingual voice. The default
-     * language for any voice is the one returned by the <a href=
-     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
-     * parameter. For example, if no language code is specified, Aditi will use
-     * Indian English rather than Hindi.
-     * </p>
-     * <p>
-     * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
-     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
-     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
-     *
-     * @param languageCode <p>
-     *            Optional language code for the Synthesize Speech request. This
-     *            is only necessary if using a bilingual voice, such as Aditi,
-     *            which can be used for either Indian English (en-IN) or Hindi
-     *            (hi-IN).
-     *            </p>
-     *            <p>
-     *            If a bilingual voice is used and no language code is
-     *            specified, Amazon Polly will use the default language of the
-     *            bilingual voice. The default language for any voice is the one
-     *            returned by the <a href=
-     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     *            >DescribeVoices</a> operation for the
-     *            <code>LanguageCode</code> parameter. For example, if no
-     *            language code is specified, Aditi will use Indian English
-     *            rather than Hindi.
-     *            </p>
-     * @see LanguageCode
-     */
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
-    }
-
-    /**
-     * <p>
-     * Optional language code for the Synthesize Speech request. This is only
-     * necessary if using a bilingual voice, such as Aditi, which can be used
-     * for either Indian English (en-IN) or Hindi (hi-IN).
-     * </p>
-     * <p>
-     * If a bilingual voice is used and no language code is specified, Amazon
-     * Polly will use the default language of the bilingual voice. The default
-     * language for any voice is the one returned by the <a href=
-     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
-     * parameter. For example, if no language code is specified, Aditi will use
-     * Indian English rather than Hindi.
-     * </p>
-     * <p>
-     * Returns a reference to this object so that method calls can be chained
-     * together.
-     * <p>
-     * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
-     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
-     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
-     *
-     * @param languageCode <p>
-     *            Optional language code for the Synthesize Speech request. This
-     *            is only necessary if using a bilingual voice, such as Aditi,
-     *            which can be used for either Indian English (en-IN) or Hindi
-     *            (hi-IN).
-     *            </p>
-     *            <p>
-     *            If a bilingual voice is used and no language code is
-     *            specified, Amazon Polly will use the default language of the
-     *            bilingual voice. The default language for any voice is the one
-     *            returned by the <a href=
-     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     *            >DescribeVoices</a> operation for the
-     *            <code>LanguageCode</code> parameter. For example, if no
-     *            language code is specified, Aditi will use Indian English
-     *            rather than Hindi.
-     *            </p>
-     * @return A reference to this updated object so that method calls can be
-     *         chained together.
-     * @see LanguageCode
-     */
-    public SynthesizeSpeechRequest withLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
-        return this;
-    }
-
-    /**
-     * <p>
-     * Optional language code for the Synthesize Speech request. This is only
-     * necessary if using a bilingual voice, such as Aditi, which can be used
-     * for either Indian English (en-IN) or Hindi (hi-IN).
-     * </p>
-     * <p>
-     * If a bilingual voice is used and no language code is specified, Amazon
-     * Polly will use the default language of the bilingual voice. The default
-     * language for any voice is the one returned by the <a href=
-     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
-     * parameter. For example, if no language code is specified, Aditi will use
-     * Indian English rather than Hindi.
-     * </p>
-     * <p>
-     * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
-     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
-     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
-     *
-     * @param languageCode <p>
-     *            Optional language code for the Synthesize Speech request. This
-     *            is only necessary if using a bilingual voice, such as Aditi,
-     *            which can be used for either Indian English (en-IN) or Hindi
-     *            (hi-IN).
-     *            </p>
-     *            <p>
-     *            If a bilingual voice is used and no language code is
-     *            specified, Amazon Polly will use the default language of the
-     *            bilingual voice. The default language for any voice is the one
-     *            returned by the <a href=
-     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     *            >DescribeVoices</a> operation for the
-     *            <code>LanguageCode</code> parameter. For example, if no
-     *            language code is specified, Aditi will use Indian English
-     *            rather than Hindi.
-     *            </p>
-     * @see LanguageCode
-     */
-    public void setLanguageCode(LanguageCode languageCode) {
-        this.languageCode = languageCode.toString();
-    }
-
-    /**
-     * <p>
-     * Optional language code for the Synthesize Speech request. This is only
-     * necessary if using a bilingual voice, such as Aditi, which can be used
-     * for either Indian English (en-IN) or Hindi (hi-IN).
-     * </p>
-     * <p>
-     * If a bilingual voice is used and no language code is specified, Amazon
-     * Polly will use the default language of the bilingual voice. The default
-     * language for any voice is the one returned by the <a href=
-     * "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     * >DescribeVoices</a> operation for the <code>LanguageCode</code>
-     * parameter. For example, if no language code is specified, Aditi will use
-     * Indian English rather than Hindi.
-     * </p>
-     * <p>
-     * Returns a reference to this object so that method calls can be chained
-     * together.
-     * <p>
-     * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
-     * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
-     * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
-     *
-     * @param languageCode <p>
-     *            Optional language code for the Synthesize Speech request. This
-     *            is only necessary if using a bilingual voice, such as Aditi,
-     *            which can be used for either Indian English (en-IN) or Hindi
-     *            (hi-IN).
-     *            </p>
-     *            <p>
-     *            If a bilingual voice is used and no language code is
-     *            specified, Amazon Polly will use the default language of the
-     *            bilingual voice. The default language for any voice is the one
-     *            returned by the <a href=
-     *            "https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html"
-     *            >DescribeVoices</a> operation for the
-     *            <code>LanguageCode</code> parameter. For example, if no
-     *            language code is specified, Aditi will use Indian English
-     *            rather than Hindi.
-     *            </p>
-     * @return A reference to this updated object so that method calls can be
-     *         chained together.
-     * @see LanguageCode
-     */
-    public SynthesizeSpeechRequest withLanguageCode(LanguageCode languageCode) {
-        this.languageCode = languageCode.toString();
         return this;
     }
 
@@ -1174,6 +1540,10 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
+        if (getEngine() != null)
+            sb.append("Engine: " + getEngine() + ",");
+        if (getLanguageCode() != null)
+            sb.append("LanguageCode: " + getLanguageCode() + ",");
         if (getLexiconNames() != null)
             sb.append("LexiconNames: " + getLexiconNames() + ",");
         if (getOutputFormat() != null)
@@ -1187,9 +1557,7 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
         if (getTextType() != null)
             sb.append("TextType: " + getTextType() + ",");
         if (getVoiceId() != null)
-            sb.append("VoiceId: " + getVoiceId() + ",");
-        if (getLanguageCode() != null)
-            sb.append("LanguageCode: " + getLanguageCode());
+            sb.append("VoiceId: " + getVoiceId());
         sb.append("}");
         return sb.toString();
     }
@@ -1199,6 +1567,9 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
         final int prime = 31;
         int hashCode = 1;
 
+        hashCode = prime * hashCode + ((getEngine() == null) ? 0 : getEngine().hashCode());
+        hashCode = prime * hashCode
+                + ((getLanguageCode() == null) ? 0 : getLanguageCode().hashCode());
         hashCode = prime * hashCode
                 + ((getLexiconNames() == null) ? 0 : getLexiconNames().hashCode());
         hashCode = prime * hashCode
@@ -1209,8 +1580,6 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
         hashCode = prime * hashCode + ((getText() == null) ? 0 : getText().hashCode());
         hashCode = prime * hashCode + ((getTextType() == null) ? 0 : getTextType().hashCode());
         hashCode = prime * hashCode + ((getVoiceId() == null) ? 0 : getVoiceId().hashCode());
-        hashCode = prime * hashCode
-                + ((getLanguageCode() == null) ? 0 : getLanguageCode().hashCode());
         return hashCode;
     }
 
@@ -1225,6 +1594,15 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
             return false;
         SynthesizeSpeechRequest other = (SynthesizeSpeechRequest) obj;
 
+        if (other.getEngine() == null ^ this.getEngine() == null)
+            return false;
+        if (other.getEngine() != null && other.getEngine().equals(this.getEngine()) == false)
+            return false;
+        if (other.getLanguageCode() == null ^ this.getLanguageCode() == null)
+            return false;
+        if (other.getLanguageCode() != null
+                && other.getLanguageCode().equals(this.getLanguageCode()) == false)
+            return false;
         if (other.getLexiconNames() == null ^ this.getLexiconNames() == null)
             return false;
         if (other.getLexiconNames() != null
@@ -1256,11 +1634,6 @@ public class SynthesizeSpeechRequest extends AmazonWebServiceRequest implements 
         if (other.getVoiceId() == null ^ this.getVoiceId() == null)
             return false;
         if (other.getVoiceId() != null && other.getVoiceId().equals(this.getVoiceId()) == false)
-            return false;
-        if (other.getLanguageCode() == null ^ this.getLanguageCode() == null)
-            return false;
-        if (other.getLanguageCode() != null
-                && other.getLanguageCode().equals(this.getLanguageCode()) == false)
             return false;
         return true;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -54,6 +54,18 @@ public class DescribeSecurityProfileResultJsonUnmarshaller implements
             } else if (name.equals("alertTargets")) {
                 describeSecurityProfileResult.setAlertTargets(new MapUnmarshaller<AlertTarget>(
                         AlertTargetJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("additionalMetricsToRetain")) {
+                describeSecurityProfileResult
+                        .setAdditionalMetricsToRetain(new ListUnmarshaller<String>(
+                                StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("additionalMetricsToRetainV2")) {
+                describeSecurityProfileResult
+                        .setAdditionalMetricsToRetainV2(new ListUnmarshaller<MetricToRetain>(
+                                MetricToRetainJsonUnmarshaller.getInstance()
                         )
                                 .unmarshall(context));
             } else if (name.equals("version")) {

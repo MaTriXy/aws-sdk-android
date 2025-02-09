@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import com.amazonaws.services.kinesisfirehose.model.*;
  * <p>
  * Amazon Kinesis Data Firehose is a fully managed service that delivers
  * real-time streaming data to destinations such as Amazon Simple Storage
- * Service (Amazon S3), Amazon Elasticsearch Service (Amazon ES), Amazon
- * Redshift, and Splunk.
+ * Service (Amazon S3), Amazon OpenSearch Service, Amazon Redshift, Splunk, and
+ * various other supportd destinations.
  * </p>
  **/
 public interface AmazonKinesisFirehose {
@@ -98,17 +98,13 @@ public interface AmazonKinesisFirehose {
      * producers.
      * </p>
      * <p>
-     * By default, each delivery stream can take in up to 2,000 transactions per
-     * second, 5,000 records per second, or 5 MB per second. If you use
-     * <a>PutRecord</a> and <a>PutRecordBatch</a>, the limits are an aggregate
-     * across these two operations for each delivery stream. For more
-     * information about limits, see <a
-     * href="http://docs.aws.amazon.com/firehose/latest/dev/limits.html">Amazon
-     * Kinesis Data Firehose Limits</a>.
+     * For information about service quota, see <a
+     * href="https://docs.aws.amazon.com/firehose/latest/dev/limits.html">Amazon
+     * Kinesis Data Firehose Quota</a>.
      * </p>
      * <p>
      * Each <a>PutRecordBatch</a> request supports up to 500 records. Each
-     * record in the request can be as large as 1,000 KB (before 64-bit
+     * record in the request can be as large as 1,000 KB (before base64
      * encoding), up to a limit of 4 MB for the entire request. These limits
      * cannot be changed.
      * </p>
@@ -129,38 +125,39 @@ public interface AmazonKinesisFirehose {
      * </p>
      * <p>
      * The <a>PutRecordBatch</a> response includes a count of failed records,
-     * <b>FailedPutCount</b>, and an array of responses,
-     * <b>RequestResponses</b>. Even if the <a>PutRecordBatch</a> call succeeds,
-     * the value of <b>FailedPutCount</b> may be greater than 0, indicating that
-     * there are records for which the operation didn't succeed. Each entry in
-     * the <b>RequestResponses</b> array provides additional information about
-     * the processed record. It directly correlates with a record in the request
-     * array using the same ordering, from the top to the bottom. The response
-     * array always includes the same number of records as the request array.
-     * <b>RequestResponses</b> includes both successfully and unsuccessfully
-     * processed records. Kinesis Data Firehose tries to process all records in
-     * each <a>PutRecordBatch</a> request. A single record failure does not stop
-     * the processing of subsequent records.
+     * <code>FailedPutCount</code>, and an array of responses,
+     * <code>RequestResponses</code>. Even if the <a>PutRecordBatch</a> call
+     * succeeds, the value of <code>FailedPutCount</code> may be greater than 0,
+     * indicating that there are records for which the operation didn't succeed.
+     * Each entry in the <code>RequestResponses</code> array provides additional
+     * information about the processed record. It directly correlates with a
+     * record in the request array using the same ordering, from the top to the
+     * bottom. The response array always includes the same number of records as
+     * the request array. <code>RequestResponses</code> includes both
+     * successfully and unsuccessfully processed records. Kinesis Data Firehose
+     * tries to process all records in each <a>PutRecordBatch</a> request. A
+     * single record failure does not stop the processing of subsequent records.
      * </p>
      * <p>
-     * A successfully processed record includes a <b>RecordId</b> value, which
-     * is unique for the record. An unsuccessfully processed record includes
-     * <b>ErrorCode</b> and <b>ErrorMessage</b> values. <b>ErrorCode</b>
-     * reflects the type of error, and is one of the following values:
-     * <code>ServiceUnavailableException</code> or <code>InternalFailure</code>.
-     * <b>ErrorMessage</b> provides more detailed information about the error.
+     * A successfully processed record includes a <code>RecordId</code> value,
+     * which is unique for the record. An unsuccessfully processed record
+     * includes <code>ErrorCode</code> and <code>ErrorMessage</code> values.
+     * <code>ErrorCode</code> reflects the type of error, and is one of the
+     * following values: <code>ServiceUnavailableException</code> or
+     * <code>InternalFailure</code>. <code>ErrorMessage</code> provides more
+     * detailed information about the error.
      * </p>
      * <p>
      * If there is an internal server error or a timeout, the write might have
-     * completed or it might have failed. If <b>FailedPutCount</b> is greater
-     * than 0, retry the request, resending only those records that might have
-     * failed processing. This minimizes the possible duplicate records and also
-     * reduces the total bytes sent (and corresponding charges). We recommend
-     * that you handle any duplicates at the destination.
+     * completed or it might have failed. If <code>FailedPutCount</code> is
+     * greater than 0, retry the request, resending only those records that
+     * might have failed processing. This minimizes the possible duplicate
+     * records and also reduces the total bytes sent (and corresponding
+     * charges). We recommend that you handle any duplicates at the destination.
      * </p>
      * <p>
-     * If <a>PutRecordBatch</a> throws <b>ServiceUnavailableException</b>, back
-     * off and retry. If the exception persists, it is possible that the
+     * If <a>PutRecordBatch</a> throws <code>ServiceUnavailableException</code>,
+     * back off and retry. If the exception persists, it is possible that the
      * throughput limits have been exceeded for the delivery stream.
      * </p>
      * <p>
@@ -182,6 +179,7 @@ public interface AmazonKinesisFirehose {
      *         method, as returned by Amazon Kinesis Firehose.
      * @throws ResourceNotFoundException
      * @throws InvalidArgumentException
+     * @throws InvalidKMSResourceException
      * @throws ServiceUnavailableException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or

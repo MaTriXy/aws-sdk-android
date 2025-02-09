@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,16 +19,17 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Provides information about a custom vocabulary. Note that vocabularies for
- * en-AU, en-UK, and fr-CA languages that are in preview are not available. In
- * the console, the vocabulary section will be greyed-out and SDK will return
- * error message.
+ * Provides information about a custom vocabulary, including the language of the
+ * custom vocabulary, when it was last modified, its name, and the processing
+ * state.
  * </p>
  */
 public class VocabularyInfo implements Serializable {
     /**
      * <p>
-     * The name of the vocabulary.
+     * A unique name, chosen by you, for your custom vocabulary. This name is
+     * case sensitive, cannot contain spaces, and must be unique within an
+     * Amazon Web Services account.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -39,26 +40,42 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The language code of the vocabulary entries.
+     * The language code used to create your custom vocabulary. Each custom
+     * vocabulary must contain terms in only one language.
+     * </p>
+     * <p>
+     * A custom vocabulary can only be used to transcribe files in the same
+     * language as the custom vocabulary. For example, if you create a custom
+     * vocabulary using US English (<code>en-US</code>), you can only apply this
+     * custom vocabulary to files that contain English audio.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, da-DK, de-CH, de-DE, en-AB,
+     * en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR, fr-CA,
+     * fr-FR, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR, ms-MY, nl-NL, pt-BR,
+     * pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN, zh-TW, th-TH, en-ZA, en-NZ,
+     * vi-VN, sv-SE
      */
     private String languageCode;
 
     /**
      * <p>
-     * The date and time that the vocabulary was last modified.
+     * The date and time the specified custom vocabulary was last modified.
+     * </p>
+     * <p>
+     * Timestamps are in the format
+     * <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     * <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32 PM UTC-7
+     * on May 4, 2022.
      * </p>
      */
     private java.util.Date lastModifiedTime;
 
     /**
      * <p>
-     * The processing state of the vocabulary. If the state is
-     * <code>READY</code> you can use the vocabulary in a
+     * The processing state of your custom vocabulary. If the state is
+     * <code>READY</code>, you can use the custom vocabulary in a
      * <code>StartTranscriptionJob</code> request.
      * </p>
      * <p>
@@ -69,7 +86,9 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The name of the vocabulary.
+     * A unique name, chosen by you, for your custom vocabulary. This name is
+     * case sensitive, cannot contain spaces, and must be unique within an
+     * Amazon Web Services account.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -77,7 +96,9 @@ public class VocabularyInfo implements Serializable {
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @return <p>
-     *         The name of the vocabulary.
+     *         A unique name, chosen by you, for your custom vocabulary. This
+     *         name is case sensitive, cannot contain spaces, and must be unique
+     *         within an Amazon Web Services account.
      *         </p>
      */
     public String getVocabularyName() {
@@ -86,7 +107,9 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The name of the vocabulary.
+     * A unique name, chosen by you, for your custom vocabulary. This name is
+     * case sensitive, cannot contain spaces, and must be unique within an
+     * Amazon Web Services account.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -94,7 +117,9 @@ public class VocabularyInfo implements Serializable {
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param vocabularyName <p>
-     *            The name of the vocabulary.
+     *            A unique name, chosen by you, for your custom vocabulary. This
+     *            name is case sensitive, cannot contain spaces, and must be
+     *            unique within an Amazon Web Services account.
      *            </p>
      */
     public void setVocabularyName(String vocabularyName) {
@@ -103,7 +128,9 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The name of the vocabulary.
+     * A unique name, chosen by you, for your custom vocabulary. This name is
+     * case sensitive, cannot contain spaces, and must be unique within an
+     * Amazon Web Services account.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -114,7 +141,9 @@ public class VocabularyInfo implements Serializable {
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param vocabularyName <p>
-     *            The name of the vocabulary.
+     *            A unique name, chosen by you, for your custom vocabulary. This
+     *            name is case sensitive, cannot contain spaces, and must be
+     *            unique within an Amazon Web Services account.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -126,15 +155,33 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The language code of the vocabulary entries.
+     * The language code used to create your custom vocabulary. Each custom
+     * vocabulary must contain terms in only one language.
+     * </p>
+     * <p>
+     * A custom vocabulary can only be used to transcribe files in the same
+     * language as the custom vocabulary. For example, if you create a custom
+     * vocabulary using US English (<code>en-US</code>), you can only apply this
+     * custom vocabulary to files that contain English audio.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, da-DK, de-CH, de-DE, en-AB,
+     * en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR, fr-CA,
+     * fr-FR, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR, ms-MY, nl-NL, pt-BR,
+     * pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN, zh-TW, th-TH, en-ZA, en-NZ,
+     * vi-VN, sv-SE
      *
      * @return <p>
-     *         The language code of the vocabulary entries.
+     *         The language code used to create your custom vocabulary. Each
+     *         custom vocabulary must contain terms in only one language.
+     *         </p>
+     *         <p>
+     *         A custom vocabulary can only be used to transcribe files in the
+     *         same language as the custom vocabulary. For example, if you
+     *         create a custom vocabulary using US English (<code>en-US</code>),
+     *         you can only apply this custom vocabulary to files that contain
+     *         English audio.
      *         </p>
      * @see LanguageCode
      */
@@ -144,15 +191,33 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The language code of the vocabulary entries.
+     * The language code used to create your custom vocabulary. Each custom
+     * vocabulary must contain terms in only one language.
+     * </p>
+     * <p>
+     * A custom vocabulary can only be used to transcribe files in the same
+     * language as the custom vocabulary. For example, if you create a custom
+     * vocabulary using US English (<code>en-US</code>), you can only apply this
+     * custom vocabulary to files that contain English audio.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, da-DK, de-CH, de-DE, en-AB,
+     * en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR, fr-CA,
+     * fr-FR, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR, ms-MY, nl-NL, pt-BR,
+     * pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN, zh-TW, th-TH, en-ZA, en-NZ,
+     * vi-VN, sv-SE
      *
      * @param languageCode <p>
-     *            The language code of the vocabulary entries.
+     *            The language code used to create your custom vocabulary. Each
+     *            custom vocabulary must contain terms in only one language.
+     *            </p>
+     *            <p>
+     *            A custom vocabulary can only be used to transcribe files in
+     *            the same language as the custom vocabulary. For example, if
+     *            you create a custom vocabulary using US English (
+     *            <code>en-US</code>), you can only apply this custom vocabulary
+     *            to files that contain English audio.
      *            </p>
      * @see LanguageCode
      */
@@ -162,18 +227,36 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The language code of the vocabulary entries.
+     * The language code used to create your custom vocabulary. Each custom
+     * vocabulary must contain terms in only one language.
+     * </p>
+     * <p>
+     * A custom vocabulary can only be used to transcribe files in the same
+     * language as the custom vocabulary. For example, if you create a custom
+     * vocabulary using US English (<code>en-US</code>), you can only apply this
+     * custom vocabulary to files that contain English audio.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, da-DK, de-CH, de-DE, en-AB,
+     * en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR, fr-CA,
+     * fr-FR, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR, ms-MY, nl-NL, pt-BR,
+     * pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN, zh-TW, th-TH, en-ZA, en-NZ,
+     * vi-VN, sv-SE
      *
      * @param languageCode <p>
-     *            The language code of the vocabulary entries.
+     *            The language code used to create your custom vocabulary. Each
+     *            custom vocabulary must contain terms in only one language.
+     *            </p>
+     *            <p>
+     *            A custom vocabulary can only be used to transcribe files in
+     *            the same language as the custom vocabulary. For example, if
+     *            you create a custom vocabulary using US English (
+     *            <code>en-US</code>), you can only apply this custom vocabulary
+     *            to files that contain English audio.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -186,15 +269,33 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The language code of the vocabulary entries.
+     * The language code used to create your custom vocabulary. Each custom
+     * vocabulary must contain terms in only one language.
+     * </p>
+     * <p>
+     * A custom vocabulary can only be used to transcribe files in the same
+     * language as the custom vocabulary. For example, if you create a custom
+     * vocabulary using US English (<code>en-US</code>), you can only apply this
+     * custom vocabulary to files that contain English audio.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, da-DK, de-CH, de-DE, en-AB,
+     * en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR, fr-CA,
+     * fr-FR, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR, ms-MY, nl-NL, pt-BR,
+     * pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN, zh-TW, th-TH, en-ZA, en-NZ,
+     * vi-VN, sv-SE
      *
      * @param languageCode <p>
-     *            The language code of the vocabulary entries.
+     *            The language code used to create your custom vocabulary. Each
+     *            custom vocabulary must contain terms in only one language.
+     *            </p>
+     *            <p>
+     *            A custom vocabulary can only be used to transcribe files in
+     *            the same language as the custom vocabulary. For example, if
+     *            you create a custom vocabulary using US English (
+     *            <code>en-US</code>), you can only apply this custom vocabulary
+     *            to files that contain English audio.
      *            </p>
      * @see LanguageCode
      */
@@ -204,18 +305,36 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The language code of the vocabulary entries.
+     * The language code used to create your custom vocabulary. Each custom
+     * vocabulary must contain terms in only one language.
+     * </p>
+     * <p>
+     * A custom vocabulary can only be used to transcribe files in the same
+     * language as the custom vocabulary. For example, if you create a custom
+     * vocabulary using US English (<code>en-US</code>), you can only apply this
+     * custom vocabulary to files that contain English audio.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en-US, es-US, en-AU, fr-CA, en-GB, de-DE, pt-BR,
-     * fr-FR
+     * <b>Allowed Values: </b>af-ZA, ar-AE, ar-SA, da-DK, de-CH, de-DE, en-AB,
+     * en-AU, en-GB, en-IE, en-IN, en-US, en-WL, es-ES, es-US, fa-IR, fr-CA,
+     * fr-FR, he-IL, hi-IN, id-ID, it-IT, ja-JP, ko-KR, ms-MY, nl-NL, pt-BR,
+     * pt-PT, ru-RU, ta-IN, te-IN, tr-TR, zh-CN, zh-TW, th-TH, en-ZA, en-NZ,
+     * vi-VN, sv-SE
      *
      * @param languageCode <p>
-     *            The language code of the vocabulary entries.
+     *            The language code used to create your custom vocabulary. Each
+     *            custom vocabulary must contain terms in only one language.
+     *            </p>
+     *            <p>
+     *            A custom vocabulary can only be used to transcribe files in
+     *            the same language as the custom vocabulary. For example, if
+     *            you create a custom vocabulary using US English (
+     *            <code>en-US</code>), you can only apply this custom vocabulary
+     *            to files that contain English audio.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -228,11 +347,24 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The date and time that the vocabulary was last modified.
+     * The date and time the specified custom vocabulary was last modified.
+     * </p>
+     * <p>
+     * Timestamps are in the format
+     * <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     * <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32 PM UTC-7
+     * on May 4, 2022.
      * </p>
      *
      * @return <p>
-     *         The date and time that the vocabulary was last modified.
+     *         The date and time the specified custom vocabulary was last
+     *         modified.
+     *         </p>
+     *         <p>
+     *         Timestamps are in the format
+     *         <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     *         <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32 PM
+     *         UTC-7 on May 4, 2022.
      *         </p>
      */
     public java.util.Date getLastModifiedTime() {
@@ -241,11 +373,24 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The date and time that the vocabulary was last modified.
+     * The date and time the specified custom vocabulary was last modified.
+     * </p>
+     * <p>
+     * Timestamps are in the format
+     * <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     * <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32 PM UTC-7
+     * on May 4, 2022.
      * </p>
      *
      * @param lastModifiedTime <p>
-     *            The date and time that the vocabulary was last modified.
+     *            The date and time the specified custom vocabulary was last
+     *            modified.
+     *            </p>
+     *            <p>
+     *            Timestamps are in the format
+     *            <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     *            <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32
+     *            PM UTC-7 on May 4, 2022.
      *            </p>
      */
     public void setLastModifiedTime(java.util.Date lastModifiedTime) {
@@ -254,14 +399,27 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The date and time that the vocabulary was last modified.
+     * The date and time the specified custom vocabulary was last modified.
+     * </p>
+     * <p>
+     * Timestamps are in the format
+     * <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     * <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32 PM UTC-7
+     * on May 4, 2022.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastModifiedTime <p>
-     *            The date and time that the vocabulary was last modified.
+     *            The date and time the specified custom vocabulary was last
+     *            modified.
+     *            </p>
+     *            <p>
+     *            Timestamps are in the format
+     *            <code>YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC</code>. For example,
+     *            <code>2022-05-04T12:32:58.761000-07:00</code> represents 12:32
+     *            PM UTC-7 on May 4, 2022.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -273,8 +431,8 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The processing state of the vocabulary. If the state is
-     * <code>READY</code> you can use the vocabulary in a
+     * The processing state of your custom vocabulary. If the state is
+     * <code>READY</code>, you can use the custom vocabulary in a
      * <code>StartTranscriptionJob</code> request.
      * </p>
      * <p>
@@ -282,8 +440,8 @@ public class VocabularyInfo implements Serializable {
      * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @return <p>
-     *         The processing state of the vocabulary. If the state is
-     *         <code>READY</code> you can use the vocabulary in a
+     *         The processing state of your custom vocabulary. If the state is
+     *         <code>READY</code>, you can use the custom vocabulary in a
      *         <code>StartTranscriptionJob</code> request.
      *         </p>
      * @see VocabularyState
@@ -294,8 +452,8 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The processing state of the vocabulary. If the state is
-     * <code>READY</code> you can use the vocabulary in a
+     * The processing state of your custom vocabulary. If the state is
+     * <code>READY</code>, you can use the custom vocabulary in a
      * <code>StartTranscriptionJob</code> request.
      * </p>
      * <p>
@@ -303,8 +461,8 @@ public class VocabularyInfo implements Serializable {
      * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param vocabularyState <p>
-     *            The processing state of the vocabulary. If the state is
-     *            <code>READY</code> you can use the vocabulary in a
+     *            The processing state of your custom vocabulary. If the state
+     *            is <code>READY</code>, you can use the custom vocabulary in a
      *            <code>StartTranscriptionJob</code> request.
      *            </p>
      * @see VocabularyState
@@ -315,8 +473,8 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The processing state of the vocabulary. If the state is
-     * <code>READY</code> you can use the vocabulary in a
+     * The processing state of your custom vocabulary. If the state is
+     * <code>READY</code>, you can use the custom vocabulary in a
      * <code>StartTranscriptionJob</code> request.
      * </p>
      * <p>
@@ -327,8 +485,8 @@ public class VocabularyInfo implements Serializable {
      * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param vocabularyState <p>
-     *            The processing state of the vocabulary. If the state is
-     *            <code>READY</code> you can use the vocabulary in a
+     *            The processing state of your custom vocabulary. If the state
+     *            is <code>READY</code>, you can use the custom vocabulary in a
      *            <code>StartTranscriptionJob</code> request.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -342,8 +500,8 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The processing state of the vocabulary. If the state is
-     * <code>READY</code> you can use the vocabulary in a
+     * The processing state of your custom vocabulary. If the state is
+     * <code>READY</code>, you can use the custom vocabulary in a
      * <code>StartTranscriptionJob</code> request.
      * </p>
      * <p>
@@ -351,8 +509,8 @@ public class VocabularyInfo implements Serializable {
      * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param vocabularyState <p>
-     *            The processing state of the vocabulary. If the state is
-     *            <code>READY</code> you can use the vocabulary in a
+     *            The processing state of your custom vocabulary. If the state
+     *            is <code>READY</code>, you can use the custom vocabulary in a
      *            <code>StartTranscriptionJob</code> request.
      *            </p>
      * @see VocabularyState
@@ -363,8 +521,8 @@ public class VocabularyInfo implements Serializable {
 
     /**
      * <p>
-     * The processing state of the vocabulary. If the state is
-     * <code>READY</code> you can use the vocabulary in a
+     * The processing state of your custom vocabulary. If the state is
+     * <code>READY</code>, you can use the custom vocabulary in a
      * <code>StartTranscriptionJob</code> request.
      * </p>
      * <p>
@@ -375,8 +533,8 @@ public class VocabularyInfo implements Serializable {
      * <b>Allowed Values: </b>PENDING, READY, FAILED
      *
      * @param vocabularyState <p>
-     *            The processing state of the vocabulary. If the state is
-     *            <code>READY</code> you can use the vocabulary in a
+     *            The processing state of your custom vocabulary. If the state
+     *            is <code>READY</code>, you can use the custom vocabulary in a
      *            <code>StartTranscriptionJob</code> request.
      *            </p>
      * @return A reference to this updated object so that method calls can be

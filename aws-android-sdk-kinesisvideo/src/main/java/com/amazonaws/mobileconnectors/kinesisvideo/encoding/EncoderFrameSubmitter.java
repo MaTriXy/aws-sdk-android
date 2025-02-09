@@ -83,7 +83,7 @@ import java.nio.ByteBuffer;
  *    - mic drop
  */
 public class EncoderFrameSubmitter {
-
+    private static final long NS_IN_US = 1000;
     private static final long NS_IN_MS = 1000000;
     private static final int FROM_START = 0;
     private static final int NO_FLAGS = 0;
@@ -101,14 +101,14 @@ public class EncoderFrameSubmitter {
 
         // encoders are super sensitive to the timestamps, careful here
         final long timestamp = nanosSinceFirstFrame();
-        queueIntoInputImage(frameImageYUV420, timestamp, endOfStream);
+        queueIntoInputImage(frameImageYUV420, timestamp / NS_IN_US, endOfStream);
     }
 
     /**
      * TLDR: read the above javadoc for the class
      */
     private void queueIntoInputImage(final Image frameImageYUV420,
-                                     final long timestamp,
+                                     final long timestampInUS,
                                      final boolean endOfStream) {
 
         final int flags = endOfStream ? MediaCodec.BUFFER_FLAG_END_OF_STREAM : NO_FLAGS;
@@ -126,7 +126,7 @@ public class EncoderFrameSubmitter {
                 inputBufferIndex,
                 FROM_START,
                 tmpBufferSize,
-                timestamp,
+                timestampInUS,
                 flags);
     }
 
@@ -137,10 +137,27 @@ public class EncoderFrameSubmitter {
                                                final Image cameraFrame) {
         final Image codecInputImage = mEncoder.getInputImage(inputBufferIndex);
 
+        final int imageWidth = cameraFrame.getWidth();
+        final int imageRowStride = cameraFrame.getPlanes()[0].getRowStride();
+        final int imageChromaPixelStride = cameraFrame.getPlanes()[1].getPixelStride();
+
+        final boolean isRowPaddingPresent = imageWidth != imageRowStride;
+        final boolean isSemiPlanar = imageChromaPixelStride != 1;
+
         for (int i = 0; i < cameraFrame.getPlanes().length; i++) {
             final ByteBuffer sourceImagePlane = cameraFrame.getPlanes()[i].getBuffer();
             final ByteBuffer destinationImagePlane = codecInputImage.getPlanes()[i].getBuffer();
-            copyBuffer(sourceImagePlane, destinationImagePlane);
+
+            final int pixelStride = codecInputImage.getPlanes()[i].getPixelStride();
+
+            // Accounting for horizontal padding that may have been added for camera optimization. For example, non-multiple-of-64-width
+            // resolutions may have had padding added to the rows to reach the nearest greater multiple of 64.
+            // This accounting for is only supported for SemiPlanar format at the moment.
+            if (isRowPaddingPresent && isSemiPlanar) {
+                copyPaddedBuffer(sourceImagePlane, destinationImagePlane, imageWidth, imageRowStride, pixelStride);
+            } else {
+                copyBuffer(sourceImagePlane, destinationImagePlane);
+            }
         }
     }
 
@@ -151,6 +168,58 @@ public class EncoderFrameSubmitter {
         destinationBuffer.limit(bytesToCopy);
         sourceBuffer.limit(bytesToCopy);
         destinationBuffer.put(sourceBuffer);
+        destinationBuffer.rewind();
+
+        return bytesToCopy;
+    }
+
+    // This copy function will ignore the extra padding data when copying into the encoder's input buffer.
+    // This will only work for SemiPlanar format.
+    private int copyPaddedBuffer(final ByteBuffer sourceBuffer,
+                                 final ByteBuffer destinationBuffer,
+                                 final int imageWidth, 
+                                 final int sourceBufferRowStride, 
+                                 final int pixelStride) {
+        
+        // For an unknown reason, the sourceBuffer's remaining bytes are slightly less than expected, rounding up fixes this.
+        final int numRows = (int) Math.ceil((double) sourceBuffer.remaining() / sourceBufferRowStride);
+        
+        // Desired bytes might exceed destination buffer capacity.
+        final int desiredBytesToCopy = numRows * imageWidth;
+        final int bytesToCopy = Math.min(desiredBytesToCopy, destinationBuffer.capacity());
+        destinationBuffer.limit(bytesToCopy);
+
+        // If this is a chroma plane, then don't include the final row in the for loop - it is an edge case.
+        final int numRowsToIterate;
+        if (pixelStride == 2) {
+            numRowsToIterate = numRows - 1;
+        } else {
+            numRowsToIterate = numRows;
+        }
+        
+        for (int row = 0; row < numRowsToIterate; row++) {
+            final int startPos = row * sourceBufferRowStride;
+            final int endPos = startPos + imageWidth;
+
+            sourceBuffer.limit(endPos);
+            sourceBuffer.position(startPos);
+
+            // Put the valid row data into the destination buffer.
+            destinationBuffer.put(sourceBuffer);
+        }
+
+        // If this is a chroma frame, handle the final row which is missing one value, hence the "-1" to the endPos.
+        if (pixelStride == 2) {
+            final int startPos = numRowsToIterate * sourceBufferRowStride;
+            final int endPos = startPos + imageWidth - 1;
+
+            sourceBuffer.limit(endPos);
+            sourceBuffer.position(startPos);
+
+            // Put the valid row data into the destination buffer.
+            destinationBuffer.put(sourceBuffer);
+        }
+
         destinationBuffer.rewind();
 
         return bytesToCopy;

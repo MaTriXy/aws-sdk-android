@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,7 +35,10 @@ class SynthesisTaskJsonUnmarshaller implements Unmarshaller<SynthesisTask, JsonU
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if (name.equals("TaskId")) {
+            if (name.equals("Engine")) {
+                synthesisTask.setEngine(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("TaskId")) {
                 synthesisTask.setTaskId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else if (name.equals("TaskStatus")) {

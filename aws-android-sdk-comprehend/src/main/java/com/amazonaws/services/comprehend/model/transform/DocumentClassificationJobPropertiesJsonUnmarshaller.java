@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ class DocumentClassificationJobPropertiesJsonUnmarshaller implements
             if (name.equals("JobId")) {
                 documentClassificationJobProperties.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                documentClassificationJobProperties.setJobArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobName")) {
                 documentClassificationJobProperties.setJobName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -71,6 +74,18 @@ class DocumentClassificationJobPropertiesJsonUnmarshaller implements
                                 .unmarshall(context));
             } else if (name.equals("DataAccessRoleArn")) {
                 documentClassificationJobProperties.setDataAccessRoleArn(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                documentClassificationJobProperties.setVolumeKmsKeyId(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                documentClassificationJobProperties.setVpcConfig(VpcConfigJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("FlywheelArn")) {
+                documentClassificationJobProperties.setFlywheelArn(StringJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
             } else {

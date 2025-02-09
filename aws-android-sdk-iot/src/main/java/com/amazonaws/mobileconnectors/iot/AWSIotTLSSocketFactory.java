@@ -15,6 +15,8 @@
 
 package com.amazonaws.mobileconnectors.iot;
 
+import org.conscrypt.Conscrypt;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -22,11 +24,13 @@ import java.net.Socket;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import static com.amazonaws.mobileconnectors.iot.AWSIotSslUtility.ALPN_EXTENSION;
+
 /**
- * AWS IoT TLS Socket Factory An extenstion to SSLSocketFactory to enable TLS
+ * AWS IoT TLS Socket Factory An extension to SSLSocketFactory to enable TLS
  * 1.2 on the socket. TLS 1.2 is required by the AWS IoT data plane (if TLS
  * Mutual Authentication). TLS 1.2 is not supported in Android API less than 16.
- * is supported but not enabled by default 16-20. is enabled 20+.
+ * It is supported but not enabled by default for API 16-20 and is enabled for API 20+.
  *
  * @see <a
  *      href="https://developer.android.com/reference/javax/net/ssl/SSLSocket.htmlh">Android
@@ -105,6 +109,9 @@ class AWSIotTLSSocketFactory extends SSLSocketFactory {
             ((SSLSocket) socket).setEnabledProtocols(new String[] {
                 "TLSv1.2"
             });
+            if (Conscrypt.isConscrypt((SSLSocket) socket)) {
+                Conscrypt.setApplicationProtocols((SSLSocket) socket, ALPN_EXTENSION);
+            }
         }
         return socket;
     }

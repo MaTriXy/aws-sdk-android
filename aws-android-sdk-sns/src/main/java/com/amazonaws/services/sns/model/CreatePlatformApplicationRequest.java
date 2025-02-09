@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,41 +22,69 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Creates a platform application object for one of the supported push
- * notification services, such as APNS and GCM, to which devices and mobile apps
- * may register. You must specify PlatformPrincipal and PlatformCredential
- * attributes when using the <code>CreatePlatformApplication</code> action. The
- * PlatformPrincipal is received from the notification service. For
- * APNS/APNS_SANDBOX, PlatformPrincipal is "SSL certificate". For GCM,
- * PlatformPrincipal is not applicable. For ADM, PlatformPrincipal is
- * "client id". The PlatformCredential is also received from the notification
- * service. For WNS, PlatformPrincipal is "Package Security Identifier". For
- * MPNS, PlatformPrincipal is "TLS certificate". For Baidu, PlatformPrincipal is
- * "API key".
+ * notification services, such as APNS and GCM (Firebase Cloud Messaging), to
+ * which devices and mobile apps may register. You must specify
+ * <code>PlatformPrincipal</code> and <code>PlatformCredential</code> attributes
+ * when using the <code>CreatePlatformApplication</code> action.
  * </p>
  * <p>
- * For APNS/APNS_SANDBOX, PlatformCredential is "private key". For GCM,
- * PlatformCredential is "API key". For ADM, PlatformCredential is
- * "client secret". For WNS, PlatformCredential is "secret key". For MPNS,
- * PlatformCredential is "private key". For Baidu, PlatformCredential is
- * "secret key". The PlatformApplicationArn that is returned when using
- * <code>CreatePlatformApplication</code> is then used as an attribute for the
- * <code>CreatePlatformEndpoint</code> action. For more information, see <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html">Using
- * Amazon SNS Mobile Push Notifications</a>. For more information about
- * obtaining the PlatformPrincipal and PlatformCredential for each of the
- * supported push notification services, see <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-apns.html">Getting
- * Started with Apple Push Notification Service</a>, <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-adm.html">Getting
- * Started with Amazon Device Messaging</a>, <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-baidu.html"
- * >Getting Started with Baidu Cloud Push</a>, <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-gcm.html">Getting
- * Started with Google Cloud Messaging for Android</a>, <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-mpns.html">Getting
- * Started with MPNS</a>, or <a
- * href="http://docs.aws.amazon.com/sns/latest/dg/mobile-push-wns.html">Getting
- * Started with WNS</a>.
+ * <code>PlatformPrincipal</code> and <code>PlatformCredential</code> are
+ * received from the notification service.
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * For <code>ADM</code>, <code>PlatformPrincipal</code> is
+ * <code>client id</code> and <code>PlatformCredential</code> is
+ * <code>client secret</code>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For <code>Baidu</code>, <code>PlatformPrincipal</code> is
+ * <code>API key</code> and <code>PlatformCredential</code> is
+ * <code>secret key</code>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For <code>APNS</code> and <code>APNS_SANDBOX</code> using certificate
+ * credentials, <code>PlatformPrincipal</code> is <code>SSL certificate</code>
+ * and <code>PlatformCredential</code> is <code>private key</code>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For <code>APNS</code> and <code>APNS_SANDBOX</code> using token credentials,
+ * <code>PlatformPrincipal</code> is <code>signing key ID</code> and
+ * <code>PlatformCredential</code> is <code>signing key</code>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For <code>GCM</code> (Firebase Cloud Messaging), there is no
+ * <code>PlatformPrincipal</code> and the <code>PlatformCredential</code> is
+ * <code>API key</code>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For <code>MPNS</code>, <code>PlatformPrincipal</code> is
+ * <code>TLS certificate</code> and <code>PlatformCredential</code> is
+ * <code>private key</code>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For <code>WNS</code>, <code>PlatformPrincipal</code> is
+ * <code>Package Security Identifier</code> and <code>PlatformCredential</code>
+ * is <code>secret key</code>.
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * You can use the returned <code>PlatformApplicationArn</code> as an attribute
+ * for the <code>CreatePlatformEndpoint</code> action.
  * </p>
  */
 public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest implements
@@ -73,7 +101,7 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * The following platforms are supported: ADM (Amazon Device Messaging),
-     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Google
+     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Firebase
      * Cloud Messaging).
      * </p>
      */
@@ -82,8 +110,8 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * For a list of attributes, see <a href=
-     * "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     * >SetPlatformApplicationAttributes</a>
+     * "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     * >SetPlatformApplicationAttributes</a>.
      * </p>
      */
     private java.util.Map<String, String> attributes = new java.util.HashMap<String, String>();
@@ -148,14 +176,14 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * The following platforms are supported: ADM (Amazon Device Messaging),
-     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Google
+     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Firebase
      * Cloud Messaging).
      * </p>
      *
      * @return <p>
      *         The following platforms are supported: ADM (Amazon Device
      *         Messaging), APNS (Apple Push Notification Service), APNS_SANDBOX,
-     *         and GCM (Google Cloud Messaging).
+     *         and GCM (Firebase Cloud Messaging).
      *         </p>
      */
     public String getPlatform() {
@@ -165,14 +193,14 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * The following platforms are supported: ADM (Amazon Device Messaging),
-     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Google
+     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Firebase
      * Cloud Messaging).
      * </p>
      *
      * @param platform <p>
      *            The following platforms are supported: ADM (Amazon Device
      *            Messaging), APNS (Apple Push Notification Service),
-     *            APNS_SANDBOX, and GCM (Google Cloud Messaging).
+     *            APNS_SANDBOX, and GCM (Firebase Cloud Messaging).
      *            </p>
      */
     public void setPlatform(String platform) {
@@ -182,7 +210,7 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * The following platforms are supported: ADM (Amazon Device Messaging),
-     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Google
+     * APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Firebase
      * Cloud Messaging).
      * </p>
      * <p>
@@ -192,7 +220,7 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
      * @param platform <p>
      *            The following platforms are supported: ADM (Amazon Device
      *            Messaging), APNS (Apple Push Notification Service),
-     *            APNS_SANDBOX, and GCM (Google Cloud Messaging).
+     *            APNS_SANDBOX, and GCM (Firebase Cloud Messaging).
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -205,14 +233,14 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * For a list of attributes, see <a href=
-     * "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     * >SetPlatformApplicationAttributes</a>
+     * "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     * >SetPlatformApplicationAttributes</a>.
      * </p>
      *
      * @return <p>
      *         For a list of attributes, see <a href=
-     *         "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     *         >SetPlatformApplicationAttributes</a>
+     *         "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     *         >SetPlatformApplicationAttributes</a>.
      *         </p>
      */
     public java.util.Map<String, String> getAttributes() {
@@ -222,14 +250,14 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * For a list of attributes, see <a href=
-     * "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     * >SetPlatformApplicationAttributes</a>
+     * "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     * >SetPlatformApplicationAttributes</a>.
      * </p>
      *
      * @param attributes <p>
      *            For a list of attributes, see <a href=
-     *            "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     *            >SetPlatformApplicationAttributes</a>
+     *            "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     *            >SetPlatformApplicationAttributes</a>.
      *            </p>
      */
     public void setAttributes(java.util.Map<String, String> attributes) {
@@ -239,8 +267,8 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * For a list of attributes, see <a href=
-     * "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     * >SetPlatformApplicationAttributes</a>
+     * "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     * >SetPlatformApplicationAttributes</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -248,8 +276,8 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
      *
      * @param attributes <p>
      *            For a list of attributes, see <a href=
-     *            "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     *            >SetPlatformApplicationAttributes</a>
+     *            "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     *            >SetPlatformApplicationAttributes</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -262,8 +290,8 @@ public class CreatePlatformApplicationRequest extends AmazonWebServiceRequest im
     /**
      * <p>
      * For a list of attributes, see <a href=
-     * "http://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
-     * >SetPlatformApplicationAttributes</a>
+     * "https://docs.aws.amazon.com/sns/latest/api/API_SetPlatformApplicationAttributes.html"
+     * >SetPlatformApplicationAttributes</a>.
      * </p>
      * <p>
      * The method adds a new key-value pair into Attributes parameter, and

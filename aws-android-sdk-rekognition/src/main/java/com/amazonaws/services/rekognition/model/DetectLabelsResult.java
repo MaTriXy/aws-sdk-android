@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,24 +27,44 @@ public class DetectLabelsResult implements Serializable {
 
     /**
      * <p>
-     * The orientation of the input image (counter-clockwise direction). If your
-     * application displays the image, you can use this value to correct the
-     * orientation. If Amazon Rekognition detects that the input image was
-     * rotated (for example, by 90 degrees), it first corrects the orientation
-     * before detecting the labels.
+     * The value of <code>OrientationCorrection</code> is always null.
      * </p>
-     * <note>
      * <p>
-     * If the input image Exif metadata populates the orientation field, Amazon
-     * Rekognition does not perform orientation correction and the value of
-     * OrientationCorrection will be null.
+     * If the input image is in .jpeg format, it might contain exchangeable
+     * image file format (Exif) metadata that includes the image's orientation.
+     * Amazon Rekognition uses this orientation information to perform image
+     * correction. The bounding box coordinates are translated to represent
+     * object locations after the orientation information in the Exif metadata
+     * is used to correct the image orientation. Images in .png format don't
+     * contain Exif metadata.
      * </p>
-     * </note>
+     * <p>
+     * Amazon Rekognition doesn’t perform image correction for images in .png
+     * format and .jpeg images without orientation information in the image Exif
+     * metadata. The bounding box coordinates aren't translated and represent
+     * the object locations before the image is rotated.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270
      */
     private String orientationCorrection;
+
+    /**
+     * <p>
+     * Version number of the label detection model that was used to detect
+     * labels.
+     * </p>
+     */
+    private String labelModelVersion;
+
+    /**
+     * <p>
+     * Information about the properties of the input image, such as brightness,
+     * sharpness, contrast, and dominant colors.
+     * </p>
+     */
+    private DetectLabelsImageProperties imageProperties;
 
     /**
      * <p>
@@ -122,37 +142,47 @@ public class DetectLabelsResult implements Serializable {
 
     /**
      * <p>
-     * The orientation of the input image (counter-clockwise direction). If your
-     * application displays the image, you can use this value to correct the
-     * orientation. If Amazon Rekognition detects that the input image was
-     * rotated (for example, by 90 degrees), it first corrects the orientation
-     * before detecting the labels.
+     * The value of <code>OrientationCorrection</code> is always null.
      * </p>
-     * <note>
      * <p>
-     * If the input image Exif metadata populates the orientation field, Amazon
-     * Rekognition does not perform orientation correction and the value of
-     * OrientationCorrection will be null.
+     * If the input image is in .jpeg format, it might contain exchangeable
+     * image file format (Exif) metadata that includes the image's orientation.
+     * Amazon Rekognition uses this orientation information to perform image
+     * correction. The bounding box coordinates are translated to represent
+     * object locations after the orientation information in the Exif metadata
+     * is used to correct the image orientation. Images in .png format don't
+     * contain Exif metadata.
      * </p>
-     * </note>
+     * <p>
+     * Amazon Rekognition doesn’t perform image correction for images in .png
+     * format and .jpeg images without orientation information in the image Exif
+     * metadata. The bounding box coordinates aren't translated and represent
+     * the object locations before the image is rotated.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270
      *
      * @return <p>
-     *         The orientation of the input image (counter-clockwise direction).
-     *         If your application displays the image, you can use this value to
-     *         correct the orientation. If Amazon Rekognition detects that the
-     *         input image was rotated (for example, by 90 degrees), it first
-     *         corrects the orientation before detecting the labels.
+     *         The value of <code>OrientationCorrection</code> is always null.
      *         </p>
-     *         <note>
      *         <p>
-     *         If the input image Exif metadata populates the orientation field,
-     *         Amazon Rekognition does not perform orientation correction and
-     *         the value of OrientationCorrection will be null.
+     *         If the input image is in .jpeg format, it might contain
+     *         exchangeable image file format (Exif) metadata that includes the
+     *         image's orientation. Amazon Rekognition uses this orientation
+     *         information to perform image correction. The bounding box
+     *         coordinates are translated to represent object locations after
+     *         the orientation information in the Exif metadata is used to
+     *         correct the image orientation. Images in .png format don't
+     *         contain Exif metadata.
      *         </p>
-     *         </note>
+     *         <p>
+     *         Amazon Rekognition doesn’t perform image correction for images in
+     *         .png format and .jpeg images without orientation information in
+     *         the image Exif metadata. The bounding box coordinates aren't
+     *         translated and represent the object locations before the image is
+     *         rotated.
+     *         </p>
      * @see OrientationCorrection
      */
     public String getOrientationCorrection() {
@@ -161,39 +191,48 @@ public class DetectLabelsResult implements Serializable {
 
     /**
      * <p>
-     * The orientation of the input image (counter-clockwise direction). If your
-     * application displays the image, you can use this value to correct the
-     * orientation. If Amazon Rekognition detects that the input image was
-     * rotated (for example, by 90 degrees), it first corrects the orientation
-     * before detecting the labels.
+     * The value of <code>OrientationCorrection</code> is always null.
      * </p>
-     * <note>
      * <p>
-     * If the input image Exif metadata populates the orientation field, Amazon
-     * Rekognition does not perform orientation correction and the value of
-     * OrientationCorrection will be null.
+     * If the input image is in .jpeg format, it might contain exchangeable
+     * image file format (Exif) metadata that includes the image's orientation.
+     * Amazon Rekognition uses this orientation information to perform image
+     * correction. The bounding box coordinates are translated to represent
+     * object locations after the orientation information in the Exif metadata
+     * is used to correct the image orientation. Images in .png format don't
+     * contain Exif metadata.
      * </p>
-     * </note>
+     * <p>
+     * Amazon Rekognition doesn’t perform image correction for images in .png
+     * format and .jpeg images without orientation information in the image Exif
+     * metadata. The bounding box coordinates aren't translated and represent
+     * the object locations before the image is rotated.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270
      *
      * @param orientationCorrection <p>
-     *            The orientation of the input image (counter-clockwise
-     *            direction). If your application displays the image, you can
-     *            use this value to correct the orientation. If Amazon
-     *            Rekognition detects that the input image was rotated (for
-     *            example, by 90 degrees), it first corrects the orientation
-     *            before detecting the labels.
-     *            </p>
-     *            <note>
-     *            <p>
-     *            If the input image Exif metadata populates the orientation
-     *            field, Amazon Rekognition does not perform orientation
-     *            correction and the value of OrientationCorrection will be
+     *            The value of <code>OrientationCorrection</code> is always
      *            null.
      *            </p>
-     *            </note>
+     *            <p>
+     *            If the input image is in .jpeg format, it might contain
+     *            exchangeable image file format (Exif) metadata that includes
+     *            the image's orientation. Amazon Rekognition uses this
+     *            orientation information to perform image correction. The
+     *            bounding box coordinates are translated to represent object
+     *            locations after the orientation information in the Exif
+     *            metadata is used to correct the image orientation. Images in
+     *            .png format don't contain Exif metadata.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition doesn’t perform image correction for images
+     *            in .png format and .jpeg images without orientation
+     *            information in the image Exif metadata. The bounding box
+     *            coordinates aren't translated and represent the object
+     *            locations before the image is rotated.
+     *            </p>
      * @see OrientationCorrection
      */
     public void setOrientationCorrection(String orientationCorrection) {
@@ -202,19 +241,23 @@ public class DetectLabelsResult implements Serializable {
 
     /**
      * <p>
-     * The orientation of the input image (counter-clockwise direction). If your
-     * application displays the image, you can use this value to correct the
-     * orientation. If Amazon Rekognition detects that the input image was
-     * rotated (for example, by 90 degrees), it first corrects the orientation
-     * before detecting the labels.
+     * The value of <code>OrientationCorrection</code> is always null.
      * </p>
-     * <note>
      * <p>
-     * If the input image Exif metadata populates the orientation field, Amazon
-     * Rekognition does not perform orientation correction and the value of
-     * OrientationCorrection will be null.
+     * If the input image is in .jpeg format, it might contain exchangeable
+     * image file format (Exif) metadata that includes the image's orientation.
+     * Amazon Rekognition uses this orientation information to perform image
+     * correction. The bounding box coordinates are translated to represent
+     * object locations after the orientation information in the Exif metadata
+     * is used to correct the image orientation. Images in .png format don't
+     * contain Exif metadata.
      * </p>
-     * </note>
+     * <p>
+     * Amazon Rekognition doesn’t perform image correction for images in .png
+     * format and .jpeg images without orientation information in the image Exif
+     * metadata. The bounding box coordinates aren't translated and represent
+     * the object locations before the image is rotated.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -223,21 +266,26 @@ public class DetectLabelsResult implements Serializable {
      * <b>Allowed Values: </b>ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270
      *
      * @param orientationCorrection <p>
-     *            The orientation of the input image (counter-clockwise
-     *            direction). If your application displays the image, you can
-     *            use this value to correct the orientation. If Amazon
-     *            Rekognition detects that the input image was rotated (for
-     *            example, by 90 degrees), it first corrects the orientation
-     *            before detecting the labels.
-     *            </p>
-     *            <note>
-     *            <p>
-     *            If the input image Exif metadata populates the orientation
-     *            field, Amazon Rekognition does not perform orientation
-     *            correction and the value of OrientationCorrection will be
+     *            The value of <code>OrientationCorrection</code> is always
      *            null.
      *            </p>
-     *            </note>
+     *            <p>
+     *            If the input image is in .jpeg format, it might contain
+     *            exchangeable image file format (Exif) metadata that includes
+     *            the image's orientation. Amazon Rekognition uses this
+     *            orientation information to perform image correction. The
+     *            bounding box coordinates are translated to represent object
+     *            locations after the orientation information in the Exif
+     *            metadata is used to correct the image orientation. Images in
+     *            .png format don't contain Exif metadata.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition doesn’t perform image correction for images
+     *            in .png format and .jpeg images without orientation
+     *            information in the image Exif metadata. The bounding box
+     *            coordinates aren't translated and represent the object
+     *            locations before the image is rotated.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      * @see OrientationCorrection
@@ -249,39 +297,48 @@ public class DetectLabelsResult implements Serializable {
 
     /**
      * <p>
-     * The orientation of the input image (counter-clockwise direction). If your
-     * application displays the image, you can use this value to correct the
-     * orientation. If Amazon Rekognition detects that the input image was
-     * rotated (for example, by 90 degrees), it first corrects the orientation
-     * before detecting the labels.
+     * The value of <code>OrientationCorrection</code> is always null.
      * </p>
-     * <note>
      * <p>
-     * If the input image Exif metadata populates the orientation field, Amazon
-     * Rekognition does not perform orientation correction and the value of
-     * OrientationCorrection will be null.
+     * If the input image is in .jpeg format, it might contain exchangeable
+     * image file format (Exif) metadata that includes the image's orientation.
+     * Amazon Rekognition uses this orientation information to perform image
+     * correction. The bounding box coordinates are translated to represent
+     * object locations after the orientation information in the Exif metadata
+     * is used to correct the image orientation. Images in .png format don't
+     * contain Exif metadata.
      * </p>
-     * </note>
+     * <p>
+     * Amazon Rekognition doesn’t perform image correction for images in .png
+     * format and .jpeg images without orientation information in the image Exif
+     * metadata. The bounding box coordinates aren't translated and represent
+     * the object locations before the image is rotated.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270
      *
      * @param orientationCorrection <p>
-     *            The orientation of the input image (counter-clockwise
-     *            direction). If your application displays the image, you can
-     *            use this value to correct the orientation. If Amazon
-     *            Rekognition detects that the input image was rotated (for
-     *            example, by 90 degrees), it first corrects the orientation
-     *            before detecting the labels.
-     *            </p>
-     *            <note>
-     *            <p>
-     *            If the input image Exif metadata populates the orientation
-     *            field, Amazon Rekognition does not perform orientation
-     *            correction and the value of OrientationCorrection will be
+     *            The value of <code>OrientationCorrection</code> is always
      *            null.
      *            </p>
-     *            </note>
+     *            <p>
+     *            If the input image is in .jpeg format, it might contain
+     *            exchangeable image file format (Exif) metadata that includes
+     *            the image's orientation. Amazon Rekognition uses this
+     *            orientation information to perform image correction. The
+     *            bounding box coordinates are translated to represent object
+     *            locations after the orientation information in the Exif
+     *            metadata is used to correct the image orientation. Images in
+     *            .png format don't contain Exif metadata.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition doesn’t perform image correction for images
+     *            in .png format and .jpeg images without orientation
+     *            information in the image Exif metadata. The bounding box
+     *            coordinates aren't translated and represent the object
+     *            locations before the image is rotated.
+     *            </p>
      * @see OrientationCorrection
      */
     public void setOrientationCorrection(OrientationCorrection orientationCorrection) {
@@ -290,19 +347,23 @@ public class DetectLabelsResult implements Serializable {
 
     /**
      * <p>
-     * The orientation of the input image (counter-clockwise direction). If your
-     * application displays the image, you can use this value to correct the
-     * orientation. If Amazon Rekognition detects that the input image was
-     * rotated (for example, by 90 degrees), it first corrects the orientation
-     * before detecting the labels.
+     * The value of <code>OrientationCorrection</code> is always null.
      * </p>
-     * <note>
      * <p>
-     * If the input image Exif metadata populates the orientation field, Amazon
-     * Rekognition does not perform orientation correction and the value of
-     * OrientationCorrection will be null.
+     * If the input image is in .jpeg format, it might contain exchangeable
+     * image file format (Exif) metadata that includes the image's orientation.
+     * Amazon Rekognition uses this orientation information to perform image
+     * correction. The bounding box coordinates are translated to represent
+     * object locations after the orientation information in the Exif metadata
+     * is used to correct the image orientation. Images in .png format don't
+     * contain Exif metadata.
      * </p>
-     * </note>
+     * <p>
+     * Amazon Rekognition doesn’t perform image correction for images in .png
+     * format and .jpeg images without orientation information in the image Exif
+     * metadata. The bounding box coordinates aren't translated and represent
+     * the object locations before the image is rotated.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -311,27 +372,134 @@ public class DetectLabelsResult implements Serializable {
      * <b>Allowed Values: </b>ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270
      *
      * @param orientationCorrection <p>
-     *            The orientation of the input image (counter-clockwise
-     *            direction). If your application displays the image, you can
-     *            use this value to correct the orientation. If Amazon
-     *            Rekognition detects that the input image was rotated (for
-     *            example, by 90 degrees), it first corrects the orientation
-     *            before detecting the labels.
-     *            </p>
-     *            <note>
-     *            <p>
-     *            If the input image Exif metadata populates the orientation
-     *            field, Amazon Rekognition does not perform orientation
-     *            correction and the value of OrientationCorrection will be
+     *            The value of <code>OrientationCorrection</code> is always
      *            null.
      *            </p>
-     *            </note>
+     *            <p>
+     *            If the input image is in .jpeg format, it might contain
+     *            exchangeable image file format (Exif) metadata that includes
+     *            the image's orientation. Amazon Rekognition uses this
+     *            orientation information to perform image correction. The
+     *            bounding box coordinates are translated to represent object
+     *            locations after the orientation information in the Exif
+     *            metadata is used to correct the image orientation. Images in
+     *            .png format don't contain Exif metadata.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition doesn’t perform image correction for images
+     *            in .png format and .jpeg images without orientation
+     *            information in the image Exif metadata. The bounding box
+     *            coordinates aren't translated and represent the object
+     *            locations before the image is rotated.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      * @see OrientationCorrection
      */
     public DetectLabelsResult withOrientationCorrection(OrientationCorrection orientationCorrection) {
         this.orientationCorrection = orientationCorrection.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * Version number of the label detection model that was used to detect
+     * labels.
+     * </p>
+     *
+     * @return <p>
+     *         Version number of the label detection model that was used to
+     *         detect labels.
+     *         </p>
+     */
+    public String getLabelModelVersion() {
+        return labelModelVersion;
+    }
+
+    /**
+     * <p>
+     * Version number of the label detection model that was used to detect
+     * labels.
+     * </p>
+     *
+     * @param labelModelVersion <p>
+     *            Version number of the label detection model that was used to
+     *            detect labels.
+     *            </p>
+     */
+    public void setLabelModelVersion(String labelModelVersion) {
+        this.labelModelVersion = labelModelVersion;
+    }
+
+    /**
+     * <p>
+     * Version number of the label detection model that was used to detect
+     * labels.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param labelModelVersion <p>
+     *            Version number of the label detection model that was used to
+     *            detect labels.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DetectLabelsResult withLabelModelVersion(String labelModelVersion) {
+        this.labelModelVersion = labelModelVersion;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Information about the properties of the input image, such as brightness,
+     * sharpness, contrast, and dominant colors.
+     * </p>
+     *
+     * @return <p>
+     *         Information about the properties of the input image, such as
+     *         brightness, sharpness, contrast, and dominant colors.
+     *         </p>
+     */
+    public DetectLabelsImageProperties getImageProperties() {
+        return imageProperties;
+    }
+
+    /**
+     * <p>
+     * Information about the properties of the input image, such as brightness,
+     * sharpness, contrast, and dominant colors.
+     * </p>
+     *
+     * @param imageProperties <p>
+     *            Information about the properties of the input image, such as
+     *            brightness, sharpness, contrast, and dominant colors.
+     *            </p>
+     */
+    public void setImageProperties(DetectLabelsImageProperties imageProperties) {
+        this.imageProperties = imageProperties;
+    }
+
+    /**
+     * <p>
+     * Information about the properties of the input image, such as brightness,
+     * sharpness, contrast, and dominant colors.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param imageProperties <p>
+     *            Information about the properties of the input image, such as
+     *            brightness, sharpness, contrast, and dominant colors.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DetectLabelsResult withImageProperties(DetectLabelsImageProperties imageProperties) {
+        this.imageProperties = imageProperties;
         return this;
     }
 
@@ -349,7 +517,11 @@ public class DetectLabelsResult implements Serializable {
         if (getLabels() != null)
             sb.append("Labels: " + getLabels() + ",");
         if (getOrientationCorrection() != null)
-            sb.append("OrientationCorrection: " + getOrientationCorrection());
+            sb.append("OrientationCorrection: " + getOrientationCorrection() + ",");
+        if (getLabelModelVersion() != null)
+            sb.append("LabelModelVersion: " + getLabelModelVersion() + ",");
+        if (getImageProperties() != null)
+            sb.append("ImageProperties: " + getImageProperties());
         sb.append("}");
         return sb.toString();
     }
@@ -363,6 +535,10 @@ public class DetectLabelsResult implements Serializable {
         hashCode = prime
                 * hashCode
                 + ((getOrientationCorrection() == null) ? 0 : getOrientationCorrection().hashCode());
+        hashCode = prime * hashCode
+                + ((getLabelModelVersion() == null) ? 0 : getLabelModelVersion().hashCode());
+        hashCode = prime * hashCode
+                + ((getImageProperties() == null) ? 0 : getImageProperties().hashCode());
         return hashCode;
     }
 
@@ -385,6 +561,16 @@ public class DetectLabelsResult implements Serializable {
             return false;
         if (other.getOrientationCorrection() != null
                 && other.getOrientationCorrection().equals(this.getOrientationCorrection()) == false)
+            return false;
+        if (other.getLabelModelVersion() == null ^ this.getLabelModelVersion() == null)
+            return false;
+        if (other.getLabelModelVersion() != null
+                && other.getLabelModelVersion().equals(this.getLabelModelVersion()) == false)
+            return false;
+        if (other.getImageProperties() == null ^ this.getImageProperties() == null)
+            return false;
+        if (other.getImageProperties() != null
+                && other.getImageProperties().equals(this.getImageProperties()) == false)
             return false;
         return true;
     }

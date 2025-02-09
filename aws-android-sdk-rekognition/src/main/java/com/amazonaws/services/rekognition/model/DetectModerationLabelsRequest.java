@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Detects explicit or suggestive adult content in a specified JPEG or PNG
- * format image. Use <code>DetectModerationLabels</code> to moderate images
- * depending on your requirements. For example, you might want to filter images
- * that contain nudity, but not images containing suggestive content.
+ * Detects unsafe content in a specified JPEG or PNG format image. Use
+ * <code>DetectModerationLabels</code> to moderate images depending on your
+ * requirements. For example, you might want to filter images that contain
+ * nudity, but not images containing suggestive content.
  * </p>
  * <p>
  * To filter images, use the labels returned by
@@ -37,8 +37,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * You pass the input image either as base64-encoded image bytes or as a
- * reference to an image in an Amazon S3 bucket. If you use the Amazon CLI to
- * call Amazon Rekognition operations, passing image bytes is not supported. The
+ * reference to an image in an Amazon S3 bucket. If you use the AWS CLI to call
+ * Amazon Rekognition operations, passing image bytes is not supported. The
  * image must be either a PNG or JPEG formatted file.
  * </p>
  */
@@ -48,6 +48,12 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * The input image as base64-encoded bytes or an S3 object. If you use the
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
      * image bytes is not supported.
+     * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
      * </p>
      */
     private Image image;
@@ -64,9 +70,17 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float minConfidence;
+
+    /**
+     * <p>
+     * Sets up the configuration for human evaluation, including the
+     * FlowDefinition the image will be sent to.
+     * </p>
+     */
+    private HumanLoopConfig humanLoopConfig;
 
     /**
      * Default constructor for DetectModerationLabelsRequest object. Callers
@@ -86,6 +100,12 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      *            you use the AWS CLI to call Amazon Rekognition operations,
      *            passing base64-encoded image bytes is not supported.
      *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
+     *            </p>
      */
     public DetectModerationLabelsRequest(Image image) {
         setImage(image);
@@ -97,11 +117,23 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
      * image bytes is not supported.
      * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
      *
      * @return <p>
      *         The input image as base64-encoded bytes or an S3 object. If you
      *         use the AWS CLI to call Amazon Rekognition operations, passing
      *         base64-encoded image bytes is not supported.
+     *         </p>
+     *         <p>
+     *         If you are using an AWS SDK to call Amazon Rekognition, you might
+     *         not need to base64-encode image bytes passed using the
+     *         <code>Bytes</code> field. For more information, see Images in the
+     *         Amazon Rekognition developer guide.
      *         </p>
      */
     public Image getImage() {
@@ -114,11 +146,23 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
      * image bytes is not supported.
      * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
      *
      * @param image <p>
      *            The input image as base64-encoded bytes or an S3 object. If
      *            you use the AWS CLI to call Amazon Rekognition operations,
      *            passing base64-encoded image bytes is not supported.
+     *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
      *            </p>
      */
     public void setImage(Image image) {
@@ -132,6 +176,12 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * image bytes is not supported.
      * </p>
      * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
@@ -139,6 +189,12 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      *            The input image as base64-encoded bytes or an S3 object. If
      *            you use the AWS CLI to call Amazon Rekognition operations,
      *            passing base64-encoded image bytes is not supported.
+     *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -160,7 +216,7 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Specifies the minimum confidence level for the labels to return.
@@ -189,7 +245,7 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param minConfidence <p>
      *            Specifies the minimum confidence level for the labels to
@@ -221,7 +277,7 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param minConfidence <p>
      *            Specifies the minimum confidence level for the labels to
@@ -242,6 +298,57 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
     }
 
     /**
+     * <p>
+     * Sets up the configuration for human evaluation, including the
+     * FlowDefinition the image will be sent to.
+     * </p>
+     *
+     * @return <p>
+     *         Sets up the configuration for human evaluation, including the
+     *         FlowDefinition the image will be sent to.
+     *         </p>
+     */
+    public HumanLoopConfig getHumanLoopConfig() {
+        return humanLoopConfig;
+    }
+
+    /**
+     * <p>
+     * Sets up the configuration for human evaluation, including the
+     * FlowDefinition the image will be sent to.
+     * </p>
+     *
+     * @param humanLoopConfig <p>
+     *            Sets up the configuration for human evaluation, including the
+     *            FlowDefinition the image will be sent to.
+     *            </p>
+     */
+    public void setHumanLoopConfig(HumanLoopConfig humanLoopConfig) {
+        this.humanLoopConfig = humanLoopConfig;
+    }
+
+    /**
+     * <p>
+     * Sets up the configuration for human evaluation, including the
+     * FlowDefinition the image will be sent to.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param humanLoopConfig <p>
+     *            Sets up the configuration for human evaluation, including the
+     *            FlowDefinition the image will be sent to.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DetectModerationLabelsRequest withHumanLoopConfig(HumanLoopConfig humanLoopConfig) {
+        this.humanLoopConfig = humanLoopConfig;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -255,7 +362,9 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
         if (getImage() != null)
             sb.append("Image: " + getImage() + ",");
         if (getMinConfidence() != null)
-            sb.append("MinConfidence: " + getMinConfidence());
+            sb.append("MinConfidence: " + getMinConfidence() + ",");
+        if (getHumanLoopConfig() != null)
+            sb.append("HumanLoopConfig: " + getHumanLoopConfig());
         sb.append("}");
         return sb.toString();
     }
@@ -268,6 +377,8 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
         hashCode = prime * hashCode + ((getImage() == null) ? 0 : getImage().hashCode());
         hashCode = prime * hashCode
                 + ((getMinConfidence() == null) ? 0 : getMinConfidence().hashCode());
+        hashCode = prime * hashCode
+                + ((getHumanLoopConfig() == null) ? 0 : getHumanLoopConfig().hashCode());
         return hashCode;
     }
 
@@ -290,6 +401,11 @@ public class DetectModerationLabelsRequest extends AmazonWebServiceRequest imple
             return false;
         if (other.getMinConfidence() != null
                 && other.getMinConfidence().equals(this.getMinConfidence()) == false)
+            return false;
+        if (other.getHumanLoopConfig() == null ^ this.getHumanLoopConfig() == null)
+            return false;
+        if (other.getHumanLoopConfig() != null
+                && other.getHumanLoopConfig().equals(this.getHumanLoopConfig()) == false)
             return false;
         return true;
     }

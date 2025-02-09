@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,18 +20,18 @@ import java.io.Serializable;
 public class DescribeIdentityProviderResult implements Serializable {
     /**
      * <p>
-     * The identity provider that was deleted.
+     * The identity provider details.
      * </p>
      */
     private IdentityProviderType identityProvider;
 
     /**
      * <p>
-     * The identity provider that was deleted.
+     * The identity provider details.
      * </p>
      *
      * @return <p>
-     *         The identity provider that was deleted.
+     *         The identity provider details.
      *         </p>
      */
     public IdentityProviderType getIdentityProvider() {
@@ -40,11 +40,11 @@ public class DescribeIdentityProviderResult implements Serializable {
 
     /**
      * <p>
-     * The identity provider that was deleted.
+     * The identity provider details.
      * </p>
      *
      * @param identityProvider <p>
-     *            The identity provider that was deleted.
+     *            The identity provider details.
      *            </p>
      */
     public void setIdentityProvider(IdentityProviderType identityProvider) {
@@ -53,14 +53,14 @@ public class DescribeIdentityProviderResult implements Serializable {
 
     /**
      * <p>
-     * The identity provider that was deleted.
+     * The identity provider details.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param identityProvider <p>
-     *            The identity provider that was deleted.
+     *            The identity provider details.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

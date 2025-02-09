@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Lists logging levels.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListV2LoggingLevels</a> action.
+ * </p>
  */
 public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -32,14 +37,16 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      */
     private String targetType;
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      */
     private String nextToken;
@@ -61,7 +68,8 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @return <p>
      *         The type of resource for which you are configuring logging. Must
@@ -80,7 +88,8 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -102,7 +111,8 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -124,7 +134,8 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -146,7 +157,8 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -163,13 +175,15 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      *
      * @return <p>
-     *         The token used to get the next set of results, or <b>null</b> if
-     *         there are no additional results.
+     *         To retrieve the next set of results, the <code>nextToken</code>
+     *         value from a previous response; otherwise <b>null</b> to receive
+     *         the first set of results.
      *         </p>
      */
     public String getNextToken() {
@@ -178,13 +192,15 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      *
      * @param nextToken <p>
-     *            The token used to get the next set of results, or <b>null</b>
-     *            if there are no additional results.
+     *            To retrieve the next set of results, the
+     *            <code>nextToken</code> value from a previous response;
+     *            otherwise <b>null</b> to receive the first set of results.
      *            </p>
      */
     public void setNextToken(String nextToken) {
@@ -193,16 +209,18 @@ public class ListV2LoggingLevelsRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param nextToken <p>
-     *            The token used to get the next set of results, or <b>null</b>
-     *            if there are no additional results.
+     *            To retrieve the next set of results, the
+     *            <code>nextToken</code> value from a previous response;
+     *            otherwise <b>null</b> to receive the first set of results.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ public class TopicRulePayload implements Serializable {
      * <p>
      * The SQL statement used to query the topic. For more information, see <a
      * href=
-     * "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     * >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer Guide</i>.
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     * >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      * </p>
      */
     private String sql;
@@ -72,15 +72,15 @@ public class TopicRulePayload implements Serializable {
      * <p>
      * The SQL statement used to query the topic. For more information, see <a
      * href=
-     * "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     * >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer Guide</i>.
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     * >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      * </p>
      *
      * @return <p>
      *         The SQL statement used to query the topic. For more information,
      *         see <a href=
-     *         "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     *         >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer Guide</i>.
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     *         >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      *         </p>
      */
     public String getSql() {
@@ -91,16 +91,15 @@ public class TopicRulePayload implements Serializable {
      * <p>
      * The SQL statement used to query the topic. For more information, see <a
      * href=
-     * "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     * >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer Guide</i>.
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     * >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      * </p>
      *
      * @param sql <p>
      *            The SQL statement used to query the topic. For more
      *            information, see <a href=
-     *            "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     *            >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer
-     *            Guide</i>.
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     *            >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      *            </p>
      */
     public void setSql(String sql) {
@@ -111,8 +110,8 @@ public class TopicRulePayload implements Serializable {
      * <p>
      * The SQL statement used to query the topic. For more information, see <a
      * href=
-     * "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     * >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer Guide</i>.
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     * >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -121,9 +120,8 @@ public class TopicRulePayload implements Serializable {
      * @param sql <p>
      *            The SQL statement used to query the topic. For more
      *            information, see <a href=
-     *            "http://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html#aws-iot-sql-reference"
-     *            >AWS IoT SQL Reference</a> in the <i>AWS IoT Developer
-     *            Guide</i>.
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html"
+     *            >IoT SQL Reference</a> in the <i>IoT Developer Guide</i>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

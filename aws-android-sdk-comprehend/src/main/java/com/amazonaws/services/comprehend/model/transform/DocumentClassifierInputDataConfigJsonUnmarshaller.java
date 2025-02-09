@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,9 +37,38 @@ class DocumentClassifierInputDataConfigJsonUnmarshaller implements
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if (name.equals("S3Uri")) {
+            if (name.equals("DataFormat")) {
+                documentClassifierInputDataConfig.setDataFormat(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("S3Uri")) {
                 documentClassifierInputDataConfig.setS3Uri(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("TestS3Uri")) {
+                documentClassifierInputDataConfig.setTestS3Uri(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("LabelDelimiter")) {
+                documentClassifierInputDataConfig.setLabelDelimiter(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("AugmentedManifests")) {
+                documentClassifierInputDataConfig
+                        .setAugmentedManifests(new ListUnmarshaller<AugmentedManifestsListItem>(
+                                AugmentedManifestsListItemJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("DocumentType")) {
+                documentClassifierInputDataConfig.setDocumentType(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("Documents")) {
+                documentClassifierInputDataConfig
+                        .setDocuments(DocumentClassifierDocumentsJsonUnmarshaller.getInstance()
+                                .unmarshall(context));
+            } else if (name.equals("DocumentReaderConfig")) {
+                documentClassifierInputDataConfig
+                        .setDocumentReaderConfig(DocumentReaderConfigJsonUnmarshaller.getInstance()
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

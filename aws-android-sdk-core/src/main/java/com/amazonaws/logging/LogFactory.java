@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,10 +23,15 @@ import java.util.HashMap;
  * for backwards compatibility.
  */
 public class LogFactory {
-    private static final String TAG = LogFactory.class.getSimpleName();
-    private static final String APACHE_COMMONS_LOGGING_LOGFACTORY = "org.apache.commons.logging.LogFactory";
 
-    private static Map<String, Log> logMap = new HashMap<String, Log>();
+    /**
+     * NOTE : Any changes to rename this class should ensure that this log tag is no longer than 23.
+     * Log tag longer than 23 will cause it to break on Android API level <= 23.
+     */
+    private static final String TAG = LogFactory.class.getSimpleName();
+    private static final Map<String, Log> logMap = new HashMap<>();
+
+    private static Level globalLogLevel = null;
 
     /**
      * Get the logger for the clazz
@@ -34,44 +39,76 @@ public class LogFactory {
      *
      * @return logger
      */
-    public static synchronized Log getLog(Class clazz) {
-        return getLog(clazz.getSimpleName());
+    public static synchronized Log getLog(Class<?> clazz) {
+        return getLog(getTruncatedLogTag(clazz.getSimpleName()));
     }
 
     /**
      * Get the logger for the string tag
-     * @param string the string tag
+     * @param logTag the string tag
      *
      * @return logger
      */
-    public static synchronized Log getLog(final String string) {
-        Log log = logMap.get(string);
-        if (log == null) {
-            if (checkApacheCommonsLoggingExists()) {
-                try {
-                    log = new ApacheCommonsLogging(string);
-                    logMap.put(string, log);
-                } catch (Exception e) {
-                    android.util.Log.w(TAG, "Could not create log from " + APACHE_COMMONS_LOGGING_LOGFACTORY, e);
-                }
-            }
-            if (log == null) {
-                log = new AndroidLog(string);
-                logMap.put(string, log);
-            }
+    public static synchronized Log getLog(String logTag) {
+        logTag = getTruncatedLogTag(logTag);
+
+        Log log = logMap.get(logTag);
+        if (log != null) {
+            return log;
         }
+
+        if (Environment.isJUnitTest()) {
+            log = new ConsoleLog(logTag);
+        } else {
+            log = new AndroidLog(logTag);
+        }
+        logMap.put(logTag, log);
         return log;
     }
 
-    private static boolean checkApacheCommonsLoggingExists() {
-        try {
-            Class<?> classObject = Class.forName(APACHE_COMMONS_LOGGING_LOGFACTORY);
-            return true;
-        } catch (ClassNotFoundException cnfe) {
-            return false;
-        } catch (Exception ex) {
-            android.util.Log.e(TAG, ex.getMessage());
-            return false;
+    public static void setLevel(Level level) {
+        globalLogLevel = level;
+    }
+
+    public static Level getLevel() {
+        return globalLogLevel;
+    }
+
+    /**
+     * Truncate log tag to be within 23 characters in length as required by Android on certain API levels.
+     *
+     * @param logTag Log tag to be truncated
+     * @return truncated log tag
+     */
+    private static String getTruncatedLogTag(String logTag) {
+        if (logTag.length() > 23) {
+            getLog(TAG).warn("Truncating log tag length as it exceed 23, " +
+                    "the limit imposed by Android on certain API Levels");
+            logTag = logTag.substring(0, 23);
+        }
+        return logTag;
+    }
+
+    public enum Level
+    {
+        ALL(Integer.MIN_VALUE),
+        TRACE(0),
+        DEBUG(1),
+        INFO(2),
+        WARN(3),
+        ERROR(4),
+        OFF(Integer.MAX_VALUE);
+
+        private final int value;
+
+        public int getValue()
+        {
+            return this.value;
+        }
+
+        Level(int value)
+        {
+            this.value = value;
         }
     }
 }

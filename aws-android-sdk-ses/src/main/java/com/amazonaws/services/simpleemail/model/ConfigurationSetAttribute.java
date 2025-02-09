@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ public enum ConfigurationSetAttribute {
 
     EventDestinations("eventDestinations"),
     TrackingOptions("trackingOptions"),
+    DeliveryOptions("deliveryOptions"),
     ReputationOptions("reputationOptions");
 
     private String value;
@@ -43,6 +44,7 @@ public enum ConfigurationSetAttribute {
         enumMap = new HashMap<String, ConfigurationSetAttribute>();
         enumMap.put("eventDestinations", EventDestinations);
         enumMap.put("trackingOptions", TrackingOptions);
+        enumMap.put("deliveryOptions", DeliveryOptions);
         enumMap.put("reputationOptions", ReputationOptions);
     }
 

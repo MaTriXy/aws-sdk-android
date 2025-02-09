@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,14 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * This method takes a user pool ID, and returns the signing certificate.
+ * This method takes a user pool ID, and returns the signing certificate. The
+ * issued certificate is valid for 10 years from the date of issue.
+ * </p>
+ * <p>
+ * Amazon Cognito issues and assigns a new signing certificate annually. This
+ * process returns a new value in the response to
+ * <code>GetSigningCertificate</code>, but doesn't invalidate the original
+ * certificate.
  * </p>
  */
 public class GetSigningCertificateRequest extends AmazonWebServiceRequest implements Serializable {

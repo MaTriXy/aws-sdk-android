@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ import java.io.Serializable;
 public class ReEncryptResult implements Serializable {
     /**
      * <p>
-     * The reencrypted data. When you use the HTTP API or the AWS CLI, the value
-     * is Base64-encdoded. Otherwise, it is not encoded.
+     * The reencrypted data. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -31,7 +32,7 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to originally encrypt the data.
+     * Unique identifier of the KMS key used to originally encrypt the data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -41,7 +42,9 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to reencrypt the data.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to reencrypt the data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -51,16 +54,41 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * The reencrypted data. When you use the HTTP API or the AWS CLI, the value
-     * is Base64-encdoded. Otherwise, it is not encoded.
+     * The encryption algorithm that was used to decrypt the ciphertext before
+     * it was reencrypted.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     */
+    private String sourceEncryptionAlgorithm;
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to reencrypt the data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     */
+    private String destinationEncryptionAlgorithm;
+
+    /**
+     * <p>
+     * The reencrypted data. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 6144<br/>
      *
      * @return <p>
-     *         The reencrypted data. When you use the HTTP API or the AWS CLI,
-     *         the value is Base64-encdoded. Otherwise, it is not encoded.
+     *         The reencrypted data. When you use the HTTP API or the Amazon Web
+     *         Services CLI, the value is Base64-encoded. Otherwise, it is not
+     *         Base64-encoded.
      *         </p>
      */
     public java.nio.ByteBuffer getCiphertextBlob() {
@@ -69,17 +97,18 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * The reencrypted data. When you use the HTTP API or the AWS CLI, the value
-     * is Base64-encdoded. Otherwise, it is not encoded.
+     * The reencrypted data. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 6144<br/>
      *
      * @param ciphertextBlob <p>
-     *            The reencrypted data. When you use the HTTP API or the AWS
-     *            CLI, the value is Base64-encdoded. Otherwise, it is not
-     *            encoded.
+     *            The reencrypted data. When you use the HTTP API or the Amazon
+     *            Web Services CLI, the value is Base64-encoded. Otherwise, it
+     *            is not Base64-encoded.
      *            </p>
      */
     public void setCiphertextBlob(java.nio.ByteBuffer ciphertextBlob) {
@@ -88,8 +117,9 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * The reencrypted data. When you use the HTTP API or the AWS CLI, the value
-     * is Base64-encdoded. Otherwise, it is not encoded.
+     * The reencrypted data. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -99,9 +129,9 @@ public class ReEncryptResult implements Serializable {
      * <b>Length: </b>1 - 6144<br/>
      *
      * @param ciphertextBlob <p>
-     *            The reencrypted data. When you use the HTTP API or the AWS
-     *            CLI, the value is Base64-encdoded. Otherwise, it is not
-     *            encoded.
+     *            The reencrypted data. When you use the HTTP API or the Amazon
+     *            Web Services CLI, the value is Base64-encoded. Otherwise, it
+     *            is not Base64-encoded.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -113,14 +143,15 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to originally encrypt the data.
+     * Unique identifier of the KMS key used to originally encrypt the data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         Unique identifier of the CMK used to originally encrypt the data.
+     *         Unique identifier of the KMS key used to originally encrypt the
+     *         data.
      *         </p>
      */
     public String getSourceKeyId() {
@@ -129,15 +160,15 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to originally encrypt the data.
+     * Unique identifier of the KMS key used to originally encrypt the data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param sourceKeyId <p>
-     *            Unique identifier of the CMK used to originally encrypt the
-     *            data.
+     *            Unique identifier of the KMS key used to originally encrypt
+     *            the data.
      *            </p>
      */
     public void setSourceKeyId(String sourceKeyId) {
@@ -146,7 +177,7 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to originally encrypt the data.
+     * Unique identifier of the KMS key used to originally encrypt the data.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -156,8 +187,8 @@ public class ReEncryptResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param sourceKeyId <p>
-     *            Unique identifier of the CMK used to originally encrypt the
-     *            data.
+     *            Unique identifier of the KMS key used to originally encrypt
+     *            the data.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -169,14 +200,18 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to reencrypt the data.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to reencrypt the data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         Unique identifier of the CMK used to reencrypt the data.
+     *         The Amazon Resource Name (<a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *         >key ARN</a>) of the KMS key that was used to reencrypt the data.
      *         </p>
      */
     public String getKeyId() {
@@ -185,14 +220,19 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to reencrypt the data.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to reencrypt the data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            Unique identifier of the CMK used to reencrypt the data.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the KMS key that was used to reencrypt the
+     *            data.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -201,7 +241,9 @@ public class ReEncryptResult implements Serializable {
 
     /**
      * <p>
-     * Unique identifier of the CMK used to reencrypt the data.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to reencrypt the data.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -211,13 +253,233 @@ public class ReEncryptResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            Unique identifier of the CMK used to reencrypt the data.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the KMS key that was used to reencrypt the
+     *            data.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public ReEncryptResult withKeyId(String keyId) {
         this.keyId = keyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to decrypt the ciphertext before
+     * it was reencrypted.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @return <p>
+     *         The encryption algorithm that was used to decrypt the ciphertext
+     *         before it was reencrypted.
+     *         </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public String getSourceEncryptionAlgorithm() {
+        return sourceEncryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to decrypt the ciphertext before
+     * it was reencrypted.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param sourceEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to decrypt the
+     *            ciphertext before it was reencrypted.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setSourceEncryptionAlgorithm(String sourceEncryptionAlgorithm) {
+        this.sourceEncryptionAlgorithm = sourceEncryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to decrypt the ciphertext before
+     * it was reencrypted.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param sourceEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to decrypt the
+     *            ciphertext before it was reencrypted.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public ReEncryptResult withSourceEncryptionAlgorithm(String sourceEncryptionAlgorithm) {
+        this.sourceEncryptionAlgorithm = sourceEncryptionAlgorithm;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to decrypt the ciphertext before
+     * it was reencrypted.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param sourceEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to decrypt the
+     *            ciphertext before it was reencrypted.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setSourceEncryptionAlgorithm(EncryptionAlgorithmSpec sourceEncryptionAlgorithm) {
+        this.sourceEncryptionAlgorithm = sourceEncryptionAlgorithm.toString();
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to decrypt the ciphertext before
+     * it was reencrypted.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param sourceEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to decrypt the
+     *            ciphertext before it was reencrypted.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public ReEncryptResult withSourceEncryptionAlgorithm(
+            EncryptionAlgorithmSpec sourceEncryptionAlgorithm) {
+        this.sourceEncryptionAlgorithm = sourceEncryptionAlgorithm.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to reencrypt the data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @return <p>
+     *         The encryption algorithm that was used to reencrypt the data.
+     *         </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public String getDestinationEncryptionAlgorithm() {
+        return destinationEncryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to reencrypt the data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param destinationEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to reencrypt the data.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setDestinationEncryptionAlgorithm(String destinationEncryptionAlgorithm) {
+        this.destinationEncryptionAlgorithm = destinationEncryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to reencrypt the data.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param destinationEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to reencrypt the data.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public ReEncryptResult withDestinationEncryptionAlgorithm(String destinationEncryptionAlgorithm) {
+        this.destinationEncryptionAlgorithm = destinationEncryptionAlgorithm;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to reencrypt the data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param destinationEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to reencrypt the data.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setDestinationEncryptionAlgorithm(
+            EncryptionAlgorithmSpec destinationEncryptionAlgorithm) {
+        this.destinationEncryptionAlgorithm = destinationEncryptionAlgorithm.toString();
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to reencrypt the data.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param destinationEncryptionAlgorithm <p>
+     *            The encryption algorithm that was used to reencrypt the data.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public ReEncryptResult withDestinationEncryptionAlgorithm(
+            EncryptionAlgorithmSpec destinationEncryptionAlgorithm) {
+        this.destinationEncryptionAlgorithm = destinationEncryptionAlgorithm.toString();
         return this;
     }
 
@@ -237,7 +499,11 @@ public class ReEncryptResult implements Serializable {
         if (getSourceKeyId() != null)
             sb.append("SourceKeyId: " + getSourceKeyId() + ",");
         if (getKeyId() != null)
-            sb.append("KeyId: " + getKeyId());
+            sb.append("KeyId: " + getKeyId() + ",");
+        if (getSourceEncryptionAlgorithm() != null)
+            sb.append("SourceEncryptionAlgorithm: " + getSourceEncryptionAlgorithm() + ",");
+        if (getDestinationEncryptionAlgorithm() != null)
+            sb.append("DestinationEncryptionAlgorithm: " + getDestinationEncryptionAlgorithm());
         sb.append("}");
         return sb.toString();
     }
@@ -252,6 +518,14 @@ public class ReEncryptResult implements Serializable {
         hashCode = prime * hashCode
                 + ((getSourceKeyId() == null) ? 0 : getSourceKeyId().hashCode());
         hashCode = prime * hashCode + ((getKeyId() == null) ? 0 : getKeyId().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getSourceEncryptionAlgorithm() == null) ? 0 : getSourceEncryptionAlgorithm()
+                        .hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getDestinationEncryptionAlgorithm() == null) ? 0
+                        : getDestinationEncryptionAlgorithm().hashCode());
         return hashCode;
     }
 
@@ -279,6 +553,19 @@ public class ReEncryptResult implements Serializable {
         if (other.getKeyId() == null ^ this.getKeyId() == null)
             return false;
         if (other.getKeyId() != null && other.getKeyId().equals(this.getKeyId()) == false)
+            return false;
+        if (other.getSourceEncryptionAlgorithm() == null
+                ^ this.getSourceEncryptionAlgorithm() == null)
+            return false;
+        if (other.getSourceEncryptionAlgorithm() != null
+                && other.getSourceEncryptionAlgorithm().equals(this.getSourceEncryptionAlgorithm()) == false)
+            return false;
+        if (other.getDestinationEncryptionAlgorithm() == null
+                ^ this.getDestinationEncryptionAlgorithm() == null)
+            return false;
+        if (other.getDestinationEncryptionAlgorithm() != null
+                && other.getDestinationEncryptionAlgorithm().equals(
+                        this.getDestinationEncryptionAlgorithm()) == false)
             return false;
         return true;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * Your request didn't pass one or more validation tests. For example, if the
- * transcription you're trying to delete doesn't exist or if it is in a
- * non-terminal state (for example, it's "in progress"). See the exception
- * <code>Message</code> field for more information.
+ * Your request didn't pass one or more validation tests. This can occur when
+ * the entity you're trying to delete doesn't exist or if it's in a non-terminal
+ * state (such as <code>IN PROGRESS</code>). See the exception message field for
+ * more information.
  * </p>
  */
 public class BadRequestException extends AmazonServiceException {

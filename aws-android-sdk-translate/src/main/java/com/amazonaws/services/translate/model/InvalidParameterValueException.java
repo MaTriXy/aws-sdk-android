@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The value of the parameter is invalid. Review the value of the parameter you
- * are using to correct it, and then retry your operation.
+ * The value of the parameter is not valid. Review the value of the parameter
+ * you are using to correct it, and then retry your operation.
  * </p>
  */
 public class InvalidParameterValueException extends AmazonServiceException {

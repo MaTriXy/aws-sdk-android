@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.transcribe.model.transform;
 
 import com.amazonaws.services.transcribe.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -29,6 +30,11 @@ class MediaJsonMarshaller {
             String mediaFileUri = media.getMediaFileUri();
             jsonWriter.name("MediaFileUri");
             jsonWriter.value(mediaFileUri);
+        }
+        if (media.getRedactedMediaFileUri() != null) {
+            String redactedMediaFileUri = media.getRedactedMediaFileUri();
+            jsonWriter.name("RedactedMediaFileUri");
+            jsonWriter.value(redactedMediaFileUri);
         }
         jsonWriter.endObject();
     }

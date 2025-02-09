@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,10 +35,10 @@ import com.amazonaws.services.comprehend.model.transform.*;
  * client are blocking, and will not return until the service call completes.
  * <p>
  * <p>
- * Amazon Comprehend is an AWS service for gaining insight into the content of
- * documents. Use these actions to determine the topics contained in your
- * documents, the topics they discuss, the predominant sentiment expressed in
- * them, the predominant language used, and more.
+ * Amazon Comprehend is an Amazon Web Services service for gaining insight into
+ * the content of documents. Use these actions to determine the topics contained
+ * in your documents, the topics they discuss, the predominant sentiment
+ * expressed in them, the predominant language used, and more.
  * </p>
  */
 public class AmazonComprehendClient extends AmazonWebServiceClient implements AmazonComprehend {
@@ -99,16 +99,27 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * Constructs a new client to invoke service methods on AmazonComprehend
      * using the specified AWS account credentials.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonComprehendClient client = new AmazonComprehendClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -125,16 +136,27 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials and client configuration
      * options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonComprehendClient client = new AmazonComprehendClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -154,16 +176,27 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * Constructs a new client to invoke service methods on AmazonComprehend
      * using the specified AWS account credentials provider.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonComprehendClient client = new AmazonComprehendClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -181,16 +214,27 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials provider and client
      * configuration options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonComprehendClient client = new AmazonComprehendClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -239,6 +283,28 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials provider, client
      * configuration options and request metric collector.
      * <p>
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonComprehendClient client = new AmazonComprehendClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
+     * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
      *
@@ -262,20 +328,25 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
     private void init() {
         jsonErrorUnmarshallers = new ArrayList<JsonErrorUnmarshaller>();
         jsonErrorUnmarshallers.add(new BatchSizeLimitExceededExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new ConcurrentModificationExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InternalServerExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidFilterExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new InvalidRequestExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new JobNotFoundExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new KmsKeyValidationExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new ResourceInUseExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new ResourceLimitExceededExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new ResourceNotFoundExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new ResourceUnavailableExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new TextSizeLimitExceededExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new TooManyRequestsExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new TooManyTagKeysExceptionUnmarshaller());
+        jsonErrorUnmarshallers.add(new TooManyTagsExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new UnsupportedLanguageExceptionUnmarshaller());
         jsonErrorUnmarshallers.add(new JsonErrorUnmarshaller());
 
         // calling this.setEndPoint(...) will also modify the signer accordingly
+        setServiceNameIntern("comprehend");
         this.setEndpoint("comprehend.us-east-1.amazonaws.com");
         this.endpointPrefix = "comprehend";
 
@@ -297,7 +368,7 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * Determines the dominant language of the input text for a batch of
      * documents. For a list of languages that Amazon Comprehend can detect, see
      * <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -351,8 +422,10 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
     /**
      * <p>
      * Inspects the text of a batch of documents for named entities and returns
-     * information about them. For more information about named entities, see
-     * <a>how-entities</a>
+     * information about them. For more information about named entities, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html">
+     * Entities</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectEntitiesRequest
@@ -515,7 +588,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * <p>
      * Inspects the text of a batch of documents for the syntax and part of
      * speech of the words in the document and returns information about them.
-     * For more information, see <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectSyntaxRequest
@@ -567,11 +642,248 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Inspects a batch of documents and returns a sentiment analysis for each
+     * entity identified in the documents.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param batchDetectTargetedSentimentRequest
+     * @return batchDetectTargetedSentimentResult The response from the
+     *         BatchDetectTargetedSentiment service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws BatchSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public BatchDetectTargetedSentimentResult batchDetectTargetedSentiment(
+            BatchDetectTargetedSentimentRequest batchDetectTargetedSentimentRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(batchDetectTargetedSentimentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<BatchDetectTargetedSentimentRequest> request = null;
+        Response<BatchDetectTargetedSentimentResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new BatchDetectTargetedSentimentRequestMarshaller()
+                        .marshall(batchDetectTargetedSentimentRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<BatchDetectTargetedSentimentResult, JsonUnmarshallerContext> unmarshaller = new BatchDetectTargetedSentimentResultJsonUnmarshaller();
+            JsonResponseHandler<BatchDetectTargetedSentimentResult> responseHandler = new JsonResponseHandler<BatchDetectTargetedSentimentResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new document classification request to analyze a single
+     * document in real-time, using a previously created and trained custom
+     * model and an endpoint.
+     * </p>
+     * <p>
+     * You can input plain text or you can upload a single-page input document
+     * (text, PDF, Word, or image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> that
+     * describes the errors.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
+     * </p>
+     * 
+     * @param classifyDocumentRequest
+     * @return classifyDocumentResult The response from the ClassifyDocument
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
+     * @throws TextSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ClassifyDocumentResult classifyDocument(ClassifyDocumentRequest classifyDocumentRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(classifyDocumentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ClassifyDocumentRequest> request = null;
+        Response<ClassifyDocumentResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ClassifyDocumentRequestMarshaller().marshall(classifyDocumentRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ClassifyDocumentResult, JsonUnmarshallerContext> unmarshaller = new ClassifyDocumentResultJsonUnmarshaller();
+            JsonResponseHandler<ClassifyDocumentResult> responseHandler = new JsonResponseHandler<ClassifyDocumentResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Analyzes input text for the presence of personally identifiable
+     * information (PII) and returns the labels of identified PII entity types
+     * such as name, address, bank account number, or phone number.
+     * </p>
+     * 
+     * @param containsPiiEntitiesRequest
+     * @return containsPiiEntitiesResult The response from the
+     *         ContainsPiiEntities service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ContainsPiiEntitiesResult containsPiiEntities(
+            ContainsPiiEntitiesRequest containsPiiEntitiesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(containsPiiEntitiesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ContainsPiiEntitiesRequest> request = null;
+        Response<ContainsPiiEntitiesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ContainsPiiEntitiesRequestMarshaller()
+                        .marshall(containsPiiEntitiesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ContainsPiiEntitiesResult, JsonUnmarshallerContext> unmarshaller = new ContainsPiiEntitiesResultJsonUnmarshaller();
+            JsonResponseHandler<ContainsPiiEntitiesResult> responseHandler = new JsonResponseHandler<ContainsPiiEntitiesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a dataset to upload training or test data for a model associated
+     * with a flywheel. For more information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createDatasetRequest
+     * @return createDatasetResult The response from the CreateDataset service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateDatasetResult createDataset(CreateDatasetRequest createDatasetRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createDatasetRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateDatasetRequest> request = null;
+        Response<CreateDatasetResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateDatasetRequestMarshaller().marshall(createDatasetRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateDatasetResult, JsonUnmarshallerContext> unmarshaller = new CreateDatasetResultJsonUnmarshaller();
+            JsonResponseHandler<CreateDatasetResult> responseHandler = new JsonResponseHandler<CreateDatasetResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Creates a new document classifier that you can use to categorize
-     * documents. To create a classifier you provide a set of training documents
-     * that labeled with the categories that you want to use. After the
-     * classifier is trained you can use it to categorize a set of labeled
-     * documents into the categories.
+     * documents. To create a classifier, you provide a set of training
+     * documents that are labeled with the categories that you want to use. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/training-classifier-model.html"
+     * >Training classifier models</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param createDocumentClassifierRequest
@@ -580,9 +892,11 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -625,9 +939,66 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Creates a model-specific endpoint for synchronous inference for a
+     * previously trained custom model For information about endpoints, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param createEndpointRequest
+     * @return createEndpointResult The response from the CreateEndpoint service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws TooManyRequestsException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateEndpointResult createEndpoint(CreateEndpointRequest createEndpointRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateEndpointRequest> request = null;
+        Response<CreateEndpointResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateEndpointRequestMarshaller().marshall(createEndpointRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateEndpointResult, JsonUnmarshallerContext> unmarshaller = new CreateEndpointResultJsonUnmarshaller();
+            JsonResponseHandler<CreateEndpointResult> responseHandler = new JsonResponseHandler<CreateEndpointResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Creates an entity recognizer using submitted files. After your
      * <code>CreateEntityRecognizer</code> request is submitted, you can check
-     * job status using the API.
+     * job status using the <code>DescribeEntityRecognizer</code> API.
      * </p>
      * 
      * @param createEntityRecognizerRequest
@@ -636,9 +1007,11 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -668,6 +1041,83 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<CreateEntityRecognizerResult, JsonUnmarshallerContext> unmarshaller = new CreateEntityRecognizerResultJsonUnmarshaller();
             JsonResponseHandler<CreateEntityRecognizerResult> responseHandler = new JsonResponseHandler<CreateEntityRecognizerResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * A flywheel is an Amazon Web Services resource that orchestrates the
+     * ongoing training of a model for custom classification or custom entity
+     * recognition. You can create a flywheel to start with an existing trained
+     * model, or Comprehend can create and train a new model.
+     * </p>
+     * <p>
+     * When you create the flywheel, Comprehend creates a data lake in your
+     * account. The data lake holds the training data and test data for all
+     * versions of the model.
+     * </p>
+     * <p>
+     * To use a flywheel with an existing trained model, you specify the active
+     * model version. Comprehend copies the model's training data and test data
+     * into the flywheel's data lake.
+     * </p>
+     * <p>
+     * To use the flywheel with a new model, you need to provide a dataset for
+     * training data (and optional test data) when you create the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createFlywheelRequest
+     * @return createFlywheelResult The response from the CreateFlywheel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateFlywheelResult createFlywheel(CreateFlywheelRequest createFlywheelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createFlywheelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateFlywheelRequest> request = null;
+        Response<CreateFlywheelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateFlywheelRequestMarshaller().marshall(createFlywheelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateFlywheelResult, JsonUnmarshallerContext> unmarshaller = new CreateFlywheelResultJsonUnmarshaller();
+            JsonResponseHandler<CreateFlywheelResult> responseHandler = new JsonResponseHandler<CreateFlywheelResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -746,6 +1196,60 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Deletes a model-specific endpoint for a previously-trained custom model.
+     * All endpoints must be deleted in order for the model to be deleted. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param deleteEndpointRequest
+     * @return deleteEndpointResult The response from the DeleteEndpoint service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DeleteEndpointResult deleteEndpoint(DeleteEndpointRequest deleteEndpointRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteEndpointRequest> request = null;
+        Response<DeleteEndpointResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteEndpointRequestMarshaller().marshall(deleteEndpointRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteEndpointResult, JsonUnmarshallerContext> unmarshaller = new DeleteEndpointResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteEndpointResult> responseHandler = new JsonResponseHandler<DeleteEndpointResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Deletes an entity recognizer.
      * </p>
      * <p>
@@ -798,6 +1302,166 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<DeleteEntityRecognizerResult, JsonUnmarshallerContext> unmarshaller = new DeleteEntityRecognizerResultJsonUnmarshaller();
             JsonResponseHandler<DeleteEntityRecognizerResult> responseHandler = new JsonResponseHandler<DeleteEntityRecognizerResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a flywheel. When you delete the flywheel, Amazon Comprehend does
+     * not delete the data lake or the model associated with the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param deleteFlywheelRequest
+     * @return deleteFlywheelResult The response from the DeleteFlywheel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DeleteFlywheelResult deleteFlywheel(DeleteFlywheelRequest deleteFlywheelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteFlywheelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteFlywheelRequest> request = null;
+        Response<DeleteFlywheelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteFlywheelRequestMarshaller().marshall(deleteFlywheelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteFlywheelResult, JsonUnmarshallerContext> unmarshaller = new DeleteFlywheelResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteFlywheelResult> responseHandler = new JsonResponseHandler<DeleteFlywheelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a resource-based policy that is attached to a custom model.
+     * </p>
+     * 
+     * @param deleteResourcePolicyRequest
+     * @return deleteResourcePolicyResult The response from the
+     *         DeleteResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DeleteResourcePolicyResult deleteResourcePolicy(
+            DeleteResourcePolicyRequest deleteResourcePolicyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteResourcePolicyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteResourcePolicyRequest> request = null;
+        Response<DeleteResourcePolicyResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteResourcePolicyRequestMarshaller()
+                        .marshall(deleteResourcePolicyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteResourcePolicyResult, JsonUnmarshallerContext> unmarshaller = new DeleteResourcePolicyResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteResourcePolicyResult> responseHandler = new JsonResponseHandler<DeleteResourcePolicyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Returns information about the dataset that you specify. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeDatasetRequest
+     * @return describeDatasetResult The response from the DescribeDataset
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeDatasetResult describeDataset(DescribeDatasetRequest describeDatasetRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeDatasetRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeDatasetRequest> request = null;
+        Response<DescribeDatasetResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeDatasetRequestMarshaller().marshall(describeDatasetRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeDatasetResult, JsonUnmarshallerContext> unmarshaller = new DescribeDatasetResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeDatasetResult> responseHandler = new JsonResponseHandler<DescribeDatasetResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -969,6 +1633,59 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Gets the properties associated with a specific endpoint. Use this
+     * operation to get the status of an endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param describeEndpointRequest
+     * @return describeEndpointResult The response from the DescribeEndpoint
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeEndpointResult describeEndpoint(DescribeEndpointRequest describeEndpointRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeEndpointRequest> request = null;
+        Response<DescribeEndpointResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeEndpointRequestMarshaller().marshall(describeEndpointRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeEndpointResult, JsonUnmarshallerContext> unmarshaller = new DescribeEndpointResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeEndpointResult> responseHandler = new JsonResponseHandler<DescribeEndpointResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Gets the properties associated with an entities detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -1075,6 +1792,165 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Gets the status and details of an events detection job.
+     * </p>
+     * 
+     * @param describeEventsDetectionJobRequest
+     * @return describeEventsDetectionJobResult The response from the
+     *         DescribeEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeEventsDetectionJobResult describeEventsDetectionJob(
+            DescribeEventsDetectionJobRequest describeEventsDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeEventsDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeEventsDetectionJobRequest> request = null;
+        Response<DescribeEventsDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeEventsDetectionJobRequestMarshaller()
+                        .marshall(describeEventsDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeEventsDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new DescribeEventsDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeEventsDetectionJobResult> responseHandler = new JsonResponseHandler<DescribeEventsDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides configuration information about the flywheel. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelRequest
+     * @return describeFlywheelResult The response from the DescribeFlywheel
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeFlywheelResult describeFlywheel(DescribeFlywheelRequest describeFlywheelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeFlywheelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeFlywheelRequest> request = null;
+        Response<DescribeFlywheelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeFlywheelRequestMarshaller().marshall(describeFlywheelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeFlywheelResult, JsonUnmarshallerContext> unmarshaller = new DescribeFlywheelResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeFlywheelResult> responseHandler = new JsonResponseHandler<DescribeFlywheelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Retrieve the configuration properties of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelIterationRequest
+     * @return describeFlywheelIterationResult The response from the
+     *         DescribeFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeFlywheelIterationResult describeFlywheelIteration(
+            DescribeFlywheelIterationRequest describeFlywheelIterationRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeFlywheelIterationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeFlywheelIterationRequest> request = null;
+        Response<DescribeFlywheelIterationResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeFlywheelIterationRequestMarshaller()
+                        .marshall(describeFlywheelIterationRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeFlywheelIterationResult, JsonUnmarshallerContext> unmarshaller = new DescribeFlywheelIterationResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeFlywheelIterationResult> responseHandler = new JsonResponseHandler<DescribeFlywheelIterationResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Gets the properties associated with a key phrases detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -1128,6 +2004,111 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Gets the properties associated with a PII entities detection job. For
+     * example, you can use this operation to get the job status.
+     * </p>
+     * 
+     * @param describePiiEntitiesDetectionJobRequest
+     * @return describePiiEntitiesDetectionJobResult The response from the
+     *         DescribePiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribePiiEntitiesDetectionJobResult describePiiEntitiesDetectionJob(
+            DescribePiiEntitiesDetectionJobRequest describePiiEntitiesDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describePiiEntitiesDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribePiiEntitiesDetectionJobRequest> request = null;
+        Response<DescribePiiEntitiesDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribePiiEntitiesDetectionJobRequestMarshaller()
+                        .marshall(describePiiEntitiesDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribePiiEntitiesDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new DescribePiiEntitiesDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<DescribePiiEntitiesDetectionJobResult> responseHandler = new JsonResponseHandler<DescribePiiEntitiesDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets the details of a resource-based policy that is attached to a custom
+     * model, including the JSON body of the policy.
+     * </p>
+     * 
+     * @param describeResourcePolicyRequest
+     * @return describeResourcePolicyResult The response from the
+     *         DescribeResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeResourcePolicyResult describeResourcePolicy(
+            DescribeResourcePolicyRequest describeResourcePolicyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeResourcePolicyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeResourcePolicyRequest> request = null;
+        Response<DescribeResourcePolicyResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeResourcePolicyRequestMarshaller()
+                        .marshall(describeResourcePolicyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeResourcePolicyResult, JsonUnmarshallerContext> unmarshaller = new DescribeResourcePolicyResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeResourcePolicyResult> responseHandler = new JsonResponseHandler<DescribeResourcePolicyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Gets the properties associated with a sentiment detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -1168,6 +2149,59 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<DescribeSentimentDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new DescribeSentimentDetectionJobResultJsonUnmarshaller();
             JsonResponseHandler<DescribeSentimentDetectionJobResult> responseHandler = new JsonResponseHandler<DescribeSentimentDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets the properties associated with a targeted sentiment detection job.
+     * Use this operation to get the status of the job.
+     * </p>
+     * 
+     * @param describeTargetedSentimentDetectionJobRequest
+     * @return describeTargetedSentimentDetectionJobResult The response from the
+     *         DescribeTargetedSentimentDetectionJob service method, as returned
+     *         by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeTargetedSentimentDetectionJobResult describeTargetedSentimentDetectionJob(
+            DescribeTargetedSentimentDetectionJobRequest describeTargetedSentimentDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeTargetedSentimentDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeTargetedSentimentDetectionJobRequest> request = null;
+        Response<DescribeTargetedSentimentDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeTargetedSentimentDetectionJobRequestMarshaller()
+                        .marshall(describeTargetedSentimentDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeTargetedSentimentDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new DescribeTargetedSentimentDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeTargetedSentimentDetectionJobResult> responseHandler = new JsonResponseHandler<DescribeTargetedSentimentDetectionJobResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -1236,7 +2270,7 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * <p>
      * Determines the dominant language of the input text. For a list of
      * languages that Amazon Comprehend can detect, see <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -1288,14 +2322,39 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Inspects text for named entities, and returns information about them. For
-     * more information, about named entities, see <a>how-entities</a>.
+     * Detects named entities in input text when you use the pre-trained model.
+     * Detects custom entities if you have a custom entity recognition model.
+     * </p>
+     * <p>
+     * When detecting named entities using the pre-trained model, use plain text
+     * as the input. For more information about named entities, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html"
+     * >Entities</a> in the Comprehend Developer Guide.
+     * </p>
+     * <p>
+     * When you use a custom entity recognition model, you can input plain text
+     * or you can upload a single-page input document (text, PDF, Word, or
+     * image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> for
+     * each error.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
      * </p>
      * 
      * @param detectEntitiesRequest
      * @return detectEntitiesResult The response from the DetectEntities service
      *         method, as returned by Amazon Comprehend.
      * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
      * @throws TextSizeLimitExceededException
      * @throws UnsupportedLanguageException
      * @throws InternalServerException
@@ -1387,6 +2446,58 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Inspects the input text for entities that contain personally identifiable
+     * information (PII) and returns information about them.
+     * </p>
+     * 
+     * @param detectPiiEntitiesRequest
+     * @return detectPiiEntitiesResult The response from the DetectPiiEntities
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DetectPiiEntitiesResult detectPiiEntities(
+            DetectPiiEntitiesRequest detectPiiEntitiesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(detectPiiEntitiesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DetectPiiEntitiesRequest> request = null;
+        Response<DetectPiiEntitiesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DetectPiiEntitiesRequestMarshaller()
+                        .marshall(detectPiiEntitiesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DetectPiiEntitiesResult, JsonUnmarshallerContext> unmarshaller = new DetectPiiEntitiesResultJsonUnmarshaller();
+            JsonResponseHandler<DetectPiiEntitiesResult> responseHandler = new JsonResponseHandler<DetectPiiEntitiesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Inspects text and returns an inference of the prevailing sentiment (
      * <code>POSITIVE</code>, <code>NEUTRAL</code>, <code>MIXED</code>, or
      * <code>NEGATIVE</code>).
@@ -1439,7 +2550,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
     /**
      * <p>
      * Inspects text for syntax and the part of speech of words in the document.
-     * For more information, <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param detectSyntaxRequest
@@ -1475,6 +2588,182 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<DetectSyntaxResult, JsonUnmarshallerContext> unmarshaller = new DetectSyntaxResultJsonUnmarshaller();
             JsonResponseHandler<DetectSyntaxResult> responseHandler = new JsonResponseHandler<DetectSyntaxResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Inspects the input text and returns a sentiment analysis for each entity
+     * identified in the text.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param detectTargetedSentimentRequest
+     * @return detectTargetedSentimentResult The response from the
+     *         DetectTargetedSentiment service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DetectTargetedSentimentResult detectTargetedSentiment(
+            DetectTargetedSentimentRequest detectTargetedSentimentRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(detectTargetedSentimentRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DetectTargetedSentimentRequest> request = null;
+        Response<DetectTargetedSentimentResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DetectTargetedSentimentRequestMarshaller()
+                        .marshall(detectTargetedSentimentRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DetectTargetedSentimentResult, JsonUnmarshallerContext> unmarshaller = new DetectTargetedSentimentResultJsonUnmarshaller();
+            JsonResponseHandler<DetectTargetedSentimentResult> responseHandler = new JsonResponseHandler<DetectTargetedSentimentResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new custom model that replicates a source custom model that you
+     * import. The source model can be in your Amazon Web Services account or
+     * another one.
+     * </p>
+     * <p>
+     * If the source model is in another Amazon Web Services account, then it
+     * must have a resource-based policy that authorizes you to import it.
+     * </p>
+     * <p>
+     * The source model must be in the same Amazon Web Services Region that
+     * you're using when you import. You can't import a model that's in a
+     * different Region.
+     * </p>
+     * 
+     * @param importModelRequest
+     * @return importModelResult The response from the ImportModel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws ResourceInUseException
+     * @throws ResourceUnavailableException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws KmsKeyValidationException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ImportModelResult importModel(ImportModelRequest importModelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(importModelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ImportModelRequest> request = null;
+        Response<ImportModelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ImportModelRequestMarshaller().marshall(importModelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ImportModelResult, JsonUnmarshallerContext> unmarshaller = new ImportModelResultJsonUnmarshaller();
+            JsonResponseHandler<ImportModelResult> responseHandler = new JsonResponseHandler<ImportModelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * List the datasets that you have configured in this Region. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listDatasetsRequest
+     * @return listDatasetsResult The response from the ListDatasets service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListDatasetsResult listDatasets(ListDatasetsRequest listDatasetsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listDatasetsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListDatasetsRequest> request = null;
+        Response<ListDatasetsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListDatasetsRequestMarshaller().marshall(listDatasetsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListDatasetsResult, JsonUnmarshallerContext> unmarshaller = new ListDatasetsResultJsonUnmarshaller();
+            JsonResponseHandler<ListDatasetsResult> responseHandler = new JsonResponseHandler<ListDatasetsResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -1528,6 +2817,58 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<ListDocumentClassificationJobsResult, JsonUnmarshallerContext> unmarshaller = new ListDocumentClassificationJobsResultJsonUnmarshaller();
             JsonResponseHandler<ListDocumentClassificationJobsResult> responseHandler = new JsonResponseHandler<ListDocumentClassificationJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets a list of summaries of the document classifiers that you have
+     * created
+     * </p>
+     * 
+     * @param listDocumentClassifierSummariesRequest
+     * @return listDocumentClassifierSummariesResult The response from the
+     *         ListDocumentClassifierSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListDocumentClassifierSummariesResult listDocumentClassifierSummaries(
+            ListDocumentClassifierSummariesRequest listDocumentClassifierSummariesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listDocumentClassifierSummariesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListDocumentClassifierSummariesRequest> request = null;
+        Response<ListDocumentClassifierSummariesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListDocumentClassifierSummariesRequestMarshaller()
+                        .marshall(listDocumentClassifierSummariesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListDocumentClassifierSummariesResult, JsonUnmarshallerContext> unmarshaller = new ListDocumentClassifierSummariesResultJsonUnmarshaller();
+            JsonResponseHandler<ListDocumentClassifierSummariesResult> responseHandler = new JsonResponseHandler<ListDocumentClassifierSummariesResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -1646,6 +2987,57 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Gets a list of all existing endpoints that you've created. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param listEndpointsRequest
+     * @return listEndpointsResult The response from the ListEndpoints service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListEndpointsResult listEndpoints(ListEndpointsRequest listEndpointsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listEndpointsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListEndpointsRequest> request = null;
+        Response<ListEndpointsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListEndpointsRequestMarshaller().marshall(listEndpointsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListEndpointsResult, JsonUnmarshallerContext> unmarshaller = new ListEndpointsResultJsonUnmarshaller();
+            JsonResponseHandler<ListEndpointsResult> responseHandler = new JsonResponseHandler<ListEndpointsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Gets a list of the entity detection jobs that you have submitted.
      * </p>
      * 
@@ -1685,6 +3077,58 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<ListEntitiesDetectionJobsResult, JsonUnmarshallerContext> unmarshaller = new ListEntitiesDetectionJobsResultJsonUnmarshaller();
             JsonResponseHandler<ListEntitiesDetectionJobsResult> responseHandler = new JsonResponseHandler<ListEntitiesDetectionJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets a list of summaries for the entity recognizers that you have
+     * created.
+     * </p>
+     * 
+     * @param listEntityRecognizerSummariesRequest
+     * @return listEntityRecognizerSummariesResult The response from the
+     *         ListEntityRecognizerSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListEntityRecognizerSummariesResult listEntityRecognizerSummaries(
+            ListEntityRecognizerSummariesRequest listEntityRecognizerSummariesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listEntityRecognizerSummariesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListEntityRecognizerSummariesRequest> request = null;
+        Response<ListEntityRecognizerSummariesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListEntityRecognizerSummariesRequestMarshaller()
+                        .marshall(listEntityRecognizerSummariesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListEntityRecognizerSummariesResult, JsonUnmarshallerContext> unmarshaller = new ListEntityRecognizerSummariesResultJsonUnmarshaller();
+            JsonResponseHandler<ListEntityRecognizerSummariesResult> responseHandler = new JsonResponseHandler<ListEntityRecognizerSummariesResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -1758,6 +3202,163 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Gets a list of the events detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listEventsDetectionJobsRequest
+     * @return listEventsDetectionJobsResult The response from the
+     *         ListEventsDetectionJobs service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListEventsDetectionJobsResult listEventsDetectionJobs(
+            ListEventsDetectionJobsRequest listEventsDetectionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listEventsDetectionJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListEventsDetectionJobsRequest> request = null;
+        Response<ListEventsDetectionJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListEventsDetectionJobsRequestMarshaller()
+                        .marshall(listEventsDetectionJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListEventsDetectionJobsResult, JsonUnmarshallerContext> unmarshaller = new ListEventsDetectionJobsResultJsonUnmarshaller();
+            JsonResponseHandler<ListEventsDetectionJobsResult> responseHandler = new JsonResponseHandler<ListEventsDetectionJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Information about the history of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listFlywheelIterationHistoryRequest
+     * @return listFlywheelIterationHistoryResult The response from the
+     *         ListFlywheelIterationHistory service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListFlywheelIterationHistoryResult listFlywheelIterationHistory(
+            ListFlywheelIterationHistoryRequest listFlywheelIterationHistoryRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listFlywheelIterationHistoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListFlywheelIterationHistoryRequest> request = null;
+        Response<ListFlywheelIterationHistoryResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListFlywheelIterationHistoryRequestMarshaller()
+                        .marshall(listFlywheelIterationHistoryRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListFlywheelIterationHistoryResult, JsonUnmarshallerContext> unmarshaller = new ListFlywheelIterationHistoryResultJsonUnmarshaller();
+            JsonResponseHandler<ListFlywheelIterationHistoryResult> responseHandler = new JsonResponseHandler<ListFlywheelIterationHistoryResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets a list of the flywheels that you have created.
+     * </p>
+     * 
+     * @param listFlywheelsRequest
+     * @return listFlywheelsResult The response from the ListFlywheels service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListFlywheelsResult listFlywheels(ListFlywheelsRequest listFlywheelsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listFlywheelsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListFlywheelsRequest> request = null;
+        Response<ListFlywheelsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListFlywheelsRequestMarshaller().marshall(listFlywheelsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListFlywheelsResult, JsonUnmarshallerContext> unmarshaller = new ListFlywheelsResultJsonUnmarshaller();
+            JsonResponseHandler<ListFlywheelsResult> responseHandler = new JsonResponseHandler<ListFlywheelsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Get a list of key phrase detection jobs that you have submitted.
      * </p>
      * 
@@ -1797,6 +3398,58 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<ListKeyPhrasesDetectionJobsResult, JsonUnmarshallerContext> unmarshaller = new ListKeyPhrasesDetectionJobsResultJsonUnmarshaller();
             JsonResponseHandler<ListKeyPhrasesDetectionJobsResult> responseHandler = new JsonResponseHandler<ListKeyPhrasesDetectionJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets a list of the PII entity detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listPiiEntitiesDetectionJobsRequest
+     * @return listPiiEntitiesDetectionJobsResult The response from the
+     *         ListPiiEntitiesDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListPiiEntitiesDetectionJobsResult listPiiEntitiesDetectionJobs(
+            ListPiiEntitiesDetectionJobsRequest listPiiEntitiesDetectionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listPiiEntitiesDetectionJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListPiiEntitiesDetectionJobsRequest> request = null;
+        Response<ListPiiEntitiesDetectionJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListPiiEntitiesDetectionJobsRequestMarshaller()
+                        .marshall(listPiiEntitiesDetectionJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListPiiEntitiesDetectionJobsResult, JsonUnmarshallerContext> unmarshaller = new ListPiiEntitiesDetectionJobsResultJsonUnmarshaller();
+            JsonResponseHandler<ListPiiEntitiesDetectionJobsResult> responseHandler = new JsonResponseHandler<ListPiiEntitiesDetectionJobsResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);
@@ -1862,6 +3515,109 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Lists all tags associated with a given Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return listTagsForResourceResult The response from the
+     *         ListTagsForResource service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListTagsForResourceResult listTagsForResource(
+            ListTagsForResourceRequest listTagsForResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listTagsForResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListTagsForResourceRequest> request = null;
+        Response<ListTagsForResourceResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListTagsForResourceRequestMarshaller()
+                        .marshall(listTagsForResourceRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListTagsForResourceResult, JsonUnmarshallerContext> unmarshaller = new ListTagsForResourceResultJsonUnmarshaller();
+            JsonResponseHandler<ListTagsForResourceResult> responseHandler = new JsonResponseHandler<ListTagsForResourceResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets a list of targeted sentiment detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listTargetedSentimentDetectionJobsRequest
+     * @return listTargetedSentimentDetectionJobsResult The response from the
+     *         ListTargetedSentimentDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListTargetedSentimentDetectionJobsResult listTargetedSentimentDetectionJobs(
+            ListTargetedSentimentDetectionJobsRequest listTargetedSentimentDetectionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listTargetedSentimentDetectionJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListTargetedSentimentDetectionJobsRequest> request = null;
+        Response<ListTargetedSentimentDetectionJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListTargetedSentimentDetectionJobsRequestMarshaller()
+                        .marshall(listTargetedSentimentDetectionJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListTargetedSentimentDetectionJobsResult, JsonUnmarshallerContext> unmarshaller = new ListTargetedSentimentDetectionJobsResultJsonUnmarshaller();
+            JsonResponseHandler<ListTargetedSentimentDetectionJobsResult> responseHandler = new JsonResponseHandler<ListTargetedSentimentDetectionJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Gets a list of the topic detection jobs that you have submitted.
      * </p>
      * 
@@ -1914,8 +3670,62 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Starts an asynchronous document classification job. Use the operation to
-     * track the progress of the job.
+     * Attaches a resource-based policy to a custom model. You can use this
+     * policy to authorize an entity in another Amazon Web Services account to
+     * import the custom model, which replicates it in Amazon Comprehend in
+     * their account.
+     * </p>
+     * 
+     * @param putResourcePolicyRequest
+     * @return putResourcePolicyResult The response from the PutResourcePolicy
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public PutResourcePolicyResult putResourcePolicy(
+            PutResourcePolicyRequest putResourcePolicyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(putResourcePolicyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PutResourcePolicyRequest> request = null;
+        Response<PutResourcePolicyResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PutResourcePolicyRequestMarshaller()
+                        .marshall(putResourcePolicyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<PutResourcePolicyResult, JsonUnmarshallerContext> unmarshaller = new PutResourcePolicyResultJsonUnmarshaller();
+            JsonResponseHandler<PutResourcePolicyResult> responseHandler = new JsonResponseHandler<PutResourcePolicyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Starts an asynchronous document classification job. Use the
+     * <code>DescribeDocumentClassificationJob</code> operation to track the
+     * progress of the job.
      * </p>
      * 
      * @param startDocumentClassificationJobRequest
@@ -1926,6 +3736,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -1978,6 +3791,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      *         Amazon Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2038,6 +3854,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2080,6 +3899,117 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Starts an asynchronous event detection job for a collection of documents.
+     * </p>
+     * 
+     * @param startEventsDetectionJobRequest
+     * @return startEventsDetectionJobResult The response from the
+     *         StartEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartEventsDetectionJobResult startEventsDetectionJob(
+            StartEventsDetectionJobRequest startEventsDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startEventsDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartEventsDetectionJobRequest> request = null;
+        Response<StartEventsDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartEventsDetectionJobRequestMarshaller()
+                        .marshall(startEventsDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartEventsDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StartEventsDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StartEventsDetectionJobResult> responseHandler = new JsonResponseHandler<StartEventsDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Start the flywheel iteration.This operation uses any new datasets to
+     * train a new model version. For more information about flywheels, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param startFlywheelIterationRequest
+     * @return startFlywheelIterationResult The response from the
+     *         StartFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartFlywheelIterationResult startFlywheelIteration(
+            StartFlywheelIterationRequest startFlywheelIterationRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startFlywheelIterationRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartFlywheelIterationRequest> request = null;
+        Response<StartFlywheelIterationResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartFlywheelIterationRequestMarshaller()
+                        .marshall(startFlywheelIterationRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartFlywheelIterationResult, JsonUnmarshallerContext> unmarshaller = new StartFlywheelIterationResultJsonUnmarshaller();
+            JsonResponseHandler<StartFlywheelIterationResult> responseHandler = new JsonResponseHandler<StartFlywheelIterationResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Starts an asynchronous key phrase detection job for a collection of
      * documents. Use the operation to track the status of a job.
      * </p>
@@ -2090,6 +4020,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2132,8 +4065,63 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Starts an asynchronous PII entity detection job for a collection of
+     * documents.
+     * </p>
+     * 
+     * @param startPiiEntitiesDetectionJobRequest
+     * @return startPiiEntitiesDetectionJobResult The response from the
+     *         StartPiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartPiiEntitiesDetectionJobResult startPiiEntitiesDetectionJob(
+            StartPiiEntitiesDetectionJobRequest startPiiEntitiesDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startPiiEntitiesDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartPiiEntitiesDetectionJobRequest> request = null;
+        Response<StartPiiEntitiesDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartPiiEntitiesDetectionJobRequestMarshaller()
+                        .marshall(startPiiEntitiesDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartPiiEntitiesDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StartPiiEntitiesDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StartPiiEntitiesDetectionJobResult> responseHandler = new JsonResponseHandler<StartPiiEntitiesDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Starts an asynchronous sentiment detection job for a collection of
-     * documents. use the operation to track the status of a job.
+     * documents. Use the operation to track the status of a job.
      * </p>
      * 
      * @param startSentimentDetectionJobRequest
@@ -2142,6 +4130,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2184,6 +4175,62 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Starts an asynchronous targeted sentiment detection job for a collection
+     * of documents. Use the <code>DescribeTargetedSentimentDetectionJob</code>
+     * operation to track the status of a job.
+     * </p>
+     * 
+     * @param startTargetedSentimentDetectionJobRequest
+     * @return startTargetedSentimentDetectionJobResult The response from the
+     *         StartTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartTargetedSentimentDetectionJobResult startTargetedSentimentDetectionJob(
+            StartTargetedSentimentDetectionJobRequest startTargetedSentimentDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startTargetedSentimentDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartTargetedSentimentDetectionJobRequest> request = null;
+        Response<StartTargetedSentimentDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartTargetedSentimentDetectionJobRequestMarshaller()
+                        .marshall(startTargetedSentimentDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartTargetedSentimentDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StartTargetedSentimentDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StartTargetedSentimentDetectionJobResult> responseHandler = new JsonResponseHandler<StartTargetedSentimentDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Starts an asynchronous topic detection job. Use the
      * <code>DescribeTopicDetectionJob</code> operation to track the status of a
      * job.
@@ -2195,6 +4242,9 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2371,6 +4421,57 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Stops an events detection job in progress.
+     * </p>
+     * 
+     * @param stopEventsDetectionJobRequest
+     * @return stopEventsDetectionJobResult The response from the
+     *         StopEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StopEventsDetectionJobResult stopEventsDetectionJob(
+            StopEventsDetectionJobRequest stopEventsDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(stopEventsDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StopEventsDetectionJobRequest> request = null;
+        Response<StopEventsDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StopEventsDetectionJobRequestMarshaller()
+                        .marshall(stopEventsDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StopEventsDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StopEventsDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StopEventsDetectionJobResult> responseHandler = new JsonResponseHandler<StopEventsDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Stops a key phrases detection job in progress.
      * </p>
      * <p>
@@ -2438,10 +4539,61 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
+     * Stops a PII entities detection job in progress.
+     * </p>
+     * 
+     * @param stopPiiEntitiesDetectionJobRequest
+     * @return stopPiiEntitiesDetectionJobResult The response from the
+     *         StopPiiEntitiesDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StopPiiEntitiesDetectionJobResult stopPiiEntitiesDetectionJob(
+            StopPiiEntitiesDetectionJobRequest stopPiiEntitiesDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(stopPiiEntitiesDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StopPiiEntitiesDetectionJobRequest> request = null;
+        Response<StopPiiEntitiesDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StopPiiEntitiesDetectionJobRequestMarshaller()
+                        .marshall(stopPiiEntitiesDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StopPiiEntitiesDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StopPiiEntitiesDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StopPiiEntitiesDetectionJobResult> responseHandler = new JsonResponseHandler<StopPiiEntitiesDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
      * Stops a sentiment detection job in progress.
      * </p>
      * <p>
-     * If the job state is <code>IN_PROGRESS</code> the job is marked for
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
      * termination and put into the <code>STOP_REQUESTED</code> state. If the
      * job completes before it can be stopped, it is put into the
      * <code>COMPLETED</code> state; otherwise the job is be stopped and put
@@ -2492,6 +4644,401 @@ public class AmazonComprehendClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<StopSentimentDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StopSentimentDetectionJobResultJsonUnmarshaller();
             JsonResponseHandler<StopSentimentDetectionJobResult> responseHandler = new JsonResponseHandler<StopSentimentDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Stops a targeted sentiment detection job in progress.
+     * </p>
+     * <p>
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * job completes before it can be stopped, it is put into the
+     * <code>COMPLETED</code> state; otherwise the job is be stopped and put
+     * into the <code>STOPPED</code> state.
+     * </p>
+     * <p>
+     * If the job is in the <code>COMPLETED</code> or <code>FAILED</code> state
+     * when you call the <code>StopDominantLanguageDetectionJob</code>
+     * operation, the operation returns a 400 Internal Request Exception.
+     * </p>
+     * <p>
+     * When a job is stopped, any documents already processed are written to the
+     * output location.
+     * </p>
+     * 
+     * @param stopTargetedSentimentDetectionJobRequest
+     * @return stopTargetedSentimentDetectionJobResult The response from the
+     *         StopTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StopTargetedSentimentDetectionJobResult stopTargetedSentimentDetectionJob(
+            StopTargetedSentimentDetectionJobRequest stopTargetedSentimentDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(stopTargetedSentimentDetectionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StopTargetedSentimentDetectionJobRequest> request = null;
+        Response<StopTargetedSentimentDetectionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StopTargetedSentimentDetectionJobRequestMarshaller()
+                        .marshall(stopTargetedSentimentDetectionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StopTargetedSentimentDetectionJobResult, JsonUnmarshallerContext> unmarshaller = new StopTargetedSentimentDetectionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StopTargetedSentimentDetectionJobResult> responseHandler = new JsonResponseHandler<StopTargetedSentimentDetectionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Stops a document classifier training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and put into
+     * the <code>STOPPED</code> state and the service sends back an HTTP 200
+     * response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingDocumentClassifierRequest
+     * @return stopTrainingDocumentClassifierResult The response from the
+     *         StopTrainingDocumentClassifier service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StopTrainingDocumentClassifierResult stopTrainingDocumentClassifier(
+            StopTrainingDocumentClassifierRequest stopTrainingDocumentClassifierRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(stopTrainingDocumentClassifierRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StopTrainingDocumentClassifierRequest> request = null;
+        Response<StopTrainingDocumentClassifierResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StopTrainingDocumentClassifierRequestMarshaller()
+                        .marshall(stopTrainingDocumentClassifierRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StopTrainingDocumentClassifierResult, JsonUnmarshallerContext> unmarshaller = new StopTrainingDocumentClassifierResultJsonUnmarshaller();
+            JsonResponseHandler<StopTrainingDocumentClassifierResult> responseHandler = new JsonResponseHandler<StopTrainingDocumentClassifierResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Stops an entity recognizer training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and putted
+     * into the <code>STOPPED</code> state and the service sends back an HTTP
+     * 200 response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingEntityRecognizerRequest
+     * @return stopTrainingEntityRecognizerResult The response from the
+     *         StopTrainingEntityRecognizer service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StopTrainingEntityRecognizerResult stopTrainingEntityRecognizer(
+            StopTrainingEntityRecognizerRequest stopTrainingEntityRecognizerRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(stopTrainingEntityRecognizerRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StopTrainingEntityRecognizerRequest> request = null;
+        Response<StopTrainingEntityRecognizerResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StopTrainingEntityRecognizerRequestMarshaller()
+                        .marshall(stopTrainingEntityRecognizerRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StopTrainingEntityRecognizerResult, JsonUnmarshallerContext> unmarshaller = new StopTrainingEntityRecognizerResultJsonUnmarshaller();
+            JsonResponseHandler<StopTrainingEntityRecognizerResult> responseHandler = new JsonResponseHandler<StopTrainingEntityRecognizerResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Associates a specific tag with an Amazon Comprehend resource. A tag is a
+     * key-value pair that adds as a metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return tagResourceResult The response from the TagResource service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public TagResourceResult tagResource(TagResourceRequest tagResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(tagResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<TagResourceRequest> request = null;
+        Response<TagResourceResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new TagResourceRequestMarshaller().marshall(tagResourceRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<TagResourceResult, JsonUnmarshallerContext> unmarshaller = new TagResourceResultJsonUnmarshaller();
+            JsonResponseHandler<TagResourceResult> responseHandler = new JsonResponseHandler<TagResourceResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Removes a specific tag associated with an Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return untagResourceResult The response from the UntagResource service
+     *         method, as returned by Amazon Comprehend.
+     * @throws TooManyTagKeysException
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UntagResourceResult untagResource(UntagResourceRequest untagResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(untagResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UntagResourceRequest> request = null;
+        Response<UntagResourceResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UntagResourceRequestMarshaller().marshall(untagResourceRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UntagResourceResult, JsonUnmarshallerContext> unmarshaller = new UntagResourceResultJsonUnmarshaller();
+            JsonResponseHandler<UntagResourceResult> responseHandler = new JsonResponseHandler<UntagResourceResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Updates information about the specified endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param updateEndpointRequest
+     * @return updateEndpointResult The response from the UpdateEndpoint service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UpdateEndpointResult updateEndpoint(UpdateEndpointRequest updateEndpointRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateEndpointRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateEndpointRequest> request = null;
+        Response<UpdateEndpointResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateEndpointRequestMarshaller().marshall(updateEndpointRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateEndpointResult, JsonUnmarshallerContext> unmarshaller = new UpdateEndpointResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateEndpointResult> responseHandler = new JsonResponseHandler<UpdateEndpointResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Update the configuration information for an existing flywheel.
+     * </p>
+     * 
+     * @param updateFlywheelRequest
+     * @return updateFlywheelResult The response from the UpdateFlywheel service
+     *         method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UpdateFlywheelResult updateFlywheel(UpdateFlywheelRequest updateFlywheelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateFlywheelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateFlywheelRequest> request = null;
+        Response<UpdateFlywheelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateFlywheelRequestMarshaller().marshall(updateFlywheelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateFlywheelResult, JsonUnmarshallerContext> unmarshaller = new UpdateFlywheelResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateFlywheelResult> responseHandler = new JsonResponseHandler<UpdateFlywheelResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,9 +20,11 @@ import java.io.Serializable;
 public class GetParametersForImportResult implements Serializable {
     /**
      * <p>
-     * The identifier of the CMK to use in a subsequent <a>ImportKeyMaterial</a>
-     * request. This is the same CMK specified in the
-     * <code>GetParametersForImport</code> request.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key to use in a subsequent
+     * <a>ImportKeyMaterial</a> request. This is the same KMS key specified in
+     * the <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -64,18 +66,22 @@ public class GetParametersForImportResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK to use in a subsequent <a>ImportKeyMaterial</a>
-     * request. This is the same CMK specified in the
-     * <code>GetParametersForImport</code> request.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key to use in a subsequent
+     * <a>ImportKeyMaterial</a> request. This is the same KMS key specified in
+     * the <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The identifier of the CMK to use in a subsequent
-     *         <a>ImportKeyMaterial</a> request. This is the same CMK specified
-     *         in the <code>GetParametersForImport</code> request.
+     *         The Amazon Resource Name (<a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *         >key ARN</a>) of the KMS key to use in a subsequent
+     *         <a>ImportKeyMaterial</a> request. This is the same KMS key
+     *         specified in the <code>GetParametersForImport</code> request.
      *         </p>
      */
     public String getKeyId() {
@@ -84,17 +90,21 @@ public class GetParametersForImportResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK to use in a subsequent <a>ImportKeyMaterial</a>
-     * request. This is the same CMK specified in the
-     * <code>GetParametersForImport</code> request.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key to use in a subsequent
+     * <a>ImportKeyMaterial</a> request. This is the same KMS key specified in
+     * the <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The identifier of the CMK to use in a subsequent
-     *            <a>ImportKeyMaterial</a> request. This is the same CMK
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the KMS key to use in a subsequent
+     *            <a>ImportKeyMaterial</a> request. This is the same KMS key
      *            specified in the <code>GetParametersForImport</code> request.
      *            </p>
      */
@@ -104,9 +114,11 @@ public class GetParametersForImportResult implements Serializable {
 
     /**
      * <p>
-     * The identifier of the CMK to use in a subsequent <a>ImportKeyMaterial</a>
-     * request. This is the same CMK specified in the
-     * <code>GetParametersForImport</code> request.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key to use in a subsequent
+     * <a>ImportKeyMaterial</a> request. This is the same KMS key specified in
+     * the <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -116,8 +128,10 @@ public class GetParametersForImportResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The identifier of the CMK to use in a subsequent
-     *            <a>ImportKeyMaterial</a> request. This is the same CMK
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the KMS key to use in a subsequent
+     *            <a>ImportKeyMaterial</a> request. This is the same KMS key
      *            specified in the <code>GetParametersForImport</code> request.
      *            </p>
      * @return A reference to this updated object so that method calls can be

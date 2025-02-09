@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -44,6 +44,11 @@ public class IndexFacesResultJsonUnmarshaller implements
             } else if (name.equals("FaceModelVersion")) {
                 indexFacesResult.setFaceModelVersion(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("UnindexedFaces")) {
+                indexFacesResult.setUnindexedFaces(new ListUnmarshaller<UnindexedFace>(
+                        UnindexedFaceJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

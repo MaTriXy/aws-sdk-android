@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,8 +26,9 @@ public class CreateEntityRecognizerResult implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      */
     private String entityRecognizerArn;
 
@@ -39,8 +40,9 @@ public class CreateEntityRecognizerResult implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @return <p>
      *         The Amazon Resource Name (ARN) that identifies the entity
@@ -59,8 +61,9 @@ public class CreateEntityRecognizerResult implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param entityRecognizerArn <p>
      *            The Amazon Resource Name (ARN) that identifies the entity
@@ -82,8 +85,9 @@ public class CreateEntityRecognizerResult implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param entityRecognizerArn <p>
      *            The Amazon Resource Name (ARN) that identifies the entity

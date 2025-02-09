@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -117,6 +118,70 @@ class JobJsonMarshaller {
             TimeoutConfig timeoutConfig = job.getTimeoutConfig();
             jsonWriter.name("timeoutConfig");
             TimeoutConfigJsonMarshaller.getInstance().marshall(timeoutConfig, jsonWriter);
+        }
+        if (job.getNamespaceId() != null) {
+            String namespaceId = job.getNamespaceId();
+            jsonWriter.name("namespaceId");
+            jsonWriter.value(namespaceId);
+        }
+        if (job.getJobTemplateArn() != null) {
+            String jobTemplateArn = job.getJobTemplateArn();
+            jsonWriter.name("jobTemplateArn");
+            jsonWriter.value(jobTemplateArn);
+        }
+        if (job.getJobExecutionsRetryConfig() != null) {
+            JobExecutionsRetryConfig jobExecutionsRetryConfig = job.getJobExecutionsRetryConfig();
+            jsonWriter.name("jobExecutionsRetryConfig");
+            JobExecutionsRetryConfigJsonMarshaller.getInstance().marshall(jobExecutionsRetryConfig,
+                    jsonWriter);
+        }
+        if (job.getDocumentParameters() != null) {
+            java.util.Map<String, String> documentParameters = job.getDocumentParameters();
+            jsonWriter.name("documentParameters");
+            jsonWriter.beginObject();
+            for (java.util.Map.Entry<String, String> documentParametersEntry : documentParameters
+                    .entrySet()) {
+                String documentParametersValue = documentParametersEntry.getValue();
+                if (documentParametersValue != null) {
+                    jsonWriter.name(documentParametersEntry.getKey());
+                    jsonWriter.value(documentParametersValue);
+                }
+            }
+            jsonWriter.endObject();
+        }
+        if (job.getIsConcurrent() != null) {
+            Boolean isConcurrent = job.getIsConcurrent();
+            jsonWriter.name("isConcurrent");
+            jsonWriter.value(isConcurrent);
+        }
+        if (job.getSchedulingConfig() != null) {
+            SchedulingConfig schedulingConfig = job.getSchedulingConfig();
+            jsonWriter.name("schedulingConfig");
+            SchedulingConfigJsonMarshaller.getInstance().marshall(schedulingConfig, jsonWriter);
+        }
+        if (job.getScheduledJobRollouts() != null) {
+            java.util.List<ScheduledJobRollout> scheduledJobRollouts = job
+                    .getScheduledJobRollouts();
+            jsonWriter.name("scheduledJobRollouts");
+            jsonWriter.beginArray();
+            for (ScheduledJobRollout scheduledJobRolloutsItem : scheduledJobRollouts) {
+                if (scheduledJobRolloutsItem != null) {
+                    ScheduledJobRolloutJsonMarshaller.getInstance().marshall(
+                            scheduledJobRolloutsItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (job.getDestinationPackageVersions() != null) {
+            java.util.List<String> destinationPackageVersions = job.getDestinationPackageVersions();
+            jsonWriter.name("destinationPackageVersions");
+            jsonWriter.beginArray();
+            for (String destinationPackageVersionsItem : destinationPackageVersions) {
+                if (destinationPackageVersionsItem != null) {
+                    jsonWriter.value(destinationPackageVersionsItem);
+                }
+            }
+            jsonWriter.endArray();
         }
         jsonWriter.endObject();
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Updates a dynamic thing group.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >UpdateDynamicThingGroup</a> action.
  * </p>
  */
 public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest implements Serializable {
@@ -56,7 +61,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      * </p>
      * <note>
      * <p>
-     * Currently one index is supported: 'AWS_Things'.
+     * Currently one index is supported: <code>AWS_Things</code>.
      * </p>
      * </note>
      * <p>
@@ -243,7 +248,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      * </p>
      * <note>
      * <p>
-     * Currently one index is supported: 'AWS_Things'.
+     * Currently one index is supported: <code>AWS_Things</code>.
      * </p>
      * </note>
      * <p>
@@ -256,7 +261,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      *         </p>
      *         <note>
      *         <p>
-     *         Currently one index is supported: 'AWS_Things'.
+     *         Currently one index is supported: <code>AWS_Things</code>.
      *         </p>
      *         </note>
      */
@@ -270,7 +275,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      * </p>
      * <note>
      * <p>
-     * Currently one index is supported: 'AWS_Things'.
+     * Currently one index is supported: <code>AWS_Things</code>.
      * </p>
      * </note>
      * <p>
@@ -283,7 +288,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      *            </p>
      *            <note>
      *            <p>
-     *            Currently one index is supported: 'AWS_Things'.
+     *            Currently one index is supported: <code>AWS_Things</code>.
      *            </p>
      *            </note>
      */
@@ -297,7 +302,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      * </p>
      * <note>
      * <p>
-     * Currently one index is supported: 'AWS_Things'.
+     * Currently one index is supported: <code>AWS_Things</code>.
      * </p>
      * </note>
      * <p>
@@ -313,7 +318,7 @@ public class UpdateDynamicThingGroupRequest extends AmazonWebServiceRequest impl
      *            </p>
      *            <note>
      *            <p>
-     *            Currently one index is supported: 'AWS_Things'.
+     *            Currently one index is supported: <code>AWS_Things</code>.
      *            </p>
      *            </note>
      * @return A reference to this updated object so that method calls can be

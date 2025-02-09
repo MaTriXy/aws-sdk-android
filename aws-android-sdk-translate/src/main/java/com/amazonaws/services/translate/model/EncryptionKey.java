@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,15 +19,14 @@ import java.io.Serializable;
 
 /**
  * <p>
- * The encryption key used to encrypt the custom terminologies used by Amazon
- * Translate.
+ * The encryption key used to encrypt this object.
  * </p>
  */
 public class EncryptionKey implements Serializable {
     /**
      * <p>
-     * The type of encryption key used by Amazon Translate to encrypt custom
-     * terminologies.
+     * The type of encryption key used by Amazon Translate to encrypt this
+     * object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -38,21 +37,23 @@ public class EncryptionKey implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the encryption key being used to
-     * encrypt the custom terminology.
+     * encrypt this object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 400<br/>
      * <b>Pattern:
-     * </b>(arn:aws((-us-gov)|(-cn))?:kms:)?([a-z]{2}-[a-z]+-\d:)?(\d
-     * {12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))<br/>
+     * </b>(arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:kms:)?([a-z]{2}
+     * -[a-z]+(-[a-
+     * z]+)?-\d:)?(\d{12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))
+     * <br/>
      */
     private String id;
 
     /**
      * <p>
-     * The type of encryption key used by Amazon Translate to encrypt custom
-     * terminologies.
+     * The type of encryption key used by Amazon Translate to encrypt this
+     * object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -60,7 +61,7 @@ public class EncryptionKey implements Serializable {
      *
      * @return <p>
      *         The type of encryption key used by Amazon Translate to encrypt
-     *         custom terminologies.
+     *         this object.
      *         </p>
      * @see EncryptionKeyType
      */
@@ -70,8 +71,8 @@ public class EncryptionKey implements Serializable {
 
     /**
      * <p>
-     * The type of encryption key used by Amazon Translate to encrypt custom
-     * terminologies.
+     * The type of encryption key used by Amazon Translate to encrypt this
+     * object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -79,7 +80,7 @@ public class EncryptionKey implements Serializable {
      *
      * @param type <p>
      *            The type of encryption key used by Amazon Translate to encrypt
-     *            custom terminologies.
+     *            this object.
      *            </p>
      * @see EncryptionKeyType
      */
@@ -89,8 +90,8 @@ public class EncryptionKey implements Serializable {
 
     /**
      * <p>
-     * The type of encryption key used by Amazon Translate to encrypt custom
-     * terminologies.
+     * The type of encryption key used by Amazon Translate to encrypt this
+     * object.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -101,7 +102,7 @@ public class EncryptionKey implements Serializable {
      *
      * @param type <p>
      *            The type of encryption key used by Amazon Translate to encrypt
-     *            custom terminologies.
+     *            this object.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -114,8 +115,8 @@ public class EncryptionKey implements Serializable {
 
     /**
      * <p>
-     * The type of encryption key used by Amazon Translate to encrypt custom
-     * terminologies.
+     * The type of encryption key used by Amazon Translate to encrypt this
+     * object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -123,7 +124,7 @@ public class EncryptionKey implements Serializable {
      *
      * @param type <p>
      *            The type of encryption key used by Amazon Translate to encrypt
-     *            custom terminologies.
+     *            this object.
      *            </p>
      * @see EncryptionKeyType
      */
@@ -133,8 +134,8 @@ public class EncryptionKey implements Serializable {
 
     /**
      * <p>
-     * The type of encryption key used by Amazon Translate to encrypt custom
-     * terminologies.
+     * The type of encryption key used by Amazon Translate to encrypt this
+     * object.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -145,7 +146,7 @@ public class EncryptionKey implements Serializable {
      *
      * @param type <p>
      *            The type of encryption key used by Amazon Translate to encrypt
-     *            custom terminologies.
+     *            this object.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -159,18 +160,20 @@ public class EncryptionKey implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the encryption key being used to
-     * encrypt the custom terminology.
+     * encrypt this object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 400<br/>
      * <b>Pattern:
-     * </b>(arn:aws((-us-gov)|(-cn))?:kms:)?([a-z]{2}-[a-z]+-\d:)?(\d
-     * {12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))<br/>
+     * </b>(arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:kms:)?([a-z]{2}
+     * -[a-z]+(-[a-
+     * z]+)?-\d:)?(\d{12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))
+     * <br/>
      *
      * @return <p>
      *         The Amazon Resource Name (ARN) of the encryption key being used
-     *         to encrypt the custom terminology.
+     *         to encrypt this object.
      *         </p>
      */
     public String getId() {
@@ -180,18 +183,20 @@ public class EncryptionKey implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the encryption key being used to
-     * encrypt the custom terminology.
+     * encrypt this object.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 400<br/>
      * <b>Pattern:
-     * </b>(arn:aws((-us-gov)|(-cn))?:kms:)?([a-z]{2}-[a-z]+-\d:)?(\d
-     * {12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))<br/>
+     * </b>(arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:kms:)?([a-z]{2}
+     * -[a-z]+(-[a-
+     * z]+)?-\d:)?(\d{12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))
+     * <br/>
      *
      * @param id <p>
      *            The Amazon Resource Name (ARN) of the encryption key being
-     *            used to encrypt the custom terminology.
+     *            used to encrypt this object.
      *            </p>
      */
     public void setId(String id) {
@@ -201,7 +206,7 @@ public class EncryptionKey implements Serializable {
     /**
      * <p>
      * The Amazon Resource Name (ARN) of the encryption key being used to
-     * encrypt the custom terminology.
+     * encrypt this object.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -210,12 +215,14 @@ public class EncryptionKey implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 400<br/>
      * <b>Pattern:
-     * </b>(arn:aws((-us-gov)|(-cn))?:kms:)?([a-z]{2}-[a-z]+-\d:)?(\d
-     * {12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))<br/>
+     * </b>(arn:aws((-us-gov)|(-iso)|(-iso-b)|(-cn))?:kms:)?([a-z]{2}
+     * -[a-z]+(-[a-
+     * z]+)?-\d:)?(\d{12}:)?(((key/)?[a-zA-Z0-9-_]+)|(alias/[a-zA-Z0-9:/_-]+))
+     * <br/>
      *
      * @param id <p>
      *            The Amazon Resource Name (ARN) of the encryption key being
-     *            used to encrypt the custom terminology.
+     *            used to encrypt this object.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

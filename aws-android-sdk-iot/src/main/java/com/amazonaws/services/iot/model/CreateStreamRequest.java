@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,11 +24,12 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Creates a stream for delivering one or more large files in chunks over MQTT.
  * A stream transports data bytes in chunks or blocks packaged as MQTT messages
  * from a source like S3. You can have one or more files associated with a
- * stream. The total size of a file associated with the stream cannot exceed
- * more than 2 MB. The stream will be created with version 0. If a stream is
- * created with the same streamID as a stream that existed and was deleted
- * within last 90 days, we will resurrect that old stream by incrementing the
- * version by 1.
+ * stream.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreateStream</a> action.
  * </p>
  */
 public class CreateStreamRequest extends AmazonWebServiceRequest implements Serializable {
@@ -63,14 +64,21 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * An IAM role that allows the IoT service principal assumes to access your
-     * S3 files.
+     * An IAM role that allows the IoT service principal to access your S3
+     * files.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      */
     private String roleArn;
+
+    /**
+     * <p>
+     * Metadata which can be used to manage streams.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
@@ -262,16 +270,16 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * An IAM role that allows the IoT service principal assumes to access your
-     * S3 files.
+     * An IAM role that allows the IoT service principal to access your S3
+     * files.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         An IAM role that allows the IoT service principal assumes to
-     *         access your S3 files.
+     *         An IAM role that allows the IoT service principal to access your
+     *         S3 files.
      *         </p>
      */
     public String getRoleArn() {
@@ -280,16 +288,16 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * An IAM role that allows the IoT service principal assumes to access your
-     * S3 files.
+     * An IAM role that allows the IoT service principal to access your S3
+     * files.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param roleArn <p>
-     *            An IAM role that allows the IoT service principal assumes to
-     *            access your S3 files.
+     *            An IAM role that allows the IoT service principal to access
+     *            your S3 files.
      *            </p>
      */
     public void setRoleArn(String roleArn) {
@@ -298,8 +306,8 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * An IAM role that allows the IoT service principal assumes to access your
-     * S3 files.
+     * An IAM role that allows the IoT service principal to access your S3
+     * files.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -309,14 +317,88 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param roleArn <p>
-     *            An IAM role that allows the IoT service principal assumes to
-     *            access your S3 files.
+     *            An IAM role that allows the IoT service principal to access
+     *            your S3 files.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public CreateStreamRequest withRoleArn(String roleArn) {
         this.roleArn = roleArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage streams.
+     * </p>
+     *
+     * @return <p>
+     *         Metadata which can be used to manage streams.
+     *         </p>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage streams.
+     * </p>
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage streams.
+     *            </p>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage streams.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage streams.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateStreamRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage streams.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage streams.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateStreamRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
         return this;
     }
 
@@ -338,7 +420,9 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
         if (getFiles() != null)
             sb.append("files: " + getFiles() + ",");
         if (getRoleArn() != null)
-            sb.append("roleArn: " + getRoleArn());
+            sb.append("roleArn: " + getRoleArn() + ",");
+        if (getTags() != null)
+            sb.append("tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -353,6 +437,7 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
                 + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode + ((getFiles() == null) ? 0 : getFiles().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -383,6 +468,10 @@ public class CreateStreamRequest extends AmazonWebServiceRequest implements Seri
         if (other.getRoleArn() == null ^ this.getRoleArn() == null)
             return false;
         if (other.getRoleArn() != null && other.getRoleArn().equals(this.getRoleArn()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

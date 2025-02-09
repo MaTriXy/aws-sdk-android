@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -88,6 +88,36 @@ public interface AWSKinesisVideo {
 
     /**
      * <p>
+     * Creates a signaling channel.
+     * </p>
+     * <p>
+     * <code>CreateSignalingChannel</code> is an asynchronous operation.
+     * </p>
+     * 
+     * @param createSignalingChannelRequest
+     * @return createSignalingChannelResult The response from the
+     *         CreateSignalingChannel service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws AccountChannelLimitExceededException
+     * @throws ResourceInUseException
+     * @throws AccessDeniedException
+     * @throws TagsPerResourceExceededLimitException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    CreateSignalingChannelResult createSignalingChannel(
+            CreateSignalingChannelRequest createSignalingChannelRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Creates a new Kinesis video stream.
      * </p>
      * <p>
@@ -100,7 +130,7 @@ public interface AWSKinesisVideo {
      * </p>
      * <p>
      * For information about how the service works, see <a href=
-     * "http://docs.aws.amazon.com/kinesisvideostreams/latest/dg/how-it-works.html"
+     * "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/how-it-works.html"
      * >How it Works</a>.
      * </p>
      * <p>
@@ -117,6 +147,7 @@ public interface AWSKinesisVideo {
      * @throws InvalidDeviceException
      * @throws InvalidArgumentException
      * @throws ClientLimitExceededException
+     * @throws TagsPerResourceExceededLimitException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -126,6 +157,75 @@ public interface AWSKinesisVideo {
      *             data in the request, or a server side issue.
      */
     CreateStreamResult createStream(CreateStreamRequest createStreamRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * An asynchronous API that deletes a stream’s existing edge configuration,
+     * as well as the corresponding media from the Edge Agent.
+     * </p>
+     * <p>
+     * When you invoke this API, the sync status is set to <code>DELETING</code>
+     * . A deletion process starts, in which active edge jobs are stopped and
+     * all media is deleted from the edge device. The time to delete varies,
+     * depending on the total amount of stored media. If the deletion process
+     * fails, the sync status changes to <code>DELETE_FAILED</code>. You will
+     * need to re-try the deletion.
+     * </p>
+     * <p>
+     * When the deletion process has completed successfully, the edge
+     * configuration is no longer accessible.
+     * </p>
+     * 
+     * @param deleteEdgeConfigurationRequest
+     * @return deleteEdgeConfigurationResult The response from the
+     *         DeleteEdgeConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws AccessDeniedException
+     * @throws ClientLimitExceededException
+     * @throws InvalidArgumentException
+     * @throws ResourceNotFoundException
+     * @throws StreamEdgeConfigurationNotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DeleteEdgeConfigurationResult deleteEdgeConfiguration(
+            DeleteEdgeConfigurationRequest deleteEdgeConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Deletes a specified signaling channel.
+     * <code>DeleteSignalingChannel</code> is an asynchronous operation. If you
+     * don't specify the channel's current version, the most recent version is
+     * deleted.
+     * </p>
+     * 
+     * @param deleteSignalingChannelRequest
+     * @return deleteSignalingChannelResult The response from the
+     *         DeleteSignalingChannel service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws VersionMismatchException
+     * @throws ResourceInUseException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DeleteSignalingChannelResult deleteSignalingChannel(
+            DeleteSignalingChannelRequest deleteSignalingChannelRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -157,6 +257,8 @@ public interface AWSKinesisVideo {
      * @throws InvalidArgumentException
      * @throws ResourceNotFoundException
      * @throws NotAuthorizedException
+     * @throws VersionMismatchException
+     * @throws ResourceInUseException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is
@@ -166,6 +268,169 @@ public interface AWSKinesisVideo {
      *             data in the request, or a server side issue.
      */
     DeleteStreamResult deleteStream(DeleteStreamRequest deleteStreamRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Describes a stream’s edge configuration that was set using the
+     * <code>StartEdgeConfigurationUpdate</code> API and the latest status of
+     * the edge agent's recorder and uploader jobs. Use this API to get the
+     * status of the configuration to determine if the configuration is in sync
+     * with the Edge Agent. Use this API to evaluate the health of the Edge
+     * Agent.
+     * </p>
+     * 
+     * @param describeEdgeConfigurationRequest
+     * @return describeEdgeConfigurationResult The response from the
+     *         DescribeEdgeConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws AccessDeniedException
+     * @throws ClientLimitExceededException
+     * @throws InvalidArgumentException
+     * @throws ResourceNotFoundException
+     * @throws StreamEdgeConfigurationNotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DescribeEdgeConfigurationResult describeEdgeConfiguration(
+            DescribeEdgeConfigurationRequest describeEdgeConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets the <code>ImageGenerationConfiguration</code> for a given Kinesis
+     * video stream.
+     * </p>
+     * 
+     * @param describeImageGenerationConfigurationRequest
+     * @return describeImageGenerationConfigurationResult The response from the
+     *         DescribeImageGenerationConfiguration service method, as returned
+     *         by AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DescribeImageGenerationConfigurationResult describeImageGenerationConfiguration(
+            DescribeImageGenerationConfigurationRequest describeImageGenerationConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns the most current information about the stream. The
+     * <code>streamName</code> or <code>streamARN</code> should be provided in
+     * the input.
+     * </p>
+     * 
+     * @param describeMappedResourceConfigurationRequest
+     * @return describeMappedResourceConfigurationResult The response from the
+     *         DescribeMappedResourceConfiguration service method, as returned
+     *         by AWSKinesisVideoFrontend.
+     * @throws ResourceNotFoundException
+     * @throws InvalidArgumentException
+     * @throws AccessDeniedException
+     * @throws ClientLimitExceededException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DescribeMappedResourceConfigurationResult describeMappedResourceConfiguration(
+            DescribeMappedResourceConfigurationRequest describeMappedResourceConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns the most current information about the channel. Specify the
+     * <code>ChannelName</code> or <code>ChannelARN</code> in the input.
+     * </p>
+     * 
+     * @param describeMediaStorageConfigurationRequest
+     * @return describeMediaStorageConfigurationResult The response from the
+     *         DescribeMediaStorageConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws ResourceNotFoundException
+     * @throws InvalidArgumentException
+     * @throws AccessDeniedException
+     * @throws ClientLimitExceededException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DescribeMediaStorageConfigurationResult describeMediaStorageConfiguration(
+            DescribeMediaStorageConfigurationRequest describeMediaStorageConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Gets the <code>NotificationConfiguration</code> for a given Kinesis video
+     * stream.
+     * </p>
+     * 
+     * @param describeNotificationConfigurationRequest
+     * @return describeNotificationConfigurationResult The response from the
+     *         DescribeNotificationConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DescribeNotificationConfigurationResult describeNotificationConfiguration(
+            DescribeNotificationConfigurationRequest describeNotificationConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns the most current information about the signaling channel. You
+     * must specify either the name or the Amazon Resource Name (ARN) of the
+     * channel that you want to describe.
+     * </p>
+     * 
+     * @param describeSignalingChannelRequest
+     * @return describeSignalingChannelResult The response from the
+     *         DescribeSignalingChannel service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    DescribeSignalingChannelResult describeSignalingChannel(
+            DescribeSignalingChannelRequest describeSignalingChannelRequest)
             throws AmazonClientException, AmazonServiceException;
 
     /**
@@ -230,6 +495,105 @@ public interface AWSKinesisVideo {
 
     /**
      * <p>
+     * Provides an endpoint for the specified signaling channel to send and
+     * receive messages. This API uses the
+     * <code>SingleMasterChannelEndpointConfiguration</code> input parameter,
+     * which consists of the <code>Protocols</code> and <code>Role</code>
+     * properties.
+     * </p>
+     * <p>
+     * <code>Protocols</code> is used to determine the communication mechanism.
+     * For example, if you specify <code>WSS</code> as the protocol, this API
+     * produces a secure websocket endpoint. If you specify <code>HTTPS</code>
+     * as the protocol, this API generates an HTTPS endpoint.
+     * </p>
+     * <p>
+     * <code>Role</code> determines the messaging permissions. A
+     * <code>MASTER</code> role results in this API generating an endpoint that
+     * a client can use to communicate with any of the viewers on the channel. A
+     * <code>VIEWER</code> role results in this API generating an endpoint that
+     * a client can use to communicate only with a <code>MASTER</code>.
+     * </p>
+     * 
+     * @param getSignalingChannelEndpointRequest
+     * @return getSignalingChannelEndpointResult The response from the
+     *         GetSignalingChannelEndpoint service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceInUseException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    GetSignalingChannelEndpointResult getSignalingChannelEndpoint(
+            GetSignalingChannelEndpointRequest getSignalingChannelEndpointRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns an array of edge configurations associated with the specified
+     * Edge Agent.
+     * </p>
+     * <p>
+     * In the request, you must specify the Edge Agent <code>HubDeviceArn</code>
+     * .
+     * </p>
+     * 
+     * @param listEdgeAgentConfigurationsRequest
+     * @return listEdgeAgentConfigurationsResult The response from the
+     *         ListEdgeAgentConfigurations service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws NotAuthorizedException
+     * @throws ClientLimitExceededException
+     * @throws InvalidArgumentException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    ListEdgeAgentConfigurationsResult listEdgeAgentConfigurations(
+            ListEdgeAgentConfigurationsRequest listEdgeAgentConfigurationsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns an array of <code>ChannelInfo</code> objects. Each object
+     * describes a signaling channel. To retrieve only those channels that
+     * satisfy a specific condition, you can specify a
+     * <code>ChannelNameCondition</code>.
+     * </p>
+     * 
+     * @param listSignalingChannelsRequest
+     * @return listSignalingChannelsResult The response from the
+     *         ListSignalingChannels service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    ListSignalingChannelsResult listSignalingChannels(
+            ListSignalingChannelsRequest listSignalingChannelsRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Returns an array of <code>StreamInfo</code> objects. Each object
      * describes a stream. To retrieve only streams that satisfy a specific
      * condition, you can specify a <code>StreamNameCondition</code>.
@@ -250,6 +614,31 @@ public interface AWSKinesisVideo {
      */
     ListStreamsResult listStreams(ListStreamsRequest listStreamsRequest)
             throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Returns a list of tags associated with the specified signaling channel.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return listTagsForResourceResult The response from the
+     *         ListTagsForResource service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    ListTagsForResourceResult listTagsForResource(
+            ListTagsForResourceRequest listTagsForResourceRequest) throws AmazonClientException,
+            AmazonServiceException;
 
     /**
      * <p>
@@ -281,13 +670,89 @@ public interface AWSKinesisVideo {
 
     /**
      * <p>
+     * An asynchronous API that updates a stream’s existing edge configuration.
+     * The Kinesis Video Stream will sync the stream’s edge configuration with
+     * the Edge Agent IoT Greengrass component that runs on an IoT Hub Device,
+     * setup at your premise. The time to sync can vary and depends on the
+     * connectivity of the Hub Device. The <code>SyncStatus</code> will be
+     * updated as the edge configuration is acknowledged, and synced with the
+     * Edge Agent.
+     * </p>
+     * <p>
+     * If this API is invoked for the first time, a new edge configuration will
+     * be created for the stream, and the sync status will be set to
+     * <code>SYNCING</code>. You will have to wait for the sync status to reach
+     * a terminal state such as: <code>IN_SYNC</code>, or
+     * <code>SYNC_FAILED</code>, before using this API again. If you invoke this
+     * API during the syncing process, a <code>ResourceInUseException</code>
+     * will be thrown. The connectivity of the stream’s edge configuration and
+     * the Edge Agent will be retried for 15 minutes. After 15 minutes, the
+     * status will transition into the <code>SYNC_FAILED</code> state.
+     * </p>
+     * 
+     * @param startEdgeConfigurationUpdateRequest
+     * @return startEdgeConfigurationUpdateResult The response from the
+     *         StartEdgeConfigurationUpdate service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws AccessDeniedException
+     * @throws ClientLimitExceededException
+     * @throws InvalidArgumentException
+     * @throws NoDataRetentionException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    StartEdgeConfigurationUpdateResult startEdgeConfigurationUpdate(
+            StartEdgeConfigurationUpdateRequest startEdgeConfigurationUpdateRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Adds one or more tags to a signaling channel. A <i>tag</i> is a key-value
+     * pair (the value is optional) that you can define and assign to Amazon Web
+     * Services resources. If you specify a tag that already exists, the tag
+     * value is replaced with the value that you specify in the request. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
+     * >Using Cost Allocation Tags</a> in the <i>Billing and Cost Management and
+     * Cost Management User Guide</i>.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return tagResourceResult The response from the TagResource service
+     *         method, as returned by AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws TagsPerResourceExceededLimitException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    TagResourceResult tagResource(TagResourceRequest tagResourceRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
      * Adds one or more tags to a stream. A <i>tag</i> is a key-value pair (the
-     * value is optional) that you can define and assign to AWS resources. If
-     * you specify a tag that already exists, the tag value is replaced with the
-     * value that you specify in the request. For more information, see <a href=
-     * "http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
-     * >Using Cost Allocation Tags</a> in the <i>AWS Billing and Cost Management
-     * User Guide</i>.
+     * value is optional) that you can define and assign to Amazon Web Services
+     * resources. If you specify a tag that already exists, the tag value is
+     * replaced with the value that you specify in the request. For more
+     * information, see <a href=
+     * "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
+     * >Using Cost Allocation Tags</a> in the <i>Billing and Cost Management and
+     * Cost Management User Guide</i>.
      * </p>
      * <p>
      * You must provide either the <code>StreamName</code> or the
@@ -298,7 +763,7 @@ public interface AWSKinesisVideo {
      * <code>KinesisVideo:TagStream</code> action.
      * </p>
      * <p>
-     * Kinesis video streams support up to 50 tags.
+     * A Kinesis video stream can support up to 50 tags.
      * </p>
      * 
      * @param tagStreamRequest
@@ -320,6 +785,31 @@ public interface AWSKinesisVideo {
      */
     TagStreamResult tagStream(TagStreamRequest tagStreamRequest) throws AmazonClientException,
             AmazonServiceException;
+
+    /**
+     * <p>
+     * Removes one or more tags from a signaling channel. In the request,
+     * specify only a tag key or keys; don't specify the value. If you specify a
+     * tag key that does not exist, it's ignored.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return untagResourceResult The response from the UntagResource service
+     *         method, as returned by AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    UntagResourceResult untagResource(UntagResourceRequest untagResourceRequest)
+            throws AmazonClientException, AmazonServiceException;
 
     /**
      * <p>
@@ -412,6 +902,146 @@ public interface AWSKinesisVideo {
     UpdateDataRetentionResult updateDataRetention(
             UpdateDataRetentionRequest updateDataRetentionRequest) throws AmazonClientException,
             AmazonServiceException;
+
+    /**
+     * <p>
+     * Updates the <code>StreamInfo</code> and
+     * <code>ImageProcessingConfiguration</code> fields.
+     * </p>
+     * 
+     * @param updateImageGenerationConfigurationRequest
+     * @return updateImageGenerationConfigurationResult The response from the
+     *         UpdateImageGenerationConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws ResourceInUseException
+     * @throws NoDataRetentionException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    UpdateImageGenerationConfigurationResult updateImageGenerationConfiguration(
+            UpdateImageGenerationConfigurationRequest updateImageGenerationConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Associates a <code>SignalingChannel</code> to a stream to store the
+     * media. There are two signaling modes that can specified :
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * If the <code>StorageStatus</code> is disabled, no data will be stored,
+     * and the <code>StreamARN</code> parameter will not be needed.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * If the <code>StorageStatus</code> is enabled, the data will be stored in
+     * the <code>StreamARN</code> provided.
+     * </p>
+     * </li>
+     * </ul>
+     * <important>
+     * <p>
+     * If <code>StorageStatus</code> is enabled, direct peer-to-peer
+     * (master-viewer) connections no longer occur. Peers connect directly to
+     * the storage session. You must call the <code>JoinStorageSession</code>
+     * API to trigger an SDP offer send and establish a connection between a
+     * peer and the storage session.
+     * </p>
+     * </important>
+     * 
+     * @param updateMediaStorageConfigurationRequest
+     * @return updateMediaStorageConfigurationResult The response from the
+     *         UpdateMediaStorageConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws ResourceInUseException
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws NoDataRetentionException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    UpdateMediaStorageConfigurationResult updateMediaStorageConfiguration(
+            UpdateMediaStorageConfigurationRequest updateMediaStorageConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Updates the notification information for a stream.
+     * </p>
+     * 
+     * @param updateNotificationConfigurationRequest
+     * @return updateNotificationConfigurationResult The response from the
+     *         UpdateNotificationConfiguration service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
+     * @throws ResourceInUseException
+     * @throws NoDataRetentionException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    UpdateNotificationConfigurationResult updateNotificationConfiguration(
+            UpdateNotificationConfigurationRequest updateNotificationConfigurationRequest)
+            throws AmazonClientException, AmazonServiceException;
+
+    /**
+     * <p>
+     * Updates the existing signaling channel. This is an asynchronous operation
+     * and takes time to complete.
+     * </p>
+     * <p>
+     * If the <code>MessageTtlSeconds</code> value is updated (either increased
+     * or reduced), it only applies to new messages sent via this channel after
+     * it's been updated. Existing messages are still expired as per the
+     * previous <code>MessageTtlSeconds</code> value.
+     * </p>
+     * 
+     * @param updateSignalingChannelRequest
+     * @return updateSignalingChannelResult The response from the
+     *         UpdateSignalingChannel service method, as returned by
+     *         AWSKinesisVideoFrontend.
+     * @throws InvalidArgumentException
+     * @throws ClientLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceInUseException
+     * @throws AccessDeniedException
+     * @throws VersionMismatchException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by
+     *             AWSKinesisVideoFrontend indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    UpdateSignalingChannelResult updateSignalingChannel(
+            UpdateSignalingChannelRequest updateSignalingChannelRequest)
+            throws AmazonClientException, AmazonServiceException;
 
     /**
      * <p>

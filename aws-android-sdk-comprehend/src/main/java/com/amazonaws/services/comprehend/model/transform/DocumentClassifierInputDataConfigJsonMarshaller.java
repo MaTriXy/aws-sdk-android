@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -26,10 +27,56 @@ class DocumentClassifierInputDataConfigJsonMarshaller {
     public void marshall(DocumentClassifierInputDataConfig documentClassifierInputDataConfig,
             AwsJsonWriter jsonWriter) throws Exception {
         jsonWriter.beginObject();
+        if (documentClassifierInputDataConfig.getDataFormat() != null) {
+            String dataFormat = documentClassifierInputDataConfig.getDataFormat();
+            jsonWriter.name("DataFormat");
+            jsonWriter.value(dataFormat);
+        }
         if (documentClassifierInputDataConfig.getS3Uri() != null) {
             String s3Uri = documentClassifierInputDataConfig.getS3Uri();
             jsonWriter.name("S3Uri");
             jsonWriter.value(s3Uri);
+        }
+        if (documentClassifierInputDataConfig.getTestS3Uri() != null) {
+            String testS3Uri = documentClassifierInputDataConfig.getTestS3Uri();
+            jsonWriter.name("TestS3Uri");
+            jsonWriter.value(testS3Uri);
+        }
+        if (documentClassifierInputDataConfig.getLabelDelimiter() != null) {
+            String labelDelimiter = documentClassifierInputDataConfig.getLabelDelimiter();
+            jsonWriter.name("LabelDelimiter");
+            jsonWriter.value(labelDelimiter);
+        }
+        if (documentClassifierInputDataConfig.getAugmentedManifests() != null) {
+            java.util.List<AugmentedManifestsListItem> augmentedManifests = documentClassifierInputDataConfig
+                    .getAugmentedManifests();
+            jsonWriter.name("AugmentedManifests");
+            jsonWriter.beginArray();
+            for (AugmentedManifestsListItem augmentedManifestsItem : augmentedManifests) {
+                if (augmentedManifestsItem != null) {
+                    AugmentedManifestsListItemJsonMarshaller.getInstance().marshall(
+                            augmentedManifestsItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (documentClassifierInputDataConfig.getDocumentType() != null) {
+            String documentType = documentClassifierInputDataConfig.getDocumentType();
+            jsonWriter.name("DocumentType");
+            jsonWriter.value(documentType);
+        }
+        if (documentClassifierInputDataConfig.getDocuments() != null) {
+            DocumentClassifierDocuments documents = documentClassifierInputDataConfig
+                    .getDocuments();
+            jsonWriter.name("Documents");
+            DocumentClassifierDocumentsJsonMarshaller.getInstance().marshall(documents, jsonWriter);
+        }
+        if (documentClassifierInputDataConfig.getDocumentReaderConfig() != null) {
+            DocumentReaderConfig documentReaderConfig = documentClassifierInputDataConfig
+                    .getDocumentReaderConfig();
+            jsonWriter.name("DocumentReaderConfig");
+            DocumentReaderConfigJsonMarshaller.getInstance().marshall(documentReaderConfig,
+                    jsonWriter);
         }
         jsonWriter.endObject();
     }

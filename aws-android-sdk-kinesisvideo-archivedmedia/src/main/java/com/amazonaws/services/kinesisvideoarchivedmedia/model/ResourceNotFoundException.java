@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,13 +19,15 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * <code>GetMedia</code> throws this error when Kinesis Video Streams can't find
- * the stream that you specified.
+ * <code>GetImages</code> will throw this error when Kinesis Video Streams can't
+ * find the stream that you specified.
  * </p>
  * <p>
- * <code>GetHLSStreamingSessionURL</code> throws this error if a session with a
- * <code>PlaybackMode</code> of <code>ON_DEMAND</code> is requested for a stream
- * that has no fragments within the requested time range, or if a session with a
+ * <code>GetHLSStreamingSessionURL</code> and
+ * <code>GetDASHStreamingSessionURL</code> throw this error if a session with a
+ * <code>PlaybackMode</code> of <code>ON_DEMAND</code> or
+ * <code>LIVE_REPLAY</code>is requested for a stream that has no fragments
+ * within the requested time range, or if a session with a
  * <code>PlaybackMode</code> of <code>LIVE</code> is requested for a stream that
  * has no fragments within the last 30 seconds.
  * </p>

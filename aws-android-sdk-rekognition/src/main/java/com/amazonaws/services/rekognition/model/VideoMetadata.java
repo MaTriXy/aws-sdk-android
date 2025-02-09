@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -77,12 +77,15 @@ public class VideoMetadata implements Serializable {
     private Long frameWidth;
 
     /**
-     * The new value for the rotation property for this object.
+     * <p>
+     * A description of the range of luminance values in a video, either LIMITED
+     * (16 to 235) or FULL (0 to 255).
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Allowed Values: </b>FULL, LIMITED
      */
-    private Integer rotation;
+    private String colorRange;
 
     /**
      * <p>
@@ -385,44 +388,109 @@ public class VideoMetadata implements Serializable {
     }
 
     /**
-     * Returns the value of the rotation property for this object.
+     * <p>
+     * A description of the range of luminance values in a video, either LIMITED
+     * (16 to 235) or FULL (0 to 255).
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Allowed Values: </b>FULL, LIMITED
      *
-     * @return The value of the rotation property for this object.
+     * @return <p>
+     *         A description of the range of luminance values in a video, either
+     *         LIMITED (16 to 235) or FULL (0 to 255).
+     *         </p>
+     * @see VideoColorRange
      */
-    public Integer getRotation() {
-        return rotation;
+    public String getColorRange() {
+        return colorRange;
     }
 
     /**
-     * Sets the value of rotation
+     * <p>
+     * A description of the range of luminance values in a video, either LIMITED
+     * (16 to 235) or FULL (0 to 255).
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Allowed Values: </b>FULL, LIMITED
      *
-     * @param rotation The new value for the rotation property for this object.
+     * @param colorRange <p>
+     *            A description of the range of luminance values in a video,
+     *            either LIMITED (16 to 235) or FULL (0 to 255).
+     *            </p>
+     * @see VideoColorRange
      */
-    public void setRotation(Integer rotation) {
-        this.rotation = rotation;
+    public void setColorRange(String colorRange) {
+        this.colorRange = colorRange;
     }
 
     /**
-     * Sets the value of the rotation property for this object.
+     * <p>
+     * A description of the range of luminance values in a video, either LIMITED
+     * (16 to 235) or FULL (0 to 255).
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Allowed Values: </b>FULL, LIMITED
      *
-     * @param rotation The new value for the rotation property for this object.
+     * @param colorRange <p>
+     *            A description of the range of luminance values in a video,
+     *            either LIMITED (16 to 235) or FULL (0 to 255).
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
+     * @see VideoColorRange
      */
-    public VideoMetadata withRotation(Integer rotation) {
-        this.rotation = rotation;
+    public VideoMetadata withColorRange(String colorRange) {
+        this.colorRange = colorRange;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A description of the range of luminance values in a video, either LIMITED
+     * (16 to 235) or FULL (0 to 255).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FULL, LIMITED
+     *
+     * @param colorRange <p>
+     *            A description of the range of luminance values in a video,
+     *            either LIMITED (16 to 235) or FULL (0 to 255).
+     *            </p>
+     * @see VideoColorRange
+     */
+    public void setColorRange(VideoColorRange colorRange) {
+        this.colorRange = colorRange.toString();
+    }
+
+    /**
+     * <p>
+     * A description of the range of luminance values in a video, either LIMITED
+     * (16 to 235) or FULL (0 to 255).
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FULL, LIMITED
+     *
+     * @param colorRange <p>
+     *            A description of the range of luminance values in a video,
+     *            either LIMITED (16 to 235) or FULL (0 to 255).
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see VideoColorRange
+     */
+    public VideoMetadata withColorRange(VideoColorRange colorRange) {
+        this.colorRange = colorRange.toString();
         return this;
     }
 
@@ -449,8 +517,8 @@ public class VideoMetadata implements Serializable {
             sb.append("FrameHeight: " + getFrameHeight() + ",");
         if (getFrameWidth() != null)
             sb.append("FrameWidth: " + getFrameWidth() + ",");
-        if (getRotation() != null)
-            sb.append("Rotation: " + getRotation());
+        if (getColorRange() != null)
+            sb.append("ColorRange: " + getColorRange());
         sb.append("}");
         return sb.toString();
     }
@@ -468,7 +536,7 @@ public class VideoMetadata implements Serializable {
         hashCode = prime * hashCode
                 + ((getFrameHeight() == null) ? 0 : getFrameHeight().hashCode());
         hashCode = prime * hashCode + ((getFrameWidth() == null) ? 0 : getFrameWidth().hashCode());
-        hashCode = prime * hashCode + ((getRotation() == null) ? 0 : getRotation().hashCode());
+        hashCode = prime * hashCode + ((getColorRange() == null) ? 0 : getColorRange().hashCode());
         return hashCode;
     }
 
@@ -511,9 +579,10 @@ public class VideoMetadata implements Serializable {
         if (other.getFrameWidth() != null
                 && other.getFrameWidth().equals(this.getFrameWidth()) == false)
             return false;
-        if (other.getRotation() == null ^ this.getRotation() == null)
+        if (other.getColorRange() == null ^ this.getColorRange() == null)
             return false;
-        if (other.getRotation() != null && other.getRotation().equals(this.getRotation()) == false)
+        if (other.getColorRange() != null
+                && other.getColorRange().equals(this.getColorRange()) == false)
             return false;
         return true;
     }

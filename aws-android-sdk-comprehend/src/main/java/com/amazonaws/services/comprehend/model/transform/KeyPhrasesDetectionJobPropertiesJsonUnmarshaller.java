@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ class KeyPhrasesDetectionJobPropertiesJsonUnmarshaller implements
             if (name.equals("JobId")) {
                 keyPhrasesDetectionJobProperties.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                keyPhrasesDetectionJobProperties.setJobArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobName")) {
                 keyPhrasesDetectionJobProperties.setJobName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -69,6 +72,14 @@ class KeyPhrasesDetectionJobPropertiesJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("DataAccessRoleArn")) {
                 keyPhrasesDetectionJobProperties.setDataAccessRoleArn(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                keyPhrasesDetectionJobProperties.setVolumeKmsKeyId(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                keyPhrasesDetectionJobProperties.setVpcConfig(VpcConfigJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
             } else {

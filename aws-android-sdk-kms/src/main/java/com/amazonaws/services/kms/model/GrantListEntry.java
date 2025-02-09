@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,14 +19,13 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Contains information about an entry in a list of grants.
+ * Contains information about a grant.
  * </p>
  */
 public class GrantListEntry implements Serializable {
     /**
      * <p>
-     * The unique identifier for the customer master key (CMK) to which the
-     * grant applies.
+     * The unique identifier for the KMS key to which the grant applies.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -66,7 +65,17 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The principal that receives the grant's permissions.
+     * The identity that gets the permissions in the grant.
+     * </p>
+     * <p>
+     * The <code>GranteePrincipal</code> field in the <code>ListGrants</code>
+     * response usually contains the user or role designated as the grantee
+     * principal in the grant. However, when the grantee principal in the grant
+     * is an Amazon Web Services service, the <code>GranteePrincipal</code>
+     * field contains the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     * >service principal</a>, which might represent several different grantee
+     * principals.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -88,7 +97,7 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The AWS account under which the grant was issued.
+     * The Amazon Web Services account under which the grant was issued.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -114,16 +123,14 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The unique identifier for the customer master key (CMK) to which the
-     * grant applies.
+     * The unique identifier for the KMS key to which the grant applies.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The unique identifier for the customer master key (CMK) to which
-     *         the grant applies.
+     *         The unique identifier for the KMS key to which the grant applies.
      *         </p>
      */
     public String getKeyId() {
@@ -132,16 +139,15 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The unique identifier for the customer master key (CMK) to which the
-     * grant applies.
+     * The unique identifier for the KMS key to which the grant applies.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The unique identifier for the customer master key (CMK) to
-     *            which the grant applies.
+     *            The unique identifier for the KMS key to which the grant
+     *            applies.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -150,8 +156,7 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The unique identifier for the customer master key (CMK) to which the
-     * grant applies.
+     * The unique identifier for the KMS key to which the grant applies.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -161,8 +166,8 @@ public class GrantListEntry implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The unique identifier for the customer master key (CMK) to
-     *            which the grant applies.
+     *            The unique identifier for the KMS key to which the grant
+     *            applies.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -342,7 +347,17 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The principal that receives the grant's permissions.
+     * The identity that gets the permissions in the grant.
+     * </p>
+     * <p>
+     * The <code>GranteePrincipal</code> field in the <code>ListGrants</code>
+     * response usually contains the user or role designated as the grantee
+     * principal in the grant. However, when the grantee principal in the grant
+     * is an Amazon Web Services service, the <code>GranteePrincipal</code>
+     * field contains the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     * >service principal</a>, which might represent several different grantee
+     * principals.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -350,7 +365,18 @@ public class GrantListEntry implements Serializable {
      * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
-     *         The principal that receives the grant's permissions.
+     *         The identity that gets the permissions in the grant.
+     *         </p>
+     *         <p>
+     *         The <code>GranteePrincipal</code> field in the
+     *         <code>ListGrants</code> response usually contains the user or
+     *         role designated as the grantee principal in the grant. However,
+     *         when the grantee principal in the grant is an Amazon Web Services
+     *         service, the <code>GranteePrincipal</code> field contains the <a
+     *         href=
+     *         "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     *         >service principal</a>, which might represent several different
+     *         grantee principals.
      *         </p>
      */
     public String getGranteePrincipal() {
@@ -359,7 +385,17 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The principal that receives the grant's permissions.
+     * The identity that gets the permissions in the grant.
+     * </p>
+     * <p>
+     * The <code>GranteePrincipal</code> field in the <code>ListGrants</code>
+     * response usually contains the user or role designated as the grantee
+     * principal in the grant. However, when the grantee principal in the grant
+     * is an Amazon Web Services service, the <code>GranteePrincipal</code>
+     * field contains the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     * >service principal</a>, which might represent several different grantee
+     * principals.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -367,7 +403,18 @@ public class GrantListEntry implements Serializable {
      * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param granteePrincipal <p>
-     *            The principal that receives the grant's permissions.
+     *            The identity that gets the permissions in the grant.
+     *            </p>
+     *            <p>
+     *            The <code>GranteePrincipal</code> field in the
+     *            <code>ListGrants</code> response usually contains the user or
+     *            role designated as the grantee principal in the grant.
+     *            However, when the grantee principal in the grant is an Amazon
+     *            Web Services service, the <code>GranteePrincipal</code> field
+     *            contains the <a href=
+     *            "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     *            >service principal</a>, which might represent several
+     *            different grantee principals.
      *            </p>
      */
     public void setGranteePrincipal(String granteePrincipal) {
@@ -376,7 +423,17 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The principal that receives the grant's permissions.
+     * The identity that gets the permissions in the grant.
+     * </p>
+     * <p>
+     * The <code>GranteePrincipal</code> field in the <code>ListGrants</code>
+     * response usually contains the user or role designated as the grantee
+     * principal in the grant. However, when the grantee principal in the grant
+     * is an Amazon Web Services service, the <code>GranteePrincipal</code>
+     * field contains the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     * >service principal</a>, which might represent several different grantee
+     * principals.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -387,7 +444,18 @@ public class GrantListEntry implements Serializable {
      * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param granteePrincipal <p>
-     *            The principal that receives the grant's permissions.
+     *            The identity that gets the permissions in the grant.
+     *            </p>
+     *            <p>
+     *            The <code>GranteePrincipal</code> field in the
+     *            <code>ListGrants</code> response usually contains the user or
+     *            role designated as the grantee principal in the grant.
+     *            However, when the grantee principal in the grant is an Amazon
+     *            Web Services service, the <code>GranteePrincipal</code> field
+     *            contains the <a href=
+     *            "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services"
+     *            >service principal</a>, which might represent several
+     *            different grantee principals.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -456,7 +524,7 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The AWS account under which the grant was issued.
+     * The Amazon Web Services account under which the grant was issued.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -464,7 +532,7 @@ public class GrantListEntry implements Serializable {
      * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @return <p>
-     *         The AWS account under which the grant was issued.
+     *         The Amazon Web Services account under which the grant was issued.
      *         </p>
      */
     public String getIssuingAccount() {
@@ -473,7 +541,7 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The AWS account under which the grant was issued.
+     * The Amazon Web Services account under which the grant was issued.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -481,7 +549,8 @@ public class GrantListEntry implements Serializable {
      * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param issuingAccount <p>
-     *            The AWS account under which the grant was issued.
+     *            The Amazon Web Services account under which the grant was
+     *            issued.
      *            </p>
      */
     public void setIssuingAccount(String issuingAccount) {
@@ -490,7 +559,7 @@ public class GrantListEntry implements Serializable {
 
     /**
      * <p>
-     * The AWS account under which the grant was issued.
+     * The Amazon Web Services account under which the grant was issued.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -501,7 +570,8 @@ public class GrantListEntry implements Serializable {
      * <b>Pattern: </b>^[\w+=,.@:/-]+$<br/>
      *
      * @param issuingAccount <p>
-     *            The AWS account under which the grant was issued.
+     *            The Amazon Web Services account under which the grant was
+     *            issued.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

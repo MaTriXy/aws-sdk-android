@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,14 +34,27 @@ import com.amazonaws.services.iotdata.model.transform.*;
  * Client for accessing AWS IoT Data. All service calls made using this client
  * are blocking, and will not return until the service call completes.
  * <p>
- * <fullname>AWS IoT</fullname>
+ * <fullname>IoT data</fullname>
  * <p>
- * AWS IoT-Data enables secure, bi-directional communication between
+ * IoT data enables secure, bi-directional communication between
  * Internet-connected things (such as sensors, actuators, embedded devices, or
- * smart appliances) and the AWS cloud. It implements a broker for applications
- * and things to publish messages over HTTP (Publish) and retrieve, update, and
- * delete thing shadows. A thing shadow is a persistent representation of your
- * things and their state in the AWS cloud.
+ * smart appliances) and the Amazon Web Services cloud. It implements a broker
+ * for applications and things to publish messages over HTTP (Publish) and
+ * retrieve, update, and delete shadows. A shadow is a persistent representation
+ * of your things and their state in the Amazon Web Services cloud.
+ * </p>
+ * <p>
+ * Find the endpoint address for actions in IoT data by running this CLI
+ * command:
+ * </p>
+ * <p>
+ * <code>aws iot describe-endpoint --endpoint-type iot:Data-ATS</code>
+ * </p>
+ * <p>
+ * The service name used by <a href=
+ * "https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html"
+ * >Amazon Web ServicesSignature Version 4</a> to sign requests is:
+ * <i>iotdevicegateway</i>.
  * </p>
  */
 public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotData {
@@ -102,16 +115,27 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
      * Constructs a new client to invoke service methods on AWSIotData using the
      * specified AWS account credentials.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AWSIotDataClient client = new AWSIotDataClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -127,16 +151,27 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
      * Constructs a new client to invoke service methods on AWSIotData using the
      * specified AWS account credentials and client configuration options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AWSIotDataClient client = new AWSIotDataClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -155,16 +190,27 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
      * Constructs a new client to invoke service methods on AWSIotData using the
      * specified AWS account credentials provider.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AWSIotDataClient client = new AWSIotDataClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -182,16 +228,27 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
      * specified AWS account credentials provider and client configuration
      * options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AWSIotDataClient client = new AWSIotDataClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -240,6 +297,28 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
      * specified AWS account credentials provider, client configuration options
      * and request metric collector.
      * <p>
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AWSIotDataClient client = new AWSIotDataClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
+     * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
      *
@@ -275,6 +354,7 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
         jsonErrorUnmarshallers.add(new JsonErrorUnmarshaller());
 
         // calling this.setEndPoint(...) will also modify the signer accordingly
+        setServiceNameIntern("iotdata");
         this.setEndpoint("data.iot.us-east-1.amazonaws.com");
         this.endpointPrefix = "data.iot";
 
@@ -293,12 +373,17 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
 
     /**
      * <p>
-     * Deletes the thing shadow for the specified thing.
+     * Deletes the shadow for the specified thing.
+     * </p>
+     * <p>
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+     * >DeleteThingShadow</a> action.
      * </p>
      * <p>
      * For more information, see <a href=
      * "http://docs.aws.amazon.com/iot/latest/developerguide/API_DeleteThingShadow.html"
-     * >DeleteThingShadow</a> in the <i>AWS IoT Developer Guide</i>.
+     * >DeleteThingShadow</a> in the IoT Developer Guide.
      * </p>
      * 
      * @param deleteThingShadowRequest <p>
@@ -355,12 +440,90 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
 
     /**
      * <p>
-     * Gets the thing shadow for the specified thing.
+     * Gets the details of a single retained message for the specified topic.
+     * </p>
+     * <p>
+     * This action returns the message payload of the retained message, which
+     * can incur messaging costs. To list only the topic names of the retained
+     * messages, call <a
+     * href="/iot/latest/developerguide/API_iotdata_ListRetainedMessages.html"
+     * >ListRetainedMessages</a>.
+     * </p>
+     * <p>
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotfleethubfordevicemanagement.html#awsiotfleethubfordevicemanagement-actions-as-permissions"
+     * >GetRetainedMessage</a> action.
+     * </p>
+     * <p>
+     * For more information about messaging costs, see <a
+     * href="http://aws.amazon.com/iot-core/pricing/#Messaging">IoT Core pricing
+     * - Messaging</a>.
+     * </p>
+     * 
+     * @param getRetainedMessageRequest <p>
+     *            The input for the GetRetainedMessage operation.
+     *            </p>
+     * @return getRetainedMessageResult The response from the GetRetainedMessage
+     *         service method, as returned by AWS IoT Data.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws ThrottlingException
+     * @throws UnauthorizedException
+     * @throws ServiceUnavailableException
+     * @throws InternalFailureException
+     * @throws MethodNotAllowedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by AWS
+     *             IoT Data indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetRetainedMessageResult getRetainedMessage(
+            GetRetainedMessageRequest getRetainedMessageRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getRetainedMessageRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetRetainedMessageRequest> request = null;
+        Response<GetRetainedMessageResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetRetainedMessageRequestMarshaller()
+                        .marshall(getRetainedMessageRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetRetainedMessageResult, JsonUnmarshallerContext> unmarshaller = new GetRetainedMessageResultJsonUnmarshaller();
+            JsonResponseHandler<GetRetainedMessageResult> responseHandler = new JsonResponseHandler<GetRetainedMessageResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Gets the shadow for the specified thing.
+     * </p>
+     * <p>
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+     * >GetThingShadow</a> action.
      * </p>
      * <p>
      * For more information, see <a href=
      * "http://docs.aws.amazon.com/iot/latest/developerguide/API_GetThingShadow.html"
-     * >GetThingShadow</a> in the <i>AWS IoT Developer Guide</i>.
+     * >GetThingShadow</a> in the IoT Developer Guide.
      * </p>
      * 
      * @param getThingShadowRequest <p>
@@ -415,12 +578,156 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
 
     /**
      * <p>
-     * Publishes state information.
+     * Lists the shadows for the specified thing.
      * </p>
      * <p>
-     * For more information, see <a href=
-     * "http://docs.aws.amazon.com/iot/latest/developerguide/protocols.html#http"
-     * >HTTP Protocol</a> in the <i>AWS IoT Developer Guide</i>.
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+     * >ListNamedShadowsForThing</a> action.
+     * </p>
+     * 
+     * @param listNamedShadowsForThingRequest
+     * @return listNamedShadowsForThingResult The response from the
+     *         ListNamedShadowsForThing service method, as returned by AWS IoT
+     *         Data.
+     * @throws ResourceNotFoundException
+     * @throws InvalidRequestException
+     * @throws ThrottlingException
+     * @throws UnauthorizedException
+     * @throws ServiceUnavailableException
+     * @throws InternalFailureException
+     * @throws MethodNotAllowedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by AWS
+     *             IoT Data indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListNamedShadowsForThingResult listNamedShadowsForThing(
+            ListNamedShadowsForThingRequest listNamedShadowsForThingRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listNamedShadowsForThingRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListNamedShadowsForThingRequest> request = null;
+        Response<ListNamedShadowsForThingResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListNamedShadowsForThingRequestMarshaller()
+                        .marshall(listNamedShadowsForThingRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListNamedShadowsForThingResult, JsonUnmarshallerContext> unmarshaller = new ListNamedShadowsForThingResultJsonUnmarshaller();
+            JsonResponseHandler<ListNamedShadowsForThingResult> responseHandler = new JsonResponseHandler<ListNamedShadowsForThingResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Lists summary information about the retained messages stored for the
+     * account.
+     * </p>
+     * <p>
+     * This action returns only the topic names of the retained messages. It
+     * doesn't return any message payloads. Although this action doesn't return
+     * a message payload, it can still incur messaging costs.
+     * </p>
+     * <p>
+     * To get the message payload of a retained message, call <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/API_iotdata_GetRetainedMessage.html"
+     * >GetRetainedMessage</a> with the topic name of the retained message.
+     * </p>
+     * <p>
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotfleethubfordevicemanagement.html#awsiotfleethubfordevicemanagement-actions-as-permissions"
+     * >ListRetainedMessages</a> action.
+     * </p>
+     * <p>
+     * For more information about messaging costs, see <a
+     * href="http://aws.amazon.com/iot-core/pricing/#Messaging">IoT Core pricing
+     * - Messaging</a>.
+     * </p>
+     * 
+     * @param listRetainedMessagesRequest
+     * @return listRetainedMessagesResult The response from the
+     *         ListRetainedMessages service method, as returned by AWS IoT Data.
+     * @throws InvalidRequestException
+     * @throws ThrottlingException
+     * @throws UnauthorizedException
+     * @throws ServiceUnavailableException
+     * @throws InternalFailureException
+     * @throws MethodNotAllowedException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by AWS
+     *             IoT Data indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListRetainedMessagesResult listRetainedMessages(
+            ListRetainedMessagesRequest listRetainedMessagesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listRetainedMessagesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListRetainedMessagesRequest> request = null;
+        Response<ListRetainedMessagesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListRetainedMessagesRequestMarshaller()
+                        .marshall(listRetainedMessagesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListRetainedMessagesResult, JsonUnmarshallerContext> unmarshaller = new ListRetainedMessagesResultJsonUnmarshaller();
+            JsonResponseHandler<ListRetainedMessagesResult> responseHandler = new JsonResponseHandler<ListRetainedMessagesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Publishes an MQTT message.
+     * </p>
+     * <p>
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+     * >Publish</a> action.
+     * </p>
+     * <p>
+     * For more information about MQTT messages, see <a
+     * href="http://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html"
+     * >MQTT Protocol</a> in the IoT Developer Guide.
+     * </p>
+     * <p>
+     * For more information about messaging costs, see <a
+     * href="http://aws.amazon.com/iot-core/pricing/#Messaging">IoT Core pricing
+     * - Messaging</a>.
      * </p>
      * 
      * @param publishRequest <p>
@@ -464,12 +771,17 @@ public class AWSIotDataClient extends AmazonWebServiceClient implements AWSIotDa
 
     /**
      * <p>
-     * Updates the thing shadow for the specified thing.
+     * Updates the shadow for the specified thing.
+     * </p>
+     * <p>
+     * Requires permission to access the <a href=
+     * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+     * >UpdateThingShadow</a> action.
      * </p>
      * <p>
      * For more information, see <a href=
      * "http://docs.aws.amazon.com/iot/latest/developerguide/API_UpdateThingShadow.html"
-     * >UpdateThingShadow</a> in the <i>AWS IoT Developer Guide</i>.
+     * >UpdateThingShadow</a> in the IoT Developer Guide.
      * </p>
      * 
      * @param updateThingShadowRequest <p>

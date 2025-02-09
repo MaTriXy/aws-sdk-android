@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -58,6 +58,9 @@ class JobSummaryJsonUnmarshaller implements Unmarshaller<JobSummary, JsonUnmarsh
                         .unmarshall(context));
             } else if (name.equals("completedAt")) {
                 jobSummary.setCompletedAt(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("isConcurrent")) {
+                jobSummary.setIsConcurrent(BooleanJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

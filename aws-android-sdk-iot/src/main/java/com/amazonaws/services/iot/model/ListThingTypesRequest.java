@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,18 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Lists the existing thing types.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListThingTypes</a> action.
+ * </p>
  */
 public class ListThingTypesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The token to retrieve the next set of results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      */
     private String nextToken;
@@ -55,11 +62,15 @@ public class ListThingTypesRequest extends AmazonWebServiceRequest implements Se
 
     /**
      * <p>
-     * The token to retrieve the next set of results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      *
      * @return <p>
-     *         The token to retrieve the next set of results.
+     *         To retrieve the next set of results, the <code>nextToken</code>
+     *         value from a previous response; otherwise <b>null</b> to receive
+     *         the first set of results.
      *         </p>
      */
     public String getNextToken() {
@@ -68,11 +79,15 @@ public class ListThingTypesRequest extends AmazonWebServiceRequest implements Se
 
     /**
      * <p>
-     * The token to retrieve the next set of results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      *
      * @param nextToken <p>
-     *            The token to retrieve the next set of results.
+     *            To retrieve the next set of results, the
+     *            <code>nextToken</code> value from a previous response;
+     *            otherwise <b>null</b> to receive the first set of results.
      *            </p>
      */
     public void setNextToken(String nextToken) {
@@ -81,14 +96,18 @@ public class ListThingTypesRequest extends AmazonWebServiceRequest implements Se
 
     /**
      * <p>
-     * The token to retrieve the next set of results.
+     * To retrieve the next set of results, the <code>nextToken</code> value
+     * from a previous response; otherwise <b>null</b> to receive the first set
+     * of results.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param nextToken <p>
-     *            The token to retrieve the next set of results.
+     *            To retrieve the next set of results, the
+     *            <code>nextToken</code> value from a previous response;
+     *            otherwise <b>null</b> to receive the first set of results.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

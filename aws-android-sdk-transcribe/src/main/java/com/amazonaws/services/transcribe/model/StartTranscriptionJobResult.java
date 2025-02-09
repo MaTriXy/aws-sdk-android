@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,19 +20,21 @@ import java.io.Serializable;
 public class StartTranscriptionJobResult implements Serializable {
     /**
      * <p>
-     * An object containing details of the asynchronous transcription job.
+     * Provides detailed information about the current transcription job,
+     * including job status and, if applicable, failure reason.
      * </p>
      */
     private TranscriptionJob transcriptionJob;
 
     /**
      * <p>
-     * An object containing details of the asynchronous transcription job.
+     * Provides detailed information about the current transcription job,
+     * including job status and, if applicable, failure reason.
      * </p>
      *
      * @return <p>
-     *         An object containing details of the asynchronous transcription
-     *         job.
+     *         Provides detailed information about the current transcription
+     *         job, including job status and, if applicable, failure reason.
      *         </p>
      */
     public TranscriptionJob getTranscriptionJob() {
@@ -41,12 +43,13 @@ public class StartTranscriptionJobResult implements Serializable {
 
     /**
      * <p>
-     * An object containing details of the asynchronous transcription job.
+     * Provides detailed information about the current transcription job,
+     * including job status and, if applicable, failure reason.
      * </p>
      *
      * @param transcriptionJob <p>
-     *            An object containing details of the asynchronous transcription
-     *            job.
+     *            Provides detailed information about the current transcription
+     *            job, including job status and, if applicable, failure reason.
      *            </p>
      */
     public void setTranscriptionJob(TranscriptionJob transcriptionJob) {
@@ -55,15 +58,16 @@ public class StartTranscriptionJobResult implements Serializable {
 
     /**
      * <p>
-     * An object containing details of the asynchronous transcription job.
+     * Provides detailed information about the current transcription job,
+     * including job status and, if applicable, failure reason.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param transcriptionJob <p>
-     *            An object containing details of the asynchronous transcription
-     *            job.
+     *            Provides detailed information about the current transcription
+     *            job, including job status and, if applicable, failure reason.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

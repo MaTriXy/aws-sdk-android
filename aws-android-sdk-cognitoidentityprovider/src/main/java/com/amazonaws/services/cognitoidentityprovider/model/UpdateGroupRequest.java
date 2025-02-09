@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,9 +23,33 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Updates the specified group with the specified attributes.
  * </p>
+ * <note>
  * <p>
- * Requires developer credentials.
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
  * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class UpdateGroupRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -62,9 +86,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The new role ARN for the group. This is used for setting the
-     * <code>cognito:roles</code> and <code>cognito:preferred_role</code> claims
-     * in the token.
+     * The new role Amazon Resource Name (ARN) for the group. This is used for
+     * setting the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims in the token.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -78,7 +102,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
     /**
      * <p>
      * The new precedence value for the group. For more information about this
-     * parameter, see .
+     * parameter, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     * >CreateGroup</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -256,9 +282,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The new role ARN for the group. This is used for setting the
-     * <code>cognito:roles</code> and <code>cognito:preferred_role</code> claims
-     * in the token.
+     * The new role Amazon Resource Name (ARN) for the group. This is used for
+     * setting the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims in the token.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -268,8 +294,8 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @return <p>
-     *         The new role ARN for the group. This is used for setting the
-     *         <code>cognito:roles</code> and
+     *         The new role Amazon Resource Name (ARN) for the group. This is
+     *         used for setting the <code>cognito:roles</code> and
      *         <code>cognito:preferred_role</code> claims in the token.
      *         </p>
      */
@@ -279,9 +305,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The new role ARN for the group. This is used for setting the
-     * <code>cognito:roles</code> and <code>cognito:preferred_role</code> claims
-     * in the token.
+     * The new role Amazon Resource Name (ARN) for the group. This is used for
+     * setting the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims in the token.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -291,8 +317,8 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param roleArn <p>
-     *            The new role ARN for the group. This is used for setting the
-     *            <code>cognito:roles</code> and
+     *            The new role Amazon Resource Name (ARN) for the group. This is
+     *            used for setting the <code>cognito:roles</code> and
      *            <code>cognito:preferred_role</code> claims in the token.
      *            </p>
      */
@@ -302,9 +328,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The new role ARN for the group. This is used for setting the
-     * <code>cognito:roles</code> and <code>cognito:preferred_role</code> claims
-     * in the token.
+     * The new role Amazon Resource Name (ARN) for the group. This is used for
+     * setting the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims in the token.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -317,8 +343,8 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param roleArn <p>
-     *            The new role ARN for the group. This is used for setting the
-     *            <code>cognito:roles</code> and
+     *            The new role Amazon Resource Name (ARN) for the group. This is
+     *            used for setting the <code>cognito:roles</code> and
      *            <code>cognito:preferred_role</code> claims in the token.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -332,7 +358,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
     /**
      * <p>
      * The new precedence value for the group. For more information about this
-     * parameter, see .
+     * parameter, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     * >CreateGroup</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -340,7 +368,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
      *
      * @return <p>
      *         The new precedence value for the group. For more information
-     *         about this parameter, see .
+     *         about this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     *         >CreateGroup</a>.
      *         </p>
      */
     public Integer getPrecedence() {
@@ -350,7 +380,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
     /**
      * <p>
      * The new precedence value for the group. For more information about this
-     * parameter, see .
+     * parameter, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     * >CreateGroup</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -358,7 +390,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
      *
      * @param precedence <p>
      *            The new precedence value for the group. For more information
-     *            about this parameter, see .
+     *            about this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     *            >CreateGroup</a>.
      *            </p>
      */
     public void setPrecedence(Integer precedence) {
@@ -368,7 +402,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
     /**
      * <p>
      * The new precedence value for the group. For more information about this
-     * parameter, see .
+     * parameter, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     * >CreateGroup</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -379,7 +415,9 @@ public class UpdateGroupRequest extends AmazonWebServiceRequest implements Seria
      *
      * @param precedence <p>
      *            The new precedence value for the group. For more information
-     *            about this parameter, see .
+     *            about this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html"
+     *            >CreateGroup</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

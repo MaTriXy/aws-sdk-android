@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,16 +49,29 @@ import com.amazonaws.AmazonWebServiceRequest;
 public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) used by Amazon Polly
+     * when processing input text for speech synthesis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     */
+    private String engine;
+
+    /**
+     * <p>
      * The language identification tag (ISO 639 code for the language name-ISO
      * 3166 country code) for filtering the list of voices returned. If you
      * don't specify this optional parameter, all available voices are returned.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      */
     private String languageCode;
 
@@ -80,8 +93,132 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * <code>DescribeVoices</code> operation. If present, this indicates where
      * to continue the listing.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      */
     private String nextToken;
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) used by Amazon Polly
+     * when processing input text for speech synthesis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @return <p>
+     *         Specifies the engine (<code>standard</code>, <code>neural</code>,
+     *         <code>long-form</code> or <code>generative</code>) used by Amazon
+     *         Polly when processing input text for speech synthesis.
+     *         </p>
+     * @see Engine
+     */
+    public String getEngine() {
+        return engine;
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) used by Amazon Polly
+     * when processing input text for speech synthesis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) used by Amazon Polly when processing
+     *            input text for speech synthesis.
+     *            </p>
+     * @see Engine
+     */
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) used by Amazon Polly
+     * when processing input text for speech synthesis.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) used by Amazon Polly when processing
+     *            input text for speech synthesis.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see Engine
+     */
+    public DescribeVoicesRequest withEngine(String engine) {
+        this.engine = engine;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) used by Amazon Polly
+     * when processing input text for speech synthesis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) used by Amazon Polly when processing
+     *            input text for speech synthesis.
+     *            </p>
+     * @see Engine
+     */
+    public void setEngine(Engine engine) {
+        this.engine = engine.toString();
+    }
+
+    /**
+     * <p>
+     * Specifies the engine (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) used by Amazon Polly
+     * when processing input text for speech synthesis.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>standard, neural, long-form, generative
+     *
+     * @param engine <p>
+     *            Specifies the engine (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) used by Amazon Polly when processing
+     *            input text for speech synthesis.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see Engine
+     */
+    public DescribeVoicesRequest withEngine(Engine engine) {
+        this.engine = engine.toString();
+        return this;
+    }
 
     /**
      * <p>
@@ -91,10 +228,11 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @return <p>
      *         The language identification tag (ISO 639 code for the language
@@ -116,10 +254,11 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            The language identification tag (ISO 639 code for the language
@@ -144,10 +283,11 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            The language identification tag (ISO 639 code for the language
@@ -172,10 +312,11 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            The language identification tag (ISO 639 code for the language
@@ -200,10 +341,11 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            The language identification tag (ISO 639 code for the language
@@ -327,6 +469,9 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * <code>DescribeVoices</code> operation. If present, this indicates where
      * to continue the listing.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      *
      * @return <p>
      *         An opaque pagination token returned from the previous
@@ -344,6 +489,9 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * <code>DescribeVoices</code> operation. If present, this indicates where
      * to continue the listing.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      *
      * @param nextToken <p>
      *            An opaque pagination token returned from the previous
@@ -364,6 +512,9 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      *
      * @param nextToken <p>
      *            An opaque pagination token returned from the previous
@@ -389,6 +540,8 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
+        if (getEngine() != null)
+            sb.append("Engine: " + getEngine() + ",");
         if (getLanguageCode() != null)
             sb.append("LanguageCode: " + getLanguageCode() + ",");
         if (getIncludeAdditionalLanguageCodes() != null)
@@ -405,6 +558,7 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
         final int prime = 31;
         int hashCode = 1;
 
+        hashCode = prime * hashCode + ((getEngine() == null) ? 0 : getEngine().hashCode());
         hashCode = prime * hashCode
                 + ((getLanguageCode() == null) ? 0 : getLanguageCode().hashCode());
         hashCode = prime
@@ -426,6 +580,10 @@ public class DescribeVoicesRequest extends AmazonWebServiceRequest implements Se
             return false;
         DescribeVoicesRequest other = (DescribeVoicesRequest) obj;
 
+        if (other.getEngine() == null ^ this.getEngine() == null)
+            return false;
+        if (other.getEngine() != null && other.getEngine().equals(this.getEngine()) == false)
+            return false;
         if (other.getLanguageCode() == null ^ this.getLanguageCode() == null)
             return false;
         if (other.getLanguageCode() != null

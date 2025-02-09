@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,33 @@ public class TopicsDetectionJobProperties implements Serializable {
      * <b>Pattern: </b>^([\p{L}\p{Z}\p{N}_.:/=+\-%@]*)$<br/>
      */
     private String jobId;
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the topics detection job. It is a
+     * unique, fully qualified identifier for the job. It includes the Amazon
+     * Web Services account, Amazon Web Services Region, and the job ID. The
+     * format of the ARN is as follows:
+     * </p>
+     * <p>
+     * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     * </p>
+     * <p>
+     * The following is an example job ARN:
+     * </p>
+     * <p>
+     * <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-
+     * Z0-9-]{1,64}
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*((/dataset/[a-zA-Z0-9](-*[a-zA-Z0-
+     * 9])*)|(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*))?<br/>
+     */
+    private String jobArn;
 
     /**
      * <p>
@@ -105,6 +132,56 @@ public class TopicsDetectionJobProperties implements Serializable {
 
     /**
      * <p>
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your job data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
+     */
+    private String dataAccessRoleArn;
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String volumeKmsKeyId;
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your topic detection job. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     */
+    private VpcConfig vpcConfig;
+
+    /**
+     * <p>
      * The identifier assigned to the topic detection job.
      * </p>
      * <p>
@@ -157,6 +234,147 @@ public class TopicsDetectionJobProperties implements Serializable {
      */
     public TopicsDetectionJobProperties withJobId(String jobId) {
         this.jobId = jobId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the topics detection job. It is a
+     * unique, fully qualified identifier for the job. It includes the Amazon
+     * Web Services account, Amazon Web Services Region, and the job ID. The
+     * format of the ARN is as follows:
+     * </p>
+     * <p>
+     * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     * </p>
+     * <p>
+     * The following is an example job ARN:
+     * </p>
+     * <p>
+     * <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-
+     * Z0-9-]{1,64}
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*((/dataset/[a-zA-Z0-9](-*[a-zA-Z0-
+     * 9])*)|(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*))?<br/>
+     *
+     * @return <p>
+     *         The Amazon Resource Name (ARN) of the topics detection job. It is
+     *         a unique, fully qualified identifier for the job. It includes the
+     *         Amazon Web Services account, Amazon Web Services Region, and the
+     *         job ID. The format of the ARN is as follows:
+     *         </p>
+     *         <p>
+     *         <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     *         </p>
+     *         <p>
+     *         The following is an example job ARN:
+     *         </p>
+     *         <p>
+     *         <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     *         </p>
+     */
+    public String getJobArn() {
+        return jobArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the topics detection job. It is a
+     * unique, fully qualified identifier for the job. It includes the Amazon
+     * Web Services account, Amazon Web Services Region, and the job ID. The
+     * format of the ARN is as follows:
+     * </p>
+     * <p>
+     * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     * </p>
+     * <p>
+     * The following is an example job ARN:
+     * </p>
+     * <p>
+     * <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-
+     * Z0-9-]{1,64}
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*((/dataset/[a-zA-Z0-9](-*[a-zA-Z0-
+     * 9])*)|(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*))?<br/>
+     *
+     * @param jobArn <p>
+     *            The Amazon Resource Name (ARN) of the topics detection job. It
+     *            is a unique, fully qualified identifier for the job. It
+     *            includes the Amazon Web Services account, Amazon Web Services
+     *            Region, and the job ID. The format of the ARN is as follows:
+     *            </p>
+     *            <p>
+     *            <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     *            </p>
+     *            <p>
+     *            The following is an example job ARN:
+     *            </p>
+     *            <p>
+     *            <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     *            </p>
+     */
+    public void setJobArn(String jobArn) {
+        this.jobArn = jobArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the topics detection job. It is a
+     * unique, fully qualified identifier for the job. It includes the Amazon
+     * Web Services account, Amazon Web Services Region, and the job ID. The
+     * format of the ARN is as follows:
+     * </p>
+     * <p>
+     * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     * </p>
+     * <p>
+     * The following is an example job ARN:
+     * </p>
+     * <p>
+     * <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:[a-zA-
+     * Z0-9-]{1,64}
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*((/dataset/[a-zA-Z0-9](-*[a-zA-Z0-
+     * 9])*)|(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*))?<br/>
+     *
+     * @param jobArn <p>
+     *            The Amazon Resource Name (ARN) of the topics detection job. It
+     *            is a unique, fully qualified identifier for the job. It
+     *            includes the Amazon Web Services account, Amazon Web Services
+     *            Region, and the job ID. The format of the ARN is as follows:
+     *            </p>
+     *            <p>
+     *            <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:topics-detection-job/&lt;job-id&gt;</code>
+     *            </p>
+     *            <p>
+     *            The following is an example job ARN:
+     *            </p>
+     *            <p>
+     *            <code>arn:aws:comprehend:us-west-2:111122223333:topics-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TopicsDetectionJobProperties withJobArn(String jobArn) {
+        this.jobArn = jobArn;
         return this;
     }
 
@@ -631,6 +849,295 @@ public class TopicsDetectionJobProperties implements Serializable {
     }
 
     /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your job data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
+     *
+     * @return <p>
+     *         The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     *         Comprehend read access to your job data.
+     *         </p>
+     */
+    public String getDataAccessRoleArn() {
+        return dataAccessRoleArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your job data.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
+     *
+     * @param dataAccessRoleArn <p>
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your job data.
+     *            </p>
+     */
+    public void setDataAccessRoleArn(String dataAccessRoleArn) {
+        this.dataAccessRoleArn = dataAccessRoleArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your job data.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
+     *
+     * @param dataAccessRoleArn <p>
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your job data.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TopicsDetectionJobProperties withDataAccessRoleArn(String dataAccessRoleArn) {
+        this.dataAccessRoleArn = dataAccessRoleArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the Amazon Web Services Key Management Service (KMS) key
+     *         that Amazon Comprehend uses to encrypt data on the storage volume
+     *         attached to the ML compute instance(s) that process the analysis
+     *         job. The VolumeKmsKeyId can be either of the following formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getVolumeKmsKeyId() {
+        return volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TopicsDetectionJobProperties withVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your topic detection job. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Configuration parameters for a private Virtual Private Cloud
+     *         (VPC) containing the resources you are using for your topic
+     *         detection job. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *         >Amazon VPC</a>.
+     *         </p>
+     */
+    public VpcConfig getVpcConfig() {
+        return vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your topic detection job. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for a private Virtual Private Cloud
+     *            (VPC) containing the resources you are using for your topic
+     *            detection job. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     */
+    public void setVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your topic detection job. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for a private Virtual Private Cloud
+     *            (VPC) containing the resources you are using for your topic
+     *            detection job. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public TopicsDetectionJobProperties withVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -643,6 +1150,8 @@ public class TopicsDetectionJobProperties implements Serializable {
         sb.append("{");
         if (getJobId() != null)
             sb.append("JobId: " + getJobId() + ",");
+        if (getJobArn() != null)
+            sb.append("JobArn: " + getJobArn() + ",");
         if (getJobName() != null)
             sb.append("JobName: " + getJobName() + ",");
         if (getJobStatus() != null)
@@ -658,7 +1167,13 @@ public class TopicsDetectionJobProperties implements Serializable {
         if (getOutputDataConfig() != null)
             sb.append("OutputDataConfig: " + getOutputDataConfig() + ",");
         if (getNumberOfTopics() != null)
-            sb.append("NumberOfTopics: " + getNumberOfTopics());
+            sb.append("NumberOfTopics: " + getNumberOfTopics() + ",");
+        if (getDataAccessRoleArn() != null)
+            sb.append("DataAccessRoleArn: " + getDataAccessRoleArn() + ",");
+        if (getVolumeKmsKeyId() != null)
+            sb.append("VolumeKmsKeyId: " + getVolumeKmsKeyId() + ",");
+        if (getVpcConfig() != null)
+            sb.append("VpcConfig: " + getVpcConfig());
         sb.append("}");
         return sb.toString();
     }
@@ -669,6 +1184,7 @@ public class TopicsDetectionJobProperties implements Serializable {
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getJobId() == null) ? 0 : getJobId().hashCode());
+        hashCode = prime * hashCode + ((getJobArn() == null) ? 0 : getJobArn().hashCode());
         hashCode = prime * hashCode + ((getJobName() == null) ? 0 : getJobName().hashCode());
         hashCode = prime * hashCode + ((getJobStatus() == null) ? 0 : getJobStatus().hashCode());
         hashCode = prime * hashCode + ((getMessage() == null) ? 0 : getMessage().hashCode());
@@ -680,6 +1196,11 @@ public class TopicsDetectionJobProperties implements Serializable {
                 + ((getOutputDataConfig() == null) ? 0 : getOutputDataConfig().hashCode());
         hashCode = prime * hashCode
                 + ((getNumberOfTopics() == null) ? 0 : getNumberOfTopics().hashCode());
+        hashCode = prime * hashCode
+                + ((getDataAccessRoleArn() == null) ? 0 : getDataAccessRoleArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getVolumeKmsKeyId() == null) ? 0 : getVolumeKmsKeyId().hashCode());
+        hashCode = prime * hashCode + ((getVpcConfig() == null) ? 0 : getVpcConfig().hashCode());
         return hashCode;
     }
 
@@ -697,6 +1218,10 @@ public class TopicsDetectionJobProperties implements Serializable {
         if (other.getJobId() == null ^ this.getJobId() == null)
             return false;
         if (other.getJobId() != null && other.getJobId().equals(this.getJobId()) == false)
+            return false;
+        if (other.getJobArn() == null ^ this.getJobArn() == null)
+            return false;
+        if (other.getJobArn() != null && other.getJobArn().equals(this.getJobArn()) == false)
             return false;
         if (other.getJobName() == null ^ this.getJobName() == null)
             return false;
@@ -734,6 +1259,21 @@ public class TopicsDetectionJobProperties implements Serializable {
             return false;
         if (other.getNumberOfTopics() != null
                 && other.getNumberOfTopics().equals(this.getNumberOfTopics()) == false)
+            return false;
+        if (other.getDataAccessRoleArn() == null ^ this.getDataAccessRoleArn() == null)
+            return false;
+        if (other.getDataAccessRoleArn() != null
+                && other.getDataAccessRoleArn().equals(this.getDataAccessRoleArn()) == false)
+            return false;
+        if (other.getVolumeKmsKeyId() == null ^ this.getVolumeKmsKeyId() == null)
+            return false;
+        if (other.getVolumeKmsKeyId() != null
+                && other.getVolumeKmsKeyId().equals(this.getVolumeKmsKeyId()) == false)
+            return false;
+        if (other.getVpcConfig() == null ^ this.getVpcConfig() == null)
+            return false;
+        if (other.getVpcConfig() != null
+                && other.getVpcConfig().equals(this.getVpcConfig()) == false)
             return false;
         return true;
     }

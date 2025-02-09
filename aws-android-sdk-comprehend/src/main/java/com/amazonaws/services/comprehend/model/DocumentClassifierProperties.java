@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,8 +31,9 @@ public class DocumentClassifierProperties implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      */
     private String documentClassifierArn;
 
@@ -43,20 +44,27 @@ public class DocumentClassifierProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      */
     private String languageCode;
 
     /**
      * <p>
-     * The status of the document classifier. The the status is
+     * The status of the document classifier. If the status is
      * <code>TRAINED</code> the classifier is ready to use. If the status is
-     * <code>FAILED</code> you can see additional information about why the
-     * classifier wasn't trained in the <code>Message</code> field.
+     * <code>TRAINED_WITH_WARNINGS</code> the classifier training succeeded, but
+     * you should review the warnings returned in the
+     * <code>CreateDocumentClassifier</code> response.
+     * </p>
+     * <p>
+     * If the status is <code>FAILED</code> you can see additional information
+     * about why the classifier wasn't trained in the <code>Message</code>
+     * field.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      */
     private String status;
 
@@ -110,6 +118,14 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
+     * Provides output results configuration parameters for custom classifier
+     * jobs.
+     * </p>
+     */
+    private DocumentClassifierOutputDataConfig outputDataConfig;
+
+    /**
+     * <p>
      * Information about the document classifier, including the number of
      * documents used for training the classifier, the number of documents used
      * for test the classifier, and an accuracy rating.
@@ -119,8 +135,8 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -131,14 +147,131 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String volumeKmsKeyId;
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom classifier. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     */
+    private VpcConfig vpcConfig;
+
+    /**
+     * <p>
+     * Indicates the mode in which the specific classifier was trained. This
+     * also indicates the format of input documents and the format of the
+     * confusion matrix. Each classifier can only be trained in one mode and
+     * this cannot be changed once the classifier is trained.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>MULTI_CLASS, MULTI_LABEL
+     */
+    private String mode;
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String modelKmsKeyId;
+
+    /**
+     * <p>
+     * The version name that you assigned to the document classifier.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     */
+    private String versionName;
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * document classifier model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     */
+    private String sourceModelArn;
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     */
+    private String flywheelArn;
+
+    /**
+     * <p>
      * The Amazon Resource Name (ARN) that identifies the document classifier.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @return <p>
      *         The Amazon Resource Name (ARN) that identifies the document
@@ -157,8 +290,9 @@ public class DocumentClassifierProperties implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param documentClassifierArn <p>
      *            The Amazon Resource Name (ARN) that identifies the document
@@ -180,8 +314,9 @@ public class DocumentClassifierProperties implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param documentClassifierArn <p>
      *            The Amazon Resource Name (ARN) that identifies the document
@@ -202,7 +337,7 @@ public class DocumentClassifierProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @return <p>
      *         The language code for the language of the documents that the
@@ -221,7 +356,7 @@ public class DocumentClassifierProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language code for the language of the documents that the
@@ -243,7 +378,7 @@ public class DocumentClassifierProperties implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language code for the language of the documents that the
@@ -265,7 +400,7 @@ public class DocumentClassifierProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language code for the language of the documents that the
@@ -287,7 +422,7 @@ public class DocumentClassifierProperties implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language code for the language of the documents that the
@@ -304,20 +439,32 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The status of the document classifier. The the status is
+     * The status of the document classifier. If the status is
      * <code>TRAINED</code> the classifier is ready to use. If the status is
-     * <code>FAILED</code> you can see additional information about why the
-     * classifier wasn't trained in the <code>Message</code> field.
+     * <code>TRAINED_WITH_WARNINGS</code> the classifier training succeeded, but
+     * you should review the warnings returned in the
+     * <code>CreateDocumentClassifier</code> response.
+     * </p>
+     * <p>
+     * If the status is <code>FAILED</code> you can see additional information
+     * about why the classifier wasn't trained in the <code>Message</code>
+     * field.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @return <p>
-     *         The status of the document classifier. The the status is
+     *         The status of the document classifier. If the status is
      *         <code>TRAINED</code> the classifier is ready to use. If the
-     *         status is <code>FAILED</code> you can see additional information
-     *         about why the classifier wasn't trained in the
+     *         status is <code>TRAINED_WITH_WARNINGS</code> the classifier
+     *         training succeeded, but you should review the warnings returned
+     *         in the <code>CreateDocumentClassifier</code> response.
+     *         </p>
+     *         <p>
+     *         If the status is <code>FAILED</code> you can see additional
+     *         information about why the classifier wasn't trained in the
      *         <code>Message</code> field.
      *         </p>
      * @see ModelStatus
@@ -328,19 +475,32 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The status of the document classifier. The the status is
+     * The status of the document classifier. If the status is
      * <code>TRAINED</code> the classifier is ready to use. If the status is
-     * <code>FAILED</code> you can see additional information about why the
-     * classifier wasn't trained in the <code>Message</code> field.
+     * <code>TRAINED_WITH_WARNINGS</code> the classifier training succeeded, but
+     * you should review the warnings returned in the
+     * <code>CreateDocumentClassifier</code> response.
+     * </p>
+     * <p>
+     * If the status is <code>FAILED</code> you can see additional information
+     * about why the classifier wasn't trained in the <code>Message</code>
+     * field.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
-     *            The status of the document classifier. The the status is
+     *            The status of the document classifier. If the status is
      *            <code>TRAINED</code> the classifier is ready to use. If the
-     *            status is <code>FAILED</code> you can see additional
+     *            status is <code>TRAINED_WITH_WARNINGS</code> the classifier
+     *            training succeeded, but you should review the warnings
+     *            returned in the <code>CreateDocumentClassifier</code>
+     *            response.
+     *            </p>
+     *            <p>
+     *            If the status is <code>FAILED</code> you can see additional
      *            information about why the classifier wasn't trained in the
      *            <code>Message</code> field.
      *            </p>
@@ -352,22 +512,35 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The status of the document classifier. The the status is
+     * The status of the document classifier. If the status is
      * <code>TRAINED</code> the classifier is ready to use. If the status is
-     * <code>FAILED</code> you can see additional information about why the
-     * classifier wasn't trained in the <code>Message</code> field.
+     * <code>TRAINED_WITH_WARNINGS</code> the classifier training succeeded, but
+     * you should review the warnings returned in the
+     * <code>CreateDocumentClassifier</code> response.
+     * </p>
+     * <p>
+     * If the status is <code>FAILED</code> you can see additional information
+     * about why the classifier wasn't trained in the <code>Message</code>
+     * field.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
-     *            The status of the document classifier. The the status is
+     *            The status of the document classifier. If the status is
      *            <code>TRAINED</code> the classifier is ready to use. If the
-     *            status is <code>FAILED</code> you can see additional
+     *            status is <code>TRAINED_WITH_WARNINGS</code> the classifier
+     *            training succeeded, but you should review the warnings
+     *            returned in the <code>CreateDocumentClassifier</code>
+     *            response.
+     *            </p>
+     *            <p>
+     *            If the status is <code>FAILED</code> you can see additional
      *            information about why the classifier wasn't trained in the
      *            <code>Message</code> field.
      *            </p>
@@ -382,19 +555,32 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The status of the document classifier. The the status is
+     * The status of the document classifier. If the status is
      * <code>TRAINED</code> the classifier is ready to use. If the status is
-     * <code>FAILED</code> you can see additional information about why the
-     * classifier wasn't trained in the <code>Message</code> field.
+     * <code>TRAINED_WITH_WARNINGS</code> the classifier training succeeded, but
+     * you should review the warnings returned in the
+     * <code>CreateDocumentClassifier</code> response.
+     * </p>
+     * <p>
+     * If the status is <code>FAILED</code> you can see additional information
+     * about why the classifier wasn't trained in the <code>Message</code>
+     * field.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
-     *            The status of the document classifier. The the status is
+     *            The status of the document classifier. If the status is
      *            <code>TRAINED</code> the classifier is ready to use. If the
-     *            status is <code>FAILED</code> you can see additional
+     *            status is <code>TRAINED_WITH_WARNINGS</code> the classifier
+     *            training succeeded, but you should review the warnings
+     *            returned in the <code>CreateDocumentClassifier</code>
+     *            response.
+     *            </p>
+     *            <p>
+     *            If the status is <code>FAILED</code> you can see additional
      *            information about why the classifier wasn't trained in the
      *            <code>Message</code> field.
      *            </p>
@@ -406,22 +592,35 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The status of the document classifier. The the status is
+     * The status of the document classifier. If the status is
      * <code>TRAINED</code> the classifier is ready to use. If the status is
-     * <code>FAILED</code> you can see additional information about why the
-     * classifier wasn't trained in the <code>Message</code> field.
+     * <code>TRAINED_WITH_WARNINGS</code> the classifier training succeeded, but
+     * you should review the warnings returned in the
+     * <code>CreateDocumentClassifier</code> response.
+     * </p>
+     * <p>
+     * If the status is <code>FAILED</code> you can see additional information
+     * about why the classifier wasn't trained in the <code>Message</code>
+     * field.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
-     *            The status of the document classifier. The the status is
+     *            The status of the document classifier. If the status is
      *            <code>TRAINED</code> the classifier is ready to use. If the
-     *            status is <code>FAILED</code> you can see additional
+     *            status is <code>TRAINED_WITH_WARNINGS</code> the classifier
+     *            training succeeded, but you should review the warnings
+     *            returned in the <code>CreateDocumentClassifier</code>
+     *            response.
+     *            </p>
+     *            <p>
+     *            If the status is <code>FAILED</code> you can see additional
      *            information about why the classifier wasn't trained in the
      *            <code>Message</code> field.
      *            </p>
@@ -745,6 +944,58 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
+     * Provides output results configuration parameters for custom classifier
+     * jobs.
+     * </p>
+     *
+     * @return <p>
+     *         Provides output results configuration parameters for custom
+     *         classifier jobs.
+     *         </p>
+     */
+    public DocumentClassifierOutputDataConfig getOutputDataConfig() {
+        return outputDataConfig;
+    }
+
+    /**
+     * <p>
+     * Provides output results configuration parameters for custom classifier
+     * jobs.
+     * </p>
+     *
+     * @param outputDataConfig <p>
+     *            Provides output results configuration parameters for custom
+     *            classifier jobs.
+     *            </p>
+     */
+    public void setOutputDataConfig(DocumentClassifierOutputDataConfig outputDataConfig) {
+        this.outputDataConfig = outputDataConfig;
+    }
+
+    /**
+     * <p>
+     * Provides output results configuration parameters for custom classifier
+     * jobs.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param outputDataConfig <p>
+     *            Provides output results configuration parameters for custom
+     *            classifier jobs.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withOutputDataConfig(
+            DocumentClassifierOutputDataConfig outputDataConfig) {
+        this.outputDataConfig = outputDataConfig;
+        return this;
+    }
+
+    /**
+     * <p>
      * Information about the document classifier, including the number of
      * documents used for training the classifier, the number of documents used
      * for test the classifier, and an accuracy rating.
@@ -804,8 +1055,8 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -813,9 +1064,8 @@ public class DocumentClassifierProperties implements Serializable {
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @return <p>
-     *         The Amazon Resource Name (ARN) of the AWS Identity and Management
-     *         (IAM) role that grants Amazon Comprehend read access to your
-     *         input data.
+     *         The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     *         Comprehend read access to your input data.
      *         </p>
      */
     public String getDataAccessRoleArn() {
@@ -824,8 +1074,8 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -833,9 +1083,8 @@ public class DocumentClassifierProperties implements Serializable {
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data.
      *            </p>
      */
     public void setDataAccessRoleArn(String dataAccessRoleArn) {
@@ -844,8 +1093,8 @@ public class DocumentClassifierProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -856,15 +1105,719 @@ public class DocumentClassifierProperties implements Serializable {
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public DocumentClassifierProperties withDataAccessRoleArn(String dataAccessRoleArn) {
         this.dataAccessRoleArn = dataAccessRoleArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the Amazon Web Services Key Management Service (KMS) key
+     *         that Amazon Comprehend uses to encrypt data on the storage volume
+     *         attached to the ML compute instance(s) that process the analysis
+     *         job. The VolumeKmsKeyId can be either of the following formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getVolumeKmsKeyId() {
+        return volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom classifier. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Configuration parameters for a private Virtual Private Cloud
+     *         (VPC) containing the resources you are using for your custom
+     *         classifier. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     *         >Amazon VPC</a>.
+     *         </p>
+     */
+    public VpcConfig getVpcConfig() {
+        return vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom classifier. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for a private Virtual Private Cloud
+     *            (VPC) containing the resources you are using for your custom
+     *            classifier. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     */
+    public void setVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom classifier. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for a private Virtual Private Cloud
+     *            (VPC) containing the resources you are using for your custom
+     *            classifier. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/vppc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates the mode in which the specific classifier was trained. This
+     * also indicates the format of input documents and the format of the
+     * confusion matrix. Each classifier can only be trained in one mode and
+     * this cannot be changed once the classifier is trained.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>MULTI_CLASS, MULTI_LABEL
+     *
+     * @return <p>
+     *         Indicates the mode in which the specific classifier was trained.
+     *         This also indicates the format of input documents and the format
+     *         of the confusion matrix. Each classifier can only be trained in
+     *         one mode and this cannot be changed once the classifier is
+     *         trained.
+     *         </p>
+     * @see DocumentClassifierMode
+     */
+    public String getMode() {
+        return mode;
+    }
+
+    /**
+     * <p>
+     * Indicates the mode in which the specific classifier was trained. This
+     * also indicates the format of input documents and the format of the
+     * confusion matrix. Each classifier can only be trained in one mode and
+     * this cannot be changed once the classifier is trained.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>MULTI_CLASS, MULTI_LABEL
+     *
+     * @param mode <p>
+     *            Indicates the mode in which the specific classifier was
+     *            trained. This also indicates the format of input documents and
+     *            the format of the confusion matrix. Each classifier can only
+     *            be trained in one mode and this cannot be changed once the
+     *            classifier is trained.
+     *            </p>
+     * @see DocumentClassifierMode
+     */
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    /**
+     * <p>
+     * Indicates the mode in which the specific classifier was trained. This
+     * also indicates the format of input documents and the format of the
+     * confusion matrix. Each classifier can only be trained in one mode and
+     * this cannot be changed once the classifier is trained.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>MULTI_CLASS, MULTI_LABEL
+     *
+     * @param mode <p>
+     *            Indicates the mode in which the specific classifier was
+     *            trained. This also indicates the format of input documents and
+     *            the format of the confusion matrix. Each classifier can only
+     *            be trained in one mode and this cannot be changed once the
+     *            classifier is trained.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see DocumentClassifierMode
+     */
+    public DocumentClassifierProperties withMode(String mode) {
+        this.mode = mode;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates the mode in which the specific classifier was trained. This
+     * also indicates the format of input documents and the format of the
+     * confusion matrix. Each classifier can only be trained in one mode and
+     * this cannot be changed once the classifier is trained.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>MULTI_CLASS, MULTI_LABEL
+     *
+     * @param mode <p>
+     *            Indicates the mode in which the specific classifier was
+     *            trained. This also indicates the format of input documents and
+     *            the format of the confusion matrix. Each classifier can only
+     *            be trained in one mode and this cannot be changed once the
+     *            classifier is trained.
+     *            </p>
+     * @see DocumentClassifierMode
+     */
+    public void setMode(DocumentClassifierMode mode) {
+        this.mode = mode.toString();
+    }
+
+    /**
+     * <p>
+     * Indicates the mode in which the specific classifier was trained. This
+     * also indicates the format of input documents and the format of the
+     * confusion matrix. Each classifier can only be trained in one mode and
+     * this cannot be changed once the classifier is trained.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>MULTI_CLASS, MULTI_LABEL
+     *
+     * @param mode <p>
+     *            Indicates the mode in which the specific classifier was
+     *            trained. This also indicates the format of input documents and
+     *            the format of the confusion matrix. Each classifier can only
+     *            be trained in one mode and this cannot be changed once the
+     *            classifier is trained.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see DocumentClassifierMode
+     */
+    public DocumentClassifierProperties withMode(DocumentClassifierMode mode) {
+        this.mode = mode.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the KMS key that Amazon Comprehend uses to encrypt trained
+     *         custom models. The ModelKmsKeyId can be either of the following
+     *         formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getModelKmsKeyId() {
+        return modelKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param modelKmsKeyId <p>
+     *            ID for the KMS key that Amazon Comprehend uses to encrypt
+     *            trained custom models. The ModelKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setModelKmsKeyId(String modelKmsKeyId) {
+        this.modelKmsKeyId = modelKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param modelKmsKeyId <p>
+     *            ID for the KMS key that Amazon Comprehend uses to encrypt
+     *            trained custom models. The ModelKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withModelKmsKeyId(String modelKmsKeyId) {
+        this.modelKmsKeyId = modelKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The version name that you assigned to the document classifier.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @return <p>
+     *         The version name that you assigned to the document classifier.
+     *         </p>
+     */
+    public String getVersionName() {
+        return versionName;
+    }
+
+    /**
+     * <p>
+     * The version name that you assigned to the document classifier.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param versionName <p>
+     *            The version name that you assigned to the document classifier.
+     *            </p>
+     */
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
+    }
+
+    /**
+     * <p>
+     * The version name that you assigned to the document classifier.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param versionName <p>
+     *            The version name that you assigned to the document classifier.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withVersionName(String versionName) {
+        this.versionName = versionName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * document classifier model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     *
+     * @return <p>
+     *         The Amazon Resource Name (ARN) of the source model. This model
+     *         was imported from a different Amazon Web Services account to
+     *         create the document classifier model in your Amazon Web Services
+     *         account.
+     *         </p>
+     */
+    public String getSourceModelArn() {
+        return sourceModelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * document classifier model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     *
+     * @param sourceModelArn <p>
+     *            The Amazon Resource Name (ARN) of the source model. This model
+     *            was imported from a different Amazon Web Services account to
+     *            create the document classifier model in your Amazon Web
+     *            Services account.
+     *            </p>
+     */
+    public void setSourceModelArn(String sourceModelArn) {
+        this.sourceModelArn = sourceModelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * document classifier model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     *
+     * @param sourceModelArn <p>
+     *            The Amazon Resource Name (ARN) of the source model. This model
+     *            was imported from a different Amazon Web Services account to
+     *            create the document classifier model in your Amazon Web
+     *            Services account.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withSourceModelArn(String sourceModelArn) {
+        this.sourceModelArn = sourceModelArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     *
+     * @return <p>
+     *         The Amazon Resource Number (ARN) of the flywheel
+     *         </p>
+     */
+    public String getFlywheelArn() {
+        return flywheelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     *
+     * @param flywheelArn <p>
+     *            The Amazon Resource Number (ARN) of the flywheel
+     *            </p>
+     */
+    public void setFlywheelArn(String flywheelArn) {
+        this.flywheelArn = flywheelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     *
+     * @param flywheelArn <p>
+     *            The Amazon Resource Number (ARN) of the flywheel
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierProperties withFlywheelArn(String flywheelArn) {
+        this.flywheelArn = flywheelArn;
         return this;
     }
 
@@ -897,10 +1850,26 @@ public class DocumentClassifierProperties implements Serializable {
             sb.append("TrainingEndTime: " + getTrainingEndTime() + ",");
         if (getInputDataConfig() != null)
             sb.append("InputDataConfig: " + getInputDataConfig() + ",");
+        if (getOutputDataConfig() != null)
+            sb.append("OutputDataConfig: " + getOutputDataConfig() + ",");
         if (getClassifierMetadata() != null)
             sb.append("ClassifierMetadata: " + getClassifierMetadata() + ",");
         if (getDataAccessRoleArn() != null)
-            sb.append("DataAccessRoleArn: " + getDataAccessRoleArn());
+            sb.append("DataAccessRoleArn: " + getDataAccessRoleArn() + ",");
+        if (getVolumeKmsKeyId() != null)
+            sb.append("VolumeKmsKeyId: " + getVolumeKmsKeyId() + ",");
+        if (getVpcConfig() != null)
+            sb.append("VpcConfig: " + getVpcConfig() + ",");
+        if (getMode() != null)
+            sb.append("Mode: " + getMode() + ",");
+        if (getModelKmsKeyId() != null)
+            sb.append("ModelKmsKeyId: " + getModelKmsKeyId() + ",");
+        if (getVersionName() != null)
+            sb.append("VersionName: " + getVersionName() + ",");
+        if (getSourceModelArn() != null)
+            sb.append("SourceModelArn: " + getSourceModelArn() + ",");
+        if (getFlywheelArn() != null)
+            sb.append("FlywheelArn: " + getFlywheelArn());
         sb.append("}");
         return sb.toString();
     }
@@ -926,9 +1895,23 @@ public class DocumentClassifierProperties implements Serializable {
         hashCode = prime * hashCode
                 + ((getInputDataConfig() == null) ? 0 : getInputDataConfig().hashCode());
         hashCode = prime * hashCode
+                + ((getOutputDataConfig() == null) ? 0 : getOutputDataConfig().hashCode());
+        hashCode = prime * hashCode
                 + ((getClassifierMetadata() == null) ? 0 : getClassifierMetadata().hashCode());
         hashCode = prime * hashCode
                 + ((getDataAccessRoleArn() == null) ? 0 : getDataAccessRoleArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getVolumeKmsKeyId() == null) ? 0 : getVolumeKmsKeyId().hashCode());
+        hashCode = prime * hashCode + ((getVpcConfig() == null) ? 0 : getVpcConfig().hashCode());
+        hashCode = prime * hashCode + ((getMode() == null) ? 0 : getMode().hashCode());
+        hashCode = prime * hashCode
+                + ((getModelKmsKeyId() == null) ? 0 : getModelKmsKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getVersionName() == null) ? 0 : getVersionName().hashCode());
+        hashCode = prime * hashCode
+                + ((getSourceModelArn() == null) ? 0 : getSourceModelArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getFlywheelArn() == null) ? 0 : getFlywheelArn().hashCode());
         return hashCode;
     }
 
@@ -985,6 +1968,11 @@ public class DocumentClassifierProperties implements Serializable {
         if (other.getInputDataConfig() != null
                 && other.getInputDataConfig().equals(this.getInputDataConfig()) == false)
             return false;
+        if (other.getOutputDataConfig() == null ^ this.getOutputDataConfig() == null)
+            return false;
+        if (other.getOutputDataConfig() != null
+                && other.getOutputDataConfig().equals(this.getOutputDataConfig()) == false)
+            return false;
         if (other.getClassifierMetadata() == null ^ this.getClassifierMetadata() == null)
             return false;
         if (other.getClassifierMetadata() != null
@@ -994,6 +1982,40 @@ public class DocumentClassifierProperties implements Serializable {
             return false;
         if (other.getDataAccessRoleArn() != null
                 && other.getDataAccessRoleArn().equals(this.getDataAccessRoleArn()) == false)
+            return false;
+        if (other.getVolumeKmsKeyId() == null ^ this.getVolumeKmsKeyId() == null)
+            return false;
+        if (other.getVolumeKmsKeyId() != null
+                && other.getVolumeKmsKeyId().equals(this.getVolumeKmsKeyId()) == false)
+            return false;
+        if (other.getVpcConfig() == null ^ this.getVpcConfig() == null)
+            return false;
+        if (other.getVpcConfig() != null
+                && other.getVpcConfig().equals(this.getVpcConfig()) == false)
+            return false;
+        if (other.getMode() == null ^ this.getMode() == null)
+            return false;
+        if (other.getMode() != null && other.getMode().equals(this.getMode()) == false)
+            return false;
+        if (other.getModelKmsKeyId() == null ^ this.getModelKmsKeyId() == null)
+            return false;
+        if (other.getModelKmsKeyId() != null
+                && other.getModelKmsKeyId().equals(this.getModelKmsKeyId()) == false)
+            return false;
+        if (other.getVersionName() == null ^ this.getVersionName() == null)
+            return false;
+        if (other.getVersionName() != null
+                && other.getVersionName().equals(this.getVersionName()) == false)
+            return false;
+        if (other.getSourceModelArn() == null ^ this.getSourceModelArn() == null)
+            return false;
+        if (other.getSourceModelArn() != null
+                && other.getSourceModelArn().equals(this.getSourceModelArn()) == false)
+            return false;
+        if (other.getFlywheelArn() == null ^ this.getFlywheelArn() == null)
+            return false;
+        if (other.getFlywheelArn() != null
+                && other.getFlywheelArn().equals(this.getFlywheelArn()) == false)
             return false;
         return true;
     }

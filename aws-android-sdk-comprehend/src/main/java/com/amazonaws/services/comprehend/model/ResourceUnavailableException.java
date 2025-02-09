@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The specified resource is not available. Check to see if the resource is in
- * the <code>TRAINED</code> state and try your request again.
+ * The specified resource is not available. Check the resource and try your
+ * request again.
  * </p>
  */
 public class ResourceUnavailableException extends AmazonServiceException {

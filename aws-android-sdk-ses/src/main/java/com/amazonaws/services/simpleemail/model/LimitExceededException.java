@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.amazonaws.AmazonServiceException;
  * <p>
  * Indicates that a resource could not be created because of service limits. For
  * a list of Amazon SES limits, see the <a
- * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html"
+ * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html"
  * >Amazon SES Developer Guide</a>.
  * </p>
  */

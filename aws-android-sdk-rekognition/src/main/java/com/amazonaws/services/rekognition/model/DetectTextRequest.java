@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,15 +31,14 @@ import com.amazonaws.AmazonWebServiceRequest;
  * image must be either a .png or .jpeg formatted file.
  * </p>
  * <p>
- * The <code>DetectText</code> operation returns text in an array of elements,
- * <code>TextDetections</code>. Each <code>TextDetection</code> element provides
- * information about a single word or line of text that was detected in the
- * image.
+ * The <code>DetectText</code> operation returns text in an array of
+ * <a>TextDetection</a> elements, <code>TextDetections</code>. Each
+ * <code>TextDetection</code> element provides information about a single word
+ * or line of text that was detected in the image.
  * </p>
  * <p>
- * A word is one or more ISO basic latin script characters that are not
- * separated by spaces. <code>DetectText</code> can detect up to 50 words in an
- * image.
+ * A word is one or more script characters that are not separated by spaces.
+ * <code>DetectText</code> can detect up to 100 words in an image.
  * </p>
  * <p>
  * A line is a string of equally spaced words. A line isn't necessarily a
@@ -56,11 +55,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * or a word, use the <code>TextDetection</code> object <code>Type</code> field.
  * </p>
  * <p>
- * To be detected, text must be within +/- 30 degrees orientation of the
+ * To be detected, text must be within +/- 90 degrees orientation of the
  * horizontal axis.
  * </p>
  * <p>
- * For more information, see DetectText in the Amazon Rekognition Developer
+ * For more information, see Detecting text in the Amazon Rekognition Developer
  * Guide.
  * </p>
  */
@@ -71,8 +70,22 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
      * use the AWS CLI to call Amazon Rekognition operations, you can't pass
      * image bytes.
      * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
      */
     private Image image;
+
+    /**
+     * <p>
+     * Optional parameters that let you set the criteria that the text must meet
+     * to be included in your response.
+     * </p>
+     */
+    private DetectTextFilters filters;
 
     /**
      * <p>
@@ -80,11 +93,23 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
      * use the AWS CLI to call Amazon Rekognition operations, you can't pass
      * image bytes.
      * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
      *
      * @return <p>
      *         The input image as base64-encoded bytes or an Amazon S3 object.
      *         If you use the AWS CLI to call Amazon Rekognition operations, you
      *         can't pass image bytes.
+     *         </p>
+     *         <p>
+     *         If you are using an AWS SDK to call Amazon Rekognition, you might
+     *         not need to base64-encode image bytes passed using the
+     *         <code>Bytes</code> field. For more information, see Images in the
+     *         Amazon Rekognition developer guide.
      *         </p>
      */
     public Image getImage() {
@@ -97,11 +122,23 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
      * use the AWS CLI to call Amazon Rekognition operations, you can't pass
      * image bytes.
      * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
      *
      * @param image <p>
      *            The input image as base64-encoded bytes or an Amazon S3
      *            object. If you use the AWS CLI to call Amazon Rekognition
      *            operations, you can't pass image bytes.
+     *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
      *            </p>
      */
     public void setImage(Image image) {
@@ -115,6 +152,12 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
      * image bytes.
      * </p>
      * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
@@ -123,11 +166,68 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
      *            object. If you use the AWS CLI to call Amazon Rekognition
      *            operations, you can't pass image bytes.
      *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public DetectTextRequest withImage(Image image) {
         this.image = image;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Optional parameters that let you set the criteria that the text must meet
+     * to be included in your response.
+     * </p>
+     *
+     * @return <p>
+     *         Optional parameters that let you set the criteria that the text
+     *         must meet to be included in your response.
+     *         </p>
+     */
+    public DetectTextFilters getFilters() {
+        return filters;
+    }
+
+    /**
+     * <p>
+     * Optional parameters that let you set the criteria that the text must meet
+     * to be included in your response.
+     * </p>
+     *
+     * @param filters <p>
+     *            Optional parameters that let you set the criteria that the
+     *            text must meet to be included in your response.
+     *            </p>
+     */
+    public void setFilters(DetectTextFilters filters) {
+        this.filters = filters;
+    }
+
+    /**
+     * <p>
+     * Optional parameters that let you set the criteria that the text must meet
+     * to be included in your response.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param filters <p>
+     *            Optional parameters that let you set the criteria that the
+     *            text must meet to be included in your response.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DetectTextRequest withFilters(DetectTextFilters filters) {
+        this.filters = filters;
         return this;
     }
 
@@ -143,7 +243,9 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         if (getImage() != null)
-            sb.append("Image: " + getImage());
+            sb.append("Image: " + getImage() + ",");
+        if (getFilters() != null)
+            sb.append("Filters: " + getFilters());
         sb.append("}");
         return sb.toString();
     }
@@ -154,6 +256,7 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getImage() == null) ? 0 : getImage().hashCode());
+        hashCode = prime * hashCode + ((getFilters() == null) ? 0 : getFilters().hashCode());
         return hashCode;
     }
 
@@ -171,6 +274,10 @@ public class DetectTextRequest extends AmazonWebServiceRequest implements Serial
         if (other.getImage() == null ^ this.getImage() == null)
             return false;
         if (other.getImage() != null && other.getImage().equals(this.getImage()) == false)
+            return false;
+        if (other.getFilters() == null ^ this.getFilters() == null)
+            return false;
+        if (other.getFilters() != null && other.getFilters().equals(this.getFilters()) == false)
             return false;
         return true;
     }

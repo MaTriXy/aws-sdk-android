@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,40 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Creates a new domain for a user pool.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The domain string.
+     * The domain string. For custom domains, this is the fully-qualified domain
+     * name, such as <code>auth.example.com</code>. For Amazon Cognito prefix
+     * domains, this is the prefix alone, such as <code>auth</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -53,14 +82,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * webpages for your application.
      * </p>
      * <p>
-     * Provide this parameter only if you want to use own custom domain for your
+     * Provide this parameter only if you want to use a custom domain for your
      * user pool. Otherwise, you can exclude this parameter and use the Amazon
      * Cognito hosted domain instead.
      * </p>
      * <p>
      * For more information about the hosted domain and custom domains, see <a
      * href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      * >Configuring a User Pool Domain</a>.
      * </p>
      */
@@ -68,7 +97,9 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The domain string.
+     * The domain string. For custom domains, this is the fully-qualified domain
+     * name, such as <code>auth.example.com</code>. For Amazon Cognito prefix
+     * domains, this is the prefix alone, such as <code>auth</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -76,7 +107,10 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>^[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?$<br/>
      *
      * @return <p>
-     *         The domain string.
+     *         The domain string. For custom domains, this is the
+     *         fully-qualified domain name, such as
+     *         <code>auth.example.com</code>. For Amazon Cognito prefix domains,
+     *         this is the prefix alone, such as <code>auth</code>.
      *         </p>
      */
     public String getDomain() {
@@ -85,7 +119,9 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The domain string.
+     * The domain string. For custom domains, this is the fully-qualified domain
+     * name, such as <code>auth.example.com</code>. For Amazon Cognito prefix
+     * domains, this is the prefix alone, such as <code>auth</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -93,7 +129,10 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>^[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?$<br/>
      *
      * @param domain <p>
-     *            The domain string.
+     *            The domain string. For custom domains, this is the
+     *            fully-qualified domain name, such as
+     *            <code>auth.example.com</code>. For Amazon Cognito prefix
+     *            domains, this is the prefix alone, such as <code>auth</code>.
      *            </p>
      */
     public void setDomain(String domain) {
@@ -102,7 +141,9 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The domain string.
+     * The domain string. For custom domains, this is the fully-qualified domain
+     * name, such as <code>auth.example.com</code>. For Amazon Cognito prefix
+     * domains, this is the prefix alone, such as <code>auth</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -113,7 +154,10 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>^[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?$<br/>
      *
      * @param domain <p>
-     *            The domain string.
+     *            The domain string. For custom domains, this is the
+     *            fully-qualified domain name, such as
+     *            <code>auth.example.com</code>. For Amazon Cognito prefix
+     *            domains, this is the prefix alone, such as <code>auth</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -186,14 +230,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * webpages for your application.
      * </p>
      * <p>
-     * Provide this parameter only if you want to use own custom domain for your
+     * Provide this parameter only if you want to use a custom domain for your
      * user pool. Otherwise, you can exclude this parameter and use the Amazon
      * Cognito hosted domain instead.
      * </p>
      * <p>
      * For more information about the hosted domain and custom domains, see <a
      * href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      * >Configuring a User Pool Domain</a>.
      * </p>
      *
@@ -202,14 +246,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      *         sign-in webpages for your application.
      *         </p>
      *         <p>
-     *         Provide this parameter only if you want to use own custom domain
+     *         Provide this parameter only if you want to use a custom domain
      *         for your user pool. Otherwise, you can exclude this parameter and
      *         use the Amazon Cognito hosted domain instead.
      *         </p>
      *         <p>
      *         For more information about the hosted domain and custom domains,
      *         see <a href=
-     *         "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      *         >Configuring a User Pool Domain</a>.
      *         </p>
      */
@@ -223,14 +267,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * webpages for your application.
      * </p>
      * <p>
-     * Provide this parameter only if you want to use own custom domain for your
+     * Provide this parameter only if you want to use a custom domain for your
      * user pool. Otherwise, you can exclude this parameter and use the Amazon
      * Cognito hosted domain instead.
      * </p>
      * <p>
      * For more information about the hosted domain and custom domains, see <a
      * href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      * >Configuring a User Pool Domain</a>.
      * </p>
      *
@@ -239,14 +283,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      *            and sign-in webpages for your application.
      *            </p>
      *            <p>
-     *            Provide this parameter only if you want to use own custom
-     *            domain for your user pool. Otherwise, you can exclude this
-     *            parameter and use the Amazon Cognito hosted domain instead.
+     *            Provide this parameter only if you want to use a custom domain
+     *            for your user pool. Otherwise, you can exclude this parameter
+     *            and use the Amazon Cognito hosted domain instead.
      *            </p>
      *            <p>
      *            For more information about the hosted domain and custom
      *            domains, see <a href=
-     *            "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      *            >Configuring a User Pool Domain</a>.
      *            </p>
      */
@@ -260,14 +304,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      * webpages for your application.
      * </p>
      * <p>
-     * Provide this parameter only if you want to use own custom domain for your
+     * Provide this parameter only if you want to use a custom domain for your
      * user pool. Otherwise, you can exclude this parameter and use the Amazon
      * Cognito hosted domain instead.
      * </p>
      * <p>
      * For more information about the hosted domain and custom domains, see <a
      * href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      * >Configuring a User Pool Domain</a>.
      * </p>
      * <p>
@@ -279,14 +323,14 @@ public class CreateUserPoolDomainRequest extends AmazonWebServiceRequest impleme
      *            and sign-in webpages for your application.
      *            </p>
      *            <p>
-     *            Provide this parameter only if you want to use own custom
-     *            domain for your user pool. Otherwise, you can exclude this
-     *            parameter and use the Amazon Cognito hosted domain instead.
+     *            Provide this parameter only if you want to use a custom domain
+     *            for your user pool. Otherwise, you can exclude this parameter
+     *            and use the Amazon Cognito hosted domain instead.
      *            </p>
      *            <p>
      *            For more information about the hosted domain and custom
      *            domains, see <a href=
-     *            "http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html"
      *            >Configuring a User Pool Domain</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be

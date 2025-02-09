@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -88,6 +88,37 @@ class JobJsonUnmarshaller implements Unmarshaller<Job, JsonUnmarshallerContext> 
             } else if (name.equals("timeoutConfig")) {
                 job.setTimeoutConfig(TimeoutConfigJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("namespaceId")) {
+                job.setNamespaceId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("jobTemplateArn")) {
+                job.setJobTemplateArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("jobExecutionsRetryConfig")) {
+                job.setJobExecutionsRetryConfig(JobExecutionsRetryConfigJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("documentParameters")) {
+                job.setDocumentParameters(new MapUnmarshaller<String>(StringJsonUnmarshaller
+                        .getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("isConcurrent")) {
+                job.setIsConcurrent(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("schedulingConfig")) {
+                job.setSchedulingConfig(SchedulingConfigJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("scheduledJobRollouts")) {
+                job.setScheduledJobRollouts(new ListUnmarshaller<ScheduledJobRollout>(
+                        ScheduledJobRolloutJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("destinationPackageVersions")) {
+                job.setDestinationPackageVersions(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

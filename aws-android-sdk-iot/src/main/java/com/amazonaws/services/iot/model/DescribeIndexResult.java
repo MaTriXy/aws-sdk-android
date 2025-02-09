@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,25 +47,33 @@ public class DescribeIndexResult implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains only registry data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry data and
-     * shadow data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry data and shadow
+     * data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will contain registry
+     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains registry
      * data and thing connectivity status data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index will
-     * contain registry data, shadow data, and thing connectivity status data.
+     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index contains
+     * registry data, shadow data, and thing connectivity status data.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * MULTI_INDEXING_MODE - Your thing index contains multiple data sources.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     * >GetIndexingConfiguration</a>.
      * </p>
      * </li>
      * </ul>
@@ -234,25 +242,33 @@ public class DescribeIndexResult implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains only registry data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry data and
-     * shadow data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry data and shadow
+     * data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will contain registry
+     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains registry
      * data and thing connectivity status data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index will
-     * contain registry data, shadow data, and thing connectivity status data.
+     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index contains
+     * registry data, shadow data, and thing connectivity status data.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * MULTI_INDEXING_MODE - Your thing index contains multiple data sources.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     * >GetIndexingConfiguration</a>.
      * </p>
      * </li>
      * </ul>
@@ -264,26 +280,34 @@ public class DescribeIndexResult implements Serializable {
      *         <ul>
      *         <li>
      *         <p>
-     *         REGISTRY – Your thing index will contain only registry data.
+     *         REGISTRY – Your thing index contains only registry data.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         REGISTRY_AND_SHADOW - Your thing index will contain registry data
-     *         and shadow data.
+     *         REGISTRY_AND_SHADOW - Your thing index contains registry data and
+     *         shadow data.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will contain
+     *         REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains
      *         registry data and thing connectivity status data.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
      *         REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index
-     *         will contain registry data, shadow data, and thing connectivity
+     *         contains registry data, shadow data, and thing connectivity
      *         status data.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         MULTI_INDEXING_MODE - Your thing index contains multiple data
+     *         sources. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     *         >GetIndexingConfiguration</a>.
      *         </p>
      *         </li>
      *         </ul>
@@ -300,25 +324,33 @@ public class DescribeIndexResult implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains only registry data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry data and
-     * shadow data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry data and shadow
+     * data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will contain registry
+     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains registry
      * data and thing connectivity status data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index will
-     * contain registry data, shadow data, and thing connectivity status data.
+     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index contains
+     * registry data, shadow data, and thing connectivity status data.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * MULTI_INDEXING_MODE - Your thing index contains multiple data sources.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     * >GetIndexingConfiguration</a>.
      * </p>
      * </li>
      * </ul>
@@ -330,26 +362,34 @@ public class DescribeIndexResult implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            REGISTRY – Your thing index will contain only registry data.
+     *            REGISTRY – Your thing index contains only registry data.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_SHADOW - Your thing index will contain registry
-     *            data and shadow data.
+     *            REGISTRY_AND_SHADOW - Your thing index contains registry data
+     *            and shadow data.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will
-     *            contain registry data and thing connectivity status data.
+     *            REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains
+     *            registry data and thing connectivity status data.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
      *            REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index
-     *            will contain registry data, shadow data, and thing
-     *            connectivity status data.
+     *            contains registry data, shadow data, and thing connectivity
+     *            status data.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            MULTI_INDEXING_MODE - Your thing index contains multiple data
+     *            sources. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     *            >GetIndexingConfiguration</a>.
      *            </p>
      *            </li>
      *            </ul>
@@ -366,25 +406,33 @@ public class DescribeIndexResult implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains only registry data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry data and
-     * shadow data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry data and shadow
+     * data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will contain registry
+     * REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains registry
      * data and thing connectivity status data.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index will
-     * contain registry data, shadow data, and thing connectivity status data.
+     * REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index contains
+     * registry data, shadow data, and thing connectivity status data.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * MULTI_INDEXING_MODE - Your thing index contains multiple data sources.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     * >GetIndexingConfiguration</a>.
      * </p>
      * </li>
      * </ul>
@@ -399,26 +447,34 @@ public class DescribeIndexResult implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            REGISTRY – Your thing index will contain only registry data.
+     *            REGISTRY – Your thing index contains only registry data.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_SHADOW - Your thing index will contain registry
-     *            data and shadow data.
+     *            REGISTRY_AND_SHADOW - Your thing index contains registry data
+     *            and shadow data.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index will
-     *            contain registry data and thing connectivity status data.
+     *            REGISTRY_AND_CONNECTIVITY_STATUS - Your thing index contains
+     *            registry data and thing connectivity status data.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
      *            REGISTRY_AND_SHADOW_AND_CONNECTIVITY_STATUS - Your thing index
-     *            will contain registry data, shadow data, and thing
-     *            connectivity status data.
+     *            contains registry data, shadow data, and thing connectivity
+     *            status data.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            MULTI_INDEXING_MODE - Your thing index contains multiple data
+     *            sources. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/apireference/API_GetIndexingConfiguration.html"
+     *            >GetIndexingConfiguration</a>.
      *            </p>
      *            </li>
      *            </ul>

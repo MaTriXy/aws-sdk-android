@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,9 +19,17 @@ import java.io.Serializable;
 
 /**
  * <p>
- * The Amazon Pinpoint analytics configuration for collecting metrics for a user
- * pool.
+ * The Amazon Pinpoint analytics configuration necessary to collect metrics for
+ * a user pool.
  * </p>
+ * <note>
+ * <p>
+ * In Regions where Amazon Pinpoint isn't available, user pools only support
+ * sending events to Amazon Pinpoint projects in us-east-1. In Regions where
+ * Amazon Pinpoint is available, user pools support sending events to Amazon
+ * Pinpoint projects within that same Region.
+ * </p>
+ * </note>
  */
 public class AnalyticsConfigurationType implements Serializable {
     /**
@@ -36,8 +44,24 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that authorizes Amazon Cognito to publish events
-     * to Amazon Pinpoint analytics.
+     * The Amazon Resource Name (ARN) of an Amazon Pinpoint project. You can use
+     * the Amazon Pinpoint project to integrate with the chosen user pool
+     * Client. Amazon Cognito publishes events to the Amazon Pinpoint project
+     * that the app ARN declares.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern:
+     * </b>arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=
+     * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
+     */
+    private String applicationArn;
+
+    /**
+     * <p>
+     * The ARN of an Identity and Access Management role that authorizes Amazon
+     * Cognito to publish events to Amazon Pinpoint analytics.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -52,13 +76,16 @@ public class AnalyticsConfigurationType implements Serializable {
      * <p>
      * The external ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String externalId;
 
     /**
      * <p>
-     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito will
-     * include user data in the events it publishes to Amazon Pinpoint
+     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito
+     * includes user data in the events that it publishes to Amazon Pinpoint
      * analytics.
      * </p>
      */
@@ -120,8 +147,10 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that authorizes Amazon Cognito to publish events
-     * to Amazon Pinpoint analytics.
+     * The Amazon Resource Name (ARN) of an Amazon Pinpoint project. You can use
+     * the Amazon Pinpoint project to integrate with the chosen user pool
+     * Client. Amazon Cognito publishes events to the Amazon Pinpoint project
+     * that the app ARN declares.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -131,8 +160,87 @@ public class AnalyticsConfigurationType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @return <p>
-     *         The ARN of an IAM role that authorizes Amazon Cognito to publish
-     *         events to Amazon Pinpoint analytics.
+     *         The Amazon Resource Name (ARN) of an Amazon Pinpoint project. You
+     *         can use the Amazon Pinpoint project to integrate with the chosen
+     *         user pool Client. Amazon Cognito publishes events to the Amazon
+     *         Pinpoint project that the app ARN declares.
+     *         </p>
+     */
+    public String getApplicationArn() {
+        return applicationArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of an Amazon Pinpoint project. You can use
+     * the Amazon Pinpoint project to integrate with the chosen user pool
+     * Client. Amazon Cognito publishes events to the Amazon Pinpoint project
+     * that the app ARN declares.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern:
+     * </b>arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=
+     * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
+     *
+     * @param applicationArn <p>
+     *            The Amazon Resource Name (ARN) of an Amazon Pinpoint project.
+     *            You can use the Amazon Pinpoint project to integrate with the
+     *            chosen user pool Client. Amazon Cognito publishes events to
+     *            the Amazon Pinpoint project that the app ARN declares.
+     *            </p>
+     */
+    public void setApplicationArn(String applicationArn) {
+        this.applicationArn = applicationArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of an Amazon Pinpoint project. You can use
+     * the Amazon Pinpoint project to integrate with the chosen user pool
+     * Client. Amazon Cognito publishes events to the Amazon Pinpoint project
+     * that the app ARN declares.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern:
+     * </b>arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=
+     * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
+     *
+     * @param applicationArn <p>
+     *            The Amazon Resource Name (ARN) of an Amazon Pinpoint project.
+     *            You can use the Amazon Pinpoint project to integrate with the
+     *            chosen user pool Client. Amazon Cognito publishes events to
+     *            the Amazon Pinpoint project that the app ARN declares.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AnalyticsConfigurationType withApplicationArn(String applicationArn) {
+        this.applicationArn = applicationArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ARN of an Identity and Access Management role that authorizes Amazon
+     * Cognito to publish events to Amazon Pinpoint analytics.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     * <b>Pattern:
+     * </b>arn:[\w+=/,.@-]+:[\w+=/,.@-]+:([\w+=/,.@-]*)?:[0-9]+:[\w+=
+     * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
+     *
+     * @return <p>
+     *         The ARN of an Identity and Access Management role that authorizes
+     *         Amazon Cognito to publish events to Amazon Pinpoint analytics.
      *         </p>
      */
     public String getRoleArn() {
@@ -141,8 +249,8 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that authorizes Amazon Cognito to publish events
-     * to Amazon Pinpoint analytics.
+     * The ARN of an Identity and Access Management role that authorizes Amazon
+     * Cognito to publish events to Amazon Pinpoint analytics.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -152,8 +260,9 @@ public class AnalyticsConfigurationType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param roleArn <p>
-     *            The ARN of an IAM role that authorizes Amazon Cognito to
-     *            publish events to Amazon Pinpoint analytics.
+     *            The ARN of an Identity and Access Management role that
+     *            authorizes Amazon Cognito to publish events to Amazon Pinpoint
+     *            analytics.
      *            </p>
      */
     public void setRoleArn(String roleArn) {
@@ -162,8 +271,8 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that authorizes Amazon Cognito to publish events
-     * to Amazon Pinpoint analytics.
+     * The ARN of an Identity and Access Management role that authorizes Amazon
+     * Cognito to publish events to Amazon Pinpoint analytics.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -176,8 +285,9 @@ public class AnalyticsConfigurationType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param roleArn <p>
-     *            The ARN of an IAM role that authorizes Amazon Cognito to
-     *            publish events to Amazon Pinpoint analytics.
+     *            The ARN of an Identity and Access Management role that
+     *            authorizes Amazon Cognito to publish events to Amazon Pinpoint
+     *            analytics.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -191,6 +301,9 @@ public class AnalyticsConfigurationType implements Serializable {
      * <p>
      * The external ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The external ID.
@@ -204,6 +317,9 @@ public class AnalyticsConfigurationType implements Serializable {
      * <p>
      * The external ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param externalId <p>
      *            The external ID.
@@ -220,6 +336,9 @@ public class AnalyticsConfigurationType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param externalId <p>
      *            The external ID.
@@ -234,14 +353,14 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito will
-     * include user data in the events it publishes to Amazon Pinpoint
+     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito
+     * includes user data in the events that it publishes to Amazon Pinpoint
      * analytics.
      * </p>
      *
      * @return <p>
      *         If <code>UserDataShared</code> is <code>true</code>, Amazon
-     *         Cognito will include user data in the events it publishes to
+     *         Cognito includes user data in the events that it publishes to
      *         Amazon Pinpoint analytics.
      *         </p>
      */
@@ -251,14 +370,14 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito will
-     * include user data in the events it publishes to Amazon Pinpoint
+     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito
+     * includes user data in the events that it publishes to Amazon Pinpoint
      * analytics.
      * </p>
      *
      * @return <p>
      *         If <code>UserDataShared</code> is <code>true</code>, Amazon
-     *         Cognito will include user data in the events it publishes to
+     *         Cognito includes user data in the events that it publishes to
      *         Amazon Pinpoint analytics.
      *         </p>
      */
@@ -268,14 +387,14 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito will
-     * include user data in the events it publishes to Amazon Pinpoint
+     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito
+     * includes user data in the events that it publishes to Amazon Pinpoint
      * analytics.
      * </p>
      *
      * @param userDataShared <p>
      *            If <code>UserDataShared</code> is <code>true</code>, Amazon
-     *            Cognito will include user data in the events it publishes to
+     *            Cognito includes user data in the events that it publishes to
      *            Amazon Pinpoint analytics.
      *            </p>
      */
@@ -285,8 +404,8 @@ public class AnalyticsConfigurationType implements Serializable {
 
     /**
      * <p>
-     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito will
-     * include user data in the events it publishes to Amazon Pinpoint
+     * If <code>UserDataShared</code> is <code>true</code>, Amazon Cognito
+     * includes user data in the events that it publishes to Amazon Pinpoint
      * analytics.
      * </p>
      * <p>
@@ -295,7 +414,7 @@ public class AnalyticsConfigurationType implements Serializable {
      *
      * @param userDataShared <p>
      *            If <code>UserDataShared</code> is <code>true</code>, Amazon
-     *            Cognito will include user data in the events it publishes to
+     *            Cognito includes user data in the events that it publishes to
      *            Amazon Pinpoint analytics.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -319,6 +438,8 @@ public class AnalyticsConfigurationType implements Serializable {
         sb.append("{");
         if (getApplicationId() != null)
             sb.append("ApplicationId: " + getApplicationId() + ",");
+        if (getApplicationArn() != null)
+            sb.append("ApplicationArn: " + getApplicationArn() + ",");
         if (getRoleArn() != null)
             sb.append("RoleArn: " + getRoleArn() + ",");
         if (getExternalId() != null)
@@ -336,6 +457,8 @@ public class AnalyticsConfigurationType implements Serializable {
 
         hashCode = prime * hashCode
                 + ((getApplicationId() == null) ? 0 : getApplicationId().hashCode());
+        hashCode = prime * hashCode
+                + ((getApplicationArn() == null) ? 0 : getApplicationArn().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
         hashCode = prime * hashCode + ((getExternalId() == null) ? 0 : getExternalId().hashCode());
         hashCode = prime * hashCode
@@ -358,6 +481,11 @@ public class AnalyticsConfigurationType implements Serializable {
             return false;
         if (other.getApplicationId() != null
                 && other.getApplicationId().equals(this.getApplicationId()) == false)
+            return false;
+        if (other.getApplicationArn() == null ^ this.getApplicationArn() == null)
+            return false;
+        if (other.getApplicationArn() != null
+                && other.getApplicationArn().equals(this.getApplicationArn()) == false)
             return false;
         if (other.getRoleArn() == null ^ this.getRoleArn() == null)
             return false;

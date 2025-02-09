@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.rekognition.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -72,6 +75,22 @@ public class ListFacesRequestMarshaller implements
                 Integer maxResults = listFacesRequest.getMaxResults();
                 jsonWriter.name("MaxResults");
                 jsonWriter.value(maxResults);
+            }
+            if (listFacesRequest.getUserId() != null) {
+                String userId = listFacesRequest.getUserId();
+                jsonWriter.name("UserId");
+                jsonWriter.value(userId);
+            }
+            if (listFacesRequest.getFaceIds() != null) {
+                java.util.List<String> faceIds = listFacesRequest.getFaceIds();
+                jsonWriter.name("FaceIds");
+                jsonWriter.beginArray();
+                for (String faceIdsItem : faceIds) {
+                    if (faceIdsItem != null) {
+                        jsonWriter.value(faceIdsItem);
+                    }
+                }
+                jsonWriter.endArray();
             }
 
             jsonWriter.endObject();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Starts an on-demand Device Defender audit.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >StartOnDemandAuditTask</a> action.
+ * </p>
  */
 public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -30,7 +35,7 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      * Which checks are performed during the audit. The checks you specify must
      * be enabled for your account or an exception occurs. Use
      * <code>DescribeAccountAuditConfiguration</code> to see the list of all
-     * checks including those that are enabled or
+     * checks, including those that are enabled or
      * <code>UpdateAccountAuditConfiguration</code> to select which checks are
      * enabled.
      * </p>
@@ -42,7 +47,7 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      * Which checks are performed during the audit. The checks you specify must
      * be enabled for your account or an exception occurs. Use
      * <code>DescribeAccountAuditConfiguration</code> to see the list of all
-     * checks including those that are enabled or
+     * checks, including those that are enabled or
      * <code>UpdateAccountAuditConfiguration</code> to select which checks are
      * enabled.
      * </p>
@@ -51,7 +56,7 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      *         Which checks are performed during the audit. The checks you
      *         specify must be enabled for your account or an exception occurs.
      *         Use <code>DescribeAccountAuditConfiguration</code> to see the
-     *         list of all checks including those that are enabled or
+     *         list of all checks, including those that are enabled or
      *         <code>UpdateAccountAuditConfiguration</code> to select which
      *         checks are enabled.
      *         </p>
@@ -65,7 +70,7 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      * Which checks are performed during the audit. The checks you specify must
      * be enabled for your account or an exception occurs. Use
      * <code>DescribeAccountAuditConfiguration</code> to see the list of all
-     * checks including those that are enabled or
+     * checks, including those that are enabled or
      * <code>UpdateAccountAuditConfiguration</code> to select which checks are
      * enabled.
      * </p>
@@ -74,9 +79,9 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      *            Which checks are performed during the audit. The checks you
      *            specify must be enabled for your account or an exception
      *            occurs. Use <code>DescribeAccountAuditConfiguration</code> to
-     *            see the list of all checks including those that are enabled or
-     *            <code>UpdateAccountAuditConfiguration</code> to select which
-     *            checks are enabled.
+     *            see the list of all checks, including those that are enabled
+     *            or <code>UpdateAccountAuditConfiguration</code> to select
+     *            which checks are enabled.
      *            </p>
      */
     public void setTargetCheckNames(java.util.Collection<String> targetCheckNames) {
@@ -93,7 +98,7 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      * Which checks are performed during the audit. The checks you specify must
      * be enabled for your account or an exception occurs. Use
      * <code>DescribeAccountAuditConfiguration</code> to see the list of all
-     * checks including those that are enabled or
+     * checks, including those that are enabled or
      * <code>UpdateAccountAuditConfiguration</code> to select which checks are
      * enabled.
      * </p>
@@ -105,9 +110,9 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      *            Which checks are performed during the audit. The checks you
      *            specify must be enabled for your account or an exception
      *            occurs. Use <code>DescribeAccountAuditConfiguration</code> to
-     *            see the list of all checks including those that are enabled or
-     *            <code>UpdateAccountAuditConfiguration</code> to select which
-     *            checks are enabled.
+     *            see the list of all checks, including those that are enabled
+     *            or <code>UpdateAccountAuditConfiguration</code> to select
+     *            which checks are enabled.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -127,7 +132,7 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      * Which checks are performed during the audit. The checks you specify must
      * be enabled for your account or an exception occurs. Use
      * <code>DescribeAccountAuditConfiguration</code> to see the list of all
-     * checks including those that are enabled or
+     * checks, including those that are enabled or
      * <code>UpdateAccountAuditConfiguration</code> to select which checks are
      * enabled.
      * </p>
@@ -139,9 +144,9 @@ public class StartOnDemandAuditTaskRequest extends AmazonWebServiceRequest imple
      *            Which checks are performed during the audit. The checks you
      *            specify must be enabled for your account or an exception
      *            occurs. Use <code>DescribeAccountAuditConfiguration</code> to
-     *            see the list of all checks including those that are enabled or
-     *            <code>UpdateAccountAuditConfiguration</code> to select which
-     *            checks are enabled.
+     *            see the list of all checks, including those that are enabled
+     *            or <code>UpdateAccountAuditConfiguration</code> to select
+     *            which checks are enabled.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

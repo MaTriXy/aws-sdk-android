@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,7 +41,8 @@ public class ClassifierMetadata implements Serializable {
     /**
      * <p>
      * The number of documents in the input data that were used to test the
-     * classifier. Typically this is 10 to 20 percent of the input documents.
+     * classifier. Typically this is 10 to 20 percent of the input documents, up
+     * to 10,000 documents.
      * </p>
      */
     private Integer numberOfTestDocuments;
@@ -156,13 +157,14 @@ public class ClassifierMetadata implements Serializable {
     /**
      * <p>
      * The number of documents in the input data that were used to test the
-     * classifier. Typically this is 10 to 20 percent of the input documents.
+     * classifier. Typically this is 10 to 20 percent of the input documents, up
+     * to 10,000 documents.
      * </p>
      *
      * @return <p>
      *         The number of documents in the input data that were used to test
      *         the classifier. Typically this is 10 to 20 percent of the input
-     *         documents.
+     *         documents, up to 10,000 documents.
      *         </p>
      */
     public Integer getNumberOfTestDocuments() {
@@ -172,13 +174,14 @@ public class ClassifierMetadata implements Serializable {
     /**
      * <p>
      * The number of documents in the input data that were used to test the
-     * classifier. Typically this is 10 to 20 percent of the input documents.
+     * classifier. Typically this is 10 to 20 percent of the input documents, up
+     * to 10,000 documents.
      * </p>
      *
      * @param numberOfTestDocuments <p>
      *            The number of documents in the input data that were used to
      *            test the classifier. Typically this is 10 to 20 percent of the
-     *            input documents.
+     *            input documents, up to 10,000 documents.
      *            </p>
      */
     public void setNumberOfTestDocuments(Integer numberOfTestDocuments) {
@@ -188,7 +191,8 @@ public class ClassifierMetadata implements Serializable {
     /**
      * <p>
      * The number of documents in the input data that were used to test the
-     * classifier. Typically this is 10 to 20 percent of the input documents.
+     * classifier. Typically this is 10 to 20 percent of the input documents, up
+     * to 10,000 documents.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -197,7 +201,7 @@ public class ClassifierMetadata implements Serializable {
      * @param numberOfTestDocuments <p>
      *            The number of documents in the input data that were used to
      *            test the classifier. Typically this is 10 to 20 percent of the
-     *            input documents.
+     *            input documents, up to 10,000 documents.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

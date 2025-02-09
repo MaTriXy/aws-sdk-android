@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,21 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Returns details about the IAM identity whose credentials are used to call the
- * API.
+ * Returns details about the IAM user or role whose credentials are used to call
+ * the operation.
  * </p>
+ * <note>
+ * <p>
+ * No permissions are required to perform this operation. If an administrator
+ * attaches a policy to your identity that explicitly denies access to the
+ * <code>sts:GetCallerIdentity</code> action, you can still perform this
+ * operation. Permissions are not required because the same information is
+ * returned when access is denied. To view an example response, see <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_general.html#troubleshoot_general_access-denied-delete-mfa"
+ * >I Am Not Authorized to Perform: iam:DeleteVirtualMFADevice</a> in the <i>IAM
+ * User Guide</i>.
+ * </p>
+ * </note>
  */
 public class GetCallerIdentityRequest extends AmazonWebServiceRequest implements Serializable {
     /**

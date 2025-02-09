@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,7 +47,8 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING
+     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING,
+     * UPDATING
      */
     private String status;
 
@@ -95,19 +96,71 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      */
     private String roleArn;
 
     /**
      * <p>
-     * Face recognition input parameters that are being used by the stream
-     * processor. Includes the collection to use for face recognition and the
-     * face attributes to detect.
+     * Input parameters used in a streaming video analyzed by a stream
+     * processor. You can use <code>FaceSearch</code> to recognize faces in a
+     * streaming video, or you can use <code>ConnectedHome</code> to detect
+     * labels.
      * </p>
      */
     private StreamProcessorSettings settings;
+
+    /**
+     * <p>
+     * The Amazon Simple Notification Service topic to which Amazon Rekognition
+     * publishes the object detection results and completion status of a video
+     * analysis operation.
+     * </p>
+     * <p>
+     * Amazon Rekognition publishes a notification the first time an object of
+     * interest or a person is detected in the video stream. For example, if
+     * Amazon Rekognition detects a person at second 2, a pet at second 4, and a
+     * person again at second 5, Amazon Rekognition sends 2 object class
+     * detected notifications, one for a person at second 2 and one for a pet at
+     * second 4.
+     * </p>
+     * <p>
+     * Amazon Rekognition also publishes an an end-of-session notification with
+     * a summary when the stream processing session is complete.
+     * </p>
+     */
+    private StreamProcessorNotificationChannel notificationChannel;
+
+    /**
+     * <p>
+     * The identifier for your AWS Key Management Service key (AWS KMS key).
+     * This is an optional parameter for label detection stream processors.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     * <b>Pattern: </b>^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$<br/>
+     */
+    private String kmsKeyId;
+
+    /**
+     * <p>
+     * Specifies locations in the frames where Amazon Rekognition checks for
+     * objects or people. This is an optional parameter for label detection
+     * stream processors.
+     * </p>
+     */
+    private java.util.List<RegionOfInterest> regionsOfInterest;
+
+    /**
+     * <p>
+     * Shows whether you are sharing data with Rekognition to improve model
+     * performance. You can choose this option at the account level or on a
+     * per-stream basis. Note that if you opt out at the account level this
+     * setting is ignored on individual streams.
+     * </p>
+     */
+    private StreamProcessorDataSharingPreference dataSharingPreference;
 
     /**
      * <p>
@@ -232,7 +285,8 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING
+     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING,
+     * UPDATING
      *
      * @return <p>
      *         Current status of the stream processor.
@@ -249,7 +303,8 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING
+     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING,
+     * UPDATING
      *
      * @param status <p>
      *            Current status of the stream processor.
@@ -269,7 +324,8 @@ public class DescribeStreamProcessorResult implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING
+     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING,
+     * UPDATING
      *
      * @param status <p>
      *            Current status of the stream processor.
@@ -289,7 +345,8 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING
+     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING,
+     * UPDATING
      *
      * @param status <p>
      *            Current status of the stream processor.
@@ -309,7 +366,8 @@ public class DescribeStreamProcessorResult implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING
+     * <b>Allowed Values: </b>STOPPED, STARTING, RUNNING, FAILED, STOPPING,
+     * UPDATING
      *
      * @param status <p>
      *            Current status of the stream processor.
@@ -575,8 +633,7 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      *
      * @return <p>
      *         ARN of the IAM role that allows access to the stream processor.
@@ -592,8 +649,7 @@ public class DescribeStreamProcessorResult implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      *
      * @param roleArn <p>
      *            ARN of the IAM role that allows access to the stream
@@ -613,8 +669,7 @@ public class DescribeStreamProcessorResult implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      *
      * @param roleArn <p>
      *            ARN of the IAM role that allows access to the stream
@@ -630,15 +685,17 @@ public class DescribeStreamProcessorResult implements Serializable {
 
     /**
      * <p>
-     * Face recognition input parameters that are being used by the stream
-     * processor. Includes the collection to use for face recognition and the
-     * face attributes to detect.
+     * Input parameters used in a streaming video analyzed by a stream
+     * processor. You can use <code>FaceSearch</code> to recognize faces in a
+     * streaming video, or you can use <code>ConnectedHome</code> to detect
+     * labels.
      * </p>
      *
      * @return <p>
-     *         Face recognition input parameters that are being used by the
-     *         stream processor. Includes the collection to use for face
-     *         recognition and the face attributes to detect.
+     *         Input parameters used in a streaming video analyzed by a stream
+     *         processor. You can use <code>FaceSearch</code> to recognize faces
+     *         in a streaming video, or you can use <code>ConnectedHome</code>
+     *         to detect labels.
      *         </p>
      */
     public StreamProcessorSettings getSettings() {
@@ -647,15 +704,17 @@ public class DescribeStreamProcessorResult implements Serializable {
 
     /**
      * <p>
-     * Face recognition input parameters that are being used by the stream
-     * processor. Includes the collection to use for face recognition and the
-     * face attributes to detect.
+     * Input parameters used in a streaming video analyzed by a stream
+     * processor. You can use <code>FaceSearch</code> to recognize faces in a
+     * streaming video, or you can use <code>ConnectedHome</code> to detect
+     * labels.
      * </p>
      *
      * @param settings <p>
-     *            Face recognition input parameters that are being used by the
-     *            stream processor. Includes the collection to use for face
-     *            recognition and the face attributes to detect.
+     *            Input parameters used in a streaming video analyzed by a
+     *            stream processor. You can use <code>FaceSearch</code> to
+     *            recognize faces in a streaming video, or you can use
+     *            <code>ConnectedHome</code> to detect labels.
      *            </p>
      */
     public void setSettings(StreamProcessorSettings settings) {
@@ -664,24 +723,386 @@ public class DescribeStreamProcessorResult implements Serializable {
 
     /**
      * <p>
-     * Face recognition input parameters that are being used by the stream
-     * processor. Includes the collection to use for face recognition and the
-     * face attributes to detect.
+     * Input parameters used in a streaming video analyzed by a stream
+     * processor. You can use <code>FaceSearch</code> to recognize faces in a
+     * streaming video, or you can use <code>ConnectedHome</code> to detect
+     * labels.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param settings <p>
-     *            Face recognition input parameters that are being used by the
-     *            stream processor. Includes the collection to use for face
-     *            recognition and the face attributes to detect.
+     *            Input parameters used in a streaming video analyzed by a
+     *            stream processor. You can use <code>FaceSearch</code> to
+     *            recognize faces in a streaming video, or you can use
+     *            <code>ConnectedHome</code> to detect labels.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public DescribeStreamProcessorResult withSettings(StreamProcessorSettings settings) {
         this.settings = settings;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Simple Notification Service topic to which Amazon Rekognition
+     * publishes the object detection results and completion status of a video
+     * analysis operation.
+     * </p>
+     * <p>
+     * Amazon Rekognition publishes a notification the first time an object of
+     * interest or a person is detected in the video stream. For example, if
+     * Amazon Rekognition detects a person at second 2, a pet at second 4, and a
+     * person again at second 5, Amazon Rekognition sends 2 object class
+     * detected notifications, one for a person at second 2 and one for a pet at
+     * second 4.
+     * </p>
+     * <p>
+     * Amazon Rekognition also publishes an an end-of-session notification with
+     * a summary when the stream processing session is complete.
+     * </p>
+     *
+     * @return <p>
+     *         The Amazon Simple Notification Service topic to which Amazon
+     *         Rekognition publishes the object detection results and completion
+     *         status of a video analysis operation.
+     *         </p>
+     *         <p>
+     *         Amazon Rekognition publishes a notification the first time an
+     *         object of interest or a person is detected in the video stream.
+     *         For example, if Amazon Rekognition detects a person at second 2,
+     *         a pet at second 4, and a person again at second 5, Amazon
+     *         Rekognition sends 2 object class detected notifications, one for
+     *         a person at second 2 and one for a pet at second 4.
+     *         </p>
+     *         <p>
+     *         Amazon Rekognition also publishes an an end-of-session
+     *         notification with a summary when the stream processing session is
+     *         complete.
+     *         </p>
+     */
+    public StreamProcessorNotificationChannel getNotificationChannel() {
+        return notificationChannel;
+    }
+
+    /**
+     * <p>
+     * The Amazon Simple Notification Service topic to which Amazon Rekognition
+     * publishes the object detection results and completion status of a video
+     * analysis operation.
+     * </p>
+     * <p>
+     * Amazon Rekognition publishes a notification the first time an object of
+     * interest or a person is detected in the video stream. For example, if
+     * Amazon Rekognition detects a person at second 2, a pet at second 4, and a
+     * person again at second 5, Amazon Rekognition sends 2 object class
+     * detected notifications, one for a person at second 2 and one for a pet at
+     * second 4.
+     * </p>
+     * <p>
+     * Amazon Rekognition also publishes an an end-of-session notification with
+     * a summary when the stream processing session is complete.
+     * </p>
+     *
+     * @param notificationChannel <p>
+     *            The Amazon Simple Notification Service topic to which Amazon
+     *            Rekognition publishes the object detection results and
+     *            completion status of a video analysis operation.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition publishes a notification the first time an
+     *            object of interest or a person is detected in the video
+     *            stream. For example, if Amazon Rekognition detects a person at
+     *            second 2, a pet at second 4, and a person again at second 5,
+     *            Amazon Rekognition sends 2 object class detected
+     *            notifications, one for a person at second 2 and one for a pet
+     *            at second 4.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition also publishes an an end-of-session
+     *            notification with a summary when the stream processing session
+     *            is complete.
+     *            </p>
+     */
+    public void setNotificationChannel(StreamProcessorNotificationChannel notificationChannel) {
+        this.notificationChannel = notificationChannel;
+    }
+
+    /**
+     * <p>
+     * The Amazon Simple Notification Service topic to which Amazon Rekognition
+     * publishes the object detection results and completion status of a video
+     * analysis operation.
+     * </p>
+     * <p>
+     * Amazon Rekognition publishes a notification the first time an object of
+     * interest or a person is detected in the video stream. For example, if
+     * Amazon Rekognition detects a person at second 2, a pet at second 4, and a
+     * person again at second 5, Amazon Rekognition sends 2 object class
+     * detected notifications, one for a person at second 2 and one for a pet at
+     * second 4.
+     * </p>
+     * <p>
+     * Amazon Rekognition also publishes an an end-of-session notification with
+     * a summary when the stream processing session is complete.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param notificationChannel <p>
+     *            The Amazon Simple Notification Service topic to which Amazon
+     *            Rekognition publishes the object detection results and
+     *            completion status of a video analysis operation.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition publishes a notification the first time an
+     *            object of interest or a person is detected in the video
+     *            stream. For example, if Amazon Rekognition detects a person at
+     *            second 2, a pet at second 4, and a person again at second 5,
+     *            Amazon Rekognition sends 2 object class detected
+     *            notifications, one for a person at second 2 and one for a pet
+     *            at second 4.
+     *            </p>
+     *            <p>
+     *            Amazon Rekognition also publishes an an end-of-session
+     *            notification with a summary when the stream processing session
+     *            is complete.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeStreamProcessorResult withNotificationChannel(
+            StreamProcessorNotificationChannel notificationChannel) {
+        this.notificationChannel = notificationChannel;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The identifier for your AWS Key Management Service key (AWS KMS key).
+     * This is an optional parameter for label detection stream processors.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     * <b>Pattern: </b>^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$<br/>
+     *
+     * @return <p>
+     *         The identifier for your AWS Key Management Service key (AWS KMS
+     *         key). This is an optional parameter for label detection stream
+     *         processors.
+     *         </p>
+     */
+    public String getKmsKeyId() {
+        return kmsKeyId;
+    }
+
+    /**
+     * <p>
+     * The identifier for your AWS Key Management Service key (AWS KMS key).
+     * This is an optional parameter for label detection stream processors.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     * <b>Pattern: </b>^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$<br/>
+     *
+     * @param kmsKeyId <p>
+     *            The identifier for your AWS Key Management Service key (AWS
+     *            KMS key). This is an optional parameter for label detection
+     *            stream processors.
+     *            </p>
+     */
+    public void setKmsKeyId(String kmsKeyId) {
+        this.kmsKeyId = kmsKeyId;
+    }
+
+    /**
+     * <p>
+     * The identifier for your AWS Key Management Service key (AWS KMS key).
+     * This is an optional parameter for label detection stream processors.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     * <b>Pattern: </b>^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$<br/>
+     *
+     * @param kmsKeyId <p>
+     *            The identifier for your AWS Key Management Service key (AWS
+     *            KMS key). This is an optional parameter for label detection
+     *            stream processors.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeStreamProcessorResult withKmsKeyId(String kmsKeyId) {
+        this.kmsKeyId = kmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies locations in the frames where Amazon Rekognition checks for
+     * objects or people. This is an optional parameter for label detection
+     * stream processors.
+     * </p>
+     *
+     * @return <p>
+     *         Specifies locations in the frames where Amazon Rekognition checks
+     *         for objects or people. This is an optional parameter for label
+     *         detection stream processors.
+     *         </p>
+     */
+    public java.util.List<RegionOfInterest> getRegionsOfInterest() {
+        return regionsOfInterest;
+    }
+
+    /**
+     * <p>
+     * Specifies locations in the frames where Amazon Rekognition checks for
+     * objects or people. This is an optional parameter for label detection
+     * stream processors.
+     * </p>
+     *
+     * @param regionsOfInterest <p>
+     *            Specifies locations in the frames where Amazon Rekognition
+     *            checks for objects or people. This is an optional parameter
+     *            for label detection stream processors.
+     *            </p>
+     */
+    public void setRegionsOfInterest(java.util.Collection<RegionOfInterest> regionsOfInterest) {
+        if (regionsOfInterest == null) {
+            this.regionsOfInterest = null;
+            return;
+        }
+
+        this.regionsOfInterest = new java.util.ArrayList<RegionOfInterest>(regionsOfInterest);
+    }
+
+    /**
+     * <p>
+     * Specifies locations in the frames where Amazon Rekognition checks for
+     * objects or people. This is an optional parameter for label detection
+     * stream processors.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param regionsOfInterest <p>
+     *            Specifies locations in the frames where Amazon Rekognition
+     *            checks for objects or people. This is an optional parameter
+     *            for label detection stream processors.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeStreamProcessorResult withRegionsOfInterest(
+            RegionOfInterest... regionsOfInterest) {
+        if (getRegionsOfInterest() == null) {
+            this.regionsOfInterest = new java.util.ArrayList<RegionOfInterest>(
+                    regionsOfInterest.length);
+        }
+        for (RegionOfInterest value : regionsOfInterest) {
+            this.regionsOfInterest.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies locations in the frames where Amazon Rekognition checks for
+     * objects or people. This is an optional parameter for label detection
+     * stream processors.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param regionsOfInterest <p>
+     *            Specifies locations in the frames where Amazon Rekognition
+     *            checks for objects or people. This is an optional parameter
+     *            for label detection stream processors.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeStreamProcessorResult withRegionsOfInterest(
+            java.util.Collection<RegionOfInterest> regionsOfInterest) {
+        setRegionsOfInterest(regionsOfInterest);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Shows whether you are sharing data with Rekognition to improve model
+     * performance. You can choose this option at the account level or on a
+     * per-stream basis. Note that if you opt out at the account level this
+     * setting is ignored on individual streams.
+     * </p>
+     *
+     * @return <p>
+     *         Shows whether you are sharing data with Rekognition to improve
+     *         model performance. You can choose this option at the account
+     *         level or on a per-stream basis. Note that if you opt out at the
+     *         account level this setting is ignored on individual streams.
+     *         </p>
+     */
+    public StreamProcessorDataSharingPreference getDataSharingPreference() {
+        return dataSharingPreference;
+    }
+
+    /**
+     * <p>
+     * Shows whether you are sharing data with Rekognition to improve model
+     * performance. You can choose this option at the account level or on a
+     * per-stream basis. Note that if you opt out at the account level this
+     * setting is ignored on individual streams.
+     * </p>
+     *
+     * @param dataSharingPreference <p>
+     *            Shows whether you are sharing data with Rekognition to improve
+     *            model performance. You can choose this option at the account
+     *            level or on a per-stream basis. Note that if you opt out at
+     *            the account level this setting is ignored on individual
+     *            streams.
+     *            </p>
+     */
+    public void setDataSharingPreference(StreamProcessorDataSharingPreference dataSharingPreference) {
+        this.dataSharingPreference = dataSharingPreference;
+    }
+
+    /**
+     * <p>
+     * Shows whether you are sharing data with Rekognition to improve model
+     * performance. You can choose this option at the account level or on a
+     * per-stream basis. Note that if you opt out at the account level this
+     * setting is ignored on individual streams.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param dataSharingPreference <p>
+     *            Shows whether you are sharing data with Rekognition to improve
+     *            model performance. You can choose this option at the account
+     *            level or on a per-stream basis. Note that if you opt out at
+     *            the account level this setting is ignored on individual
+     *            streams.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeStreamProcessorResult withDataSharingPreference(
+            StreamProcessorDataSharingPreference dataSharingPreference) {
+        this.dataSharingPreference = dataSharingPreference;
         return this;
     }
 
@@ -715,7 +1136,15 @@ public class DescribeStreamProcessorResult implements Serializable {
         if (getRoleArn() != null)
             sb.append("RoleArn: " + getRoleArn() + ",");
         if (getSettings() != null)
-            sb.append("Settings: " + getSettings());
+            sb.append("Settings: " + getSettings() + ",");
+        if (getNotificationChannel() != null)
+            sb.append("NotificationChannel: " + getNotificationChannel() + ",");
+        if (getKmsKeyId() != null)
+            sb.append("KmsKeyId: " + getKmsKeyId() + ",");
+        if (getRegionsOfInterest() != null)
+            sb.append("RegionsOfInterest: " + getRegionsOfInterest() + ",");
+        if (getDataSharingPreference() != null)
+            sb.append("DataSharingPreference: " + getDataSharingPreference());
         sb.append("}");
         return sb.toString();
     }
@@ -739,6 +1168,14 @@ public class DescribeStreamProcessorResult implements Serializable {
         hashCode = prime * hashCode + ((getOutput() == null) ? 0 : getOutput().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
         hashCode = prime * hashCode + ((getSettings() == null) ? 0 : getSettings().hashCode());
+        hashCode = prime * hashCode
+                + ((getNotificationChannel() == null) ? 0 : getNotificationChannel().hashCode());
+        hashCode = prime * hashCode + ((getKmsKeyId() == null) ? 0 : getKmsKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getRegionsOfInterest() == null) ? 0 : getRegionsOfInterest().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getDataSharingPreference() == null) ? 0 : getDataSharingPreference().hashCode());
         return hashCode;
     }
 
@@ -796,6 +1233,25 @@ public class DescribeStreamProcessorResult implements Serializable {
         if (other.getSettings() == null ^ this.getSettings() == null)
             return false;
         if (other.getSettings() != null && other.getSettings().equals(this.getSettings()) == false)
+            return false;
+        if (other.getNotificationChannel() == null ^ this.getNotificationChannel() == null)
+            return false;
+        if (other.getNotificationChannel() != null
+                && other.getNotificationChannel().equals(this.getNotificationChannel()) == false)
+            return false;
+        if (other.getKmsKeyId() == null ^ this.getKmsKeyId() == null)
+            return false;
+        if (other.getKmsKeyId() != null && other.getKmsKeyId().equals(this.getKmsKeyId()) == false)
+            return false;
+        if (other.getRegionsOfInterest() == null ^ this.getRegionsOfInterest() == null)
+            return false;
+        if (other.getRegionsOfInterest() != null
+                && other.getRegionsOfInterest().equals(this.getRegionsOfInterest()) == false)
+            return false;
+        if (other.getDataSharingPreference() == null ^ this.getDataSharingPreference() == null)
+            return false;
+        if (other.getDataSharingPreference() != null
+                && other.getDataSharingPreference().equals(this.getDataSharingPreference()) == false)
             return false;
         return true;
     }

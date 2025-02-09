@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,13 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Attaches the specified principal to the specified thing.
+ * Attaches the specified principal to the specified thing. A principal can be
+ * X.509 certificates, Amazon Cognito identities or federated identities.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >AttachThingPrincipal</a> action.
  * </p>
  */
 public class AttachThingPrincipalRequest extends AmazonWebServiceRequest implements Serializable {
@@ -38,7 +44,8 @@ public class AttachThingPrincipalRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal, such as a certificate or other credential.
+     * The principal, which can be a certificate ARN (as returned from the
+     * CreateCertificate operation) or an Amazon Cognito ID.
      * </p>
      */
     private String principal;
@@ -102,11 +109,13 @@ public class AttachThingPrincipalRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal, such as a certificate or other credential.
+     * The principal, which can be a certificate ARN (as returned from the
+     * CreateCertificate operation) or an Amazon Cognito ID.
      * </p>
      *
      * @return <p>
-     *         The principal, such as a certificate or other credential.
+     *         The principal, which can be a certificate ARN (as returned from
+     *         the CreateCertificate operation) or an Amazon Cognito ID.
      *         </p>
      */
     public String getPrincipal() {
@@ -115,11 +124,13 @@ public class AttachThingPrincipalRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal, such as a certificate or other credential.
+     * The principal, which can be a certificate ARN (as returned from the
+     * CreateCertificate operation) or an Amazon Cognito ID.
      * </p>
      *
      * @param principal <p>
-     *            The principal, such as a certificate or other credential.
+     *            The principal, which can be a certificate ARN (as returned
+     *            from the CreateCertificate operation) or an Amazon Cognito ID.
      *            </p>
      */
     public void setPrincipal(String principal) {
@@ -128,14 +139,16 @@ public class AttachThingPrincipalRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal, such as a certificate or other credential.
+     * The principal, which can be a certificate ARN (as returned from the
+     * CreateCertificate operation) or an Amazon Cognito ID.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param principal <p>
-     *            The principal, such as a certificate or other credential.
+     *            The principal, which can be a certificate ARN (as returned
+     *            from the CreateCertificate operation) or an Amazon Cognito ID.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

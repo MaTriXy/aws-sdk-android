@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -71,17 +71,31 @@ public class Face implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float confidence;
 
     /**
-     * The new value for the associationScore property for this object.
+     * <p>
+     * The version of the face detect and storage model that was used when
+     * indexing the face vector.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Pattern: </b>[0-9\.]+<br/>
      */
-    private Float associationScore;
+    private String indexFacesModelVersion;
+
+    /**
+     * <p>
+     * Unique identifier assigned to the user.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     */
+    private String userId;
 
     /**
      * <p>
@@ -311,7 +325,7 @@ public class Face implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Confidence level that the bounding box contains a face (and not a
@@ -329,7 +343,7 @@ public class Face implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param confidence <p>
      *            Confidence level that the bounding box contains a face (and
@@ -350,7 +364,7 @@ public class Face implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param confidence <p>
      *            Confidence level that the bounding box contains a face (and
@@ -365,46 +379,119 @@ public class Face implements Serializable {
     }
 
     /**
-     * Returns the value of the associationScore property for this object.
+     * <p>
+     * The version of the face detect and storage model that was used when
+     * indexing the face vector.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Pattern: </b>[0-9\.]+<br/>
      *
-     * @return The value of the associationScore property for this object.
+     * @return <p>
+     *         The version of the face detect and storage model that was used
+     *         when indexing the face vector.
+     *         </p>
      */
-    public Float getAssociationScore() {
-        return associationScore;
+    public String getIndexFacesModelVersion() {
+        return indexFacesModelVersion;
     }
 
     /**
-     * Sets the value of associationScore
+     * <p>
+     * The version of the face detect and storage model that was used when
+     * indexing the face vector.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Pattern: </b>[0-9\.]+<br/>
      *
-     * @param associationScore The new value for the associationScore property
-     *            for this object.
+     * @param indexFacesModelVersion <p>
+     *            The version of the face detect and storage model that was used
+     *            when indexing the face vector.
+     *            </p>
      */
-    public void setAssociationScore(Float associationScore) {
-        this.associationScore = associationScore;
+    public void setIndexFacesModelVersion(String indexFacesModelVersion) {
+        this.indexFacesModelVersion = indexFacesModelVersion;
     }
 
     /**
-     * Sets the value of the associationScore property for this object.
+     * <p>
+     * The version of the face detect and storage model that was used when
+     * indexing the face vector.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Pattern: </b>[0-9\.]+<br/>
      *
-     * @param associationScore The new value for the associationScore property
-     *            for this object.
+     * @param indexFacesModelVersion <p>
+     *            The version of the face detect and storage model that was used
+     *            when indexing the face vector.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
-    public Face withAssociationScore(Float associationScore) {
-        this.associationScore = associationScore;
+    public Face withIndexFacesModelVersion(String indexFacesModelVersion) {
+        this.indexFacesModelVersion = indexFacesModelVersion;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Unique identifier assigned to the user.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     *
+     * @return <p>
+     *         Unique identifier assigned to the user.
+     *         </p>
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * <p>
+     * Unique identifier assigned to the user.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     *
+     * @param userId <p>
+     *            Unique identifier assigned to the user.
+     *            </p>
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * <p>
+     * Unique identifier assigned to the user.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 128<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     *
+     * @param userId <p>
+     *            Unique identifier assigned to the user.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Face withUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 
@@ -429,8 +516,10 @@ public class Face implements Serializable {
             sb.append("ExternalImageId: " + getExternalImageId() + ",");
         if (getConfidence() != null)
             sb.append("Confidence: " + getConfidence() + ",");
-        if (getAssociationScore() != null)
-            sb.append("AssociationScore: " + getAssociationScore());
+        if (getIndexFacesModelVersion() != null)
+            sb.append("IndexFacesModelVersion: " + getIndexFacesModelVersion() + ",");
+        if (getUserId() != null)
+            sb.append("UserId: " + getUserId());
         sb.append("}");
         return sb.toString();
     }
@@ -447,8 +536,11 @@ public class Face implements Serializable {
         hashCode = prime * hashCode
                 + ((getExternalImageId() == null) ? 0 : getExternalImageId().hashCode());
         hashCode = prime * hashCode + ((getConfidence() == null) ? 0 : getConfidence().hashCode());
-        hashCode = prime * hashCode
-                + ((getAssociationScore() == null) ? 0 : getAssociationScore().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getIndexFacesModelVersion() == null) ? 0 : getIndexFacesModelVersion()
+                        .hashCode());
+        hashCode = prime * hashCode + ((getUserId() == null) ? 0 : getUserId().hashCode());
         return hashCode;
     }
 
@@ -486,10 +578,14 @@ public class Face implements Serializable {
         if (other.getConfidence() != null
                 && other.getConfidence().equals(this.getConfidence()) == false)
             return false;
-        if (other.getAssociationScore() == null ^ this.getAssociationScore() == null)
+        if (other.getIndexFacesModelVersion() == null ^ this.getIndexFacesModelVersion() == null)
             return false;
-        if (other.getAssociationScore() != null
-                && other.getAssociationScore().equals(this.getAssociationScore()) == false)
+        if (other.getIndexFacesModelVersion() != null
+                && other.getIndexFacesModelVersion().equals(this.getIndexFacesModelVersion()) == false)
+            return false;
+        if (other.getUserId() == null ^ this.getUserId() == null)
+            return false;
+        if (other.getUserId() != null && other.getUserId().equals(this.getUserId()) == false)
             return false;
         return true;
     }

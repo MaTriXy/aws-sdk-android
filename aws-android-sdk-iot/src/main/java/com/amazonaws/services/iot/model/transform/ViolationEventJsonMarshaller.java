@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -50,10 +51,27 @@ class ViolationEventJsonMarshaller {
             jsonWriter.name("metricValue");
             MetricValueJsonMarshaller.getInstance().marshall(metricValue, jsonWriter);
         }
+        if (violationEvent.getViolationEventAdditionalInfo() != null) {
+            ViolationEventAdditionalInfo violationEventAdditionalInfo = violationEvent
+                    .getViolationEventAdditionalInfo();
+            jsonWriter.name("violationEventAdditionalInfo");
+            ViolationEventAdditionalInfoJsonMarshaller.getInstance().marshall(
+                    violationEventAdditionalInfo, jsonWriter);
+        }
         if (violationEvent.getViolationEventType() != null) {
             String violationEventType = violationEvent.getViolationEventType();
             jsonWriter.name("violationEventType");
             jsonWriter.value(violationEventType);
+        }
+        if (violationEvent.getVerificationState() != null) {
+            String verificationState = violationEvent.getVerificationState();
+            jsonWriter.name("verificationState");
+            jsonWriter.value(verificationState);
+        }
+        if (violationEvent.getVerificationStateDescription() != null) {
+            String verificationStateDescription = violationEvent.getVerificationStateDescription();
+            jsonWriter.name("verificationStateDescription");
+            jsonWriter.value(verificationStateDescription);
         }
         if (violationEvent.getViolationEventTime() != null) {
             java.util.Date violationEventTime = violationEvent.getViolationEventTime();

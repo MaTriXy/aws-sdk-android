@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,8 +25,11 @@ import java.io.Serializable;
 public class EventContextDataType implements Serializable {
     /**
      * <p>
-     * The user's IP address.
+     * The source IP address of your user's device.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String ipAddress;
 
@@ -34,6 +37,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's device name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String deviceName;
 
@@ -41,6 +47,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's time zone.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String timezone;
 
@@ -48,6 +57,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's city.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String city;
 
@@ -55,16 +67,22 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's country.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String country;
 
     /**
      * <p>
-     * The user's IP address.
+     * The source IP address of your user's device.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
-     *         The user's IP address.
+     *         The source IP address of your user's device.
      *         </p>
      */
     public String getIpAddress() {
@@ -73,11 +91,14 @@ public class EventContextDataType implements Serializable {
 
     /**
      * <p>
-     * The user's IP address.
+     * The source IP address of your user's device.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param ipAddress <p>
-     *            The user's IP address.
+     *            The source IP address of your user's device.
      *            </p>
      */
     public void setIpAddress(String ipAddress) {
@@ -86,14 +107,17 @@ public class EventContextDataType implements Serializable {
 
     /**
      * <p>
-     * The user's IP address.
+     * The source IP address of your user's device.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param ipAddress <p>
-     *            The user's IP address.
+     *            The source IP address of your user's device.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -107,6 +131,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's device name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The user's device name.
@@ -120,6 +147,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's device name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param deviceName <p>
      *            The user's device name.
@@ -136,6 +166,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param deviceName <p>
      *            The user's device name.
@@ -152,6 +185,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's time zone.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The user's time zone.
@@ -165,6 +201,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's time zone.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param timezone <p>
      *            The user's time zone.
@@ -181,6 +220,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param timezone <p>
      *            The user's time zone.
@@ -197,6 +239,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's city.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The user's city.
@@ -210,6 +255,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's city.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param city <p>
      *            The user's city.
@@ -226,6 +274,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param city <p>
      *            The user's city.
@@ -242,6 +293,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's country.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The user's country.
@@ -255,6 +309,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * The user's country.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param country <p>
      *            The user's country.
@@ -271,6 +328,9 @@ public class EventContextDataType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param country <p>
      *            The user's country.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -47,7 +47,12 @@ public enum LandmarkType {
     MouthUp("mouthUp"),
     MouthDown("mouthDown"),
     LeftPupil("leftPupil"),
-    RightPupil("rightPupil");
+    RightPupil("rightPupil"),
+    UpperJawlineLeft("upperJawlineLeft"),
+    MidJawlineLeft("midJawlineLeft"),
+    ChinBottom("chinBottom"),
+    MidJawlineRight("midJawlineRight"),
+    UpperJawlineRight("upperJawlineRight");
 
     private String value;
 
@@ -88,6 +93,11 @@ public enum LandmarkType {
         enumMap.put("mouthDown", MouthDown);
         enumMap.put("leftPupil", LeftPupil);
         enumMap.put("rightPupil", RightPupil);
+        enumMap.put("upperJawlineLeft", UpperJawlineLeft);
+        enumMap.put("midJawlineLeft", MidJawlineLeft);
+        enumMap.put("chinBottom", ChinBottom);
+        enumMap.put("midJawlineRight", MidJawlineRight);
+        enumMap.put("upperJawlineRight", UpperJawlineRight);
     }
 
     /**

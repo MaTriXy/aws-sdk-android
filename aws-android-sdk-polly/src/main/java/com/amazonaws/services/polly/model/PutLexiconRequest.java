@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,14 +21,15 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Stores a pronunciation lexicon in an AWS Region. If a lexicon with the same
- * name already exists in the region, it is overwritten by the new lexicon.
- * Lexicon operations have eventual consistency, therefore, it might take some
- * time before the lexicon is available to the SynthesizeSpeech operation.
+ * Stores a pronunciation lexicon in an Amazon Web Services Region. If a lexicon
+ * with the same name already exists in the region, it is overwritten by the new
+ * lexicon. Lexicon operations have eventual consistency, therefore, it might
+ * take some time before the lexicon is available to the SynthesizeSpeech
+ * operation.
  * </p>
  * <p>
  * For more information, see <a
- * href="http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+ * href="https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
  * >Managing Lexicons</a>.
  * </p>
  */

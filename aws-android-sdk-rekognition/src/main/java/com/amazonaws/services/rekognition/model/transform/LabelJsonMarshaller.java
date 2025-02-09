@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -34,6 +35,50 @@ class LabelJsonMarshaller {
             Float confidence = label.getConfidence();
             jsonWriter.name("Confidence");
             jsonWriter.value(confidence);
+        }
+        if (label.getInstances() != null) {
+            java.util.List<Instance> instances = label.getInstances();
+            jsonWriter.name("Instances");
+            jsonWriter.beginArray();
+            for (Instance instancesItem : instances) {
+                if (instancesItem != null) {
+                    InstanceJsonMarshaller.getInstance().marshall(instancesItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (label.getParents() != null) {
+            java.util.List<Parent> parents = label.getParents();
+            jsonWriter.name("Parents");
+            jsonWriter.beginArray();
+            for (Parent parentsItem : parents) {
+                if (parentsItem != null) {
+                    ParentJsonMarshaller.getInstance().marshall(parentsItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (label.getAliases() != null) {
+            java.util.List<LabelAlias> aliases = label.getAliases();
+            jsonWriter.name("Aliases");
+            jsonWriter.beginArray();
+            for (LabelAlias aliasesItem : aliases) {
+                if (aliasesItem != null) {
+                    LabelAliasJsonMarshaller.getInstance().marshall(aliasesItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (label.getCategories() != null) {
+            java.util.List<LabelCategory> categories = label.getCategories();
+            jsonWriter.name("Categories");
+            jsonWriter.beginArray();
+            for (LabelCategory categoriesItem : categories) {
+                if (categoriesItem != null) {
+                    LabelCategoryJsonMarshaller.getInstance().marshall(categoriesItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
         }
         jsonWriter.endObject();
     }

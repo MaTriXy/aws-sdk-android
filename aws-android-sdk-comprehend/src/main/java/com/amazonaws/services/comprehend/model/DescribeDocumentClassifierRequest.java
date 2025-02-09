@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,33 +29,37 @@ public class DescribeDocumentClassifierRequest extends AmazonWebServiceRequest i
     /**
      * <p>
      * The Amazon Resource Name (ARN) that identifies the document classifier.
-     * The operation returns this identifier in its response.
+     * The <code>CreateDocumentClassifier</code> operation returns this
+     * identifier in its response.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      */
     private String documentClassifierArn;
 
     /**
      * <p>
      * The Amazon Resource Name (ARN) that identifies the document classifier.
-     * The operation returns this identifier in its response.
+     * The <code>CreateDocumentClassifier</code> operation returns this
+     * identifier in its response.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @return <p>
      *         The Amazon Resource Name (ARN) that identifies the document
-     *         classifier. The operation returns this identifier in its
-     *         response.
+     *         classifier. The <code>CreateDocumentClassifier</code> operation
+     *         returns this identifier in its response.
      *         </p>
      */
     public String getDocumentClassifierArn() {
@@ -65,19 +69,21 @@ public class DescribeDocumentClassifierRequest extends AmazonWebServiceRequest i
     /**
      * <p>
      * The Amazon Resource Name (ARN) that identifies the document classifier.
-     * The operation returns this identifier in its response.
+     * The <code>CreateDocumentClassifier</code> operation returns this
+     * identifier in its response.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param documentClassifierArn <p>
      *            The Amazon Resource Name (ARN) that identifies the document
-     *            classifier. The operation returns this identifier in its
-     *            response.
+     *            classifier. The <code>CreateDocumentClassifier</code>
+     *            operation returns this identifier in its response.
      *            </p>
      */
     public void setDocumentClassifierArn(String documentClassifierArn) {
@@ -87,7 +93,8 @@ public class DescribeDocumentClassifierRequest extends AmazonWebServiceRequest i
     /**
      * <p>
      * The Amazon Resource Name (ARN) that identifies the document classifier.
-     * The operation returns this identifier in its response.
+     * The <code>CreateDocumentClassifier</code> operation returns this
+     * identifier in its response.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -96,13 +103,14 @@ public class DescribeDocumentClassifierRequest extends AmazonWebServiceRequest i
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document
+     * -classifier
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param documentClassifierArn <p>
      *            The Amazon Resource Name (ARN) that identifies the document
-     *            classifier. The operation returns this identifier in its
-     *            response.
+     *            classifier. The <code>CreateDocumentClassifier</code>
+     *            operation returns this identifier in its response.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

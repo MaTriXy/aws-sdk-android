@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,15 +21,20 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates a new version of the specified AWS IoT policy. To update a policy,
- * create a new policy version. A managed policy can have up to five versions.
- * If the policy has five versions, you must use <a>DeletePolicyVersion</a> to
- * delete an existing version before you create a new one.
+ * Creates a new version of the specified IoT policy. To update a policy, create
+ * a new policy version. A managed policy can have up to five versions. If the
+ * policy has five versions, you must use <a>DeletePolicyVersion</a> to delete
+ * an existing version before you create a new one.
  * </p>
  * <p>
  * Optionally, you can set the new version as the policy's default version. The
  * default version is the operative version (that is, the version that is in
  * effect for the certificates to which the policy is attached).
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreatePolicyVersion</a> action.
  * </p>
  */
 public class CreatePolicyVersionRequest extends AmazonWebServiceRequest implements Serializable {
@@ -49,6 +54,10 @@ public class CreatePolicyVersionRequest extends AmazonWebServiceRequest implemen
      * The JSON document that describes the policy. Minimum length of 1. Maximum
      * length of 2048, excluding whitespace.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String policyDocument;
 
@@ -124,6 +133,10 @@ public class CreatePolicyVersionRequest extends AmazonWebServiceRequest implemen
      * The JSON document that describes the policy. Minimum length of 1. Maximum
      * length of 2048, excluding whitespace.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The JSON document that describes the policy. Minimum length of 1.
@@ -139,6 +152,10 @@ public class CreatePolicyVersionRequest extends AmazonWebServiceRequest implemen
      * The JSON document that describes the policy. Minimum length of 1. Maximum
      * length of 2048, excluding whitespace.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param policyDocument <p>
      *            The JSON document that describes the policy. Minimum length of
@@ -157,6 +174,10 @@ public class CreatePolicyVersionRequest extends AmazonWebServiceRequest implemen
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param policyDocument <p>
      *            The JSON document that describes the policy. Minimum length of

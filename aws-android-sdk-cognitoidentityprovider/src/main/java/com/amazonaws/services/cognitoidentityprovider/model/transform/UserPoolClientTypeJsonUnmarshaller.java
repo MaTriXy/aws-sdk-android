@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,6 +57,16 @@ class UserPoolClientTypeJsonUnmarshaller implements
             } else if (name.equals("RefreshTokenValidity")) {
                 userPoolClientType.setRefreshTokenValidity(IntegerJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("AccessTokenValidity")) {
+                userPoolClientType.setAccessTokenValidity(IntegerJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdTokenValidity")) {
+                userPoolClientType.setIdTokenValidity(IntegerJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("TokenValidityUnits")) {
+                userPoolClientType.setTokenValidityUnits(TokenValidityUnitsTypeJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
             } else if (name.equals("ReadAttributes")) {
                 userPoolClientType.setReadAttributes(new ListUnmarshaller<String>(
                         StringJsonUnmarshaller.getInstance()
@@ -109,6 +119,21 @@ class UserPoolClientTypeJsonUnmarshaller implements
                         .setAnalyticsConfiguration(AnalyticsConfigurationTypeJsonUnmarshaller
                                 .getInstance()
                                 .unmarshall(context));
+            } else if (name.equals("PreventUserExistenceErrors")) {
+                userPoolClientType.setPreventUserExistenceErrors(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("EnableTokenRevocation")) {
+                userPoolClientType.setEnableTokenRevocation(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("EnablePropagateAdditionalUserContextData")) {
+                userPoolClientType
+                        .setEnablePropagateAdditionalUserContextData(BooleanJsonUnmarshaller
+                                .getInstance()
+                                .unmarshall(context));
+            } else if (name.equals("AuthSessionValidity")) {
+                userPoolClientType.setAuthSessionValidity(IntegerJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else {
                 reader.skipValue();
             }

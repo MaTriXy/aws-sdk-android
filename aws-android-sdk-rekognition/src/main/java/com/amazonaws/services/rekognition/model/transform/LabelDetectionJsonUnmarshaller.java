@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,15 @@ class LabelDetectionJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("Label")) {
                 labelDetection.setLabel(LabelJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("StartTimestampMillis")) {
+                labelDetection.setStartTimestampMillis(LongJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("EndTimestampMillis")) {
+                labelDetection.setEndTimestampMillis(LongJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("DurationMillis")) {
+                labelDetection.setDurationMillis(LongJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

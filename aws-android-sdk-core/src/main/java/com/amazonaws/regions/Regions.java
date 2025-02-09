@@ -38,6 +38,12 @@ public enum Regions {
     /** us-west-2. */
     US_WEST_2("us-west-2"),
 
+    /** eu-south-1/ */
+    EU_SOUTH_1("eu-south-1"),
+    
+    /** eu-south-2. */
+    EU_SOUTH_2("eu-south-2"),
+
     /** eu-west-1/ */
     EU_WEST_1("eu-west-1"),
 
@@ -50,8 +56,14 @@ public enum Regions {
     /** eu-central-1. */
     EU_CENTRAL_1("eu-central-1"),
 
+    /** eu-central-2. */
+    EU_CENTRAL_2("eu-central-2"),
+
     /** eu-north-1. */
     EU_NORTH_1("eu-north-1"),
+
+    /** ap-east-1. */
+    AP_EAST_1("ap-east-1"),
 
     /** ap-south-1. */
     AP_SOUTH_1("ap-south-1"),
@@ -61,6 +73,18 @@ public enum Regions {
 
     /** ap-southeast-2. */
     AP_SOUTHEAST_2("ap-southeast-2"),
+
+    /** ap-southeast-4. */
+    AP_SOUTHEAST_4("ap-southeast-4"),
+
+    /** ap-southeast-5. */
+    AP_SOUTHEAST_5("ap-southeast-5"),
+
+    /** ap-southeast-7. */
+    AP_SOUTHEAST_7("ap-southeast-7"),
+
+    /** mx-central-1. */
+    MX_CENTRAL_1("mx-central-1"),
 
     /** ap-northeast-1. */
     AP_NORTHEAST_1("ap-northeast-1"),
@@ -76,9 +100,30 @@ public enum Regions {
 
     /** cn-north-1. */
     CN_NORTH_1("cn-north-1"),
-    
+
     /** cn-northwest-1. */
-    CN_NORTHWEST_1("cn-northwest-1");
+    CN_NORTHWEST_1("cn-northwest-1"),
+
+    /** me-south-1. */
+    ME_SOUTH_1("me-south-1"),
+
+    /** af-south-1. */
+    AF_SOUTH_1("af-south-1"),
+
+    /** ap-southeast-3. */
+    AP_SOUTHEAST_3("ap-southeast-3"),
+
+    /** me-central-1. */
+    ME_CENTRAL_1("me-central-1"),
+
+    /** ap-south-2. */
+    AP_SOUTH_2("ap-south-2"),
+
+    /** il-central-1. */
+    IL_CENTRAL_1("il-central-1"),
+
+    /** ca-west-1. */
+    CA_WEST_1("ca-west-1");
 
     /**
      * The default region that new customers in the US are encouraged to use

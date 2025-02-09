@@ -15,6 +15,8 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.targeting.notification;
 
+import static android.os.Build.*;
+
 import android.app.PendingIntent;
 import android.os.Bundle;
 
@@ -37,13 +39,19 @@ final class BaiduNotificationClient extends NotificationClientBase {
     }
 
     @Override
-    protected PendingIntent createOpenAppPendingIntent(Bundle pushBundle, Class<?> targetClass, String campaignId, int requestId, String intentAction) {
+    protected PendingIntent createOpenAppPendingIntent(Bundle pushBundle, Class<?> targetClass, String eventSourceId, int requestId, String intentAction) {
         PendingIntent contentIntent = null;
         if (NotificationClient.BAIDU_INTENT_ACTION.equals(intentAction)) {
-            contentIntent = PendingIntent.getBroadcast(pinpointContext.getApplicationContext(), requestId,
-                    this.notificationIntent(pushBundle, campaignId, requestId, NotificationClient.BAIDU_INTENT_ACTION,
-                            targetClass), PendingIntent.FLAG_ONE_SHOT);
-            PinpointNotificationReceiver.setNotificationClient(this);
+            int flags = PendingIntent.FLAG_ONE_SHOT;
+
+            if (VERSION.SDK_INT >= VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+
+            contentIntent = PendingIntent.getActivity(pinpointContext.getApplicationContext(), requestId,
+                    this.notificationIntent(pushBundle, eventSourceId, requestId, NotificationClient.BAIDU_INTENT_ACTION,
+                            targetClass), flags);
+            PinpointNotificationActivity.setNotificationClient(this);
         }
         return contentIntent;
     }

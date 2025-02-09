@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ public enum SNSActions implements Action {
     /** Action for the CreatePlatformEndpoint operation. */
     CreatePlatformEndpoint("sns:CreatePlatformEndpoint"),
 
+    /** Action for the CreateSMSSandboxPhoneNumber operation. */
+    CreateSMSSandboxPhoneNumber("sns:CreateSMSSandboxPhoneNumber"),
+
     /** Action for the CreateTopic operation. */
     CreateTopic("sns:CreateTopic"),
 
@@ -49,8 +52,14 @@ public enum SNSActions implements Action {
     /** Action for the DeletePlatformApplication operation. */
     DeletePlatformApplication("sns:DeletePlatformApplication"),
 
+    /** Action for the DeleteSMSSandboxPhoneNumber operation. */
+    DeleteSMSSandboxPhoneNumber("sns:DeleteSMSSandboxPhoneNumber"),
+
     /** Action for the DeleteTopic operation. */
     DeleteTopic("sns:DeleteTopic"),
+
+    /** Action for the GetDataProtectionPolicy operation. */
+    GetDataProtectionPolicy("sns:GetDataProtectionPolicy"),
 
     /** Action for the GetEndpointAttributes operation. */
     GetEndpointAttributes("sns:GetEndpointAttributes"),
@@ -61,6 +70,9 @@ public enum SNSActions implements Action {
     /** Action for the GetSMSAttributes operation. */
     GetSMSAttributes("sns:GetSMSAttributes"),
 
+    /** Action for the GetSMSSandboxAccountStatus operation. */
+    GetSMSSandboxAccountStatus("sns:GetSMSSandboxAccountStatus"),
+
     /** Action for the GetSubscriptionAttributes operation. */
     GetSubscriptionAttributes("sns:GetSubscriptionAttributes"),
 
@@ -70,17 +82,26 @@ public enum SNSActions implements Action {
     /** Action for the ListEndpointsByPlatformApplication operation. */
     ListEndpointsByPlatformApplication("sns:ListEndpointsByPlatformApplication"),
 
+    /** Action for the ListOriginationNumbers operation. */
+    ListOriginationNumbers("sns:ListOriginationNumbers"),
+
     /** Action for the ListPhoneNumbersOptedOut operation. */
     ListPhoneNumbersOptedOut("sns:ListPhoneNumbersOptedOut"),
 
     /** Action for the ListPlatformApplications operation. */
     ListPlatformApplications("sns:ListPlatformApplications"),
 
+    /** Action for the ListSMSSandboxPhoneNumbers operation. */
+    ListSMSSandboxPhoneNumbers("sns:ListSMSSandboxPhoneNumbers"),
+
     /** Action for the ListSubscriptions operation. */
     ListSubscriptions("sns:ListSubscriptions"),
 
     /** Action for the ListSubscriptionsByTopic operation. */
     ListSubscriptionsByTopic("sns:ListSubscriptionsByTopic"),
+
+    /** Action for the ListTagsForResource operation. */
+    ListTagsForResource("sns:ListTagsForResource"),
 
     /** Action for the ListTopics operation. */
     ListTopics("sns:ListTopics"),
@@ -90,6 +111,12 @@ public enum SNSActions implements Action {
 
     /** Action for the Publish operation. */
     Publish("sns:Publish"),
+
+    /** Action for the PublishBatch operation. */
+    PublishBatch("sns:PublishBatch"),
+
+    /** Action for the PutDataProtectionPolicy operation. */
+    PutDataProtectionPolicy("sns:PutDataProtectionPolicy"),
 
     /** Action for the RemovePermission operation. */
     RemovePermission("sns:RemovePermission"),
@@ -112,8 +139,17 @@ public enum SNSActions implements Action {
     /** Action for the Subscribe operation. */
     Subscribe("sns:Subscribe"),
 
+    /** Action for the TagResource operation. */
+    TagResource("sns:TagResource"),
+
     /** Action for the Unsubscribe operation. */
-    Unsubscribe("sns:Unsubscribe");
+    Unsubscribe("sns:Unsubscribe"),
+
+    /** Action for the UntagResource operation. */
+    UntagResource("sns:UntagResource"),
+
+    /** Action for the VerifySMSSandboxPhoneNumber operation. */
+    VerifySMSSandboxPhoneNumber("sns:VerifySMSSandboxPhoneNumber");
 
     private final String action;
 

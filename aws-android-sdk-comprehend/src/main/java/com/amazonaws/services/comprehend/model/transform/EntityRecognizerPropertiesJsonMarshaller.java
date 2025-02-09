@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -84,6 +85,43 @@ class EntityRecognizerPropertiesJsonMarshaller {
             String dataAccessRoleArn = entityRecognizerProperties.getDataAccessRoleArn();
             jsonWriter.name("DataAccessRoleArn");
             jsonWriter.value(dataAccessRoleArn);
+        }
+        if (entityRecognizerProperties.getVolumeKmsKeyId() != null) {
+            String volumeKmsKeyId = entityRecognizerProperties.getVolumeKmsKeyId();
+            jsonWriter.name("VolumeKmsKeyId");
+            jsonWriter.value(volumeKmsKeyId);
+        }
+        if (entityRecognizerProperties.getVpcConfig() != null) {
+            VpcConfig vpcConfig = entityRecognizerProperties.getVpcConfig();
+            jsonWriter.name("VpcConfig");
+            VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
+        }
+        if (entityRecognizerProperties.getModelKmsKeyId() != null) {
+            String modelKmsKeyId = entityRecognizerProperties.getModelKmsKeyId();
+            jsonWriter.name("ModelKmsKeyId");
+            jsonWriter.value(modelKmsKeyId);
+        }
+        if (entityRecognizerProperties.getVersionName() != null) {
+            String versionName = entityRecognizerProperties.getVersionName();
+            jsonWriter.name("VersionName");
+            jsonWriter.value(versionName);
+        }
+        if (entityRecognizerProperties.getSourceModelArn() != null) {
+            String sourceModelArn = entityRecognizerProperties.getSourceModelArn();
+            jsonWriter.name("SourceModelArn");
+            jsonWriter.value(sourceModelArn);
+        }
+        if (entityRecognizerProperties.getFlywheelArn() != null) {
+            String flywheelArn = entityRecognizerProperties.getFlywheelArn();
+            jsonWriter.name("FlywheelArn");
+            jsonWriter.value(flywheelArn);
+        }
+        if (entityRecognizerProperties.getOutputDataConfig() != null) {
+            EntityRecognizerOutputDataConfig outputDataConfig = entityRecognizerProperties
+                    .getOutputDataConfig();
+            jsonWriter.name("OutputDataConfig");
+            EntityRecognizerOutputDataConfigJsonMarshaller.getInstance().marshall(outputDataConfig,
+                    jsonWriter);
         }
         jsonWriter.endObject();
     }

@@ -16,6 +16,7 @@
 package com.amazonaws.mobileconnectors.s3.transferutility;
 
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3;
@@ -25,6 +26,9 @@ import com.amazonaws.util.json.JsonUtils;
 import com.amazonaws.logging.Log;
 import com.amazonaws.logging.LogFactory;
 
+import com.google.gson.Gson;
+
+import com.google.gson.JsonSyntaxException;
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -81,7 +85,11 @@ class TransferRecord {
     public String md5;
     public String cannedAcl;
 
+    public TransferUtilityOptions transferUtilityOptions;
+
     private Future<?> submittedTask;
+
+    private Gson gson = new Gson();
 
     /**
      * Constructs a TransferRecord and initializes the transfer id and S3
@@ -149,21 +157,35 @@ class TransferRecord {
         this.cannedAcl = c.getString(c.getColumnIndexOrThrow(TransferTable.COLUMN_CANNED_ACL));
         this.headerStorageClass = c
                 .getString(c.getColumnIndexOrThrow(TransferTable.COLUMN_HEADER_STORAGE_CLASS));
+        String options = c.getString(c
+            .getColumnIndexOrThrow(TransferTable.COLUMN_TRANSFER_UTILITY_OPTIONS));
+        try {
+            this.transferUtilityOptions = gson.fromJson(options, TransferUtilityOptions.class);
+        } catch (JsonSyntaxException jsonSyntaxException) {
+            LOGGER.error(String.format("Failed to deserialize: %s, setting to default", options), jsonSyntaxException);
+            this.transferUtilityOptions = new TransferUtilityOptions();
+        }
     }
 
     /**
-     * Checks the state of the transfer and starts a thread to run the transfer
-     * task if possible.
+     * Start a new transfer when
+     * 1) there is no existing transfer for the same transfer record
+     * 2) the transfer is not completed
+     * 3) the preferred network is available
      *
      * @param s3 s3 instance
      * @param dbUtil database util
      * @param updater status updater
+     * @param connManager the android network connectivity manager
      * @return Whether the task is running.
      */
-    public boolean start(AmazonS3 s3,
-                         TransferDBUtil dbUtil,
-                         TransferStatusUpdater updater) {
-        if (!isRunning() && checkIsReadyToRun()) {
+    public boolean start(final AmazonS3 s3,
+                         final TransferDBUtil dbUtil,
+                         final TransferStatusUpdater updater,
+                         final ConnectivityManager connManager) {
+        if (!isRunning() &&
+            checkIsReadyToRun() &&
+            checkPreferredNetworkAvailability(updater, connManager)) {
             if (type.equals(TransferType.DOWNLOAD)) {
                 submittedTask = TransferThreadPool
                         .submitTask(new DownloadTask(this, s3, updater));
@@ -184,9 +206,12 @@ class TransferRecord {
      * @return true if the transfer is running and is paused successfully, false
      *         otherwise
      */
-    public boolean pause(AmazonS3 s3, TransferStatusUpdater updater) {
-        if (!isFinalState(state) && !TransferState.PAUSED.equals(state)) {
-            updater.updateState(id, TransferState.PAUSED);
+    public boolean pause(final AmazonS3 s3,
+                         final TransferStatusUpdater updater) {
+        if (!isFinalState(state)
+                && !TransferState.PAUSED.equals(state)
+                && !TransferState.PENDING_PAUSE.equals(state)) {
+            updater.updateState(id, TransferState.PENDING_PAUSE);
             if (isRunning()) {
                 submittedTask.cancel(true);
             }
@@ -196,27 +221,61 @@ class TransferRecord {
     }
 
     /**
+     * Pauses a running transfer if the preferred network is not available.
+     *
+     * @param s3 s3 instance
+     * @param updater status updater
+     * @param connManager the android network connectivity manager
+     * @return true if the transfer is running and is paused successfully, false
+     *         otherwise
+     */
+    boolean pauseIfRequiredForNetworkInterruption(final AmazonS3 s3,
+                                final TransferStatusUpdater updater,
+                                final ConnectivityManager connManager) {
+        // Check if the transfer needs to be paused
+        if (!checkPreferredNetworkAvailability(updater, connManager)) {
+            // the preferred network is not available. pause the transfer.
+            if (!isFinalState(state)) {
+                if (isRunning()) {
+                    submittedTask.cancel(true);
+                }
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    /**
      * Cancels a running transfer.
-     * 
+     *
      * @param s3 s3 instance
      * @param updater status updater
      * @return true if the transfer is running and is canceled successfully,
      *         false otherwise
      */
-    public boolean cancel(final AmazonS3 s3, final TransferStatusUpdater updater) {
+    public boolean cancel(final AmazonS3 s3,
+                          final TransferStatusUpdater updater) {
         if (!isFinalState(state)) {
-            updater.updateState(id, TransferState.CANCELED);
+            // Update the state to PENDING_CANCEL in the TransferStatusUpdater
+            // and TransferDBUtil and involves the onStateChanged callback.
+            updater.updateState(id, TransferState.PENDING_CANCEL);
             if (isRunning()) {
+                // State will update to CANCELED upon encountering S3 exception
                 submittedTask.cancel(true);
             }
-            // additional cleanups
-            if (isMultipart == 1) {
+            // additional cleanup
+            if (TransferType.UPLOAD.equals(type) &&
+                isMultipart == 1) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            s3.abortMultipartUpload(new AbortMultipartUploadRequest(bucketName,
-                                    key, multipartId));
+                            // abort the multi part upload operation
+                            s3.abortMultipartUpload(
+                                new AbortMultipartUploadRequest(bucketName,
+                                    key,
+                                    multipartId));
                             LOGGER.debug("Successfully clean up multipart upload: " + id);
                         } catch (final AmazonClientException e) {
                             LOGGER.debug("Failed to abort multiplart upload: " + id, e);
@@ -224,7 +283,7 @@ class TransferRecord {
                     }
                 }).start();
             } else if (TransferType.DOWNLOAD.equals(type)) {
-                // remove partially download file
+                // remove the partially download file
                 new File(file).delete();
             }
             return true;
@@ -242,7 +301,7 @@ class TransferRecord {
     }
 
     /**
-     * Wait till transfer finishes.
+     * Wait till transfer finishes. This method is used for testing purposes.
      *
      * @param timeout the maximum time to wait in milliseconds
      * @throws InterruptedException
@@ -292,7 +351,37 @@ class TransferRecord {
                 .append("eTag:").append(eTag).append(",")
                 .append("storageClass:").append(headerStorageClass).append(",")
                 .append("userMetadata:").append(userMetadata.toString()).append(",")
+                .append("transferUtilityOptions:").append(gson.toJson(transferUtilityOptions))
                 .append("]");
         return sb.toString();
+    }
+
+    /**
+     * Checks if the preferred network is available. Updates state to WAITING_FOR_NETWORK if
+     * the preferred network is not available
+     *
+     * @param updater the transfer status updater object
+     * @param connManager the android connectivity manager
+     * @return true if the preferred network is available, false otherwise.
+     */
+    protected boolean checkPreferredNetworkAvailability(final TransferStatusUpdater updater,
+                                                      final ConnectivityManager connManager) {
+
+        if (connManager == null) {
+            // Unable to get the details of the network, we will start the transfer.
+            return true;
+        }
+
+        if (transferUtilityOptions != null && transferUtilityOptions.getTransferNetworkConnectionType() != null && !transferUtilityOptions.getTransferNetworkConnectionType().isConnected(connManager)) {
+            // the network that is configured in the TransferUtilityOptions is not available.
+            // we will set the state to WAITING_FOR_NETWORK. The transfer will be started
+            // when a future notification is received for the desired network.
+            LOGGER.info("Network Connection " + transferUtilityOptions.getTransferNetworkConnectionType() + " is not available.");
+            updater.updateState(id, TransferState.WAITING_FOR_NETWORK);
+            return false;
+        }
+        // Either TransferUtilityOptions was not set (in case of an upgrade)
+        // or the preferred network is available. Start the transfer.
+        return true;
     }
 }

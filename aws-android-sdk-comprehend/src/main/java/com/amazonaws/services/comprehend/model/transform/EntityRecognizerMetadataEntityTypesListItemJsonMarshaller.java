@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -31,6 +32,19 @@ class EntityRecognizerMetadataEntityTypesListItemJsonMarshaller {
             String type = entityRecognizerMetadataEntityTypesListItem.getType();
             jsonWriter.name("Type");
             jsonWriter.value(type);
+        }
+        if (entityRecognizerMetadataEntityTypesListItem.getEvaluationMetrics() != null) {
+            EntityTypesEvaluationMetrics evaluationMetrics = entityRecognizerMetadataEntityTypesListItem
+                    .getEvaluationMetrics();
+            jsonWriter.name("EvaluationMetrics");
+            EntityTypesEvaluationMetricsJsonMarshaller.getInstance().marshall(evaluationMetrics,
+                    jsonWriter);
+        }
+        if (entityRecognizerMetadataEntityTypesListItem.getNumberOfTrainMentions() != null) {
+            Integer numberOfTrainMentions = entityRecognizerMetadataEntityTypesListItem
+                    .getNumberOfTrainMentions();
+            jsonWriter.name("NumberOfTrainMentions");
+            jsonWriter.value(numberOfTrainMentions);
         }
         jsonWriter.endObject();
     }

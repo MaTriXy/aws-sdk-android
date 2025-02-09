@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * input face.
  * </p>
  * <p>
- * For an example, see Searching for a Face Using Its Face ID in the Amazon
+ * For an example, see Searching for a face using its face ID in the Amazon
  * Rekognition Developer Guide.
  * </p>
  * <p>
@@ -87,11 +87,11 @@ public class SearchFacesRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * Optional value specifying the minimum confidence in the face match to
      * return. For example, don't return any matches where confidence in matches
-     * is less than 70%.
+     * is less than 70%. The default value is 80%.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float faceMatchThreshold;
 
@@ -300,16 +300,16 @@ public class SearchFacesRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * Optional value specifying the minimum confidence in the face match to
      * return. For example, don't return any matches where confidence in matches
-     * is less than 70%.
+     * is less than 70%. The default value is 80%.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Optional value specifying the minimum confidence in the face
      *         match to return. For example, don't return any matches where
-     *         confidence in matches is less than 70%.
+     *         confidence in matches is less than 70%. The default value is 80%.
      *         </p>
      */
     public Float getFaceMatchThreshold() {
@@ -320,16 +320,17 @@ public class SearchFacesRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * Optional value specifying the minimum confidence in the face match to
      * return. For example, don't return any matches where confidence in matches
-     * is less than 70%.
+     * is less than 70%. The default value is 80%.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param faceMatchThreshold <p>
      *            Optional value specifying the minimum confidence in the face
      *            match to return. For example, don't return any matches where
-     *            confidence in matches is less than 70%.
+     *            confidence in matches is less than 70%. The default value is
+     *            80%.
      *            </p>
      */
     public void setFaceMatchThreshold(Float faceMatchThreshold) {
@@ -340,19 +341,20 @@ public class SearchFacesRequest extends AmazonWebServiceRequest implements Seria
      * <p>
      * Optional value specifying the minimum confidence in the face match to
      * return. For example, don't return any matches where confidence in matches
-     * is less than 70%.
+     * is less than 70%. The default value is 80%.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param faceMatchThreshold <p>
      *            Optional value specifying the minimum confidence in the face
      *            match to return. For example, don't return any matches where
-     *            confidence in matches is less than 70%.
+     *            confidence in matches is less than 70%. The default value is
+     *            80%.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

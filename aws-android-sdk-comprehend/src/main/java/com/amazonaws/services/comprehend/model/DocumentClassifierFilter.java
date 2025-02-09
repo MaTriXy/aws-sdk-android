@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.io.Serializable;
  * <p>
  * Provides information for filtering a list of document classifiers. You can
  * only specify one filtering parameter in a request. For more information, see
- * the operation.
+ * the <code>ListDocumentClassifiers</code> operation.
  * </p>
  */
 public class DocumentClassifierFilter implements Serializable {
@@ -31,9 +31,21 @@ public class DocumentClassifierFilter implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      */
     private String status;
+
+    /**
+     * <p>
+     * The name that you assigned to the document classifier
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     */
+    private String documentClassifierName;
 
     /**
      * <p>
@@ -61,7 +73,8 @@ public class DocumentClassifierFilter implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @return <p>
      *         Filters the list of classifiers based on status.
@@ -78,7 +91,8 @@ public class DocumentClassifierFilter implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Filters the list of classifiers based on status.
@@ -98,7 +112,8 @@ public class DocumentClassifierFilter implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Filters the list of classifiers based on status.
@@ -118,7 +133,8 @@ public class DocumentClassifierFilter implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Filters the list of classifiers based on status.
@@ -138,7 +154,8 @@ public class DocumentClassifierFilter implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Filters the list of classifiers based on status.
@@ -149,6 +166,63 @@ public class DocumentClassifierFilter implements Serializable {
      */
     public DocumentClassifierFilter withStatus(ModelStatus status) {
         this.status = status.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * The name that you assigned to the document classifier
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @return <p>
+     *         The name that you assigned to the document classifier
+     *         </p>
+     */
+    public String getDocumentClassifierName() {
+        return documentClassifierName;
+    }
+
+    /**
+     * <p>
+     * The name that you assigned to the document classifier
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param documentClassifierName <p>
+     *            The name that you assigned to the document classifier
+     *            </p>
+     */
+    public void setDocumentClassifierName(String documentClassifierName) {
+        this.documentClassifierName = documentClassifierName;
+    }
+
+    /**
+     * <p>
+     * The name that you assigned to the document classifier
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param documentClassifierName <p>
+     *            The name that you assigned to the document classifier
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DocumentClassifierFilter withDocumentClassifierName(String documentClassifierName) {
+        this.documentClassifierName = documentClassifierName;
         return this;
     }
 
@@ -291,6 +365,8 @@ public class DocumentClassifierFilter implements Serializable {
         sb.append("{");
         if (getStatus() != null)
             sb.append("Status: " + getStatus() + ",");
+        if (getDocumentClassifierName() != null)
+            sb.append("DocumentClassifierName: " + getDocumentClassifierName() + ",");
         if (getSubmitTimeBefore() != null)
             sb.append("SubmitTimeBefore: " + getSubmitTimeBefore() + ",");
         if (getSubmitTimeAfter() != null)
@@ -305,6 +381,10 @@ public class DocumentClassifierFilter implements Serializable {
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getDocumentClassifierName() == null) ? 0 : getDocumentClassifierName()
+                        .hashCode());
         hashCode = prime * hashCode
                 + ((getSubmitTimeBefore() == null) ? 0 : getSubmitTimeBefore().hashCode());
         hashCode = prime * hashCode
@@ -326,6 +406,11 @@ public class DocumentClassifierFilter implements Serializable {
         if (other.getStatus() == null ^ this.getStatus() == null)
             return false;
         if (other.getStatus() != null && other.getStatus().equals(this.getStatus()) == false)
+            return false;
+        if (other.getDocumentClassifierName() == null ^ this.getDocumentClassifierName() == null)
+            return false;
+        if (other.getDocumentClassifierName() != null
+                && other.getDocumentClassifierName().equals(this.getDocumentClassifierName()) == false)
             return false;
         if (other.getSubmitTimeBefore() == null ^ this.getSubmitTimeBefore() == null)
             return false;

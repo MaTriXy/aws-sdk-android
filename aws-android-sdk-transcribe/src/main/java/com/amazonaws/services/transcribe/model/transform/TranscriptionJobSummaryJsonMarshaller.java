@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.transcribe.model.transform;
 
 import com.amazonaws.services.transcribe.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -35,6 +36,11 @@ class TranscriptionJobSummaryJsonMarshaller {
             java.util.Date creationTime = transcriptionJobSummary.getCreationTime();
             jsonWriter.name("CreationTime");
             jsonWriter.value(creationTime);
+        }
+        if (transcriptionJobSummary.getStartTime() != null) {
+            java.util.Date startTime = transcriptionJobSummary.getStartTime();
+            jsonWriter.name("StartTime");
+            jsonWriter.value(startTime);
         }
         if (transcriptionJobSummary.getCompletionTime() != null) {
             java.util.Date completionTime = transcriptionJobSummary.getCompletionTime();
@@ -60,6 +66,58 @@ class TranscriptionJobSummaryJsonMarshaller {
             String outputLocationType = transcriptionJobSummary.getOutputLocationType();
             jsonWriter.name("OutputLocationType");
             jsonWriter.value(outputLocationType);
+        }
+        if (transcriptionJobSummary.getContentRedaction() != null) {
+            ContentRedaction contentRedaction = transcriptionJobSummary.getContentRedaction();
+            jsonWriter.name("ContentRedaction");
+            ContentRedactionJsonMarshaller.getInstance().marshall(contentRedaction, jsonWriter);
+        }
+        if (transcriptionJobSummary.getModelSettings() != null) {
+            ModelSettings modelSettings = transcriptionJobSummary.getModelSettings();
+            jsonWriter.name("ModelSettings");
+            ModelSettingsJsonMarshaller.getInstance().marshall(modelSettings, jsonWriter);
+        }
+        if (transcriptionJobSummary.getIdentifyLanguage() != null) {
+            Boolean identifyLanguage = transcriptionJobSummary.getIdentifyLanguage();
+            jsonWriter.name("IdentifyLanguage");
+            jsonWriter.value(identifyLanguage);
+        }
+        if (transcriptionJobSummary.getIdentifyMultipleLanguages() != null) {
+            Boolean identifyMultipleLanguages = transcriptionJobSummary
+                    .getIdentifyMultipleLanguages();
+            jsonWriter.name("IdentifyMultipleLanguages");
+            jsonWriter.value(identifyMultipleLanguages);
+        }
+        if (transcriptionJobSummary.getIdentifiedLanguageScore() != null) {
+            Float identifiedLanguageScore = transcriptionJobSummary.getIdentifiedLanguageScore();
+            jsonWriter.name("IdentifiedLanguageScore");
+            jsonWriter.value(identifiedLanguageScore);
+        }
+        if (transcriptionJobSummary.getLanguageCodes() != null) {
+            java.util.List<LanguageCodeItem> languageCodes = transcriptionJobSummary
+                    .getLanguageCodes();
+            jsonWriter.name("LanguageCodes");
+            jsonWriter.beginArray();
+            for (LanguageCodeItem languageCodesItem : languageCodes) {
+                if (languageCodesItem != null) {
+                    LanguageCodeItemJsonMarshaller.getInstance().marshall(languageCodesItem,
+                            jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (transcriptionJobSummary.getToxicityDetection() != null) {
+            java.util.List<ToxicityDetectionSettings> toxicityDetection = transcriptionJobSummary
+                    .getToxicityDetection();
+            jsonWriter.name("ToxicityDetection");
+            jsonWriter.beginArray();
+            for (ToxicityDetectionSettings toxicityDetectionItem : toxicityDetection) {
+                if (toxicityDetectionItem != null) {
+                    ToxicityDetectionSettingsJsonMarshaller.getInstance().marshall(
+                            toxicityDetectionItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
         }
         jsonWriter.endObject();
     }

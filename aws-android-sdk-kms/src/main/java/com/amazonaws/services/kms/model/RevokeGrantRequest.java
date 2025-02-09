@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,23 +21,82 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Revokes the specified grant for the specified customer master key (CMK). You
- * can revoke a grant to actively deny operations that depend on it.
+ * Deletes the specified grant. You revoke a grant to terminate the permissions
+ * that the grant allows. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#grant-delete"
+ * >Retiring and revoking grants</a> in the <i> <i>Key Management Service
+ * Developer Guide</i> </i>.
  * </p>
  * <p>
- * To perform this operation on a CMK in a different AWS account, specify the
- * key ARN in the value of the <code>KeyId</code> parameter.
+ * When you create, retire, or revoke a grant, there might be a brief delay,
+ * usually less than five minutes, until the grant is available throughout KMS.
+ * This state is known as <i>eventual consistency</i>. For details, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+ * >Eventual consistency</a> in the <i> <i>Key Management Service Developer
+ * Guide</i> </i>.
+ * </p>
+ * <p>
+ * For detailed information about grants, including grant terminology, see <a
+ * href
+ * ="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html">Grants
+ * in KMS</a> in the <i> <i>Key Management Service Developer Guide</i> </i>. For
+ * examples of working with grants in several programming languages, see <a
+ * href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-grants.html"
+ * >Programming grants</a>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: Yes. To perform this operation on a KMS key in a
+ * different Amazon Web Services account, specify the key ARN in the value of
+ * the <code>KeyId</code> parameter.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:RevokeGrant</a> (key policy).
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>CreateGrant</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListGrants</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListRetirableGrants</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>RetireGrant</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class RevokeGrantRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * A unique identifier for the customer master key associated with the
-     * grant.
+     * A unique identifier for the KMS key associated with the grant. To get the
+     * key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
-     * specify a CMK in a different AWS account, you must use the key ARN.
+     * Specify the key ID or key ARN of the KMS key. To specify a KMS key in a
+     * different Amazon Web Services account, you must use the key ARN.
      * </p>
      * <p>
      * For example:
@@ -56,7 +115,7 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -67,7 +126,8 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Identifier of the grant to be revoked.
+     * Identifies the grant to revoke. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -77,12 +137,27 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * A unique identifier for the customer master key associated with the
-     * grant.
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
-     * specify a CMK in a different AWS account, you must use the key ARN.
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     */
+    private Boolean dryRun;
+
+    /**
+     * <p>
+     * A unique identifier for the KMS key associated with the grant. To get the
+     * key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
+     * </p>
+     * <p>
+     * Specify the key ID or key ARN of the KMS key. To specify a KMS key in a
+     * different Amazon Web Services account, you must use the key ARN.
      * </p>
      * <p>
      * For example:
@@ -101,7 +176,7 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -109,13 +184,14 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         A unique identifier for the customer master key associated with
-     *         the grant.
+     *         A unique identifier for the KMS key associated with the grant. To
+     *         get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     *         <a>DescribeKey</a>.
      *         </p>
      *         <p>
-     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
-     *         To specify a CMK in a different AWS account, you must use the key
-     *         ARN.
+     *         Specify the key ID or key ARN of the KMS key. To specify a KMS
+     *         key in a different Amazon Web Services account, you must use the
+     *         key ARN.
      *         </p>
      *         <p>
      *         For example:
@@ -134,8 +210,8 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      *         </li>
      *         </ul>
      *         <p>
-     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
-     *         <a>DescribeKey</a>.
+     *         To get the key ID and key ARN for a KMS key, use <a>ListKeys</a>
+     *         or <a>DescribeKey</a>.
      *         </p>
      */
     public String getKeyId() {
@@ -144,12 +220,13 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * A unique identifier for the customer master key associated with the
-     * grant.
+     * A unique identifier for the KMS key associated with the grant. To get the
+     * key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
-     * specify a CMK in a different AWS account, you must use the key ARN.
+     * Specify the key ID or key ARN of the KMS key. To specify a KMS key in a
+     * different Amazon Web Services account, you must use the key ARN.
      * </p>
      * <p>
      * For example:
@@ -168,7 +245,7 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -176,12 +253,13 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key associated
-     *            with the grant.
+     *            A unique identifier for the KMS key associated with the grant.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK. To specify a CMK in a different AWS account, you must use
+     *            Specify the key ID or key ARN of the KMS key. To specify a KMS
+     *            key in a different Amazon Web Services account, you must use
      *            the key ARN.
      *            </p>
      *            <p>
@@ -201,8 +279,8 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -211,12 +289,13 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * A unique identifier for the customer master key associated with the
-     * grant.
+     * A unique identifier for the KMS key associated with the grant. To get the
+     * key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK. To
-     * specify a CMK in a different AWS account, you must use the key ARN.
+     * Specify the key ID or key ARN of the KMS key. To specify a KMS key in a
+     * different Amazon Web Services account, you must use the key ARN.
      * </p>
      * <p>
      * For example:
@@ -235,7 +314,7 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -246,12 +325,13 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key associated
-     *            with the grant.
+     *            A unique identifier for the KMS key associated with the grant.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK. To specify a CMK in a different AWS account, you must use
+     *            Specify the key ID or key ARN of the KMS key. To specify a KMS
+     *            key in a different Amazon Web Services account, you must use
      *            the key ARN.
      *            </p>
      *            <p>
@@ -271,8 +351,8 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -284,14 +364,17 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Identifier of the grant to be revoked.
+     * Identifies the grant to revoke. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
      *
      * @return <p>
-     *         Identifier of the grant to be revoked.
+     *         Identifies the grant to revoke. To get the grant ID, use
+     *         <a>CreateGrant</a>, <a>ListGrants</a>, or
+     *         <a>ListRetirableGrants</a>.
      *         </p>
      */
     public String getGrantId() {
@@ -300,14 +383,17 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Identifier of the grant to be revoked.
+     * Identifies the grant to revoke. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
      *
      * @param grantId <p>
-     *            Identifier of the grant to be revoked.
+     *            Identifies the grant to revoke. To get the grant ID, use
+     *            <a>CreateGrant</a>, <a>ListGrants</a>, or
+     *            <a>ListRetirableGrants</a>.
      *            </p>
      */
     public void setGrantId(String grantId) {
@@ -316,7 +402,8 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Identifier of the grant to be revoked.
+     * Identifies the grant to revoke. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -326,13 +413,129 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 128<br/>
      *
      * @param grantId <p>
-     *            Identifier of the grant to be revoked.
+     *            Identifies the grant to revoke. To get the grant ID, use
+     *            <a>CreateGrant</a>, <a>ListGrants</a>, or
+     *            <a>ListRetirableGrants</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public RevokeGrantRequest withGrantId(String grantId) {
         this.grantId = grantId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         Checks if your request will succeed. <code>DryRun</code> is an
+     *         optional parameter.
+     *         </p>
+     *         <p>
+     *         To learn more about how to use this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *         >Testing your KMS API calls</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     */
+    public Boolean isDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         Checks if your request will succeed. <code>DryRun</code> is an
+     *         optional parameter.
+     *         </p>
+     *         <p>
+     *         To learn more about how to use this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *         >Testing your KMS API calls</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     */
+    public Boolean getDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @param dryRun <p>
+     *            Checks if your request will succeed. <code>DryRun</code> is an
+     *            optional parameter.
+     *            </p>
+     *            <p>
+     *            To learn more about how to use this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *            >Testing your KMS API calls</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     */
+    public void setDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param dryRun <p>
+     *            Checks if your request will succeed. <code>DryRun</code> is an
+     *            optional parameter.
+     *            </p>
+     *            <p>
+     *            To learn more about how to use this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *            >Testing your KMS API calls</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public RevokeGrantRequest withDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
         return this;
     }
 
@@ -350,7 +553,9 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
         if (getKeyId() != null)
             sb.append("KeyId: " + getKeyId() + ",");
         if (getGrantId() != null)
-            sb.append("GrantId: " + getGrantId());
+            sb.append("GrantId: " + getGrantId() + ",");
+        if (getDryRun() != null)
+            sb.append("DryRun: " + getDryRun());
         sb.append("}");
         return sb.toString();
     }
@@ -362,6 +567,7 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
 
         hashCode = prime * hashCode + ((getKeyId() == null) ? 0 : getKeyId().hashCode());
         hashCode = prime * hashCode + ((getGrantId() == null) ? 0 : getGrantId().hashCode());
+        hashCode = prime * hashCode + ((getDryRun() == null) ? 0 : getDryRun().hashCode());
         return hashCode;
     }
 
@@ -383,6 +589,10 @@ public class RevokeGrantRequest extends AmazonWebServiceRequest implements Seria
         if (other.getGrantId() == null ^ this.getGrantId() == null)
             return false;
         if (other.getGrantId() != null && other.getGrantId().equals(this.getGrantId()) == false)
+            return false;
+        if (other.getDryRun() == null ^ this.getDryRun() == null)
+            return false;
+        if (other.getDryRun() != null && other.getDryRun().equals(this.getDryRun()) == false)
             return false;
         return true;
     }

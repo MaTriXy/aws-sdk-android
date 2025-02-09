@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,18 +22,19 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Gets face detection results for a Amazon Rekognition Video analysis started
- * by .
+ * by <a>StartFaceDetection</a>.
  * </p>
  * <p>
  * Face detection with Amazon Rekognition Video is an asynchronous operation.
- * You start face detection by calling which returns a job identifier (
- * <code>JobId</code>). When the face detection operation finishes, Amazon
- * Rekognition Video publishes a completion status to the Amazon Simple
- * Notification Service topic registered in the initial call to
+ * You start face detection by calling <a>StartFaceDetection</a> which returns a
+ * job identifier (<code>JobId</code>). When the face detection operation
+ * finishes, Amazon Rekognition Video publishes a completion status to the
+ * Amazon Simple Notification Service topic registered in the initial call to
  * <code>StartFaceDetection</code>. To get the results of the face detection
  * operation, first check that the status value published to the Amazon SNS
- * topic is <code>SUCCEEDED</code>. If so, call and pass the job identifier (
- * <code>JobId</code>) from the initial call to <code>StartFaceDetection</code>.
+ * topic is <code>SUCCEEDED</code>. If so, call <a>GetFaceDetection</a> and pass
+ * the job identifier (<code>JobId</code>) from the initial call to
+ * <code>StartFaceDetection</code>.
  * </p>
  * <p>
  * <code>GetFaceDetection</code> returns an array of detected faces (
@@ -47,6 +48,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <code>GetFaceDetection</code> and populate the <code>NextToken</code> request
  * parameter with the token value returned from the previous call to
  * <code>GetFaceDetection</code>.
+ * </p>
+ * <p>
+ * Note that for the <code>GetFaceDetection</code> operation, the returned
+ * values for <code>FaceOccluded</code> and <code>EyeDirection</code> will
+ * always be "null".
  * </p>
  */
 public class GetFaceDetectionRequest extends AmazonWebServiceRequest implements Serializable {

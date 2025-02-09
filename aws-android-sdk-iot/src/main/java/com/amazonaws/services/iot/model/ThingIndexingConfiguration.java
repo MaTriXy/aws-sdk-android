@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,13 +32,12 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains registry data only.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow
-     * data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry and shadow data.
      * </p>
      * </li>
      * <li>
@@ -60,9 +59,8 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * STATUS – Your thing index will contain connectivity status. In order to
-     * enable thing connectivity indexing, thingIndexMode must not be set to
-     * OFF.
+     * STATUS – Your thing index contains connectivity status. To enable thing
+     * connectivity indexing, <i>thingIndexMode</i> must not be set to OFF.
      * </p>
      * </li>
      * <li>
@@ -79,18 +77,100 @@ public class ThingIndexingConfiguration implements Serializable {
 
     /**
      * <p>
+     * Device Defender indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * VIOLATIONS – Your thing index contains Device Defender violations. To
+     * enable Device Defender indexing, <i>deviceDefenderIndexingMode</i> must
+     * not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Device Defender indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Device Defender violations, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     * >Device Defender Detect.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, VIOLATIONS
+     */
+    private String deviceDefenderIndexingMode;
+
+    /**
+     * <p>
+     * Named shadow indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * ON – Your thing index contains named shadow. To enable thing named shadow
+     * indexing, <i>namedShadowIndexingMode</i> must not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Named shadow indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, ON
+     */
+    private String namedShadowIndexingMode;
+
+    /**
+     * <p>
+     * Contains fields that are indexed and whose types are already known by the
+     * Fleet Indexing service.
+     * </p>
+     */
+    private java.util.List<Field> managedFields;
+
+    /**
+     * <p>
+     * Contains custom field names and their data type.
+     * </p>
+     */
+    private java.util.List<Field> customFields;
+
+    /**
+     * <p>
+     * Provides additional filters for specific data sources. Named shadow is
+     * the only data source that currently supports and requires a filter. To
+     * add named shadows to your fleet indexing configuration, set
+     * <code>namedShadowIndexingMode</code> to be <code>ON</code> and specify
+     * your shadow names in <code>filter</code>.
+     * </p>
+     */
+    private IndexingFilter filter;
+
+    /**
+     * <p>
      * Thing indexing mode. Valid values are:
      * </p>
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains registry data only.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow
-     * data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry and shadow data.
      * </p>
      * </li>
      * <li>
@@ -109,12 +189,12 @@ public class ThingIndexingConfiguration implements Serializable {
      *         <ul>
      *         <li>
      *         <p>
-     *         REGISTRY – Your thing index will contain only registry data.
+     *         REGISTRY – Your thing index contains registry data only.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         REGISTRY_AND_SHADOW - Your thing index will contain registry and
+     *         REGISTRY_AND_SHADOW - Your thing index contains registry and
      *         shadow data.
      *         </p>
      *         </li>
@@ -137,13 +217,12 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains registry data only.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow
-     * data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry and shadow data.
      * </p>
      * </li>
      * <li>
@@ -162,13 +241,13 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            REGISTRY – Your thing index will contain only registry data.
+     *            REGISTRY – Your thing index contains registry data only.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_SHADOW - Your thing index will contain registry
-     *            and shadow data.
+     *            REGISTRY_AND_SHADOW - Your thing index contains registry and
+     *            shadow data.
      *            </p>
      *            </li>
      *            <li>
@@ -190,13 +269,12 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains registry data only.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow
-     * data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry and shadow data.
      * </p>
      * </li>
      * <li>
@@ -218,13 +296,13 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            REGISTRY – Your thing index will contain only registry data.
+     *            REGISTRY – Your thing index contains registry data only.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_SHADOW - Your thing index will contain registry
-     *            and shadow data.
+     *            REGISTRY_AND_SHADOW - Your thing index contains registry and
+     *            shadow data.
      *            </p>
      *            </li>
      *            <li>
@@ -249,13 +327,12 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains registry data only.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow
-     * data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry and shadow data.
      * </p>
      * </li>
      * <li>
@@ -274,13 +351,13 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            REGISTRY – Your thing index will contain only registry data.
+     *            REGISTRY – Your thing index contains registry data only.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_SHADOW - Your thing index will contain registry
-     *            and shadow data.
+     *            REGISTRY_AND_SHADOW - Your thing index contains registry and
+     *            shadow data.
      *            </p>
      *            </li>
      *            <li>
@@ -302,13 +379,12 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * REGISTRY – Your thing index will contain only registry data.
+     * REGISTRY – Your thing index contains registry data only.
      * </p>
      * </li>
      * <li>
      * <p>
-     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow
-     * data.
+     * REGISTRY_AND_SHADOW - Your thing index contains registry and shadow data.
      * </p>
      * </li>
      * <li>
@@ -330,13 +406,13 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            REGISTRY – Your thing index will contain only registry data.
+     *            REGISTRY – Your thing index contains registry data only.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            REGISTRY_AND_SHADOW - Your thing index will contain registry
-     *            and shadow data.
+     *            REGISTRY_AND_SHADOW - Your thing index contains registry and
+     *            shadow data.
      *            </p>
      *            </li>
      *            <li>
@@ -361,9 +437,8 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * STATUS – Your thing index will contain connectivity status. In order to
-     * enable thing connectivity indexing, thingIndexMode must not be set to
-     * OFF.
+     * STATUS – Your thing index contains connectivity status. To enable thing
+     * connectivity indexing, <i>thingIndexMode</i> must not be set to OFF.
      * </p>
      * </li>
      * <li>
@@ -382,9 +457,9 @@ public class ThingIndexingConfiguration implements Serializable {
      *         <ul>
      *         <li>
      *         <p>
-     *         STATUS – Your thing index will contain connectivity status. In
-     *         order to enable thing connectivity indexing, thingIndexMode must
-     *         not be set to OFF.
+     *         STATUS – Your thing index contains connectivity status. To enable
+     *         thing connectivity indexing, <i>thingIndexMode</i> must not be
+     *         set to OFF.
      *         </p>
      *         </li>
      *         <li>
@@ -406,9 +481,8 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * STATUS – Your thing index will contain connectivity status. In order to
-     * enable thing connectivity indexing, thingIndexMode must not be set to
-     * OFF.
+     * STATUS – Your thing index contains connectivity status. To enable thing
+     * connectivity indexing, <i>thingIndexMode</i> must not be set to OFF.
      * </p>
      * </li>
      * <li>
@@ -427,9 +501,9 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            STATUS – Your thing index will contain connectivity status. In
-     *            order to enable thing connectivity indexing, thingIndexMode
-     *            must not be set to OFF.
+     *            STATUS – Your thing index contains connectivity status. To
+     *            enable thing connectivity indexing, <i>thingIndexMode</i> must
+     *            not be set to OFF.
      *            </p>
      *            </li>
      *            <li>
@@ -451,9 +525,8 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * STATUS – Your thing index will contain connectivity status. In order to
-     * enable thing connectivity indexing, thingIndexMode must not be set to
-     * OFF.
+     * STATUS – Your thing index contains connectivity status. To enable thing
+     * connectivity indexing, <i>thingIndexMode</i> must not be set to OFF.
      * </p>
      * </li>
      * <li>
@@ -475,9 +548,9 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            STATUS – Your thing index will contain connectivity status. In
-     *            order to enable thing connectivity indexing, thingIndexMode
-     *            must not be set to OFF.
+     *            STATUS – Your thing index contains connectivity status. To
+     *            enable thing connectivity indexing, <i>thingIndexMode</i> must
+     *            not be set to OFF.
      *            </p>
      *            </li>
      *            <li>
@@ -503,9 +576,8 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * STATUS – Your thing index will contain connectivity status. In order to
-     * enable thing connectivity indexing, thingIndexMode must not be set to
-     * OFF.
+     * STATUS – Your thing index contains connectivity status. To enable thing
+     * connectivity indexing, <i>thingIndexMode</i> must not be set to OFF.
      * </p>
      * </li>
      * <li>
@@ -524,9 +596,9 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            STATUS – Your thing index will contain connectivity status. In
-     *            order to enable thing connectivity indexing, thingIndexMode
-     *            must not be set to OFF.
+     *            STATUS – Your thing index contains connectivity status. To
+     *            enable thing connectivity indexing, <i>thingIndexMode</i> must
+     *            not be set to OFF.
      *            </p>
      *            </li>
      *            <li>
@@ -549,9 +621,8 @@ public class ThingIndexingConfiguration implements Serializable {
      * <ul>
      * <li>
      * <p>
-     * STATUS – Your thing index will contain connectivity status. In order to
-     * enable thing connectivity indexing, thingIndexMode must not be set to
-     * OFF.
+     * STATUS – Your thing index contains connectivity status. To enable thing
+     * connectivity indexing, <i>thingIndexMode</i> must not be set to OFF.
      * </p>
      * </li>
      * <li>
@@ -573,9 +644,9 @@ public class ThingIndexingConfiguration implements Serializable {
      *            <ul>
      *            <li>
      *            <p>
-     *            STATUS – Your thing index will contain connectivity status. In
-     *            order to enable thing connectivity indexing, thingIndexMode
-     *            must not be set to OFF.
+     *            STATUS – Your thing index contains connectivity status. To
+     *            enable thing connectivity indexing, <i>thingIndexMode</i> must
+     *            not be set to OFF.
      *            </p>
      *            </li>
      *            <li>
@@ -595,6 +666,811 @@ public class ThingIndexingConfiguration implements Serializable {
     }
 
     /**
+     * <p>
+     * Device Defender indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * VIOLATIONS – Your thing index contains Device Defender violations. To
+     * enable Device Defender indexing, <i>deviceDefenderIndexingMode</i> must
+     * not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Device Defender indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Device Defender violations, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     * >Device Defender Detect.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, VIOLATIONS
+     *
+     * @return <p>
+     *         Device Defender indexing mode. Valid values are:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         VIOLATIONS – Your thing index contains Device Defender
+     *         violations. To enable Device Defender indexing,
+     *         <i>deviceDefenderIndexingMode</i> must not be set to OFF.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         OFF - Device Defender indexing is disabled.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         For more information about Device Defender violations, see <a
+     *         href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     *         >Device Defender Detect.</a>
+     *         </p>
+     * @see DeviceDefenderIndexingMode
+     */
+    public String getDeviceDefenderIndexingMode() {
+        return deviceDefenderIndexingMode;
+    }
+
+    /**
+     * <p>
+     * Device Defender indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * VIOLATIONS – Your thing index contains Device Defender violations. To
+     * enable Device Defender indexing, <i>deviceDefenderIndexingMode</i> must
+     * not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Device Defender indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Device Defender violations, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     * >Device Defender Detect.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, VIOLATIONS
+     *
+     * @param deviceDefenderIndexingMode <p>
+     *            Device Defender indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            VIOLATIONS – Your thing index contains Device Defender
+     *            violations. To enable Device Defender indexing,
+     *            <i>deviceDefenderIndexingMode</i> must not be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Device Defender indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Device Defender violations, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     *            >Device Defender Detect.</a>
+     *            </p>
+     * @see DeviceDefenderIndexingMode
+     */
+    public void setDeviceDefenderIndexingMode(String deviceDefenderIndexingMode) {
+        this.deviceDefenderIndexingMode = deviceDefenderIndexingMode;
+    }
+
+    /**
+     * <p>
+     * Device Defender indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * VIOLATIONS – Your thing index contains Device Defender violations. To
+     * enable Device Defender indexing, <i>deviceDefenderIndexingMode</i> must
+     * not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Device Defender indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Device Defender violations, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     * >Device Defender Detect.</a>
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, VIOLATIONS
+     *
+     * @param deviceDefenderIndexingMode <p>
+     *            Device Defender indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            VIOLATIONS – Your thing index contains Device Defender
+     *            violations. To enable Device Defender indexing,
+     *            <i>deviceDefenderIndexingMode</i> must not be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Device Defender indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Device Defender violations, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     *            >Device Defender Detect.</a>
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see DeviceDefenderIndexingMode
+     */
+    public ThingIndexingConfiguration withDeviceDefenderIndexingMode(
+            String deviceDefenderIndexingMode) {
+        this.deviceDefenderIndexingMode = deviceDefenderIndexingMode;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Device Defender indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * VIOLATIONS – Your thing index contains Device Defender violations. To
+     * enable Device Defender indexing, <i>deviceDefenderIndexingMode</i> must
+     * not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Device Defender indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Device Defender violations, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     * >Device Defender Detect.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, VIOLATIONS
+     *
+     * @param deviceDefenderIndexingMode <p>
+     *            Device Defender indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            VIOLATIONS – Your thing index contains Device Defender
+     *            violations. To enable Device Defender indexing,
+     *            <i>deviceDefenderIndexingMode</i> must not be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Device Defender indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Device Defender violations, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     *            >Device Defender Detect.</a>
+     *            </p>
+     * @see DeviceDefenderIndexingMode
+     */
+    public void setDeviceDefenderIndexingMode(DeviceDefenderIndexingMode deviceDefenderIndexingMode) {
+        this.deviceDefenderIndexingMode = deviceDefenderIndexingMode.toString();
+    }
+
+    /**
+     * <p>
+     * Device Defender indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * VIOLATIONS – Your thing index contains Device Defender violations. To
+     * enable Device Defender indexing, <i>deviceDefenderIndexingMode</i> must
+     * not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Device Defender indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Device Defender violations, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     * >Device Defender Detect.</a>
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, VIOLATIONS
+     *
+     * @param deviceDefenderIndexingMode <p>
+     *            Device Defender indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            VIOLATIONS – Your thing index contains Device Defender
+     *            violations. To enable Device Defender indexing,
+     *            <i>deviceDefenderIndexingMode</i> must not be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Device Defender indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Device Defender violations, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender-detect.html"
+     *            >Device Defender Detect.</a>
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see DeviceDefenderIndexingMode
+     */
+    public ThingIndexingConfiguration withDeviceDefenderIndexingMode(
+            DeviceDefenderIndexingMode deviceDefenderIndexingMode) {
+        this.deviceDefenderIndexingMode = deviceDefenderIndexingMode.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * Named shadow indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * ON – Your thing index contains named shadow. To enable thing named shadow
+     * indexing, <i>namedShadowIndexingMode</i> must not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Named shadow indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, ON
+     *
+     * @return <p>
+     *         Named shadow indexing mode. Valid values are:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         ON – Your thing index contains named shadow. To enable thing
+     *         named shadow indexing, <i>namedShadowIndexingMode</i> must not be
+     *         set to OFF.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         OFF - Named shadow indexing is disabled.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         For more information about Shadows, see <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *         >IoT Device Shadow service.</a>
+     *         </p>
+     * @see NamedShadowIndexingMode
+     */
+    public String getNamedShadowIndexingMode() {
+        return namedShadowIndexingMode;
+    }
+
+    /**
+     * <p>
+     * Named shadow indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * ON – Your thing index contains named shadow. To enable thing named shadow
+     * indexing, <i>namedShadowIndexingMode</i> must not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Named shadow indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, ON
+     *
+     * @param namedShadowIndexingMode <p>
+     *            Named shadow indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            ON – Your thing index contains named shadow. To enable thing
+     *            named shadow indexing, <i>namedShadowIndexingMode</i> must not
+     *            be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Named shadow indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Shadows, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *            >IoT Device Shadow service.</a>
+     *            </p>
+     * @see NamedShadowIndexingMode
+     */
+    public void setNamedShadowIndexingMode(String namedShadowIndexingMode) {
+        this.namedShadowIndexingMode = namedShadowIndexingMode;
+    }
+
+    /**
+     * <p>
+     * Named shadow indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * ON – Your thing index contains named shadow. To enable thing named shadow
+     * indexing, <i>namedShadowIndexingMode</i> must not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Named shadow indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, ON
+     *
+     * @param namedShadowIndexingMode <p>
+     *            Named shadow indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            ON – Your thing index contains named shadow. To enable thing
+     *            named shadow indexing, <i>namedShadowIndexingMode</i> must not
+     *            be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Named shadow indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Shadows, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *            >IoT Device Shadow service.</a>
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see NamedShadowIndexingMode
+     */
+    public ThingIndexingConfiguration withNamedShadowIndexingMode(String namedShadowIndexingMode) {
+        this.namedShadowIndexingMode = namedShadowIndexingMode;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Named shadow indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * ON – Your thing index contains named shadow. To enable thing named shadow
+     * indexing, <i>namedShadowIndexingMode</i> must not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Named shadow indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, ON
+     *
+     * @param namedShadowIndexingMode <p>
+     *            Named shadow indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            ON – Your thing index contains named shadow. To enable thing
+     *            named shadow indexing, <i>namedShadowIndexingMode</i> must not
+     *            be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Named shadow indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Shadows, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *            >IoT Device Shadow service.</a>
+     *            </p>
+     * @see NamedShadowIndexingMode
+     */
+    public void setNamedShadowIndexingMode(NamedShadowIndexingMode namedShadowIndexingMode) {
+        this.namedShadowIndexingMode = namedShadowIndexingMode.toString();
+    }
+
+    /**
+     * <p>
+     * Named shadow indexing mode. Valid values are:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * ON – Your thing index contains named shadow. To enable thing named shadow
+     * indexing, <i>namedShadowIndexingMode</i> must not be set to OFF.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * OFF - Named shadow indexing is disabled.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * For more information about Shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>OFF, ON
+     *
+     * @param namedShadowIndexingMode <p>
+     *            Named shadow indexing mode. Valid values are:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            ON – Your thing index contains named shadow. To enable thing
+     *            named shadow indexing, <i>namedShadowIndexingMode</i> must not
+     *            be set to OFF.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            OFF - Named shadow indexing is disabled.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            For more information about Shadows, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *            >IoT Device Shadow service.</a>
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see NamedShadowIndexingMode
+     */
+    public ThingIndexingConfiguration withNamedShadowIndexingMode(
+            NamedShadowIndexingMode namedShadowIndexingMode) {
+        this.namedShadowIndexingMode = namedShadowIndexingMode.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * Contains fields that are indexed and whose types are already known by the
+     * Fleet Indexing service.
+     * </p>
+     *
+     * @return <p>
+     *         Contains fields that are indexed and whose types are already
+     *         known by the Fleet Indexing service.
+     *         </p>
+     */
+    public java.util.List<Field> getManagedFields() {
+        return managedFields;
+    }
+
+    /**
+     * <p>
+     * Contains fields that are indexed and whose types are already known by the
+     * Fleet Indexing service.
+     * </p>
+     *
+     * @param managedFields <p>
+     *            Contains fields that are indexed and whose types are already
+     *            known by the Fleet Indexing service.
+     *            </p>
+     */
+    public void setManagedFields(java.util.Collection<Field> managedFields) {
+        if (managedFields == null) {
+            this.managedFields = null;
+            return;
+        }
+
+        this.managedFields = new java.util.ArrayList<Field>(managedFields);
+    }
+
+    /**
+     * <p>
+     * Contains fields that are indexed and whose types are already known by the
+     * Fleet Indexing service.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param managedFields <p>
+     *            Contains fields that are indexed and whose types are already
+     *            known by the Fleet Indexing service.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingIndexingConfiguration withManagedFields(Field... managedFields) {
+        if (getManagedFields() == null) {
+            this.managedFields = new java.util.ArrayList<Field>(managedFields.length);
+        }
+        for (Field value : managedFields) {
+            this.managedFields.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Contains fields that are indexed and whose types are already known by the
+     * Fleet Indexing service.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param managedFields <p>
+     *            Contains fields that are indexed and whose types are already
+     *            known by the Fleet Indexing service.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingIndexingConfiguration withManagedFields(java.util.Collection<Field> managedFields) {
+        setManagedFields(managedFields);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Contains custom field names and their data type.
+     * </p>
+     *
+     * @return <p>
+     *         Contains custom field names and their data type.
+     *         </p>
+     */
+    public java.util.List<Field> getCustomFields() {
+        return customFields;
+    }
+
+    /**
+     * <p>
+     * Contains custom field names and their data type.
+     * </p>
+     *
+     * @param customFields <p>
+     *            Contains custom field names and their data type.
+     *            </p>
+     */
+    public void setCustomFields(java.util.Collection<Field> customFields) {
+        if (customFields == null) {
+            this.customFields = null;
+            return;
+        }
+
+        this.customFields = new java.util.ArrayList<Field>(customFields);
+    }
+
+    /**
+     * <p>
+     * Contains custom field names and their data type.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param customFields <p>
+     *            Contains custom field names and their data type.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingIndexingConfiguration withCustomFields(Field... customFields) {
+        if (getCustomFields() == null) {
+            this.customFields = new java.util.ArrayList<Field>(customFields.length);
+        }
+        for (Field value : customFields) {
+            this.customFields.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Contains custom field names and their data type.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param customFields <p>
+     *            Contains custom field names and their data type.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingIndexingConfiguration withCustomFields(java.util.Collection<Field> customFields) {
+        setCustomFields(customFields);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Provides additional filters for specific data sources. Named shadow is
+     * the only data source that currently supports and requires a filter. To
+     * add named shadows to your fleet indexing configuration, set
+     * <code>namedShadowIndexingMode</code> to be <code>ON</code> and specify
+     * your shadow names in <code>filter</code>.
+     * </p>
+     *
+     * @return <p>
+     *         Provides additional filters for specific data sources. Named
+     *         shadow is the only data source that currently supports and
+     *         requires a filter. To add named shadows to your fleet indexing
+     *         configuration, set <code>namedShadowIndexingMode</code> to be
+     *         <code>ON</code> and specify your shadow names in
+     *         <code>filter</code>.
+     *         </p>
+     */
+    public IndexingFilter getFilter() {
+        return filter;
+    }
+
+    /**
+     * <p>
+     * Provides additional filters for specific data sources. Named shadow is
+     * the only data source that currently supports and requires a filter. To
+     * add named shadows to your fleet indexing configuration, set
+     * <code>namedShadowIndexingMode</code> to be <code>ON</code> and specify
+     * your shadow names in <code>filter</code>.
+     * </p>
+     *
+     * @param filter <p>
+     *            Provides additional filters for specific data sources. Named
+     *            shadow is the only data source that currently supports and
+     *            requires a filter. To add named shadows to your fleet indexing
+     *            configuration, set <code>namedShadowIndexingMode</code> to be
+     *            <code>ON</code> and specify your shadow names in
+     *            <code>filter</code>.
+     *            </p>
+     */
+    public void setFilter(IndexingFilter filter) {
+        this.filter = filter;
+    }
+
+    /**
+     * <p>
+     * Provides additional filters for specific data sources. Named shadow is
+     * the only data source that currently supports and requires a filter. To
+     * add named shadows to your fleet indexing configuration, set
+     * <code>namedShadowIndexingMode</code> to be <code>ON</code> and specify
+     * your shadow names in <code>filter</code>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param filter <p>
+     *            Provides additional filters for specific data sources. Named
+     *            shadow is the only data source that currently supports and
+     *            requires a filter. To add named shadows to your fleet indexing
+     *            configuration, set <code>namedShadowIndexingMode</code> to be
+     *            <code>ON</code> and specify your shadow names in
+     *            <code>filter</code>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingIndexingConfiguration withFilter(IndexingFilter filter) {
+        this.filter = filter;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -608,7 +1484,17 @@ public class ThingIndexingConfiguration implements Serializable {
         if (getThingIndexingMode() != null)
             sb.append("thingIndexingMode: " + getThingIndexingMode() + ",");
         if (getThingConnectivityIndexingMode() != null)
-            sb.append("thingConnectivityIndexingMode: " + getThingConnectivityIndexingMode());
+            sb.append("thingConnectivityIndexingMode: " + getThingConnectivityIndexingMode() + ",");
+        if (getDeviceDefenderIndexingMode() != null)
+            sb.append("deviceDefenderIndexingMode: " + getDeviceDefenderIndexingMode() + ",");
+        if (getNamedShadowIndexingMode() != null)
+            sb.append("namedShadowIndexingMode: " + getNamedShadowIndexingMode() + ",");
+        if (getManagedFields() != null)
+            sb.append("managedFields: " + getManagedFields() + ",");
+        if (getCustomFields() != null)
+            sb.append("customFields: " + getCustomFields() + ",");
+        if (getFilter() != null)
+            sb.append("filter: " + getFilter());
         sb.append("}");
         return sb.toString();
     }
@@ -624,6 +1510,19 @@ public class ThingIndexingConfiguration implements Serializable {
                 * hashCode
                 + ((getThingConnectivityIndexingMode() == null) ? 0
                         : getThingConnectivityIndexingMode().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getDeviceDefenderIndexingMode() == null) ? 0 : getDeviceDefenderIndexingMode()
+                        .hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getNamedShadowIndexingMode() == null) ? 0 : getNamedShadowIndexingMode()
+                        .hashCode());
+        hashCode = prime * hashCode
+                + ((getManagedFields() == null) ? 0 : getManagedFields().hashCode());
+        hashCode = prime * hashCode
+                + ((getCustomFields() == null) ? 0 : getCustomFields().hashCode());
+        hashCode = prime * hashCode + ((getFilter() == null) ? 0 : getFilter().hashCode());
         return hashCode;
     }
 
@@ -649,6 +1548,32 @@ public class ThingIndexingConfiguration implements Serializable {
         if (other.getThingConnectivityIndexingMode() != null
                 && other.getThingConnectivityIndexingMode().equals(
                         this.getThingConnectivityIndexingMode()) == false)
+            return false;
+        if (other.getDeviceDefenderIndexingMode() == null
+                ^ this.getDeviceDefenderIndexingMode() == null)
+            return false;
+        if (other.getDeviceDefenderIndexingMode() != null
+                && other.getDeviceDefenderIndexingMode().equals(
+                        this.getDeviceDefenderIndexingMode()) == false)
+            return false;
+        if (other.getNamedShadowIndexingMode() == null ^ this.getNamedShadowIndexingMode() == null)
+            return false;
+        if (other.getNamedShadowIndexingMode() != null
+                && other.getNamedShadowIndexingMode().equals(this.getNamedShadowIndexingMode()) == false)
+            return false;
+        if (other.getManagedFields() == null ^ this.getManagedFields() == null)
+            return false;
+        if (other.getManagedFields() != null
+                && other.getManagedFields().equals(this.getManagedFields()) == false)
+            return false;
+        if (other.getCustomFields() == null ^ this.getCustomFields() == null)
+            return false;
+        if (other.getCustomFields() != null
+                && other.getCustomFields().equals(this.getCustomFields()) == false)
+            return false;
+        if (other.getFilter() == null ^ this.getFilter() == null)
+            return false;
+        if (other.getFilter() != null && other.getFilter().equals(this.getFilter()) == false)
             return false;
         return true;
     }

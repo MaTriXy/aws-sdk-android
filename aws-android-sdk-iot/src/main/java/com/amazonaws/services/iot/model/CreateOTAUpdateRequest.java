@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,12 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates an AWS IoT OTAUpdate on a target group of things or groups.
+ * Creates an IoT OTA update on a target group of things or groups.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreateOTAUpdate</a> action.
  * </p>
  */
 public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements Serializable {
@@ -49,10 +54,19 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The targeted devices to receive OTA updates.
+     * The devices targeted to receive OTA updates.
      * </p>
      */
     private java.util.List<String> targets;
+
+    /**
+     * <p>
+     * The protocol used to transfer the OTA update image. Valid values are
+     * [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and MQTT are specified, the
+     * target device can choose the protocol.
+     * </p>
+     */
+    private java.util.List<String> protocols;
 
     /**
      * <p>
@@ -79,6 +93,31 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
+     * Configuration information for pre-signed URLs.
+     * </p>
+     */
+    private AwsJobPresignedUrlConfig awsJobPresignedUrlConfig;
+
+    /**
+     * <p>
+     * The criteria that determine when and how a job abort takes place.
+     * </p>
+     */
+    private AwsJobAbortConfig awsJobAbortConfig;
+
+    /**
+     * <p>
+     * Specifies the amount of time each device has to finish its execution of
+     * the job. A timer is started when the job execution status is set to
+     * <code>IN_PROGRESS</code>. If the job execution status is not set to
+     * another terminal state before the timer expires, it will be automatically
+     * set to <code>TIMED_OUT</code>.
+     * </p>
+     */
+    private AwsJobTimeoutConfig awsJobTimeoutConfig;
+
+    /**
+     * <p>
      * The files to be streamed by the OTA update.
      * </p>
      */
@@ -86,7 +125,9 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The IAM role that allows access to the AWS IoT Jobs service.
+     * The IAM role that grants Amazon Web Services IoT Core access to the
+     * Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to
+     * create an OTA update job.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -100,6 +141,13 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
      * </p>
      */
     private java.util.Map<String, String> additionalParameters;
+
+    /**
+     * <p>
+     * Metadata which can be used to manage updates.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
@@ -217,11 +265,11 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The targeted devices to receive OTA updates.
+     * The devices targeted to receive OTA updates.
      * </p>
      *
      * @return <p>
-     *         The targeted devices to receive OTA updates.
+     *         The devices targeted to receive OTA updates.
      *         </p>
      */
     public java.util.List<String> getTargets() {
@@ -230,11 +278,11 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The targeted devices to receive OTA updates.
+     * The devices targeted to receive OTA updates.
      * </p>
      *
      * @param targets <p>
-     *            The targeted devices to receive OTA updates.
+     *            The devices targeted to receive OTA updates.
      *            </p>
      */
     public void setTargets(java.util.Collection<String> targets) {
@@ -248,14 +296,14 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The targeted devices to receive OTA updates.
+     * The devices targeted to receive OTA updates.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param targets <p>
-     *            The targeted devices to receive OTA updates.
+     *            The devices targeted to receive OTA updates.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -272,20 +320,110 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The targeted devices to receive OTA updates.
+     * The devices targeted to receive OTA updates.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param targets <p>
-     *            The targeted devices to receive OTA updates.
+     *            The devices targeted to receive OTA updates.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public CreateOTAUpdateRequest withTargets(java.util.Collection<String> targets) {
         setTargets(targets);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The protocol used to transfer the OTA update image. Valid values are
+     * [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and MQTT are specified, the
+     * target device can choose the protocol.
+     * </p>
+     *
+     * @return <p>
+     *         The protocol used to transfer the OTA update image. Valid values
+     *         are [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and MQTT are
+     *         specified, the target device can choose the protocol.
+     *         </p>
+     */
+    public java.util.List<String> getProtocols() {
+        return protocols;
+    }
+
+    /**
+     * <p>
+     * The protocol used to transfer the OTA update image. Valid values are
+     * [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and MQTT are specified, the
+     * target device can choose the protocol.
+     * </p>
+     *
+     * @param protocols <p>
+     *            The protocol used to transfer the OTA update image. Valid
+     *            values are [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and
+     *            MQTT are specified, the target device can choose the protocol.
+     *            </p>
+     */
+    public void setProtocols(java.util.Collection<String> protocols) {
+        if (protocols == null) {
+            this.protocols = null;
+            return;
+        }
+
+        this.protocols = new java.util.ArrayList<String>(protocols);
+    }
+
+    /**
+     * <p>
+     * The protocol used to transfer the OTA update image. Valid values are
+     * [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and MQTT are specified, the
+     * target device can choose the protocol.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param protocols <p>
+     *            The protocol used to transfer the OTA update image. Valid
+     *            values are [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and
+     *            MQTT are specified, the target device can choose the protocol.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withProtocols(String... protocols) {
+        if (getProtocols() == null) {
+            this.protocols = new java.util.ArrayList<String>(protocols.length);
+        }
+        for (String value : protocols) {
+            this.protocols.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * The protocol used to transfer the OTA update image. Valid values are
+     * [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and MQTT are specified, the
+     * target device can choose the protocol.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param protocols <p>
+     *            The protocol used to transfer the OTA update image. Valid
+     *            values are [HTTP], [MQTT], [HTTP, MQTT]. When both HTTP and
+     *            MQTT are specified, the target device can choose the protocol.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withProtocols(java.util.Collection<String> protocols) {
+        setProtocols(protocols);
         return this;
     }
 
@@ -500,6 +638,170 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
+     * Configuration information for pre-signed URLs.
+     * </p>
+     *
+     * @return <p>
+     *         Configuration information for pre-signed URLs.
+     *         </p>
+     */
+    public AwsJobPresignedUrlConfig getAwsJobPresignedUrlConfig() {
+        return awsJobPresignedUrlConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration information for pre-signed URLs.
+     * </p>
+     *
+     * @param awsJobPresignedUrlConfig <p>
+     *            Configuration information for pre-signed URLs.
+     *            </p>
+     */
+    public void setAwsJobPresignedUrlConfig(AwsJobPresignedUrlConfig awsJobPresignedUrlConfig) {
+        this.awsJobPresignedUrlConfig = awsJobPresignedUrlConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration information for pre-signed URLs.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param awsJobPresignedUrlConfig <p>
+     *            Configuration information for pre-signed URLs.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withAwsJobPresignedUrlConfig(
+            AwsJobPresignedUrlConfig awsJobPresignedUrlConfig) {
+        this.awsJobPresignedUrlConfig = awsJobPresignedUrlConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The criteria that determine when and how a job abort takes place.
+     * </p>
+     *
+     * @return <p>
+     *         The criteria that determine when and how a job abort takes place.
+     *         </p>
+     */
+    public AwsJobAbortConfig getAwsJobAbortConfig() {
+        return awsJobAbortConfig;
+    }
+
+    /**
+     * <p>
+     * The criteria that determine when and how a job abort takes place.
+     * </p>
+     *
+     * @param awsJobAbortConfig <p>
+     *            The criteria that determine when and how a job abort takes
+     *            place.
+     *            </p>
+     */
+    public void setAwsJobAbortConfig(AwsJobAbortConfig awsJobAbortConfig) {
+        this.awsJobAbortConfig = awsJobAbortConfig;
+    }
+
+    /**
+     * <p>
+     * The criteria that determine when and how a job abort takes place.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param awsJobAbortConfig <p>
+     *            The criteria that determine when and how a job abort takes
+     *            place.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withAwsJobAbortConfig(AwsJobAbortConfig awsJobAbortConfig) {
+        this.awsJobAbortConfig = awsJobAbortConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the amount of time each device has to finish its execution of
+     * the job. A timer is started when the job execution status is set to
+     * <code>IN_PROGRESS</code>. If the job execution status is not set to
+     * another terminal state before the timer expires, it will be automatically
+     * set to <code>TIMED_OUT</code>.
+     * </p>
+     *
+     * @return <p>
+     *         Specifies the amount of time each device has to finish its
+     *         execution of the job. A timer is started when the job execution
+     *         status is set to <code>IN_PROGRESS</code>. If the job execution
+     *         status is not set to another terminal state before the timer
+     *         expires, it will be automatically set to <code>TIMED_OUT</code>.
+     *         </p>
+     */
+    public AwsJobTimeoutConfig getAwsJobTimeoutConfig() {
+        return awsJobTimeoutConfig;
+    }
+
+    /**
+     * <p>
+     * Specifies the amount of time each device has to finish its execution of
+     * the job. A timer is started when the job execution status is set to
+     * <code>IN_PROGRESS</code>. If the job execution status is not set to
+     * another terminal state before the timer expires, it will be automatically
+     * set to <code>TIMED_OUT</code>.
+     * </p>
+     *
+     * @param awsJobTimeoutConfig <p>
+     *            Specifies the amount of time each device has to finish its
+     *            execution of the job. A timer is started when the job
+     *            execution status is set to <code>IN_PROGRESS</code>. If the
+     *            job execution status is not set to another terminal state
+     *            before the timer expires, it will be automatically set to
+     *            <code>TIMED_OUT</code>.
+     *            </p>
+     */
+    public void setAwsJobTimeoutConfig(AwsJobTimeoutConfig awsJobTimeoutConfig) {
+        this.awsJobTimeoutConfig = awsJobTimeoutConfig;
+    }
+
+    /**
+     * <p>
+     * Specifies the amount of time each device has to finish its execution of
+     * the job. A timer is started when the job execution status is set to
+     * <code>IN_PROGRESS</code>. If the job execution status is not set to
+     * another terminal state before the timer expires, it will be automatically
+     * set to <code>TIMED_OUT</code>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param awsJobTimeoutConfig <p>
+     *            Specifies the amount of time each device has to finish its
+     *            execution of the job. A timer is started when the job
+     *            execution status is set to <code>IN_PROGRESS</code>. If the
+     *            job execution status is not set to another terminal state
+     *            before the timer expires, it will be automatically set to
+     *            <code>TIMED_OUT</code>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withAwsJobTimeoutConfig(AwsJobTimeoutConfig awsJobTimeoutConfig) {
+        this.awsJobTimeoutConfig = awsJobTimeoutConfig;
+        return this;
+    }
+
+    /**
+     * <p>
      * The files to be streamed by the OTA update.
      * </p>
      *
@@ -574,14 +876,18 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The IAM role that allows access to the AWS IoT Jobs service.
+     * The IAM role that grants Amazon Web Services IoT Core access to the
+     * Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to
+     * create an OTA update job.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         The IAM role that allows access to the AWS IoT Jobs service.
+     *         The IAM role that grants Amazon Web Services IoT Core access to
+     *         the Amazon S3, IoT jobs and Amazon Web Services Code Signing
+     *         resources to create an OTA update job.
      *         </p>
      */
     public String getRoleArn() {
@@ -590,14 +896,18 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The IAM role that allows access to the AWS IoT Jobs service.
+     * The IAM role that grants Amazon Web Services IoT Core access to the
+     * Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to
+     * create an OTA update job.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param roleArn <p>
-     *            The IAM role that allows access to the AWS IoT Jobs service.
+     *            The IAM role that grants Amazon Web Services IoT Core access
+     *            to the Amazon S3, IoT jobs and Amazon Web Services Code
+     *            Signing resources to create an OTA update job.
      *            </p>
      */
     public void setRoleArn(String roleArn) {
@@ -606,7 +916,9 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * The IAM role that allows access to the AWS IoT Jobs service.
+     * The IAM role that grants Amazon Web Services IoT Core access to the
+     * Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to
+     * create an OTA update job.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -616,7 +928,9 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param roleArn <p>
-     *            The IAM role that allows access to the AWS IoT Jobs service.
+     *            The IAM role that grants Amazon Web Services IoT Core access
+     *            to the Amazon S3, IoT jobs and Amazon Web Services Code
+     *            Signing resources to create an OTA update job.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -713,6 +1027,80 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
     }
 
     /**
+     * <p>
+     * Metadata which can be used to manage updates.
+     * </p>
+     *
+     * @return <p>
+     *         Metadata which can be used to manage updates.
+     *         </p>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage updates.
+     * </p>
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage updates.
+     *            </p>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage updates.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage updates.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage updates.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage updates.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateOTAUpdateRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -729,16 +1117,26 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
             sb.append("description: " + getDescription() + ",");
         if (getTargets() != null)
             sb.append("targets: " + getTargets() + ",");
+        if (getProtocols() != null)
+            sb.append("protocols: " + getProtocols() + ",");
         if (getTargetSelection() != null)
             sb.append("targetSelection: " + getTargetSelection() + ",");
         if (getAwsJobExecutionsRolloutConfig() != null)
             sb.append("awsJobExecutionsRolloutConfig: " + getAwsJobExecutionsRolloutConfig() + ",");
+        if (getAwsJobPresignedUrlConfig() != null)
+            sb.append("awsJobPresignedUrlConfig: " + getAwsJobPresignedUrlConfig() + ",");
+        if (getAwsJobAbortConfig() != null)
+            sb.append("awsJobAbortConfig: " + getAwsJobAbortConfig() + ",");
+        if (getAwsJobTimeoutConfig() != null)
+            sb.append("awsJobTimeoutConfig: " + getAwsJobTimeoutConfig() + ",");
         if (getFiles() != null)
             sb.append("files: " + getFiles() + ",");
         if (getRoleArn() != null)
             sb.append("roleArn: " + getRoleArn() + ",");
         if (getAdditionalParameters() != null)
-            sb.append("additionalParameters: " + getAdditionalParameters());
+            sb.append("additionalParameters: " + getAdditionalParameters() + ",");
+        if (getTags() != null)
+            sb.append("tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -753,16 +1151,26 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
         hashCode = prime * hashCode
                 + ((getDescription() == null) ? 0 : getDescription().hashCode());
         hashCode = prime * hashCode + ((getTargets() == null) ? 0 : getTargets().hashCode());
+        hashCode = prime * hashCode + ((getProtocols() == null) ? 0 : getProtocols().hashCode());
         hashCode = prime * hashCode
                 + ((getTargetSelection() == null) ? 0 : getTargetSelection().hashCode());
         hashCode = prime
                 * hashCode
                 + ((getAwsJobExecutionsRolloutConfig() == null) ? 0
                         : getAwsJobExecutionsRolloutConfig().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getAwsJobPresignedUrlConfig() == null) ? 0 : getAwsJobPresignedUrlConfig()
+                        .hashCode());
+        hashCode = prime * hashCode
+                + ((getAwsJobAbortConfig() == null) ? 0 : getAwsJobAbortConfig().hashCode());
+        hashCode = prime * hashCode
+                + ((getAwsJobTimeoutConfig() == null) ? 0 : getAwsJobTimeoutConfig().hashCode());
         hashCode = prime * hashCode + ((getFiles() == null) ? 0 : getFiles().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
         hashCode = prime * hashCode
                 + ((getAdditionalParameters() == null) ? 0 : getAdditionalParameters().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -791,6 +1199,11 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
             return false;
         if (other.getTargets() != null && other.getTargets().equals(this.getTargets()) == false)
             return false;
+        if (other.getProtocols() == null ^ this.getProtocols() == null)
+            return false;
+        if (other.getProtocols() != null
+                && other.getProtocols().equals(this.getProtocols()) == false)
+            return false;
         if (other.getTargetSelection() == null ^ this.getTargetSelection() == null)
             return false;
         if (other.getTargetSelection() != null
@@ -802,6 +1215,22 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
         if (other.getAwsJobExecutionsRolloutConfig() != null
                 && other.getAwsJobExecutionsRolloutConfig().equals(
                         this.getAwsJobExecutionsRolloutConfig()) == false)
+            return false;
+        if (other.getAwsJobPresignedUrlConfig() == null
+                ^ this.getAwsJobPresignedUrlConfig() == null)
+            return false;
+        if (other.getAwsJobPresignedUrlConfig() != null
+                && other.getAwsJobPresignedUrlConfig().equals(this.getAwsJobPresignedUrlConfig()) == false)
+            return false;
+        if (other.getAwsJobAbortConfig() == null ^ this.getAwsJobAbortConfig() == null)
+            return false;
+        if (other.getAwsJobAbortConfig() != null
+                && other.getAwsJobAbortConfig().equals(this.getAwsJobAbortConfig()) == false)
+            return false;
+        if (other.getAwsJobTimeoutConfig() == null ^ this.getAwsJobTimeoutConfig() == null)
+            return false;
+        if (other.getAwsJobTimeoutConfig() != null
+                && other.getAwsJobTimeoutConfig().equals(this.getAwsJobTimeoutConfig()) == false)
             return false;
         if (other.getFiles() == null ^ this.getFiles() == null)
             return false;
@@ -815,6 +1244,10 @@ public class CreateOTAUpdateRequest extends AmazonWebServiceRequest implements S
             return false;
         if (other.getAdditionalParameters() != null
                 && other.getAdditionalParameters().equals(this.getAdditionalParameters()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

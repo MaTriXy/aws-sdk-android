@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ import java.io.Serializable;
 public class EncryptResult implements Serializable {
     /**
      * <p>
-     * The encrypted plaintext. When you use the HTTP API or the AWS CLI, the
-     * value is Base64-encdoded. Otherwise, it is not encoded.
+     * The encrypted plaintext. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -31,7 +32,9 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The ID of the key used during encryption.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to encrypt the plaintext.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -41,16 +44,29 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The encrypted plaintext. When you use the HTTP API or the AWS CLI, the
-     * value is Base64-encdoded. Otherwise, it is not encoded.
+     * The encryption algorithm that was used to encrypt the plaintext.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     */
+    private String encryptionAlgorithm;
+
+    /**
+     * <p>
+     * The encrypted plaintext. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 6144<br/>
      *
      * @return <p>
-     *         The encrypted plaintext. When you use the HTTP API or the AWS
-     *         CLI, the value is Base64-encdoded. Otherwise, it is not encoded.
+     *         The encrypted plaintext. When you use the HTTP API or the Amazon
+     *         Web Services CLI, the value is Base64-encoded. Otherwise, it is
+     *         not Base64-encoded.
      *         </p>
      */
     public java.nio.ByteBuffer getCiphertextBlob() {
@@ -59,17 +75,18 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The encrypted plaintext. When you use the HTTP API or the AWS CLI, the
-     * value is Base64-encdoded. Otherwise, it is not encoded.
+     * The encrypted plaintext. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 6144<br/>
      *
      * @param ciphertextBlob <p>
-     *            The encrypted plaintext. When you use the HTTP API or the AWS
-     *            CLI, the value is Base64-encdoded. Otherwise, it is not
-     *            encoded.
+     *            The encrypted plaintext. When you use the HTTP API or the
+     *            Amazon Web Services CLI, the value is Base64-encoded.
+     *            Otherwise, it is not Base64-encoded.
      *            </p>
      */
     public void setCiphertextBlob(java.nio.ByteBuffer ciphertextBlob) {
@@ -78,8 +95,9 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The encrypted plaintext. When you use the HTTP API or the AWS CLI, the
-     * value is Base64-encdoded. Otherwise, it is not encoded.
+     * The encrypted plaintext. When you use the HTTP API or the Amazon Web
+     * Services CLI, the value is Base64-encoded. Otherwise, it is not
+     * Base64-encoded.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -89,9 +107,9 @@ public class EncryptResult implements Serializable {
      * <b>Length: </b>1 - 6144<br/>
      *
      * @param ciphertextBlob <p>
-     *            The encrypted plaintext. When you use the HTTP API or the AWS
-     *            CLI, the value is Base64-encdoded. Otherwise, it is not
-     *            encoded.
+     *            The encrypted plaintext. When you use the HTTP API or the
+     *            Amazon Web Services CLI, the value is Base64-encoded.
+     *            Otherwise, it is not Base64-encoded.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -103,14 +121,19 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The ID of the key used during encryption.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to encrypt the plaintext.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The ID of the key used during encryption.
+     *         The Amazon Resource Name (<a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *         >key ARN</a>) of the KMS key that was used to encrypt the
+     *         plaintext.
      *         </p>
      */
     public String getKeyId() {
@@ -119,14 +142,19 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The ID of the key used during encryption.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to encrypt the plaintext.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The ID of the key used during encryption.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the KMS key that was used to encrypt the
+     *            plaintext.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -135,7 +163,9 @@ public class EncryptResult implements Serializable {
 
     /**
      * <p>
-     * The ID of the key used during encryption.
+     * The Amazon Resource Name (<a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     * >key ARN</a>) of the KMS key that was used to encrypt the plaintext.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -145,13 +175,122 @@ public class EncryptResult implements Serializable {
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The ID of the key used during encryption.
+     *            The Amazon Resource Name (<a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN"
+     *            >key ARN</a>) of the KMS key that was used to encrypt the
+     *            plaintext.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public EncryptResult withKeyId(String keyId) {
         this.keyId = keyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to encrypt the plaintext.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @return <p>
+     *         The encryption algorithm that was used to encrypt the plaintext.
+     *         </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public String getEncryptionAlgorithm() {
+        return encryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to encrypt the plaintext.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            The encryption algorithm that was used to encrypt the
+     *            plaintext.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setEncryptionAlgorithm(String encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to encrypt the plaintext.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            The encryption algorithm that was used to encrypt the
+     *            plaintext.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public EncryptResult withEncryptionAlgorithm(String encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to encrypt the plaintext.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            The encryption algorithm that was used to encrypt the
+     *            plaintext.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setEncryptionAlgorithm(EncryptionAlgorithmSpec encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm.toString();
+    }
+
+    /**
+     * <p>
+     * The encryption algorithm that was used to encrypt the plaintext.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            The encryption algorithm that was used to encrypt the
+     *            plaintext.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public EncryptResult withEncryptionAlgorithm(EncryptionAlgorithmSpec encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm.toString();
         return this;
     }
 
@@ -169,7 +308,9 @@ public class EncryptResult implements Serializable {
         if (getCiphertextBlob() != null)
             sb.append("CiphertextBlob: " + getCiphertextBlob() + ",");
         if (getKeyId() != null)
-            sb.append("KeyId: " + getKeyId());
+            sb.append("KeyId: " + getKeyId() + ",");
+        if (getEncryptionAlgorithm() != null)
+            sb.append("EncryptionAlgorithm: " + getEncryptionAlgorithm());
         sb.append("}");
         return sb.toString();
     }
@@ -182,6 +323,8 @@ public class EncryptResult implements Serializable {
         hashCode = prime * hashCode
                 + ((getCiphertextBlob() == null) ? 0 : getCiphertextBlob().hashCode());
         hashCode = prime * hashCode + ((getKeyId() == null) ? 0 : getKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getEncryptionAlgorithm() == null) ? 0 : getEncryptionAlgorithm().hashCode());
         return hashCode;
     }
 
@@ -204,6 +347,11 @@ public class EncryptResult implements Serializable {
         if (other.getKeyId() == null ^ this.getKeyId() == null)
             return false;
         if (other.getKeyId() != null && other.getKeyId().equals(this.getKeyId()) == false)
+            return false;
+        if (other.getEncryptionAlgorithm() == null ^ this.getEncryptionAlgorithm() == null)
+            return false;
+        if (other.getEncryptionAlgorithm() != null
+                && other.getEncryptionAlgorithm().equals(this.getEncryptionAlgorithm()) == false)
             return false;
         return true;
     }

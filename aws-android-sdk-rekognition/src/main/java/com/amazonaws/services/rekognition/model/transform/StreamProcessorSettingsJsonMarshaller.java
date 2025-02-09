@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -30,6 +31,11 @@ class StreamProcessorSettingsJsonMarshaller {
             FaceSearchSettings faceSearch = streamProcessorSettings.getFaceSearch();
             jsonWriter.name("FaceSearch");
             FaceSearchSettingsJsonMarshaller.getInstance().marshall(faceSearch, jsonWriter);
+        }
+        if (streamProcessorSettings.getConnectedHome() != null) {
+            ConnectedHomeSettings connectedHome = streamProcessorSettings.getConnectedHome();
+            jsonWriter.name("ConnectedHome");
+            ConnectedHomeSettingsJsonMarshaller.getInstance().marshall(connectedHome, jsonWriter);
         }
         jsonWriter.endObject();
     }

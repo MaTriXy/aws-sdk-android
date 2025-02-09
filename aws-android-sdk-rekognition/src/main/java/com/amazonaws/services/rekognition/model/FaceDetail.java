@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,12 +28,13 @@ import java.io.Serializable;
  * <code>Pose</code>, and <code>Quality</code>.
  * </p>
  * <p>
- * is the only Amazon Rekognition Video stored video operation that can return a
- * <code>FaceDetail</code> object with all attributes. To specify which
- * attributes to return, use the <code>FaceAttributes</code> input parameter for
- * . The following Amazon Rekognition Video operations return only the default
+ * <a>GetFaceDetection</a> is the only Amazon Rekognition Video stored video
+ * operation that can return a <code>FaceDetail</code> object with all
+ * attributes. To specify which attributes to return, use the
+ * <code>FaceAttributes</code> input parameter for <a>StartFaceDetection</a>.
+ * The following Amazon Rekognition Video operations return only the default
  * attributes. The corresponding Start operations don't have a
- * <code>FaceAttributes</code> input parameter.
+ * <code>FaceAttributes</code> input parameter:
  * </p>
  * <ul>
  * <li>
@@ -53,9 +54,10 @@ import java.io.Serializable;
  * </li>
  * </ul>
  * <p>
- * The Amazon Rekognition Image and operations can return all facial attributes.
- * To specify which attributes to return, use the <code>Attributes</code> input
- * parameter for <code>DetectFaces</code>. For <code>IndexFaces</code>, use the
+ * The Amazon Rekognition Image <a>DetectFaces</a> and <a>IndexFaces</a>
+ * operations can return all facial attributes. To specify which attributes to
+ * return, use the <code>Attributes</code> input parameter for
+ * <code>DetectFaces</code>. For <code>IndexFaces</code>, use the
  * <code>DetectAttributes</code> input parameter.
  * </p>
  */
@@ -101,7 +103,7 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * Gender of the face and the confidence level in the determination.
+     * The predicted gender of a detected face.
      * </p>
      */
     private Gender gender;
@@ -140,8 +142,12 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * The emotions detected on the face, and the confidence level in the
-     * determination. For example, HAPPY, SAD, and ANGRY.
+     * The emotions that appear to be expressed on the face, and the confidence
+     * level in the determination. The API is only making a determination of the
+     * physical appearance of a person's face. It is not a determination of the
+     * person’s internal emotional state and should not be used in such a way.
+     * For example, a person pretending to have a sad face might not be sad
+     * emotionally.
      * </p>
      */
     private java.util.List<Emotion> emotions;
@@ -175,9 +181,30 @@ public class FaceDetail implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float confidence;
+
+    /**
+     * <p>
+     * <code>FaceOccluded</code> should return "true" with a high confidence
+     * score if a detected face’s eyes, nose, and mouth are partially captured
+     * or if they are covered by masks, dark sunglasses, cell phones, hands, or
+     * other objects. <code>FaceOccluded</code> should return "false" with a
+     * high confidence score if common occurrences that do not impact face
+     * verification are detected, such as eye glasses, lightly tinted
+     * sunglasses, strands of hair, and others.
+     * </p>
+     */
+    private FaceOccluded faceOccluded;
+
+    /**
+     * <p>
+     * Indicates the direction the eyes are gazing in, as defined by pitch and
+     * yaw.
+     * </p>
+     */
+    private EyeDirection eyeDirection;
 
     /**
      * <p>
@@ -433,11 +460,11 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * Gender of the face and the confidence level in the determination.
+     * The predicted gender of a detected face.
      * </p>
      *
      * @return <p>
-     *         Gender of the face and the confidence level in the determination.
+     *         The predicted gender of a detected face.
      *         </p>
      */
     public Gender getGender() {
@@ -446,12 +473,11 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * Gender of the face and the confidence level in the determination.
+     * The predicted gender of a detected face.
      * </p>
      *
      * @param gender <p>
-     *            Gender of the face and the confidence level in the
-     *            determination.
+     *            The predicted gender of a detected face.
      *            </p>
      */
     public void setGender(Gender gender) {
@@ -460,15 +486,14 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * Gender of the face and the confidence level in the determination.
+     * The predicted gender of a detected face.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param gender <p>
-     *            Gender of the face and the confidence level in the
-     *            determination.
+     *            The predicted gender of a detected face.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -684,13 +709,21 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * The emotions detected on the face, and the confidence level in the
-     * determination. For example, HAPPY, SAD, and ANGRY.
+     * The emotions that appear to be expressed on the face, and the confidence
+     * level in the determination. The API is only making a determination of the
+     * physical appearance of a person's face. It is not a determination of the
+     * person’s internal emotional state and should not be used in such a way.
+     * For example, a person pretending to have a sad face might not be sad
+     * emotionally.
      * </p>
      *
      * @return <p>
-     *         The emotions detected on the face, and the confidence level in
-     *         the determination. For example, HAPPY, SAD, and ANGRY.
+     *         The emotions that appear to be expressed on the face, and the
+     *         confidence level in the determination. The API is only making a
+     *         determination of the physical appearance of a person's face. It
+     *         is not a determination of the person’s internal emotional state
+     *         and should not be used in such a way. For example, a person
+     *         pretending to have a sad face might not be sad emotionally.
      *         </p>
      */
     public java.util.List<Emotion> getEmotions() {
@@ -699,13 +732,22 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * The emotions detected on the face, and the confidence level in the
-     * determination. For example, HAPPY, SAD, and ANGRY.
+     * The emotions that appear to be expressed on the face, and the confidence
+     * level in the determination. The API is only making a determination of the
+     * physical appearance of a person's face. It is not a determination of the
+     * person’s internal emotional state and should not be used in such a way.
+     * For example, a person pretending to have a sad face might not be sad
+     * emotionally.
      * </p>
      *
      * @param emotions <p>
-     *            The emotions detected on the face, and the confidence level in
-     *            the determination. For example, HAPPY, SAD, and ANGRY.
+     *            The emotions that appear to be expressed on the face, and the
+     *            confidence level in the determination. The API is only making
+     *            a determination of the physical appearance of a person's face.
+     *            It is not a determination of the person’s internal emotional
+     *            state and should not be used in such a way. For example, a
+     *            person pretending to have a sad face might not be sad
+     *            emotionally.
      *            </p>
      */
     public void setEmotions(java.util.Collection<Emotion> emotions) {
@@ -719,16 +761,25 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * The emotions detected on the face, and the confidence level in the
-     * determination. For example, HAPPY, SAD, and ANGRY.
+     * The emotions that appear to be expressed on the face, and the confidence
+     * level in the determination. The API is only making a determination of the
+     * physical appearance of a person's face. It is not a determination of the
+     * person’s internal emotional state and should not be used in such a way.
+     * For example, a person pretending to have a sad face might not be sad
+     * emotionally.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param emotions <p>
-     *            The emotions detected on the face, and the confidence level in
-     *            the determination. For example, HAPPY, SAD, and ANGRY.
+     *            The emotions that appear to be expressed on the face, and the
+     *            confidence level in the determination. The API is only making
+     *            a determination of the physical appearance of a person's face.
+     *            It is not a determination of the person’s internal emotional
+     *            state and should not be used in such a way. For example, a
+     *            person pretending to have a sad face might not be sad
+     *            emotionally.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -745,16 +796,25 @@ public class FaceDetail implements Serializable {
 
     /**
      * <p>
-     * The emotions detected on the face, and the confidence level in the
-     * determination. For example, HAPPY, SAD, and ANGRY.
+     * The emotions that appear to be expressed on the face, and the confidence
+     * level in the determination. The API is only making a determination of the
+     * physical appearance of a person's face. It is not a determination of the
+     * person’s internal emotional state and should not be used in such a way.
+     * For example, a person pretending to have a sad face might not be sad
+     * emotionally.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param emotions <p>
-     *            The emotions detected on the face, and the confidence level in
-     *            the determination. For example, HAPPY, SAD, and ANGRY.
+     *            The emotions that appear to be expressed on the face, and the
+     *            confidence level in the determination. The API is only making
+     *            a determination of the physical appearance of a person's face.
+     *            It is not a determination of the person’s internal emotional
+     *            state and should not be used in such a way. For example, a
+     *            person pretending to have a sad face might not be sad
+     *            emotionally.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -945,7 +1005,7 @@ public class FaceDetail implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Confidence level that the bounding box contains a face (and not a
@@ -963,7 +1023,7 @@ public class FaceDetail implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param confidence <p>
      *            Confidence level that the bounding box contains a face (and
@@ -984,7 +1044,7 @@ public class FaceDetail implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param confidence <p>
      *            Confidence level that the bounding box contains a face (and
@@ -995,6 +1055,141 @@ public class FaceDetail implements Serializable {
      */
     public FaceDetail withConfidence(Float confidence) {
         this.confidence = confidence;
+        return this;
+    }
+
+    /**
+     * <p>
+     * <code>FaceOccluded</code> should return "true" with a high confidence
+     * score if a detected face’s eyes, nose, and mouth are partially captured
+     * or if they are covered by masks, dark sunglasses, cell phones, hands, or
+     * other objects. <code>FaceOccluded</code> should return "false" with a
+     * high confidence score if common occurrences that do not impact face
+     * verification are detected, such as eye glasses, lightly tinted
+     * sunglasses, strands of hair, and others.
+     * </p>
+     *
+     * @return <p>
+     *         <code>FaceOccluded</code> should return "true" with a high
+     *         confidence score if a detected face’s eyes, nose, and mouth are
+     *         partially captured or if they are covered by masks, dark
+     *         sunglasses, cell phones, hands, or other objects.
+     *         <code>FaceOccluded</code> should return "false" with a high
+     *         confidence score if common occurrences that do not impact face
+     *         verification are detected, such as eye glasses, lightly tinted
+     *         sunglasses, strands of hair, and others.
+     *         </p>
+     */
+    public FaceOccluded getFaceOccluded() {
+        return faceOccluded;
+    }
+
+    /**
+     * <p>
+     * <code>FaceOccluded</code> should return "true" with a high confidence
+     * score if a detected face’s eyes, nose, and mouth are partially captured
+     * or if they are covered by masks, dark sunglasses, cell phones, hands, or
+     * other objects. <code>FaceOccluded</code> should return "false" with a
+     * high confidence score if common occurrences that do not impact face
+     * verification are detected, such as eye glasses, lightly tinted
+     * sunglasses, strands of hair, and others.
+     * </p>
+     *
+     * @param faceOccluded <p>
+     *            <code>FaceOccluded</code> should return "true" with a high
+     *            confidence score if a detected face’s eyes, nose, and mouth
+     *            are partially captured or if they are covered by masks, dark
+     *            sunglasses, cell phones, hands, or other objects.
+     *            <code>FaceOccluded</code> should return "false" with a high
+     *            confidence score if common occurrences that do not impact face
+     *            verification are detected, such as eye glasses, lightly tinted
+     *            sunglasses, strands of hair, and others.
+     *            </p>
+     */
+    public void setFaceOccluded(FaceOccluded faceOccluded) {
+        this.faceOccluded = faceOccluded;
+    }
+
+    /**
+     * <p>
+     * <code>FaceOccluded</code> should return "true" with a high confidence
+     * score if a detected face’s eyes, nose, and mouth are partially captured
+     * or if they are covered by masks, dark sunglasses, cell phones, hands, or
+     * other objects. <code>FaceOccluded</code> should return "false" with a
+     * high confidence score if common occurrences that do not impact face
+     * verification are detected, such as eye glasses, lightly tinted
+     * sunglasses, strands of hair, and others.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param faceOccluded <p>
+     *            <code>FaceOccluded</code> should return "true" with a high
+     *            confidence score if a detected face’s eyes, nose, and mouth
+     *            are partially captured or if they are covered by masks, dark
+     *            sunglasses, cell phones, hands, or other objects.
+     *            <code>FaceOccluded</code> should return "false" with a high
+     *            confidence score if common occurrences that do not impact face
+     *            verification are detected, such as eye glasses, lightly tinted
+     *            sunglasses, strands of hair, and others.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public FaceDetail withFaceOccluded(FaceOccluded faceOccluded) {
+        this.faceOccluded = faceOccluded;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates the direction the eyes are gazing in, as defined by pitch and
+     * yaw.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates the direction the eyes are gazing in, as defined by
+     *         pitch and yaw.
+     *         </p>
+     */
+    public EyeDirection getEyeDirection() {
+        return eyeDirection;
+    }
+
+    /**
+     * <p>
+     * Indicates the direction the eyes are gazing in, as defined by pitch and
+     * yaw.
+     * </p>
+     *
+     * @param eyeDirection <p>
+     *            Indicates the direction the eyes are gazing in, as defined by
+     *            pitch and yaw.
+     *            </p>
+     */
+    public void setEyeDirection(EyeDirection eyeDirection) {
+        this.eyeDirection = eyeDirection;
+    }
+
+    /**
+     * <p>
+     * Indicates the direction the eyes are gazing in, as defined by pitch and
+     * yaw.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param eyeDirection <p>
+     *            Indicates the direction the eyes are gazing in, as defined by
+     *            pitch and yaw.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public FaceDetail withEyeDirection(EyeDirection eyeDirection) {
+        this.eyeDirection = eyeDirection;
         return this;
     }
 
@@ -1038,7 +1233,11 @@ public class FaceDetail implements Serializable {
         if (getQuality() != null)
             sb.append("Quality: " + getQuality() + ",");
         if (getConfidence() != null)
-            sb.append("Confidence: " + getConfidence());
+            sb.append("Confidence: " + getConfidence() + ",");
+        if (getFaceOccluded() != null)
+            sb.append("FaceOccluded: " + getFaceOccluded() + ",");
+        if (getEyeDirection() != null)
+            sb.append("EyeDirection: " + getEyeDirection());
         sb.append("}");
         return sb.toString();
     }
@@ -1064,6 +1263,10 @@ public class FaceDetail implements Serializable {
         hashCode = prime * hashCode + ((getPose() == null) ? 0 : getPose().hashCode());
         hashCode = prime * hashCode + ((getQuality() == null) ? 0 : getQuality().hashCode());
         hashCode = prime * hashCode + ((getConfidence() == null) ? 0 : getConfidence().hashCode());
+        hashCode = prime * hashCode
+                + ((getFaceOccluded() == null) ? 0 : getFaceOccluded().hashCode());
+        hashCode = prime * hashCode
+                + ((getEyeDirection() == null) ? 0 : getEyeDirection().hashCode());
         return hashCode;
     }
 
@@ -1143,6 +1346,16 @@ public class FaceDetail implements Serializable {
             return false;
         if (other.getConfidence() != null
                 && other.getConfidence().equals(this.getConfidence()) == false)
+            return false;
+        if (other.getFaceOccluded() == null ^ this.getFaceOccluded() == null)
+            return false;
+        if (other.getFaceOccluded() != null
+                && other.getFaceOccluded().equals(this.getFaceOccluded()) == false)
+            return false;
+        if (other.getEyeDirection() == null ^ this.getEyeDirection() == null)
+            return false;
+        if (other.getEyeDirection() != null
+                && other.getEyeDirection().equals(this.getEyeDirection()) == false)
             return false;
         return true;
     }

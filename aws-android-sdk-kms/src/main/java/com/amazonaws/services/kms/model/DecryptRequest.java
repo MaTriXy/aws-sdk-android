@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,13 +21,23 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Decrypts ciphertext. Ciphertext is plaintext that has been previously
- * encrypted by using any of the following operations:
+ * Decrypts ciphertext that was encrypted by a KMS key using any of the
+ * following operations:
  * </p>
  * <ul>
  * <li>
  * <p>
+ * <a>Encrypt</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
  * <a>GenerateDataKey</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>GenerateDataKeyPair</a>
  * </p>
  * </li>
  * <li>
@@ -37,27 +47,120 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </li>
  * <li>
  * <p>
- * <a>Encrypt</a>
+ * <a>GenerateDataKeyPairWithoutPlaintext</a>
  * </p>
  * </li>
  * </ul>
  * <p>
- * Note that if a caller has been granted access permissions to all keys
- * (through, for example, IAM user policies that grant <code>Decrypt</code>
- * permission on all resources), then ciphertext encrypted by using keys in
- * other accounts where the key grants access to the caller can be decrypted. To
- * remedy this, we recommend that you do not grant <code>Decrypt</code> access
- * in an IAM user policy. Instead grant <code>Decrypt</code> access only in key
- * policies. If you must grant <code>Decrypt</code> access in an IAM user
- * policy, you should scope the resource to specific keys or to specific trusted
- * accounts.
+ * You can use this operation to decrypt ciphertext that was encrypted under a
+ * symmetric encryption KMS key or an asymmetric encryption KMS key. When the
+ * KMS key is asymmetric, you must specify the KMS key and the encryption
+ * algorithm that was used to encrypt the ciphertext. For information about
+ * asymmetric KMS keys, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html"
+ * >Asymmetric KMS keys</a> in the <i>Key Management Service Developer
+ * Guide</i>.
  * </p>
  * <p>
- * The result of this operation varies with the key state of the CMK. For
- * details, see <a
- * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
- * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
- * Management Service Developer Guide</i>.
+ * The <code>Decrypt</code> operation also decrypts ciphertext that was
+ * encrypted outside of KMS by the public key in an KMS asymmetric KMS key.
+ * However, it cannot decrypt symmetric ciphertext produced by other libraries,
+ * such as the <a
+ * href="https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/"
+ * >Amazon Web Services Encryption SDK</a> or <a href=
+ * "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingClientSideEncryption.html"
+ * >Amazon S3 client-side encryption</a>. These libraries return a ciphertext
+ * format that is incompatible with KMS.
+ * </p>
+ * <p>
+ * If the ciphertext was encrypted under a symmetric encryption KMS key, the
+ * <code>KeyId</code> parameter is optional. KMS can get this information from
+ * metadata that it adds to the symmetric ciphertext blob. This feature adds
+ * durability to your implementation by ensuring that authorized users can
+ * decrypt ciphertext decades after it was encrypted, even if they've lost track
+ * of the key ID. However, specifying the KMS key is always recommended as a
+ * best practice. When you use the <code>KeyId</code> parameter to specify a KMS
+ * key, KMS only uses the KMS key you specify. If the ciphertext was encrypted
+ * under a different KMS key, the <code>Decrypt</code> operation fails. This
+ * practice ensures that you use the KMS key that you intend.
+ * </p>
+ * <p>
+ * Whenever possible, use key policies to give users permission to call the
+ * <code>Decrypt</code> operation on a particular KMS key, instead of using
+ * &amp;IAM; policies. Otherwise, you might create an &amp;IAM; policy that
+ * gives the user <code>Decrypt</code> permission on all KMS keys. This user
+ * could decrypt ciphertext that was encrypted by KMS keys in other accounts if
+ * the key policy for the cross-account KMS key permits it. If you must use an
+ * IAM policy for <code>Decrypt</code> permissions, limit the user to particular
+ * KMS keys or particular trusted accounts. For details, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/iam-policies.html#iam-policies-best-practices"
+ * >Best practices for IAM policies</a> in the <i>Key Management Service
+ * Developer Guide</i>.
+ * </p>
+ * <p>
+ * <code>Decrypt</code> also supports <a href=
+ * "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave.html"
+ * >Amazon Web Services Nitro Enclaves</a>, which provide an isolated compute
+ * environment in Amazon EC2. To call <code>Decrypt</code> for a Nitro enclave,
+ * use the <a href=
+ * "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+ * >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services SDK.
+ * Use the <code>Recipient</code> parameter to provide the attestation document
+ * for the enclave. Instead of the plaintext data, the response includes the
+ * plaintext data encrypted with the public key from the attestation document (
+ * <code>CiphertextForRecipient</code>). For information about the interaction
+ * between KMS and Amazon Web Services Nitro Enclaves, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+ * >How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key Management
+ * Service Developer Guide</i>.
+ * </p>
+ * <p>
+ * The KMS key that you use for this operation must be in a compatible key
+ * state. For details, see <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >Key states of KMS keys</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: Yes. If you use the <code>KeyId</code> parameter to
+ * identify a KMS key in a different Amazon Web Services account, specify the
+ * key ARN or the alias ARN of the KMS key.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:Decrypt</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>Encrypt</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>GenerateDataKey</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>GenerateDataKeyPair</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ReEncrypt</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class DecryptRequest extends AmazonWebServiceRequest implements Serializable {
@@ -73,11 +176,27 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The encryption context. If this was specified in the <a>Encrypt</a>
-     * function, it must be specified here or the decryption operation will
-     * fail. For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     * >Encryption Context</a>.
+     * Specifies the encryption context to use when decrypting the data. An
+     * encryption context is valid only for <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     * >cryptographic operations</a> with a symmetric encryption KMS key. The
+     * standard asymmetric encryption algorithms and HMAC algorithms that KMS
+     * uses do not support an encryption context.
+     * </p>
+     * <p>
+     * An <i>encryption context</i> is a collection of non-secret key-value
+     * pairs that represent additional authenticated data. When you use an
+     * encryption context to encrypt data, you must specify the same (an exact
+     * case-sensitive match) encryption context to decrypt the data. An
+     * encryption context is supported only on operations with symmetric
+     * encryption KMS keys. On operations with symmetric encryption KMS keys, an
+     * encryption context is optional, but it is strongly recommended.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     * >Encryption context</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      */
     private java.util.Map<String, String> encryptionContext = new java.util.HashMap<String, String>();
@@ -87,13 +206,144 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      * A list of grant tokens.
      * </p>
      * <p>
-     * For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     * >Grant Tokens</a> in the <i>AWS Key Management Service Developer
+     * Use a grant token when your permission to call this operation comes from
+     * a new grant that has not yet achieved <i>eventual consistency</i>. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     * >Using a grant token</a> in the <i>Key Management Service Developer
      * Guide</i>.
      * </p>
      */
     private java.util.List<String> grantTokens = new java.util.ArrayList<String>();
+
+    /**
+     * <p>
+     * Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     * </p>
+     * <p>
+     * Enter a key ID of the KMS key that was used to encrypt the ciphertext. If
+     * you identify a different KMS key, the <code>Decrypt</code> operation
+     * throws an <code>IncorrectKeyException</code>.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. If you used a symmetric encryption KMS key, KMS
+     * can get the KMS key from metadata that it adds to the symmetric
+     * ciphertext blob. However, it is always recommended as a best practice.
+     * This practice ensures that you use the KMS key that you intend.
+     * </p>
+     * <p>
+     * To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN.
+     * When using an alias name, prefix it with <code>"alias/"</code>. To
+     * specify a KMS key in a different Amazon Web Services account, you must
+     * use the key ARN or alias ARN.
+     * </p>
+     * <p>
+     * For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias name: <code>alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>. To get the alias name and alias ARN, use
+     * <a>ListAliases</a>.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     */
+    private String keyId;
+
+    /**
+     * <p>
+     * Specifies the encryption algorithm that will be used to decrypt the
+     * ciphertext. Specify the same algorithm that was used to encrypt the data.
+     * If you specify a different algorithm, the <code>Decrypt</code> operation
+     * fails.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>,
+     * represents the only supported algorithm that is valid for symmetric
+     * encryption KMS keys.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     */
+    private String encryptionAlgorithm;
+
+    /**
+     * <p>
+     * A signed <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     * >attestation document</a> from an Amazon Web Services Nitro enclave and
+     * the encryption algorithm to use with the enclave's public key. The only
+     * valid encryption algorithm is <code>RSAES_OAEP_SHA_256</code>.
+     * </p>
+     * <p>
+     * This parameter only supports attestation documents for Amazon Web
+     * Services Nitro Enclaves. To include this parameter, use the <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     * >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services
+     * SDK.
+     * </p>
+     * <p>
+     * When you use this parameter, instead of returning the plaintext data, KMS
+     * encrypts the plaintext data with the public key in the attestation
+     * document, and returns the resulting ciphertext in the
+     * <code>CiphertextForRecipient</code> field in the response. This
+     * ciphertext can be decrypted only with the private key in the enclave. The
+     * <code>Plaintext</code> field in the response is null or empty.
+     * </p>
+     * <p>
+     * For information about the interaction between KMS and Amazon Web Services
+     * Nitro Enclaves, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     * >How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key
+     * Management Service Developer Guide</i>.
+     * </p>
+     */
+    private RecipientInfo recipient;
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     */
+    private Boolean dryRun;
 
     /**
      * <p>
@@ -151,20 +401,52 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The encryption context. If this was specified in the <a>Encrypt</a>
-     * function, it must be specified here or the decryption operation will
-     * fail. For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     * >Encryption Context</a>.
+     * Specifies the encryption context to use when decrypting the data. An
+     * encryption context is valid only for <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     * >cryptographic operations</a> with a symmetric encryption KMS key. The
+     * standard asymmetric encryption algorithms and HMAC algorithms that KMS
+     * uses do not support an encryption context.
+     * </p>
+     * <p>
+     * An <i>encryption context</i> is a collection of non-secret key-value
+     * pairs that represent additional authenticated data. When you use an
+     * encryption context to encrypt data, you must specify the same (an exact
+     * case-sensitive match) encryption context to decrypt the data. An
+     * encryption context is supported only on operations with symmetric
+     * encryption KMS keys. On operations with symmetric encryption KMS keys, an
+     * encryption context is optional, but it is strongly recommended.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     * >Encryption context</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      *
      * @return <p>
-     *         The encryption context. If this was specified in the
-     *         <a>Encrypt</a> function, it must be specified here or the
-     *         decryption operation will fail. For more information, see <a
-     *         href=
-     *         "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     *         >Encryption Context</a>.
+     *         Specifies the encryption context to use when decrypting the data.
+     *         An encryption context is valid only for <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     *         >cryptographic operations</a> with a symmetric encryption KMS
+     *         key. The standard asymmetric encryption algorithms and HMAC
+     *         algorithms that KMS uses do not support an encryption context.
+     *         </p>
+     *         <p>
+     *         An <i>encryption context</i> is a collection of non-secret
+     *         key-value pairs that represent additional authenticated data.
+     *         When you use an encryption context to encrypt data, you must
+     *         specify the same (an exact case-sensitive match) encryption
+     *         context to decrypt the data. An encryption context is supported
+     *         only on operations with symmetric encryption KMS keys. On
+     *         operations with symmetric encryption KMS keys, an encryption
+     *         context is optional, but it is strongly recommended.
+     *         </p>
+     *         <p>
+     *         For more information, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     *         >Encryption context</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
      *         </p>
      */
     public java.util.Map<String, String> getEncryptionContext() {
@@ -173,20 +455,53 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The encryption context. If this was specified in the <a>Encrypt</a>
-     * function, it must be specified here or the decryption operation will
-     * fail. For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     * >Encryption Context</a>.
+     * Specifies the encryption context to use when decrypting the data. An
+     * encryption context is valid only for <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     * >cryptographic operations</a> with a symmetric encryption KMS key. The
+     * standard asymmetric encryption algorithms and HMAC algorithms that KMS
+     * uses do not support an encryption context.
+     * </p>
+     * <p>
+     * An <i>encryption context</i> is a collection of non-secret key-value
+     * pairs that represent additional authenticated data. When you use an
+     * encryption context to encrypt data, you must specify the same (an exact
+     * case-sensitive match) encryption context to decrypt the data. An
+     * encryption context is supported only on operations with symmetric
+     * encryption KMS keys. On operations with symmetric encryption KMS keys, an
+     * encryption context is optional, but it is strongly recommended.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     * >Encryption context</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      *
      * @param encryptionContext <p>
-     *            The encryption context. If this was specified in the
-     *            <a>Encrypt</a> function, it must be specified here or the
-     *            decryption operation will fail. For more information, see <a
-     *            href=
-     *            "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     *            >Encryption Context</a>.
+     *            Specifies the encryption context to use when decrypting the
+     *            data. An encryption context is valid only for <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     *            >cryptographic operations</a> with a symmetric encryption KMS
+     *            key. The standard asymmetric encryption algorithms and HMAC
+     *            algorithms that KMS uses do not support an encryption context.
+     *            </p>
+     *            <p>
+     *            An <i>encryption context</i> is a collection of non-secret
+     *            key-value pairs that represent additional authenticated data.
+     *            When you use an encryption context to encrypt data, you must
+     *            specify the same (an exact case-sensitive match) encryption
+     *            context to decrypt the data. An encryption context is
+     *            supported only on operations with symmetric encryption KMS
+     *            keys. On operations with symmetric encryption KMS keys, an
+     *            encryption context is optional, but it is strongly
+     *            recommended.
+     *            </p>
+     *            <p>
+     *            For more information, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     *            >Encryption context</a> in the <i>Key Management Service
+     *            Developer Guide</i>.
      *            </p>
      */
     public void setEncryptionContext(java.util.Map<String, String> encryptionContext) {
@@ -195,23 +510,56 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The encryption context. If this was specified in the <a>Encrypt</a>
-     * function, it must be specified here or the decryption operation will
-     * fail. For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     * >Encryption Context</a>.
+     * Specifies the encryption context to use when decrypting the data. An
+     * encryption context is valid only for <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     * >cryptographic operations</a> with a symmetric encryption KMS key. The
+     * standard asymmetric encryption algorithms and HMAC algorithms that KMS
+     * uses do not support an encryption context.
+     * </p>
+     * <p>
+     * An <i>encryption context</i> is a collection of non-secret key-value
+     * pairs that represent additional authenticated data. When you use an
+     * encryption context to encrypt data, you must specify the same (an exact
+     * case-sensitive match) encryption context to decrypt the data. An
+     * encryption context is supported only on operations with symmetric
+     * encryption KMS keys. On operations with symmetric encryption KMS keys, an
+     * encryption context is optional, but it is strongly recommended.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     * >Encryption context</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param encryptionContext <p>
-     *            The encryption context. If this was specified in the
-     *            <a>Encrypt</a> function, it must be specified here or the
-     *            decryption operation will fail. For more information, see <a
-     *            href=
-     *            "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     *            >Encryption Context</a>.
+     *            Specifies the encryption context to use when decrypting the
+     *            data. An encryption context is valid only for <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     *            >cryptographic operations</a> with a symmetric encryption KMS
+     *            key. The standard asymmetric encryption algorithms and HMAC
+     *            algorithms that KMS uses do not support an encryption context.
+     *            </p>
+     *            <p>
+     *            An <i>encryption context</i> is a collection of non-secret
+     *            key-value pairs that represent additional authenticated data.
+     *            When you use an encryption context to encrypt data, you must
+     *            specify the same (an exact case-sensitive match) encryption
+     *            context to decrypt the data. An encryption context is
+     *            supported only on operations with symmetric encryption KMS
+     *            keys. On operations with symmetric encryption KMS keys, an
+     *            encryption context is optional, but it is strongly
+     *            recommended.
+     *            </p>
+     *            <p>
+     *            For more information, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     *            >Encryption context</a> in the <i>Key Management Service
+     *            Developer Guide</i>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -223,11 +571,27 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The encryption context. If this was specified in the <a>Encrypt</a>
-     * function, it must be specified here or the decryption operation will
-     * fail. For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/encryption-context.html"
-     * >Encryption Context</a>.
+     * Specifies the encryption context to use when decrypting the data. An
+     * encryption context is valid only for <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+     * >cryptographic operations</a> with a symmetric encryption KMS key. The
+     * standard asymmetric encryption algorithms and HMAC algorithms that KMS
+     * uses do not support an encryption context.
+     * </p>
+     * <p>
+     * An <i>encryption context</i> is a collection of non-secret key-value
+     * pairs that represent additional authenticated data. When you use an
+     * encryption context to encrypt data, you must specify the same (an exact
+     * case-sensitive match) encryption context to decrypt the data. An
+     * encryption context is supported only on operations with symmetric
+     * encryption KMS keys. On operations with symmetric encryption KMS keys, an
+     * encryption context is optional, but it is strongly recommended.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context"
+     * >Encryption context</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      * <p>
      * The method adds a new key-value pair into EncryptionContext parameter,
@@ -267,9 +631,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      * A list of grant tokens.
      * </p>
      * <p>
-     * For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     * >Grant Tokens</a> in the <i>AWS Key Management Service Developer
+     * Use a grant token when your permission to call this operation comes from
+     * a new grant that has not yet achieved <i>eventual consistency</i>. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     * >Using a grant token</a> in the <i>Key Management Service Developer
      * Guide</i>.
      * </p>
      *
@@ -277,10 +645,14 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      *         A list of grant tokens.
      *         </p>
      *         <p>
-     *         For more information, see <a href=
-     *         "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     *         >Grant Tokens</a> in the <i>AWS Key Management Service Developer
-     *         Guide</i>.
+     *         Use a grant token when your permission to call this operation
+     *         comes from a new grant that has not yet achieved <i>eventual
+     *         consistency</i>. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *         >Grant token</a> and <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     *         >Using a grant token</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
      *         </p>
      */
     public java.util.List<String> getGrantTokens() {
@@ -292,9 +664,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      * A list of grant tokens.
      * </p>
      * <p>
-     * For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     * >Grant Tokens</a> in the <i>AWS Key Management Service Developer
+     * Use a grant token when your permission to call this operation comes from
+     * a new grant that has not yet achieved <i>eventual consistency</i>. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     * >Using a grant token</a> in the <i>Key Management Service Developer
      * Guide</i>.
      * </p>
      *
@@ -302,9 +678,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      *            A list of grant tokens.
      *            </p>
      *            <p>
-     *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     *            >Grant Tokens</a> in the <i>AWS Key Management Service
+     *            Use a grant token when your permission to call this operation
+     *            comes from a new grant that has not yet achieved <i>eventual
+     *            consistency</i>. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *            >Grant token</a> and <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     *            >Using a grant token</a> in the <i>Key Management Service
      *            Developer Guide</i>.
      *            </p>
      */
@@ -322,9 +702,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      * A list of grant tokens.
      * </p>
      * <p>
-     * For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     * >Grant Tokens</a> in the <i>AWS Key Management Service Developer
+     * Use a grant token when your permission to call this operation comes from
+     * a new grant that has not yet achieved <i>eventual consistency</i>. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     * >Using a grant token</a> in the <i>Key Management Service Developer
      * Guide</i>.
      * </p>
      * <p>
@@ -335,9 +719,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      *            A list of grant tokens.
      *            </p>
      *            <p>
-     *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     *            >Grant Tokens</a> in the <i>AWS Key Management Service
+     *            Use a grant token when your permission to call this operation
+     *            comes from a new grant that has not yet achieved <i>eventual
+     *            consistency</i>. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *            >Grant token</a> and <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     *            >Using a grant token</a> in the <i>Key Management Service
      *            Developer Guide</i>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -358,9 +746,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      * A list of grant tokens.
      * </p>
      * <p>
-     * For more information, see <a href=
-     * "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     * >Grant Tokens</a> in the <i>AWS Key Management Service Developer
+     * Use a grant token when your permission to call this operation comes from
+     * a new grant that has not yet achieved <i>eventual consistency</i>. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     * >Using a grant token</a> in the <i>Key Management Service Developer
      * Guide</i>.
      * </p>
      * <p>
@@ -371,9 +763,13 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      *            A list of grant tokens.
      *            </p>
      *            <p>
-     *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#grant_token"
-     *            >Grant Tokens</a> in the <i>AWS Key Management Service
+     *            Use a grant token when your permission to call this operation
+     *            comes from a new grant that has not yet achieved <i>eventual
+     *            consistency</i>. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *            >Grant token</a> and <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token"
+     *            >Using a grant token</a> in the <i>Key Management Service
      *            Developer Guide</i>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -381,6 +777,886 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
      */
     public DecryptRequest withGrantTokens(java.util.Collection<String> grantTokens) {
         setGrantTokens(grantTokens);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     * </p>
+     * <p>
+     * Enter a key ID of the KMS key that was used to encrypt the ciphertext. If
+     * you identify a different KMS key, the <code>Decrypt</code> operation
+     * throws an <code>IncorrectKeyException</code>.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. If you used a symmetric encryption KMS key, KMS
+     * can get the KMS key from metadata that it adds to the symmetric
+     * ciphertext blob. However, it is always recommended as a best practice.
+     * This practice ensures that you use the KMS key that you intend.
+     * </p>
+     * <p>
+     * To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN.
+     * When using an alias name, prefix it with <code>"alias/"</code>. To
+     * specify a KMS key in a different Amazon Web Services account, you must
+     * use the key ARN or alias ARN.
+     * </p>
+     * <p>
+     * For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias name: <code>alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>. To get the alias name and alias ARN, use
+     * <a>ListAliases</a>.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     *
+     * @return <p>
+     *         Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     *         </p>
+     *         <p>
+     *         Enter a key ID of the KMS key that was used to encrypt the
+     *         ciphertext. If you identify a different KMS key, the
+     *         <code>Decrypt</code> operation throws an
+     *         <code>IncorrectKeyException</code>.
+     *         </p>
+     *         <p>
+     *         This parameter is required only when the ciphertext was encrypted
+     *         under an asymmetric KMS key. If you used a symmetric encryption
+     *         KMS key, KMS can get the KMS key from metadata that it adds to
+     *         the symmetric ciphertext blob. However, it is always recommended
+     *         as a best practice. This practice ensures that you use the KMS
+     *         key that you intend.
+     *         </p>
+     *         <p>
+     *         To specify a KMS key, use its key ID, key ARN, alias name, or
+     *         alias ARN. When using an alias name, prefix it with
+     *         <code>"alias/"</code>. To specify a KMS key in a different Amazon
+     *         Web Services account, you must use the key ARN or alias ARN.
+     *         </p>
+     *         <p>
+     *         For example:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Key ARN:
+     *         <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Alias name: <code>alias/ExampleAlias</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Alias ARN:
+     *         <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         To get the key ID and key ARN for a KMS key, use <a>ListKeys</a>
+     *         or <a>DescribeKey</a>. To get the alias name and alias ARN, use
+     *         <a>ListAliases</a>.
+     *         </p>
+     */
+    public String getKeyId() {
+        return keyId;
+    }
+
+    /**
+     * <p>
+     * Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     * </p>
+     * <p>
+     * Enter a key ID of the KMS key that was used to encrypt the ciphertext. If
+     * you identify a different KMS key, the <code>Decrypt</code> operation
+     * throws an <code>IncorrectKeyException</code>.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. If you used a symmetric encryption KMS key, KMS
+     * can get the KMS key from metadata that it adds to the symmetric
+     * ciphertext blob. However, it is always recommended as a best practice.
+     * This practice ensures that you use the KMS key that you intend.
+     * </p>
+     * <p>
+     * To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN.
+     * When using an alias name, prefix it with <code>"alias/"</code>. To
+     * specify a KMS key in a different Amazon Web Services account, you must
+     * use the key ARN or alias ARN.
+     * </p>
+     * <p>
+     * For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias name: <code>alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>. To get the alias name and alias ARN, use
+     * <a>ListAliases</a>.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     *
+     * @param keyId <p>
+     *            Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     *            </p>
+     *            <p>
+     *            Enter a key ID of the KMS key that was used to encrypt the
+     *            ciphertext. If you identify a different KMS key, the
+     *            <code>Decrypt</code> operation throws an
+     *            <code>IncorrectKeyException</code>.
+     *            </p>
+     *            <p>
+     *            This parameter is required only when the ciphertext was
+     *            encrypted under an asymmetric KMS key. If you used a symmetric
+     *            encryption KMS key, KMS can get the KMS key from metadata that
+     *            it adds to the symmetric ciphertext blob. However, it is
+     *            always recommended as a best practice. This practice ensures
+     *            that you use the KMS key that you intend.
+     *            </p>
+     *            <p>
+     *            To specify a KMS key, use its key ID, key ARN, alias name, or
+     *            alias ARN. When using an alias name, prefix it with
+     *            <code>"alias/"</code>. To specify a KMS key in a different
+     *            Amazon Web Services account, you must use the key ARN or alias
+     *            ARN.
+     *            </p>
+     *            <p>
+     *            For example:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Key ARN:
+     *            <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Alias name: <code>alias/ExampleAlias</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Alias ARN:
+     *            <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>. To get the alias name
+     *            and alias ARN, use <a>ListAliases</a>.
+     *            </p>
+     */
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
+    }
+
+    /**
+     * <p>
+     * Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     * </p>
+     * <p>
+     * Enter a key ID of the KMS key that was used to encrypt the ciphertext. If
+     * you identify a different KMS key, the <code>Decrypt</code> operation
+     * throws an <code>IncorrectKeyException</code>.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. If you used a symmetric encryption KMS key, KMS
+     * can get the KMS key from metadata that it adds to the symmetric
+     * ciphertext blob. However, it is always recommended as a best practice.
+     * This practice ensures that you use the KMS key that you intend.
+     * </p>
+     * <p>
+     * To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN.
+     * When using an alias name, prefix it with <code>"alias/"</code>. To
+     * specify a KMS key in a different Amazon Web Services account, you must
+     * use the key ARN or alias ARN.
+     * </p>
+     * <p>
+     * For example:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Key ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias name: <code>alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Alias ARN:
+     * <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
+     * <a>DescribeKey</a>. To get the alias name and alias ARN, use
+     * <a>ListAliases</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     *
+     * @param keyId <p>
+     *            Specifies the KMS key that KMS uses to decrypt the ciphertext.
+     *            </p>
+     *            <p>
+     *            Enter a key ID of the KMS key that was used to encrypt the
+     *            ciphertext. If you identify a different KMS key, the
+     *            <code>Decrypt</code> operation throws an
+     *            <code>IncorrectKeyException</code>.
+     *            </p>
+     *            <p>
+     *            This parameter is required only when the ciphertext was
+     *            encrypted under an asymmetric KMS key. If you used a symmetric
+     *            encryption KMS key, KMS can get the KMS key from metadata that
+     *            it adds to the symmetric ciphertext blob. However, it is
+     *            always recommended as a best practice. This practice ensures
+     *            that you use the KMS key that you intend.
+     *            </p>
+     *            <p>
+     *            To specify a KMS key, use its key ID, key ARN, alias name, or
+     *            alias ARN. When using an alias name, prefix it with
+     *            <code>"alias/"</code>. To specify a KMS key in a different
+     *            Amazon Web Services account, you must use the key ARN or alias
+     *            ARN.
+     *            </p>
+     *            <p>
+     *            For example:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Key ARN:
+     *            <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Alias name: <code>alias/ExampleAlias</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Alias ARN:
+     *            <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>. To get the alias name
+     *            and alias ARN, use <a>ListAliases</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DecryptRequest withKeyId(String keyId) {
+        this.keyId = keyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the encryption algorithm that will be used to decrypt the
+     * ciphertext. Specify the same algorithm that was used to encrypt the data.
+     * If you specify a different algorithm, the <code>Decrypt</code> operation
+     * fails.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>,
+     * represents the only supported algorithm that is valid for symmetric
+     * encryption KMS keys.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @return <p>
+     *         Specifies the encryption algorithm that will be used to decrypt
+     *         the ciphertext. Specify the same algorithm that was used to
+     *         encrypt the data. If you specify a different algorithm, the
+     *         <code>Decrypt</code> operation fails.
+     *         </p>
+     *         <p>
+     *         This parameter is required only when the ciphertext was encrypted
+     *         under an asymmetric KMS key. The default value,
+     *         <code>SYMMETRIC_DEFAULT</code>, represents the only supported
+     *         algorithm that is valid for symmetric encryption KMS keys.
+     *         </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public String getEncryptionAlgorithm() {
+        return encryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * Specifies the encryption algorithm that will be used to decrypt the
+     * ciphertext. Specify the same algorithm that was used to encrypt the data.
+     * If you specify a different algorithm, the <code>Decrypt</code> operation
+     * fails.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>,
+     * represents the only supported algorithm that is valid for symmetric
+     * encryption KMS keys.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            Specifies the encryption algorithm that will be used to
+     *            decrypt the ciphertext. Specify the same algorithm that was
+     *            used to encrypt the data. If you specify a different
+     *            algorithm, the <code>Decrypt</code> operation fails.
+     *            </p>
+     *            <p>
+     *            This parameter is required only when the ciphertext was
+     *            encrypted under an asymmetric KMS key. The default value,
+     *            <code>SYMMETRIC_DEFAULT</code>, represents the only supported
+     *            algorithm that is valid for symmetric encryption KMS keys.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setEncryptionAlgorithm(String encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm;
+    }
+
+    /**
+     * <p>
+     * Specifies the encryption algorithm that will be used to decrypt the
+     * ciphertext. Specify the same algorithm that was used to encrypt the data.
+     * If you specify a different algorithm, the <code>Decrypt</code> operation
+     * fails.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>,
+     * represents the only supported algorithm that is valid for symmetric
+     * encryption KMS keys.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            Specifies the encryption algorithm that will be used to
+     *            decrypt the ciphertext. Specify the same algorithm that was
+     *            used to encrypt the data. If you specify a different
+     *            algorithm, the <code>Decrypt</code> operation fails.
+     *            </p>
+     *            <p>
+     *            This parameter is required only when the ciphertext was
+     *            encrypted under an asymmetric KMS key. The default value,
+     *            <code>SYMMETRIC_DEFAULT</code>, represents the only supported
+     *            algorithm that is valid for symmetric encryption KMS keys.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public DecryptRequest withEncryptionAlgorithm(String encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies the encryption algorithm that will be used to decrypt the
+     * ciphertext. Specify the same algorithm that was used to encrypt the data.
+     * If you specify a different algorithm, the <code>Decrypt</code> operation
+     * fails.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>,
+     * represents the only supported algorithm that is valid for symmetric
+     * encryption KMS keys.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            Specifies the encryption algorithm that will be used to
+     *            decrypt the ciphertext. Specify the same algorithm that was
+     *            used to encrypt the data. If you specify a different
+     *            algorithm, the <code>Decrypt</code> operation fails.
+     *            </p>
+     *            <p>
+     *            This parameter is required only when the ciphertext was
+     *            encrypted under an asymmetric KMS key. The default value,
+     *            <code>SYMMETRIC_DEFAULT</code>, represents the only supported
+     *            algorithm that is valid for symmetric encryption KMS keys.
+     *            </p>
+     * @see EncryptionAlgorithmSpec
+     */
+    public void setEncryptionAlgorithm(EncryptionAlgorithmSpec encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm.toString();
+    }
+
+    /**
+     * <p>
+     * Specifies the encryption algorithm that will be used to decrypt the
+     * ciphertext. Specify the same algorithm that was used to encrypt the data.
+     * If you specify a different algorithm, the <code>Decrypt</code> operation
+     * fails.
+     * </p>
+     * <p>
+     * This parameter is required only when the ciphertext was encrypted under
+     * an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>,
+     * represents the only supported algorithm that is valid for symmetric
+     * encryption KMS keys.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>SYMMETRIC_DEFAULT, RSAES_OAEP_SHA_1,
+     * RSAES_OAEP_SHA_256, SM2PKE
+     *
+     * @param encryptionAlgorithm <p>
+     *            Specifies the encryption algorithm that will be used to
+     *            decrypt the ciphertext. Specify the same algorithm that was
+     *            used to encrypt the data. If you specify a different
+     *            algorithm, the <code>Decrypt</code> operation fails.
+     *            </p>
+     *            <p>
+     *            This parameter is required only when the ciphertext was
+     *            encrypted under an asymmetric KMS key. The default value,
+     *            <code>SYMMETRIC_DEFAULT</code>, represents the only supported
+     *            algorithm that is valid for symmetric encryption KMS keys.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see EncryptionAlgorithmSpec
+     */
+    public DecryptRequest withEncryptionAlgorithm(EncryptionAlgorithmSpec encryptionAlgorithm) {
+        this.encryptionAlgorithm = encryptionAlgorithm.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * A signed <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     * >attestation document</a> from an Amazon Web Services Nitro enclave and
+     * the encryption algorithm to use with the enclave's public key. The only
+     * valid encryption algorithm is <code>RSAES_OAEP_SHA_256</code>.
+     * </p>
+     * <p>
+     * This parameter only supports attestation documents for Amazon Web
+     * Services Nitro Enclaves. To include this parameter, use the <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     * >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services
+     * SDK.
+     * </p>
+     * <p>
+     * When you use this parameter, instead of returning the plaintext data, KMS
+     * encrypts the plaintext data with the public key in the attestation
+     * document, and returns the resulting ciphertext in the
+     * <code>CiphertextForRecipient</code> field in the response. This
+     * ciphertext can be decrypted only with the private key in the enclave. The
+     * <code>Plaintext</code> field in the response is null or empty.
+     * </p>
+     * <p>
+     * For information about the interaction between KMS and Amazon Web Services
+     * Nitro Enclaves, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     * >How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key
+     * Management Service Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         A signed <a href=
+     *         "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     *         >attestation document</a> from an Amazon Web Services Nitro
+     *         enclave and the encryption algorithm to use with the enclave's
+     *         public key. The only valid encryption algorithm is
+     *         <code>RSAES_OAEP_SHA_256</code>.
+     *         </p>
+     *         <p>
+     *         This parameter only supports attestation documents for Amazon Web
+     *         Services Nitro Enclaves. To include this parameter, use the <a
+     *         href=
+     *         "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     *         >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web
+     *         Services SDK.
+     *         </p>
+     *         <p>
+     *         When you use this parameter, instead of returning the plaintext
+     *         data, KMS encrypts the plaintext data with the public key in the
+     *         attestation document, and returns the resulting ciphertext in the
+     *         <code>CiphertextForRecipient</code> field in the response. This
+     *         ciphertext can be decrypted only with the private key in the
+     *         enclave. The <code>Plaintext</code> field in the response is null
+     *         or empty.
+     *         </p>
+     *         <p>
+     *         For information about the interaction between KMS and Amazon Web
+     *         Services Nitro Enclaves, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     *         >How Amazon Web Services Nitro Enclaves uses KMS</a> in the
+     *         <i>Key Management Service Developer Guide</i>.
+     *         </p>
+     */
+    public RecipientInfo getRecipient() {
+        return recipient;
+    }
+
+    /**
+     * <p>
+     * A signed <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     * >attestation document</a> from an Amazon Web Services Nitro enclave and
+     * the encryption algorithm to use with the enclave's public key. The only
+     * valid encryption algorithm is <code>RSAES_OAEP_SHA_256</code>.
+     * </p>
+     * <p>
+     * This parameter only supports attestation documents for Amazon Web
+     * Services Nitro Enclaves. To include this parameter, use the <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     * >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services
+     * SDK.
+     * </p>
+     * <p>
+     * When you use this parameter, instead of returning the plaintext data, KMS
+     * encrypts the plaintext data with the public key in the attestation
+     * document, and returns the resulting ciphertext in the
+     * <code>CiphertextForRecipient</code> field in the response. This
+     * ciphertext can be decrypted only with the private key in the enclave. The
+     * <code>Plaintext</code> field in the response is null or empty.
+     * </p>
+     * <p>
+     * For information about the interaction between KMS and Amazon Web Services
+     * Nitro Enclaves, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     * >How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key
+     * Management Service Developer Guide</i>.
+     * </p>
+     *
+     * @param recipient <p>
+     *            A signed <a href=
+     *            "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     *            >attestation document</a> from an Amazon Web Services Nitro
+     *            enclave and the encryption algorithm to use with the enclave's
+     *            public key. The only valid encryption algorithm is
+     *            <code>RSAES_OAEP_SHA_256</code>.
+     *            </p>
+     *            <p>
+     *            This parameter only supports attestation documents for Amazon
+     *            Web Services Nitro Enclaves. To include this parameter, use
+     *            the <a href=
+     *            "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     *            >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web
+     *            Services SDK.
+     *            </p>
+     *            <p>
+     *            When you use this parameter, instead of returning the
+     *            plaintext data, KMS encrypts the plaintext data with the
+     *            public key in the attestation document, and returns the
+     *            resulting ciphertext in the
+     *            <code>CiphertextForRecipient</code> field in the response.
+     *            This ciphertext can be decrypted only with the private key in
+     *            the enclave. The <code>Plaintext</code> field in the response
+     *            is null or empty.
+     *            </p>
+     *            <p>
+     *            For information about the interaction between KMS and Amazon
+     *            Web Services Nitro Enclaves, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     *            >How Amazon Web Services Nitro Enclaves uses KMS</a> in the
+     *            <i>Key Management Service Developer Guide</i>.
+     *            </p>
+     */
+    public void setRecipient(RecipientInfo recipient) {
+        this.recipient = recipient;
+    }
+
+    /**
+     * <p>
+     * A signed <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     * >attestation document</a> from an Amazon Web Services Nitro enclave and
+     * the encryption algorithm to use with the enclave's public key. The only
+     * valid encryption algorithm is <code>RSAES_OAEP_SHA_256</code>.
+     * </p>
+     * <p>
+     * This parameter only supports attestation documents for Amazon Web
+     * Services Nitro Enclaves. To include this parameter, use the <a href=
+     * "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     * >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services
+     * SDK.
+     * </p>
+     * <p>
+     * When you use this parameter, instead of returning the plaintext data, KMS
+     * encrypts the plaintext data with the public key in the attestation
+     * document, and returns the resulting ciphertext in the
+     * <code>CiphertextForRecipient</code> field in the response. This
+     * ciphertext can be decrypted only with the private key in the enclave. The
+     * <code>Plaintext</code> field in the response is null or empty.
+     * </p>
+     * <p>
+     * For information about the interaction between KMS and Amazon Web Services
+     * Nitro Enclaves, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     * >How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key
+     * Management Service Developer Guide</i>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param recipient <p>
+     *            A signed <a href=
+     *            "https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc"
+     *            >attestation document</a> from an Amazon Web Services Nitro
+     *            enclave and the encryption algorithm to use with the enclave's
+     *            public key. The only valid encryption algorithm is
+     *            <code>RSAES_OAEP_SHA_256</code>.
+     *            </p>
+     *            <p>
+     *            This parameter only supports attestation documents for Amazon
+     *            Web Services Nitro Enclaves. To include this parameter, use
+     *            the <a href=
+     *            "https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk"
+     *            >Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web
+     *            Services SDK.
+     *            </p>
+     *            <p>
+     *            When you use this parameter, instead of returning the
+     *            plaintext data, KMS encrypts the plaintext data with the
+     *            public key in the attestation document, and returns the
+     *            resulting ciphertext in the
+     *            <code>CiphertextForRecipient</code> field in the response.
+     *            This ciphertext can be decrypted only with the private key in
+     *            the enclave. The <code>Plaintext</code> field in the response
+     *            is null or empty.
+     *            </p>
+     *            <p>
+     *            For information about the interaction between KMS and Amazon
+     *            Web Services Nitro Enclaves, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html"
+     *            >How Amazon Web Services Nitro Enclaves uses KMS</a> in the
+     *            <i>Key Management Service Developer Guide</i>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DecryptRequest withRecipient(RecipientInfo recipient) {
+        this.recipient = recipient;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         Checks if your request will succeed. <code>DryRun</code> is an
+     *         optional parameter.
+     *         </p>
+     *         <p>
+     *         To learn more about how to use this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *         >Testing your KMS API calls</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     */
+    public Boolean isDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         Checks if your request will succeed. <code>DryRun</code> is an
+     *         optional parameter.
+     *         </p>
+     *         <p>
+     *         To learn more about how to use this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *         >Testing your KMS API calls</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     */
+    public Boolean getDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @param dryRun <p>
+     *            Checks if your request will succeed. <code>DryRun</code> is an
+     *            optional parameter.
+     *            </p>
+     *            <p>
+     *            To learn more about how to use this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *            >Testing your KMS API calls</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     */
+    public void setDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param dryRun <p>
+     *            Checks if your request will succeed. <code>DryRun</code> is an
+     *            optional parameter.
+     *            </p>
+     *            <p>
+     *            To learn more about how to use this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *            >Testing your KMS API calls</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DecryptRequest withDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
         return this;
     }
 
@@ -400,7 +1676,15 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
         if (getEncryptionContext() != null)
             sb.append("EncryptionContext: " + getEncryptionContext() + ",");
         if (getGrantTokens() != null)
-            sb.append("GrantTokens: " + getGrantTokens());
+            sb.append("GrantTokens: " + getGrantTokens() + ",");
+        if (getKeyId() != null)
+            sb.append("KeyId: " + getKeyId() + ",");
+        if (getEncryptionAlgorithm() != null)
+            sb.append("EncryptionAlgorithm: " + getEncryptionAlgorithm() + ",");
+        if (getRecipient() != null)
+            sb.append("Recipient: " + getRecipient() + ",");
+        if (getDryRun() != null)
+            sb.append("DryRun: " + getDryRun());
         sb.append("}");
         return sb.toString();
     }
@@ -416,6 +1700,11 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
                 + ((getEncryptionContext() == null) ? 0 : getEncryptionContext().hashCode());
         hashCode = prime * hashCode
                 + ((getGrantTokens() == null) ? 0 : getGrantTokens().hashCode());
+        hashCode = prime * hashCode + ((getKeyId() == null) ? 0 : getKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getEncryptionAlgorithm() == null) ? 0 : getEncryptionAlgorithm().hashCode());
+        hashCode = prime * hashCode + ((getRecipient() == null) ? 0 : getRecipient().hashCode());
+        hashCode = prime * hashCode + ((getDryRun() == null) ? 0 : getDryRun().hashCode());
         return hashCode;
     }
 
@@ -444,6 +1733,24 @@ public class DecryptRequest extends AmazonWebServiceRequest implements Serializa
             return false;
         if (other.getGrantTokens() != null
                 && other.getGrantTokens().equals(this.getGrantTokens()) == false)
+            return false;
+        if (other.getKeyId() == null ^ this.getKeyId() == null)
+            return false;
+        if (other.getKeyId() != null && other.getKeyId().equals(this.getKeyId()) == false)
+            return false;
+        if (other.getEncryptionAlgorithm() == null ^ this.getEncryptionAlgorithm() == null)
+            return false;
+        if (other.getEncryptionAlgorithm() != null
+                && other.getEncryptionAlgorithm().equals(this.getEncryptionAlgorithm()) == false)
+            return false;
+        if (other.getRecipient() == null ^ this.getRecipient() == null)
+            return false;
+        if (other.getRecipient() != null
+                && other.getRecipient().equals(this.getRecipient()) == false)
+            return false;
+        if (other.getDryRun() == null ^ this.getDryRun() == null)
+            return false;
+        if (other.getDryRun() != null && other.getDryRun().equals(this.getDryRun()) == false)
             return false;
         return true;
     }

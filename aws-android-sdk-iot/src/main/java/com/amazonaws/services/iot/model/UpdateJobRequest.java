@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Updates supported fields of the specified job.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >UpdateJob</a> action.
  * </p>
  */
 public class UpdateJobRequest extends AmazonWebServiceRequest implements Serializable {
@@ -78,6 +83,36 @@ public class UpdateJobRequest extends AmazonWebServiceRequest implements Seriali
      * </p>
      */
     private TimeoutConfig timeoutConfig;
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     */
+    private String namespaceId;
+
+    /**
+     * <p>
+     * Allows you to create the criteria to retry a job.
+     * </p>
+     */
+    private JobExecutionsRetryConfig jobExecutionsRetryConfig;
 
     /**
      * <p>
@@ -401,6 +436,187 @@ public class UpdateJobRequest extends AmazonWebServiceRequest implements Seriali
     }
 
     /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @return <p>
+     *         The namespace used to indicate that a job is a customer-managed
+     *         job.
+     *         </p>
+     *         <p>
+     *         When you specify a value for this parameter, Amazon Web Services
+     *         IoT Core sends jobs notifications to MQTT topics that contain the
+     *         value in the following format.
+     *         </p>
+     *         <p>
+     *         <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *         </p>
+     *         <note>
+     *         <p>
+     *         The <code>namespaceId</code> feature is in public preview.
+     *         </p>
+     *         </note>
+     */
+    public String getNamespaceId() {
+        return namespaceId;
+    }
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @param namespaceId <p>
+     *            The namespace used to indicate that a job is a
+     *            customer-managed job.
+     *            </p>
+     *            <p>
+     *            When you specify a value for this parameter, Amazon Web
+     *            Services IoT Core sends jobs notifications to MQTT topics that
+     *            contain the value in the following format.
+     *            </p>
+     *            <p>
+     *            <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>namespaceId</code> feature is in public preview.
+     *            </p>
+     *            </note>
+     */
+    public void setNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+    }
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @param namespaceId <p>
+     *            The namespace used to indicate that a job is a
+     *            customer-managed job.
+     *            </p>
+     *            <p>
+     *            When you specify a value for this parameter, Amazon Web
+     *            Services IoT Core sends jobs notifications to MQTT topics that
+     *            contain the value in the following format.
+     *            </p>
+     *            <p>
+     *            <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>namespaceId</code> feature is in public preview.
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UpdateJobRequest withNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Allows you to create the criteria to retry a job.
+     * </p>
+     *
+     * @return <p>
+     *         Allows you to create the criteria to retry a job.
+     *         </p>
+     */
+    public JobExecutionsRetryConfig getJobExecutionsRetryConfig() {
+        return jobExecutionsRetryConfig;
+    }
+
+    /**
+     * <p>
+     * Allows you to create the criteria to retry a job.
+     * </p>
+     *
+     * @param jobExecutionsRetryConfig <p>
+     *            Allows you to create the criteria to retry a job.
+     *            </p>
+     */
+    public void setJobExecutionsRetryConfig(JobExecutionsRetryConfig jobExecutionsRetryConfig) {
+        this.jobExecutionsRetryConfig = jobExecutionsRetryConfig;
+    }
+
+    /**
+     * <p>
+     * Allows you to create the criteria to retry a job.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param jobExecutionsRetryConfig <p>
+     *            Allows you to create the criteria to retry a job.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UpdateJobRequest withJobExecutionsRetryConfig(
+            JobExecutionsRetryConfig jobExecutionsRetryConfig) {
+        this.jobExecutionsRetryConfig = jobExecutionsRetryConfig;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -422,7 +638,11 @@ public class UpdateJobRequest extends AmazonWebServiceRequest implements Seriali
         if (getAbortConfig() != null)
             sb.append("abortConfig: " + getAbortConfig() + ",");
         if (getTimeoutConfig() != null)
-            sb.append("timeoutConfig: " + getTimeoutConfig());
+            sb.append("timeoutConfig: " + getTimeoutConfig() + ",");
+        if (getNamespaceId() != null)
+            sb.append("namespaceId: " + getNamespaceId() + ",");
+        if (getJobExecutionsRetryConfig() != null)
+            sb.append("jobExecutionsRetryConfig: " + getJobExecutionsRetryConfig());
         sb.append("}");
         return sb.toString();
     }
@@ -445,6 +665,12 @@ public class UpdateJobRequest extends AmazonWebServiceRequest implements Seriali
                 + ((getAbortConfig() == null) ? 0 : getAbortConfig().hashCode());
         hashCode = prime * hashCode
                 + ((getTimeoutConfig() == null) ? 0 : getTimeoutConfig().hashCode());
+        hashCode = prime * hashCode
+                + ((getNamespaceId() == null) ? 0 : getNamespaceId().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getJobExecutionsRetryConfig() == null) ? 0 : getJobExecutionsRetryConfig()
+                        .hashCode());
         return hashCode;
     }
 
@@ -489,6 +715,17 @@ public class UpdateJobRequest extends AmazonWebServiceRequest implements Seriali
             return false;
         if (other.getTimeoutConfig() != null
                 && other.getTimeoutConfig().equals(this.getTimeoutConfig()) == false)
+            return false;
+        if (other.getNamespaceId() == null ^ this.getNamespaceId() == null)
+            return false;
+        if (other.getNamespaceId() != null
+                && other.getNamespaceId().equals(this.getNamespaceId()) == false)
+            return false;
+        if (other.getJobExecutionsRetryConfig() == null
+                ^ this.getJobExecutionsRetryConfig() == null)
+            return false;
+        if (other.getJobExecutionsRetryConfig() != null
+                && other.getJobExecutionsRetryConfig().equals(this.getJobExecutionsRetryConfig()) == false)
             return false;
         return true;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,41 +19,47 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Details and tracking information for a single time a person is tracked in a
- * video. Amazon Rekognition operations that track persons return an array of
- * <code>PersonDetection</code> objects with elements for each time a person is
- * tracked in a video.
+ * Details and path tracking information for a single time a person's path is
+ * tracked in a video. Amazon Rekognition operations that track people's paths
+ * return an array of <code>PersonDetection</code> objects with elements for
+ * each time a person's path is tracked in a video.
  * </p>
  * <p>
- * For more information, see API_GetPersonTracking in the Amazon Rekognition
+ * For more information, see GetPersonTracking in the Amazon Rekognition
  * Developer Guide.
  * </p>
  */
 public class PersonDetection implements Serializable {
     /**
      * <p>
-     * The time, in milliseconds from the start of the video, that the person
-     * was tracked.
+     * The time, in milliseconds from the start of the video, that the person's
+     * path was tracked. Note that <code>Timestamp</code> is not guaranteed to
+     * be accurate to the individual frame where the person's path first
+     * appears.
      * </p>
      */
     private Long timestamp;
 
     /**
      * <p>
-     * Details about a person tracked in a video.
+     * Details about a person whose path was tracked in a video.
      * </p>
      */
     private PersonDetail person;
 
     /**
      * <p>
-     * The time, in milliseconds from the start of the video, that the person
-     * was tracked.
+     * The time, in milliseconds from the start of the video, that the person's
+     * path was tracked. Note that <code>Timestamp</code> is not guaranteed to
+     * be accurate to the individual frame where the person's path first
+     * appears.
      * </p>
      *
      * @return <p>
      *         The time, in milliseconds from the start of the video, that the
-     *         person was tracked.
+     *         person's path was tracked. Note that <code>Timestamp</code> is
+     *         not guaranteed to be accurate to the individual frame where the
+     *         person's path first appears.
      *         </p>
      */
     public Long getTimestamp() {
@@ -62,13 +68,17 @@ public class PersonDetection implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds from the start of the video, that the person
-     * was tracked.
+     * The time, in milliseconds from the start of the video, that the person's
+     * path was tracked. Note that <code>Timestamp</code> is not guaranteed to
+     * be accurate to the individual frame where the person's path first
+     * appears.
      * </p>
      *
      * @param timestamp <p>
      *            The time, in milliseconds from the start of the video, that
-     *            the person was tracked.
+     *            the person's path was tracked. Note that
+     *            <code>Timestamp</code> is not guaranteed to be accurate to the
+     *            individual frame where the person's path first appears.
      *            </p>
      */
     public void setTimestamp(Long timestamp) {
@@ -77,8 +87,10 @@ public class PersonDetection implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds from the start of the video, that the person
-     * was tracked.
+     * The time, in milliseconds from the start of the video, that the person's
+     * path was tracked. Note that <code>Timestamp</code> is not guaranteed to
+     * be accurate to the individual frame where the person's path first
+     * appears.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -86,7 +98,9 @@ public class PersonDetection implements Serializable {
      *
      * @param timestamp <p>
      *            The time, in milliseconds from the start of the video, that
-     *            the person was tracked.
+     *            the person's path was tracked. Note that
+     *            <code>Timestamp</code> is not guaranteed to be accurate to the
+     *            individual frame where the person's path first appears.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -98,11 +112,11 @@ public class PersonDetection implements Serializable {
 
     /**
      * <p>
-     * Details about a person tracked in a video.
+     * Details about a person whose path was tracked in a video.
      * </p>
      *
      * @return <p>
-     *         Details about a person tracked in a video.
+     *         Details about a person whose path was tracked in a video.
      *         </p>
      */
     public PersonDetail getPerson() {
@@ -111,11 +125,11 @@ public class PersonDetection implements Serializable {
 
     /**
      * <p>
-     * Details about a person tracked in a video.
+     * Details about a person whose path was tracked in a video.
      * </p>
      *
      * @param person <p>
-     *            Details about a person tracked in a video.
+     *            Details about a person whose path was tracked in a video.
      *            </p>
      */
     public void setPerson(PersonDetail person) {
@@ -124,14 +138,14 @@ public class PersonDetection implements Serializable {
 
     /**
      * <p>
-     * Details about a person tracked in a video.
+     * Details about a person whose path was tracked in a video.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param person <p>
-     *            Details about a person tracked in a video.
+     *            Details about a person whose path was tracked in a video.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

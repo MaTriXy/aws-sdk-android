@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,13 +25,19 @@ import com.amazonaws.AmazonWebServiceRequest;
  * idempotent.
  * </p>
  * <p>
- * Moving a certificate from the ACTIVE state (including REVOKED) will not
- * disconnect currently connected devices, but these devices will be unable to
- * reconnect.
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >UpdateCertificate</a> action.
  * </p>
  * <p>
- * The ACTIVE state is required to authenticate devices connecting to AWS IoT
- * using a certificate.
+ * Certificates must be in the ACTIVE state to authenticate devices that use a
+ * certificate to connect to IoT.
+ * </p>
+ * <p>
+ * Within a few minutes of updating a certificate from the ACTIVE state to any
+ * other state, IoT disconnects all devices that used that certificate to
+ * connect. Devices cannot use a certificate that is not in the ACTIVE state to
+ * reconnect.
  * </p>
  */
 public class UpdateCertificateRequest extends AmazonWebServiceRequest implements Serializable {
@@ -52,9 +58,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      * The new status.
      * </p>
      * <p>
-     * <b>Note:</b> Setting the status to PENDING_TRANSFER will result in an
-     * exception being thrown. PENDING_TRANSFER is a status used internally by
-     * AWS IoT. It is not intended for developer use.
+     * <b>Note:</b> Setting the status to PENDING_TRANSFER or PENDING_ACTIVATION
+     * will result in an exception being thrown. PENDING_TRANSFER and
+     * PENDING_ACTIVATION are statuses used internally by IoT. They are not
+     * intended for developer use.
      * </p>
      * <p>
      * <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and should
@@ -135,9 +142,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      * The new status.
      * </p>
      * <p>
-     * <b>Note:</b> Setting the status to PENDING_TRANSFER will result in an
-     * exception being thrown. PENDING_TRANSFER is a status used internally by
-     * AWS IoT. It is not intended for developer use.
+     * <b>Note:</b> Setting the status to PENDING_TRANSFER or PENDING_ACTIVATION
+     * will result in an exception being thrown. PENDING_TRANSFER and
+     * PENDING_ACTIVATION are statuses used internally by IoT. They are not
+     * intended for developer use.
      * </p>
      * <p>
      * <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and should
@@ -152,9 +160,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      *         The new status.
      *         </p>
      *         <p>
-     *         <b>Note:</b> Setting the status to PENDING_TRANSFER will result
-     *         in an exception being thrown. PENDING_TRANSFER is a status used
-     *         internally by AWS IoT. It is not intended for developer use.
+     *         <b>Note:</b> Setting the status to PENDING_TRANSFER or
+     *         PENDING_ACTIVATION will result in an exception being thrown.
+     *         PENDING_TRANSFER and PENDING_ACTIVATION are statuses used
+     *         internally by IoT. They are not intended for developer use.
      *         </p>
      *         <p>
      *         <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and
@@ -171,9 +180,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      * The new status.
      * </p>
      * <p>
-     * <b>Note:</b> Setting the status to PENDING_TRANSFER will result in an
-     * exception being thrown. PENDING_TRANSFER is a status used internally by
-     * AWS IoT. It is not intended for developer use.
+     * <b>Note:</b> Setting the status to PENDING_TRANSFER or PENDING_ACTIVATION
+     * will result in an exception being thrown. PENDING_TRANSFER and
+     * PENDING_ACTIVATION are statuses used internally by IoT. They are not
+     * intended for developer use.
      * </p>
      * <p>
      * <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and should
@@ -188,10 +198,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      *            The new status.
      *            </p>
      *            <p>
-     *            <b>Note:</b> Setting the status to PENDING_TRANSFER will
-     *            result in an exception being thrown. PENDING_TRANSFER is a
-     *            status used internally by AWS IoT. It is not intended for
-     *            developer use.
+     *            <b>Note:</b> Setting the status to PENDING_TRANSFER or
+     *            PENDING_ACTIVATION will result in an exception being thrown.
+     *            PENDING_TRANSFER and PENDING_ACTIVATION are statuses used
+     *            internally by IoT. They are not intended for developer use.
      *            </p>
      *            <p>
      *            <b>Note:</b> The status value REGISTER_INACTIVE is deprecated
@@ -208,9 +218,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      * The new status.
      * </p>
      * <p>
-     * <b>Note:</b> Setting the status to PENDING_TRANSFER will result in an
-     * exception being thrown. PENDING_TRANSFER is a status used internally by
-     * AWS IoT. It is not intended for developer use.
+     * <b>Note:</b> Setting the status to PENDING_TRANSFER or PENDING_ACTIVATION
+     * will result in an exception being thrown. PENDING_TRANSFER and
+     * PENDING_ACTIVATION are statuses used internally by IoT. They are not
+     * intended for developer use.
      * </p>
      * <p>
      * <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and should
@@ -228,10 +239,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      *            The new status.
      *            </p>
      *            <p>
-     *            <b>Note:</b> Setting the status to PENDING_TRANSFER will
-     *            result in an exception being thrown. PENDING_TRANSFER is a
-     *            status used internally by AWS IoT. It is not intended for
-     *            developer use.
+     *            <b>Note:</b> Setting the status to PENDING_TRANSFER or
+     *            PENDING_ACTIVATION will result in an exception being thrown.
+     *            PENDING_TRANSFER and PENDING_ACTIVATION are statuses used
+     *            internally by IoT. They are not intended for developer use.
      *            </p>
      *            <p>
      *            <b>Note:</b> The status value REGISTER_INACTIVE is deprecated
@@ -251,9 +262,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      * The new status.
      * </p>
      * <p>
-     * <b>Note:</b> Setting the status to PENDING_TRANSFER will result in an
-     * exception being thrown. PENDING_TRANSFER is a status used internally by
-     * AWS IoT. It is not intended for developer use.
+     * <b>Note:</b> Setting the status to PENDING_TRANSFER or PENDING_ACTIVATION
+     * will result in an exception being thrown. PENDING_TRANSFER and
+     * PENDING_ACTIVATION are statuses used internally by IoT. They are not
+     * intended for developer use.
      * </p>
      * <p>
      * <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and should
@@ -268,10 +280,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      *            The new status.
      *            </p>
      *            <p>
-     *            <b>Note:</b> Setting the status to PENDING_TRANSFER will
-     *            result in an exception being thrown. PENDING_TRANSFER is a
-     *            status used internally by AWS IoT. It is not intended for
-     *            developer use.
+     *            <b>Note:</b> Setting the status to PENDING_TRANSFER or
+     *            PENDING_ACTIVATION will result in an exception being thrown.
+     *            PENDING_TRANSFER and PENDING_ACTIVATION are statuses used
+     *            internally by IoT. They are not intended for developer use.
      *            </p>
      *            <p>
      *            <b>Note:</b> The status value REGISTER_INACTIVE is deprecated
@@ -288,9 +300,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      * The new status.
      * </p>
      * <p>
-     * <b>Note:</b> Setting the status to PENDING_TRANSFER will result in an
-     * exception being thrown. PENDING_TRANSFER is a status used internally by
-     * AWS IoT. It is not intended for developer use.
+     * <b>Note:</b> Setting the status to PENDING_TRANSFER or PENDING_ACTIVATION
+     * will result in an exception being thrown. PENDING_TRANSFER and
+     * PENDING_ACTIVATION are statuses used internally by IoT. They are not
+     * intended for developer use.
      * </p>
      * <p>
      * <b>Note:</b> The status value REGISTER_INACTIVE is deprecated and should
@@ -308,10 +321,10 @@ public class UpdateCertificateRequest extends AmazonWebServiceRequest implements
      *            The new status.
      *            </p>
      *            <p>
-     *            <b>Note:</b> Setting the status to PENDING_TRANSFER will
-     *            result in an exception being thrown. PENDING_TRANSFER is a
-     *            status used internally by AWS IoT. It is not intended for
-     *            developer use.
+     *            <b>Note:</b> Setting the status to PENDING_TRANSFER or
+     *            PENDING_ACTIVATION will result in an exception being thrown.
+     *            PENDING_TRANSFER and PENDING_ACTIVATION are statuses used
+     *            internally by IoT. They are not intended for developer use.
      *            </p>
      *            <p>
      *            <b>Note:</b> The status value REGISTER_INACTIVE is deprecated

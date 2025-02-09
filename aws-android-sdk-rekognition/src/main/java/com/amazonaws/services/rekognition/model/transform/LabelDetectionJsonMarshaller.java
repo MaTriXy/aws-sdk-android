@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -34,6 +35,21 @@ class LabelDetectionJsonMarshaller {
             Label label = labelDetection.getLabel();
             jsonWriter.name("Label");
             LabelJsonMarshaller.getInstance().marshall(label, jsonWriter);
+        }
+        if (labelDetection.getStartTimestampMillis() != null) {
+            Long startTimestampMillis = labelDetection.getStartTimestampMillis();
+            jsonWriter.name("StartTimestampMillis");
+            jsonWriter.value(startTimestampMillis);
+        }
+        if (labelDetection.getEndTimestampMillis() != null) {
+            Long endTimestampMillis = labelDetection.getEndTimestampMillis();
+            jsonWriter.name("EndTimestampMillis");
+            jsonWriter.value(endTimestampMillis);
+        }
+        if (labelDetection.getDurationMillis() != null) {
+            Long durationMillis = labelDetection.getDurationMillis();
+            jsonWriter.name("DurationMillis");
+            jsonWriter.value(durationMillis);
         }
         jsonWriter.endObject();
     }

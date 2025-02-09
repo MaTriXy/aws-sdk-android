@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,7 +35,12 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * The entity's type.
+     * The entity type. For entity detection using the built-in model, this
+     * field contains one of the standard entity types listed below.
+     * </p>
+     * <p>
+     * For custom entity detection, this field contains one of the entity types
+     * that you specified when you trained your custom model.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -56,25 +61,33 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity begins
-     * (the first character is at position 0). The offset returns the position
-     * of each UTF-8 code point in the string. A <i>code point</i> is the
-     * abstract character from a particular graphical representation. For
-     * example, a multi-byte UTF-8 character maps to a single code point.
+     * The zero-based offset from the beginning of the source text to the first
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      */
     private Integer beginOffset;
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity ends.
-     * The offset returns the position of each UTF-8 code point in the string. A
-     * <i>code point</i> is the abstract character from a particular graphical
-     * representation. For example, a multi-byte UTF-8 character maps to a
-     * single code point.
+     * The zero-based offset from the beginning of the source text to the last
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      */
     private Integer endOffset;
+
+    /**
+     * <p>
+     * A reference to each block for this entity. This field is empty for
+     * plain-text input.
+     * </p>
+     */
+    private java.util.List<BlockReference> blockReferences;
 
     /**
      * <p>
@@ -129,7 +142,12 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * The entity's type.
+     * The entity type. For entity detection using the built-in model, this
+     * field contains one of the standard entity types listed below.
+     * </p>
+     * <p>
+     * For custom entity detection, this field contains one of the entity types
+     * that you specified when you trained your custom model.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -137,7 +155,14 @@ public class Entity implements Serializable {
      * EVENT, DATE, QUANTITY, TITLE, OTHER
      *
      * @return <p>
-     *         The entity's type.
+     *         The entity type. For entity detection using the built-in model,
+     *         this field contains one of the standard entity types listed
+     *         below.
+     *         </p>
+     *         <p>
+     *         For custom entity detection, this field contains one of the
+     *         entity types that you specified when you trained your custom
+     *         model.
      *         </p>
      * @see EntityType
      */
@@ -147,7 +172,12 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * The entity's type.
+     * The entity type. For entity detection using the built-in model, this
+     * field contains one of the standard entity types listed below.
+     * </p>
+     * <p>
+     * For custom entity detection, this field contains one of the entity types
+     * that you specified when you trained your custom model.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -155,7 +185,14 @@ public class Entity implements Serializable {
      * EVENT, DATE, QUANTITY, TITLE, OTHER
      *
      * @param type <p>
-     *            The entity's type.
+     *            The entity type. For entity detection using the built-in
+     *            model, this field contains one of the standard entity types
+     *            listed below.
+     *            </p>
+     *            <p>
+     *            For custom entity detection, this field contains one of the
+     *            entity types that you specified when you trained your custom
+     *            model.
      *            </p>
      * @see EntityType
      */
@@ -165,7 +202,12 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * The entity's type.
+     * The entity type. For entity detection using the built-in model, this
+     * field contains one of the standard entity types listed below.
+     * </p>
+     * <p>
+     * For custom entity detection, this field contains one of the entity types
+     * that you specified when you trained your custom model.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -176,7 +218,14 @@ public class Entity implements Serializable {
      * EVENT, DATE, QUANTITY, TITLE, OTHER
      *
      * @param type <p>
-     *            The entity's type.
+     *            The entity type. For entity detection using the built-in
+     *            model, this field contains one of the standard entity types
+     *            listed below.
+     *            </p>
+     *            <p>
+     *            For custom entity detection, this field contains one of the
+     *            entity types that you specified when you trained your custom
+     *            model.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -189,7 +238,12 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * The entity's type.
+     * The entity type. For entity detection using the built-in model, this
+     * field contains one of the standard entity types listed below.
+     * </p>
+     * <p>
+     * For custom entity detection, this field contains one of the entity types
+     * that you specified when you trained your custom model.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -197,7 +251,14 @@ public class Entity implements Serializable {
      * EVENT, DATE, QUANTITY, TITLE, OTHER
      *
      * @param type <p>
-     *            The entity's type.
+     *            The entity type. For entity detection using the built-in
+     *            model, this field contains one of the standard entity types
+     *            listed below.
+     *            </p>
+     *            <p>
+     *            For custom entity detection, this field contains one of the
+     *            entity types that you specified when you trained your custom
+     *            model.
      *            </p>
      * @see EntityType
      */
@@ -207,7 +268,12 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * The entity's type.
+     * The entity type. For entity detection using the built-in model, this
+     * field contains one of the standard entity types listed below.
+     * </p>
+     * <p>
+     * For custom entity detection, this field contains one of the entity types
+     * that you specified when you trained your custom model.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -218,7 +284,14 @@ public class Entity implements Serializable {
      * EVENT, DATE, QUANTITY, TITLE, OTHER
      *
      * @param type <p>
-     *            The entity's type.
+     *            The entity type. For entity detection using the built-in
+     *            model, this field contains one of the standard entity types
+     *            listed below.
+     *            </p>
+     *            <p>
+     *            For custom entity detection, this field contains one of the
+     *            entity types that you specified when you trained your custom
+     *            model.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -285,20 +358,19 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity begins
-     * (the first character is at position 0). The offset returns the position
-     * of each UTF-8 code point in the string. A <i>code point</i> is the
-     * abstract character from a particular graphical representation. For
-     * example, a multi-byte UTF-8 character maps to a single code point.
+     * The zero-based offset from the beginning of the source text to the first
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      *
      * @return <p>
-     *         A character offset in the input text that shows where the entity
-     *         begins (the first character is at position 0). The offset returns
-     *         the position of each UTF-8 code point in the string. A <i>code
-     *         point</i> is the abstract character from a particular graphical
-     *         representation. For example, a multi-byte UTF-8 character maps to
-     *         a single code point.
+     *         The zero-based offset from the beginning of the source text to
+     *         the first character in the entity.
+     *         </p>
+     *         <p>
+     *         This field is empty for non-text input.
      *         </p>
      */
     public Integer getBeginOffset() {
@@ -307,20 +379,19 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity begins
-     * (the first character is at position 0). The offset returns the position
-     * of each UTF-8 code point in the string. A <i>code point</i> is the
-     * abstract character from a particular graphical representation. For
-     * example, a multi-byte UTF-8 character maps to a single code point.
+     * The zero-based offset from the beginning of the source text to the first
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      *
      * @param beginOffset <p>
-     *            A character offset in the input text that shows where the
-     *            entity begins (the first character is at position 0). The
-     *            offset returns the position of each UTF-8 code point in the
-     *            string. A <i>code point</i> is the abstract character from a
-     *            particular graphical representation. For example, a multi-byte
-     *            UTF-8 character maps to a single code point.
+     *            The zero-based offset from the beginning of the source text to
+     *            the first character in the entity.
+     *            </p>
+     *            <p>
+     *            This field is empty for non-text input.
      *            </p>
      */
     public void setBeginOffset(Integer beginOffset) {
@@ -329,23 +400,22 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity begins
-     * (the first character is at position 0). The offset returns the position
-     * of each UTF-8 code point in the string. A <i>code point</i> is the
-     * abstract character from a particular graphical representation. For
-     * example, a multi-byte UTF-8 character maps to a single code point.
+     * The zero-based offset from the beginning of the source text to the first
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param beginOffset <p>
-     *            A character offset in the input text that shows where the
-     *            entity begins (the first character is at position 0). The
-     *            offset returns the position of each UTF-8 code point in the
-     *            string. A <i>code point</i> is the abstract character from a
-     *            particular graphical representation. For example, a multi-byte
-     *            UTF-8 character maps to a single code point.
+     *            The zero-based offset from the beginning of the source text to
+     *            the first character in the entity.
+     *            </p>
+     *            <p>
+     *            This field is empty for non-text input.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -357,19 +427,19 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity ends.
-     * The offset returns the position of each UTF-8 code point in the string. A
-     * <i>code point</i> is the abstract character from a particular graphical
-     * representation. For example, a multi-byte UTF-8 character maps to a
-     * single code point.
+     * The zero-based offset from the beginning of the source text to the last
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      *
      * @return <p>
-     *         A character offset in the input text that shows where the entity
-     *         ends. The offset returns the position of each UTF-8 code point in
-     *         the string. A <i>code point</i> is the abstract character from a
-     *         particular graphical representation. For example, a multi-byte
-     *         UTF-8 character maps to a single code point.
+     *         The zero-based offset from the beginning of the source text to
+     *         the last character in the entity.
+     *         </p>
+     *         <p>
+     *         This field is empty for non-text input.
      *         </p>
      */
     public Integer getEndOffset() {
@@ -378,20 +448,19 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity ends.
-     * The offset returns the position of each UTF-8 code point in the string. A
-     * <i>code point</i> is the abstract character from a particular graphical
-     * representation. For example, a multi-byte UTF-8 character maps to a
-     * single code point.
+     * The zero-based offset from the beginning of the source text to the last
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      *
      * @param endOffset <p>
-     *            A character offset in the input text that shows where the
-     *            entity ends. The offset returns the position of each UTF-8
-     *            code point in the string. A <i>code point</i> is the abstract
-     *            character from a particular graphical representation. For
-     *            example, a multi-byte UTF-8 character maps to a single code
-     *            point.
+     *            The zero-based offset from the beginning of the source text to
+     *            the last character in the entity.
+     *            </p>
+     *            <p>
+     *            This field is empty for non-text input.
      *            </p>
      */
     public void setEndOffset(Integer endOffset) {
@@ -400,29 +469,110 @@ public class Entity implements Serializable {
 
     /**
      * <p>
-     * A character offset in the input text that shows where the entity ends.
-     * The offset returns the position of each UTF-8 code point in the string. A
-     * <i>code point</i> is the abstract character from a particular graphical
-     * representation. For example, a multi-byte UTF-8 character maps to a
-     * single code point.
+     * The zero-based offset from the beginning of the source text to the last
+     * character in the entity.
+     * </p>
+     * <p>
+     * This field is empty for non-text input.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param endOffset <p>
-     *            A character offset in the input text that shows where the
-     *            entity ends. The offset returns the position of each UTF-8
-     *            code point in the string. A <i>code point</i> is the abstract
-     *            character from a particular graphical representation. For
-     *            example, a multi-byte UTF-8 character maps to a single code
-     *            point.
+     *            The zero-based offset from the beginning of the source text to
+     *            the last character in the entity.
+     *            </p>
+     *            <p>
+     *            This field is empty for non-text input.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public Entity withEndOffset(Integer endOffset) {
         this.endOffset = endOffset;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A reference to each block for this entity. This field is empty for
+     * plain-text input.
+     * </p>
+     *
+     * @return <p>
+     *         A reference to each block for this entity. This field is empty
+     *         for plain-text input.
+     *         </p>
+     */
+    public java.util.List<BlockReference> getBlockReferences() {
+        return blockReferences;
+    }
+
+    /**
+     * <p>
+     * A reference to each block for this entity. This field is empty for
+     * plain-text input.
+     * </p>
+     *
+     * @param blockReferences <p>
+     *            A reference to each block for this entity. This field is empty
+     *            for plain-text input.
+     *            </p>
+     */
+    public void setBlockReferences(java.util.Collection<BlockReference> blockReferences) {
+        if (blockReferences == null) {
+            this.blockReferences = null;
+            return;
+        }
+
+        this.blockReferences = new java.util.ArrayList<BlockReference>(blockReferences);
+    }
+
+    /**
+     * <p>
+     * A reference to each block for this entity. This field is empty for
+     * plain-text input.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param blockReferences <p>
+     *            A reference to each block for this entity. This field is empty
+     *            for plain-text input.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Entity withBlockReferences(BlockReference... blockReferences) {
+        if (getBlockReferences() == null) {
+            this.blockReferences = new java.util.ArrayList<BlockReference>(blockReferences.length);
+        }
+        for (BlockReference value : blockReferences) {
+            this.blockReferences.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * A reference to each block for this entity. This field is empty for
+     * plain-text input.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param blockReferences <p>
+     *            A reference to each block for this entity. This field is empty
+     *            for plain-text input.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Entity withBlockReferences(java.util.Collection<BlockReference> blockReferences) {
+        setBlockReferences(blockReferences);
         return this;
     }
 
@@ -446,7 +596,9 @@ public class Entity implements Serializable {
         if (getBeginOffset() != null)
             sb.append("BeginOffset: " + getBeginOffset() + ",");
         if (getEndOffset() != null)
-            sb.append("EndOffset: " + getEndOffset());
+            sb.append("EndOffset: " + getEndOffset() + ",");
+        if (getBlockReferences() != null)
+            sb.append("BlockReferences: " + getBlockReferences());
         sb.append("}");
         return sb.toString();
     }
@@ -462,6 +614,8 @@ public class Entity implements Serializable {
         hashCode = prime * hashCode
                 + ((getBeginOffset() == null) ? 0 : getBeginOffset().hashCode());
         hashCode = prime * hashCode + ((getEndOffset() == null) ? 0 : getEndOffset().hashCode());
+        hashCode = prime * hashCode
+                + ((getBlockReferences() == null) ? 0 : getBlockReferences().hashCode());
         return hashCode;
     }
 
@@ -497,6 +651,11 @@ public class Entity implements Serializable {
             return false;
         if (other.getEndOffset() != null
                 && other.getEndOffset().equals(this.getEndOffset()) == false)
+            return false;
+        if (other.getBlockReferences() == null ^ this.getBlockReferences() == null)
+            return false;
+        if (other.getBlockReferences() != null
+                && other.getBlockReferences().equals(this.getBlockReferences()) == false)
             return false;
         return true;
     }

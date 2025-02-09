@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public enum LanguageCode {
 
+    Arb("arb"),
     CmnCN("cmn-CN"),
     CyGB("cy-GB"),
     DaDK("da-DK"),
@@ -50,7 +51,17 @@ public enum LanguageCode {
     RoRO("ro-RO"),
     RuRU("ru-RU"),
     SvSE("sv-SE"),
-    TrTR("tr-TR");
+    TrTR("tr-TR"),
+    EnNZ("en-NZ"),
+    EnZA("en-ZA"),
+    CaES("ca-ES"),
+    DeAT("de-AT"),
+    YueCN("yue-CN"),
+    ArAE("ar-AE"),
+    FiFI("fi-FI"),
+    EnIE("en-IE"),
+    NlBE("nl-BE"),
+    FrBE("fr-BE");
 
     private String value;
 
@@ -66,6 +77,7 @@ public enum LanguageCode {
     private static final Map<String, LanguageCode> enumMap;
     static {
         enumMap = new HashMap<String, LanguageCode>();
+        enumMap.put("arb", Arb);
         enumMap.put("cmn-CN", CmnCN);
         enumMap.put("cy-GB", CyGB);
         enumMap.put("da-DK", DaDK);
@@ -94,6 +106,16 @@ public enum LanguageCode {
         enumMap.put("ru-RU", RuRU);
         enumMap.put("sv-SE", SvSE);
         enumMap.put("tr-TR", TrTR);
+        enumMap.put("en-NZ", EnNZ);
+        enumMap.put("en-ZA", EnZA);
+        enumMap.put("ca-ES", CaES);
+        enumMap.put("de-AT", DeAT);
+        enumMap.put("yue-CN", YueCN);
+        enumMap.put("ar-AE", ArAE);
+        enumMap.put("fi-FI", FiFI);
+        enumMap.put("en-IE", EnIE);
+        enumMap.put("nl-BE", NlBE);
+        enumMap.put("fr-BE", FrBE);
     }
 
     /**

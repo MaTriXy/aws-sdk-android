@@ -28,7 +28,6 @@ public abstract class ClientConstants {
     public static final String APP_LOCAL_CACHE_KEY_PREFIX = "CognitoIdentityProvider";
     public static final String AUTH_RESPONSE_TYPE_CODE = "code";
     public static final String CHROME_PACKAGE = "com.android.chrome";
-    public static final int CHROME_NAVIGATION_CANCELLED = 6;
     public static final String DOMAIN_PATH_OAUTH2 = "oauth2";
     public static final String DOMAIN_PATH_SIGN_IN = "authorize";
     public static final String DOMAIN_PATH_SIGN_OUT = "logout";
@@ -39,6 +38,7 @@ public abstract class ClientConstants {
     public static final String DOMAIN_QUERY_PARAM_CODE_CHALLENGE_METHOD_SHA256 = "S256";
     public static final String DOMAIN_QUERY_PARAM_CODE_VERIFIER = "code_verifier";
     public static final String DOMAIN_QUERY_PARAM_ERROR = "error";
+    public static final String DOMAIN_QUERY_PARAM_ERROR_DESCRIPTION = "error_description";
     public static final String DOMAIN_QUERY_PARAM_REDIRECT_URI = "redirect_uri";
     public static final String DOMAIN_QUERY_PARAM_LOGOUT_URI = "logout_uri";
     public static final String DOMAIN_QUERY_PARAM_RESPONSE_TYPE = "response_type";

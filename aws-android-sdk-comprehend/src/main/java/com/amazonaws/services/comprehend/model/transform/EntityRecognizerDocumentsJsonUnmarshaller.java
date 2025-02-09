@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,12 @@ class EntityRecognizerDocumentsJsonUnmarshaller implements
             String name = reader.nextName();
             if (name.equals("S3Uri")) {
                 entityRecognizerDocuments.setS3Uri(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("TestS3Uri")) {
+                entityRecognizerDocuments.setTestS3Uri(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("InputFormat")) {
+                entityRecognizerDocuments.setInputFormat(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

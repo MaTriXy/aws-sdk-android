@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,17 +51,22 @@ public class GetLabelDetectionResultJsonUnmarshaller implements
                         LabelDetectionJsonUnmarshaller.getInstance()
                         )
                                 .unmarshall(context));
-            } else if (name.equals("BillableDurationSeconds")) {
-                getLabelDetectionResult.setBillableDurationSeconds(IntegerJsonUnmarshaller
-                        .getInstance()
+            } else if (name.equals("LabelModelVersion")) {
+                getLabelDetectionResult.setLabelModelVersion(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("ErrorCode")) {
-                getLabelDetectionResult.setErrorCode(StringJsonUnmarshaller.getInstance()
+            } else if (name.equals("JobId")) {
+                getLabelDetectionResult.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("Warnings")) {
-                getLabelDetectionResult.setWarnings(new ListUnmarshaller<Warning>(
-                        WarningJsonUnmarshaller.getInstance()
-                        )
+            } else if (name.equals("Video")) {
+                getLabelDetectionResult.setVideo(VideoJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("JobTag")) {
+                getLabelDetectionResult.setJobTag(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("GetRequestMetadata")) {
+                getLabelDetectionResult
+                        .setGetRequestMetadata(GetLabelDetectionRequestMetadataJsonUnmarshaller
+                                .getInstance()
                                 .unmarshall(context));
             } else {
                 reader.skipValue();

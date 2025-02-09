@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,10 +19,11 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * Amazon Comprehend can't process the language of the input text. For all
- * custom entity recognition APIs (such as <code>CreateEntityRecognizer</code>),
- * only English is accepted. For most other APIs, Amazon Comprehend accepts only
- * English or Spanish text.
+ * Amazon Comprehend can't process the language of the input text. For custom
+ * entity recognition APIs, only English, Spanish, French, Italian, German, or
+ * Portuguese are accepted. For a list of supported languages, <a href=
+ * "https://docs.aws.amazon.com/comprehend/latest/dg/supported-languages.html"
+ * >Supported languages</a> in the Comprehend Developer Guide.
  * </p>
  */
 public class UnsupportedLanguageException extends AmazonServiceException {

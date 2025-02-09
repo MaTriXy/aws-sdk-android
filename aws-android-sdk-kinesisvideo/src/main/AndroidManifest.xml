@@ -4,7 +4,9 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.amazonaws.kinesisvideo">
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application>
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
-<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="25" /></manifest>
+</manifest>
 

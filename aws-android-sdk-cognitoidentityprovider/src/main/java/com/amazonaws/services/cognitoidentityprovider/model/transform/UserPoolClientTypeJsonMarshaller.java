@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.cognitoidentityprovider.model.transform;
 
 import com.amazonaws.services.cognitoidentityprovider.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -60,6 +61,22 @@ class UserPoolClientTypeJsonMarshaller {
             Integer refreshTokenValidity = userPoolClientType.getRefreshTokenValidity();
             jsonWriter.name("RefreshTokenValidity");
             jsonWriter.value(refreshTokenValidity);
+        }
+        if (userPoolClientType.getAccessTokenValidity() != null) {
+            Integer accessTokenValidity = userPoolClientType.getAccessTokenValidity();
+            jsonWriter.name("AccessTokenValidity");
+            jsonWriter.value(accessTokenValidity);
+        }
+        if (userPoolClientType.getIdTokenValidity() != null) {
+            Integer idTokenValidity = userPoolClientType.getIdTokenValidity();
+            jsonWriter.name("IdTokenValidity");
+            jsonWriter.value(idTokenValidity);
+        }
+        if (userPoolClientType.getTokenValidityUnits() != null) {
+            TokenValidityUnitsType tokenValidityUnits = userPoolClientType.getTokenValidityUnits();
+            jsonWriter.name("TokenValidityUnits");
+            TokenValidityUnitsTypeJsonMarshaller.getInstance().marshall(tokenValidityUnits,
+                    jsonWriter);
         }
         if (userPoolClientType.getReadAttributes() != null) {
             java.util.List<String> readAttributes = userPoolClientType.getReadAttributes();
@@ -167,6 +184,27 @@ class UserPoolClientTypeJsonMarshaller {
             jsonWriter.name("AnalyticsConfiguration");
             AnalyticsConfigurationTypeJsonMarshaller.getInstance().marshall(analyticsConfiguration,
                     jsonWriter);
+        }
+        if (userPoolClientType.getPreventUserExistenceErrors() != null) {
+            String preventUserExistenceErrors = userPoolClientType.getPreventUserExistenceErrors();
+            jsonWriter.name("PreventUserExistenceErrors");
+            jsonWriter.value(preventUserExistenceErrors);
+        }
+        if (userPoolClientType.getEnableTokenRevocation() != null) {
+            Boolean enableTokenRevocation = userPoolClientType.getEnableTokenRevocation();
+            jsonWriter.name("EnableTokenRevocation");
+            jsonWriter.value(enableTokenRevocation);
+        }
+        if (userPoolClientType.getEnablePropagateAdditionalUserContextData() != null) {
+            Boolean enablePropagateAdditionalUserContextData = userPoolClientType
+                    .getEnablePropagateAdditionalUserContextData();
+            jsonWriter.name("EnablePropagateAdditionalUserContextData");
+            jsonWriter.value(enablePropagateAdditionalUserContextData);
+        }
+        if (userPoolClientType.getAuthSessionValidity() != null) {
+            Integer authSessionValidity = userPoolClientType.getAuthSessionValidity();
+            jsonWriter.name("AuthSessionValidity");
+            jsonWriter.value(authSessionValidity);
         }
         jsonWriter.endObject();
     }

@@ -1,40 +1,18 @@
 apply plugin: 'com.android.library'
+apply from: rootProject.file('publishing.gradle')
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        minSdkVersion 14 // v4 support, brought from facebook sdk
+        targetSdkVersion 29
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    // TODO Remove and fix lint issues
-    lintOptions {
-        abortOnError false
-    }
-
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    api project(":aws-android-sdk-auth-core")
-    api "com.facebook.android:facebook-android-sdk:4.1.0"
-    implementation "com.android.support:support-v4:23.0.1"
+    api project(':aws-android-sdk-auth-core')
+    api 'com.facebook.android:facebook-login:11.2.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
+

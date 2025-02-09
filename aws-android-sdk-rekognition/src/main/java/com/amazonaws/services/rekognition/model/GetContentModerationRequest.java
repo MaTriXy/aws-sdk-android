@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,29 +21,34 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Gets the content moderation analysis results for a Amazon Rekognition Video
- * analysis started by .
+ * Gets the inappropriate, unwanted, or offensive content analysis results for a
+ * Amazon Rekognition Video analysis started by <a>StartContentModeration</a>.
+ * For a list of moderation labels in Amazon Rekognition, see <a href=
+ * "https://docs.aws.amazon.com/rekognition/latest/dg/moderation.html#moderation-api"
+ * >Using the image and video moderation APIs</a>.
  * </p>
  * <p>
- * Content moderation analysis of a video is an asynchronous operation. You
- * start analysis by calling . which returns a job identifier (
+ * Amazon Rekognition Video inappropriate or offensive content detection in a
+ * stored video is an asynchronous operation. You start analysis by calling
+ * <a>StartContentModeration</a> which returns a job identifier (
  * <code>JobId</code>). When analysis finishes, Amazon Rekognition Video
  * publishes a completion status to the Amazon Simple Notification Service topic
  * registered in the initial call to <code>StartContentModeration</code>. To get
- * the results of the content moderation analysis, first check that the status
- * value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If so,
- * call <code>GetCelebrityDetection</code> and pass the job identifier (
+ * the results of the content analysis, first check that the status value
+ * published to the Amazon SNS topic is <code>SUCCEEDED</code>. If so, call
+ * <code>GetContentModeration</code> and pass the job identifier (
  * <code>JobId</code>) from the initial call to
- * <code>StartCelebrityDetection</code>.
+ * <code>StartContentModeration</code>.
  * </p>
  * <p>
  * For more information, see Working with Stored Videos in the Amazon
  * Rekognition Devlopers Guide.
  * </p>
  * <p>
- * <code>GetContentModeration</code> returns detected content moderation labels,
- * and the time they are detected, in an array, <code>ModerationLabels</code>,
- * of objects.
+ * <code>GetContentModeration</code> returns detected inappropriate, unwanted,
+ * or offensive content moderation labels, and the time they are detected, in an
+ * array, <code>ModerationLabels</code>, of <a>ContentModerationDetection</a>
+ * objects.
  * </p>
  * <p>
  * By default, the moderated labels are returned sorted by time, in milliseconds
@@ -62,16 +67,16 @@ import com.amazonaws.AmazonWebServiceRequest;
  * previous call to <code>GetContentModeration</code>.
  * </p>
  * <p>
- * For more information, see Detecting Unsafe Content in the Amazon Rekognition
+ * For more information, see moderating content in the Amazon Rekognition
  * Developer Guide.
  * </p>
  */
 public class GetContentModerationRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The identifier for the content moderation job. Use <code>JobId</code> to
-     * identify the job in a subsequent call to
-     * <code>GetContentModeration</code>.
+     * The identifier for the inappropriate, unwanted, or offensive content
+     * moderation job. Use <code>JobId</code> to identify the job in a
+     * subsequent call to <code>GetContentModeration</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -122,9 +127,21 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The identifier for the content moderation job. Use <code>JobId</code> to
-     * identify the job in a subsequent call to
-     * <code>GetContentModeration</code>.
+     * Defines how to aggregate results of the StartContentModeration request.
+     * Default aggregation option is TIMESTAMPS. SEGMENTS mode aggregates
+     * moderation labels over time.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>TIMESTAMPS, SEGMENTS
+     */
+    private String aggregateBy;
+
+    /**
+     * <p>
+     * The identifier for the inappropriate, unwanted, or offensive content
+     * moderation job. Use <code>JobId</code> to identify the job in a
+     * subsequent call to <code>GetContentModeration</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -132,9 +149,9 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      *
      * @return <p>
-     *         The identifier for the content moderation job. Use
-     *         <code>JobId</code> to identify the job in a subsequent call to
-     *         <code>GetContentModeration</code>.
+     *         The identifier for the inappropriate, unwanted, or offensive
+     *         content moderation job. Use <code>JobId</code> to identify the
+     *         job in a subsequent call to <code>GetContentModeration</code>.
      *         </p>
      */
     public String getJobId() {
@@ -143,9 +160,9 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The identifier for the content moderation job. Use <code>JobId</code> to
-     * identify the job in a subsequent call to
-     * <code>GetContentModeration</code>.
+     * The identifier for the inappropriate, unwanted, or offensive content
+     * moderation job. Use <code>JobId</code> to identify the job in a
+     * subsequent call to <code>GetContentModeration</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -153,9 +170,9 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      *
      * @param jobId <p>
-     *            The identifier for the content moderation job. Use
-     *            <code>JobId</code> to identify the job in a subsequent call to
-     *            <code>GetContentModeration</code>.
+     *            The identifier for the inappropriate, unwanted, or offensive
+     *            content moderation job. Use <code>JobId</code> to identify the
+     *            job in a subsequent call to <code>GetContentModeration</code>.
      *            </p>
      */
     public void setJobId(String jobId) {
@@ -164,9 +181,9 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The identifier for the content moderation job. Use <code>JobId</code> to
-     * identify the job in a subsequent call to
-     * <code>GetContentModeration</code>.
+     * The identifier for the inappropriate, unwanted, or offensive content
+     * moderation job. Use <code>JobId</code> to identify the job in a
+     * subsequent call to <code>GetContentModeration</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -177,9 +194,9 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      *
      * @param jobId <p>
-     *            The identifier for the content moderation job. Use
-     *            <code>JobId</code> to identify the job in a subsequent call to
-     *            <code>GetContentModeration</code>.
+     *            The identifier for the inappropriate, unwanted, or offensive
+     *            content moderation job. Use <code>JobId</code> to identify the
+     *            job in a subsequent call to <code>GetContentModeration</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -483,6 +500,123 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
     }
 
     /**
+     * <p>
+     * Defines how to aggregate results of the StartContentModeration request.
+     * Default aggregation option is TIMESTAMPS. SEGMENTS mode aggregates
+     * moderation labels over time.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>TIMESTAMPS, SEGMENTS
+     *
+     * @return <p>
+     *         Defines how to aggregate results of the StartContentModeration
+     *         request. Default aggregation option is TIMESTAMPS. SEGMENTS mode
+     *         aggregates moderation labels over time.
+     *         </p>
+     * @see ContentModerationAggregateBy
+     */
+    public String getAggregateBy() {
+        return aggregateBy;
+    }
+
+    /**
+     * <p>
+     * Defines how to aggregate results of the StartContentModeration request.
+     * Default aggregation option is TIMESTAMPS. SEGMENTS mode aggregates
+     * moderation labels over time.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>TIMESTAMPS, SEGMENTS
+     *
+     * @param aggregateBy <p>
+     *            Defines how to aggregate results of the StartContentModeration
+     *            request. Default aggregation option is TIMESTAMPS. SEGMENTS
+     *            mode aggregates moderation labels over time.
+     *            </p>
+     * @see ContentModerationAggregateBy
+     */
+    public void setAggregateBy(String aggregateBy) {
+        this.aggregateBy = aggregateBy;
+    }
+
+    /**
+     * <p>
+     * Defines how to aggregate results of the StartContentModeration request.
+     * Default aggregation option is TIMESTAMPS. SEGMENTS mode aggregates
+     * moderation labels over time.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>TIMESTAMPS, SEGMENTS
+     *
+     * @param aggregateBy <p>
+     *            Defines how to aggregate results of the StartContentModeration
+     *            request. Default aggregation option is TIMESTAMPS. SEGMENTS
+     *            mode aggregates moderation labels over time.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see ContentModerationAggregateBy
+     */
+    public GetContentModerationRequest withAggregateBy(String aggregateBy) {
+        this.aggregateBy = aggregateBy;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Defines how to aggregate results of the StartContentModeration request.
+     * Default aggregation option is TIMESTAMPS. SEGMENTS mode aggregates
+     * moderation labels over time.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>TIMESTAMPS, SEGMENTS
+     *
+     * @param aggregateBy <p>
+     *            Defines how to aggregate results of the StartContentModeration
+     *            request. Default aggregation option is TIMESTAMPS. SEGMENTS
+     *            mode aggregates moderation labels over time.
+     *            </p>
+     * @see ContentModerationAggregateBy
+     */
+    public void setAggregateBy(ContentModerationAggregateBy aggregateBy) {
+        this.aggregateBy = aggregateBy.toString();
+    }
+
+    /**
+     * <p>
+     * Defines how to aggregate results of the StartContentModeration request.
+     * Default aggregation option is TIMESTAMPS. SEGMENTS mode aggregates
+     * moderation labels over time.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>TIMESTAMPS, SEGMENTS
+     *
+     * @param aggregateBy <p>
+     *            Defines how to aggregate results of the StartContentModeration
+     *            request. Default aggregation option is TIMESTAMPS. SEGMENTS
+     *            mode aggregates moderation labels over time.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see ContentModerationAggregateBy
+     */
+    public GetContentModerationRequest withAggregateBy(ContentModerationAggregateBy aggregateBy) {
+        this.aggregateBy = aggregateBy.toString();
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -500,7 +634,9 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
         if (getNextToken() != null)
             sb.append("NextToken: " + getNextToken() + ",");
         if (getSortBy() != null)
-            sb.append("SortBy: " + getSortBy());
+            sb.append("SortBy: " + getSortBy() + ",");
+        if (getAggregateBy() != null)
+            sb.append("AggregateBy: " + getAggregateBy());
         sb.append("}");
         return sb.toString();
     }
@@ -514,6 +650,8 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
         hashCode = prime * hashCode + ((getMaxResults() == null) ? 0 : getMaxResults().hashCode());
         hashCode = prime * hashCode + ((getNextToken() == null) ? 0 : getNextToken().hashCode());
         hashCode = prime * hashCode + ((getSortBy() == null) ? 0 : getSortBy().hashCode());
+        hashCode = prime * hashCode
+                + ((getAggregateBy() == null) ? 0 : getAggregateBy().hashCode());
         return hashCode;
     }
 
@@ -545,6 +683,11 @@ public class GetContentModerationRequest extends AmazonWebServiceRequest impleme
         if (other.getSortBy() == null ^ this.getSortBy() == null)
             return false;
         if (other.getSortBy() != null && other.getSortBy().equals(this.getSortBy()) == false)
+            return false;
+        if (other.getAggregateBy() == null ^ this.getAggregateBy() == null)
+            return false;
+        if (other.getAggregateBy() != null
+                && other.getAggregateBy().equals(this.getAggregateBy()) == false)
             return false;
         return true;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -55,6 +56,11 @@ class CelebrityJsonMarshaller {
             Float matchConfidence = celebrity.getMatchConfidence();
             jsonWriter.name("MatchConfidence");
             jsonWriter.value(matchConfidence);
+        }
+        if (celebrity.getKnownGender() != null) {
+            KnownGender knownGender = celebrity.getKnownGender();
+            jsonWriter.name("KnownGender");
+            KnownGenderJsonMarshaller.getInstance().marshall(knownGender, jsonWriter);
         }
         jsonWriter.endObject();
     }

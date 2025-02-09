@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.comprehend.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -65,10 +68,26 @@ public class CreateEntityRecognizerRequestMarshaller implements
                 jsonWriter.name("RecognizerName");
                 jsonWriter.value(recognizerName);
             }
+            if (createEntityRecognizerRequest.getVersionName() != null) {
+                String versionName = createEntityRecognizerRequest.getVersionName();
+                jsonWriter.name("VersionName");
+                jsonWriter.value(versionName);
+            }
             if (createEntityRecognizerRequest.getDataAccessRoleArn() != null) {
                 String dataAccessRoleArn = createEntityRecognizerRequest.getDataAccessRoleArn();
                 jsonWriter.name("DataAccessRoleArn");
                 jsonWriter.value(dataAccessRoleArn);
+            }
+            if (createEntityRecognizerRequest.getTags() != null) {
+                java.util.List<Tag> tags = createEntityRecognizerRequest.getTags();
+                jsonWriter.name("Tags");
+                jsonWriter.beginArray();
+                for (Tag tagsItem : tags) {
+                    if (tagsItem != null) {
+                        TagJsonMarshaller.getInstance().marshall(tagsItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
             }
             if (createEntityRecognizerRequest.getInputDataConfig() != null) {
                 EntityRecognizerInputDataConfig inputDataConfig = createEntityRecognizerRequest
@@ -86,6 +105,26 @@ public class CreateEntityRecognizerRequestMarshaller implements
                 String languageCode = createEntityRecognizerRequest.getLanguageCode();
                 jsonWriter.name("LanguageCode");
                 jsonWriter.value(languageCode);
+            }
+            if (createEntityRecognizerRequest.getVolumeKmsKeyId() != null) {
+                String volumeKmsKeyId = createEntityRecognizerRequest.getVolumeKmsKeyId();
+                jsonWriter.name("VolumeKmsKeyId");
+                jsonWriter.value(volumeKmsKeyId);
+            }
+            if (createEntityRecognizerRequest.getVpcConfig() != null) {
+                VpcConfig vpcConfig = createEntityRecognizerRequest.getVpcConfig();
+                jsonWriter.name("VpcConfig");
+                VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
+            }
+            if (createEntityRecognizerRequest.getModelKmsKeyId() != null) {
+                String modelKmsKeyId = createEntityRecognizerRequest.getModelKmsKeyId();
+                jsonWriter.name("ModelKmsKeyId");
+                jsonWriter.value(modelKmsKeyId);
+            }
+            if (createEntityRecognizerRequest.getModelPolicy() != null) {
+                String modelPolicy = createEntityRecognizerRequest.getModelPolicy();
+                jsonWriter.name("ModelPolicy");
+                jsonWriter.value(modelPolicy);
             }
 
             jsonWriter.endObject();

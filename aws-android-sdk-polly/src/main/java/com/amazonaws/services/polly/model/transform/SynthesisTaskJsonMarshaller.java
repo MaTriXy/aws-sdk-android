@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.polly.model.transform;
 
 import com.amazonaws.services.polly.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -25,6 +26,11 @@ class SynthesisTaskJsonMarshaller {
 
     public void marshall(SynthesisTask synthesisTask, AwsJsonWriter jsonWriter) throws Exception {
         jsonWriter.beginObject();
+        if (synthesisTask.getEngine() != null) {
+            String engine = synthesisTask.getEngine();
+            jsonWriter.name("Engine");
+            jsonWriter.value(engine);
+        }
         if (synthesisTask.getTaskId() != null) {
             String taskId = synthesisTask.getTaskId();
             jsonWriter.name("TaskId");

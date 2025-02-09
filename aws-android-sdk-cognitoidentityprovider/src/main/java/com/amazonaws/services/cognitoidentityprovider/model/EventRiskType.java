@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,6 +42,14 @@ public class EventRiskType implements Serializable {
      * <b>Allowed Values: </b>Low, Medium, High
      */
     private String riskLevel;
+
+    /**
+     * <p>
+     * Indicates whether compromised credentials were detected during an
+     * authentication event.
+     * </p>
+     */
+    private Boolean compromisedCredentialsDetected;
 
     /**
      * <p>
@@ -238,6 +246,72 @@ public class EventRiskType implements Serializable {
     }
 
     /**
+     * <p>
+     * Indicates whether compromised credentials were detected during an
+     * authentication event.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether compromised credentials were detected during an
+     *         authentication event.
+     *         </p>
+     */
+    public Boolean isCompromisedCredentialsDetected() {
+        return compromisedCredentialsDetected;
+    }
+
+    /**
+     * <p>
+     * Indicates whether compromised credentials were detected during an
+     * authentication event.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether compromised credentials were detected during an
+     *         authentication event.
+     *         </p>
+     */
+    public Boolean getCompromisedCredentialsDetected() {
+        return compromisedCredentialsDetected;
+    }
+
+    /**
+     * <p>
+     * Indicates whether compromised credentials were detected during an
+     * authentication event.
+     * </p>
+     *
+     * @param compromisedCredentialsDetected <p>
+     *            Indicates whether compromised credentials were detected during
+     *            an authentication event.
+     *            </p>
+     */
+    public void setCompromisedCredentialsDetected(Boolean compromisedCredentialsDetected) {
+        this.compromisedCredentialsDetected = compromisedCredentialsDetected;
+    }
+
+    /**
+     * <p>
+     * Indicates whether compromised credentials were detected during an
+     * authentication event.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param compromisedCredentialsDetected <p>
+     *            Indicates whether compromised credentials were detected during
+     *            an authentication event.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EventRiskType withCompromisedCredentialsDetected(Boolean compromisedCredentialsDetected) {
+        this.compromisedCredentialsDetected = compromisedCredentialsDetected;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -251,7 +325,9 @@ public class EventRiskType implements Serializable {
         if (getRiskDecision() != null)
             sb.append("RiskDecision: " + getRiskDecision() + ",");
         if (getRiskLevel() != null)
-            sb.append("RiskLevel: " + getRiskLevel());
+            sb.append("RiskLevel: " + getRiskLevel() + ",");
+        if (getCompromisedCredentialsDetected() != null)
+            sb.append("CompromisedCredentialsDetected: " + getCompromisedCredentialsDetected());
         sb.append("}");
         return sb.toString();
     }
@@ -264,6 +340,10 @@ public class EventRiskType implements Serializable {
         hashCode = prime * hashCode
                 + ((getRiskDecision() == null) ? 0 : getRiskDecision().hashCode());
         hashCode = prime * hashCode + ((getRiskLevel() == null) ? 0 : getRiskLevel().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getCompromisedCredentialsDetected() == null) ? 0
+                        : getCompromisedCredentialsDetected().hashCode());
         return hashCode;
     }
 
@@ -287,6 +367,13 @@ public class EventRiskType implements Serializable {
             return false;
         if (other.getRiskLevel() != null
                 && other.getRiskLevel().equals(this.getRiskLevel()) == false)
+            return false;
+        if (other.getCompromisedCredentialsDetected() == null
+                ^ this.getCompromisedCredentialsDetected() == null)
+            return false;
+        if (other.getCompromisedCredentialsDetected() != null
+                && other.getCompromisedCredentialsDetected().equals(
+                        this.getCompromisedCredentialsDetected()) == false)
             return false;
         return true;
     }

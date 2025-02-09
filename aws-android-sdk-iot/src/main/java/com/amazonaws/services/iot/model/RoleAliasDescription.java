@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,9 @@ public class RoleAliasDescription implements Serializable {
      * <p>
      * The ARN of the role alias.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
      */
     private String roleAliasArn;
 
@@ -68,7 +71,7 @@ public class RoleAliasDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      */
     private Integer credentialDurationSeconds;
 
@@ -147,6 +150,9 @@ public class RoleAliasDescription implements Serializable {
      * <p>
      * The ARN of the role alias.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
      *         The ARN of the role alias.
@@ -160,6 +166,9 @@ public class RoleAliasDescription implements Serializable {
      * <p>
      * The ARN of the role alias.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param roleAliasArn <p>
      *            The ARN of the role alias.
@@ -176,6 +185,9 @@ public class RoleAliasDescription implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
      *
      * @param roleAliasArn <p>
      *            The ARN of the role alias.
@@ -305,7 +317,7 @@ public class RoleAliasDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @return <p>
      *         The number of seconds for which the credential is valid.
@@ -321,7 +333,7 @@ public class RoleAliasDescription implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @param credentialDurationSeconds <p>
      *            The number of seconds for which the credential is valid.
@@ -340,7 +352,7 @@ public class RoleAliasDescription implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @param credentialDurationSeconds <p>
      *            The number of seconds for which the credential is valid.

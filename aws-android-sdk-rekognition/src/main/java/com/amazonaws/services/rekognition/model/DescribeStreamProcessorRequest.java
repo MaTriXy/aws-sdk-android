@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Provides information about a stream processor created by . You can get
- * information about the input and output streams, the input parameters for the
- * face recognition being performed, and the current status of the stream
- * processor.
+ * Provides information about a stream processor created by
+ * <a>CreateStreamProcessor</a>. You can get information about the input and
+ * output streams, the input parameters for the face recognition being
+ * performed, and the current status of the stream processor.
  * </p>
  */
 public class DescribeStreamProcessorRequest extends AmazonWebServiceRequest implements Serializable {

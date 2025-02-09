@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,10 @@ public enum AlgorithmSpec {
 
     RSAES_PKCS1_V1_5("RSAES_PKCS1_V1_5"),
     RSAES_OAEP_SHA_1("RSAES_OAEP_SHA_1"),
-    RSAES_OAEP_SHA_256("RSAES_OAEP_SHA_256");
+    RSAES_OAEP_SHA_256("RSAES_OAEP_SHA_256"),
+    RSA_AES_KEY_WRAP_SHA_1("RSA_AES_KEY_WRAP_SHA_1"),
+    RSA_AES_KEY_WRAP_SHA_256("RSA_AES_KEY_WRAP_SHA_256"),
+    SM2PKE("SM2PKE");
 
     private String value;
 
@@ -44,6 +47,9 @@ public enum AlgorithmSpec {
         enumMap.put("RSAES_PKCS1_V1_5", RSAES_PKCS1_V1_5);
         enumMap.put("RSAES_OAEP_SHA_1", RSAES_OAEP_SHA_1);
         enumMap.put("RSAES_OAEP_SHA_256", RSAES_OAEP_SHA_256);
+        enumMap.put("RSA_AES_KEY_WRAP_SHA_1", RSA_AES_KEY_WRAP_SHA_1);
+        enumMap.put("RSA_AES_KEY_WRAP_SHA_256", RSA_AES_KEY_WRAP_SHA_256);
+        enumMap.put("SM2PKE", SM2PKE);
     }
 
     /**

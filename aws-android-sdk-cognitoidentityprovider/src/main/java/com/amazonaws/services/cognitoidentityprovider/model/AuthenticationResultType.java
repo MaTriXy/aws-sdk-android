@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ import java.io.Serializable;
 public class AuthenticationResultType implements Serializable {
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user who you want
+     * to authenticate.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -44,6 +45,9 @@ public class AuthenticationResultType implements Serializable {
      * <p>
      * The token type.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String tokenType;
 
@@ -76,14 +80,16 @@ public class AuthenticationResultType implements Serializable {
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user who you want
+     * to authenticate.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @return <p>
-     *         The access token.
+     *         A valid access token that Amazon Cognito issued to the user who
+     *         you want to authenticate.
      *         </p>
      */
     public String getAccessToken() {
@@ -92,14 +98,16 @@ public class AuthenticationResultType implements Serializable {
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user who you want
+     * to authenticate.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @param accessToken <p>
-     *            The access token.
+     *            A valid access token that Amazon Cognito issued to the user
+     *            who you want to authenticate.
      *            </p>
      */
     public void setAccessToken(String accessToken) {
@@ -108,7 +116,8 @@ public class AuthenticationResultType implements Serializable {
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user who you want
+     * to authenticate.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -118,7 +127,8 @@ public class AuthenticationResultType implements Serializable {
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @param accessToken <p>
-     *            The access token.
+     *            A valid access token that Amazon Cognito issued to the user
+     *            who you want to authenticate.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -177,6 +187,9 @@ public class AuthenticationResultType implements Serializable {
      * <p>
      * The token type.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The token type.
@@ -190,6 +203,9 @@ public class AuthenticationResultType implements Serializable {
      * <p>
      * The token type.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param tokenType <p>
      *            The token type.
@@ -206,6 +222,9 @@ public class AuthenticationResultType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param tokenType <p>
      *            The token type.

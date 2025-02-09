@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the group.
+     * The role Amazon Resource Name (ARN) for the group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -70,14 +70,14 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * A nonnegative integer value that specifies the precedence of this group
+     * A non-negative integer value that specifies the precedence of this group
      * relative to the other groups that a user can belong to in the user pool.
-     * If a user belongs to two or more groups, it is the group with the highest
-     * precedence whose role ARN will be used in the <code>cognito:roles</code>
-     * and <code>cognito:preferred_role</code> claims in the user's tokens.
-     * Groups with higher <code>Precedence</code> values take precedence over
-     * groups with lower <code>Precedence</code> values or with null
-     * <code>Precedence</code> values.
+     * Zero is the highest precedence value. Groups with lower
+     * <code>Precedence</code> values take precedence over groups with higher
+     * ornull <code>Precedence</code> values. If a user belongs to two or more
+     * groups, it is the group with the lowest precedence value whose role ARN
+     * is given in the user's tokens for the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims.
      * </p>
      * <p>
      * Two groups can have the same <code>Precedence</code> value. If this
@@ -85,7 +85,7 @@ public class GroupType implements Serializable {
      * with the same <code>Precedence</code> have the same role ARN, that role
      * is used in the <code>cognito:preferred_role</code> claim in tokens for
      * users in each group. If the two groups have different role ARNs, the
-     * <code>cognito:preferred_role</code> claim is not set in users' tokens.
+     * <code>cognito:preferred_role</code> claim isn't set in users' tokens.
      * </p>
      * <p>
      * The default <code>Precedence</code> value is null.
@@ -98,14 +98,18 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      */
     private java.util.Date lastModifiedDate;
 
     /**
      * <p>
-     * The date the group was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      */
     private java.util.Date creationDate;
@@ -280,7 +284,7 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the group.
+     * The role Amazon Resource Name (ARN) for the group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -290,7 +294,7 @@ public class GroupType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @return <p>
-     *         The role ARN for the group.
+     *         The role Amazon Resource Name (ARN) for the group.
      *         </p>
      */
     public String getRoleArn() {
@@ -299,7 +303,7 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the group.
+     * The role Amazon Resource Name (ARN) for the group.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -309,7 +313,7 @@ public class GroupType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param roleArn <p>
-     *            The role ARN for the group.
+     *            The role Amazon Resource Name (ARN) for the group.
      *            </p>
      */
     public void setRoleArn(String roleArn) {
@@ -318,7 +322,7 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the group.
+     * The role Amazon Resource Name (ARN) for the group.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -331,7 +335,7 @@ public class GroupType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param roleArn <p>
-     *            The role ARN for the group.
+     *            The role Amazon Resource Name (ARN) for the group.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -343,14 +347,14 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * A nonnegative integer value that specifies the precedence of this group
+     * A non-negative integer value that specifies the precedence of this group
      * relative to the other groups that a user can belong to in the user pool.
-     * If a user belongs to two or more groups, it is the group with the highest
-     * precedence whose role ARN will be used in the <code>cognito:roles</code>
-     * and <code>cognito:preferred_role</code> claims in the user's tokens.
-     * Groups with higher <code>Precedence</code> values take precedence over
-     * groups with lower <code>Precedence</code> values or with null
-     * <code>Precedence</code> values.
+     * Zero is the highest precedence value. Groups with lower
+     * <code>Precedence</code> values take precedence over groups with higher
+     * ornull <code>Precedence</code> values. If a user belongs to two or more
+     * groups, it is the group with the lowest precedence value whose role ARN
+     * is given in the user's tokens for the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims.
      * </p>
      * <p>
      * Two groups can have the same <code>Precedence</code> value. If this
@@ -358,7 +362,7 @@ public class GroupType implements Serializable {
      * with the same <code>Precedence</code> have the same role ARN, that role
      * is used in the <code>cognito:preferred_role</code> claim in tokens for
      * users in each group. If the two groups have different role ARNs, the
-     * <code>cognito:preferred_role</code> claim is not set in users' tokens.
+     * <code>cognito:preferred_role</code> claim isn't set in users' tokens.
      * </p>
      * <p>
      * The default <code>Precedence</code> value is null.
@@ -368,15 +372,15 @@ public class GroupType implements Serializable {
      * <b>Range: </b>0 - <br/>
      *
      * @return <p>
-     *         A nonnegative integer value that specifies the precedence of this
-     *         group relative to the other groups that a user can belong to in
-     *         the user pool. If a user belongs to two or more groups, it is the
-     *         group with the highest precedence whose role ARN will be used in
-     *         the <code>cognito:roles</code> and
-     *         <code>cognito:preferred_role</code> claims in the user's tokens.
-     *         Groups with higher <code>Precedence</code> values take precedence
-     *         over groups with lower <code>Precedence</code> values or with
-     *         null <code>Precedence</code> values.
+     *         A non-negative integer value that specifies the precedence of
+     *         this group relative to the other groups that a user can belong to
+     *         in the user pool. Zero is the highest precedence value. Groups
+     *         with lower <code>Precedence</code> values take precedence over
+     *         groups with higher ornull <code>Precedence</code> values. If a
+     *         user belongs to two or more groups, it is the group with the
+     *         lowest precedence value whose role ARN is given in the user's
+     *         tokens for the <code>cognito:roles</code> and
+     *         <code>cognito:preferred_role</code> claims.
      *         </p>
      *         <p>
      *         Two groups can have the same <code>Precedence</code> value. If
@@ -385,7 +389,7 @@ public class GroupType implements Serializable {
      *         role ARN, that role is used in the
      *         <code>cognito:preferred_role</code> claim in tokens for users in
      *         each group. If the two groups have different role ARNs, the
-     *         <code>cognito:preferred_role</code> claim is not set in users'
+     *         <code>cognito:preferred_role</code> claim isn't set in users'
      *         tokens.
      *         </p>
      *         <p>
@@ -398,14 +402,14 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * A nonnegative integer value that specifies the precedence of this group
+     * A non-negative integer value that specifies the precedence of this group
      * relative to the other groups that a user can belong to in the user pool.
-     * If a user belongs to two or more groups, it is the group with the highest
-     * precedence whose role ARN will be used in the <code>cognito:roles</code>
-     * and <code>cognito:preferred_role</code> claims in the user's tokens.
-     * Groups with higher <code>Precedence</code> values take precedence over
-     * groups with lower <code>Precedence</code> values or with null
-     * <code>Precedence</code> values.
+     * Zero is the highest precedence value. Groups with lower
+     * <code>Precedence</code> values take precedence over groups with higher
+     * ornull <code>Precedence</code> values. If a user belongs to two or more
+     * groups, it is the group with the lowest precedence value whose role ARN
+     * is given in the user's tokens for the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims.
      * </p>
      * <p>
      * Two groups can have the same <code>Precedence</code> value. If this
@@ -413,7 +417,7 @@ public class GroupType implements Serializable {
      * with the same <code>Precedence</code> have the same role ARN, that role
      * is used in the <code>cognito:preferred_role</code> claim in tokens for
      * users in each group. If the two groups have different role ARNs, the
-     * <code>cognito:preferred_role</code> claim is not set in users' tokens.
+     * <code>cognito:preferred_role</code> claim isn't set in users' tokens.
      * </p>
      * <p>
      * The default <code>Precedence</code> value is null.
@@ -423,15 +427,16 @@ public class GroupType implements Serializable {
      * <b>Range: </b>0 - <br/>
      *
      * @param precedence <p>
-     *            A nonnegative integer value that specifies the precedence of
+     *            A non-negative integer value that specifies the precedence of
      *            this group relative to the other groups that a user can belong
-     *            to in the user pool. If a user belongs to two or more groups,
-     *            it is the group with the highest precedence whose role ARN
-     *            will be used in the <code>cognito:roles</code> and
-     *            <code>cognito:preferred_role</code> claims in the user's
-     *            tokens. Groups with higher <code>Precedence</code> values take
-     *            precedence over groups with lower <code>Precedence</code>
-     *            values or with null <code>Precedence</code> values.
+     *            to in the user pool. Zero is the highest precedence value.
+     *            Groups with lower <code>Precedence</code> values take
+     *            precedence over groups with higher ornull
+     *            <code>Precedence</code> values. If a user belongs to two or
+     *            more groups, it is the group with the lowest precedence value
+     *            whose role ARN is given in the user's tokens for the
+     *            <code>cognito:roles</code> and
+     *            <code>cognito:preferred_role</code> claims.
      *            </p>
      *            <p>
      *            Two groups can have the same <code>Precedence</code> value. If
@@ -440,7 +445,7 @@ public class GroupType implements Serializable {
      *            same role ARN, that role is used in the
      *            <code>cognito:preferred_role</code> claim in tokens for users
      *            in each group. If the two groups have different role ARNs, the
-     *            <code>cognito:preferred_role</code> claim is not set in users'
+     *            <code>cognito:preferred_role</code> claim isn't set in users'
      *            tokens.
      *            </p>
      *            <p>
@@ -453,14 +458,14 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * A nonnegative integer value that specifies the precedence of this group
+     * A non-negative integer value that specifies the precedence of this group
      * relative to the other groups that a user can belong to in the user pool.
-     * If a user belongs to two or more groups, it is the group with the highest
-     * precedence whose role ARN will be used in the <code>cognito:roles</code>
-     * and <code>cognito:preferred_role</code> claims in the user's tokens.
-     * Groups with higher <code>Precedence</code> values take precedence over
-     * groups with lower <code>Precedence</code> values or with null
-     * <code>Precedence</code> values.
+     * Zero is the highest precedence value. Groups with lower
+     * <code>Precedence</code> values take precedence over groups with higher
+     * ornull <code>Precedence</code> values. If a user belongs to two or more
+     * groups, it is the group with the lowest precedence value whose role ARN
+     * is given in the user's tokens for the <code>cognito:roles</code> and
+     * <code>cognito:preferred_role</code> claims.
      * </p>
      * <p>
      * Two groups can have the same <code>Precedence</code> value. If this
@@ -468,7 +473,7 @@ public class GroupType implements Serializable {
      * with the same <code>Precedence</code> have the same role ARN, that role
      * is used in the <code>cognito:preferred_role</code> claim in tokens for
      * users in each group. If the two groups have different role ARNs, the
-     * <code>cognito:preferred_role</code> claim is not set in users' tokens.
+     * <code>cognito:preferred_role</code> claim isn't set in users' tokens.
      * </p>
      * <p>
      * The default <code>Precedence</code> value is null.
@@ -481,15 +486,16 @@ public class GroupType implements Serializable {
      * <b>Range: </b>0 - <br/>
      *
      * @param precedence <p>
-     *            A nonnegative integer value that specifies the precedence of
+     *            A non-negative integer value that specifies the precedence of
      *            this group relative to the other groups that a user can belong
-     *            to in the user pool. If a user belongs to two or more groups,
-     *            it is the group with the highest precedence whose role ARN
-     *            will be used in the <code>cognito:roles</code> and
-     *            <code>cognito:preferred_role</code> claims in the user's
-     *            tokens. Groups with higher <code>Precedence</code> values take
-     *            precedence over groups with lower <code>Precedence</code>
-     *            values or with null <code>Precedence</code> values.
+     *            to in the user pool. Zero is the highest precedence value.
+     *            Groups with lower <code>Precedence</code> values take
+     *            precedence over groups with higher ornull
+     *            <code>Precedence</code> values. If a user belongs to two or
+     *            more groups, it is the group with the lowest precedence value
+     *            whose role ARN is given in the user's tokens for the
+     *            <code>cognito:roles</code> and
+     *            <code>cognito:preferred_role</code> claims.
      *            </p>
      *            <p>
      *            Two groups can have the same <code>Precedence</code> value. If
@@ -498,7 +504,7 @@ public class GroupType implements Serializable {
      *            same role ARN, that role is used in the
      *            <code>cognito:preferred_role</code> claim in tokens for users
      *            in each group. If the two groups have different role ARNs, the
-     *            <code>cognito:preferred_role</code> claim is not set in users'
+     *            <code>cognito:preferred_role</code> claim isn't set in users'
      *            tokens.
      *            </p>
      *            <p>
@@ -514,11 +520,15 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @return <p>
-     *         The date the group was last modified.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was modified.
      *         </p>
      */
     public java.util.Date getLastModifiedDate() {
@@ -527,11 +537,15 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @param lastModifiedDate <p>
-     *            The date the group was last modified.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      */
     public void setLastModifiedDate(java.util.Date lastModifiedDate) {
@@ -540,14 +554,18 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastModifiedDate <p>
-     *            The date the group was last modified.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -559,11 +577,15 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @return <p>
-     *         The date the group was created.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -572,11 +594,15 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The date the group was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -585,14 +611,18 @@ public class GroupType implements Serializable {
 
     /**
      * <p>
-     * The date the group was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The date the group was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

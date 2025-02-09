@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.io.Serializable;
 public class GetUserResult implements Serializable {
     /**
      * <p>
-     * The user name of the user you wish to retrieve from the get user request.
+     * The username of the user that you requested.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -48,7 +48,11 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * <i>This response parameter is no longer supported.</i> It provides
+     * information only about SMS MFA configurations. It doesn't provide
+     * information about time-based one-time password (TOTP) software token MFA
+     * configurations. To look up information about either type of MFA
+     * configuration, use UserMFASettingList instead.
      * </p>
      */
     private java.util.List<MFAOptionType> mFAOptions;
@@ -57,19 +61,23 @@ public class GetUserResult implements Serializable {
      * <p>
      * The user's preferred MFA setting.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String preferredMfaSetting;
 
     /**
      * <p>
-     * The list of the user's MFA settings.
+     * The MFA options that are activated for the user. The possible values in
+     * this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.
      * </p>
      */
     private java.util.List<String> userMFASettingList;
 
     /**
      * <p>
-     * The user name of the user you wish to retrieve from the get user request.
+     * The username of the user that you requested.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -77,8 +85,7 @@ public class GetUserResult implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The user name of the user you wish to retrieve from the get user
-     *         request.
+     *         The username of the user that you requested.
      *         </p>
      */
     public String getUsername() {
@@ -87,7 +94,7 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * The user name of the user you wish to retrieve from the get user request.
+     * The username of the user that you requested.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -95,8 +102,7 @@ public class GetUserResult implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param username <p>
-     *            The user name of the user you wish to retrieve from the get
-     *            user request.
+     *            The username of the user that you requested.
      *            </p>
      */
     public void setUsername(String username) {
@@ -105,7 +111,7 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * The user name of the user you wish to retrieve from the get user request.
+     * The username of the user that you requested.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -116,8 +122,7 @@ public class GetUserResult implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param username <p>
-     *            The user name of the user you wish to retrieve from the get
-     *            user request.
+     *            The username of the user that you requested.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -235,11 +240,20 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * <i>This response parameter is no longer supported.</i> It provides
+     * information only about SMS MFA configurations. It doesn't provide
+     * information about time-based one-time password (TOTP) software token MFA
+     * configurations. To look up information about either type of MFA
+     * configuration, use UserMFASettingList instead.
      * </p>
      *
      * @return <p>
-     *         Specifies the options for MFA (e.g., email or phone number).
+     *         <i>This response parameter is no longer supported.</i> It
+     *         provides information only about SMS MFA configurations. It
+     *         doesn't provide information about time-based one-time password
+     *         (TOTP) software token MFA configurations. To look up information
+     *         about either type of MFA configuration, use UserMFASettingList
+     *         instead.
      *         </p>
      */
     public java.util.List<MFAOptionType> getMFAOptions() {
@@ -248,11 +262,20 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * <i>This response parameter is no longer supported.</i> It provides
+     * information only about SMS MFA configurations. It doesn't provide
+     * information about time-based one-time password (TOTP) software token MFA
+     * configurations. To look up information about either type of MFA
+     * configuration, use UserMFASettingList instead.
      * </p>
      *
      * @param mFAOptions <p>
-     *            Specifies the options for MFA (e.g., email or phone number).
+     *            <i>This response parameter is no longer supported.</i> It
+     *            provides information only about SMS MFA configurations. It
+     *            doesn't provide information about time-based one-time password
+     *            (TOTP) software token MFA configurations. To look up
+     *            information about either type of MFA configuration, use
+     *            UserMFASettingList instead.
      *            </p>
      */
     public void setMFAOptions(java.util.Collection<MFAOptionType> mFAOptions) {
@@ -266,14 +289,23 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * <i>This response parameter is no longer supported.</i> It provides
+     * information only about SMS MFA configurations. It doesn't provide
+     * information about time-based one-time password (TOTP) software token MFA
+     * configurations. To look up information about either type of MFA
+     * configuration, use UserMFASettingList instead.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param mFAOptions <p>
-     *            Specifies the options for MFA (e.g., email or phone number).
+     *            <i>This response parameter is no longer supported.</i> It
+     *            provides information only about SMS MFA configurations. It
+     *            doesn't provide information about time-based one-time password
+     *            (TOTP) software token MFA configurations. To look up
+     *            information about either type of MFA configuration, use
+     *            UserMFASettingList instead.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -290,14 +322,23 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * <i>This response parameter is no longer supported.</i> It provides
+     * information only about SMS MFA configurations. It doesn't provide
+     * information about time-based one-time password (TOTP) software token MFA
+     * configurations. To look up information about either type of MFA
+     * configuration, use UserMFASettingList instead.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param mFAOptions <p>
-     *            Specifies the options for MFA (e.g., email or phone number).
+     *            <i>This response parameter is no longer supported.</i> It
+     *            provides information only about SMS MFA configurations. It
+     *            doesn't provide information about time-based one-time password
+     *            (TOTP) software token MFA configurations. To look up
+     *            information about either type of MFA configuration, use
+     *            UserMFASettingList instead.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -311,6 +352,9 @@ public class GetUserResult implements Serializable {
      * <p>
      * The user's preferred MFA setting.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The user's preferred MFA setting.
@@ -324,6 +368,9 @@ public class GetUserResult implements Serializable {
      * <p>
      * The user's preferred MFA setting.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param preferredMfaSetting <p>
      *            The user's preferred MFA setting.
@@ -340,6 +387,9 @@ public class GetUserResult implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param preferredMfaSetting <p>
      *            The user's preferred MFA setting.
@@ -354,11 +404,14 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * The list of the user's MFA settings.
+     * The MFA options that are activated for the user. The possible values in
+     * this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.
      * </p>
      *
      * @return <p>
-     *         The list of the user's MFA settings.
+     *         The MFA options that are activated for the user. The possible
+     *         values in this list are <code>SMS_MFA</code> and
+     *         <code>SOFTWARE_TOKEN_MFA</code>.
      *         </p>
      */
     public java.util.List<String> getUserMFASettingList() {
@@ -367,11 +420,14 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * The list of the user's MFA settings.
+     * The MFA options that are activated for the user. The possible values in
+     * this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.
      * </p>
      *
      * @param userMFASettingList <p>
-     *            The list of the user's MFA settings.
+     *            The MFA options that are activated for the user. The possible
+     *            values in this list are <code>SMS_MFA</code> and
+     *            <code>SOFTWARE_TOKEN_MFA</code>.
      *            </p>
      */
     public void setUserMFASettingList(java.util.Collection<String> userMFASettingList) {
@@ -385,14 +441,17 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * The list of the user's MFA settings.
+     * The MFA options that are activated for the user. The possible values in
+     * this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param userMFASettingList <p>
-     *            The list of the user's MFA settings.
+     *            The MFA options that are activated for the user. The possible
+     *            values in this list are <code>SMS_MFA</code> and
+     *            <code>SOFTWARE_TOKEN_MFA</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -409,14 +468,17 @@ public class GetUserResult implements Serializable {
 
     /**
      * <p>
-     * The list of the user's MFA settings.
+     * The MFA options that are activated for the user. The possible values in
+     * this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param userMFASettingList <p>
-     *            The list of the user's MFA settings.
+     *            The MFA options that are activated for the user. The possible
+     *            values in this list are <code>SMS_MFA</code> and
+     *            <code>SOFTWARE_TOKEN_MFA</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -35,6 +36,21 @@ class ContentModerationDetectionJsonMarshaller {
             ModerationLabel moderationLabel = contentModerationDetection.getModerationLabel();
             jsonWriter.name("ModerationLabel");
             ModerationLabelJsonMarshaller.getInstance().marshall(moderationLabel, jsonWriter);
+        }
+        if (contentModerationDetection.getStartTimestampMillis() != null) {
+            Long startTimestampMillis = contentModerationDetection.getStartTimestampMillis();
+            jsonWriter.name("StartTimestampMillis");
+            jsonWriter.value(startTimestampMillis);
+        }
+        if (contentModerationDetection.getEndTimestampMillis() != null) {
+            Long endTimestampMillis = contentModerationDetection.getEndTimestampMillis();
+            jsonWriter.name("EndTimestampMillis");
+            jsonWriter.value(endTimestampMillis);
+        }
+        if (contentModerationDetection.getDurationMillis() != null) {
+            Long durationMillis = contentModerationDetection.getDurationMillis();
+            jsonWriter.name("DurationMillis");
+            jsonWriter.value(durationMillis);
         }
         jsonWriter.endObject();
     }

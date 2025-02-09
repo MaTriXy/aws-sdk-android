@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,12 +23,23 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Adds a thing to a billing group.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >AddThingToBillingGroup</a> action.
+ * </p>
  */
 public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
      * The name of the billing group.
      * </p>
+     * <note>
+     * <p>
+     * This call is asynchronous. It might take several seconds for the
+     * detachment to propagate.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
@@ -65,6 +76,12 @@ public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest imple
      * <p>
      * The name of the billing group.
      * </p>
+     * <note>
+     * <p>
+     * This call is asynchronous. It might take several seconds for the
+     * detachment to propagate.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
@@ -73,6 +90,12 @@ public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest imple
      * @return <p>
      *         The name of the billing group.
      *         </p>
+     *         <note>
+     *         <p>
+     *         This call is asynchronous. It might take several seconds for the
+     *         detachment to propagate.
+     *         </p>
+     *         </note>
      */
     public String getBillingGroupName() {
         return billingGroupName;
@@ -82,6 +105,12 @@ public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest imple
      * <p>
      * The name of the billing group.
      * </p>
+     * <note>
+     * <p>
+     * This call is asynchronous. It might take several seconds for the
+     * detachment to propagate.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
@@ -90,6 +119,12 @@ public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest imple
      * @param billingGroupName <p>
      *            The name of the billing group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            This call is asynchronous. It might take several seconds for
+     *            the detachment to propagate.
+     *            </p>
+     *            </note>
      */
     public void setBillingGroupName(String billingGroupName) {
         this.billingGroupName = billingGroupName;
@@ -99,6 +134,12 @@ public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest imple
      * <p>
      * The name of the billing group.
      * </p>
+     * <note>
+     * <p>
+     * This call is asynchronous. It might take several seconds for the
+     * detachment to propagate.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -110,6 +151,12 @@ public class AddThingToBillingGroupRequest extends AmazonWebServiceRequest imple
      * @param billingGroupName <p>
      *            The name of the billing group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            This call is asynchronous. It might take several seconds for
+     *            the detachment to propagate.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */

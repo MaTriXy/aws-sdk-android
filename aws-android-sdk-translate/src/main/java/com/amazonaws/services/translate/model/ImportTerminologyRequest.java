@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,18 +21,16 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates or updates a custom terminology, depending on whether or not one
- * already exists for the given terminology name. Importing a terminology with
- * the same name as an existing one will merge the terminologies based on the
- * chosen merge strategy. Currently, the only supported merge strategy is
- * OVERWRITE, and so the imported terminology will overwrite an existing
- * terminology of the same name.
+ * Creates or updates a custom terminology, depending on whether one already
+ * exists for the given terminology name. Importing a terminology with the same
+ * name as an existing one will merge the terminologies based on the chosen
+ * merge strategy. The only supported merge strategy is OVERWRITE, where the
+ * imported terminology overwrites the existing terminology of the same name.
  * </p>
  * <p>
  * If you import a terminology that overwrites an existing one, the new
- * terminology take up to 10 minutes to fully propagate and be available for use
- * in a translation due to cache policies with the DataPlane service that
- * performs the translations.
+ * terminology takes up to 10 minutes to fully propagate. After that,
+ * translations have access to the new terminology.
  * </p>
  */
 public class ImportTerminologyRequest extends AmazonWebServiceRequest implements Serializable {
@@ -84,6 +82,17 @@ public class ImportTerminologyRequest extends AmazonWebServiceRequest implements
      * </p>
      */
     private EncryptionKey encryptionKey;
+
+    /**
+     * <p>
+     * Tags to be associated with this resource. A tag is a key-value pair that
+     * adds metadata to a resource. Each tag key for the resource must be
+     * unique. For more information, see <a
+     * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html">
+     * Tagging your resources</a>.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
@@ -419,6 +428,112 @@ public class ImportTerminologyRequest extends AmazonWebServiceRequest implements
     }
 
     /**
+     * <p>
+     * Tags to be associated with this resource. A tag is a key-value pair that
+     * adds metadata to a resource. Each tag key for the resource must be
+     * unique. For more information, see <a
+     * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html">
+     * Tagging your resources</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Tags to be associated with this resource. A tag is a key-value
+     *         pair that adds metadata to a resource. Each tag key for the
+     *         resource must be unique. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/translate/latest/dg/tagging.html">
+     *         Tagging your resources</a>.
+     *         </p>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Tags to be associated with this resource. A tag is a key-value pair that
+     * adds metadata to a resource. Each tag key for the resource must be
+     * unique. For more information, see <a
+     * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html">
+     * Tagging your resources</a>.
+     * </p>
+     *
+     * @param tags <p>
+     *            Tags to be associated with this resource. A tag is a key-value
+     *            pair that adds metadata to a resource. Each tag key for the
+     *            resource must be unique. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/translate/latest/dg/tagging.html"
+     *            > Tagging your resources</a>.
+     *            </p>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Tags to be associated with this resource. A tag is a key-value pair that
+     * adds metadata to a resource. Each tag key for the resource must be
+     * unique. For more information, see <a
+     * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html">
+     * Tagging your resources</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Tags to be associated with this resource. A tag is a key-value
+     *            pair that adds metadata to a resource. Each tag key for the
+     *            resource must be unique. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/translate/latest/dg/tagging.html"
+     *            > Tagging your resources</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ImportTerminologyRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Tags to be associated with this resource. A tag is a key-value pair that
+     * adds metadata to a resource. Each tag key for the resource must be
+     * unique. For more information, see <a
+     * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html">
+     * Tagging your resources</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Tags to be associated with this resource. A tag is a key-value
+     *            pair that adds metadata to a resource. Each tag key for the
+     *            resource must be unique. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/translate/latest/dg/tagging.html"
+     *            > Tagging your resources</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ImportTerminologyRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -438,7 +553,9 @@ public class ImportTerminologyRequest extends AmazonWebServiceRequest implements
         if (getTerminologyData() != null)
             sb.append("TerminologyData: " + getTerminologyData() + ",");
         if (getEncryptionKey() != null)
-            sb.append("EncryptionKey: " + getEncryptionKey());
+            sb.append("EncryptionKey: " + getEncryptionKey() + ",");
+        if (getTags() != null)
+            sb.append("Tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -457,6 +574,7 @@ public class ImportTerminologyRequest extends AmazonWebServiceRequest implements
                 + ((getTerminologyData() == null) ? 0 : getTerminologyData().hashCode());
         hashCode = prime * hashCode
                 + ((getEncryptionKey() == null) ? 0 : getEncryptionKey().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -494,6 +612,10 @@ public class ImportTerminologyRequest extends AmazonWebServiceRequest implements
             return false;
         if (other.getEncryptionKey() != null
                 && other.getEncryptionKey().equals(this.getEncryptionKey()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

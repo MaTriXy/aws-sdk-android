@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -57,6 +57,9 @@ class TranscriptionJobJsonUnmarshaller implements
             } else if (name.equals("Transcript")) {
                 transcriptionJob.setTranscript(TranscriptJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("StartTime")) {
+                transcriptionJob.setStartTime(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("CreationTime")) {
                 transcriptionJob.setCreationTime(DateJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -69,6 +72,54 @@ class TranscriptionJobJsonUnmarshaller implements
             } else if (name.equals("Settings")) {
                 transcriptionJob.setSettings(SettingsJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("ModelSettings")) {
+                transcriptionJob.setModelSettings(ModelSettingsJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("JobExecutionSettings")) {
+                transcriptionJob.setJobExecutionSettings(JobExecutionSettingsJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("ContentRedaction")) {
+                transcriptionJob.setContentRedaction(ContentRedactionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdentifyLanguage")) {
+                transcriptionJob.setIdentifyLanguage(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdentifyMultipleLanguages")) {
+                transcriptionJob.setIdentifyMultipleLanguages(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("LanguageOptions")) {
+                transcriptionJob.setLanguageOptions(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("IdentifiedLanguageScore")) {
+                transcriptionJob.setIdentifiedLanguageScore(FloatJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("LanguageCodes")) {
+                transcriptionJob.setLanguageCodes(new ListUnmarshaller<LanguageCodeItem>(
+                        LanguageCodeItemJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("Tags")) {
+                transcriptionJob.setTags(new ListUnmarshaller<Tag>(TagJsonUnmarshaller
+                        .getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("Subtitles")) {
+                transcriptionJob.setSubtitles(SubtitlesOutputJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("LanguageIdSettings")) {
+                transcriptionJob.setLanguageIdSettings(new MapUnmarshaller<LanguageIdSettings>(
+                        LanguageIdSettingsJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("ToxicityDetection")) {
+                transcriptionJob
+                        .setToxicityDetection(new ListUnmarshaller<ToxicityDetectionSettings>(
+                                ToxicityDetectionSettingsJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

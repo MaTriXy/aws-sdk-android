@@ -1,13 +1,18 @@
-apply plugin: 'java-library'
+apply from: rootProject.file('publishing.gradle')
+apply plugin: 'com.android.library'
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+android {
+    compileSdkVersion 29
 
-    api project(":aws-android-sdk-core")
-    implementation project(":aws-android-sdk-ddb")
-
-    implementation "com.google.guava:guava:20.0"
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 29
+    }
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+dependencies {
+    api project(':aws-android-sdk-core')
+    implementation project(':aws-android-sdk-ddb')
+    implementation 'com.google.guava:guava:29.0-android'
+}
+

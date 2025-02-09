@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,8 +35,31 @@ import com.amazonaws.services.transcribe.model.transform.*;
  * client are blocking, and will not return until the service call completes.
  * <p>
  * <p>
- * Operations and objects for transcribing speech to text.
+ * Amazon Transcribe offers three main types of batch transcription:
+ * <b>Standard</b>, <b>Medical</b>, and <b>Call Analytics</b>.
  * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <b>Standard transcriptions</b> are the most common option. Refer to for
+ * details.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <b>Medical transcriptions</b> are tailored to medical professionals and
+ * incorporate medical terms. A common use case for this service is transcribing
+ * doctor-patient dialogue into after-visit notes. Refer to for details.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <b>Call Analytics transcriptions</b> are designed for use with call center
+ * audio on two different channels; if you're looking for insight into customer
+ * service calls, use this option. Refer to for details.
+ * </p>
+ * </li>
+ * </ul>
  */
 public class AmazonTranscribeClient extends AmazonWebServiceClient implements AmazonTranscribe {
     /** Provider for AWS credentials. */
@@ -96,16 +119,27 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
      * Constructs a new client to invoke service methods on AmazonTranscribe
      * using the specified AWS account credentials.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonTranscribeClient client = new AmazonTranscribeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -122,16 +156,27 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials and client configuration
      * options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonTranscribeClient client = new AmazonTranscribeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -151,16 +196,27 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
      * Constructs a new client to invoke service methods on AmazonTranscribe
      * using the specified AWS account credentials provider.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonTranscribeClient client = new AmazonTranscribeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -178,16 +234,27 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials provider and client
      * configuration options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonTranscribeClient client = new AmazonTranscribeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -236,6 +303,28 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials provider, client
      * configuration options and request metric collector.
      * <p>
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonTranscribeClient client = new AmazonTranscribeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
+     * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
      *
@@ -266,6 +355,7 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
         jsonErrorUnmarshallers.add(new JsonErrorUnmarshaller());
 
         // calling this.setEndPoint(...) will also modify the signer accordingly
+        setServiceNameIntern("transcribe");
         this.setEndpoint("transcribe.us-east-1.amazonaws.com");
         this.endpointPrefix = "transcribe";
 
@@ -284,11 +374,260 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Creates a new custom vocabulary that you can use to change the way Amazon
-     * Transcribe handles transcription of an audio file. Note that vocabularies
-     * for en-AU, en-UK, and fr-CA languages that are in preview are not
-     * available. In the console, the vocabulary section will be greyed-out and
-     * SDK will return error message.
+     * Creates a new Call Analytics category.
+     * </p>
+     * <p>
+     * All categories are automatically applied to your Call Analytics
+     * transcriptions. Note that in order to apply categories to your
+     * transcriptions, you must create them before submitting your transcription
+     * request, as categories cannot be applied retroactively.
+     * </p>
+     * <p>
+     * When creating a new category, you can use the <code>InputType</code>
+     * parameter to label the category as a <code>POST_CALL</code> or a
+     * <code>REAL_TIME</code> category. <code>POST_CALL</code> categories can
+     * only be applied to post-call transcriptions and <code>REAL_TIME</code>
+     * categories can only be applied to real-time transcriptions. If you do not
+     * include <code>InputType</code>, your category is created as a
+     * <code>POST_CALL</code> category by default.
+     * </p>
+     * <p>
+     * Call Analytics categories are composed of rules. For each category, you
+     * must create between 1 and 20 rules. Rules can include these parameters: ,
+     * , , and .
+     * </p>
+     * <p>
+     * To update an existing category, see .
+     * </p>
+     * <p>
+     * To learn more about Call Analytics categories, see <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html"
+     * >Creating categories for post-call transcriptions</a> and <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html"
+     * >Creating categories for real-time transcriptions</a>.
+     * </p>
+     * 
+     * @param createCallAnalyticsCategoryRequest
+     * @return createCallAnalyticsCategoryResult The response from the
+     *         CreateCallAnalyticsCategory service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateCallAnalyticsCategoryResult createCallAnalyticsCategory(
+            CreateCallAnalyticsCategoryRequest createCallAnalyticsCategoryRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createCallAnalyticsCategoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateCallAnalyticsCategoryRequest> request = null;
+        Response<CreateCallAnalyticsCategoryResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateCallAnalyticsCategoryRequestMarshaller()
+                        .marshall(createCallAnalyticsCategoryRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateCallAnalyticsCategoryResult, JsonUnmarshallerContext> unmarshaller = new CreateCallAnalyticsCategoryResultJsonUnmarshaller();
+            JsonResponseHandler<CreateCallAnalyticsCategoryResult> responseHandler = new JsonResponseHandler<CreateCallAnalyticsCategoryResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new custom language model.
+     * </p>
+     * <p>
+     * When creating a new custom language model, you must specify:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * If you want a Wideband (audio sample rates over 16,000 Hz) or Narrowband
+     * (audio sample rates under 16,000 Hz) base model
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The location of your training and tuning files (this must be an Amazon S3
+     * URI)
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The language of your model
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * A unique name for your model
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param createLanguageModelRequest
+     * @return createLanguageModelResult The response from the
+     *         CreateLanguageModel service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateLanguageModelResult createLanguageModel(
+            CreateLanguageModelRequest createLanguageModelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createLanguageModelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateLanguageModelRequest> request = null;
+        Response<CreateLanguageModelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateLanguageModelRequestMarshaller()
+                        .marshall(createLanguageModelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateLanguageModelResult, JsonUnmarshallerContext> unmarshaller = new CreateLanguageModelResultJsonUnmarshaller();
+            JsonResponseHandler<CreateLanguageModelResult> responseHandler = new JsonResponseHandler<CreateLanguageModelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new custom medical vocabulary.
+     * </p>
+     * <p>
+     * Before creating a new custom medical vocabulary, you must first upload a
+     * text file that contains your vocabulary table into an Amazon S3 bucket.
+     * Note that this differs from , where you can include a list of terms
+     * within your request using the <code>Phrases</code> flag;
+     * <code>CreateMedicalVocabulary</code> does not support the
+     * <code>Phrases</code> flag and only accepts vocabularies in table format.
+     * </p>
+     * <p>
+     * Each language has a character set that contains all allowed characters
+     * for that specific language. If you use unsupported characters, your
+     * custom vocabulary request fails. Refer to <a
+     * href="https://docs.aws.amazon.com/transcribe/latest/dg/charsets.html"
+     * >Character Sets for Custom Vocabularies</a> to get the character set for
+     * your language.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
+     * >Custom vocabularies</a>.
+     * </p>
+     * 
+     * @param createMedicalVocabularyRequest
+     * @return createMedicalVocabularyResult The response from the
+     *         CreateMedicalVocabulary service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateMedicalVocabularyResult createMedicalVocabulary(
+            CreateMedicalVocabularyRequest createMedicalVocabularyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createMedicalVocabularyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateMedicalVocabularyRequest> request = null;
+        Response<CreateMedicalVocabularyResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateMedicalVocabularyRequestMarshaller()
+                        .marshall(createMedicalVocabularyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateMedicalVocabularyResult, JsonUnmarshallerContext> unmarshaller = new CreateMedicalVocabularyResultJsonUnmarshaller();
+            JsonResponseHandler<CreateMedicalVocabularyResult> responseHandler = new JsonResponseHandler<CreateMedicalVocabularyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new custom vocabulary.
+     * </p>
+     * <p>
+     * When creating a new custom vocabulary, you can either upload a text file
+     * that contains your new entries, phrases, and terms into an Amazon S3
+     * bucket and include the URI in your request. Or you can include a list of
+     * terms directly in your request using the <code>Phrases</code> flag.
+     * </p>
+     * <p>
+     * Each language has a character set that contains all allowed characters
+     * for that specific language. If you use unsupported characters, your
+     * custom vocabulary request fails. Refer to <a
+     * href="https://docs.aws.amazon.com/transcribe/latest/dg/charsets.html"
+     * >Character Sets for Custom Vocabularies</a> to get the character set for
+     * your language.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
+     * >Custom vocabularies</a>.
      * </p>
      * 
      * @param createVocabularyRequest
@@ -337,8 +676,321 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Deletes a previously submitted transcription job along with any other
-     * generated results such as the transcription, models, and so on.
+     * Creates a new custom vocabulary filter.
+     * </p>
+     * <p>
+     * You can use custom vocabulary filters to mask, delete, or flag specific
+     * words from your transcript. Custom vocabulary filters are commonly used
+     * to mask profanity in transcripts.
+     * </p>
+     * <p>
+     * Each language has a character set that contains all allowed characters
+     * for that specific language. If you use unsupported characters, your
+     * custom vocabulary filter request fails. Refer to <a
+     * href="https://docs.aws.amazon.com/transcribe/latest/dg/charsets.html"
+     * >Character Sets for Custom Vocabularies</a> to get the character set for
+     * your language.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/vocabulary-filtering.html"
+     * >Vocabulary filtering</a>.
+     * </p>
+     * 
+     * @param createVocabularyFilterRequest
+     * @return createVocabularyFilterResult The response from the
+     *         CreateVocabularyFilter service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public CreateVocabularyFilterResult createVocabularyFilter(
+            CreateVocabularyFilterRequest createVocabularyFilterRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(createVocabularyFilterRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<CreateVocabularyFilterRequest> request = null;
+        Response<CreateVocabularyFilterResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new CreateVocabularyFilterRequestMarshaller()
+                        .marshall(createVocabularyFilterRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<CreateVocabularyFilterResult, JsonUnmarshallerContext> unmarshaller = new CreateVocabularyFilterResultJsonUnmarshaller();
+            JsonResponseHandler<CreateVocabularyFilterResult> responseHandler = new JsonResponseHandler<CreateVocabularyFilterResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a Call Analytics category. To use this operation, specify the
+     * name of the category you want to delete using <code>CategoryName</code>.
+     * Category names are case sensitive.
+     * </p>
+     * 
+     * @param deleteCallAnalyticsCategoryRequest
+     * @return deleteCallAnalyticsCategoryResult The response from the
+     *         DeleteCallAnalyticsCategory service method, as returned by Amazon
+     *         Transcribe.
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws BadRequestException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DeleteCallAnalyticsCategoryResult deleteCallAnalyticsCategory(
+            DeleteCallAnalyticsCategoryRequest deleteCallAnalyticsCategoryRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteCallAnalyticsCategoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteCallAnalyticsCategoryRequest> request = null;
+        Response<DeleteCallAnalyticsCategoryResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteCallAnalyticsCategoryRequestMarshaller()
+                        .marshall(deleteCallAnalyticsCategoryRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteCallAnalyticsCategoryResult, JsonUnmarshallerContext> unmarshaller = new DeleteCallAnalyticsCategoryResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteCallAnalyticsCategoryResult> responseHandler = new JsonResponseHandler<DeleteCallAnalyticsCategoryResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a Call Analytics job. To use this operation, specify the name of
+     * the job you want to delete using <code>CallAnalyticsJobName</code>. Job
+     * names are case sensitive.
+     * </p>
+     * 
+     * @param deleteCallAnalyticsJobRequest
+     * @return deleteCallAnalyticsJobResult The response from the
+     *         DeleteCallAnalyticsJob service method, as returned by Amazon
+     *         Transcribe.
+     * @throws LimitExceededException
+     * @throws BadRequestException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DeleteCallAnalyticsJobResult deleteCallAnalyticsJob(
+            DeleteCallAnalyticsJobRequest deleteCallAnalyticsJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteCallAnalyticsJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteCallAnalyticsJobRequest> request = null;
+        Response<DeleteCallAnalyticsJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteCallAnalyticsJobRequestMarshaller()
+                        .marshall(deleteCallAnalyticsJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteCallAnalyticsJobResult, JsonUnmarshallerContext> unmarshaller = new DeleteCallAnalyticsJobResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteCallAnalyticsJobResult> responseHandler = new JsonResponseHandler<DeleteCallAnalyticsJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a custom language model. To use this operation, specify the name
+     * of the language model you want to delete using <code>ModelName</code>.
+     * custom language model names are case sensitive.
+     * </p>
+     * 
+     * @param deleteLanguageModelRequest
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public void deleteLanguageModel(DeleteLanguageModelRequest deleteLanguageModelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteLanguageModelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteLanguageModelRequest> request = null;
+        Response<Void> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteLanguageModelRequestMarshaller()
+                        .marshall(deleteLanguageModelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            JsonResponseHandler<Void> responseHandler = new JsonResponseHandler<Void>(null);
+            invoke(request, responseHandler, executionContext);
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a medical transcription job. To use this operation, specify the
+     * name of the job you want to delete using
+     * <code>MedicalTranscriptionJobName</code>. Job names are case sensitive.
+     * </p>
+     * 
+     * @param deleteMedicalTranscriptionJobRequest
+     * @throws LimitExceededException
+     * @throws BadRequestException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public void deleteMedicalTranscriptionJob(
+            DeleteMedicalTranscriptionJobRequest deleteMedicalTranscriptionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteMedicalTranscriptionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteMedicalTranscriptionJobRequest> request = null;
+        Response<Void> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteMedicalTranscriptionJobRequestMarshaller()
+                        .marshall(deleteMedicalTranscriptionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            JsonResponseHandler<Void> responseHandler = new JsonResponseHandler<Void>(null);
+            invoke(request, responseHandler, executionContext);
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a custom medical vocabulary. To use this operation, specify the
+     * name of the custom vocabulary you want to delete using
+     * <code>VocabularyName</code>. Custom vocabulary names are case sensitive.
+     * </p>
+     * 
+     * @param deleteMedicalVocabularyRequest
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws BadRequestException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public void deleteMedicalVocabulary(
+            DeleteMedicalVocabularyRequest deleteMedicalVocabularyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteMedicalVocabularyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteMedicalVocabularyRequest> request = null;
+        Response<Void> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteMedicalVocabularyRequestMarshaller()
+                        .marshall(deleteMedicalVocabularyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            JsonResponseHandler<Void> responseHandler = new JsonResponseHandler<Void>(null);
+            invoke(request, responseHandler, executionContext);
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Deletes a transcription job. To use this operation, specify the name of
+     * the job you want to delete using <code>TranscriptionJobName</code>. Job
+     * names are case sensitive.
      * </p>
      * 
      * @param deleteTranscriptionJobRequest
@@ -380,7 +1032,9 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Deletes a vocabulary from Amazon Transcribe.
+     * Deletes a custom vocabulary. To use this operation, specify the name of
+     * the custom vocabulary you want to delete using
+     * <code>VocabularyName</code>. Custom vocabulary names are case sensitive.
      * </p>
      * 
      * @param deleteVocabularyRequest
@@ -422,11 +1076,384 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Returns information about a transcription job. To see the status of the
-     * job, check the <code>TranscriptionJobStatus</code> field. If the status
-     * is <code>COMPLETED</code>, the job is finished and you can find the
-     * results at the location specified in the
-     * <code>TranscriptionFileUri</code> field.
+     * Deletes a custom vocabulary filter. To use this operation, specify the
+     * name of the custom vocabulary filter you want to delete using
+     * <code>VocabularyFilterName</code>. Custom vocabulary filter names are
+     * case sensitive.
+     * </p>
+     * 
+     * @param deleteVocabularyFilterRequest
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws BadRequestException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public void deleteVocabularyFilter(DeleteVocabularyFilterRequest deleteVocabularyFilterRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteVocabularyFilterRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteVocabularyFilterRequest> request = null;
+        Response<Void> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteVocabularyFilterRequestMarshaller()
+                        .marshall(deleteVocabularyFilterRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            JsonResponseHandler<Void> responseHandler = new JsonResponseHandler<Void>(null);
+            invoke(request, responseHandler, executionContext);
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides information about the specified custom language model.
+     * </p>
+     * <p>
+     * This operation also shows if the base language model that you used to
+     * create your custom language model has been updated. If Amazon Transcribe
+     * has updated the base model, you can create a new custom language model
+     * using the updated base model.
+     * </p>
+     * <p>
+     * If you tried to create a new custom language model and the request wasn't
+     * successful, you can use <code>DescribeLanguageModel</code> to help
+     * identify the reason for this failure.
+     * </p>
+     * 
+     * @param describeLanguageModelRequest
+     * @return describeLanguageModelResult The response from the
+     *         DescribeLanguageModel service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws NotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public DescribeLanguageModelResult describeLanguageModel(
+            DescribeLanguageModelRequest describeLanguageModelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(describeLanguageModelRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DescribeLanguageModelRequest> request = null;
+        Response<DescribeLanguageModelResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DescribeLanguageModelRequestMarshaller()
+                        .marshall(describeLanguageModelRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DescribeLanguageModelResult, JsonUnmarshallerContext> unmarshaller = new DescribeLanguageModelResultJsonUnmarshaller();
+            JsonResponseHandler<DescribeLanguageModelResult> responseHandler = new JsonResponseHandler<DescribeLanguageModelResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides information about the specified Call Analytics category.
+     * </p>
+     * <p>
+     * To get a list of your Call Analytics categories, use the operation.
+     * </p>
+     * 
+     * @param getCallAnalyticsCategoryRequest
+     * @return getCallAnalyticsCategoryResult The response from the
+     *         GetCallAnalyticsCategory service method, as returned by Amazon
+     *         Transcribe.
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws BadRequestException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetCallAnalyticsCategoryResult getCallAnalyticsCategory(
+            GetCallAnalyticsCategoryRequest getCallAnalyticsCategoryRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getCallAnalyticsCategoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetCallAnalyticsCategoryRequest> request = null;
+        Response<GetCallAnalyticsCategoryResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetCallAnalyticsCategoryRequestMarshaller()
+                        .marshall(getCallAnalyticsCategoryRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetCallAnalyticsCategoryResult, JsonUnmarshallerContext> unmarshaller = new GetCallAnalyticsCategoryResultJsonUnmarshaller();
+            JsonResponseHandler<GetCallAnalyticsCategoryResult> responseHandler = new JsonResponseHandler<GetCallAnalyticsCategoryResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides information about the specified Call Analytics job.
+     * </p>
+     * <p>
+     * To view the job's status, refer to <code>CallAnalyticsJobStatus</code>.
+     * If the status is <code>COMPLETED</code>, the job is finished. You can
+     * find your completed transcript at the URI specified in
+     * <code>TranscriptFileUri</code>. If the status is <code>FAILED</code>,
+     * <code>FailureReason</code> provides details on why your transcription job
+     * failed.
+     * </p>
+     * <p>
+     * If you enabled personally identifiable information (PII) redaction, the
+     * redacted transcript appears at the location specified in
+     * <code>RedactedTranscriptFileUri</code>.
+     * </p>
+     * <p>
+     * If you chose to redact the audio in your media file, you can find your
+     * redacted media file at the location specified in
+     * <code>RedactedMediaFileUri</code>.
+     * </p>
+     * <p>
+     * To get a list of your Call Analytics jobs, use the operation.
+     * </p>
+     * 
+     * @param getCallAnalyticsJobRequest
+     * @return getCallAnalyticsJobResult The response from the
+     *         GetCallAnalyticsJob service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws NotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetCallAnalyticsJobResult getCallAnalyticsJob(
+            GetCallAnalyticsJobRequest getCallAnalyticsJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getCallAnalyticsJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetCallAnalyticsJobRequest> request = null;
+        Response<GetCallAnalyticsJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetCallAnalyticsJobRequestMarshaller()
+                        .marshall(getCallAnalyticsJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetCallAnalyticsJobResult, JsonUnmarshallerContext> unmarshaller = new GetCallAnalyticsJobResultJsonUnmarshaller();
+            JsonResponseHandler<GetCallAnalyticsJobResult> responseHandler = new JsonResponseHandler<GetCallAnalyticsJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides information about the specified medical transcription job.
+     * </p>
+     * <p>
+     * To view the status of the specified medical transcription job, check the
+     * <code>TranscriptionJobStatus</code> field. If the status is
+     * <code>COMPLETED</code>, the job is finished. You can find the results at
+     * the location specified in <code>TranscriptFileUri</code>. If the status
+     * is <code>FAILED</code>, <code>FailureReason</code> provides details on
+     * why your transcription job failed.
+     * </p>
+     * <p>
+     * To get a list of your medical transcription jobs, use the operation.
+     * </p>
+     * 
+     * @param getMedicalTranscriptionJobRequest
+     * @return getMedicalTranscriptionJobResult The response from the
+     *         GetMedicalTranscriptionJob service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws NotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetMedicalTranscriptionJobResult getMedicalTranscriptionJob(
+            GetMedicalTranscriptionJobRequest getMedicalTranscriptionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getMedicalTranscriptionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetMedicalTranscriptionJobRequest> request = null;
+        Response<GetMedicalTranscriptionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetMedicalTranscriptionJobRequestMarshaller()
+                        .marshall(getMedicalTranscriptionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetMedicalTranscriptionJobResult, JsonUnmarshallerContext> unmarshaller = new GetMedicalTranscriptionJobResultJsonUnmarshaller();
+            JsonResponseHandler<GetMedicalTranscriptionJobResult> responseHandler = new JsonResponseHandler<GetMedicalTranscriptionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides information about the specified custom medical vocabulary.
+     * </p>
+     * <p>
+     * To view the status of the specified custom medical vocabulary, check the
+     * <code>VocabularyState</code> field. If the status is <code>READY</code>,
+     * your custom vocabulary is available to use. If the status is
+     * <code>FAILED</code>, <code>FailureReason</code> provides details on why
+     * your vocabulary failed.
+     * </p>
+     * <p>
+     * To get a list of your custom medical vocabularies, use the operation.
+     * </p>
+     * 
+     * @param getMedicalVocabularyRequest
+     * @return getMedicalVocabularyResult The response from the
+     *         GetMedicalVocabulary service method, as returned by Amazon
+     *         Transcribe.
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws BadRequestException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetMedicalVocabularyResult getMedicalVocabulary(
+            GetMedicalVocabularyRequest getMedicalVocabularyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getMedicalVocabularyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetMedicalVocabularyRequest> request = null;
+        Response<GetMedicalVocabularyResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetMedicalVocabularyRequestMarshaller()
+                        .marshall(getMedicalVocabularyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetMedicalVocabularyResult, JsonUnmarshallerContext> unmarshaller = new GetMedicalVocabularyResultJsonUnmarshaller();
+            JsonResponseHandler<GetMedicalVocabularyResult> responseHandler = new JsonResponseHandler<GetMedicalVocabularyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides information about the specified transcription job.
+     * </p>
+     * <p>
+     * To view the status of the specified transcription job, check the
+     * <code>TranscriptionJobStatus</code> field. If the status is
+     * <code>COMPLETED</code>, the job is finished. You can find the results at
+     * the location specified in <code>TranscriptFileUri</code>. If the status
+     * is <code>FAILED</code>, <code>FailureReason</code> provides details on
+     * why your transcription job failed.
+     * </p>
+     * <p>
+     * If you enabled content redaction, the redacted transcript can be found at
+     * the location specified in <code>RedactedTranscriptFileUri</code>.
+     * </p>
+     * <p>
+     * To get a list of your transcription jobs, use the operation.
      * </p>
      * 
      * @param getTranscriptionJobRequest
@@ -478,10 +1505,17 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Gets information about a vocabulary. Note that vocabularies for en-AU,
-     * en-UK, and fr-CA languages that are in preview are not available. In the
-     * console, the vocabulary section will be greyed-out and SDK will return
-     * error message.
+     * Provides information about the specified custom vocabulary.
+     * </p>
+     * <p>
+     * To view the status of the specified custom vocabulary, check the
+     * <code>VocabularyState</code> field. If the status is <code>READY</code>,
+     * your custom vocabulary is available to use. If the status is
+     * <code>FAILED</code>, <code>FailureReason</code> provides details on why
+     * your custom vocabulary failed.
+     * </p>
+     * <p>
+     * To get a list of your custom vocabularies, use the operation.
      * </p>
      * 
      * @param getVocabularyRequest
@@ -530,7 +1564,407 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Lists transcription jobs with the specified status.
+     * Provides information about the specified custom vocabulary filter.
+     * </p>
+     * <p>
+     * To get a list of your custom vocabulary filters, use the operation.
+     * </p>
+     * 
+     * @param getVocabularyFilterRequest
+     * @return getVocabularyFilterResult The response from the
+     *         GetVocabularyFilter service method, as returned by Amazon
+     *         Transcribe.
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws BadRequestException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public GetVocabularyFilterResult getVocabularyFilter(
+            GetVocabularyFilterRequest getVocabularyFilterRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getVocabularyFilterRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetVocabularyFilterRequest> request = null;
+        Response<GetVocabularyFilterResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetVocabularyFilterRequestMarshaller()
+                        .marshall(getVocabularyFilterRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetVocabularyFilterResult, JsonUnmarshallerContext> unmarshaller = new GetVocabularyFilterResultJsonUnmarshaller();
+            JsonResponseHandler<GetVocabularyFilterResult> responseHandler = new JsonResponseHandler<GetVocabularyFilterResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides a list of Call Analytics categories, including all rules that
+     * make up each category.
+     * </p>
+     * <p>
+     * To get detailed information about a specific Call Analytics category, use
+     * the operation.
+     * </p>
+     * 
+     * @param listCallAnalyticsCategoriesRequest
+     * @return listCallAnalyticsCategoriesResult The response from the
+     *         ListCallAnalyticsCategories service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListCallAnalyticsCategoriesResult listCallAnalyticsCategories(
+            ListCallAnalyticsCategoriesRequest listCallAnalyticsCategoriesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listCallAnalyticsCategoriesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListCallAnalyticsCategoriesRequest> request = null;
+        Response<ListCallAnalyticsCategoriesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListCallAnalyticsCategoriesRequestMarshaller()
+                        .marshall(listCallAnalyticsCategoriesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListCallAnalyticsCategoriesResult, JsonUnmarshallerContext> unmarshaller = new ListCallAnalyticsCategoriesResultJsonUnmarshaller();
+            JsonResponseHandler<ListCallAnalyticsCategoriesResult> responseHandler = new JsonResponseHandler<ListCallAnalyticsCategoriesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides a list of Call Analytics jobs that match the specified criteria.
+     * If no criteria are specified, all Call Analytics jobs are returned.
+     * </p>
+     * <p>
+     * To get detailed information about a specific Call Analytics job, use the
+     * operation.
+     * </p>
+     * 
+     * @param listCallAnalyticsJobsRequest
+     * @return listCallAnalyticsJobsResult The response from the
+     *         ListCallAnalyticsJobs service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListCallAnalyticsJobsResult listCallAnalyticsJobs(
+            ListCallAnalyticsJobsRequest listCallAnalyticsJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listCallAnalyticsJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListCallAnalyticsJobsRequest> request = null;
+        Response<ListCallAnalyticsJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListCallAnalyticsJobsRequestMarshaller()
+                        .marshall(listCallAnalyticsJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListCallAnalyticsJobsResult, JsonUnmarshallerContext> unmarshaller = new ListCallAnalyticsJobsResultJsonUnmarshaller();
+            JsonResponseHandler<ListCallAnalyticsJobsResult> responseHandler = new JsonResponseHandler<ListCallAnalyticsJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides a list of custom language models that match the specified
+     * criteria. If no criteria are specified, all custom language models are
+     * returned.
+     * </p>
+     * <p>
+     * To get detailed information about a specific custom language model, use
+     * the operation.
+     * </p>
+     * 
+     * @param listLanguageModelsRequest
+     * @return listLanguageModelsResult The response from the ListLanguageModels
+     *         service method, as returned by Amazon Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListLanguageModelsResult listLanguageModels(
+            ListLanguageModelsRequest listLanguageModelsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listLanguageModelsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListLanguageModelsRequest> request = null;
+        Response<ListLanguageModelsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListLanguageModelsRequestMarshaller()
+                        .marshall(listLanguageModelsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListLanguageModelsResult, JsonUnmarshallerContext> unmarshaller = new ListLanguageModelsResultJsonUnmarshaller();
+            JsonResponseHandler<ListLanguageModelsResult> responseHandler = new JsonResponseHandler<ListLanguageModelsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides a list of medical transcription jobs that match the specified
+     * criteria. If no criteria are specified, all medical transcription jobs
+     * are returned.
+     * </p>
+     * <p>
+     * To get detailed information about a specific medical transcription job,
+     * use the operation.
+     * </p>
+     * 
+     * @param listMedicalTranscriptionJobsRequest
+     * @return listMedicalTranscriptionJobsResult The response from the
+     *         ListMedicalTranscriptionJobs service method, as returned by
+     *         Amazon Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListMedicalTranscriptionJobsResult listMedicalTranscriptionJobs(
+            ListMedicalTranscriptionJobsRequest listMedicalTranscriptionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listMedicalTranscriptionJobsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListMedicalTranscriptionJobsRequest> request = null;
+        Response<ListMedicalTranscriptionJobsResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListMedicalTranscriptionJobsRequestMarshaller()
+                        .marshall(listMedicalTranscriptionJobsRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListMedicalTranscriptionJobsResult, JsonUnmarshallerContext> unmarshaller = new ListMedicalTranscriptionJobsResultJsonUnmarshaller();
+            JsonResponseHandler<ListMedicalTranscriptionJobsResult> responseHandler = new JsonResponseHandler<ListMedicalTranscriptionJobsResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides a list of custom medical vocabularies that match the specified
+     * criteria. If no criteria are specified, all custom medical vocabularies
+     * are returned.
+     * </p>
+     * <p>
+     * To get detailed information about a specific custom medical vocabulary,
+     * use the operation.
+     * </p>
+     * 
+     * @param listMedicalVocabulariesRequest
+     * @return listMedicalVocabulariesResult The response from the
+     *         ListMedicalVocabularies service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListMedicalVocabulariesResult listMedicalVocabularies(
+            ListMedicalVocabulariesRequest listMedicalVocabulariesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listMedicalVocabulariesRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListMedicalVocabulariesRequest> request = null;
+        Response<ListMedicalVocabulariesResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListMedicalVocabulariesRequestMarshaller()
+                        .marshall(listMedicalVocabulariesRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListMedicalVocabulariesResult, JsonUnmarshallerContext> unmarshaller = new ListMedicalVocabulariesResultJsonUnmarshaller();
+            JsonResponseHandler<ListMedicalVocabulariesResult> responseHandler = new JsonResponseHandler<ListMedicalVocabulariesResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Lists all tags associated with the specified transcription job,
+     * vocabulary, model, or resource.
+     * </p>
+     * <p>
+     * To learn more about using tags with Amazon Transcribe, refer to <a
+     * href="https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html"
+     * >Tagging resources</a>.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return listTagsForResourceResult The response from the
+     *         ListTagsForResource service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListTagsForResourceResult listTagsForResource(
+            ListTagsForResourceRequest listTagsForResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listTagsForResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListTagsForResourceRequest> request = null;
+        Response<ListTagsForResourceResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListTagsForResourceRequestMarshaller()
+                        .marshall(listTagsForResourceRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListTagsForResourceResult, JsonUnmarshallerContext> unmarshaller = new ListTagsForResourceResultJsonUnmarshaller();
+            JsonResponseHandler<ListTagsForResourceResult> responseHandler = new JsonResponseHandler<ListTagsForResourceResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Provides a list of transcription jobs that match the specified criteria.
+     * If no criteria are specified, all transcription jobs are returned.
+     * </p>
+     * <p>
+     * To get detailed information about a specific transcription job, use the
+     * operation.
      * </p>
      * 
      * @param listTranscriptionJobsRequest
@@ -581,8 +2015,12 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Returns a list of vocabularies that match the specified criteria. If no
-     * criteria are specified, returns the entire list of vocabularies.
+     * Provides a list of custom vocabularies that match the specified criteria.
+     * If no criteria are specified, all custom vocabularies are returned.
+     * </p>
+     * <p>
+     * To get detailed information about a specific custom vocabulary, use the
+     * operation.
      * </p>
      * 
      * @param listVocabulariesRequest
@@ -630,10 +2068,355 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Starts an asynchronous job to transcribe speech to text. Note that en-AU,
-     * en-UK, and fr-CA languages are in preview and are only available to
-     * whitelisted customers.
+     * Provides a list of custom vocabulary filters that match the specified
+     * criteria. If no criteria are specified, all custom vocabularies are
+     * returned.
      * </p>
+     * <p>
+     * To get detailed information about a specific custom vocabulary filter,
+     * use the operation.
+     * </p>
+     * 
+     * @param listVocabularyFiltersRequest
+     * @return listVocabularyFiltersResult The response from the
+     *         ListVocabularyFilters service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public ListVocabularyFiltersResult listVocabularyFilters(
+            ListVocabularyFiltersRequest listVocabularyFiltersRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(listVocabularyFiltersRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<ListVocabularyFiltersRequest> request = null;
+        Response<ListVocabularyFiltersResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new ListVocabularyFiltersRequestMarshaller()
+                        .marshall(listVocabularyFiltersRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<ListVocabularyFiltersResult, JsonUnmarshallerContext> unmarshaller = new ListVocabularyFiltersResultJsonUnmarshaller();
+            JsonResponseHandler<ListVocabularyFiltersResult> responseHandler = new JsonResponseHandler<ListVocabularyFiltersResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Transcribes the audio from a customer service call and applies any
+     * additional Request Parameters you choose to include in your request.
+     * </p>
+     * <p>
+     * In addition to many standard transcription features, Call Analytics
+     * provides you with call characteristics, call summarization, speaker
+     * sentiment, and optional redaction of your text transcript and your audio
+     * file. You can also apply custom categories to flag specified conditions.
+     * To learn more about these features and insights, refer to <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html"
+     * >Analyzing call center audio with Call Analytics</a>.
+     * </p>
+     * <p>
+     * If you want to apply categories to your Call Analytics job, you must
+     * create them before submitting your job request. Categories cannot be
+     * retroactively applied to a job. To create a new category, use the
+     * operation. To learn more about Call Analytics categories, see <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html"
+     * >Creating categories for post-call transcriptions</a> and <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html"
+     * >Creating categories for real-time transcriptions</a>.
+     * </p>
+     * <p>
+     * To make a <code>StartCallAnalyticsJob</code> request, you must first
+     * upload your media file into an Amazon S3 bucket; you can then specify the
+     * Amazon S3 location of the file using the <code>Media</code> parameter.
+     * </p>
+     * <p>
+     * Note that job queuing is enabled by default for Call Analytics jobs.
+     * </p>
+     * <p>
+     * You must include the following parameters in your
+     * <code>StartCallAnalyticsJob</code> request:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>region</code>: The Amazon Web Services Region where you are making
+     * your request. For a list of Amazon Web Services Regions supported with
+     * Amazon Transcribe, refer to <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/transcribe.html"
+     * >Amazon Transcribe endpoints and quotas</a>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>CallAnalyticsJobName</code>: A custom name that you create for your
+     * transcription job that's unique within your Amazon Web Services account.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>DataAccessRoleArn</code>: The Amazon Resource Name (ARN) of an IAM
+     * role that has permissions to access the Amazon S3 bucket that contains
+     * your input files.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>Media</code> (<code>MediaFileUri</code> or
+     * <code>RedactedMediaFileUri</code>): The Amazon S3 location of your media
+     * file.
+     * </p>
+     * </li>
+     * </ul>
+     * <note>
+     * <p>
+     * With Call Analytics, you can redact the audio contained in your media
+     * file by including <code>RedactedMediaFileUri</code>, instead of
+     * <code>MediaFileUri</code>, to specify the location of your input audio.
+     * If you choose to redact your audio, you can find your redacted media at
+     * the location specified in the <code>RedactedMediaFileUri</code> field of
+     * your response.
+     * </p>
+     * </note>
+     * 
+     * @param startCallAnalyticsJobRequest
+     * @return startCallAnalyticsJobResult The response from the
+     *         StartCallAnalyticsJob service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartCallAnalyticsJobResult startCallAnalyticsJob(
+            StartCallAnalyticsJobRequest startCallAnalyticsJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startCallAnalyticsJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartCallAnalyticsJobRequest> request = null;
+        Response<StartCallAnalyticsJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartCallAnalyticsJobRequestMarshaller()
+                        .marshall(startCallAnalyticsJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartCallAnalyticsJobResult, JsonUnmarshallerContext> unmarshaller = new StartCallAnalyticsJobResultJsonUnmarshaller();
+            JsonResponseHandler<StartCallAnalyticsJobResult> responseHandler = new JsonResponseHandler<StartCallAnalyticsJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Transcribes the audio from a medical dictation or conversation and
+     * applies any additional Request Parameters you choose to include in your
+     * request.
+     * </p>
+     * <p>
+     * In addition to many standard transcription features, Amazon Transcribe
+     * Medical provides you with a robust medical vocabulary and, optionally,
+     * content identification, which adds flags to personal health information
+     * (PHI). To learn more about these features, refer to <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/how-it-works-med.html"
+     * >How Amazon Transcribe Medical works</a>.
+     * </p>
+     * <p>
+     * To make a <code>StartMedicalTranscriptionJob</code> request, you must
+     * first upload your media file into an Amazon S3 bucket; you can then
+     * specify the S3 location of the file using the <code>Media</code>
+     * parameter.
+     * </p>
+     * <p>
+     * You must include the following parameters in your
+     * <code>StartMedicalTranscriptionJob</code> request:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>region</code>: The Amazon Web Services Region where you are making
+     * your request. For a list of Amazon Web Services Regions supported with
+     * Amazon Transcribe, refer to <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/transcribe.html"
+     * >Amazon Transcribe endpoints and quotas</a>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>MedicalTranscriptionJobName</code>: A custom name you create for
+     * your transcription job that is unique within your Amazon Web Services
+     * account.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>Media</code> (<code>MediaFileUri</code>): The Amazon S3 location of
+     * your media file.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LanguageCode</code>: This must be <code>en-US</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>OutputBucketName</code>: The Amazon S3 bucket where you want your
+     * transcript stored. If you want your output stored in a sub-folder of this
+     * bucket, you must also include <code>OutputKey</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>Specialty</code>: This must be <code>PRIMARYCARE</code>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>Type</code>: Choose whether your audio is a conversation or a
+     * dictation.
+     * </p>
+     * </li>
+     * </ul>
+     * 
+     * @param startMedicalTranscriptionJobRequest
+     * @return startMedicalTranscriptionJobResult The response from the
+     *         StartMedicalTranscriptionJob service method, as returned by
+     *         Amazon Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public StartMedicalTranscriptionJobResult startMedicalTranscriptionJob(
+            StartMedicalTranscriptionJobRequest startMedicalTranscriptionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(startMedicalTranscriptionJobRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<StartMedicalTranscriptionJobRequest> request = null;
+        Response<StartMedicalTranscriptionJobResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new StartMedicalTranscriptionJobRequestMarshaller()
+                        .marshall(startMedicalTranscriptionJobRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<StartMedicalTranscriptionJobResult, JsonUnmarshallerContext> unmarshaller = new StartMedicalTranscriptionJobResultJsonUnmarshaller();
+            JsonResponseHandler<StartMedicalTranscriptionJobResult> responseHandler = new JsonResponseHandler<StartMedicalTranscriptionJobResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Transcribes the audio from a media file and applies any additional
+     * Request Parameters you choose to include in your request.
+     * </p>
+     * <p>
+     * To make a <code>StartTranscriptionJob</code> request, you must first
+     * upload your media file into an Amazon S3 bucket; you can then specify the
+     * Amazon S3 location of the file using the <code>Media</code> parameter.
+     * </p>
+     * <p>
+     * You must include the following parameters in your
+     * <code>StartTranscriptionJob</code> request:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>region</code>: The Amazon Web Services Region where you are making
+     * your request. For a list of Amazon Web Services Regions supported with
+     * Amazon Transcribe, refer to <a
+     * href="https://docs.aws.amazon.com/general/latest/gr/transcribe.html"
+     * >Amazon Transcribe endpoints and quotas</a>.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>TranscriptionJobName</code>: A custom name you create for your
+     * transcription job that is unique within your Amazon Web Services account.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>Media</code> (<code>MediaFileUri</code>): The Amazon S3 location of
+     * your media file.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * One of <code>LanguageCode</code>, <code>IdentifyLanguage</code>, or
+     * <code>IdentifyMultipleLanguages</code>: If you know the language of your
+     * media file, specify it using the <code>LanguageCode</code> parameter; you
+     * can find all valid language codes in the <a href=
+     * "https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html"
+     * >Supported languages</a> table. If you don't know the languages spoken in
+     * your media, use either <code>IdentifyLanguage</code> or
+     * <code>IdentifyMultipleLanguages</code> and let Amazon Transcribe identify
+     * the languages for you.
+     * </p>
+     * </li>
+     * </ul>
      * 
      * @param startTranscriptionJobRequest
      * @return startTranscriptionJobResult The response from the
@@ -684,12 +2467,233 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Updates an existing vocabulary with new values. The
-     * <code>UpdateVocabulary</code> operation overwrites all of the existing
-     * information with the values that you provide in the request. Note that
-     * vocabularies for en-AU, en-UK, and fr-CA languages that are in preview
-     * are not available. In the console, the vocabulary section will be
-     * greyed-out and SDK will return error message.
+     * Adds one or more custom tags, each in the form of a key:value pair, to
+     * the specified resource.
+     * </p>
+     * <p>
+     * To learn more about using tags with Amazon Transcribe, refer to <a
+     * href="https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html"
+     * >Tagging resources</a>.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return tagResourceResult The response from the TagResource service
+     *         method, as returned by Amazon Transcribe.
+     * @throws BadRequestException
+     * @throws ConflictException
+     * @throws NotFoundException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public TagResourceResult tagResource(TagResourceRequest tagResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(tagResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<TagResourceRequest> request = null;
+        Response<TagResourceResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new TagResourceRequestMarshaller().marshall(tagResourceRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<TagResourceResult, JsonUnmarshallerContext> unmarshaller = new TagResourceResultJsonUnmarshaller();
+            JsonResponseHandler<TagResourceResult> responseHandler = new JsonResponseHandler<TagResourceResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Removes the specified tags from the specified Amazon Transcribe resource.
+     * </p>
+     * <p>
+     * If you include <code>UntagResource</code> in your request, you must also
+     * include <code>ResourceArn</code> and <code>TagKeys</code>.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return untagResourceResult The response from the UntagResource service
+     *         method, as returned by Amazon Transcribe.
+     * @throws LimitExceededException
+     * @throws BadRequestException
+     * @throws ConflictException
+     * @throws NotFoundException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UntagResourceResult untagResource(UntagResourceRequest untagResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(untagResourceRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UntagResourceRequest> request = null;
+        Response<UntagResourceResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UntagResourceRequestMarshaller().marshall(untagResourceRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UntagResourceResult, JsonUnmarshallerContext> unmarshaller = new UntagResourceResultJsonUnmarshaller();
+            JsonResponseHandler<UntagResourceResult> responseHandler = new JsonResponseHandler<UntagResourceResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Updates the specified Call Analytics category with new rules. Note that
+     * the <code>UpdateCallAnalyticsCategory</code> operation overwrites all
+     * existing rules contained in the specified category. You cannot append
+     * additional rules onto an existing category.
+     * </p>
+     * <p>
+     * To create a new category, see .
+     * </p>
+     * 
+     * @param updateCallAnalyticsCategoryRequest
+     * @return updateCallAnalyticsCategoryResult The response from the
+     *         UpdateCallAnalyticsCategory service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws NotFoundException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UpdateCallAnalyticsCategoryResult updateCallAnalyticsCategory(
+            UpdateCallAnalyticsCategoryRequest updateCallAnalyticsCategoryRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateCallAnalyticsCategoryRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateCallAnalyticsCategoryRequest> request = null;
+        Response<UpdateCallAnalyticsCategoryResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateCallAnalyticsCategoryRequestMarshaller()
+                        .marshall(updateCallAnalyticsCategoryRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateCallAnalyticsCategoryResult, JsonUnmarshallerContext> unmarshaller = new UpdateCallAnalyticsCategoryResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateCallAnalyticsCategoryResult> responseHandler = new JsonResponseHandler<UpdateCallAnalyticsCategoryResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Updates an existing custom medical vocabulary with new values. This
+     * operation overwrites all existing information with your new values; you
+     * cannot append new terms onto an existing custom vocabulary.
+     * </p>
+     * 
+     * @param updateMedicalVocabularyRequest
+     * @return updateMedicalVocabularyResult The response from the
+     *         UpdateMedicalVocabulary service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws NotFoundException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UpdateMedicalVocabularyResult updateMedicalVocabulary(
+            UpdateMedicalVocabularyRequest updateMedicalVocabularyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateMedicalVocabularyRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateMedicalVocabularyRequest> request = null;
+        Response<UpdateMedicalVocabularyResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateMedicalVocabularyRequestMarshaller()
+                        .marshall(updateMedicalVocabularyRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateMedicalVocabularyResult, JsonUnmarshallerContext> unmarshaller = new UpdateMedicalVocabularyResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateMedicalVocabularyResult> responseHandler = new JsonResponseHandler<UpdateMedicalVocabularyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Updates an existing custom vocabulary with new values. This operation
+     * overwrites all existing information with your new values; you cannot
+     * append new terms onto an existing custom vocabulary.
      * </p>
      * 
      * @param updateVocabularyRequest
@@ -726,6 +2730,60 @@ public class AmazonTranscribeClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<UpdateVocabularyResult, JsonUnmarshallerContext> unmarshaller = new UpdateVocabularyResultJsonUnmarshaller();
             JsonResponseHandler<UpdateVocabularyResult> responseHandler = new JsonResponseHandler<UpdateVocabularyResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Updates an existing custom vocabulary filter with a new list of words.
+     * The new list you provide overwrites all previous entries; you cannot
+     * append new terms onto an existing custom vocabulary filter.
+     * </p>
+     * 
+     * @param updateVocabularyFilterRequest
+     * @return updateVocabularyFilterResult The response from the
+     *         UpdateVocabularyFilter service method, as returned by Amazon
+     *         Transcribe.
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws NotFoundException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Transcribe indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public UpdateVocabularyFilterResult updateVocabularyFilter(
+            UpdateVocabularyFilterRequest updateVocabularyFilterRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(updateVocabularyFilterRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<UpdateVocabularyFilterRequest> request = null;
+        Response<UpdateVocabularyFilterResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new UpdateVocabularyFilterRequestMarshaller()
+                        .marshall(updateVocabularyFilterRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<UpdateVocabularyFilterResult, JsonUnmarshallerContext> unmarshaller = new UpdateVocabularyFilterResultJsonUnmarshaller();
+            JsonResponseHandler<UpdateVocabularyFilterResult> responseHandler = new JsonResponseHandler<UpdateVocabularyFilterResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);

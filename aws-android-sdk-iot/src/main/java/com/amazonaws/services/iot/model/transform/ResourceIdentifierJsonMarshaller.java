@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -57,6 +58,28 @@ class ResourceIdentifierJsonMarshaller {
             String account = resourceIdentifier.getAccount();
             jsonWriter.name("account");
             jsonWriter.value(account);
+        }
+        if (resourceIdentifier.getIamRoleArn() != null) {
+            String iamRoleArn = resourceIdentifier.getIamRoleArn();
+            jsonWriter.name("iamRoleArn");
+            jsonWriter.value(iamRoleArn);
+        }
+        if (resourceIdentifier.getRoleAliasArn() != null) {
+            String roleAliasArn = resourceIdentifier.getRoleAliasArn();
+            jsonWriter.name("roleAliasArn");
+            jsonWriter.value(roleAliasArn);
+        }
+        if (resourceIdentifier.getIssuerCertificateIdentifier() != null) {
+            IssuerCertificateIdentifier issuerCertificateIdentifier = resourceIdentifier
+                    .getIssuerCertificateIdentifier();
+            jsonWriter.name("issuerCertificateIdentifier");
+            IssuerCertificateIdentifierJsonMarshaller.getInstance().marshall(
+                    issuerCertificateIdentifier, jsonWriter);
+        }
+        if (resourceIdentifier.getDeviceCertificateArn() != null) {
+            String deviceCertificateArn = resourceIdentifier.getDeviceCertificateArn();
+            jsonWriter.name("deviceCertificateArn");
+            jsonWriter.value(deviceCertificateArn);
         }
         jsonWriter.endObject();
     }

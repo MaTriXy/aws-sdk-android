@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,8 +31,9 @@ public class EntityRecognizerProperties implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      */
     private String entityRecognizerArn;
 
@@ -43,7 +44,7 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      */
     private String languageCode;
 
@@ -53,7 +54,8 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      */
     private String status;
 
@@ -108,8 +110,8 @@ public class EntityRecognizerProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -120,14 +122,125 @@ public class EntityRecognizerProperties implements Serializable {
 
     /**
      * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String volumeKmsKeyId;
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom entity recognizer.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     */
+    private VpcConfig vpcConfig;
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String modelKmsKeyId;
+
+    /**
+     * <p>
+     * The version name you assigned to the entity recognizer.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     */
+    private String versionName;
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * entity recognizer model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     */
+    private String sourceModelArn;
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     */
+    private String flywheelArn;
+
+    /**
+     * <p>
+     * Output data configuration.
+     * </p>
+     */
+    private EntityRecognizerOutputDataConfig outputDataConfig;
+
+    /**
+     * <p>
      * The Amazon Resource Name (ARN) that identifies the entity recognizer.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @return <p>
      *         The Amazon Resource Name (ARN) that identifies the entity
@@ -146,8 +259,9 @@ public class EntityRecognizerProperties implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param entityRecognizerArn <p>
      *            The Amazon Resource Name (ARN) that identifies the entity
@@ -169,8 +283,9 @@ public class EntityRecognizerProperties implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 256<br/>
      * <b>Pattern:
-     * </b>arn:aws:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer
-     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
      *
      * @param entityRecognizerArn <p>
      *            The Amazon Resource Name (ARN) that identifies the entity
@@ -191,7 +306,7 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @return <p>
      *         The language of the input documents. All documents must be in the
@@ -210,7 +325,7 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language of the input documents. All documents must be in
@@ -232,7 +347,7 @@ public class EntityRecognizerProperties implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language of the input documents. All documents must be in
@@ -254,7 +369,7 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language of the input documents. All documents must be in
@@ -276,7 +391,7 @@ public class EntityRecognizerProperties implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
      *            The language of the input documents. All documents must be in
@@ -297,7 +412,8 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @return <p>
      *         Provides the status of the entity recognizer.
@@ -314,7 +430,8 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Provides the status of the entity recognizer.
@@ -334,7 +451,8 @@ public class EntityRecognizerProperties implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Provides the status of the entity recognizer.
@@ -354,7 +472,8 @@ public class EntityRecognizerProperties implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Provides the status of the entity recognizer.
@@ -374,7 +493,8 @@ public class EntityRecognizerProperties implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, IN_ERROR, TRAINED
+     * <b>Allowed Values: </b>SUBMITTED, TRAINING, DELETING, STOP_REQUESTED,
+     * STOPPED, IN_ERROR, TRAINED, TRAINED_WITH_WARNING
      *
      * @param status <p>
      *            Provides the status of the entity recognizer.
@@ -707,8 +827,8 @@ public class EntityRecognizerProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -716,9 +836,8 @@ public class EntityRecognizerProperties implements Serializable {
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @return <p>
-     *         The Amazon Resource Name (ARN) of the AWS Identity and Management
-     *         (IAM) role that grants Amazon Comprehend read access to your
-     *         input data.
+     *         The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     *         Comprehend read access to your input data.
      *         </p>
      */
     public String getDataAccessRoleArn() {
@@ -727,8 +846,8 @@ public class EntityRecognizerProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -736,9 +855,8 @@ public class EntityRecognizerProperties implements Serializable {
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data.
      *            </p>
      */
     public void setDataAccessRoleArn(String dataAccessRoleArn) {
@@ -747,8 +865,8 @@ public class EntityRecognizerProperties implements Serializable {
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -759,15 +877,633 @@ public class EntityRecognizerProperties implements Serializable {
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public EntityRecognizerProperties withDataAccessRoleArn(String dataAccessRoleArn) {
         this.dataAccessRoleArn = dataAccessRoleArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the Amazon Web Services Key Management Service (KMS) key
+     *         that Amazon Comprehend uses to encrypt data on the storage volume
+     *         attached to the ML compute instance(s) that process the analysis
+     *         job. The VolumeKmsKeyId can be either of the following formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getVolumeKmsKeyId() {
+        return volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom entity recognizer.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Configuration parameters for a private Virtual Private Cloud
+     *         (VPC) containing the resources you are using for your custom
+     *         entity recognizer. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *         >Amazon VPC</a>.
+     *         </p>
+     */
+    public VpcConfig getVpcConfig() {
+        return vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom entity recognizer.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for a private Virtual Private Cloud
+     *            (VPC) containing the resources you are using for your custom
+     *            entity recognizer. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     */
+    public void setVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for a private Virtual Private Cloud (VPC)
+     * containing the resources you are using for your custom entity recognizer.
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for a private Virtual Private Cloud
+     *            (VPC) containing the resources you are using for your custom
+     *            entity recognizer. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the KMS key that Amazon Comprehend uses to encrypt trained
+     *         custom models. The ModelKmsKeyId can be either of the following
+     *         formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getModelKmsKeyId() {
+        return modelKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param modelKmsKeyId <p>
+     *            ID for the KMS key that Amazon Comprehend uses to encrypt
+     *            trained custom models. The ModelKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setModelKmsKeyId(String modelKmsKeyId) {
+        this.modelKmsKeyId = modelKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param modelKmsKeyId <p>
+     *            ID for the KMS key that Amazon Comprehend uses to encrypt
+     *            trained custom models. The ModelKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withModelKmsKeyId(String modelKmsKeyId) {
+        this.modelKmsKeyId = modelKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The version name you assigned to the entity recognizer.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @return <p>
+     *         The version name you assigned to the entity recognizer.
+     *         </p>
+     */
+    public String getVersionName() {
+        return versionName;
+    }
+
+    /**
+     * <p>
+     * The version name you assigned to the entity recognizer.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param versionName <p>
+     *            The version name you assigned to the entity recognizer.
+     *            </p>
+     */
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
+    }
+
+    /**
+     * <p>
+     * The version name you assigned to the entity recognizer.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param versionName <p>
+     *            The version name you assigned to the entity recognizer.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withVersionName(String versionName) {
+        this.versionName = versionName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * entity recognizer model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     *
+     * @return <p>
+     *         The Amazon Resource Name (ARN) of the source model. This model
+     *         was imported from a different Amazon Web Services account to
+     *         create the entity recognizer model in your Amazon Web Services
+     *         account.
+     *         </p>
+     */
+    public String getSourceModelArn() {
+        return sourceModelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * entity recognizer model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     *
+     * @param sourceModelArn <p>
+     *            The Amazon Resource Name (ARN) of the source model. This model
+     *            was imported from a different Amazon Web Services account to
+     *            create the entity recognizer model in your Amazon Web Services
+     *            account.
+     *            </p>
+     */
+    public void setSourceModelArn(String sourceModelArn) {
+        this.sourceModelArn = sourceModelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the source model. This model was
+     * imported from a different Amazon Web Services account to create the
+     * entity recognizer model in your Amazon Web Services account.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity
+     * -recognizer/
+     * [a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?<br/>
+     *
+     * @param sourceModelArn <p>
+     *            The Amazon Resource Name (ARN) of the source model. This model
+     *            was imported from a different Amazon Web Services account to
+     *            create the entity recognizer model in your Amazon Web Services
+     *            account.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withSourceModelArn(String sourceModelArn) {
+        this.sourceModelArn = sourceModelArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     *
+     * @return <p>
+     *         The Amazon Resource Number (ARN) of the flywheel
+     *         </p>
+     */
+    public String getFlywheelArn() {
+        return flywheelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     *
+     * @param flywheelArn <p>
+     *            The Amazon Resource Number (ARN) of the flywheel
+     *            </p>
+     */
+    public void setFlywheelArn(String flywheelArn) {
+        this.flywheelArn = flywheelArn;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Number (ARN) of the flywheel
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 256<br/>
+     * <b>Pattern:
+     * </b>arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:flywheel
+     * /[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     *
+     * @param flywheelArn <p>
+     *            The Amazon Resource Number (ARN) of the flywheel
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withFlywheelArn(String flywheelArn) {
+        this.flywheelArn = flywheelArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Output data configuration.
+     * </p>
+     *
+     * @return <p>
+     *         Output data configuration.
+     *         </p>
+     */
+    public EntityRecognizerOutputDataConfig getOutputDataConfig() {
+        return outputDataConfig;
+    }
+
+    /**
+     * <p>
+     * Output data configuration.
+     * </p>
+     *
+     * @param outputDataConfig <p>
+     *            Output data configuration.
+     *            </p>
+     */
+    public void setOutputDataConfig(EntityRecognizerOutputDataConfig outputDataConfig) {
+        this.outputDataConfig = outputDataConfig;
+    }
+
+    /**
+     * <p>
+     * Output data configuration.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param outputDataConfig <p>
+     *            Output data configuration.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public EntityRecognizerProperties withOutputDataConfig(
+            EntityRecognizerOutputDataConfig outputDataConfig) {
+        this.outputDataConfig = outputDataConfig;
         return this;
     }
 
@@ -803,7 +1539,21 @@ public class EntityRecognizerProperties implements Serializable {
         if (getRecognizerMetadata() != null)
             sb.append("RecognizerMetadata: " + getRecognizerMetadata() + ",");
         if (getDataAccessRoleArn() != null)
-            sb.append("DataAccessRoleArn: " + getDataAccessRoleArn());
+            sb.append("DataAccessRoleArn: " + getDataAccessRoleArn() + ",");
+        if (getVolumeKmsKeyId() != null)
+            sb.append("VolumeKmsKeyId: " + getVolumeKmsKeyId() + ",");
+        if (getVpcConfig() != null)
+            sb.append("VpcConfig: " + getVpcConfig() + ",");
+        if (getModelKmsKeyId() != null)
+            sb.append("ModelKmsKeyId: " + getModelKmsKeyId() + ",");
+        if (getVersionName() != null)
+            sb.append("VersionName: " + getVersionName() + ",");
+        if (getSourceModelArn() != null)
+            sb.append("SourceModelArn: " + getSourceModelArn() + ",");
+        if (getFlywheelArn() != null)
+            sb.append("FlywheelArn: " + getFlywheelArn() + ",");
+        if (getOutputDataConfig() != null)
+            sb.append("OutputDataConfig: " + getOutputDataConfig());
         sb.append("}");
         return sb.toString();
     }
@@ -831,6 +1581,19 @@ public class EntityRecognizerProperties implements Serializable {
                 + ((getRecognizerMetadata() == null) ? 0 : getRecognizerMetadata().hashCode());
         hashCode = prime * hashCode
                 + ((getDataAccessRoleArn() == null) ? 0 : getDataAccessRoleArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getVolumeKmsKeyId() == null) ? 0 : getVolumeKmsKeyId().hashCode());
+        hashCode = prime * hashCode + ((getVpcConfig() == null) ? 0 : getVpcConfig().hashCode());
+        hashCode = prime * hashCode
+                + ((getModelKmsKeyId() == null) ? 0 : getModelKmsKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getVersionName() == null) ? 0 : getVersionName().hashCode());
+        hashCode = prime * hashCode
+                + ((getSourceModelArn() == null) ? 0 : getSourceModelArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getFlywheelArn() == null) ? 0 : getFlywheelArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getOutputDataConfig() == null) ? 0 : getOutputDataConfig().hashCode());
         return hashCode;
     }
 
@@ -896,6 +1659,41 @@ public class EntityRecognizerProperties implements Serializable {
             return false;
         if (other.getDataAccessRoleArn() != null
                 && other.getDataAccessRoleArn().equals(this.getDataAccessRoleArn()) == false)
+            return false;
+        if (other.getVolumeKmsKeyId() == null ^ this.getVolumeKmsKeyId() == null)
+            return false;
+        if (other.getVolumeKmsKeyId() != null
+                && other.getVolumeKmsKeyId().equals(this.getVolumeKmsKeyId()) == false)
+            return false;
+        if (other.getVpcConfig() == null ^ this.getVpcConfig() == null)
+            return false;
+        if (other.getVpcConfig() != null
+                && other.getVpcConfig().equals(this.getVpcConfig()) == false)
+            return false;
+        if (other.getModelKmsKeyId() == null ^ this.getModelKmsKeyId() == null)
+            return false;
+        if (other.getModelKmsKeyId() != null
+                && other.getModelKmsKeyId().equals(this.getModelKmsKeyId()) == false)
+            return false;
+        if (other.getVersionName() == null ^ this.getVersionName() == null)
+            return false;
+        if (other.getVersionName() != null
+                && other.getVersionName().equals(this.getVersionName()) == false)
+            return false;
+        if (other.getSourceModelArn() == null ^ this.getSourceModelArn() == null)
+            return false;
+        if (other.getSourceModelArn() != null
+                && other.getSourceModelArn().equals(this.getSourceModelArn()) == false)
+            return false;
+        if (other.getFlywheelArn() == null ^ this.getFlywheelArn() == null)
+            return false;
+        if (other.getFlywheelArn() != null
+                && other.getFlywheelArn().equals(this.getFlywheelArn()) == false)
+            return false;
+        if (other.getOutputDataConfig() == null ^ this.getOutputDataConfig() == null)
+            return false;
+        if (other.getOutputDataConfig() != null
+                && other.getOutputDataConfig().equals(this.getOutputDataConfig()) == false)
             return false;
         return true;
     }

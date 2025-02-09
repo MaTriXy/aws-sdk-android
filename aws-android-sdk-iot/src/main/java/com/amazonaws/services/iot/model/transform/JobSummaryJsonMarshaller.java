@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -64,6 +65,11 @@ class JobSummaryJsonMarshaller {
             java.util.Date completedAt = jobSummary.getCompletedAt();
             jsonWriter.name("completedAt");
             jsonWriter.value(completedAt);
+        }
+        if (jobSummary.getIsConcurrent() != null) {
+            Boolean isConcurrent = jobSummary.getIsConcurrent();
+            jsonWriter.name("isConcurrent");
+            jsonWriter.value(isConcurrent);
         }
         jsonWriter.endObject();
     }

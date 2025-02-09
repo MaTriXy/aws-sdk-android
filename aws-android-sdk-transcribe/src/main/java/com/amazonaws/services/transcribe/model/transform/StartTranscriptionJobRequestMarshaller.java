@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.transcribe.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -92,10 +95,122 @@ public class StartTranscriptionJobRequestMarshaller implements
                 jsonWriter.name("OutputBucketName");
                 jsonWriter.value(outputBucketName);
             }
+            if (startTranscriptionJobRequest.getOutputKey() != null) {
+                String outputKey = startTranscriptionJobRequest.getOutputKey();
+                jsonWriter.name("OutputKey");
+                jsonWriter.value(outputKey);
+            }
+            if (startTranscriptionJobRequest.getOutputEncryptionKMSKeyId() != null) {
+                String outputEncryptionKMSKeyId = startTranscriptionJobRequest
+                        .getOutputEncryptionKMSKeyId();
+                jsonWriter.name("OutputEncryptionKMSKeyId");
+                jsonWriter.value(outputEncryptionKMSKeyId);
+            }
+            if (startTranscriptionJobRequest.getKMSEncryptionContext() != null) {
+                java.util.Map<String, String> kMSEncryptionContext = startTranscriptionJobRequest
+                        .getKMSEncryptionContext();
+                jsonWriter.name("KMSEncryptionContext");
+                jsonWriter.beginObject();
+                for (java.util.Map.Entry<String, String> kMSEncryptionContextEntry : kMSEncryptionContext
+                        .entrySet()) {
+                    String kMSEncryptionContextValue = kMSEncryptionContextEntry.getValue();
+                    if (kMSEncryptionContextValue != null) {
+                        jsonWriter.name(kMSEncryptionContextEntry.getKey());
+                        jsonWriter.value(kMSEncryptionContextValue);
+                    }
+                }
+                jsonWriter.endObject();
+            }
             if (startTranscriptionJobRequest.getSettings() != null) {
                 Settings settings = startTranscriptionJobRequest.getSettings();
                 jsonWriter.name("Settings");
                 SettingsJsonMarshaller.getInstance().marshall(settings, jsonWriter);
+            }
+            if (startTranscriptionJobRequest.getModelSettings() != null) {
+                ModelSettings modelSettings = startTranscriptionJobRequest.getModelSettings();
+                jsonWriter.name("ModelSettings");
+                ModelSettingsJsonMarshaller.getInstance().marshall(modelSettings, jsonWriter);
+            }
+            if (startTranscriptionJobRequest.getJobExecutionSettings() != null) {
+                JobExecutionSettings jobExecutionSettings = startTranscriptionJobRequest
+                        .getJobExecutionSettings();
+                jsonWriter.name("JobExecutionSettings");
+                JobExecutionSettingsJsonMarshaller.getInstance().marshall(jobExecutionSettings,
+                        jsonWriter);
+            }
+            if (startTranscriptionJobRequest.getContentRedaction() != null) {
+                ContentRedaction contentRedaction = startTranscriptionJobRequest
+                        .getContentRedaction();
+                jsonWriter.name("ContentRedaction");
+                ContentRedactionJsonMarshaller.getInstance().marshall(contentRedaction, jsonWriter);
+            }
+            if (startTranscriptionJobRequest.getIdentifyLanguage() != null) {
+                Boolean identifyLanguage = startTranscriptionJobRequest.getIdentifyLanguage();
+                jsonWriter.name("IdentifyLanguage");
+                jsonWriter.value(identifyLanguage);
+            }
+            if (startTranscriptionJobRequest.getIdentifyMultipleLanguages() != null) {
+                Boolean identifyMultipleLanguages = startTranscriptionJobRequest
+                        .getIdentifyMultipleLanguages();
+                jsonWriter.name("IdentifyMultipleLanguages");
+                jsonWriter.value(identifyMultipleLanguages);
+            }
+            if (startTranscriptionJobRequest.getLanguageOptions() != null) {
+                java.util.List<String> languageOptions = startTranscriptionJobRequest
+                        .getLanguageOptions();
+                jsonWriter.name("LanguageOptions");
+                jsonWriter.beginArray();
+                for (String languageOptionsItem : languageOptions) {
+                    if (languageOptionsItem != null) {
+                        jsonWriter.value(languageOptionsItem);
+                    }
+                }
+                jsonWriter.endArray();
+            }
+            if (startTranscriptionJobRequest.getSubtitles() != null) {
+                Subtitles subtitles = startTranscriptionJobRequest.getSubtitles();
+                jsonWriter.name("Subtitles");
+                SubtitlesJsonMarshaller.getInstance().marshall(subtitles, jsonWriter);
+            }
+            if (startTranscriptionJobRequest.getTags() != null) {
+                java.util.List<Tag> tags = startTranscriptionJobRequest.getTags();
+                jsonWriter.name("Tags");
+                jsonWriter.beginArray();
+                for (Tag tagsItem : tags) {
+                    if (tagsItem != null) {
+                        TagJsonMarshaller.getInstance().marshall(tagsItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
+            }
+            if (startTranscriptionJobRequest.getLanguageIdSettings() != null) {
+                java.util.Map<String, LanguageIdSettings> languageIdSettings = startTranscriptionJobRequest
+                        .getLanguageIdSettings();
+                jsonWriter.name("LanguageIdSettings");
+                jsonWriter.beginObject();
+                for (java.util.Map.Entry<String, LanguageIdSettings> languageIdSettingsEntry : languageIdSettings
+                        .entrySet()) {
+                    LanguageIdSettings languageIdSettingsValue = languageIdSettingsEntry.getValue();
+                    if (languageIdSettingsValue != null) {
+                        jsonWriter.name(languageIdSettingsEntry.getKey());
+                        LanguageIdSettingsJsonMarshaller.getInstance().marshall(
+                                languageIdSettingsValue, jsonWriter);
+                    }
+                }
+                jsonWriter.endObject();
+            }
+            if (startTranscriptionJobRequest.getToxicityDetection() != null) {
+                java.util.List<ToxicityDetectionSettings> toxicityDetection = startTranscriptionJobRequest
+                        .getToxicityDetection();
+                jsonWriter.name("ToxicityDetection");
+                jsonWriter.beginArray();
+                for (ToxicityDetectionSettings toxicityDetectionItem : toxicityDetection) {
+                    if (toxicityDetectionItem != null) {
+                        ToxicityDetectionSettingsJsonMarshaller.getInstance().marshall(
+                                toxicityDetectionItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
             }
 
             jsonWriter.endObject();

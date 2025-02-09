@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,18 +53,15 @@ public class GetCelebrityRecognitionResultJsonUnmarshaller implements
                                 CelebrityRecognitionJsonUnmarshaller.getInstance()
                         )
                                 .unmarshall(context));
-            } else if (name.equals("BillableDurationSeconds")) {
-                getCelebrityRecognitionResult.setBillableDurationSeconds(IntegerJsonUnmarshaller
-                        .getInstance()
+            } else if (name.equals("JobId")) {
+                getCelebrityRecognitionResult.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("ErrorCode")) {
-                getCelebrityRecognitionResult.setErrorCode(StringJsonUnmarshaller.getInstance()
+            } else if (name.equals("Video")) {
+                getCelebrityRecognitionResult.setVideo(VideoJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("Warnings")) {
-                getCelebrityRecognitionResult.setWarnings(new ListUnmarshaller<Warning>(
-                        WarningJsonUnmarshaller.getInstance()
-                        )
-                                .unmarshall(context));
+            } else if (name.equals("JobTag")) {
+                getCelebrityRecognitionResult.setJobTag(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else {
                 reader.skipValue();
             }

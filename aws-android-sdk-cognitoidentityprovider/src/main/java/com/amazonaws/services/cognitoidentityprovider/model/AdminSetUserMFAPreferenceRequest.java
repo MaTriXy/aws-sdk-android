@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,40 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Sets the user's multi-factor authentication (MFA) preference.
+ * The user's multi-factor authentication (MFA) preference, including which MFA
+ * options are activated, and if any are preferred. Only one factor can be set
+ * as preferred. The preferred MFA factor will be used to authenticate a user if
+ * multiple factors are activated. If multiple options are activated and no
+ * preference is set, a challenge to choose an MFA option will be returned
+ * during sign-in.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class AdminSetUserMFAPreferenceRequest extends AmazonWebServiceRequest implements
         Serializable {

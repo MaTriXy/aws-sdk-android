@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,22 +21,23 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Starts the asynchronous tracking of persons in a stored video.
+ * Starts the asynchronous tracking of a person's path in a stored video.
  * </p>
  * <p>
- * Amazon Rekognition Video can track persons in a video stored in an Amazon S3
- * bucket. Use <a>Video</a> to specify the bucket name and the filename of the
- * video. <code>StartPersonTracking</code> returns a job identifier (
- * <code>JobId</code>) which you use to get the results of the operation. When
- * label detection is finished, Amazon Rekognition publishes a completion status
- * to the Amazon Simple Notification Service topic that you specify in
- * <code>NotificationChannel</code>.
+ * Amazon Rekognition Video can track the path of people in a video stored in an
+ * Amazon S3 bucket. Use <a>Video</a> to specify the bucket name and the
+ * filename of the video. <code>StartPersonTracking</code> returns a job
+ * identifier (<code>JobId</code>) which you use to get the results of the
+ * operation. When label detection is finished, Amazon Rekognition publishes a
+ * completion status to the Amazon Simple Notification Service topic that you
+ * specify in <code>NotificationChannel</code>.
  * </p>
  * <p>
  * To get the results of the person detection operation, first check that the
  * status value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If
- * so, call and pass the job identifier (<code>JobId</code>) from the initial
- * call to <code>StartPersonTracking</code>.
+ * so, call <a>GetPersonTracking</a> and pass the job identifier (
+ * <code>JobId</code>) from the initial call to <code>StartPersonTracking</code>
+ * .
  * </p>
  */
 public class StartPersonTrackingRequest extends AmazonWebServiceRequest implements Serializable {
@@ -65,20 +66,24 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the people detection operation to.
+     * completion status of the people detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      */
     private NotificationChannel notificationChannel;
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      */
     private String jobTag;
 
@@ -216,13 +221,17 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the people detection operation to.
+     * completion status of the people detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      *
      * @return <p>
      *         The Amazon SNS topic ARN you want Amazon Rekognition Video to
      *         publish the completion status of the people detection operation
-     *         to.
+     *         to. The Amazon SNS topic must have a topic name that begins with
+     *         <i>AmazonRekognition</i> if you are using the
+     *         AmazonRekognitionServiceRole permissions policy.
      *         </p>
      */
     public NotificationChannel getNotificationChannel() {
@@ -232,13 +241,17 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the people detection operation to.
+     * completion status of the people detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      *
      * @param notificationChannel <p>
      *            The Amazon SNS topic ARN you want Amazon Rekognition Video to
      *            publish the completion status of the people detection
-     *            operation to.
+     *            operation to. The Amazon SNS topic must have a topic name that
+     *            begins with <i>AmazonRekognition</i> if you are using the
+     *            AmazonRekognitionServiceRole permissions policy.
      *            </p>
      */
     public void setNotificationChannel(NotificationChannel notificationChannel) {
@@ -248,7 +261,9 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the people detection operation to.
+     * completion status of the people detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -257,7 +272,9 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
      * @param notificationChannel <p>
      *            The Amazon SNS topic ARN you want Amazon Rekognition Video to
      *            publish the completion status of the people detection
-     *            operation to.
+     *            operation to. The Amazon SNS topic must have a topic name that
+     *            begins with <i>AmazonRekognition</i> if you are using the
+     *            AmazonRekognitionServiceRole permissions policy.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -270,18 +287,22 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @return <p>
-     *         Unique identifier you specify to identify the job in the
-     *         completion status published to the Amazon Simple Notification
-     *         Service topic.
+     *         An identifier you specify that's returned in the completion
+     *         notification that's published to your Amazon Simple Notification
+     *         Service topic. For example, you can use <code>JobTag</code> to
+     *         group related jobs and identify them in the completion
+     *         notification.
      *         </p>
      */
     public String getJobTag() {
@@ -290,18 +311,22 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @param jobTag <p>
-     *            Unique identifier you specify to identify the job in the
-     *            completion status published to the Amazon Simple Notification
-     *            Service topic.
+     *            An identifier you specify that's returned in the completion
+     *            notification that's published to your Amazon Simple
+     *            Notification Service topic. For example, you can use
+     *            <code>JobTag</code> to group related jobs and identify them in
+     *            the completion notification.
      *            </p>
      */
     public void setJobTag(String jobTag) {
@@ -310,21 +335,25 @@ public class StartPersonTrackingRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @param jobTag <p>
-     *            Unique identifier you specify to identify the job in the
-     *            completion status published to the Amazon Simple Notification
-     *            Service topic.
+     *            An identifier you specify that's returned in the completion
+     *            notification that's published to your Amazon Simple
+     *            Notification Service topic. For example, you can use
+     *            <code>JobTag</code> to group related jobs and identify them in
+     *            the completion notification.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

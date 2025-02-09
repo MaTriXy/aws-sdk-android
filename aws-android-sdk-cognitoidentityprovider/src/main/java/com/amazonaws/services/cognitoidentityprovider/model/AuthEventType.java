@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,9 @@ public class AuthEventType implements Serializable {
      * <p>
      * The event ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String eventId;
 
@@ -36,13 +39,16 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword
+     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword, PasswordChange,
+     * ResendCode
      */
     private String eventType;
 
     /**
      * <p>
-     * The creation date
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      */
     private java.util.Date creationDate;
@@ -53,7 +59,7 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Success, Failure
+     * <b>Allowed Values: </b>Pass, Fail, InProgress
      */
     private String eventResponse;
 
@@ -73,9 +79,9 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The user context data captured at the time of an event request. It
-     * provides additional information about the client from which event the
-     * request is received.
+     * The user context data captured at the time of an event request. This
+     * value provides additional information about the client from which event
+     * the request is received.
      * </p>
      */
     private EventContextDataType eventContextData;
@@ -92,6 +98,9 @@ public class AuthEventType implements Serializable {
      * <p>
      * The event ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The event ID.
@@ -105,6 +114,9 @@ public class AuthEventType implements Serializable {
      * <p>
      * The event ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param eventId <p>
      *            The event ID.
@@ -121,6 +133,9 @@ public class AuthEventType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param eventId <p>
      *            The event ID.
@@ -139,7 +154,8 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword
+     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword, PasswordChange,
+     * ResendCode
      *
      * @return <p>
      *         The event type.
@@ -156,7 +172,8 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword
+     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword, PasswordChange,
+     * ResendCode
      *
      * @param eventType <p>
      *            The event type.
@@ -176,7 +193,8 @@ public class AuthEventType implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword
+     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword, PasswordChange,
+     * ResendCode
      *
      * @param eventType <p>
      *            The event type.
@@ -196,7 +214,8 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword
+     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword, PasswordChange,
+     * ResendCode
      *
      * @param eventType <p>
      *            The event type.
@@ -216,7 +235,8 @@ public class AuthEventType implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword
+     * <b>Allowed Values: </b>SignIn, SignUp, ForgotPassword, PasswordChange,
+     * ResendCode
      *
      * @param eventType <p>
      *            The event type.
@@ -232,11 +252,15 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The creation date
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @return <p>
-     *         The creation date
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -245,11 +269,15 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The creation date
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The creation date
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -258,14 +286,18 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The creation date
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The creation date
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -281,7 +313,7 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Success, Failure
+     * <b>Allowed Values: </b>Pass, Fail, InProgress
      *
      * @return <p>
      *         The event response.
@@ -298,7 +330,7 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Success, Failure
+     * <b>Allowed Values: </b>Pass, Fail, InProgress
      *
      * @param eventResponse <p>
      *            The event response.
@@ -318,7 +350,7 @@ public class AuthEventType implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Success, Failure
+     * <b>Allowed Values: </b>Pass, Fail, InProgress
      *
      * @param eventResponse <p>
      *            The event response.
@@ -338,7 +370,7 @@ public class AuthEventType implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Success, Failure
+     * <b>Allowed Values: </b>Pass, Fail, InProgress
      *
      * @param eventResponse <p>
      *            The event response.
@@ -358,7 +390,7 @@ public class AuthEventType implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Success, Failure
+     * <b>Allowed Values: </b>Pass, Fail, InProgress
      *
      * @param eventResponse <p>
      *            The event response.
@@ -495,15 +527,15 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The user context data captured at the time of an event request. It
-     * provides additional information about the client from which event the
-     * request is received.
+     * The user context data captured at the time of an event request. This
+     * value provides additional information about the client from which event
+     * the request is received.
      * </p>
      *
      * @return <p>
      *         The user context data captured at the time of an event request.
-     *         It provides additional information about the client from which
-     *         event the request is received.
+     *         This value provides additional information about the client from
+     *         which event the request is received.
      *         </p>
      */
     public EventContextDataType getEventContextData() {
@@ -512,15 +544,15 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The user context data captured at the time of an event request. It
-     * provides additional information about the client from which event the
-     * request is received.
+     * The user context data captured at the time of an event request. This
+     * value provides additional information about the client from which event
+     * the request is received.
      * </p>
      *
      * @param eventContextData <p>
      *            The user context data captured at the time of an event
-     *            request. It provides additional information about the client
-     *            from which event the request is received.
+     *            request. This value provides additional information about the
+     *            client from which event the request is received.
      *            </p>
      */
     public void setEventContextData(EventContextDataType eventContextData) {
@@ -529,9 +561,9 @@ public class AuthEventType implements Serializable {
 
     /**
      * <p>
-     * The user context data captured at the time of an event request. It
-     * provides additional information about the client from which event the
-     * request is received.
+     * The user context data captured at the time of an event request. This
+     * value provides additional information about the client from which event
+     * the request is received.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -539,8 +571,8 @@ public class AuthEventType implements Serializable {
      *
      * @param eventContextData <p>
      *            The user context data captured at the time of an event
-     *            request. It provides additional information about the client
-     *            from which event the request is received.
+     *            request. This value provides additional information about the
+     *            client from which event the request is received.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

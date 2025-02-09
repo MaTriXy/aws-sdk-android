@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,9 @@ class OutputDataConfigJsonUnmarshaller implements
             String name = reader.nextName();
             if (name.equals("S3Uri")) {
                 outputDataConfig.setS3Uri(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("KmsKeyId")) {
+                outputDataConfig.setKmsKeyId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

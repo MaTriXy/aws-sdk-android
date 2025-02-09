@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,10 @@ import java.io.Serializable;
 
 public class DescribeCollectionResult implements Serializable {
     /**
-     * The new value for the faceCount property for this object.
+     * <p>
+     * The number of faces that are indexed into the collection. To index faces
+     * into a collection, use <a>IndexFaces</a>.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Range: </b>0 - <br/>
@@ -27,47 +30,84 @@ public class DescribeCollectionResult implements Serializable {
     private Long faceCount;
 
     /**
-     * The new value for the faceModelVersion property for this object.
+     * <p>
+     * The version of the face model that's used by the collection for face
+     * detection.
+     * </p>
+     * <p>
+     * For more information, see Model versioning in the Amazon Rekognition
+     * Developer Guide.
+     * </p>
      */
     private String faceModelVersion;
 
     /**
-     * The new value for the collectionARN property for this object.
+     * <p>
+     * The Amazon Resource Name (ARN) of the collection.
+     * </p>
      */
     private String collectionARN;
 
     /**
-     * The new value for the creationTimestamp property for this object.
+     * <p>
+     * The number of milliseconds since the Unix epoch time until the creation
+     * of the collection. The Unix epoch time is 00:00:00 Coordinated Universal
+     * Time (UTC), Thursday, 1 January 1970.
+     * </p>
      */
     private java.util.Date creationTimestamp;
 
     /**
-     * Returns the value of the faceCount property for this object.
+     * <p>
+     * The number of UserIDs assigned to the specified colleciton.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     */
+    private Long userCount;
+
+    /**
+     * <p>
+     * The number of faces that are indexed into the collection. To index faces
+     * into a collection, use <a>IndexFaces</a>.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Range: </b>0 - <br/>
      *
-     * @return The value of the faceCount property for this object.
+     * @return <p>
+     *         The number of faces that are indexed into the collection. To
+     *         index faces into a collection, use <a>IndexFaces</a>.
+     *         </p>
      */
     public Long getFaceCount() {
         return faceCount;
     }
 
     /**
-     * Sets the value of faceCount
+     * <p>
+     * The number of faces that are indexed into the collection. To index faces
+     * into a collection, use <a>IndexFaces</a>.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Range: </b>0 - <br/>
      *
-     * @param faceCount The new value for the faceCount property for this
-     *            object.
+     * @param faceCount <p>
+     *            The number of faces that are indexed into the collection. To
+     *            index faces into a collection, use <a>IndexFaces</a>.
+     *            </p>
      */
     public void setFaceCount(Long faceCount) {
         this.faceCount = faceCount;
     }
 
     /**
-     * Sets the value of the faceCount property for this object.
+     * <p>
+     * The number of faces that are indexed into the collection. To index faces
+     * into a collection, use <a>IndexFaces</a>.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -75,8 +115,10 @@ public class DescribeCollectionResult implements Serializable {
      * <b>Constraints:</b><br/>
      * <b>Range: </b>0 - <br/>
      *
-     * @param faceCount The new value for the faceCount property for this
-     *            object.
+     * @param faceCount <p>
+     *            The number of faces that are indexed into the collection. To
+     *            index faces into a collection, use <a>IndexFaces</a>.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -86,32 +128,72 @@ public class DescribeCollectionResult implements Serializable {
     }
 
     /**
-     * Returns the value of the faceModelVersion property for this object.
+     * <p>
+     * The version of the face model that's used by the collection for face
+     * detection.
+     * </p>
+     * <p>
+     * For more information, see Model versioning in the Amazon Rekognition
+     * Developer Guide.
+     * </p>
      *
-     * @return The value of the faceModelVersion property for this object.
+     * @return <p>
+     *         The version of the face model that's used by the collection for
+     *         face detection.
+     *         </p>
+     *         <p>
+     *         For more information, see Model versioning in the Amazon
+     *         Rekognition Developer Guide.
+     *         </p>
      */
     public String getFaceModelVersion() {
         return faceModelVersion;
     }
 
     /**
-     * Sets the value of faceModelVersion
+     * <p>
+     * The version of the face model that's used by the collection for face
+     * detection.
+     * </p>
+     * <p>
+     * For more information, see Model versioning in the Amazon Rekognition
+     * Developer Guide.
+     * </p>
      *
-     * @param faceModelVersion The new value for the faceModelVersion property
-     *            for this object.
+     * @param faceModelVersion <p>
+     *            The version of the face model that's used by the collection
+     *            for face detection.
+     *            </p>
+     *            <p>
+     *            For more information, see Model versioning in the Amazon
+     *            Rekognition Developer Guide.
+     *            </p>
      */
     public void setFaceModelVersion(String faceModelVersion) {
         this.faceModelVersion = faceModelVersion;
     }
 
     /**
-     * Sets the value of the faceModelVersion property for this object.
+     * <p>
+     * The version of the face model that's used by the collection for face
+     * detection.
+     * </p>
+     * <p>
+     * For more information, see Model versioning in the Amazon Rekognition
+     * Developer Guide.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param faceModelVersion The new value for the faceModelVersion property
-     *            for this object.
+     * @param faceModelVersion <p>
+     *            The version of the face model that's used by the collection
+     *            for face detection.
+     *            </p>
+     *            <p>
+     *            For more information, see Model versioning in the Amazon
+     *            Rekognition Developer Guide.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -121,32 +203,42 @@ public class DescribeCollectionResult implements Serializable {
     }
 
     /**
-     * Returns the value of the collectionARN property for this object.
+     * <p>
+     * The Amazon Resource Name (ARN) of the collection.
+     * </p>
      *
-     * @return The value of the collectionARN property for this object.
+     * @return <p>
+     *         The Amazon Resource Name (ARN) of the collection.
+     *         </p>
      */
     public String getCollectionARN() {
         return collectionARN;
     }
 
     /**
-     * Sets the value of collectionARN
+     * <p>
+     * The Amazon Resource Name (ARN) of the collection.
+     * </p>
      *
-     * @param collectionARN The new value for the collectionARN property for
-     *            this object.
+     * @param collectionARN <p>
+     *            The Amazon Resource Name (ARN) of the collection.
+     *            </p>
      */
     public void setCollectionARN(String collectionARN) {
         this.collectionARN = collectionARN;
     }
 
     /**
-     * Sets the value of the collectionARN property for this object.
+     * <p>
+     * The Amazon Resource Name (ARN) of the collection.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param collectionARN The new value for the collectionARN property for
-     *            this object.
+     * @param collectionARN <p>
+     *            The Amazon Resource Name (ARN) of the collection.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -156,37 +248,113 @@ public class DescribeCollectionResult implements Serializable {
     }
 
     /**
-     * Returns the value of the creationTimestamp property for this object.
+     * <p>
+     * The number of milliseconds since the Unix epoch time until the creation
+     * of the collection. The Unix epoch time is 00:00:00 Coordinated Universal
+     * Time (UTC), Thursday, 1 January 1970.
+     * </p>
      *
-     * @return The value of the creationTimestamp property for this object.
+     * @return <p>
+     *         The number of milliseconds since the Unix epoch time until the
+     *         creation of the collection. The Unix epoch time is 00:00:00
+     *         Coordinated Universal Time (UTC), Thursday, 1 January 1970.
+     *         </p>
      */
     public java.util.Date getCreationTimestamp() {
         return creationTimestamp;
     }
 
     /**
-     * Sets the value of creationTimestamp
+     * <p>
+     * The number of milliseconds since the Unix epoch time until the creation
+     * of the collection. The Unix epoch time is 00:00:00 Coordinated Universal
+     * Time (UTC), Thursday, 1 January 1970.
+     * </p>
      *
-     * @param creationTimestamp The new value for the creationTimestamp property
-     *            for this object.
+     * @param creationTimestamp <p>
+     *            The number of milliseconds since the Unix epoch time until the
+     *            creation of the collection. The Unix epoch time is 00:00:00
+     *            Coordinated Universal Time (UTC), Thursday, 1 January 1970.
+     *            </p>
      */
     public void setCreationTimestamp(java.util.Date creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
     }
 
     /**
-     * Sets the value of the creationTimestamp property for this object.
+     * <p>
+     * The number of milliseconds since the Unix epoch time until the creation
+     * of the collection. The Unix epoch time is 00:00:00 Coordinated Universal
+     * Time (UTC), Thursday, 1 January 1970.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param creationTimestamp The new value for the creationTimestamp property
-     *            for this object.
+     * @param creationTimestamp <p>
+     *            The number of milliseconds since the Unix epoch time until the
+     *            creation of the collection. The Unix epoch time is 00:00:00
+     *            Coordinated Universal Time (UTC), Thursday, 1 January 1970.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public DescribeCollectionResult withCreationTimestamp(java.util.Date creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The number of UserIDs assigned to the specified colleciton.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @return <p>
+     *         The number of UserIDs assigned to the specified colleciton.
+     *         </p>
+     */
+    public Long getUserCount() {
+        return userCount;
+    }
+
+    /**
+     * <p>
+     * The number of UserIDs assigned to the specified colleciton.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param userCount <p>
+     *            The number of UserIDs assigned to the specified colleciton.
+     *            </p>
+     */
+    public void setUserCount(Long userCount) {
+        this.userCount = userCount;
+    }
+
+    /**
+     * <p>
+     * The number of UserIDs assigned to the specified colleciton.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param userCount <p>
+     *            The number of UserIDs assigned to the specified colleciton.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DescribeCollectionResult withUserCount(Long userCount) {
+        this.userCount = userCount;
         return this;
     }
 
@@ -208,7 +376,9 @@ public class DescribeCollectionResult implements Serializable {
         if (getCollectionARN() != null)
             sb.append("CollectionARN: " + getCollectionARN() + ",");
         if (getCreationTimestamp() != null)
-            sb.append("CreationTimestamp: " + getCreationTimestamp());
+            sb.append("CreationTimestamp: " + getCreationTimestamp() + ",");
+        if (getUserCount() != null)
+            sb.append("UserCount: " + getUserCount());
         sb.append("}");
         return sb.toString();
     }
@@ -225,6 +395,7 @@ public class DescribeCollectionResult implements Serializable {
                 + ((getCollectionARN() == null) ? 0 : getCollectionARN().hashCode());
         hashCode = prime * hashCode
                 + ((getCreationTimestamp() == null) ? 0 : getCreationTimestamp().hashCode());
+        hashCode = prime * hashCode + ((getUserCount() == null) ? 0 : getUserCount().hashCode());
         return hashCode;
     }
 
@@ -258,6 +429,11 @@ public class DescribeCollectionResult implements Serializable {
             return false;
         if (other.getCreationTimestamp() != null
                 && other.getCreationTimestamp().equals(this.getCreationTimestamp()) == false)
+            return false;
+        if (other.getUserCount() == null ^ this.getUserCount() == null)
+            return false;
+        if (other.getUserCount() != null
+                && other.getUserCount().equals(this.getUserCount()) == false)
             return false;
         return true;
     }

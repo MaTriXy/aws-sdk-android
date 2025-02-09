@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,81 +21,207 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Imports key material into an existing AWS KMS customer master key (CMK) that
- * was created without key material. You cannot perform this operation on a CMK
- * in a different AWS account. For more information about creating CMKs with no
- * key material and then importing key material, see <a href=
- * "http://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
- * >Importing Key Material</a> in the <i>AWS Key Management Service Developer
+ * Imports or reimports key material into an existing KMS key that was created
+ * without key material. <code>ImportKeyMaterial</code> also sets the expiration
+ * model and expiration date of the imported key material.
+ * </p>
+ * <p>
+ * By default, KMS keys are created with key material that KMS generates. This
+ * operation supports <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+ * >Importing key material</a>, an advanced feature that lets you generate and
+ * import the cryptographic key material for a KMS key. For more information
+ * about importing key material into KMS, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+ * >Importing key material</a> in the <i>Key Management Service Developer
  * Guide</i>.
  * </p>
  * <p>
- * Before using this operation, call <a>GetParametersForImport</a>. Its response
- * includes a public key and an import token. Use the public key to encrypt the
- * key material. Then, submit the import token from the same
- * <code>GetParametersForImport</code> response.
+ * After you successfully import key material into a KMS key, you can <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html#reimport-key-material"
+ * >reimport the same key material</a> into that KMS key, but you cannot import
+ * different key material. You might reimport key material to replace key
+ * material that expired or key material that you deleted. You might also
+ * reimport key material to change the expiration model or expiration date of
+ * the key material.
  * </p>
  * <p>
- * When calling this operation, you must specify the following values:
+ * Each time you import key material into KMS, you can determine whether (
+ * <code>ExpirationModel</code>) and when (<code>ValidTo</code>) the key
+ * material expires. To change the expiration of your key material, you must
+ * import it again, either by calling <code>ImportKeyMaterial</code> or using
+ * the <a href=
+ * "kms/latest/developerguide/importing-keys-import-key-material.html#importing-keys-import-key-material-console"
+ * >import features</a> of the KMS console.
+ * </p>
+ * <p>
+ * Before calling <code>ImportKeyMaterial</code>:
  * </p>
  * <ul>
  * <li>
  * <p>
- * The key ID or key ARN of a CMK with no key material. Its <code>Origin</code>
- * must be <code>EXTERNAL</code>.
+ * Create or identify a KMS key with no key material. The KMS key must have an
+ * <code>Origin</code> value of <code>EXTERNAL</code>, which indicates that the
+ * KMS key is designed for imported key material.
  * </p>
  * <p>
- * To create a CMK with no key material, call <a>CreateKey</a> and set the value
- * of its <code>Origin</code> parameter to <code>EXTERNAL</code>. To get the
- * <code>Origin</code> of a CMK, call <a>DescribeKey</a>.)
+ * To create an new KMS key for imported key material, call the <a>CreateKey</a>
+ * operation with an <code>Origin</code> value of <code>EXTERNAL</code>. You can
+ * create a symmetric encryption KMS key, HMAC KMS key, asymmetric encryption
+ * KMS key, or asymmetric signing KMS key. You can also import key material into
+ * a <a href="kms/latest/developerguide/multi-region-keys-overview.html">multi-
+ * Region key</a> of any supported type. However, you can't import key material
+ * into a KMS key in a <a
+ * href="kms/latest/developerguide/custom-key-store-overview.html">custom key
+ * store</a>.
  * </p>
  * </li>
  * <li>
  * <p>
- * The encrypted key material. To get the public key to encrypt the key
- * material, call <a>GetParametersForImport</a>.
+ * Use the <a>DescribeKey</a> operation to verify that the <code>KeyState</code>
+ * of the KMS key is <code>PendingImport</code>, which indicates that the KMS
+ * key has no key material.
+ * </p>
+ * <p>
+ * If you are reimporting the same key material into an existing KMS key, you
+ * might need to call the <a>DeleteImportedKeyMaterial</a> to delete its
+ * existing key material.
  * </p>
  * </li>
  * <li>
  * <p>
- * The import token that <a>GetParametersForImport</a> returned. This token and
- * the public key used to encrypt the key material must have come from the same
+ * Call the <a>GetParametersForImport</a> operation to get a public key and
+ * import token set for importing key material.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * Use the public key in the <a>GetParametersForImport</a> response to encrypt
+ * your key material.
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * Then, in an <code>ImportKeyMaterial</code> request, you submit your encrypted
+ * key material and import token. When calling this operation, you must specify
+ * the following values:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * The key ID or key ARN of the KMS key to associate with the imported key
+ * material. Its <code>Origin</code> must be <code>EXTERNAL</code> and its
+ * <code>KeyState</code> must be <code>PendingImport</code>. You cannot perform
+ * this operation on a KMS key in a <a
+ * href="kms/latest/developerguide/custom-key-store-overview.html">custom key
+ * store</a>, or on a KMS key in a different Amazon Web Services account. To get
+ * the <code>Origin</code> and <code>KeyState</code> of a KMS key, call
+ * <a>DescribeKey</a>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The encrypted key material.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The import token that <a>GetParametersForImport</a> returned. You must use a
+ * public key and token from the same <code>GetParametersForImport</code>
  * response.
  * </p>
  * </li>
  * <li>
  * <p>
- * Whether the key material expires and if so, when. If you set an expiration
- * date, you can change it only by reimporting the same key material and
- * specifying a new expiration date. If the key material expires, AWS KMS
- * deletes the key material and the CMK becomes unusable. To use the CMK again,
- * you must reimport the same key material.
+ * Whether the key material expires (<code>ExpirationModel</code>) and, if so,
+ * when (<code>ValidTo</code>). For help with this choice, see <a href=
+ * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+ * >Setting an expiration time</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * If you set an expiration date, KMS deletes the key material from the KMS key
+ * on the specified date, making the KMS key unusable. To use the KMS key in
+ * cryptographic operations again, you must reimport the same key material.
+ * However, you can delete and reimport the key material at any time, including
+ * before the key material expires. Each time you reimport, you can eliminate or
+ * reset the expiration time.
  * </p>
  * </li>
  * </ul>
  * <p>
- * When this operation is successful, the key state of the CMK changes from
- * <code>PendingImport</code> to <code>Enabled</code>, and you can use the CMK.
- * After you successfully import key material into a CMK, you can reimport the
- * same key material into that CMK, but you cannot import different key
- * material.
+ * When this operation is successful, the key state of the KMS key changes from
+ * <code>PendingImport</code> to <code>Enabled</code>, and you can use the KMS
+ * key in cryptographic operations.
  * </p>
  * <p>
- * The result of this operation varies with the key state of the CMK. For
- * details, see <a
- * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
- * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
- * Management Service Developer Guide</i>.
+ * If this operation fails, use the exception to help determine the problem. If
+ * the error is related to the key material, the import token, or wrapping key,
+ * use <a>GetParametersForImport</a> to get a new public key and import token
+ * for the KMS key and repeat the import procedure. For help, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html#importing-keys-overview"
+ * >How To Import Key Material</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * The KMS key that you use for this operation must be in a compatible key
+ * state. For details, see <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >Key states of KMS keys</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a KMS key
+ * in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:ImportKeyMaterial</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>DeleteImportedKeyMaterial</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>GetParametersForImport</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The identifier of the CMK to import the key material into. The CMK's
-     * <code>Origin</code> must be <code>EXTERNAL</code>.
+     * The identifier of the KMS key that will be associated with the imported
+     * key material. This must be the same KMS key specified in the
+     * <code>KeyID</code> parameter of the corresponding
+     * <a>GetParametersForImport</a> request. The <code>Origin</code> of the KMS
+     * key must be <code>EXTERNAL</code> and its <code>KeyState</code> must be
+     * <code>PendingImport</code>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * The KMS key can be a symmetric encryption KMS key, HMAC KMS key,
+     * asymmetric encryption KMS key, or asymmetric signing KMS key, including a
+     * <a
+     * href="kms/latest/developerguide/multi-region-keys-overview.html">multi-
+     * Region key</a> of any supported type. You cannot perform this operation
+     * on a KMS key in a custom key store, or on a KMS key in a different Amazon
+     * Web Services account.
+     * </p>
+     * <p>
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -114,7 +240,7 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -137,10 +263,10 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The encrypted key material to import. It must be encrypted with the
-     * public key that you received in the response to a previous
-     * <a>GetParametersForImport</a> request, using the wrapping algorithm that
-     * you specified in that request.
+     * The encrypted key material to import. The key material must be encrypted
+     * under the public wrapping key that <a>GetParametersForImport</a>
+     * returned, using the wrapping algorithm that you specified in the same
+     * <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -150,11 +276,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The time at which the imported key material expires. When the key
-     * material expires, AWS KMS deletes the key material and the CMK becomes
-     * unusable. You must omit this parameter when the
-     * <code>ExpirationModel</code> parameter is set to
-     * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is required.
+     * The date and time when the imported key material expires. This parameter
+     * is required when the value of the <code>ExpirationModel</code> parameter
+     * is <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     * </p>
+     * <p>
+     * The value of this parameter must be a future date and time. The maximum
+     * value is 365 days from the request date.
+     * </p>
+     * <p>
+     * When the key material expires, KMS deletes the key material from the KMS
+     * key. Without its key material, the KMS key is unusable. To use the KMS
+     * key in cryptographic operations, you must reimport the same key material.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must delete
+     * (<a>DeleteImportedKeyMaterial</a>) and reimport the key material.
      * </p>
      */
     private java.util.Date validTo;
@@ -162,10 +301,23 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
     /**
      * <p>
      * Specifies whether the key material expires. The default is
-     * <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include the
-     * <code>ValidTo</code> parameter. When this parameter is set to
+     * <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a
+     * href=
+     * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     * >Setting an expiration time</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * When the value of <code>ExpirationModel</code> is
+     * <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the
+     * <code>ValidTo</code> parameter. When value is
      * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      * <code>ValidTo</code> parameter.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must reimport the key material.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -175,11 +327,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The identifier of the CMK to import the key material into. The CMK's
-     * <code>Origin</code> must be <code>EXTERNAL</code>.
+     * The identifier of the KMS key that will be associated with the imported
+     * key material. This must be the same KMS key specified in the
+     * <code>KeyID</code> parameter of the corresponding
+     * <a>GetParametersForImport</a> request. The <code>Origin</code> of the KMS
+     * key must be <code>EXTERNAL</code> and its <code>KeyState</code> must be
+     * <code>PendingImport</code>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * The KMS key can be a symmetric encryption KMS key, HMAC KMS key,
+     * asymmetric encryption KMS key, or asymmetric signing KMS key, including a
+     * <a
+     * href="kms/latest/developerguide/multi-region-keys-overview.html">multi-
+     * Region key</a> of any supported type. You cannot perform this operation
+     * on a KMS key in a custom key store, or on a KMS key in a different Amazon
+     * Web Services account.
+     * </p>
+     * <p>
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -198,7 +363,7 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -206,11 +371,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The identifier of the CMK to import the key material into. The
-     *         CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
+     *         The identifier of the KMS key that will be associated with the
+     *         imported key material. This must be the same KMS key specified in
+     *         the <code>KeyID</code> parameter of the corresponding
+     *         <a>GetParametersForImport</a> request. The <code>Origin</code> of
+     *         the KMS key must be <code>EXTERNAL</code> and its
+     *         <code>KeyState</code> must be <code>PendingImport</code>.
      *         </p>
      *         <p>
-     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         The KMS key can be a symmetric encryption KMS key, HMAC KMS key,
+     *         asymmetric encryption KMS key, or asymmetric signing KMS key,
+     *         including a <a href=
+     *         "kms/latest/developerguide/multi-region-keys-overview.html"
+     *         >multi-Region key</a> of any supported type. You cannot perform
+     *         this operation on a KMS key in a custom key store, or on a KMS
+     *         key in a different Amazon Web Services account.
+     *         </p>
+     *         <p>
+     *         Specify the key ID or key ARN of the KMS key.
      *         </p>
      *         <p>
      *         For example:
@@ -229,8 +407,8 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *         </li>
      *         </ul>
      *         <p>
-     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
-     *         <a>DescribeKey</a>.
+     *         To get the key ID and key ARN for a KMS key, use <a>ListKeys</a>
+     *         or <a>DescribeKey</a>.
      *         </p>
      */
     public String getKeyId() {
@@ -239,11 +417,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The identifier of the CMK to import the key material into. The CMK's
-     * <code>Origin</code> must be <code>EXTERNAL</code>.
+     * The identifier of the KMS key that will be associated with the imported
+     * key material. This must be the same KMS key specified in the
+     * <code>KeyID</code> parameter of the corresponding
+     * <a>GetParametersForImport</a> request. The <code>Origin</code> of the KMS
+     * key must be <code>EXTERNAL</code> and its <code>KeyState</code> must be
+     * <code>PendingImport</code>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * The KMS key can be a symmetric encryption KMS key, HMAC KMS key,
+     * asymmetric encryption KMS key, or asymmetric signing KMS key, including a
+     * <a
+     * href="kms/latest/developerguide/multi-region-keys-overview.html">multi-
+     * Region key</a> of any supported type. You cannot perform this operation
+     * on a KMS key in a custom key store, or on a KMS key in a different Amazon
+     * Web Services account.
+     * </p>
+     * <p>
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -262,7 +453,7 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -270,12 +461,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The identifier of the CMK to import the key material into. The
-     *            CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
+     *            The identifier of the KMS key that will be associated with the
+     *            imported key material. This must be the same KMS key specified
+     *            in the <code>KeyID</code> parameter of the corresponding
+     *            <a>GetParametersForImport</a> request. The <code>Origin</code>
+     *            of the KMS key must be <code>EXTERNAL</code> and its
+     *            <code>KeyState</code> must be <code>PendingImport</code>.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            The KMS key can be a symmetric encryption KMS key, HMAC KMS
+     *            key, asymmetric encryption KMS key, or asymmetric signing KMS
+     *            key, including a <a href=
+     *            "kms/latest/developerguide/multi-region-keys-overview.html"
+     *            >multi-Region key</a> of any supported type. You cannot
+     *            perform this operation on a KMS key in a custom key store, or
+     *            on a KMS key in a different Amazon Web Services account.
+     *            </p>
+     *            <p>
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -294,8 +497,8 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -304,11 +507,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The identifier of the CMK to import the key material into. The CMK's
-     * <code>Origin</code> must be <code>EXTERNAL</code>.
+     * The identifier of the KMS key that will be associated with the imported
+     * key material. This must be the same KMS key specified in the
+     * <code>KeyID</code> parameter of the corresponding
+     * <a>GetParametersForImport</a> request. The <code>Origin</code> of the KMS
+     * key must be <code>EXTERNAL</code> and its <code>KeyState</code> must be
+     * <code>PendingImport</code>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * The KMS key can be a symmetric encryption KMS key, HMAC KMS key,
+     * asymmetric encryption KMS key, or asymmetric signing KMS key, including a
+     * <a
+     * href="kms/latest/developerguide/multi-region-keys-overview.html">multi-
+     * Region key</a> of any supported type. You cannot perform this operation
+     * on a KMS key in a custom key store, or on a KMS key in a different Amazon
+     * Web Services account.
+     * </p>
+     * <p>
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -327,7 +543,7 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -338,12 +554,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The identifier of the CMK to import the key material into. The
-     *            CMK's <code>Origin</code> must be <code>EXTERNAL</code>.
+     *            The identifier of the KMS key that will be associated with the
+     *            imported key material. This must be the same KMS key specified
+     *            in the <code>KeyID</code> parameter of the corresponding
+     *            <a>GetParametersForImport</a> request. The <code>Origin</code>
+     *            of the KMS key must be <code>EXTERNAL</code> and its
+     *            <code>KeyState</code> must be <code>PendingImport</code>.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            The KMS key can be a symmetric encryption KMS key, HMAC KMS
+     *            key, asymmetric encryption KMS key, or asymmetric signing KMS
+     *            key, including a <a href=
+     *            "kms/latest/developerguide/multi-region-keys-overview.html"
+     *            >multi-Region key</a> of any supported type. You cannot
+     *            perform this operation on a KMS key in a custom key store, or
+     *            on a KMS key in a different Amazon Web Services account.
+     *            </p>
+     *            <p>
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -362,8 +590,8 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -444,20 +672,21 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The encrypted key material to import. It must be encrypted with the
-     * public key that you received in the response to a previous
-     * <a>GetParametersForImport</a> request, using the wrapping algorithm that
-     * you specified in that request.
+     * The encrypted key material to import. The key material must be encrypted
+     * under the public wrapping key that <a>GetParametersForImport</a>
+     * returned, using the wrapping algorithm that you specified in the same
+     * <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 6144<br/>
      *
      * @return <p>
-     *         The encrypted key material to import. It must be encrypted with
-     *         the public key that you received in the response to a previous
-     *         <a>GetParametersForImport</a> request, using the wrapping
-     *         algorithm that you specified in that request.
+     *         The encrypted key material to import. The key material must be
+     *         encrypted under the public wrapping key that
+     *         <a>GetParametersForImport</a> returned, using the wrapping
+     *         algorithm that you specified in the same
+     *         <code>GetParametersForImport</code> request.
      *         </p>
      */
     public java.nio.ByteBuffer getEncryptedKeyMaterial() {
@@ -466,20 +695,21 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The encrypted key material to import. It must be encrypted with the
-     * public key that you received in the response to a previous
-     * <a>GetParametersForImport</a> request, using the wrapping algorithm that
-     * you specified in that request.
+     * The encrypted key material to import. The key material must be encrypted
+     * under the public wrapping key that <a>GetParametersForImport</a>
+     * returned, using the wrapping algorithm that you specified in the same
+     * <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 6144<br/>
      *
      * @param encryptedKeyMaterial <p>
-     *            The encrypted key material to import. It must be encrypted
-     *            with the public key that you received in the response to a
-     *            previous <a>GetParametersForImport</a> request, using the
-     *            wrapping algorithm that you specified in that request.
+     *            The encrypted key material to import. The key material must be
+     *            encrypted under the public wrapping key that
+     *            <a>GetParametersForImport</a> returned, using the wrapping
+     *            algorithm that you specified in the same
+     *            <code>GetParametersForImport</code> request.
      *            </p>
      */
     public void setEncryptedKeyMaterial(java.nio.ByteBuffer encryptedKeyMaterial) {
@@ -488,10 +718,10 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The encrypted key material to import. It must be encrypted with the
-     * public key that you received in the response to a previous
-     * <a>GetParametersForImport</a> request, using the wrapping algorithm that
-     * you specified in that request.
+     * The encrypted key material to import. The key material must be encrypted
+     * under the public wrapping key that <a>GetParametersForImport</a>
+     * returned, using the wrapping algorithm that you specified in the same
+     * <code>GetParametersForImport</code> request.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -501,10 +731,11 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      * <b>Length: </b>1 - 6144<br/>
      *
      * @param encryptedKeyMaterial <p>
-     *            The encrypted key material to import. It must be encrypted
-     *            with the public key that you received in the response to a
-     *            previous <a>GetParametersForImport</a> request, using the
-     *            wrapping algorithm that you specified in that request.
+     *            The encrypted key material to import. The key material must be
+     *            encrypted under the public wrapping key that
+     *            <a>GetParametersForImport</a> returned, using the wrapping
+     *            algorithm that you specified in the same
+     *            <code>GetParametersForImport</code> request.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -517,20 +748,47 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The time at which the imported key material expires. When the key
-     * material expires, AWS KMS deletes the key material and the CMK becomes
-     * unusable. You must omit this parameter when the
-     * <code>ExpirationModel</code> parameter is set to
-     * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is required.
+     * The date and time when the imported key material expires. This parameter
+     * is required when the value of the <code>ExpirationModel</code> parameter
+     * is <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     * </p>
+     * <p>
+     * The value of this parameter must be a future date and time. The maximum
+     * value is 365 days from the request date.
+     * </p>
+     * <p>
+     * When the key material expires, KMS deletes the key material from the KMS
+     * key. Without its key material, the KMS key is unusable. To use the KMS
+     * key in cryptographic operations, you must reimport the same key material.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must delete
+     * (<a>DeleteImportedKeyMaterial</a>) and reimport the key material.
      * </p>
      *
      * @return <p>
-     *         The time at which the imported key material expires. When the key
-     *         material expires, AWS KMS deletes the key material and the CMK
-     *         becomes unusable. You must omit this parameter when the
-     *         <code>ExpirationModel</code> parameter is set to
-     *         <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is
-     *         required.
+     *         The date and time when the imported key material expires. This
+     *         parameter is required when the value of the
+     *         <code>ExpirationModel</code> parameter is
+     *         <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     *         </p>
+     *         <p>
+     *         The value of this parameter must be a future date and time. The
+     *         maximum value is 365 days from the request date.
+     *         </p>
+     *         <p>
+     *         When the key material expires, KMS deletes the key material from
+     *         the KMS key. Without its key material, the KMS key is unusable.
+     *         To use the KMS key in cryptographic operations, you must reimport
+     *         the same key material.
+     *         </p>
+     *         <p>
+     *         You cannot change the <code>ExpirationModel</code> or
+     *         <code>ValidTo</code> values for the current import after the
+     *         request completes. To change either value, you must delete
+     *         (<a>DeleteImportedKeyMaterial</a>) and reimport the key material.
      *         </p>
      */
     public java.util.Date getValidTo() {
@@ -539,20 +797,48 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The time at which the imported key material expires. When the key
-     * material expires, AWS KMS deletes the key material and the CMK becomes
-     * unusable. You must omit this parameter when the
-     * <code>ExpirationModel</code> parameter is set to
-     * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is required.
+     * The date and time when the imported key material expires. This parameter
+     * is required when the value of the <code>ExpirationModel</code> parameter
+     * is <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     * </p>
+     * <p>
+     * The value of this parameter must be a future date and time. The maximum
+     * value is 365 days from the request date.
+     * </p>
+     * <p>
+     * When the key material expires, KMS deletes the key material from the KMS
+     * key. Without its key material, the KMS key is unusable. To use the KMS
+     * key in cryptographic operations, you must reimport the same key material.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must delete
+     * (<a>DeleteImportedKeyMaterial</a>) and reimport the key material.
      * </p>
      *
      * @param validTo <p>
-     *            The time at which the imported key material expires. When the
-     *            key material expires, AWS KMS deletes the key material and the
-     *            CMK becomes unusable. You must omit this parameter when the
-     *            <code>ExpirationModel</code> parameter is set to
-     *            <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is
-     *            required.
+     *            The date and time when the imported key material expires. This
+     *            parameter is required when the value of the
+     *            <code>ExpirationModel</code> parameter is
+     *            <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     *            </p>
+     *            <p>
+     *            The value of this parameter must be a future date and time.
+     *            The maximum value is 365 days from the request date.
+     *            </p>
+     *            <p>
+     *            When the key material expires, KMS deletes the key material
+     *            from the KMS key. Without its key material, the KMS key is
+     *            unusable. To use the KMS key in cryptographic operations, you
+     *            must reimport the same key material.
+     *            </p>
+     *            <p>
+     *            You cannot change the <code>ExpirationModel</code> or
+     *            <code>ValidTo</code> values for the current import after the
+     *            request completes. To change either value, you must delete
+     *            (<a>DeleteImportedKeyMaterial</a>) and reimport the key
+     *            material.
      *            </p>
      */
     public void setValidTo(java.util.Date validTo) {
@@ -561,23 +847,51 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * The time at which the imported key material expires. When the key
-     * material expires, AWS KMS deletes the key material and the CMK becomes
-     * unusable. You must omit this parameter when the
-     * <code>ExpirationModel</code> parameter is set to
-     * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is required.
+     * The date and time when the imported key material expires. This parameter
+     * is required when the value of the <code>ExpirationModel</code> parameter
+     * is <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     * </p>
+     * <p>
+     * The value of this parameter must be a future date and time. The maximum
+     * value is 365 days from the request date.
+     * </p>
+     * <p>
+     * When the key material expires, KMS deletes the key material from the KMS
+     * key. Without its key material, the KMS key is unusable. To use the KMS
+     * key in cryptographic operations, you must reimport the same key material.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must delete
+     * (<a>DeleteImportedKeyMaterial</a>) and reimport the key material.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param validTo <p>
-     *            The time at which the imported key material expires. When the
-     *            key material expires, AWS KMS deletes the key material and the
-     *            CMK becomes unusable. You must omit this parameter when the
-     *            <code>ExpirationModel</code> parameter is set to
-     *            <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>. Otherwise it is
-     *            required.
+     *            The date and time when the imported key material expires. This
+     *            parameter is required when the value of the
+     *            <code>ExpirationModel</code> parameter is
+     *            <code>KEY_MATERIAL_EXPIRES</code>. Otherwise it is not valid.
+     *            </p>
+     *            <p>
+     *            The value of this parameter must be a future date and time.
+     *            The maximum value is 365 days from the request date.
+     *            </p>
+     *            <p>
+     *            When the key material expires, KMS deletes the key material
+     *            from the KMS key. Without its key material, the KMS key is
+     *            unusable. To use the KMS key in cryptographic operations, you
+     *            must reimport the same key material.
+     *            </p>
+     *            <p>
+     *            You cannot change the <code>ExpirationModel</code> or
+     *            <code>ValidTo</code> values for the current import after the
+     *            request completes. To change either value, you must delete
+     *            (<a>DeleteImportedKeyMaterial</a>) and reimport the key
+     *            material.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -590,10 +904,23 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
     /**
      * <p>
      * Specifies whether the key material expires. The default is
-     * <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include the
-     * <code>ValidTo</code> parameter. When this parameter is set to
+     * <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a
+     * href=
+     * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     * >Setting an expiration time</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * When the value of <code>ExpirationModel</code> is
+     * <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the
+     * <code>ValidTo</code> parameter. When value is
      * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      * <code>ValidTo</code> parameter.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must reimport the key material.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -601,10 +928,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *
      * @return <p>
      *         Specifies whether the key material expires. The default is
-     *         <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include
-     *         the <code>ValidTo</code> parameter. When this parameter is set to
+     *         <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see
+     *         <a href=
+     *         "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     *         >Setting an expiration time</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     *         <p>
+     *         When the value of <code>ExpirationModel</code> is
+     *         <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for
+     *         the <code>ValidTo</code> parameter. When value is
      *         <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      *         <code>ValidTo</code> parameter.
+     *         </p>
+     *         <p>
+     *         You cannot change the <code>ExpirationModel</code> or
+     *         <code>ValidTo</code> values for the current import after the
+     *         request completes. To change either value, you must reimport the
+     *         key material.
      *         </p>
      * @see ExpirationModelType
      */
@@ -615,10 +956,23 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
     /**
      * <p>
      * Specifies whether the key material expires. The default is
-     * <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include the
-     * <code>ValidTo</code> parameter. When this parameter is set to
+     * <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a
+     * href=
+     * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     * >Setting an expiration time</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * When the value of <code>ExpirationModel</code> is
+     * <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the
+     * <code>ValidTo</code> parameter. When value is
      * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      * <code>ValidTo</code> parameter.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must reimport the key material.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -626,10 +980,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *
      * @param expirationModel <p>
      *            Specifies whether the key material expires. The default is
-     *            <code>KEY_MATERIAL_EXPIRES</code>, in which case you must
-     *            include the <code>ValidTo</code> parameter. When this
-     *            parameter is set to <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>,
-     *            you must omit the <code>ValidTo</code> parameter.
+     *            <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice,
+     *            see <a href=
+     *            "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     *            >Setting an expiration time</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     *            <p>
+     *            When the value of <code>ExpirationModel</code> is
+     *            <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value
+     *            for the <code>ValidTo</code> parameter. When value is
+     *            <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
+     *            <code>ValidTo</code> parameter.
+     *            </p>
+     *            <p>
+     *            You cannot change the <code>ExpirationModel</code> or
+     *            <code>ValidTo</code> values for the current import after the
+     *            request completes. To change either value, you must reimport
+     *            the key material.
      *            </p>
      * @see ExpirationModelType
      */
@@ -640,10 +1008,23 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
     /**
      * <p>
      * Specifies whether the key material expires. The default is
-     * <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include the
-     * <code>ValidTo</code> parameter. When this parameter is set to
+     * <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a
+     * href=
+     * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     * >Setting an expiration time</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * When the value of <code>ExpirationModel</code> is
+     * <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the
+     * <code>ValidTo</code> parameter. When value is
      * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      * <code>ValidTo</code> parameter.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must reimport the key material.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -654,10 +1035,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *
      * @param expirationModel <p>
      *            Specifies whether the key material expires. The default is
-     *            <code>KEY_MATERIAL_EXPIRES</code>, in which case you must
-     *            include the <code>ValidTo</code> parameter. When this
-     *            parameter is set to <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>,
-     *            you must omit the <code>ValidTo</code> parameter.
+     *            <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice,
+     *            see <a href=
+     *            "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     *            >Setting an expiration time</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     *            <p>
+     *            When the value of <code>ExpirationModel</code> is
+     *            <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value
+     *            for the <code>ValidTo</code> parameter. When value is
+     *            <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
+     *            <code>ValidTo</code> parameter.
+     *            </p>
+     *            <p>
+     *            You cannot change the <code>ExpirationModel</code> or
+     *            <code>ValidTo</code> values for the current import after the
+     *            request completes. To change either value, you must reimport
+     *            the key material.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -671,10 +1066,23 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
     /**
      * <p>
      * Specifies whether the key material expires. The default is
-     * <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include the
-     * <code>ValidTo</code> parameter. When this parameter is set to
+     * <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a
+     * href=
+     * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     * >Setting an expiration time</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * When the value of <code>ExpirationModel</code> is
+     * <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the
+     * <code>ValidTo</code> parameter. When value is
      * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      * <code>ValidTo</code> parameter.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must reimport the key material.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -682,10 +1090,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *
      * @param expirationModel <p>
      *            Specifies whether the key material expires. The default is
-     *            <code>KEY_MATERIAL_EXPIRES</code>, in which case you must
-     *            include the <code>ValidTo</code> parameter. When this
-     *            parameter is set to <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>,
-     *            you must omit the <code>ValidTo</code> parameter.
+     *            <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice,
+     *            see <a href=
+     *            "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     *            >Setting an expiration time</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     *            <p>
+     *            When the value of <code>ExpirationModel</code> is
+     *            <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value
+     *            for the <code>ValidTo</code> parameter. When value is
+     *            <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
+     *            <code>ValidTo</code> parameter.
+     *            </p>
+     *            <p>
+     *            You cannot change the <code>ExpirationModel</code> or
+     *            <code>ValidTo</code> values for the current import after the
+     *            request completes. To change either value, you must reimport
+     *            the key material.
      *            </p>
      * @see ExpirationModelType
      */
@@ -696,10 +1118,23 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
     /**
      * <p>
      * Specifies whether the key material expires. The default is
-     * <code>KEY_MATERIAL_EXPIRES</code>, in which case you must include the
-     * <code>ValidTo</code> parameter. When this parameter is set to
+     * <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a
+     * href=
+     * "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     * >Setting an expiration time</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * When the value of <code>ExpirationModel</code> is
+     * <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the
+     * <code>ValidTo</code> parameter. When value is
      * <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
      * <code>ValidTo</code> parameter.
+     * </p>
+     * <p>
+     * You cannot change the <code>ExpirationModel</code> or
+     * <code>ValidTo</code> values for the current import after the request
+     * completes. To change either value, you must reimport the key material.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -710,10 +1145,24 @@ public class ImportKeyMaterialRequest extends AmazonWebServiceRequest implements
      *
      * @param expirationModel <p>
      *            Specifies whether the key material expires. The default is
-     *            <code>KEY_MATERIAL_EXPIRES</code>, in which case you must
-     *            include the <code>ValidTo</code> parameter. When this
-     *            parameter is set to <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>,
-     *            you must omit the <code>ValidTo</code> parameter.
+     *            <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice,
+     *            see <a href=
+     *            "https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration"
+     *            >Setting an expiration time</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     *            <p>
+     *            When the value of <code>ExpirationModel</code> is
+     *            <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value
+     *            for the <code>ValidTo</code> parameter. When value is
+     *            <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the
+     *            <code>ValidTo</code> parameter.
+     *            </p>
+     *            <p>
+     *            You cannot change the <code>ExpirationModel</code> or
+     *            <code>ValidTo</code> values for the current import after the
+     *            request completes. To change either value, you must reimport
+     *            the key material.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

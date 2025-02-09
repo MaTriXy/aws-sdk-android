@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,6 +43,9 @@ class TranscriptionJobSummaryJsonUnmarshaller implements
             } else if (name.equals("CreationTime")) {
                 transcriptionJobSummary.setCreationTime(DateJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("StartTime")) {
+                transcriptionJobSummary.setStartTime(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("CompletionTime")) {
                 transcriptionJobSummary.setCompletionTime(DateJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -59,6 +62,36 @@ class TranscriptionJobSummaryJsonUnmarshaller implements
             } else if (name.equals("OutputLocationType")) {
                 transcriptionJobSummary.setOutputLocationType(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("ContentRedaction")) {
+                transcriptionJobSummary.setContentRedaction(ContentRedactionJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("ModelSettings")) {
+                transcriptionJobSummary.setModelSettings(ModelSettingsJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdentifyLanguage")) {
+                transcriptionJobSummary.setIdentifyLanguage(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdentifyMultipleLanguages")) {
+                transcriptionJobSummary.setIdentifyMultipleLanguages(BooleanJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("IdentifiedLanguageScore")) {
+                transcriptionJobSummary.setIdentifiedLanguageScore(FloatJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("LanguageCodes")) {
+                transcriptionJobSummary.setLanguageCodes(new ListUnmarshaller<LanguageCodeItem>(
+                        LanguageCodeItemJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("ToxicityDetection")) {
+                transcriptionJobSummary
+                        .setToxicityDetection(new ListUnmarshaller<ToxicityDetectionSettings>(
+                                ToxicityDetectionSettingsJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,54 +24,155 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Detects faces in the input image and adds them to the specified collection.
  * </p>
  * <p>
- * Amazon Rekognition does not save the actual faces detected. Instead, the
- * underlying detection algorithm first detects the faces in the input image,
- * and for each face extracts facial features into a feature vector, and stores
- * it in the back-end database. Amazon Rekognition uses feature vectors when
- * performing face match and search operations using the and operations.
+ * Amazon Rekognition doesn't save the actual faces that are detected. Instead,
+ * the underlying detection algorithm first detects the faces in the input
+ * image. For each face, the algorithm extracts facial features into a feature
+ * vector, and stores it in the backend database. Amazon Rekognition uses
+ * feature vectors when it performs face match and search operations using the
+ * <a>SearchFaces</a> and <a>SearchFacesByImage</a> operations.
  * </p>
  * <p>
- * If you are using version 1.0 of the face detection model,
+ * For more information, see Adding faces to a collection in the Amazon
+ * Rekognition Developer Guide.
+ * </p>
+ * <p>
+ * To get the number of faces in a collection, call <a>DescribeCollection</a>.
+ * </p>
+ * <p>
+ * If you're using version 1.0 of the face detection model,
  * <code>IndexFaces</code> indexes the 15 largest faces in the input image.
  * Later versions of the face detection model index the 100 largest faces in the
- * input image. To determine which version of the model you are using, check the
- * the value of <code>FaceModelVersion</code> in the response from
- * <code>IndexFaces</code>.
+ * input image.
+ * </p>
+ * <p>
+ * If you're using version 4 or later of the face model, image orientation
+ * information is not returned in the <code>OrientationCorrection</code> field.
+ * </p>
+ * <p>
+ * To determine which version of the model you're using, call
+ * <a>DescribeCollection</a> and supply the collection ID. You can also get the
+ * model version from the value of <code>FaceModelVersion</code> in the response
+ * from <code>IndexFaces</code>
  * </p>
  * <p>
  * For more information, see Model Versioning in the Amazon Rekognition
  * Developer Guide.
  * </p>
  * <p>
- * If you provide the optional <code>ExternalImageID</code> for the input image
+ * If you provide the optional <code>ExternalImageId</code> for the input image
  * you provided, Amazon Rekognition associates this ID with all faces that it
- * detects. When you call the operation, the response returns the external ID.
- * You can use this external image ID to create a client-side index to associate
- * the faces with each image. You can then use the index to find all faces in an
- * image.
+ * detects. When you call the <a>ListFaces</a> operation, the response returns
+ * the external ID. You can use this external image ID to create a client-side
+ * index to associate the faces with each image. You can then use the index to
+ * find all faces in an image.
  * </p>
  * <p>
- * In response, the operation returns an array of metadata for all detected
- * faces. This includes, the bounding box of the detected face, confidence value
- * (indicating the bounding box contains a face), a face ID assigned by the
- * service for each face that is detected and stored, and an image ID assigned
- * by the service for the input image. If you request all facial attributes
- * (using the <code>detectionAttributes</code> parameter, Amazon Rekognition
- * returns detailed facial attributes such as facial landmarks (for example,
- * location of eye and mouth) and other facial attributes such gender. If you
- * provide the same image, specify the same collection, and use the same
+ * You can specify the maximum number of faces to index with the
+ * <code>MaxFaces</code> input parameter. This is useful when you want to index
+ * the largest faces in an image and don't want to index smaller faces, such as
+ * those belonging to people standing in the background.
+ * </p>
+ * <p>
+ * The <code>QualityFilter</code> input parameter allows you to filter out
+ * detected faces that don’t meet a required quality bar. The quality bar is
+ * based on a variety of common use cases. By default, <code>IndexFaces</code>
+ * chooses the quality bar that's used to filter faces. You can also explicitly
+ * choose the quality bar. Use <code>QualityFilter</code>, to set the quality
+ * bar by specifying <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>
+ * . If you do not want to filter detected faces, specify <code>NONE</code>.
+ * </p>
+ * <note>
+ * <p>
+ * To use quality filtering, you need a collection associated with version 3 of
+ * the face model or higher. To get the version of the face model associated
+ * with a collection, call <a>DescribeCollection</a>.
+ * </p>
+ * </note>
+ * <p>
+ * Information about faces detected in an image, but not indexed, is returned in
+ * an array of <a>UnindexedFace</a> objects, <code>UnindexedFaces</code>. Faces
+ * aren't indexed for reasons such as:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * The number of faces detected exceeds the value of the <code>MaxFaces</code>
+ * request parameter.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The face is too small compared to the image dimensions.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The face is too blurry.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The image is too dark.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The face has an extreme pose.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * The face doesn’t have enough detail to be suitable for face search.
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * In response, the <code>IndexFaces</code> operation returns an array of
+ * metadata for all detected faces, <code>FaceRecords</code>. This includes:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * The bounding box, <code>BoundingBox</code>, of the detected face.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * A confidence value, <code>Confidence</code>, which indicates the confidence
+ * that the bounding box contains a face.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * A face ID, <code>FaceId</code>, assigned by the service for each face that's
+ * detected and stored.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * An image ID, <code>ImageId</code>, assigned by the service for the input
+ * image.
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * If you request <code>ALL</code> or specific facial attributes (e.g.,
+ * <code>FACE_OCCLUDED</code>) by using the detectionAttributes parameter,
+ * Amazon Rekognition returns detailed facial attributes, such as facial
+ * landmarks (for example, location of eye and mouth), facial occlusion, and
+ * other facial attributes.
+ * </p>
+ * <p>
+ * If you provide the same image, specify the same collection, and use the same
  * external ID in the <code>IndexFaces</code> operation, Amazon Rekognition
  * doesn't save duplicate face metadata.
  * </p>
+ * <p/>
  * <p>
- * For more information, see Adding Faces to a Collection in the Amazon
- * Rekognition Developer Guide.
- * </p>
- * <p>
- * The input image is passed either as base64-encoded image bytes or as a
- * reference to an image in an Amazon S3 bucket. If you use the Amazon CLI to
- * call Amazon Rekognition operations, passing image bytes is not supported. The
- * image must be either a PNG or JPEG formatted file.
+ * The input image is passed either as base64-encoded image bytes, or as a
+ * reference to an image in an Amazon S3 bucket. If you use the AWS CLI to call
+ * Amazon Rekognition operations, passing image bytes isn't supported. The image
+ * must be formatted as a PNG or JPEG file.
  * </p>
  * <p>
  * This operation requires permissions to perform the
@@ -95,14 +196,20 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <p>
      * The input image as base64-encoded bytes or an S3 object. If you use the
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
-     * image bytes is not supported.
+     * image bytes isn't supported.
+     * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
      * </p>
      */
     private Image image;
 
     /**
      * <p>
-     * ID you want to assign to all the faces detected in the image.
+     * The ID you want to assign to all the faces detected in the image.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -113,14 +220,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * An array of facial attributes that you want to be returned. This can be
-     * the default list of attributes or all attributes. If you don't specify a
-     * value for <code>Attributes</code> or if you specify
-     * <code>["DEFAULT"]</code>, the API returns the following subset of facial
-     * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
-     * <code>Pose</code>, <code>Quality</code> and <code>Landmarks</code>. If
-     * you provide <code>["ALL"]</code>, all facial attributes are returned but
-     * the operation will take longer to complete.
+     * An array of facial attributes you want to be returned. A
+     * <code>DEFAULT</code> subset of facial attributes -
+     * <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>,
+     * <code>Quality</code>, and <code>Landmarks</code> - will always be
+     * returned. You can request for specific facial attributes (in addition to
+     * the default list) - by using <code>["DEFAULT", "FACE_OCCLUDED"]</code> or
+     * just <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     * attributes by using <code>["ALL"]</code>. Requesting more attributes may
+     * increase response time.
      * </p>
      * <p>
      * If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a
@@ -129,6 +237,59 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * </p>
      */
     private java.util.List<String> detectionAttributes;
+
+    /**
+     * <p>
+     * The maximum number of faces to index. The value of <code>MaxFaces</code>
+     * must be greater than or equal to 1. <code>IndexFaces</code> returns no
+     * more than 100 detected faces in an image, even if you specify a larger
+     * value for <code>MaxFaces</code>.
+     * </p>
+     * <p>
+     * If <code>IndexFaces</code> detects more faces than the value of
+     * <code>MaxFaces</code>, the faces with the lowest quality are filtered out
+     * first. If there are still more faces than the value of
+     * <code>MaxFaces</code>, the faces with the smallest bounding boxes are
+     * filtered out (up to the number that's needed to satisfy the value of
+     * <code>MaxFaces</code>). Information about the unindexed faces is
+     * available in the <code>UnindexedFaces</code> array.
+     * </p>
+     * <p>
+     * The faces that are returned by <code>IndexFaces</code> are sorted by the
+     * largest face bounding box size to the smallest size, in descending order.
+     * </p>
+     * <p>
+     * <code>MaxFaces</code> can be used with a collection associated with any
+     * version of the face model.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     */
+    private Integer maxFaces;
+
+    /**
+     * <p>
+     * A filter that specifies a quality bar for how much filtering is done to
+     * identify faces. Filtered faces aren't indexed. If you specify
+     * <code>AUTO</code>, Amazon Rekognition chooses the quality bar. If you
+     * specify <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>,
+     * filtering removes all faces that don’t meet the chosen quality bar. The
+     * default value is <code>AUTO</code>. The quality bar is based on a variety
+     * of common use cases. Low-quality detections can occur for a number of
+     * reasons. Some examples are an object that's misidentified as a face, a
+     * face that's too blurry, or a face with a pose that's too extreme to use.
+     * If you specify <code>NONE</code>, no filtering is performed.
+     * </p>
+     * <p>
+     * To use quality filtering, the collection you are using must be associated
+     * with version 3 of the face model or higher.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>NONE, AUTO, LOW, MEDIUM, HIGH
+     */
+    private String qualityFilter;
 
     /**
      * Default constructor for IndexFacesRequest object. Callers should use the
@@ -150,7 +311,13 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * @param image <p>
      *            The input image as base64-encoded bytes or an S3 object. If
      *            you use the AWS CLI to call Amazon Rekognition operations,
-     *            passing base64-encoded image bytes is not supported.
+     *            passing base64-encoded image bytes isn't supported.
+     *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
      *            </p>
      */
     public IndexFacesRequest(String collectionId, Image image) {
@@ -225,13 +392,25 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <p>
      * The input image as base64-encoded bytes or an S3 object. If you use the
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
-     * image bytes is not supported.
+     * image bytes isn't supported.
+     * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
      * </p>
      *
      * @return <p>
      *         The input image as base64-encoded bytes or an S3 object. If you
      *         use the AWS CLI to call Amazon Rekognition operations, passing
-     *         base64-encoded image bytes is not supported.
+     *         base64-encoded image bytes isn't supported.
+     *         </p>
+     *         <p>
+     *         If you are using an AWS SDK to call Amazon Rekognition, you might
+     *         not need to base64-encode image bytes passed using the
+     *         <code>Bytes</code> field. For more information, see Images in the
+     *         Amazon Rekognition developer guide.
      *         </p>
      */
     public Image getImage() {
@@ -242,13 +421,25 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <p>
      * The input image as base64-encoded bytes or an S3 object. If you use the
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
-     * image bytes is not supported.
+     * image bytes isn't supported.
+     * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
      * </p>
      *
      * @param image <p>
      *            The input image as base64-encoded bytes or an S3 object. If
      *            you use the AWS CLI to call Amazon Rekognition operations,
-     *            passing base64-encoded image bytes is not supported.
+     *            passing base64-encoded image bytes isn't supported.
+     *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
      *            </p>
      */
     public void setImage(Image image) {
@@ -259,7 +450,13 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <p>
      * The input image as base64-encoded bytes or an S3 object. If you use the
      * AWS CLI to call Amazon Rekognition operations, passing base64-encoded
-     * image bytes is not supported.
+     * image bytes isn't supported.
+     * </p>
+     * <p>
+     * If you are using an AWS SDK to call Amazon Rekognition, you might not
+     * need to base64-encode image bytes passed using the <code>Bytes</code>
+     * field. For more information, see Images in the Amazon Rekognition
+     * developer guide.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -268,7 +465,13 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * @param image <p>
      *            The input image as base64-encoded bytes or an S3 object. If
      *            you use the AWS CLI to call Amazon Rekognition operations,
-     *            passing base64-encoded image bytes is not supported.
+     *            passing base64-encoded image bytes isn't supported.
+     *            </p>
+     *            <p>
+     *            If you are using an AWS SDK to call Amazon Rekognition, you
+     *            might not need to base64-encode image bytes passed using the
+     *            <code>Bytes</code> field. For more information, see Images in
+     *            the Amazon Rekognition developer guide.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -280,7 +483,7 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * ID you want to assign to all the faces detected in the image.
+     * The ID you want to assign to all the faces detected in the image.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -288,7 +491,7 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
      *
      * @return <p>
-     *         ID you want to assign to all the faces detected in the image.
+     *         The ID you want to assign to all the faces detected in the image.
      *         </p>
      */
     public String getExternalImageId() {
@@ -297,7 +500,7 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * ID you want to assign to all the faces detected in the image.
+     * The ID you want to assign to all the faces detected in the image.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -305,7 +508,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
      *
      * @param externalImageId <p>
-     *            ID you want to assign to all the faces detected in the image.
+     *            The ID you want to assign to all the faces detected in the
+     *            image.
      *            </p>
      */
     public void setExternalImageId(String externalImageId) {
@@ -314,7 +518,7 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * ID you want to assign to all the faces detected in the image.
+     * The ID you want to assign to all the faces detected in the image.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -325,7 +529,8 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
      *
      * @param externalImageId <p>
-     *            ID you want to assign to all the faces detected in the image.
+     *            The ID you want to assign to all the faces detected in the
+     *            image.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -337,14 +542,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * An array of facial attributes that you want to be returned. This can be
-     * the default list of attributes or all attributes. If you don't specify a
-     * value for <code>Attributes</code> or if you specify
-     * <code>["DEFAULT"]</code>, the API returns the following subset of facial
-     * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
-     * <code>Pose</code>, <code>Quality</code> and <code>Landmarks</code>. If
-     * you provide <code>["ALL"]</code>, all facial attributes are returned but
-     * the operation will take longer to complete.
+     * An array of facial attributes you want to be returned. A
+     * <code>DEFAULT</code> subset of facial attributes -
+     * <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>,
+     * <code>Quality</code>, and <code>Landmarks</code> - will always be
+     * returned. You can request for specific facial attributes (in addition to
+     * the default list) - by using <code>["DEFAULT", "FACE_OCCLUDED"]</code> or
+     * just <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     * attributes by using <code>["ALL"]</code>. Requesting more attributes may
+     * increase response time.
      * </p>
      * <p>
      * If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a
@@ -353,15 +559,16 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * </p>
      *
      * @return <p>
-     *         An array of facial attributes that you want to be returned. This
-     *         can be the default list of attributes or all attributes. If you
-     *         don't specify a value for <code>Attributes</code> or if you
-     *         specify <code>["DEFAULT"]</code>, the API returns the following
-     *         subset of facial attributes: <code>BoundingBox</code>,
-     *         <code>Confidence</code>, <code>Pose</code>, <code>Quality</code>
-     *         and <code>Landmarks</code>. If you provide <code>["ALL"]</code>,
-     *         all facial attributes are returned but the operation will take
-     *         longer to complete.
+     *         An array of facial attributes you want to be returned. A
+     *         <code>DEFAULT</code> subset of facial attributes -
+     *         <code>BoundingBox</code>, <code>Confidence</code>,
+     *         <code>Pose</code>, <code>Quality</code>, and
+     *         <code>Landmarks</code> - will always be returned. You can request
+     *         for specific facial attributes (in addition to the default list)
+     *         - by using <code>["DEFAULT", "FACE_OCCLUDED"]</code> or just
+     *         <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     *         attributes by using <code>["ALL"]</code>. Requesting more
+     *         attributes may increase response time.
      *         </p>
      *         <p>
      *         If you provide both, <code>["ALL", "DEFAULT"]</code>, the service
@@ -375,14 +582,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * An array of facial attributes that you want to be returned. This can be
-     * the default list of attributes or all attributes. If you don't specify a
-     * value for <code>Attributes</code> or if you specify
-     * <code>["DEFAULT"]</code>, the API returns the following subset of facial
-     * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
-     * <code>Pose</code>, <code>Quality</code> and <code>Landmarks</code>. If
-     * you provide <code>["ALL"]</code>, all facial attributes are returned but
-     * the operation will take longer to complete.
+     * An array of facial attributes you want to be returned. A
+     * <code>DEFAULT</code> subset of facial attributes -
+     * <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>,
+     * <code>Quality</code>, and <code>Landmarks</code> - will always be
+     * returned. You can request for specific facial attributes (in addition to
+     * the default list) - by using <code>["DEFAULT", "FACE_OCCLUDED"]</code> or
+     * just <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     * attributes by using <code>["ALL"]</code>. Requesting more attributes may
+     * increase response time.
      * </p>
      * <p>
      * If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a
@@ -391,16 +599,17 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * </p>
      *
      * @param detectionAttributes <p>
-     *            An array of facial attributes that you want to be returned.
-     *            This can be the default list of attributes or all attributes.
-     *            If you don't specify a value for <code>Attributes</code> or if
-     *            you specify <code>["DEFAULT"]</code>, the API returns the
-     *            following subset of facial attributes:
+     *            An array of facial attributes you want to be returned. A
+     *            <code>DEFAULT</code> subset of facial attributes -
      *            <code>BoundingBox</code>, <code>Confidence</code>,
-     *            <code>Pose</code>, <code>Quality</code> and
-     *            <code>Landmarks</code>. If you provide <code>["ALL"]</code>,
-     *            all facial attributes are returned but the operation will take
-     *            longer to complete.
+     *            <code>Pose</code>, <code>Quality</code>, and
+     *            <code>Landmarks</code> - will always be returned. You can
+     *            request for specific facial attributes (in addition to the
+     *            default list) - by using
+     *            <code>["DEFAULT", "FACE_OCCLUDED"]</code> or just
+     *            <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     *            attributes by using <code>["ALL"]</code>. Requesting more
+     *            attributes may increase response time.
      *            </p>
      *            <p>
      *            If you provide both, <code>["ALL", "DEFAULT"]</code>, the
@@ -419,14 +628,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * An array of facial attributes that you want to be returned. This can be
-     * the default list of attributes or all attributes. If you don't specify a
-     * value for <code>Attributes</code> or if you specify
-     * <code>["DEFAULT"]</code>, the API returns the following subset of facial
-     * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
-     * <code>Pose</code>, <code>Quality</code> and <code>Landmarks</code>. If
-     * you provide <code>["ALL"]</code>, all facial attributes are returned but
-     * the operation will take longer to complete.
+     * An array of facial attributes you want to be returned. A
+     * <code>DEFAULT</code> subset of facial attributes -
+     * <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>,
+     * <code>Quality</code>, and <code>Landmarks</code> - will always be
+     * returned. You can request for specific facial attributes (in addition to
+     * the default list) - by using <code>["DEFAULT", "FACE_OCCLUDED"]</code> or
+     * just <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     * attributes by using <code>["ALL"]</code>. Requesting more attributes may
+     * increase response time.
      * </p>
      * <p>
      * If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a
@@ -438,16 +648,17 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * together.
      *
      * @param detectionAttributes <p>
-     *            An array of facial attributes that you want to be returned.
-     *            This can be the default list of attributes or all attributes.
-     *            If you don't specify a value for <code>Attributes</code> or if
-     *            you specify <code>["DEFAULT"]</code>, the API returns the
-     *            following subset of facial attributes:
+     *            An array of facial attributes you want to be returned. A
+     *            <code>DEFAULT</code> subset of facial attributes -
      *            <code>BoundingBox</code>, <code>Confidence</code>,
-     *            <code>Pose</code>, <code>Quality</code> and
-     *            <code>Landmarks</code>. If you provide <code>["ALL"]</code>,
-     *            all facial attributes are returned but the operation will take
-     *            longer to complete.
+     *            <code>Pose</code>, <code>Quality</code>, and
+     *            <code>Landmarks</code> - will always be returned. You can
+     *            request for specific facial attributes (in addition to the
+     *            default list) - by using
+     *            <code>["DEFAULT", "FACE_OCCLUDED"]</code> or just
+     *            <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     *            attributes by using <code>["ALL"]</code>. Requesting more
+     *            attributes may increase response time.
      *            </p>
      *            <p>
      *            If you provide both, <code>["ALL", "DEFAULT"]</code>, the
@@ -469,14 +680,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * An array of facial attributes that you want to be returned. This can be
-     * the default list of attributes or all attributes. If you don't specify a
-     * value for <code>Attributes</code> or if you specify
-     * <code>["DEFAULT"]</code>, the API returns the following subset of facial
-     * attributes: <code>BoundingBox</code>, <code>Confidence</code>,
-     * <code>Pose</code>, <code>Quality</code> and <code>Landmarks</code>. If
-     * you provide <code>["ALL"]</code>, all facial attributes are returned but
-     * the operation will take longer to complete.
+     * An array of facial attributes you want to be returned. A
+     * <code>DEFAULT</code> subset of facial attributes -
+     * <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>,
+     * <code>Quality</code>, and <code>Landmarks</code> - will always be
+     * returned. You can request for specific facial attributes (in addition to
+     * the default list) - by using <code>["DEFAULT", "FACE_OCCLUDED"]</code> or
+     * just <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     * attributes by using <code>["ALL"]</code>. Requesting more attributes may
+     * increase response time.
      * </p>
      * <p>
      * If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a
@@ -488,16 +700,17 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
      * together.
      *
      * @param detectionAttributes <p>
-     *            An array of facial attributes that you want to be returned.
-     *            This can be the default list of attributes or all attributes.
-     *            If you don't specify a value for <code>Attributes</code> or if
-     *            you specify <code>["DEFAULT"]</code>, the API returns the
-     *            following subset of facial attributes:
+     *            An array of facial attributes you want to be returned. A
+     *            <code>DEFAULT</code> subset of facial attributes -
      *            <code>BoundingBox</code>, <code>Confidence</code>,
-     *            <code>Pose</code>, <code>Quality</code> and
-     *            <code>Landmarks</code>. If you provide <code>["ALL"]</code>,
-     *            all facial attributes are returned but the operation will take
-     *            longer to complete.
+     *            <code>Pose</code>, <code>Quality</code>, and
+     *            <code>Landmarks</code> - will always be returned. You can
+     *            request for specific facial attributes (in addition to the
+     *            default list) - by using
+     *            <code>["DEFAULT", "FACE_OCCLUDED"]</code> or just
+     *            <code>["FACE_OCCLUDED"]</code>. You can request for all facial
+     *            attributes by using <code>["ALL"]</code>. Requesting more
+     *            attributes may increase response time.
      *            </p>
      *            <p>
      *            If you provide both, <code>["ALL", "DEFAULT"]</code>, the
@@ -510,6 +723,425 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
     public IndexFacesRequest withDetectionAttributes(
             java.util.Collection<String> detectionAttributes) {
         setDetectionAttributes(detectionAttributes);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The maximum number of faces to index. The value of <code>MaxFaces</code>
+     * must be greater than or equal to 1. <code>IndexFaces</code> returns no
+     * more than 100 detected faces in an image, even if you specify a larger
+     * value for <code>MaxFaces</code>.
+     * </p>
+     * <p>
+     * If <code>IndexFaces</code> detects more faces than the value of
+     * <code>MaxFaces</code>, the faces with the lowest quality are filtered out
+     * first. If there are still more faces than the value of
+     * <code>MaxFaces</code>, the faces with the smallest bounding boxes are
+     * filtered out (up to the number that's needed to satisfy the value of
+     * <code>MaxFaces</code>). Information about the unindexed faces is
+     * available in the <code>UnindexedFaces</code> array.
+     * </p>
+     * <p>
+     * The faces that are returned by <code>IndexFaces</code> are sorted by the
+     * largest face bounding box size to the smallest size, in descending order.
+     * </p>
+     * <p>
+     * <code>MaxFaces</code> can be used with a collection associated with any
+     * version of the face model.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     *
+     * @return <p>
+     *         The maximum number of faces to index. The value of
+     *         <code>MaxFaces</code> must be greater than or equal to 1.
+     *         <code>IndexFaces</code> returns no more than 100 detected faces
+     *         in an image, even if you specify a larger value for
+     *         <code>MaxFaces</code>.
+     *         </p>
+     *         <p>
+     *         If <code>IndexFaces</code> detects more faces than the value of
+     *         <code>MaxFaces</code>, the faces with the lowest quality are
+     *         filtered out first. If there are still more faces than the value
+     *         of <code>MaxFaces</code>, the faces with the smallest bounding
+     *         boxes are filtered out (up to the number that's needed to satisfy
+     *         the value of <code>MaxFaces</code>). Information about the
+     *         unindexed faces is available in the <code>UnindexedFaces</code>
+     *         array.
+     *         </p>
+     *         <p>
+     *         The faces that are returned by <code>IndexFaces</code> are sorted
+     *         by the largest face bounding box size to the smallest size, in
+     *         descending order.
+     *         </p>
+     *         <p>
+     *         <code>MaxFaces</code> can be used with a collection associated
+     *         with any version of the face model.
+     *         </p>
+     */
+    public Integer getMaxFaces() {
+        return maxFaces;
+    }
+
+    /**
+     * <p>
+     * The maximum number of faces to index. The value of <code>MaxFaces</code>
+     * must be greater than or equal to 1. <code>IndexFaces</code> returns no
+     * more than 100 detected faces in an image, even if you specify a larger
+     * value for <code>MaxFaces</code>.
+     * </p>
+     * <p>
+     * If <code>IndexFaces</code> detects more faces than the value of
+     * <code>MaxFaces</code>, the faces with the lowest quality are filtered out
+     * first. If there are still more faces than the value of
+     * <code>MaxFaces</code>, the faces with the smallest bounding boxes are
+     * filtered out (up to the number that's needed to satisfy the value of
+     * <code>MaxFaces</code>). Information about the unindexed faces is
+     * available in the <code>UnindexedFaces</code> array.
+     * </p>
+     * <p>
+     * The faces that are returned by <code>IndexFaces</code> are sorted by the
+     * largest face bounding box size to the smallest size, in descending order.
+     * </p>
+     * <p>
+     * <code>MaxFaces</code> can be used with a collection associated with any
+     * version of the face model.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     *
+     * @param maxFaces <p>
+     *            The maximum number of faces to index. The value of
+     *            <code>MaxFaces</code> must be greater than or equal to 1.
+     *            <code>IndexFaces</code> returns no more than 100 detected
+     *            faces in an image, even if you specify a larger value for
+     *            <code>MaxFaces</code>.
+     *            </p>
+     *            <p>
+     *            If <code>IndexFaces</code> detects more faces than the value
+     *            of <code>MaxFaces</code>, the faces with the lowest quality
+     *            are filtered out first. If there are still more faces than the
+     *            value of <code>MaxFaces</code>, the faces with the smallest
+     *            bounding boxes are filtered out (up to the number that's
+     *            needed to satisfy the value of <code>MaxFaces</code>).
+     *            Information about the unindexed faces is available in the
+     *            <code>UnindexedFaces</code> array.
+     *            </p>
+     *            <p>
+     *            The faces that are returned by <code>IndexFaces</code> are
+     *            sorted by the largest face bounding box size to the smallest
+     *            size, in descending order.
+     *            </p>
+     *            <p>
+     *            <code>MaxFaces</code> can be used with a collection associated
+     *            with any version of the face model.
+     *            </p>
+     */
+    public void setMaxFaces(Integer maxFaces) {
+        this.maxFaces = maxFaces;
+    }
+
+    /**
+     * <p>
+     * The maximum number of faces to index. The value of <code>MaxFaces</code>
+     * must be greater than or equal to 1. <code>IndexFaces</code> returns no
+     * more than 100 detected faces in an image, even if you specify a larger
+     * value for <code>MaxFaces</code>.
+     * </p>
+     * <p>
+     * If <code>IndexFaces</code> detects more faces than the value of
+     * <code>MaxFaces</code>, the faces with the lowest quality are filtered out
+     * first. If there are still more faces than the value of
+     * <code>MaxFaces</code>, the faces with the smallest bounding boxes are
+     * filtered out (up to the number that's needed to satisfy the value of
+     * <code>MaxFaces</code>). Information about the unindexed faces is
+     * available in the <code>UnindexedFaces</code> array.
+     * </p>
+     * <p>
+     * The faces that are returned by <code>IndexFaces</code> are sorted by the
+     * largest face bounding box size to the smallest size, in descending order.
+     * </p>
+     * <p>
+     * <code>MaxFaces</code> can be used with a collection associated with any
+     * version of the face model.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - <br/>
+     *
+     * @param maxFaces <p>
+     *            The maximum number of faces to index. The value of
+     *            <code>MaxFaces</code> must be greater than or equal to 1.
+     *            <code>IndexFaces</code> returns no more than 100 detected
+     *            faces in an image, even if you specify a larger value for
+     *            <code>MaxFaces</code>.
+     *            </p>
+     *            <p>
+     *            If <code>IndexFaces</code> detects more faces than the value
+     *            of <code>MaxFaces</code>, the faces with the lowest quality
+     *            are filtered out first. If there are still more faces than the
+     *            value of <code>MaxFaces</code>, the faces with the smallest
+     *            bounding boxes are filtered out (up to the number that's
+     *            needed to satisfy the value of <code>MaxFaces</code>).
+     *            Information about the unindexed faces is available in the
+     *            <code>UnindexedFaces</code> array.
+     *            </p>
+     *            <p>
+     *            The faces that are returned by <code>IndexFaces</code> are
+     *            sorted by the largest face bounding box size to the smallest
+     *            size, in descending order.
+     *            </p>
+     *            <p>
+     *            <code>MaxFaces</code> can be used with a collection associated
+     *            with any version of the face model.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public IndexFacesRequest withMaxFaces(Integer maxFaces) {
+        this.maxFaces = maxFaces;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A filter that specifies a quality bar for how much filtering is done to
+     * identify faces. Filtered faces aren't indexed. If you specify
+     * <code>AUTO</code>, Amazon Rekognition chooses the quality bar. If you
+     * specify <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>,
+     * filtering removes all faces that don’t meet the chosen quality bar. The
+     * default value is <code>AUTO</code>. The quality bar is based on a variety
+     * of common use cases. Low-quality detections can occur for a number of
+     * reasons. Some examples are an object that's misidentified as a face, a
+     * face that's too blurry, or a face with a pose that's too extreme to use.
+     * If you specify <code>NONE</code>, no filtering is performed.
+     * </p>
+     * <p>
+     * To use quality filtering, the collection you are using must be associated
+     * with version 3 of the face model or higher.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>NONE, AUTO, LOW, MEDIUM, HIGH
+     *
+     * @return <p>
+     *         A filter that specifies a quality bar for how much filtering is
+     *         done to identify faces. Filtered faces aren't indexed. If you
+     *         specify <code>AUTO</code>, Amazon Rekognition chooses the quality
+     *         bar. If you specify <code>LOW</code>, <code>MEDIUM</code>, or
+     *         <code>HIGH</code>, filtering removes all faces that don’t meet
+     *         the chosen quality bar. The default value is <code>AUTO</code>.
+     *         The quality bar is based on a variety of common use cases.
+     *         Low-quality detections can occur for a number of reasons. Some
+     *         examples are an object that's misidentified as a face, a face
+     *         that's too blurry, or a face with a pose that's too extreme to
+     *         use. If you specify <code>NONE</code>, no filtering is performed.
+     *         </p>
+     *         <p>
+     *         To use quality filtering, the collection you are using must be
+     *         associated with version 3 of the face model or higher.
+     *         </p>
+     * @see QualityFilter
+     */
+    public String getQualityFilter() {
+        return qualityFilter;
+    }
+
+    /**
+     * <p>
+     * A filter that specifies a quality bar for how much filtering is done to
+     * identify faces. Filtered faces aren't indexed. If you specify
+     * <code>AUTO</code>, Amazon Rekognition chooses the quality bar. If you
+     * specify <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>,
+     * filtering removes all faces that don’t meet the chosen quality bar. The
+     * default value is <code>AUTO</code>. The quality bar is based on a variety
+     * of common use cases. Low-quality detections can occur for a number of
+     * reasons. Some examples are an object that's misidentified as a face, a
+     * face that's too blurry, or a face with a pose that's too extreme to use.
+     * If you specify <code>NONE</code>, no filtering is performed.
+     * </p>
+     * <p>
+     * To use quality filtering, the collection you are using must be associated
+     * with version 3 of the face model or higher.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>NONE, AUTO, LOW, MEDIUM, HIGH
+     *
+     * @param qualityFilter <p>
+     *            A filter that specifies a quality bar for how much filtering
+     *            is done to identify faces. Filtered faces aren't indexed. If
+     *            you specify <code>AUTO</code>, Amazon Rekognition chooses the
+     *            quality bar. If you specify <code>LOW</code>,
+     *            <code>MEDIUM</code>, or <code>HIGH</code>, filtering removes
+     *            all faces that don’t meet the chosen quality bar. The default
+     *            value is <code>AUTO</code>. The quality bar is based on a
+     *            variety of common use cases. Low-quality detections can occur
+     *            for a number of reasons. Some examples are an object that's
+     *            misidentified as a face, a face that's too blurry, or a face
+     *            with a pose that's too extreme to use. If you specify
+     *            <code>NONE</code>, no filtering is performed.
+     *            </p>
+     *            <p>
+     *            To use quality filtering, the collection you are using must be
+     *            associated with version 3 of the face model or higher.
+     *            </p>
+     * @see QualityFilter
+     */
+    public void setQualityFilter(String qualityFilter) {
+        this.qualityFilter = qualityFilter;
+    }
+
+    /**
+     * <p>
+     * A filter that specifies a quality bar for how much filtering is done to
+     * identify faces. Filtered faces aren't indexed. If you specify
+     * <code>AUTO</code>, Amazon Rekognition chooses the quality bar. If you
+     * specify <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>,
+     * filtering removes all faces that don’t meet the chosen quality bar. The
+     * default value is <code>AUTO</code>. The quality bar is based on a variety
+     * of common use cases. Low-quality detections can occur for a number of
+     * reasons. Some examples are an object that's misidentified as a face, a
+     * face that's too blurry, or a face with a pose that's too extreme to use.
+     * If you specify <code>NONE</code>, no filtering is performed.
+     * </p>
+     * <p>
+     * To use quality filtering, the collection you are using must be associated
+     * with version 3 of the face model or higher.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>NONE, AUTO, LOW, MEDIUM, HIGH
+     *
+     * @param qualityFilter <p>
+     *            A filter that specifies a quality bar for how much filtering
+     *            is done to identify faces. Filtered faces aren't indexed. If
+     *            you specify <code>AUTO</code>, Amazon Rekognition chooses the
+     *            quality bar. If you specify <code>LOW</code>,
+     *            <code>MEDIUM</code>, or <code>HIGH</code>, filtering removes
+     *            all faces that don’t meet the chosen quality bar. The default
+     *            value is <code>AUTO</code>. The quality bar is based on a
+     *            variety of common use cases. Low-quality detections can occur
+     *            for a number of reasons. Some examples are an object that's
+     *            misidentified as a face, a face that's too blurry, or a face
+     *            with a pose that's too extreme to use. If you specify
+     *            <code>NONE</code>, no filtering is performed.
+     *            </p>
+     *            <p>
+     *            To use quality filtering, the collection you are using must be
+     *            associated with version 3 of the face model or higher.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see QualityFilter
+     */
+    public IndexFacesRequest withQualityFilter(String qualityFilter) {
+        this.qualityFilter = qualityFilter;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A filter that specifies a quality bar for how much filtering is done to
+     * identify faces. Filtered faces aren't indexed. If you specify
+     * <code>AUTO</code>, Amazon Rekognition chooses the quality bar. If you
+     * specify <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>,
+     * filtering removes all faces that don’t meet the chosen quality bar. The
+     * default value is <code>AUTO</code>. The quality bar is based on a variety
+     * of common use cases. Low-quality detections can occur for a number of
+     * reasons. Some examples are an object that's misidentified as a face, a
+     * face that's too blurry, or a face with a pose that's too extreme to use.
+     * If you specify <code>NONE</code>, no filtering is performed.
+     * </p>
+     * <p>
+     * To use quality filtering, the collection you are using must be associated
+     * with version 3 of the face model or higher.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>NONE, AUTO, LOW, MEDIUM, HIGH
+     *
+     * @param qualityFilter <p>
+     *            A filter that specifies a quality bar for how much filtering
+     *            is done to identify faces. Filtered faces aren't indexed. If
+     *            you specify <code>AUTO</code>, Amazon Rekognition chooses the
+     *            quality bar. If you specify <code>LOW</code>,
+     *            <code>MEDIUM</code>, or <code>HIGH</code>, filtering removes
+     *            all faces that don’t meet the chosen quality bar. The default
+     *            value is <code>AUTO</code>. The quality bar is based on a
+     *            variety of common use cases. Low-quality detections can occur
+     *            for a number of reasons. Some examples are an object that's
+     *            misidentified as a face, a face that's too blurry, or a face
+     *            with a pose that's too extreme to use. If you specify
+     *            <code>NONE</code>, no filtering is performed.
+     *            </p>
+     *            <p>
+     *            To use quality filtering, the collection you are using must be
+     *            associated with version 3 of the face model or higher.
+     *            </p>
+     * @see QualityFilter
+     */
+    public void setQualityFilter(QualityFilter qualityFilter) {
+        this.qualityFilter = qualityFilter.toString();
+    }
+
+    /**
+     * <p>
+     * A filter that specifies a quality bar for how much filtering is done to
+     * identify faces. Filtered faces aren't indexed. If you specify
+     * <code>AUTO</code>, Amazon Rekognition chooses the quality bar. If you
+     * specify <code>LOW</code>, <code>MEDIUM</code>, or <code>HIGH</code>,
+     * filtering removes all faces that don’t meet the chosen quality bar. The
+     * default value is <code>AUTO</code>. The quality bar is based on a variety
+     * of common use cases. Low-quality detections can occur for a number of
+     * reasons. Some examples are an object that's misidentified as a face, a
+     * face that's too blurry, or a face with a pose that's too extreme to use.
+     * If you specify <code>NONE</code>, no filtering is performed.
+     * </p>
+     * <p>
+     * To use quality filtering, the collection you are using must be associated
+     * with version 3 of the face model or higher.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>NONE, AUTO, LOW, MEDIUM, HIGH
+     *
+     * @param qualityFilter <p>
+     *            A filter that specifies a quality bar for how much filtering
+     *            is done to identify faces. Filtered faces aren't indexed. If
+     *            you specify <code>AUTO</code>, Amazon Rekognition chooses the
+     *            quality bar. If you specify <code>LOW</code>,
+     *            <code>MEDIUM</code>, or <code>HIGH</code>, filtering removes
+     *            all faces that don’t meet the chosen quality bar. The default
+     *            value is <code>AUTO</code>. The quality bar is based on a
+     *            variety of common use cases. Low-quality detections can occur
+     *            for a number of reasons. Some examples are an object that's
+     *            misidentified as a face, a face that's too blurry, or a face
+     *            with a pose that's too extreme to use. If you specify
+     *            <code>NONE</code>, no filtering is performed.
+     *            </p>
+     *            <p>
+     *            To use quality filtering, the collection you are using must be
+     *            associated with version 3 of the face model or higher.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see QualityFilter
+     */
+    public IndexFacesRequest withQualityFilter(QualityFilter qualityFilter) {
+        this.qualityFilter = qualityFilter.toString();
         return this;
     }
 
@@ -531,7 +1163,11 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
         if (getExternalImageId() != null)
             sb.append("ExternalImageId: " + getExternalImageId() + ",");
         if (getDetectionAttributes() != null)
-            sb.append("DetectionAttributes: " + getDetectionAttributes());
+            sb.append("DetectionAttributes: " + getDetectionAttributes() + ",");
+        if (getMaxFaces() != null)
+            sb.append("MaxFaces: " + getMaxFaces() + ",");
+        if (getQualityFilter() != null)
+            sb.append("QualityFilter: " + getQualityFilter());
         sb.append("}");
         return sb.toString();
     }
@@ -548,6 +1184,9 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
                 + ((getExternalImageId() == null) ? 0 : getExternalImageId().hashCode());
         hashCode = prime * hashCode
                 + ((getDetectionAttributes() == null) ? 0 : getDetectionAttributes().hashCode());
+        hashCode = prime * hashCode + ((getMaxFaces() == null) ? 0 : getMaxFaces().hashCode());
+        hashCode = prime * hashCode
+                + ((getQualityFilter() == null) ? 0 : getQualityFilter().hashCode());
         return hashCode;
     }
 
@@ -580,6 +1219,15 @@ public class IndexFacesRequest extends AmazonWebServiceRequest implements Serial
             return false;
         if (other.getDetectionAttributes() != null
                 && other.getDetectionAttributes().equals(this.getDetectionAttributes()) == false)
+            return false;
+        if (other.getMaxFaces() == null ^ this.getMaxFaces() == null)
+            return false;
+        if (other.getMaxFaces() != null && other.getMaxFaces().equals(this.getMaxFaces()) == false)
+            return false;
+        if (other.getQualityFilter() == null ^ this.getQualityFilter() == null)
+            return false;
+        if (other.getQualityFilter() != null
+                && other.getQualityFilter().equals(this.getQualityFilter()) == false)
             return false;
         return true;
     }

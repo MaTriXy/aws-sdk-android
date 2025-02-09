@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.comprehend.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -68,6 +71,23 @@ public class DetectEntitiesRequestMarshaller implements
                 String languageCode = detectEntitiesRequest.getLanguageCode();
                 jsonWriter.name("LanguageCode");
                 jsonWriter.value(languageCode);
+            }
+            if (detectEntitiesRequest.getEndpointArn() != null) {
+                String endpointArn = detectEntitiesRequest.getEndpointArn();
+                jsonWriter.name("EndpointArn");
+                jsonWriter.value(endpointArn);
+            }
+            if (detectEntitiesRequest.getBytes() != null) {
+                java.nio.ByteBuffer bytes = detectEntitiesRequest.getBytes();
+                jsonWriter.name("Bytes");
+                jsonWriter.value(bytes);
+            }
+            if (detectEntitiesRequest.getDocumentReaderConfig() != null) {
+                DocumentReaderConfig documentReaderConfig = detectEntitiesRequest
+                        .getDocumentReaderConfig();
+                jsonWriter.name("DocumentReaderConfig");
+                DocumentReaderConfigJsonMarshaller.getInstance().marshall(documentReaderConfig,
+                        jsonWriter);
             }
 
             jsonWriter.endObject();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,13 +19,13 @@ import java.io.Serializable;
 
 /**
  * <p>
- * The user type.
+ * A user profile in a Amazon Cognito user pool.
  * </p>
  */
 public class UserType implements Serializable {
     /**
      * <p>
-     * The user name of the user you wish to describe.
+     * The user name of the user you want to describe.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -50,7 +50,9 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The last modified date of the user.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      */
     private java.util.Date userLastModifiedDate;
@@ -64,7 +66,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user status. Can be one of the following:
+     * The user status. This can be one of the following:
      * </p>
      * <ul>
      * <li>
@@ -79,17 +81,25 @@ public class UserType implements Serializable {
      * </li>
      * <li>
      * <p>
-     * ARCHIVED - User is no longer active.
+     * EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      * </p>
      * </li>
      * <li>
      * <p>
-     * COMPROMISED - User is disabled due to a potential security threat.
+     * UNKNOWN - User status isn't known.
      * </p>
      * </li>
      * <li>
      * <p>
-     * UNKNOWN - User status is not known.
+     * RESET_REQUIRED - User is confirmed, but the user must request a code and
+     * reset their password before they can sign in.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in
+     * using a temporary password, but on first sign-in, the user must change
+     * their password to a new value before doing anything else.
      * </p>
      * </li>
      * </ul>
@@ -109,7 +119,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user name of the user you wish to describe.
+     * The user name of the user you want to describe.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -117,7 +127,7 @@ public class UserType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The user name of the user you wish to describe.
+     *         The user name of the user you want to describe.
      *         </p>
      */
     public String getUsername() {
@@ -126,7 +136,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user name of the user you wish to describe.
+     * The user name of the user you want to describe.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -134,7 +144,7 @@ public class UserType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param username <p>
-     *            The user name of the user you wish to describe.
+     *            The user name of the user you want to describe.
      *            </p>
      */
     public void setUsername(String username) {
@@ -143,7 +153,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user name of the user you wish to describe.
+     * The user name of the user you want to describe.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -154,7 +164,7 @@ public class UserType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param username <p>
-     *            The user name of the user you wish to describe.
+     *            The user name of the user you want to describe.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -285,11 +295,15 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The last modified date of the user.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @return <p>
-     *         The last modified date of the user.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was modified.
      *         </p>
      */
     public java.util.Date getUserLastModifiedDate() {
@@ -298,11 +312,15 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The last modified date of the user.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @param userLastModifiedDate <p>
-     *            The last modified date of the user.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      */
     public void setUserLastModifiedDate(java.util.Date userLastModifiedDate) {
@@ -311,14 +329,18 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The last modified date of the user.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param userLastModifiedDate <p>
-     *            The last modified date of the user.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -388,7 +410,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user status. Can be one of the following:
+     * The user status. This can be one of the following:
      * </p>
      * <ul>
      * <li>
@@ -403,17 +425,25 @@ public class UserType implements Serializable {
      * </li>
      * <li>
      * <p>
-     * ARCHIVED - User is no longer active.
+     * EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      * </p>
      * </li>
      * <li>
      * <p>
-     * COMPROMISED - User is disabled due to a potential security threat.
+     * UNKNOWN - User status isn't known.
      * </p>
      * </li>
      * <li>
      * <p>
-     * UNKNOWN - User status is not known.
+     * RESET_REQUIRED - User is confirmed, but the user must request a code and
+     * reset their password before they can sign in.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in
+     * using a temporary password, but on first sign-in, the user must change
+     * their password to a new value before doing anything else.
      * </p>
      * </li>
      * </ul>
@@ -423,7 +453,7 @@ public class UserType implements Serializable {
      * UNKNOWN, RESET_REQUIRED, FORCE_CHANGE_PASSWORD
      *
      * @return <p>
-     *         The user status. Can be one of the following:
+     *         The user status. This can be one of the following:
      *         </p>
      *         <ul>
      *         <li>
@@ -438,18 +468,26 @@ public class UserType implements Serializable {
      *         </li>
      *         <li>
      *         <p>
-     *         ARCHIVED - User is no longer active.
+     *         EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         COMPROMISED - User is disabled due to a potential security
-     *         threat.
+     *         UNKNOWN - User status isn't known.
      *         </p>
      *         </li>
      *         <li>
      *         <p>
-     *         UNKNOWN - User status is not known.
+     *         RESET_REQUIRED - User is confirmed, but the user must request a
+     *         code and reset their password before they can sign in.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         FORCE_CHANGE_PASSWORD - The user is confirmed and the user can
+     *         sign in using a temporary password, but on first sign-in, the
+     *         user must change their password to a new value before doing
+     *         anything else.
      *         </p>
      *         </li>
      *         </ul>
@@ -461,7 +499,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user status. Can be one of the following:
+     * The user status. This can be one of the following:
      * </p>
      * <ul>
      * <li>
@@ -476,17 +514,25 @@ public class UserType implements Serializable {
      * </li>
      * <li>
      * <p>
-     * ARCHIVED - User is no longer active.
+     * EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      * </p>
      * </li>
      * <li>
      * <p>
-     * COMPROMISED - User is disabled due to a potential security threat.
+     * UNKNOWN - User status isn't known.
      * </p>
      * </li>
      * <li>
      * <p>
-     * UNKNOWN - User status is not known.
+     * RESET_REQUIRED - User is confirmed, but the user must request a code and
+     * reset their password before they can sign in.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in
+     * using a temporary password, but on first sign-in, the user must change
+     * their password to a new value before doing anything else.
      * </p>
      * </li>
      * </ul>
@@ -496,7 +542,7 @@ public class UserType implements Serializable {
      * UNKNOWN, RESET_REQUIRED, FORCE_CHANGE_PASSWORD
      *
      * @param userStatus <p>
-     *            The user status. Can be one of the following:
+     *            The user status. This can be one of the following:
      *            </p>
      *            <ul>
      *            <li>
@@ -511,18 +557,26 @@ public class UserType implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            ARCHIVED - User is no longer active.
+     *            EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            COMPROMISED - User is disabled due to a potential security
-     *            threat.
+     *            UNKNOWN - User status isn't known.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            UNKNOWN - User status is not known.
+     *            RESET_REQUIRED - User is confirmed, but the user must request
+     *            a code and reset their password before they can sign in.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            FORCE_CHANGE_PASSWORD - The user is confirmed and the user can
+     *            sign in using a temporary password, but on first sign-in, the
+     *            user must change their password to a new value before doing
+     *            anything else.
      *            </p>
      *            </li>
      *            </ul>
@@ -534,7 +588,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user status. Can be one of the following:
+     * The user status. This can be one of the following:
      * </p>
      * <ul>
      * <li>
@@ -549,17 +603,25 @@ public class UserType implements Serializable {
      * </li>
      * <li>
      * <p>
-     * ARCHIVED - User is no longer active.
+     * EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      * </p>
      * </li>
      * <li>
      * <p>
-     * COMPROMISED - User is disabled due to a potential security threat.
+     * UNKNOWN - User status isn't known.
      * </p>
      * </li>
      * <li>
      * <p>
-     * UNKNOWN - User status is not known.
+     * RESET_REQUIRED - User is confirmed, but the user must request a code and
+     * reset their password before they can sign in.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in
+     * using a temporary password, but on first sign-in, the user must change
+     * their password to a new value before doing anything else.
      * </p>
      * </li>
      * </ul>
@@ -572,7 +634,7 @@ public class UserType implements Serializable {
      * UNKNOWN, RESET_REQUIRED, FORCE_CHANGE_PASSWORD
      *
      * @param userStatus <p>
-     *            The user status. Can be one of the following:
+     *            The user status. This can be one of the following:
      *            </p>
      *            <ul>
      *            <li>
@@ -587,18 +649,26 @@ public class UserType implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            ARCHIVED - User is no longer active.
+     *            EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            COMPROMISED - User is disabled due to a potential security
-     *            threat.
+     *            UNKNOWN - User status isn't known.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            UNKNOWN - User status is not known.
+     *            RESET_REQUIRED - User is confirmed, but the user must request
+     *            a code and reset their password before they can sign in.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            FORCE_CHANGE_PASSWORD - The user is confirmed and the user can
+     *            sign in using a temporary password, but on first sign-in, the
+     *            user must change their password to a new value before doing
+     *            anything else.
      *            </p>
      *            </li>
      *            </ul>
@@ -613,7 +683,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user status. Can be one of the following:
+     * The user status. This can be one of the following:
      * </p>
      * <ul>
      * <li>
@@ -628,17 +698,25 @@ public class UserType implements Serializable {
      * </li>
      * <li>
      * <p>
-     * ARCHIVED - User is no longer active.
+     * EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      * </p>
      * </li>
      * <li>
      * <p>
-     * COMPROMISED - User is disabled due to a potential security threat.
+     * UNKNOWN - User status isn't known.
      * </p>
      * </li>
      * <li>
      * <p>
-     * UNKNOWN - User status is not known.
+     * RESET_REQUIRED - User is confirmed, but the user must request a code and
+     * reset their password before they can sign in.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in
+     * using a temporary password, but on first sign-in, the user must change
+     * their password to a new value before doing anything else.
      * </p>
      * </li>
      * </ul>
@@ -648,7 +726,7 @@ public class UserType implements Serializable {
      * UNKNOWN, RESET_REQUIRED, FORCE_CHANGE_PASSWORD
      *
      * @param userStatus <p>
-     *            The user status. Can be one of the following:
+     *            The user status. This can be one of the following:
      *            </p>
      *            <ul>
      *            <li>
@@ -663,18 +741,26 @@ public class UserType implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            ARCHIVED - User is no longer active.
+     *            EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            COMPROMISED - User is disabled due to a potential security
-     *            threat.
+     *            UNKNOWN - User status isn't known.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            UNKNOWN - User status is not known.
+     *            RESET_REQUIRED - User is confirmed, but the user must request
+     *            a code and reset their password before they can sign in.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            FORCE_CHANGE_PASSWORD - The user is confirmed and the user can
+     *            sign in using a temporary password, but on first sign-in, the
+     *            user must change their password to a new value before doing
+     *            anything else.
      *            </p>
      *            </li>
      *            </ul>
@@ -686,7 +772,7 @@ public class UserType implements Serializable {
 
     /**
      * <p>
-     * The user status. Can be one of the following:
+     * The user status. This can be one of the following:
      * </p>
      * <ul>
      * <li>
@@ -701,17 +787,25 @@ public class UserType implements Serializable {
      * </li>
      * <li>
      * <p>
-     * ARCHIVED - User is no longer active.
+     * EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      * </p>
      * </li>
      * <li>
      * <p>
-     * COMPROMISED - User is disabled due to a potential security threat.
+     * UNKNOWN - User status isn't known.
      * </p>
      * </li>
      * <li>
      * <p>
-     * UNKNOWN - User status is not known.
+     * RESET_REQUIRED - User is confirmed, but the user must request a code and
+     * reset their password before they can sign in.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in
+     * using a temporary password, but on first sign-in, the user must change
+     * their password to a new value before doing anything else.
      * </p>
      * </li>
      * </ul>
@@ -724,7 +818,7 @@ public class UserType implements Serializable {
      * UNKNOWN, RESET_REQUIRED, FORCE_CHANGE_PASSWORD
      *
      * @param userStatus <p>
-     *            The user status. Can be one of the following:
+     *            The user status. This can be one of the following:
      *            </p>
      *            <ul>
      *            <li>
@@ -739,18 +833,26 @@ public class UserType implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            ARCHIVED - User is no longer active.
+     *            EXTERNAL_PROVIDER - User signed in with a third-party IdP.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            COMPROMISED - User is disabled due to a potential security
-     *            threat.
+     *            UNKNOWN - User status isn't known.
      *            </p>
      *            </li>
      *            <li>
      *            <p>
-     *            UNKNOWN - User status is not known.
+     *            RESET_REQUIRED - User is confirmed, but the user must request
+     *            a code and reset their password before they can sign in.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            FORCE_CHANGE_PASSWORD - The user is confirmed and the user can
+     *            sign in using a temporary password, but on first sign-in, the
+     *            user must change their password to a new value before doing
+     *            anything else.
      *            </p>
      *            </li>
      *            </ul>

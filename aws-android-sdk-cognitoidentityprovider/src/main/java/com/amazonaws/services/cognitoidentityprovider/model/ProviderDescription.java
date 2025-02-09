@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,13 +19,13 @@ import java.io.Serializable;
 
 /**
  * <p>
- * A container for identity provider details.
+ * A container for IdP details.
  * </p>
  */
 public class ProviderDescription implements Serializable {
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -36,11 +36,12 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      */
     private String providerType;
 
@@ -53,14 +54,16 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The date the provider was added to the user pool.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      */
     private java.util.Date creationDate;
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -68,7 +71,7 @@ public class ProviderDescription implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The identity provider name.
+     *         The IdP name.
      *         </p>
      */
     public String getProviderName() {
@@ -77,7 +80,7 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -85,7 +88,7 @@ public class ProviderDescription implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The identity provider name.
+     *            The IdP name.
      *            </p>
      */
     public void setProviderName(String providerName) {
@@ -94,7 +97,7 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -105,7 +108,7 @@ public class ProviderDescription implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The identity provider name.
+     *            The IdP name.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -117,14 +120,15 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @return <p>
-     *         The identity provider type.
+     *         The IdP type.
      *         </p>
      * @see IdentityProviderTypeType
      */
@@ -134,14 +138,15 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @see IdentityProviderTypeType
      */
@@ -151,17 +156,18 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -174,14 +180,15 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @see IdentityProviderTypeType
      */
@@ -191,17 +198,18 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -259,11 +267,15 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The date the provider was added to the user pool.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @return <p>
-     *         The date the provider was added to the user pool.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -272,11 +284,15 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The date the provider was added to the user pool.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The date the provider was added to the user pool.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -285,14 +301,18 @@ public class ProviderDescription implements Serializable {
 
     /**
      * <p>
-     * The date the provider was added to the user pool.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The date the provider was added to the user pool.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

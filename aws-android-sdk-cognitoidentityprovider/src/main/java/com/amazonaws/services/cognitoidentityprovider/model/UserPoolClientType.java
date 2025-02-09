@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -69,28 +69,113 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      */
     private java.util.Date lastModifiedDate;
 
     /**
      * <p>
-     * The date the user pool client was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      */
     private java.util.Date creationDate;
 
     /**
      * <p>
-     * The time limit, in days, after which the refresh token is no longer valid
-     * and cannot be used.
+     * The refresh token time limit. After this limit expires, your user can't
+     * use their refresh token. To specify the time unit for
+     * <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>RefreshTokenValidity</code> as
+     * <code>10</code> and <code>TokenValidityUnits</code> as <code>days</code>,
+     * your user can refresh their session and retrieve new access and ID tokens
+     * for 10 days.
+     * </p>
+     * <p>
+     * The default time unit for <code>RefreshTokenValidity</code> in an API
+     * request is days. You can't set <code>RefreshTokenValidity</code> to 0. If
+     * you do, Amazon Cognito overrides the value with the default value of 30
+     * days. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your refresh tokens are valid for 30 days.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - 3650<br/>
+     * <b>Range: </b>0 - 315360000<br/>
      */
     private Integer refreshTokenValidity;
+
+    /**
+     * <p>
+     * The access token time limit. After this limit expires, your user can't
+     * use their access token. To specify the time unit for
+     * <code>AccessTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>AccessTokenValidity</code> to
+     * <code>10</code> and <code>TokenValidityUnits</code> to <code>hours</code>
+     * , your user can authorize access with their access token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>AccessTokenValidity</code> in an API
+     * request is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your access tokens are valid for one hour.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     */
+    private Integer accessTokenValidity;
+
+    /**
+     * <p>
+     * The ID token time limit. After this limit expires, your user can't use
+     * their ID token. To specify the time unit for <code>IdTokenValidity</code>
+     * as <code>seconds</code>, <code>minutes</code>, <code>hours</code>, or
+     * <code>days</code>, set a <code>TokenValidityUnits</code> value in your
+     * API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>IdTokenValidity</code> as <code>10</code>
+     * and <code>TokenValidityUnits</code> as <code>hours</code>, your user can
+     * authenticate their session with their ID token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>IdTokenValidity</code> in an API request
+     * is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your ID tokens are valid for one hour.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     */
+    private Integer idTokenValidity;
+
+    /**
+     * <p>
+     * The time units used to specify the token validity times of each token
+     * type: ID, access, and refresh.
+     * </p>
+     */
+    private TokenValidityUnitsType tokenValidityUnits;
 
     /**
      * <p>
@@ -108,22 +193,82 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The explicit authentication flows.
+     * The authentication flows that you want your user pool client to support.
+     * For each app client in your user pool, you can sign in your users with
+     * any combination of one or more flows, including with a user name and
+     * Secure Remote Password (SRP), a user name and password, or a custom
+     * authentication process that you define with Lambda functions.
+     * </p>
+     * <note>
+     * <p>
+     * If you don't specify a value for <code>ExplicitAuthFlows</code>, your
+     * user client supports <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     * <code>ALLOW_USER_SRP_AUTH</code>, and <code>ALLOW_CUSTOM_AUTH</code>.
+     * </p>
+     * </note>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user
+     * password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This
+     * setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     * authentication flow, your app passes a user name and password to Amazon
+     * Cognito in the request, instead of using the Secure Remote Password (SRP)
+     * protocol to securely transmit the password.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     * authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based
+     * authentication. In this flow, Amazon Cognito receives the password in the
+     * request instead of using the SRP protocol to verify passwords.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * In some environments, you will see the values
+     * <code>ADMIN_NO_SRP_AUTH</code>, <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     * <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     * <code>ExplicitAuthFlows</code> values to user pool clients at the same
+     * time as values that begin with <code>ALLOW_</code>, like
+     * <code>ALLOW_USER_SRP_AUTH</code>.
      * </p>
      */
     private java.util.List<String> explicitAuthFlows;
 
     /**
      * <p>
-     * A list of provider names for the identity providers that are supported on
-     * this client.
+     * A list of provider names for the IdPs that this client supports. The
+     * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
+     * <code>Google</code>, <code>SignInWithApple</code>,
+     * <code>LoginWithAmazon</code>, and the names of your own SAML and OIDC
+     * providers.
      * </p>
      */
     private java.util.List<String> supportedIdentityProviders;
 
     /**
      * <p>
-     * A list of allowed redirect (callback) URLs for the identity providers.
+     * A list of allowed redirect (callback) URLs for the IdPs.
      * </p>
      * <p>
      * A redirect URI must:
@@ -161,7 +306,7 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed logout URLs for the identity providers.
+     * A list of allowed logout URLs for the IdPs.
      * </p>
      */
     private java.util.List<String> logoutURLs;
@@ -210,30 +355,87 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to <code>code</code> to initiate a code grant flow, which provides an
-     * authorization code as the response. This code can be exchanged for access
-     * tokens with the token endpoint.
+     * The allowed OAuth flows.
      * </p>
+     * <dl>
+     * <dt>code</dt>
+     * <dd>
      * <p>
-     * Set to <code>token</code> to specify that the client should get the
-     * access token (and, optionally, ID token, based on scopes) directly.
+     * Use a code grant flow, which provides an authorization code as the
+     * response. This code can be exchanged for access tokens with the
+     * <code>/oauth2/token</code> endpoint.
      * </p>
+     * </dd>
+     * <dt>implicit</dt>
+     * <dd>
+     * <p>
+     * Issue the access token (and, optionally, ID token, based on scopes)
+     * directly to your user.
+     * </p>
+     * </dd>
+     * <dt>client_credentials</dt>
+     * <dd>
+     * <p>
+     * Issue the access token from the <code>/oauth2/token</code> endpoint
+     * directly to a non-person user using a combination of the client ID and
+     * client secret.
+     * </p>
+     * </dd>
+     * </dl>
      */
     private java.util.List<String> allowedOAuthFlows;
 
     /**
      * <p>
-     * A list of allowed <code>OAuth</code> scopes. Currently supported values
-     * are <code>"phone"</code>, <code>"email"</code>, <code>"openid"</code>,
-     * and <code>"Cognito"</code>.
+     * The OAuth scopes that your app client supports. Possible values that
+     * OAuth provides are <code>phone</code>, <code>email</code>,
+     * <code>openid</code>, and <code>profile</code>. Possible values that
+     * Amazon Web Services provides are
+     * <code>aws.cognito.signin.user.admin</code>. Amazon Cognito also supports
+     * custom scopes that you create in Resource Servers.
      * </p>
      */
     private java.util.List<String> allowedOAuthScopes;
 
     /**
      * <p>
-     * Set to TRUE if the client is allowed to follow the OAuth protocol when
-     * interacting with Cognito user pools.
+     * Set to <code>true</code> to use OAuth 2.0 features in your user pool app
+     * client.
+     * </p>
+     * <p>
+     * <code>AllowedOAuthFlowsUserPoolClient</code> must be <code>true</code>
+     * before you can configure the following features in your app client.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>CallBackURLs</code>: Callback URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LogoutURLs</code>: Sign-out redirect URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthFlows</code>: Support for authorization code, implicit,
+     * and client credentials OAuth 2.0 grants.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To use OAuth 2.0 features, configure one of these features in the Amazon
+     * Cognito console or set <code>AllowedOAuthFlowsUserPoolClient</code> to
+     * <code>true</code> in a <code>CreateUserPoolClient</code> or
+     * <code>UpdateUserPoolClient</code> API request. If you don't set a value
+     * for <code>AllowedOAuthFlowsUserPoolClient</code> in a request with the
+     * CLI or SDKs, it defaults to <code>false</code>.
      * </p>
      */
     private Boolean allowedOAuthFlowsUserPoolClient;
@@ -242,8 +444,105 @@ public class UserPoolClientType implements Serializable {
      * <p>
      * The Amazon Pinpoint analytics configuration for the user pool client.
      * </p>
+     * <note>
+     * <p>
+     * Amazon Cognito user pools only support sending events to Amazon Pinpoint
+     * projects in the US East (N. Virginia) us-east-1 Region, regardless of the
+     * Region where the user pool resides.
+     * </p>
+     * </note>
      */
     private AnalyticsConfigurationType analyticsConfiguration;
+
+    /**
+     * <p>
+     * Errors and responses that you want Amazon Cognito APIs to return during
+     * authentication, account confirmation, and password recovery when the user
+     * doesn't exist in the user pool. When set to <code>ENABLED</code> and the
+     * user doesn't exist, authentication returns an error indicating either the
+     * username or password was incorrect. Account confirmation and password
+     * recovery return a response indicating a code was sent to a simulated
+     * destination. When set to <code>LEGACY</code>, those APIs return a
+     * <code>UserNotFoundException</code> exception if the user doesn't exist in
+     * the user pool.
+     * </p>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ENABLED</code> - This prevents user existence-related errors.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LEGACY</code> - This represents the old behavior of Amazon Cognito
+     * where user existence related errors aren't prevented.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>LEGACY, ENABLED
+     */
+    private String preventUserExistenceErrors;
+
+    /**
+     * <p>
+     * Indicates whether token revocation is activated for the user pool client.
+     * When you create a new user pool client, token revocation is activated by
+     * default. For more information about revoking tokens, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     * >RevokeToken</a>.
+     * </p>
+     */
+    private Boolean enableTokenRevocation;
+
+    /**
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is true,
+     * Amazon Cognito accepts an <code>IpAddress</code> value that you send in
+     * the <code>UserContextData</code> parameter. The
+     * <code>UserContextData</code> parameter sends information to Amazon
+     * Cognito advanced security for risk analysis. You can send
+     * <code>UserContextData</code> when you sign in Amazon Cognito native users
+     * with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.
+     * </p>
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is false, you
+     * can't send your user's source IP address to Amazon Cognito advanced
+     * security with unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect
+     * whether you can send a source IP address in a <code>ContextData</code>
+     * parameter with the authenticated API operations
+     * <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.
+     * </p>
+     * <p>
+     * You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client
+     * that has a client secret. For more information about propagation of user
+     * context data, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     * >Adding user device and session data to API requests</a>.
+     * </p>
+     */
+    private Boolean enablePropagateAdditionalUserContextData;
+
+    /**
+     * <p>
+     * Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond
+     * to each authentication challenge before the session expires.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>3 - 15<br/>
+     */
+    private Integer authSessionValidity;
 
     /**
      * <p>
@@ -477,11 +776,15 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @return <p>
-     *         The date the user pool client was last modified.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was modified.
      *         </p>
      */
     public java.util.Date getLastModifiedDate() {
@@ -490,11 +793,15 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @param lastModifiedDate <p>
-     *            The date the user pool client was last modified.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      */
     public void setLastModifiedDate(java.util.Date lastModifiedDate) {
@@ -503,14 +810,18 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastModifiedDate <p>
-     *            The date the user pool client was last modified.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -522,11 +833,15 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @return <p>
-     *         The date the user pool client was created.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -535,11 +850,15 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The date the user pool client was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -548,14 +867,18 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The date the user pool client was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The date the user pool client was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -567,16 +890,55 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The time limit, in days, after which the refresh token is no longer valid
-     * and cannot be used.
+     * The refresh token time limit. After this limit expires, your user can't
+     * use their refresh token. To specify the time unit for
+     * <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>RefreshTokenValidity</code> as
+     * <code>10</code> and <code>TokenValidityUnits</code> as <code>days</code>,
+     * your user can refresh their session and retrieve new access and ID tokens
+     * for 10 days.
+     * </p>
+     * <p>
+     * The default time unit for <code>RefreshTokenValidity</code> in an API
+     * request is days. You can't set <code>RefreshTokenValidity</code> to 0. If
+     * you do, Amazon Cognito overrides the value with the default value of 30
+     * days. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your refresh tokens are valid for 30 days.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - 3650<br/>
+     * <b>Range: </b>0 - 315360000<br/>
      *
      * @return <p>
-     *         The time limit, in days, after which the refresh token is no
-     *         longer valid and cannot be used.
+     *         The refresh token time limit. After this limit expires, your user
+     *         can't use their refresh token. To specify the time unit for
+     *         <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     *         <code>minutes</code>, <code>hours</code>, or <code>days</code>,
+     *         set a <code>TokenValidityUnits</code> value in your API request.
+     *         </p>
+     *         <p>
+     *         For example, when you set <code>RefreshTokenValidity</code> as
+     *         <code>10</code> and <code>TokenValidityUnits</code> as
+     *         <code>days</code>, your user can refresh their session and
+     *         retrieve new access and ID tokens for 10 days.
+     *         </p>
+     *         <p>
+     *         The default time unit for <code>RefreshTokenValidity</code> in an
+     *         API request is days. You can't set
+     *         <code>RefreshTokenValidity</code> to 0. If you do, Amazon Cognito
+     *         overrides the value with the default value of 30 days. <i>Valid
+     *         range</i> is displayed below in seconds.
+     *         </p>
+     *         <p>
+     *         If you don't specify otherwise in the configuration of your app
+     *         client, your refresh tokens are valid for 30 days.
      *         </p>
      */
     public Integer getRefreshTokenValidity() {
@@ -585,16 +947,56 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The time limit, in days, after which the refresh token is no longer valid
-     * and cannot be used.
+     * The refresh token time limit. After this limit expires, your user can't
+     * use their refresh token. To specify the time unit for
+     * <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>RefreshTokenValidity</code> as
+     * <code>10</code> and <code>TokenValidityUnits</code> as <code>days</code>,
+     * your user can refresh their session and retrieve new access and ID tokens
+     * for 10 days.
+     * </p>
+     * <p>
+     * The default time unit for <code>RefreshTokenValidity</code> in an API
+     * request is days. You can't set <code>RefreshTokenValidity</code> to 0. If
+     * you do, Amazon Cognito overrides the value with the default value of 30
+     * days. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your refresh tokens are valid for 30 days.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - 3650<br/>
+     * <b>Range: </b>0 - 315360000<br/>
      *
      * @param refreshTokenValidity <p>
-     *            The time limit, in days, after which the refresh token is no
-     *            longer valid and cannot be used.
+     *            The refresh token time limit. After this limit expires, your
+     *            user can't use their refresh token. To specify the time unit
+     *            for <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     *            <code>minutes</code>, <code>hours</code>, or <code>days</code>
+     *            , set a <code>TokenValidityUnits</code> value in your API
+     *            request.
+     *            </p>
+     *            <p>
+     *            For example, when you set <code>RefreshTokenValidity</code> as
+     *            <code>10</code> and <code>TokenValidityUnits</code> as
+     *            <code>days</code>, your user can refresh their session and
+     *            retrieve new access and ID tokens for 10 days.
+     *            </p>
+     *            <p>
+     *            The default time unit for <code>RefreshTokenValidity</code> in
+     *            an API request is days. You can't set
+     *            <code>RefreshTokenValidity</code> to 0. If you do, Amazon
+     *            Cognito overrides the value with the default value of 30 days.
+     *            <i>Valid range</i> is displayed below in seconds.
+     *            </p>
+     *            <p>
+     *            If you don't specify otherwise in the configuration of your
+     *            app client, your refresh tokens are valid for 30 days.
      *            </p>
      */
     public void setRefreshTokenValidity(Integer refreshTokenValidity) {
@@ -603,25 +1005,444 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The time limit, in days, after which the refresh token is no longer valid
-     * and cannot be used.
+     * The refresh token time limit. After this limit expires, your user can't
+     * use their refresh token. To specify the time unit for
+     * <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>RefreshTokenValidity</code> as
+     * <code>10</code> and <code>TokenValidityUnits</code> as <code>days</code>,
+     * your user can refresh their session and retrieve new access and ID tokens
+     * for 10 days.
+     * </p>
+     * <p>
+     * The default time unit for <code>RefreshTokenValidity</code> in an API
+     * request is days. You can't set <code>RefreshTokenValidity</code> to 0. If
+     * you do, Amazon Cognito overrides the value with the default value of 30
+     * days. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your refresh tokens are valid for 30 days.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - 3650<br/>
+     * <b>Range: </b>0 - 315360000<br/>
      *
      * @param refreshTokenValidity <p>
-     *            The time limit, in days, after which the refresh token is no
-     *            longer valid and cannot be used.
+     *            The refresh token time limit. After this limit expires, your
+     *            user can't use their refresh token. To specify the time unit
+     *            for <code>RefreshTokenValidity</code> as <code>seconds</code>,
+     *            <code>minutes</code>, <code>hours</code>, or <code>days</code>
+     *            , set a <code>TokenValidityUnits</code> value in your API
+     *            request.
+     *            </p>
+     *            <p>
+     *            For example, when you set <code>RefreshTokenValidity</code> as
+     *            <code>10</code> and <code>TokenValidityUnits</code> as
+     *            <code>days</code>, your user can refresh their session and
+     *            retrieve new access and ID tokens for 10 days.
+     *            </p>
+     *            <p>
+     *            The default time unit for <code>RefreshTokenValidity</code> in
+     *            an API request is days. You can't set
+     *            <code>RefreshTokenValidity</code> to 0. If you do, Amazon
+     *            Cognito overrides the value with the default value of 30 days.
+     *            <i>Valid range</i> is displayed below in seconds.
+     *            </p>
+     *            <p>
+     *            If you don't specify otherwise in the configuration of your
+     *            app client, your refresh tokens are valid for 30 days.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public UserPoolClientType withRefreshTokenValidity(Integer refreshTokenValidity) {
         this.refreshTokenValidity = refreshTokenValidity;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The access token time limit. After this limit expires, your user can't
+     * use their access token. To specify the time unit for
+     * <code>AccessTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>AccessTokenValidity</code> to
+     * <code>10</code> and <code>TokenValidityUnits</code> to <code>hours</code>
+     * , your user can authorize access with their access token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>AccessTokenValidity</code> in an API
+     * request is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your access tokens are valid for one hour.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     *
+     * @return <p>
+     *         The access token time limit. After this limit expires, your user
+     *         can't use their access token. To specify the time unit for
+     *         <code>AccessTokenValidity</code> as <code>seconds</code>,
+     *         <code>minutes</code>, <code>hours</code>, or <code>days</code>,
+     *         set a <code>TokenValidityUnits</code> value in your API request.
+     *         </p>
+     *         <p>
+     *         For example, when you set <code>AccessTokenValidity</code> to
+     *         <code>10</code> and <code>TokenValidityUnits</code> to
+     *         <code>hours</code>, your user can authorize access with their
+     *         access token for 10 hours.
+     *         </p>
+     *         <p>
+     *         The default time unit for <code>AccessTokenValidity</code> in an
+     *         API request is hours. <i>Valid range</i> is displayed below in
+     *         seconds.
+     *         </p>
+     *         <p>
+     *         If you don't specify otherwise in the configuration of your app
+     *         client, your access tokens are valid for one hour.
+     *         </p>
+     */
+    public Integer getAccessTokenValidity() {
+        return accessTokenValidity;
+    }
+
+    /**
+     * <p>
+     * The access token time limit. After this limit expires, your user can't
+     * use their access token. To specify the time unit for
+     * <code>AccessTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>AccessTokenValidity</code> to
+     * <code>10</code> and <code>TokenValidityUnits</code> to <code>hours</code>
+     * , your user can authorize access with their access token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>AccessTokenValidity</code> in an API
+     * request is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your access tokens are valid for one hour.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     *
+     * @param accessTokenValidity <p>
+     *            The access token time limit. After this limit expires, your
+     *            user can't use their access token. To specify the time unit
+     *            for <code>AccessTokenValidity</code> as <code>seconds</code>,
+     *            <code>minutes</code>, <code>hours</code>, or <code>days</code>
+     *            , set a <code>TokenValidityUnits</code> value in your API
+     *            request.
+     *            </p>
+     *            <p>
+     *            For example, when you set <code>AccessTokenValidity</code> to
+     *            <code>10</code> and <code>TokenValidityUnits</code> to
+     *            <code>hours</code>, your user can authorize access with their
+     *            access token for 10 hours.
+     *            </p>
+     *            <p>
+     *            The default time unit for <code>AccessTokenValidity</code> in
+     *            an API request is hours. <i>Valid range</i> is displayed below
+     *            in seconds.
+     *            </p>
+     *            <p>
+     *            If you don't specify otherwise in the configuration of your
+     *            app client, your access tokens are valid for one hour.
+     *            </p>
+     */
+    public void setAccessTokenValidity(Integer accessTokenValidity) {
+        this.accessTokenValidity = accessTokenValidity;
+    }
+
+    /**
+     * <p>
+     * The access token time limit. After this limit expires, your user can't
+     * use their access token. To specify the time unit for
+     * <code>AccessTokenValidity</code> as <code>seconds</code>,
+     * <code>minutes</code>, <code>hours</code>, or <code>days</code>, set a
+     * <code>TokenValidityUnits</code> value in your API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>AccessTokenValidity</code> to
+     * <code>10</code> and <code>TokenValidityUnits</code> to <code>hours</code>
+     * , your user can authorize access with their access token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>AccessTokenValidity</code> in an API
+     * request is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your access tokens are valid for one hour.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     *
+     * @param accessTokenValidity <p>
+     *            The access token time limit. After this limit expires, your
+     *            user can't use their access token. To specify the time unit
+     *            for <code>AccessTokenValidity</code> as <code>seconds</code>,
+     *            <code>minutes</code>, <code>hours</code>, or <code>days</code>
+     *            , set a <code>TokenValidityUnits</code> value in your API
+     *            request.
+     *            </p>
+     *            <p>
+     *            For example, when you set <code>AccessTokenValidity</code> to
+     *            <code>10</code> and <code>TokenValidityUnits</code> to
+     *            <code>hours</code>, your user can authorize access with their
+     *            access token for 10 hours.
+     *            </p>
+     *            <p>
+     *            The default time unit for <code>AccessTokenValidity</code> in
+     *            an API request is hours. <i>Valid range</i> is displayed below
+     *            in seconds.
+     *            </p>
+     *            <p>
+     *            If you don't specify otherwise in the configuration of your
+     *            app client, your access tokens are valid for one hour.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UserPoolClientType withAccessTokenValidity(Integer accessTokenValidity) {
+        this.accessTokenValidity = accessTokenValidity;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ID token time limit. After this limit expires, your user can't use
+     * their ID token. To specify the time unit for <code>IdTokenValidity</code>
+     * as <code>seconds</code>, <code>minutes</code>, <code>hours</code>, or
+     * <code>days</code>, set a <code>TokenValidityUnits</code> value in your
+     * API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>IdTokenValidity</code> as <code>10</code>
+     * and <code>TokenValidityUnits</code> as <code>hours</code>, your user can
+     * authenticate their session with their ID token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>IdTokenValidity</code> in an API request
+     * is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your ID tokens are valid for one hour.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     *
+     * @return <p>
+     *         The ID token time limit. After this limit expires, your user
+     *         can't use their ID token. To specify the time unit for
+     *         <code>IdTokenValidity</code> as <code>seconds</code>,
+     *         <code>minutes</code>, <code>hours</code>, or <code>days</code>,
+     *         set a <code>TokenValidityUnits</code> value in your API request.
+     *         </p>
+     *         <p>
+     *         For example, when you set <code>IdTokenValidity</code> as
+     *         <code>10</code> and <code>TokenValidityUnits</code> as
+     *         <code>hours</code>, your user can authenticate their session with
+     *         their ID token for 10 hours.
+     *         </p>
+     *         <p>
+     *         The default time unit for <code>IdTokenValidity</code> in an API
+     *         request is hours. <i>Valid range</i> is displayed below in
+     *         seconds.
+     *         </p>
+     *         <p>
+     *         If you don't specify otherwise in the configuration of your app
+     *         client, your ID tokens are valid for one hour.
+     *         </p>
+     */
+    public Integer getIdTokenValidity() {
+        return idTokenValidity;
+    }
+
+    /**
+     * <p>
+     * The ID token time limit. After this limit expires, your user can't use
+     * their ID token. To specify the time unit for <code>IdTokenValidity</code>
+     * as <code>seconds</code>, <code>minutes</code>, <code>hours</code>, or
+     * <code>days</code>, set a <code>TokenValidityUnits</code> value in your
+     * API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>IdTokenValidity</code> as <code>10</code>
+     * and <code>TokenValidityUnits</code> as <code>hours</code>, your user can
+     * authenticate their session with their ID token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>IdTokenValidity</code> in an API request
+     * is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your ID tokens are valid for one hour.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     *
+     * @param idTokenValidity <p>
+     *            The ID token time limit. After this limit expires, your user
+     *            can't use their ID token. To specify the time unit for
+     *            <code>IdTokenValidity</code> as <code>seconds</code>,
+     *            <code>minutes</code>, <code>hours</code>, or <code>days</code>
+     *            , set a <code>TokenValidityUnits</code> value in your API
+     *            request.
+     *            </p>
+     *            <p>
+     *            For example, when you set <code>IdTokenValidity</code> as
+     *            <code>10</code> and <code>TokenValidityUnits</code> as
+     *            <code>hours</code>, your user can authenticate their session
+     *            with their ID token for 10 hours.
+     *            </p>
+     *            <p>
+     *            The default time unit for <code>IdTokenValidity</code> in an
+     *            API request is hours. <i>Valid range</i> is displayed below in
+     *            seconds.
+     *            </p>
+     *            <p>
+     *            If you don't specify otherwise in the configuration of your
+     *            app client, your ID tokens are valid for one hour.
+     *            </p>
+     */
+    public void setIdTokenValidity(Integer idTokenValidity) {
+        this.idTokenValidity = idTokenValidity;
+    }
+
+    /**
+     * <p>
+     * The ID token time limit. After this limit expires, your user can't use
+     * their ID token. To specify the time unit for <code>IdTokenValidity</code>
+     * as <code>seconds</code>, <code>minutes</code>, <code>hours</code>, or
+     * <code>days</code>, set a <code>TokenValidityUnits</code> value in your
+     * API request.
+     * </p>
+     * <p>
+     * For example, when you set <code>IdTokenValidity</code> as <code>10</code>
+     * and <code>TokenValidityUnits</code> as <code>hours</code>, your user can
+     * authenticate their session with their ID token for 10 hours.
+     * </p>
+     * <p>
+     * The default time unit for <code>IdTokenValidity</code> in an API request
+     * is hours. <i>Valid range</i> is displayed below in seconds.
+     * </p>
+     * <p>
+     * If you don't specify otherwise in the configuration of your app client,
+     * your ID tokens are valid for one hour.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>1 - 86400<br/>
+     *
+     * @param idTokenValidity <p>
+     *            The ID token time limit. After this limit expires, your user
+     *            can't use their ID token. To specify the time unit for
+     *            <code>IdTokenValidity</code> as <code>seconds</code>,
+     *            <code>minutes</code>, <code>hours</code>, or <code>days</code>
+     *            , set a <code>TokenValidityUnits</code> value in your API
+     *            request.
+     *            </p>
+     *            <p>
+     *            For example, when you set <code>IdTokenValidity</code> as
+     *            <code>10</code> and <code>TokenValidityUnits</code> as
+     *            <code>hours</code>, your user can authenticate their session
+     *            with their ID token for 10 hours.
+     *            </p>
+     *            <p>
+     *            The default time unit for <code>IdTokenValidity</code> in an
+     *            API request is hours. <i>Valid range</i> is displayed below in
+     *            seconds.
+     *            </p>
+     *            <p>
+     *            If you don't specify otherwise in the configuration of your
+     *            app client, your ID tokens are valid for one hour.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UserPoolClientType withIdTokenValidity(Integer idTokenValidity) {
+        this.idTokenValidity = idTokenValidity;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The time units used to specify the token validity times of each token
+     * type: ID, access, and refresh.
+     * </p>
+     *
+     * @return <p>
+     *         The time units used to specify the token validity times of each
+     *         token type: ID, access, and refresh.
+     *         </p>
+     */
+    public TokenValidityUnitsType getTokenValidityUnits() {
+        return tokenValidityUnits;
+    }
+
+    /**
+     * <p>
+     * The time units used to specify the token validity times of each token
+     * type: ID, access, and refresh.
+     * </p>
+     *
+     * @param tokenValidityUnits <p>
+     *            The time units used to specify the token validity times of
+     *            each token type: ID, access, and refresh.
+     *            </p>
+     */
+    public void setTokenValidityUnits(TokenValidityUnitsType tokenValidityUnits) {
+        this.tokenValidityUnits = tokenValidityUnits;
+    }
+
+    /**
+     * <p>
+     * The time units used to specify the token validity times of each token
+     * type: ID, access, and refresh.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tokenValidityUnits <p>
+     *            The time units used to specify the token validity times of
+     *            each token type: ID, access, and refresh.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UserPoolClientType withTokenValidityUnits(TokenValidityUnitsType tokenValidityUnits) {
+        this.tokenValidityUnits = tokenValidityUnits;
         return this;
     }
 
@@ -775,11 +1596,132 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The explicit authentication flows.
+     * The authentication flows that you want your user pool client to support.
+     * For each app client in your user pool, you can sign in your users with
+     * any combination of one or more flows, including with a user name and
+     * Secure Remote Password (SRP), a user name and password, or a custom
+     * authentication process that you define with Lambda functions.
+     * </p>
+     * <note>
+     * <p>
+     * If you don't specify a value for <code>ExplicitAuthFlows</code>, your
+     * user client supports <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     * <code>ALLOW_USER_SRP_AUTH</code>, and <code>ALLOW_CUSTOM_AUTH</code>.
+     * </p>
+     * </note>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user
+     * password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This
+     * setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     * authentication flow, your app passes a user name and password to Amazon
+     * Cognito in the request, instead of using the Secure Remote Password (SRP)
+     * protocol to securely transmit the password.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     * authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based
+     * authentication. In this flow, Amazon Cognito receives the password in the
+     * request instead of using the SRP protocol to verify passwords.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * In some environments, you will see the values
+     * <code>ADMIN_NO_SRP_AUTH</code>, <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     * <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     * <code>ExplicitAuthFlows</code> values to user pool clients at the same
+     * time as values that begin with <code>ALLOW_</code>, like
+     * <code>ALLOW_USER_SRP_AUTH</code>.
      * </p>
      *
      * @return <p>
-     *         The explicit authentication flows.
+     *         The authentication flows that you want your user pool client to
+     *         support. For each app client in your user pool, you can sign in
+     *         your users with any combination of one or more flows, including
+     *         with a user name and Secure Remote Password (SRP), a user name
+     *         and password, or a custom authentication process that you define
+     *         with Lambda functions.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         If you don't specify a value for <code>ExplicitAuthFlows</code>,
+     *         your user client supports <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     *         <code>ALLOW_USER_SRP_AUTH</code>, and
+     *         <code>ALLOW_CUSTOM_AUTH</code>.
+     *         </p>
+     *         </note>
+     *         <p>
+     *         Valid values include:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based
+     *         user password authentication flow
+     *         <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces the
+     *         <code>ADMIN_NO_SRP_AUTH</code> setting. With this authentication
+     *         flow, your app passes a user name and password to Amazon Cognito
+     *         in the request, instead of using the Secure Remote Password (SRP)
+     *         protocol to securely transmit the password.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     *         authentication.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based
+     *         authentication. In this flow, Amazon Cognito receives the
+     *         password in the request instead of using the SRP protocol to
+     *         verify passwords.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based
+     *         authentication.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh
+     *         tokens.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         In some environments, you will see the values
+     *         <code>ADMIN_NO_SRP_AUTH</code>,
+     *         <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     *         <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     *         <code>ExplicitAuthFlows</code> values to user pool clients at the
+     *         same time as values that begin with <code>ALLOW_</code>, like
+     *         <code>ALLOW_USER_SRP_AUTH</code>.
      *         </p>
      */
     public java.util.List<String> getExplicitAuthFlows() {
@@ -788,11 +1730,134 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The explicit authentication flows.
+     * The authentication flows that you want your user pool client to support.
+     * For each app client in your user pool, you can sign in your users with
+     * any combination of one or more flows, including with a user name and
+     * Secure Remote Password (SRP), a user name and password, or a custom
+     * authentication process that you define with Lambda functions.
+     * </p>
+     * <note>
+     * <p>
+     * If you don't specify a value for <code>ExplicitAuthFlows</code>, your
+     * user client supports <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     * <code>ALLOW_USER_SRP_AUTH</code>, and <code>ALLOW_CUSTOM_AUTH</code>.
+     * </p>
+     * </note>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user
+     * password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This
+     * setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     * authentication flow, your app passes a user name and password to Amazon
+     * Cognito in the request, instead of using the Secure Remote Password (SRP)
+     * protocol to securely transmit the password.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     * authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based
+     * authentication. In this flow, Amazon Cognito receives the password in the
+     * request instead of using the SRP protocol to verify passwords.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * In some environments, you will see the values
+     * <code>ADMIN_NO_SRP_AUTH</code>, <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     * <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     * <code>ExplicitAuthFlows</code> values to user pool clients at the same
+     * time as values that begin with <code>ALLOW_</code>, like
+     * <code>ALLOW_USER_SRP_AUTH</code>.
      * </p>
      *
      * @param explicitAuthFlows <p>
-     *            The explicit authentication flows.
+     *            The authentication flows that you want your user pool client
+     *            to support. For each app client in your user pool, you can
+     *            sign in your users with any combination of one or more flows,
+     *            including with a user name and Secure Remote Password (SRP), a
+     *            user name and password, or a custom authentication process
+     *            that you define with Lambda functions.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            If you don't specify a value for
+     *            <code>ExplicitAuthFlows</code>, your user client supports
+     *            <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     *            <code>ALLOW_USER_SRP_AUTH</code>, and
+     *            <code>ALLOW_CUSTOM_AUTH</code>.
+     *            </p>
+     *            </note>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin
+     *            based user password authentication flow
+     *            <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces
+     *            the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     *            authentication flow, your app passes a user name and password
+     *            to Amazon Cognito in the request, instead of using the Secure
+     *            Remote Password (SRP) protocol to securely transmit the
+     *            password.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     *            authentication.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user
+     *            password-based authentication. In this flow, Amazon Cognito
+     *            receives the password in the request instead of using the SRP
+     *            protocol to verify passwords.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based
+     *            authentication.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to
+     *            refresh tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            In some environments, you will see the values
+     *            <code>ADMIN_NO_SRP_AUTH</code>,
+     *            <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     *            <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     *            <code>ExplicitAuthFlows</code> values to user pool clients at
+     *            the same time as values that begin with <code>ALLOW_</code>,
+     *            like <code>ALLOW_USER_SRP_AUTH</code>.
      *            </p>
      */
     public void setExplicitAuthFlows(java.util.Collection<String> explicitAuthFlows) {
@@ -806,14 +1871,137 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The explicit authentication flows.
+     * The authentication flows that you want your user pool client to support.
+     * For each app client in your user pool, you can sign in your users with
+     * any combination of one or more flows, including with a user name and
+     * Secure Remote Password (SRP), a user name and password, or a custom
+     * authentication process that you define with Lambda functions.
+     * </p>
+     * <note>
+     * <p>
+     * If you don't specify a value for <code>ExplicitAuthFlows</code>, your
+     * user client supports <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     * <code>ALLOW_USER_SRP_AUTH</code>, and <code>ALLOW_CUSTOM_AUTH</code>.
+     * </p>
+     * </note>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user
+     * password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This
+     * setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     * authentication flow, your app passes a user name and password to Amazon
+     * Cognito in the request, instead of using the Secure Remote Password (SRP)
+     * protocol to securely transmit the password.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     * authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based
+     * authentication. In this flow, Amazon Cognito receives the password in the
+     * request instead of using the SRP protocol to verify passwords.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * In some environments, you will see the values
+     * <code>ADMIN_NO_SRP_AUTH</code>, <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     * <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     * <code>ExplicitAuthFlows</code> values to user pool clients at the same
+     * time as values that begin with <code>ALLOW_</code>, like
+     * <code>ALLOW_USER_SRP_AUTH</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param explicitAuthFlows <p>
-     *            The explicit authentication flows.
+     *            The authentication flows that you want your user pool client
+     *            to support. For each app client in your user pool, you can
+     *            sign in your users with any combination of one or more flows,
+     *            including with a user name and Secure Remote Password (SRP), a
+     *            user name and password, or a custom authentication process
+     *            that you define with Lambda functions.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            If you don't specify a value for
+     *            <code>ExplicitAuthFlows</code>, your user client supports
+     *            <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     *            <code>ALLOW_USER_SRP_AUTH</code>, and
+     *            <code>ALLOW_CUSTOM_AUTH</code>.
+     *            </p>
+     *            </note>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin
+     *            based user password authentication flow
+     *            <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces
+     *            the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     *            authentication flow, your app passes a user name and password
+     *            to Amazon Cognito in the request, instead of using the Secure
+     *            Remote Password (SRP) protocol to securely transmit the
+     *            password.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     *            authentication.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user
+     *            password-based authentication. In this flow, Amazon Cognito
+     *            receives the password in the request instead of using the SRP
+     *            protocol to verify passwords.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based
+     *            authentication.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to
+     *            refresh tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            In some environments, you will see the values
+     *            <code>ADMIN_NO_SRP_AUTH</code>,
+     *            <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     *            <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     *            <code>ExplicitAuthFlows</code> values to user pool clients at
+     *            the same time as values that begin with <code>ALLOW_</code>,
+     *            like <code>ALLOW_USER_SRP_AUTH</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -830,14 +2018,137 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * The explicit authentication flows.
+     * The authentication flows that you want your user pool client to support.
+     * For each app client in your user pool, you can sign in your users with
+     * any combination of one or more flows, including with a user name and
+     * Secure Remote Password (SRP), a user name and password, or a custom
+     * authentication process that you define with Lambda functions.
+     * </p>
+     * <note>
+     * <p>
+     * If you don't specify a value for <code>ExplicitAuthFlows</code>, your
+     * user client supports <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     * <code>ALLOW_USER_SRP_AUTH</code>, and <code>ALLOW_CUSTOM_AUTH</code>.
+     * </p>
+     * </note>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user
+     * password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This
+     * setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     * authentication flow, your app passes a user name and password to Amazon
+     * Cognito in the request, instead of using the Secure Remote Password (SRP)
+     * protocol to securely transmit the password.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     * authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based
+     * authentication. In this flow, Amazon Cognito receives the password in the
+     * request instead of using the SRP protocol to verify passwords.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based authentication.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * In some environments, you will see the values
+     * <code>ADMIN_NO_SRP_AUTH</code>, <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     * <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     * <code>ExplicitAuthFlows</code> values to user pool clients at the same
+     * time as values that begin with <code>ALLOW_</code>, like
+     * <code>ALLOW_USER_SRP_AUTH</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param explicitAuthFlows <p>
-     *            The explicit authentication flows.
+     *            The authentication flows that you want your user pool client
+     *            to support. For each app client in your user pool, you can
+     *            sign in your users with any combination of one or more flows,
+     *            including with a user name and Secure Remote Password (SRP), a
+     *            user name and password, or a custom authentication process
+     *            that you define with Lambda functions.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            If you don't specify a value for
+     *            <code>ExplicitAuthFlows</code>, your user client supports
+     *            <code>ALLOW_REFRESH_TOKEN_AUTH</code>,
+     *            <code>ALLOW_USER_SRP_AUTH</code>, and
+     *            <code>ALLOW_CUSTOM_AUTH</code>.
+     *            </p>
+     *            </note>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin
+     *            based user password authentication flow
+     *            <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces
+     *            the <code>ADMIN_NO_SRP_AUTH</code> setting. With this
+     *            authentication flow, your app passes a user name and password
+     *            to Amazon Cognito in the request, instead of using the Secure
+     *            Remote Password (SRP) protocol to securely transmit the
+     *            password.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based
+     *            authentication.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user
+     *            password-based authentication. In this flow, Amazon Cognito
+     *            receives the password in the request instead of using the SRP
+     *            protocol to verify passwords.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP-based
+     *            authentication.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to
+     *            refresh tokens.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            In some environments, you will see the values
+     *            <code>ADMIN_NO_SRP_AUTH</code>,
+     *            <code>CUSTOM_AUTH_FLOW_ONLY</code>, or
+     *            <code>USER_PASSWORD_AUTH</code>. You can't assign these legacy
+     *            <code>ExplicitAuthFlows</code> values to user pool clients at
+     *            the same time as values that begin with <code>ALLOW_</code>,
+     *            like <code>ALLOW_USER_SRP_AUTH</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -849,13 +2160,19 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of provider names for the identity providers that are supported on
-     * this client.
+     * A list of provider names for the IdPs that this client supports. The
+     * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
+     * <code>Google</code>, <code>SignInWithApple</code>,
+     * <code>LoginWithAmazon</code>, and the names of your own SAML and OIDC
+     * providers.
      * </p>
      *
      * @return <p>
-     *         A list of provider names for the identity providers that are
-     *         supported on this client.
+     *         A list of provider names for the IdPs that this client supports.
+     *         The following are supported: <code>COGNITO</code>,
+     *         <code>Facebook</code>, <code>Google</code>,
+     *         <code>SignInWithApple</code>, <code>LoginWithAmazon</code>, and
+     *         the names of your own SAML and OIDC providers.
      *         </p>
      */
     public java.util.List<String> getSupportedIdentityProviders() {
@@ -864,13 +2181,19 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of provider names for the identity providers that are supported on
-     * this client.
+     * A list of provider names for the IdPs that this client supports. The
+     * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
+     * <code>Google</code>, <code>SignInWithApple</code>,
+     * <code>LoginWithAmazon</code>, and the names of your own SAML and OIDC
+     * providers.
      * </p>
      *
      * @param supportedIdentityProviders <p>
-     *            A list of provider names for the identity providers that are
-     *            supported on this client.
+     *            A list of provider names for the IdPs that this client
+     *            supports. The following are supported: <code>COGNITO</code>,
+     *            <code>Facebook</code>, <code>Google</code>,
+     *            <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     *            and the names of your own SAML and OIDC providers.
      *            </p>
      */
     public void setSupportedIdentityProviders(
@@ -886,16 +2209,22 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of provider names for the identity providers that are supported on
-     * this client.
+     * A list of provider names for the IdPs that this client supports. The
+     * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
+     * <code>Google</code>, <code>SignInWithApple</code>,
+     * <code>LoginWithAmazon</code>, and the names of your own SAML and OIDC
+     * providers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param supportedIdentityProviders <p>
-     *            A list of provider names for the identity providers that are
-     *            supported on this client.
+     *            A list of provider names for the IdPs that this client
+     *            supports. The following are supported: <code>COGNITO</code>,
+     *            <code>Facebook</code>, <code>Google</code>,
+     *            <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     *            and the names of your own SAML and OIDC providers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -913,16 +2242,22 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of provider names for the identity providers that are supported on
-     * this client.
+     * A list of provider names for the IdPs that this client supports. The
+     * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
+     * <code>Google</code>, <code>SignInWithApple</code>,
+     * <code>LoginWithAmazon</code>, and the names of your own SAML and OIDC
+     * providers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param supportedIdentityProviders <p>
-     *            A list of provider names for the identity providers that are
-     *            supported on this client.
+     *            A list of provider names for the IdPs that this client
+     *            supports. The following are supported: <code>COGNITO</code>,
+     *            <code>Facebook</code>, <code>Google</code>,
+     *            <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     *            and the names of your own SAML and OIDC providers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -935,7 +2270,7 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed redirect (callback) URLs for the identity providers.
+     * A list of allowed redirect (callback) URLs for the IdPs.
      * </p>
      * <p>
      * A redirect URI must:
@@ -970,8 +2305,7 @@ public class UserPoolClientType implements Serializable {
      * </p>
      *
      * @return <p>
-     *         A list of allowed redirect (callback) URLs for the identity
-     *         providers.
+     *         A list of allowed redirect (callback) URLs for the IdPs.
      *         </p>
      *         <p>
      *         A redirect URI must:
@@ -1012,7 +2346,7 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed redirect (callback) URLs for the identity providers.
+     * A list of allowed redirect (callback) URLs for the IdPs.
      * </p>
      * <p>
      * A redirect URI must:
@@ -1047,8 +2381,7 @@ public class UserPoolClientType implements Serializable {
      * </p>
      *
      * @param callbackURLs <p>
-     *            A list of allowed redirect (callback) URLs for the identity
-     *            providers.
+     *            A list of allowed redirect (callback) URLs for the IdPs.
      *            </p>
      *            <p>
      *            A redirect URI must:
@@ -1094,7 +2427,7 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed redirect (callback) URLs for the identity providers.
+     * A list of allowed redirect (callback) URLs for the IdPs.
      * </p>
      * <p>
      * A redirect URI must:
@@ -1132,8 +2465,7 @@ public class UserPoolClientType implements Serializable {
      * together.
      *
      * @param callbackURLs <p>
-     *            A list of allowed redirect (callback) URLs for the identity
-     *            providers.
+     *            A list of allowed redirect (callback) URLs for the IdPs.
      *            </p>
      *            <p>
      *            A redirect URI must:
@@ -1182,7 +2514,7 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed redirect (callback) URLs for the identity providers.
+     * A list of allowed redirect (callback) URLs for the IdPs.
      * </p>
      * <p>
      * A redirect URI must:
@@ -1220,8 +2552,7 @@ public class UserPoolClientType implements Serializable {
      * together.
      *
      * @param callbackURLs <p>
-     *            A list of allowed redirect (callback) URLs for the identity
-     *            providers.
+     *            A list of allowed redirect (callback) URLs for the IdPs.
      *            </p>
      *            <p>
      *            A redirect URI must:
@@ -1265,11 +2596,11 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed logout URLs for the identity providers.
+     * A list of allowed logout URLs for the IdPs.
      * </p>
      *
      * @return <p>
-     *         A list of allowed logout URLs for the identity providers.
+     *         A list of allowed logout URLs for the IdPs.
      *         </p>
      */
     public java.util.List<String> getLogoutURLs() {
@@ -1278,11 +2609,11 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed logout URLs for the identity providers.
+     * A list of allowed logout URLs for the IdPs.
      * </p>
      *
      * @param logoutURLs <p>
-     *            A list of allowed logout URLs for the identity providers.
+     *            A list of allowed logout URLs for the IdPs.
      *            </p>
      */
     public void setLogoutURLs(java.util.Collection<String> logoutURLs) {
@@ -1296,14 +2627,14 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed logout URLs for the identity providers.
+     * A list of allowed logout URLs for the IdPs.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param logoutURLs <p>
-     *            A list of allowed logout URLs for the identity providers.
+     *            A list of allowed logout URLs for the IdPs.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1320,14 +2651,14 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed logout URLs for the identity providers.
+     * A list of allowed logout URLs for the IdPs.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param logoutURLs <p>
-     *            A list of allowed logout URLs for the identity providers.
+     *            A list of allowed logout URLs for the IdPs.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1588,25 +2919,62 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to <code>code</code> to initiate a code grant flow, which provides an
-     * authorization code as the response. This code can be exchanged for access
-     * tokens with the token endpoint.
+     * The allowed OAuth flows.
      * </p>
+     * <dl>
+     * <dt>code</dt>
+     * <dd>
      * <p>
-     * Set to <code>token</code> to specify that the client should get the
-     * access token (and, optionally, ID token, based on scopes) directly.
+     * Use a code grant flow, which provides an authorization code as the
+     * response. This code can be exchanged for access tokens with the
+     * <code>/oauth2/token</code> endpoint.
      * </p>
+     * </dd>
+     * <dt>implicit</dt>
+     * <dd>
+     * <p>
+     * Issue the access token (and, optionally, ID token, based on scopes)
+     * directly to your user.
+     * </p>
+     * </dd>
+     * <dt>client_credentials</dt>
+     * <dd>
+     * <p>
+     * Issue the access token from the <code>/oauth2/token</code> endpoint
+     * directly to a non-person user using a combination of the client ID and
+     * client secret.
+     * </p>
+     * </dd>
+     * </dl>
      *
      * @return <p>
-     *         Set to <code>code</code> to initiate a code grant flow, which
-     *         provides an authorization code as the response. This code can be
-     *         exchanged for access tokens with the token endpoint.
+     *         The allowed OAuth flows.
      *         </p>
+     *         <dl>
+     *         <dt>code</dt>
+     *         <dd>
      *         <p>
-     *         Set to <code>token</code> to specify that the client should get
-     *         the access token (and, optionally, ID token, based on scopes)
-     *         directly.
+     *         Use a code grant flow, which provides an authorization code as
+     *         the response. This code can be exchanged for access tokens with
+     *         the <code>/oauth2/token</code> endpoint.
      *         </p>
+     *         </dd>
+     *         <dt>implicit</dt>
+     *         <dd>
+     *         <p>
+     *         Issue the access token (and, optionally, ID token, based on
+     *         scopes) directly to your user.
+     *         </p>
+     *         </dd>
+     *         <dt>client_credentials</dt>
+     *         <dd>
+     *         <p>
+     *         Issue the access token from the <code>/oauth2/token</code>
+     *         endpoint directly to a non-person user using a combination of the
+     *         client ID and client secret.
+     *         </p>
+     *         </dd>
+     *         </dl>
      */
     public java.util.List<String> getAllowedOAuthFlows() {
         return allowedOAuthFlows;
@@ -1614,25 +2982,62 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to <code>code</code> to initiate a code grant flow, which provides an
-     * authorization code as the response. This code can be exchanged for access
-     * tokens with the token endpoint.
+     * The allowed OAuth flows.
      * </p>
+     * <dl>
+     * <dt>code</dt>
+     * <dd>
      * <p>
-     * Set to <code>token</code> to specify that the client should get the
-     * access token (and, optionally, ID token, based on scopes) directly.
+     * Use a code grant flow, which provides an authorization code as the
+     * response. This code can be exchanged for access tokens with the
+     * <code>/oauth2/token</code> endpoint.
      * </p>
+     * </dd>
+     * <dt>implicit</dt>
+     * <dd>
+     * <p>
+     * Issue the access token (and, optionally, ID token, based on scopes)
+     * directly to your user.
+     * </p>
+     * </dd>
+     * <dt>client_credentials</dt>
+     * <dd>
+     * <p>
+     * Issue the access token from the <code>/oauth2/token</code> endpoint
+     * directly to a non-person user using a combination of the client ID and
+     * client secret.
+     * </p>
+     * </dd>
+     * </dl>
      *
      * @param allowedOAuthFlows <p>
-     *            Set to <code>code</code> to initiate a code grant flow, which
-     *            provides an authorization code as the response. This code can
-     *            be exchanged for access tokens with the token endpoint.
+     *            The allowed OAuth flows.
      *            </p>
+     *            <dl>
+     *            <dt>code</dt>
+     *            <dd>
      *            <p>
-     *            Set to <code>token</code> to specify that the client should
-     *            get the access token (and, optionally, ID token, based on
-     *            scopes) directly.
+     *            Use a code grant flow, which provides an authorization code as
+     *            the response. This code can be exchanged for access tokens
+     *            with the <code>/oauth2/token</code> endpoint.
      *            </p>
+     *            </dd>
+     *            <dt>implicit</dt>
+     *            <dd>
+     *            <p>
+     *            Issue the access token (and, optionally, ID token, based on
+     *            scopes) directly to your user.
+     *            </p>
+     *            </dd>
+     *            <dt>client_credentials</dt>
+     *            <dd>
+     *            <p>
+     *            Issue the access token from the <code>/oauth2/token</code>
+     *            endpoint directly to a non-person user using a combination of
+     *            the client ID and client secret.
+     *            </p>
+     *            </dd>
+     *            </dl>
      */
     public void setAllowedOAuthFlows(java.util.Collection<String> allowedOAuthFlows) {
         if (allowedOAuthFlows == null) {
@@ -1645,28 +3050,65 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to <code>code</code> to initiate a code grant flow, which provides an
-     * authorization code as the response. This code can be exchanged for access
-     * tokens with the token endpoint.
+     * The allowed OAuth flows.
      * </p>
+     * <dl>
+     * <dt>code</dt>
+     * <dd>
      * <p>
-     * Set to <code>token</code> to specify that the client should get the
-     * access token (and, optionally, ID token, based on scopes) directly.
+     * Use a code grant flow, which provides an authorization code as the
+     * response. This code can be exchanged for access tokens with the
+     * <code>/oauth2/token</code> endpoint.
      * </p>
+     * </dd>
+     * <dt>implicit</dt>
+     * <dd>
+     * <p>
+     * Issue the access token (and, optionally, ID token, based on scopes)
+     * directly to your user.
+     * </p>
+     * </dd>
+     * <dt>client_credentials</dt>
+     * <dd>
+     * <p>
+     * Issue the access token from the <code>/oauth2/token</code> endpoint
+     * directly to a non-person user using a combination of the client ID and
+     * client secret.
+     * </p>
+     * </dd>
+     * </dl>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param allowedOAuthFlows <p>
-     *            Set to <code>code</code> to initiate a code grant flow, which
-     *            provides an authorization code as the response. This code can
-     *            be exchanged for access tokens with the token endpoint.
+     *            The allowed OAuth flows.
      *            </p>
+     *            <dl>
+     *            <dt>code</dt>
+     *            <dd>
      *            <p>
-     *            Set to <code>token</code> to specify that the client should
-     *            get the access token (and, optionally, ID token, based on
-     *            scopes) directly.
+     *            Use a code grant flow, which provides an authorization code as
+     *            the response. This code can be exchanged for access tokens
+     *            with the <code>/oauth2/token</code> endpoint.
      *            </p>
+     *            </dd>
+     *            <dt>implicit</dt>
+     *            <dd>
+     *            <p>
+     *            Issue the access token (and, optionally, ID token, based on
+     *            scopes) directly to your user.
+     *            </p>
+     *            </dd>
+     *            <dt>client_credentials</dt>
+     *            <dd>
+     *            <p>
+     *            Issue the access token from the <code>/oauth2/token</code>
+     *            endpoint directly to a non-person user using a combination of
+     *            the client ID and client secret.
+     *            </p>
+     *            </dd>
+     *            </dl>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -1682,28 +3124,65 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to <code>code</code> to initiate a code grant flow, which provides an
-     * authorization code as the response. This code can be exchanged for access
-     * tokens with the token endpoint.
+     * The allowed OAuth flows.
      * </p>
+     * <dl>
+     * <dt>code</dt>
+     * <dd>
      * <p>
-     * Set to <code>token</code> to specify that the client should get the
-     * access token (and, optionally, ID token, based on scopes) directly.
+     * Use a code grant flow, which provides an authorization code as the
+     * response. This code can be exchanged for access tokens with the
+     * <code>/oauth2/token</code> endpoint.
      * </p>
+     * </dd>
+     * <dt>implicit</dt>
+     * <dd>
+     * <p>
+     * Issue the access token (and, optionally, ID token, based on scopes)
+     * directly to your user.
+     * </p>
+     * </dd>
+     * <dt>client_credentials</dt>
+     * <dd>
+     * <p>
+     * Issue the access token from the <code>/oauth2/token</code> endpoint
+     * directly to a non-person user using a combination of the client ID and
+     * client secret.
+     * </p>
+     * </dd>
+     * </dl>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param allowedOAuthFlows <p>
-     *            Set to <code>code</code> to initiate a code grant flow, which
-     *            provides an authorization code as the response. This code can
-     *            be exchanged for access tokens with the token endpoint.
+     *            The allowed OAuth flows.
      *            </p>
+     *            <dl>
+     *            <dt>code</dt>
+     *            <dd>
      *            <p>
-     *            Set to <code>token</code> to specify that the client should
-     *            get the access token (and, optionally, ID token, based on
-     *            scopes) directly.
+     *            Use a code grant flow, which provides an authorization code as
+     *            the response. This code can be exchanged for access tokens
+     *            with the <code>/oauth2/token</code> endpoint.
      *            </p>
+     *            </dd>
+     *            <dt>implicit</dt>
+     *            <dd>
+     *            <p>
+     *            Issue the access token (and, optionally, ID token, based on
+     *            scopes) directly to your user.
+     *            </p>
+     *            </dd>
+     *            <dt>client_credentials</dt>
+     *            <dd>
+     *            <p>
+     *            Issue the access token from the <code>/oauth2/token</code>
+     *            endpoint directly to a non-person user using a combination of
+     *            the client ID and client secret.
+     *            </p>
+     *            </dd>
+     *            </dl>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -1714,15 +3193,21 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed <code>OAuth</code> scopes. Currently supported values
-     * are <code>"phone"</code>, <code>"email"</code>, <code>"openid"</code>,
-     * and <code>"Cognito"</code>.
+     * The OAuth scopes that your app client supports. Possible values that
+     * OAuth provides are <code>phone</code>, <code>email</code>,
+     * <code>openid</code>, and <code>profile</code>. Possible values that
+     * Amazon Web Services provides are
+     * <code>aws.cognito.signin.user.admin</code>. Amazon Cognito also supports
+     * custom scopes that you create in Resource Servers.
      * </p>
      *
      * @return <p>
-     *         A list of allowed <code>OAuth</code> scopes. Currently supported
-     *         values are <code>"phone"</code>, <code>"email"</code>,
-     *         <code>"openid"</code>, and <code>"Cognito"</code>.
+     *         The OAuth scopes that your app client supports. Possible values
+     *         that OAuth provides are <code>phone</code>, <code>email</code>,
+     *         <code>openid</code>, and <code>profile</code>. Possible values
+     *         that Amazon Web Services provides are
+     *         <code>aws.cognito.signin.user.admin</code>. Amazon Cognito also
+     *         supports custom scopes that you create in Resource Servers.
      *         </p>
      */
     public java.util.List<String> getAllowedOAuthScopes() {
@@ -1731,16 +3216,22 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed <code>OAuth</code> scopes. Currently supported values
-     * are <code>"phone"</code>, <code>"email"</code>, <code>"openid"</code>,
-     * and <code>"Cognito"</code>.
+     * The OAuth scopes that your app client supports. Possible values that
+     * OAuth provides are <code>phone</code>, <code>email</code>,
+     * <code>openid</code>, and <code>profile</code>. Possible values that
+     * Amazon Web Services provides are
+     * <code>aws.cognito.signin.user.admin</code>. Amazon Cognito also supports
+     * custom scopes that you create in Resource Servers.
      * </p>
      *
      * @param allowedOAuthScopes <p>
-     *            A list of allowed <code>OAuth</code> scopes. Currently
-     *            supported values are <code>"phone"</code>,
-     *            <code>"email"</code>, <code>"openid"</code>, and
-     *            <code>"Cognito"</code>.
+     *            The OAuth scopes that your app client supports. Possible
+     *            values that OAuth provides are <code>phone</code>,
+     *            <code>email</code>, <code>openid</code>, and
+     *            <code>profile</code>. Possible values that Amazon Web Services
+     *            provides are <code>aws.cognito.signin.user.admin</code>.
+     *            Amazon Cognito also supports custom scopes that you create in
+     *            Resource Servers.
      *            </p>
      */
     public void setAllowedOAuthScopes(java.util.Collection<String> allowedOAuthScopes) {
@@ -1754,19 +3245,25 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed <code>OAuth</code> scopes. Currently supported values
-     * are <code>"phone"</code>, <code>"email"</code>, <code>"openid"</code>,
-     * and <code>"Cognito"</code>.
+     * The OAuth scopes that your app client supports. Possible values that
+     * OAuth provides are <code>phone</code>, <code>email</code>,
+     * <code>openid</code>, and <code>profile</code>. Possible values that
+     * Amazon Web Services provides are
+     * <code>aws.cognito.signin.user.admin</code>. Amazon Cognito also supports
+     * custom scopes that you create in Resource Servers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param allowedOAuthScopes <p>
-     *            A list of allowed <code>OAuth</code> scopes. Currently
-     *            supported values are <code>"phone"</code>,
-     *            <code>"email"</code>, <code>"openid"</code>, and
-     *            <code>"Cognito"</code>.
+     *            The OAuth scopes that your app client supports. Possible
+     *            values that OAuth provides are <code>phone</code>,
+     *            <code>email</code>, <code>openid</code>, and
+     *            <code>profile</code>. Possible values that Amazon Web Services
+     *            provides are <code>aws.cognito.signin.user.admin</code>.
+     *            Amazon Cognito also supports custom scopes that you create in
+     *            Resource Servers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1783,19 +3280,25 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * A list of allowed <code>OAuth</code> scopes. Currently supported values
-     * are <code>"phone"</code>, <code>"email"</code>, <code>"openid"</code>,
-     * and <code>"Cognito"</code>.
+     * The OAuth scopes that your app client supports. Possible values that
+     * OAuth provides are <code>phone</code>, <code>email</code>,
+     * <code>openid</code>, and <code>profile</code>. Possible values that
+     * Amazon Web Services provides are
+     * <code>aws.cognito.signin.user.admin</code>. Amazon Cognito also supports
+     * custom scopes that you create in Resource Servers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param allowedOAuthScopes <p>
-     *            A list of allowed <code>OAuth</code> scopes. Currently
-     *            supported values are <code>"phone"</code>,
-     *            <code>"email"</code>, <code>"openid"</code>, and
-     *            <code>"Cognito"</code>.
+     *            The OAuth scopes that your app client supports. Possible
+     *            values that OAuth provides are <code>phone</code>,
+     *            <code>email</code>, <code>openid</code>, and
+     *            <code>profile</code>. Possible values that Amazon Web Services
+     *            provides are <code>aws.cognito.signin.user.admin</code>.
+     *            Amazon Cognito also supports custom scopes that you create in
+     *            Resource Servers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1807,13 +3310,85 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to TRUE if the client is allowed to follow the OAuth protocol when
-     * interacting with Cognito user pools.
+     * Set to <code>true</code> to use OAuth 2.0 features in your user pool app
+     * client.
+     * </p>
+     * <p>
+     * <code>AllowedOAuthFlowsUserPoolClient</code> must be <code>true</code>
+     * before you can configure the following features in your app client.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>CallBackURLs</code>: Callback URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LogoutURLs</code>: Sign-out redirect URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthFlows</code>: Support for authorization code, implicit,
+     * and client credentials OAuth 2.0 grants.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To use OAuth 2.0 features, configure one of these features in the Amazon
+     * Cognito console or set <code>AllowedOAuthFlowsUserPoolClient</code> to
+     * <code>true</code> in a <code>CreateUserPoolClient</code> or
+     * <code>UpdateUserPoolClient</code> API request. If you don't set a value
+     * for <code>AllowedOAuthFlowsUserPoolClient</code> in a request with the
+     * CLI or SDKs, it defaults to <code>false</code>.
      * </p>
      *
      * @return <p>
-     *         Set to TRUE if the client is allowed to follow the OAuth protocol
-     *         when interacting with Cognito user pools.
+     *         Set to <code>true</code> to use OAuth 2.0 features in your user
+     *         pool app client.
+     *         </p>
+     *         <p>
+     *         <code>AllowedOAuthFlowsUserPoolClient</code> must be
+     *         <code>true</code> before you can configure the following features
+     *         in your app client.
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>CallBackURLs</code>: Callback URLs.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>LogoutURLs</code>: Sign-out redirect URLs.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>AllowedOAuthFlows</code>: Support for authorization code,
+     *         implicit, and client credentials OAuth 2.0 grants.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         To use OAuth 2.0 features, configure one of these features in the
+     *         Amazon Cognito console or set
+     *         <code>AllowedOAuthFlowsUserPoolClient</code> to <code>true</code>
+     *         in a <code>CreateUserPoolClient</code> or
+     *         <code>UpdateUserPoolClient</code> API request. If you don't set a
+     *         value for <code>AllowedOAuthFlowsUserPoolClient</code> in a
+     *         request with the CLI or SDKs, it defaults to <code>false</code>.
      *         </p>
      */
     public Boolean isAllowedOAuthFlowsUserPoolClient() {
@@ -1822,13 +3397,85 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to TRUE if the client is allowed to follow the OAuth protocol when
-     * interacting with Cognito user pools.
+     * Set to <code>true</code> to use OAuth 2.0 features in your user pool app
+     * client.
+     * </p>
+     * <p>
+     * <code>AllowedOAuthFlowsUserPoolClient</code> must be <code>true</code>
+     * before you can configure the following features in your app client.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>CallBackURLs</code>: Callback URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LogoutURLs</code>: Sign-out redirect URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthFlows</code>: Support for authorization code, implicit,
+     * and client credentials OAuth 2.0 grants.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To use OAuth 2.0 features, configure one of these features in the Amazon
+     * Cognito console or set <code>AllowedOAuthFlowsUserPoolClient</code> to
+     * <code>true</code> in a <code>CreateUserPoolClient</code> or
+     * <code>UpdateUserPoolClient</code> API request. If you don't set a value
+     * for <code>AllowedOAuthFlowsUserPoolClient</code> in a request with the
+     * CLI or SDKs, it defaults to <code>false</code>.
      * </p>
      *
      * @return <p>
-     *         Set to TRUE if the client is allowed to follow the OAuth protocol
-     *         when interacting with Cognito user pools.
+     *         Set to <code>true</code> to use OAuth 2.0 features in your user
+     *         pool app client.
+     *         </p>
+     *         <p>
+     *         <code>AllowedOAuthFlowsUserPoolClient</code> must be
+     *         <code>true</code> before you can configure the following features
+     *         in your app client.
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>CallBackURLs</code>: Callback URLs.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>LogoutURLs</code>: Sign-out redirect URLs.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>AllowedOAuthFlows</code>: Support for authorization code,
+     *         implicit, and client credentials OAuth 2.0 grants.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         To use OAuth 2.0 features, configure one of these features in the
+     *         Amazon Cognito console or set
+     *         <code>AllowedOAuthFlowsUserPoolClient</code> to <code>true</code>
+     *         in a <code>CreateUserPoolClient</code> or
+     *         <code>UpdateUserPoolClient</code> API request. If you don't set a
+     *         value for <code>AllowedOAuthFlowsUserPoolClient</code> in a
+     *         request with the CLI or SDKs, it defaults to <code>false</code>.
      *         </p>
      */
     public Boolean getAllowedOAuthFlowsUserPoolClient() {
@@ -1837,13 +3484,86 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to TRUE if the client is allowed to follow the OAuth protocol when
-     * interacting with Cognito user pools.
+     * Set to <code>true</code> to use OAuth 2.0 features in your user pool app
+     * client.
+     * </p>
+     * <p>
+     * <code>AllowedOAuthFlowsUserPoolClient</code> must be <code>true</code>
+     * before you can configure the following features in your app client.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>CallBackURLs</code>: Callback URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LogoutURLs</code>: Sign-out redirect URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthFlows</code>: Support for authorization code, implicit,
+     * and client credentials OAuth 2.0 grants.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To use OAuth 2.0 features, configure one of these features in the Amazon
+     * Cognito console or set <code>AllowedOAuthFlowsUserPoolClient</code> to
+     * <code>true</code> in a <code>CreateUserPoolClient</code> or
+     * <code>UpdateUserPoolClient</code> API request. If you don't set a value
+     * for <code>AllowedOAuthFlowsUserPoolClient</code> in a request with the
+     * CLI or SDKs, it defaults to <code>false</code>.
      * </p>
      *
      * @param allowedOAuthFlowsUserPoolClient <p>
-     *            Set to TRUE if the client is allowed to follow the OAuth
-     *            protocol when interacting with Cognito user pools.
+     *            Set to <code>true</code> to use OAuth 2.0 features in your
+     *            user pool app client.
+     *            </p>
+     *            <p>
+     *            <code>AllowedOAuthFlowsUserPoolClient</code> must be
+     *            <code>true</code> before you can configure the following
+     *            features in your app client.
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>CallBackURLs</code>: Callback URLs.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>LogoutURLs</code>: Sign-out redirect URLs.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>AllowedOAuthFlows</code>: Support for authorization
+     *            code, implicit, and client credentials OAuth 2.0 grants.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            To use OAuth 2.0 features, configure one of these features in
+     *            the Amazon Cognito console or set
+     *            <code>AllowedOAuthFlowsUserPoolClient</code> to
+     *            <code>true</code> in a <code>CreateUserPoolClient</code> or
+     *            <code>UpdateUserPoolClient</code> API request. If you don't
+     *            set a value for <code>AllowedOAuthFlowsUserPoolClient</code>
+     *            in a request with the CLI or SDKs, it defaults to
+     *            <code>false</code>.
      *            </p>
      */
     public void setAllowedOAuthFlowsUserPoolClient(Boolean allowedOAuthFlowsUserPoolClient) {
@@ -1852,16 +3572,89 @@ public class UserPoolClientType implements Serializable {
 
     /**
      * <p>
-     * Set to TRUE if the client is allowed to follow the OAuth protocol when
-     * interacting with Cognito user pools.
+     * Set to <code>true</code> to use OAuth 2.0 features in your user pool app
+     * client.
+     * </p>
+     * <p>
+     * <code>AllowedOAuthFlowsUserPoolClient</code> must be <code>true</code>
+     * before you can configure the following features in your app client.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>CallBackURLs</code>: Callback URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LogoutURLs</code>: Sign-out redirect URLs.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>AllowedOAuthFlows</code>: Support for authorization code, implicit,
+     * and client credentials OAuth 2.0 grants.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * To use OAuth 2.0 features, configure one of these features in the Amazon
+     * Cognito console or set <code>AllowedOAuthFlowsUserPoolClient</code> to
+     * <code>true</code> in a <code>CreateUserPoolClient</code> or
+     * <code>UpdateUserPoolClient</code> API request. If you don't set a value
+     * for <code>AllowedOAuthFlowsUserPoolClient</code> in a request with the
+     * CLI or SDKs, it defaults to <code>false</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param allowedOAuthFlowsUserPoolClient <p>
-     *            Set to TRUE if the client is allowed to follow the OAuth
-     *            protocol when interacting with Cognito user pools.
+     *            Set to <code>true</code> to use OAuth 2.0 features in your
+     *            user pool app client.
+     *            </p>
+     *            <p>
+     *            <code>AllowedOAuthFlowsUserPoolClient</code> must be
+     *            <code>true</code> before you can configure the following
+     *            features in your app client.
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>CallBackURLs</code>: Callback URLs.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>LogoutURLs</code>: Sign-out redirect URLs.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>AllowedOAuthScopes</code>: OAuth 2.0 scopes.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>AllowedOAuthFlows</code>: Support for authorization
+     *            code, implicit, and client credentials OAuth 2.0 grants.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            To use OAuth 2.0 features, configure one of these features in
+     *            the Amazon Cognito console or set
+     *            <code>AllowedOAuthFlowsUserPoolClient</code> to
+     *            <code>true</code> in a <code>CreateUserPoolClient</code> or
+     *            <code>UpdateUserPoolClient</code> API request. If you don't
+     *            set a value for <code>AllowedOAuthFlowsUserPoolClient</code>
+     *            in a request with the CLI or SDKs, it defaults to
+     *            <code>false</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1876,11 +3669,25 @@ public class UserPoolClientType implements Serializable {
      * <p>
      * The Amazon Pinpoint analytics configuration for the user pool client.
      * </p>
+     * <note>
+     * <p>
+     * Amazon Cognito user pools only support sending events to Amazon Pinpoint
+     * projects in the US East (N. Virginia) us-east-1 Region, regardless of the
+     * Region where the user pool resides.
+     * </p>
+     * </note>
      *
      * @return <p>
      *         The Amazon Pinpoint analytics configuration for the user pool
      *         client.
      *         </p>
+     *         <note>
+     *         <p>
+     *         Amazon Cognito user pools only support sending events to Amazon
+     *         Pinpoint projects in the US East (N. Virginia) us-east-1 Region,
+     *         regardless of the Region where the user pool resides.
+     *         </p>
+     *         </note>
      */
     public AnalyticsConfigurationType getAnalyticsConfiguration() {
         return analyticsConfiguration;
@@ -1890,11 +3697,26 @@ public class UserPoolClientType implements Serializable {
      * <p>
      * The Amazon Pinpoint analytics configuration for the user pool client.
      * </p>
+     * <note>
+     * <p>
+     * Amazon Cognito user pools only support sending events to Amazon Pinpoint
+     * projects in the US East (N. Virginia) us-east-1 Region, regardless of the
+     * Region where the user pool resides.
+     * </p>
+     * </note>
      *
      * @param analyticsConfiguration <p>
      *            The Amazon Pinpoint analytics configuration for the user pool
      *            client.
      *            </p>
+     *            <note>
+     *            <p>
+     *            Amazon Cognito user pools only support sending events to
+     *            Amazon Pinpoint projects in the US East (N. Virginia)
+     *            us-east-1 Region, regardless of the Region where the user pool
+     *            resides.
+     *            </p>
+     *            </note>
      */
     public void setAnalyticsConfiguration(AnalyticsConfigurationType analyticsConfiguration) {
         this.analyticsConfiguration = analyticsConfiguration;
@@ -1904,6 +3726,13 @@ public class UserPoolClientType implements Serializable {
      * <p>
      * The Amazon Pinpoint analytics configuration for the user pool client.
      * </p>
+     * <note>
+     * <p>
+     * Amazon Cognito user pools only support sending events to Amazon Pinpoint
+     * projects in the US East (N. Virginia) us-east-1 Region, regardless of the
+     * Region where the user pool resides.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -1912,12 +3741,802 @@ public class UserPoolClientType implements Serializable {
      *            The Amazon Pinpoint analytics configuration for the user pool
      *            client.
      *            </p>
+     *            <note>
+     *            <p>
+     *            Amazon Cognito user pools only support sending events to
+     *            Amazon Pinpoint projects in the US East (N. Virginia)
+     *            us-east-1 Region, regardless of the Region where the user pool
+     *            resides.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public UserPoolClientType withAnalyticsConfiguration(
             AnalyticsConfigurationType analyticsConfiguration) {
         this.analyticsConfiguration = analyticsConfiguration;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Errors and responses that you want Amazon Cognito APIs to return during
+     * authentication, account confirmation, and password recovery when the user
+     * doesn't exist in the user pool. When set to <code>ENABLED</code> and the
+     * user doesn't exist, authentication returns an error indicating either the
+     * username or password was incorrect. Account confirmation and password
+     * recovery return a response indicating a code was sent to a simulated
+     * destination. When set to <code>LEGACY</code>, those APIs return a
+     * <code>UserNotFoundException</code> exception if the user doesn't exist in
+     * the user pool.
+     * </p>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ENABLED</code> - This prevents user existence-related errors.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LEGACY</code> - This represents the old behavior of Amazon Cognito
+     * where user existence related errors aren't prevented.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>LEGACY, ENABLED
+     *
+     * @return <p>
+     *         Errors and responses that you want Amazon Cognito APIs to return
+     *         during authentication, account confirmation, and password
+     *         recovery when the user doesn't exist in the user pool. When set
+     *         to <code>ENABLED</code> and the user doesn't exist,
+     *         authentication returns an error indicating either the username or
+     *         password was incorrect. Account confirmation and password
+     *         recovery return a response indicating a code was sent to a
+     *         simulated destination. When set to <code>LEGACY</code>, those
+     *         APIs return a <code>UserNotFoundException</code> exception if the
+     *         user doesn't exist in the user pool.
+     *         </p>
+     *         <p>
+     *         Valid values include:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         <code>ENABLED</code> - This prevents user existence-related
+     *         errors.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         <code>LEGACY</code> - This represents the old behavior of Amazon
+     *         Cognito where user existence related errors aren't prevented.
+     *         </p>
+     *         </li>
+     *         </ul>
+     * @see PreventUserExistenceErrorTypes
+     */
+    public String getPreventUserExistenceErrors() {
+        return preventUserExistenceErrors;
+    }
+
+    /**
+     * <p>
+     * Errors and responses that you want Amazon Cognito APIs to return during
+     * authentication, account confirmation, and password recovery when the user
+     * doesn't exist in the user pool. When set to <code>ENABLED</code> and the
+     * user doesn't exist, authentication returns an error indicating either the
+     * username or password was incorrect. Account confirmation and password
+     * recovery return a response indicating a code was sent to a simulated
+     * destination. When set to <code>LEGACY</code>, those APIs return a
+     * <code>UserNotFoundException</code> exception if the user doesn't exist in
+     * the user pool.
+     * </p>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ENABLED</code> - This prevents user existence-related errors.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LEGACY</code> - This represents the old behavior of Amazon Cognito
+     * where user existence related errors aren't prevented.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>LEGACY, ENABLED
+     *
+     * @param preventUserExistenceErrors <p>
+     *            Errors and responses that you want Amazon Cognito APIs to
+     *            return during authentication, account confirmation, and
+     *            password recovery when the user doesn't exist in the user
+     *            pool. When set to <code>ENABLED</code> and the user doesn't
+     *            exist, authentication returns an error indicating either the
+     *            username or password was incorrect. Account confirmation and
+     *            password recovery return a response indicating a code was sent
+     *            to a simulated destination. When set to <code>LEGACY</code>,
+     *            those APIs return a <code>UserNotFoundException</code>
+     *            exception if the user doesn't exist in the user pool.
+     *            </p>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ENABLED</code> - This prevents user existence-related
+     *            errors.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>LEGACY</code> - This represents the old behavior of
+     *            Amazon Cognito where user existence related errors aren't
+     *            prevented.
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @see PreventUserExistenceErrorTypes
+     */
+    public void setPreventUserExistenceErrors(String preventUserExistenceErrors) {
+        this.preventUserExistenceErrors = preventUserExistenceErrors;
+    }
+
+    /**
+     * <p>
+     * Errors and responses that you want Amazon Cognito APIs to return during
+     * authentication, account confirmation, and password recovery when the user
+     * doesn't exist in the user pool. When set to <code>ENABLED</code> and the
+     * user doesn't exist, authentication returns an error indicating either the
+     * username or password was incorrect. Account confirmation and password
+     * recovery return a response indicating a code was sent to a simulated
+     * destination. When set to <code>LEGACY</code>, those APIs return a
+     * <code>UserNotFoundException</code> exception if the user doesn't exist in
+     * the user pool.
+     * </p>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ENABLED</code> - This prevents user existence-related errors.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LEGACY</code> - This represents the old behavior of Amazon Cognito
+     * where user existence related errors aren't prevented.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>LEGACY, ENABLED
+     *
+     * @param preventUserExistenceErrors <p>
+     *            Errors and responses that you want Amazon Cognito APIs to
+     *            return during authentication, account confirmation, and
+     *            password recovery when the user doesn't exist in the user
+     *            pool. When set to <code>ENABLED</code> and the user doesn't
+     *            exist, authentication returns an error indicating either the
+     *            username or password was incorrect. Account confirmation and
+     *            password recovery return a response indicating a code was sent
+     *            to a simulated destination. When set to <code>LEGACY</code>,
+     *            those APIs return a <code>UserNotFoundException</code>
+     *            exception if the user doesn't exist in the user pool.
+     *            </p>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ENABLED</code> - This prevents user existence-related
+     *            errors.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>LEGACY</code> - This represents the old behavior of
+     *            Amazon Cognito where user existence related errors aren't
+     *            prevented.
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see PreventUserExistenceErrorTypes
+     */
+    public UserPoolClientType withPreventUserExistenceErrors(String preventUserExistenceErrors) {
+        this.preventUserExistenceErrors = preventUserExistenceErrors;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Errors and responses that you want Amazon Cognito APIs to return during
+     * authentication, account confirmation, and password recovery when the user
+     * doesn't exist in the user pool. When set to <code>ENABLED</code> and the
+     * user doesn't exist, authentication returns an error indicating either the
+     * username or password was incorrect. Account confirmation and password
+     * recovery return a response indicating a code was sent to a simulated
+     * destination. When set to <code>LEGACY</code>, those APIs return a
+     * <code>UserNotFoundException</code> exception if the user doesn't exist in
+     * the user pool.
+     * </p>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ENABLED</code> - This prevents user existence-related errors.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LEGACY</code> - This represents the old behavior of Amazon Cognito
+     * where user existence related errors aren't prevented.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>LEGACY, ENABLED
+     *
+     * @param preventUserExistenceErrors <p>
+     *            Errors and responses that you want Amazon Cognito APIs to
+     *            return during authentication, account confirmation, and
+     *            password recovery when the user doesn't exist in the user
+     *            pool. When set to <code>ENABLED</code> and the user doesn't
+     *            exist, authentication returns an error indicating either the
+     *            username or password was incorrect. Account confirmation and
+     *            password recovery return a response indicating a code was sent
+     *            to a simulated destination. When set to <code>LEGACY</code>,
+     *            those APIs return a <code>UserNotFoundException</code>
+     *            exception if the user doesn't exist in the user pool.
+     *            </p>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ENABLED</code> - This prevents user existence-related
+     *            errors.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>LEGACY</code> - This represents the old behavior of
+     *            Amazon Cognito where user existence related errors aren't
+     *            prevented.
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @see PreventUserExistenceErrorTypes
+     */
+    public void setPreventUserExistenceErrors(
+            PreventUserExistenceErrorTypes preventUserExistenceErrors) {
+        this.preventUserExistenceErrors = preventUserExistenceErrors.toString();
+    }
+
+    /**
+     * <p>
+     * Errors and responses that you want Amazon Cognito APIs to return during
+     * authentication, account confirmation, and password recovery when the user
+     * doesn't exist in the user pool. When set to <code>ENABLED</code> and the
+     * user doesn't exist, authentication returns an error indicating either the
+     * username or password was incorrect. Account confirmation and password
+     * recovery return a response indicating a code was sent to a simulated
+     * destination. When set to <code>LEGACY</code>, those APIs return a
+     * <code>UserNotFoundException</code> exception if the user doesn't exist in
+     * the user pool.
+     * </p>
+     * <p>
+     * Valid values include:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <code>ENABLED</code> - This prevents user existence-related errors.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <code>LEGACY</code> - This represents the old behavior of Amazon Cognito
+     * where user existence related errors aren't prevented.
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>LEGACY, ENABLED
+     *
+     * @param preventUserExistenceErrors <p>
+     *            Errors and responses that you want Amazon Cognito APIs to
+     *            return during authentication, account confirmation, and
+     *            password recovery when the user doesn't exist in the user
+     *            pool. When set to <code>ENABLED</code> and the user doesn't
+     *            exist, authentication returns an error indicating either the
+     *            username or password was incorrect. Account confirmation and
+     *            password recovery return a response indicating a code was sent
+     *            to a simulated destination. When set to <code>LEGACY</code>,
+     *            those APIs return a <code>UserNotFoundException</code>
+     *            exception if the user doesn't exist in the user pool.
+     *            </p>
+     *            <p>
+     *            Valid values include:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            <code>ENABLED</code> - This prevents user existence-related
+     *            errors.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            <code>LEGACY</code> - This represents the old behavior of
+     *            Amazon Cognito where user existence related errors aren't
+     *            prevented.
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see PreventUserExistenceErrorTypes
+     */
+    public UserPoolClientType withPreventUserExistenceErrors(
+            PreventUserExistenceErrorTypes preventUserExistenceErrors) {
+        this.preventUserExistenceErrors = preventUserExistenceErrors.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether token revocation is activated for the user pool client.
+     * When you create a new user pool client, token revocation is activated by
+     * default. For more information about revoking tokens, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     * >RevokeToken</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether token revocation is activated for the user pool
+     *         client. When you create a new user pool client, token revocation
+     *         is activated by default. For more information about revoking
+     *         tokens, see <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     *         >RevokeToken</a>.
+     *         </p>
+     */
+    public Boolean isEnableTokenRevocation() {
+        return enableTokenRevocation;
+    }
+
+    /**
+     * <p>
+     * Indicates whether token revocation is activated for the user pool client.
+     * When you create a new user pool client, token revocation is activated by
+     * default. For more information about revoking tokens, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     * >RevokeToken</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether token revocation is activated for the user pool
+     *         client. When you create a new user pool client, token revocation
+     *         is activated by default. For more information about revoking
+     *         tokens, see <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     *         >RevokeToken</a>.
+     *         </p>
+     */
+    public Boolean getEnableTokenRevocation() {
+        return enableTokenRevocation;
+    }
+
+    /**
+     * <p>
+     * Indicates whether token revocation is activated for the user pool client.
+     * When you create a new user pool client, token revocation is activated by
+     * default. For more information about revoking tokens, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     * >RevokeToken</a>.
+     * </p>
+     *
+     * @param enableTokenRevocation <p>
+     *            Indicates whether token revocation is activated for the user
+     *            pool client. When you create a new user pool client, token
+     *            revocation is activated by default. For more information about
+     *            revoking tokens, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     *            >RevokeToken</a>.
+     *            </p>
+     */
+    public void setEnableTokenRevocation(Boolean enableTokenRevocation) {
+        this.enableTokenRevocation = enableTokenRevocation;
+    }
+
+    /**
+     * <p>
+     * Indicates whether token revocation is activated for the user pool client.
+     * When you create a new user pool client, token revocation is activated by
+     * default. For more information about revoking tokens, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     * >RevokeToken</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param enableTokenRevocation <p>
+     *            Indicates whether token revocation is activated for the user
+     *            pool client. When you create a new user pool client, token
+     *            revocation is activated by default. For more information about
+     *            revoking tokens, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html"
+     *            >RevokeToken</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UserPoolClientType withEnableTokenRevocation(Boolean enableTokenRevocation) {
+        this.enableTokenRevocation = enableTokenRevocation;
+        return this;
+    }
+
+    /**
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is true,
+     * Amazon Cognito accepts an <code>IpAddress</code> value that you send in
+     * the <code>UserContextData</code> parameter. The
+     * <code>UserContextData</code> parameter sends information to Amazon
+     * Cognito advanced security for risk analysis. You can send
+     * <code>UserContextData</code> when you sign in Amazon Cognito native users
+     * with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.
+     * </p>
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is false, you
+     * can't send your user's source IP address to Amazon Cognito advanced
+     * security with unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect
+     * whether you can send a source IP address in a <code>ContextData</code>
+     * parameter with the authenticated API operations
+     * <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.
+     * </p>
+     * <p>
+     * You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client
+     * that has a client secret. For more information about propagation of user
+     * context data, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     * >Adding user device and session data to API requests</a>.
+     * </p>
+     *
+     * @return <p>
+     *         When <code>EnablePropagateAdditionalUserContextData</code> is
+     *         true, Amazon Cognito accepts an <code>IpAddress</code> value that
+     *         you send in the <code>UserContextData</code> parameter. The
+     *         <code>UserContextData</code> parameter sends information to
+     *         Amazon Cognito advanced security for risk analysis. You can send
+     *         <code>UserContextData</code> when you sign in Amazon Cognito
+     *         native users with the <code>InitiateAuth</code> and
+     *         <code>RespondToAuthChallenge</code> API operations.
+     *         </p>
+     *         <p>
+     *         When <code>EnablePropagateAdditionalUserContextData</code> is
+     *         false, you can't send your user's source IP address to Amazon
+     *         Cognito advanced security with unauthenticated API operations.
+     *         <code>EnablePropagateAdditionalUserContextData</code> doesn't
+     *         affect whether you can send a source IP address in a
+     *         <code>ContextData</code> parameter with the authenticated API
+     *         operations <code>AdminInitiateAuth</code> and
+     *         <code>AdminRespondToAuthChallenge</code>.
+     *         </p>
+     *         <p>
+     *         You can only activate
+     *         <code>EnablePropagateAdditionalUserContextData</code> in an app
+     *         client that has a client secret. For more information about
+     *         propagation of user context data, see <a href=
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     *         >Adding user device and session data to API requests</a>.
+     *         </p>
+     */
+    public Boolean isEnablePropagateAdditionalUserContextData() {
+        return enablePropagateAdditionalUserContextData;
+    }
+
+    /**
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is true,
+     * Amazon Cognito accepts an <code>IpAddress</code> value that you send in
+     * the <code>UserContextData</code> parameter. The
+     * <code>UserContextData</code> parameter sends information to Amazon
+     * Cognito advanced security for risk analysis. You can send
+     * <code>UserContextData</code> when you sign in Amazon Cognito native users
+     * with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.
+     * </p>
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is false, you
+     * can't send your user's source IP address to Amazon Cognito advanced
+     * security with unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect
+     * whether you can send a source IP address in a <code>ContextData</code>
+     * parameter with the authenticated API operations
+     * <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.
+     * </p>
+     * <p>
+     * You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client
+     * that has a client secret. For more information about propagation of user
+     * context data, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     * >Adding user device and session data to API requests</a>.
+     * </p>
+     *
+     * @return <p>
+     *         When <code>EnablePropagateAdditionalUserContextData</code> is
+     *         true, Amazon Cognito accepts an <code>IpAddress</code> value that
+     *         you send in the <code>UserContextData</code> parameter. The
+     *         <code>UserContextData</code> parameter sends information to
+     *         Amazon Cognito advanced security for risk analysis. You can send
+     *         <code>UserContextData</code> when you sign in Amazon Cognito
+     *         native users with the <code>InitiateAuth</code> and
+     *         <code>RespondToAuthChallenge</code> API operations.
+     *         </p>
+     *         <p>
+     *         When <code>EnablePropagateAdditionalUserContextData</code> is
+     *         false, you can't send your user's source IP address to Amazon
+     *         Cognito advanced security with unauthenticated API operations.
+     *         <code>EnablePropagateAdditionalUserContextData</code> doesn't
+     *         affect whether you can send a source IP address in a
+     *         <code>ContextData</code> parameter with the authenticated API
+     *         operations <code>AdminInitiateAuth</code> and
+     *         <code>AdminRespondToAuthChallenge</code>.
+     *         </p>
+     *         <p>
+     *         You can only activate
+     *         <code>EnablePropagateAdditionalUserContextData</code> in an app
+     *         client that has a client secret. For more information about
+     *         propagation of user context data, see <a href=
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     *         >Adding user device and session data to API requests</a>.
+     *         </p>
+     */
+    public Boolean getEnablePropagateAdditionalUserContextData() {
+        return enablePropagateAdditionalUserContextData;
+    }
+
+    /**
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is true,
+     * Amazon Cognito accepts an <code>IpAddress</code> value that you send in
+     * the <code>UserContextData</code> parameter. The
+     * <code>UserContextData</code> parameter sends information to Amazon
+     * Cognito advanced security for risk analysis. You can send
+     * <code>UserContextData</code> when you sign in Amazon Cognito native users
+     * with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.
+     * </p>
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is false, you
+     * can't send your user's source IP address to Amazon Cognito advanced
+     * security with unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect
+     * whether you can send a source IP address in a <code>ContextData</code>
+     * parameter with the authenticated API operations
+     * <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.
+     * </p>
+     * <p>
+     * You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client
+     * that has a client secret. For more information about propagation of user
+     * context data, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     * >Adding user device and session data to API requests</a>.
+     * </p>
+     *
+     * @param enablePropagateAdditionalUserContextData <p>
+     *            When <code>EnablePropagateAdditionalUserContextData</code> is
+     *            true, Amazon Cognito accepts an <code>IpAddress</code> value
+     *            that you send in the <code>UserContextData</code> parameter.
+     *            The <code>UserContextData</code> parameter sends information
+     *            to Amazon Cognito advanced security for risk analysis. You can
+     *            send <code>UserContextData</code> when you sign in Amazon
+     *            Cognito native users with the <code>InitiateAuth</code> and
+     *            <code>RespondToAuthChallenge</code> API operations.
+     *            </p>
+     *            <p>
+     *            When <code>EnablePropagateAdditionalUserContextData</code> is
+     *            false, you can't send your user's source IP address to Amazon
+     *            Cognito advanced security with unauthenticated API operations.
+     *            <code>EnablePropagateAdditionalUserContextData</code> doesn't
+     *            affect whether you can send a source IP address in a
+     *            <code>ContextData</code> parameter with the authenticated API
+     *            operations <code>AdminInitiateAuth</code> and
+     *            <code>AdminRespondToAuthChallenge</code>.
+     *            </p>
+     *            <p>
+     *            You can only activate
+     *            <code>EnablePropagateAdditionalUserContextData</code> in an
+     *            app client that has a client secret. For more information
+     *            about propagation of user context data, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     *            >Adding user device and session data to API requests</a>.
+     *            </p>
+     */
+    public void setEnablePropagateAdditionalUserContextData(
+            Boolean enablePropagateAdditionalUserContextData) {
+        this.enablePropagateAdditionalUserContextData = enablePropagateAdditionalUserContextData;
+    }
+
+    /**
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is true,
+     * Amazon Cognito accepts an <code>IpAddress</code> value that you send in
+     * the <code>UserContextData</code> parameter. The
+     * <code>UserContextData</code> parameter sends information to Amazon
+     * Cognito advanced security for risk analysis. You can send
+     * <code>UserContextData</code> when you sign in Amazon Cognito native users
+     * with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.
+     * </p>
+     * <p>
+     * When <code>EnablePropagateAdditionalUserContextData</code> is false, you
+     * can't send your user's source IP address to Amazon Cognito advanced
+     * security with unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect
+     * whether you can send a source IP address in a <code>ContextData</code>
+     * parameter with the authenticated API operations
+     * <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.
+     * </p>
+     * <p>
+     * You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client
+     * that has a client secret. For more information about propagation of user
+     * context data, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     * >Adding user device and session data to API requests</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param enablePropagateAdditionalUserContextData <p>
+     *            When <code>EnablePropagateAdditionalUserContextData</code> is
+     *            true, Amazon Cognito accepts an <code>IpAddress</code> value
+     *            that you send in the <code>UserContextData</code> parameter.
+     *            The <code>UserContextData</code> parameter sends information
+     *            to Amazon Cognito advanced security for risk analysis. You can
+     *            send <code>UserContextData</code> when you sign in Amazon
+     *            Cognito native users with the <code>InitiateAuth</code> and
+     *            <code>RespondToAuthChallenge</code> API operations.
+     *            </p>
+     *            <p>
+     *            When <code>EnablePropagateAdditionalUserContextData</code> is
+     *            false, you can't send your user's source IP address to Amazon
+     *            Cognito advanced security with unauthenticated API operations.
+     *            <code>EnablePropagateAdditionalUserContextData</code> doesn't
+     *            affect whether you can send a source IP address in a
+     *            <code>ContextData</code> parameter with the authenticated API
+     *            operations <code>AdminInitiateAuth</code> and
+     *            <code>AdminRespondToAuthChallenge</code>.
+     *            </p>
+     *            <p>
+     *            You can only activate
+     *            <code>EnablePropagateAdditionalUserContextData</code> in an
+     *            app client that has a client secret. For more information
+     *            about propagation of user context data, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint"
+     *            >Adding user device and session data to API requests</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UserPoolClientType withEnablePropagateAdditionalUserContextData(
+            Boolean enablePropagateAdditionalUserContextData) {
+        this.enablePropagateAdditionalUserContextData = enablePropagateAdditionalUserContextData;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond
+     * to each authentication challenge before the session expires.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>3 - 15<br/>
+     *
+     * @return <p>
+     *         Amazon Cognito creates a session token for each API request in an
+     *         authentication flow. <code>AuthSessionValidity</code> is the
+     *         duration, in minutes, of that session token. Your user pool
+     *         native user must respond to each authentication challenge before
+     *         the session expires.
+     *         </p>
+     */
+    public Integer getAuthSessionValidity() {
+        return authSessionValidity;
+    }
+
+    /**
+     * <p>
+     * Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond
+     * to each authentication challenge before the session expires.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>3 - 15<br/>
+     *
+     * @param authSessionValidity <p>
+     *            Amazon Cognito creates a session token for each API request in
+     *            an authentication flow. <code>AuthSessionValidity</code> is
+     *            the duration, in minutes, of that session token. Your user
+     *            pool native user must respond to each authentication challenge
+     *            before the session expires.
+     *            </p>
+     */
+    public void setAuthSessionValidity(Integer authSessionValidity) {
+        this.authSessionValidity = authSessionValidity;
+    }
+
+    /**
+     * <p>
+     * Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond
+     * to each authentication challenge before the session expires.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>3 - 15<br/>
+     *
+     * @param authSessionValidity <p>
+     *            Amazon Cognito creates a session token for each API request in
+     *            an authentication flow. <code>AuthSessionValidity</code> is
+     *            the duration, in minutes, of that session token. Your user
+     *            pool native user must respond to each authentication challenge
+     *            before the session expires.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public UserPoolClientType withAuthSessionValidity(Integer authSessionValidity) {
+        this.authSessionValidity = authSessionValidity;
         return this;
     }
 
@@ -1946,6 +4565,12 @@ public class UserPoolClientType implements Serializable {
             sb.append("CreationDate: " + getCreationDate() + ",");
         if (getRefreshTokenValidity() != null)
             sb.append("RefreshTokenValidity: " + getRefreshTokenValidity() + ",");
+        if (getAccessTokenValidity() != null)
+            sb.append("AccessTokenValidity: " + getAccessTokenValidity() + ",");
+        if (getIdTokenValidity() != null)
+            sb.append("IdTokenValidity: " + getIdTokenValidity() + ",");
+        if (getTokenValidityUnits() != null)
+            sb.append("TokenValidityUnits: " + getTokenValidityUnits() + ",");
         if (getReadAttributes() != null)
             sb.append("ReadAttributes: " + getReadAttributes() + ",");
         if (getWriteAttributes() != null)
@@ -1968,7 +4593,16 @@ public class UserPoolClientType implements Serializable {
             sb.append("AllowedOAuthFlowsUserPoolClient: " + getAllowedOAuthFlowsUserPoolClient()
                     + ",");
         if (getAnalyticsConfiguration() != null)
-            sb.append("AnalyticsConfiguration: " + getAnalyticsConfiguration());
+            sb.append("AnalyticsConfiguration: " + getAnalyticsConfiguration() + ",");
+        if (getPreventUserExistenceErrors() != null)
+            sb.append("PreventUserExistenceErrors: " + getPreventUserExistenceErrors() + ",");
+        if (getEnableTokenRevocation() != null)
+            sb.append("EnableTokenRevocation: " + getEnableTokenRevocation() + ",");
+        if (getEnablePropagateAdditionalUserContextData() != null)
+            sb.append("EnablePropagateAdditionalUserContextData: "
+                    + getEnablePropagateAdditionalUserContextData() + ",");
+        if (getAuthSessionValidity() != null)
+            sb.append("AuthSessionValidity: " + getAuthSessionValidity());
         sb.append("}");
         return sb.toString();
     }
@@ -1989,6 +4623,12 @@ public class UserPoolClientType implements Serializable {
                 + ((getCreationDate() == null) ? 0 : getCreationDate().hashCode());
         hashCode = prime * hashCode
                 + ((getRefreshTokenValidity() == null) ? 0 : getRefreshTokenValidity().hashCode());
+        hashCode = prime * hashCode
+                + ((getAccessTokenValidity() == null) ? 0 : getAccessTokenValidity().hashCode());
+        hashCode = prime * hashCode
+                + ((getIdTokenValidity() == null) ? 0 : getIdTokenValidity().hashCode());
+        hashCode = prime * hashCode
+                + ((getTokenValidityUnits() == null) ? 0 : getTokenValidityUnits().hashCode());
         hashCode = prime * hashCode
                 + ((getReadAttributes() == null) ? 0 : getReadAttributes().hashCode());
         hashCode = prime * hashCode
@@ -2016,6 +4656,19 @@ public class UserPoolClientType implements Serializable {
                 * hashCode
                 + ((getAnalyticsConfiguration() == null) ? 0 : getAnalyticsConfiguration()
                         .hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getPreventUserExistenceErrors() == null) ? 0 : getPreventUserExistenceErrors()
+                        .hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getEnableTokenRevocation() == null) ? 0 : getEnableTokenRevocation().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getEnablePropagateAdditionalUserContextData() == null) ? 0
+                        : getEnablePropagateAdditionalUserContextData().hashCode());
+        hashCode = prime * hashCode
+                + ((getAuthSessionValidity() == null) ? 0 : getAuthSessionValidity().hashCode());
         return hashCode;
     }
 
@@ -2063,6 +4716,21 @@ public class UserPoolClientType implements Serializable {
             return false;
         if (other.getRefreshTokenValidity() != null
                 && other.getRefreshTokenValidity().equals(this.getRefreshTokenValidity()) == false)
+            return false;
+        if (other.getAccessTokenValidity() == null ^ this.getAccessTokenValidity() == null)
+            return false;
+        if (other.getAccessTokenValidity() != null
+                && other.getAccessTokenValidity().equals(this.getAccessTokenValidity()) == false)
+            return false;
+        if (other.getIdTokenValidity() == null ^ this.getIdTokenValidity() == null)
+            return false;
+        if (other.getIdTokenValidity() != null
+                && other.getIdTokenValidity().equals(this.getIdTokenValidity()) == false)
+            return false;
+        if (other.getTokenValidityUnits() == null ^ this.getTokenValidityUnits() == null)
+            return false;
+        if (other.getTokenValidityUnits() != null
+                && other.getTokenValidityUnits().equals(this.getTokenValidityUnits()) == false)
             return false;
         if (other.getReadAttributes() == null ^ this.getReadAttributes() == null)
             return false;
@@ -2122,6 +4790,30 @@ public class UserPoolClientType implements Serializable {
             return false;
         if (other.getAnalyticsConfiguration() != null
                 && other.getAnalyticsConfiguration().equals(this.getAnalyticsConfiguration()) == false)
+            return false;
+        if (other.getPreventUserExistenceErrors() == null
+                ^ this.getPreventUserExistenceErrors() == null)
+            return false;
+        if (other.getPreventUserExistenceErrors() != null
+                && other.getPreventUserExistenceErrors().equals(
+                        this.getPreventUserExistenceErrors()) == false)
+            return false;
+        if (other.getEnableTokenRevocation() == null ^ this.getEnableTokenRevocation() == null)
+            return false;
+        if (other.getEnableTokenRevocation() != null
+                && other.getEnableTokenRevocation().equals(this.getEnableTokenRevocation()) == false)
+            return false;
+        if (other.getEnablePropagateAdditionalUserContextData() == null
+                ^ this.getEnablePropagateAdditionalUserContextData() == null)
+            return false;
+        if (other.getEnablePropagateAdditionalUserContextData() != null
+                && other.getEnablePropagateAdditionalUserContextData().equals(
+                        this.getEnablePropagateAdditionalUserContextData()) == false)
+            return false;
+        if (other.getAuthSessionValidity() == null ^ this.getAuthSessionValidity() == null)
+            return false;
+        if (other.getAuthSessionValidity() != null
+                && other.getAuthSessionValidity().equals(this.getAuthSessionValidity()) == false)
             return false;
         return true;
     }

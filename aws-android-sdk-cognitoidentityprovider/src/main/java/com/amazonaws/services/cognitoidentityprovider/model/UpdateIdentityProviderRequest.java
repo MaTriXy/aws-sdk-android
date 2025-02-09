@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,35 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Updates identity provider information for a user pool.
+ * Updates IdP information for a user pool.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -38,7 +65,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -49,22 +76,22 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider details to be updated, such as
-     * <code>MetadataURL</code> and <code>MetadataFile</code>.
+     * The IdP details to be updated, such as <code>MetadataURL</code> and
+     * <code>MetadataFile</code>.
      * </p>
      */
     private java.util.Map<String, String> providerDetails;
 
     /**
      * <p>
-     * The identity provider attribute mapping to be changed.
+     * The IdP attribute mapping to be changed.
      * </p>
      */
     private java.util.Map<String, String> attributeMapping;
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      */
     private java.util.List<String> idpIdentifiers;
@@ -128,7 +155,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -136,7 +163,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The identity provider name.
+     *         The IdP name.
      *         </p>
      */
     public String getProviderName() {
@@ -145,7 +172,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -153,7 +180,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The identity provider name.
+     *            The IdP name.
      *            </p>
      */
     public void setProviderName(String providerName) {
@@ -162,7 +189,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -173,7 +200,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The identity provider name.
+     *            The IdP name.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -185,13 +212,13 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider details to be updated, such as
-     * <code>MetadataURL</code> and <code>MetadataFile</code>.
+     * The IdP details to be updated, such as <code>MetadataURL</code> and
+     * <code>MetadataFile</code>.
      * </p>
      *
      * @return <p>
-     *         The identity provider details to be updated, such as
-     *         <code>MetadataURL</code> and <code>MetadataFile</code>.
+     *         The IdP details to be updated, such as <code>MetadataURL</code>
+     *         and <code>MetadataFile</code>.
      *         </p>
      */
     public java.util.Map<String, String> getProviderDetails() {
@@ -200,12 +227,12 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider details to be updated, such as
-     * <code>MetadataURL</code> and <code>MetadataFile</code>.
+     * The IdP details to be updated, such as <code>MetadataURL</code> and
+     * <code>MetadataFile</code>.
      * </p>
      *
      * @param providerDetails <p>
-     *            The identity provider details to be updated, such as
+     *            The IdP details to be updated, such as
      *            <code>MetadataURL</code> and <code>MetadataFile</code>.
      *            </p>
      */
@@ -215,15 +242,15 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider details to be updated, such as
-     * <code>MetadataURL</code> and <code>MetadataFile</code>.
+     * The IdP details to be updated, such as <code>MetadataURL</code> and
+     * <code>MetadataFile</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param providerDetails <p>
-     *            The identity provider details to be updated, such as
+     *            The IdP details to be updated, such as
      *            <code>MetadataURL</code> and <code>MetadataFile</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -237,8 +264,8 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider details to be updated, such as
-     * <code>MetadataURL</code> and <code>MetadataFile</code>.
+     * The IdP details to be updated, such as <code>MetadataURL</code> and
+     * <code>MetadataFile</code>.
      * </p>
      * <p>
      * The method adds a new key-value pair into ProviderDetails parameter, and
@@ -275,11 +302,11 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider attribute mapping to be changed.
+     * The IdP attribute mapping to be changed.
      * </p>
      *
      * @return <p>
-     *         The identity provider attribute mapping to be changed.
+     *         The IdP attribute mapping to be changed.
      *         </p>
      */
     public java.util.Map<String, String> getAttributeMapping() {
@@ -288,11 +315,11 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider attribute mapping to be changed.
+     * The IdP attribute mapping to be changed.
      * </p>
      *
      * @param attributeMapping <p>
-     *            The identity provider attribute mapping to be changed.
+     *            The IdP attribute mapping to be changed.
      *            </p>
      */
     public void setAttributeMapping(java.util.Map<String, String> attributeMapping) {
@@ -301,14 +328,14 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider attribute mapping to be changed.
+     * The IdP attribute mapping to be changed.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param attributeMapping <p>
-     *            The identity provider attribute mapping to be changed.
+     *            The IdP attribute mapping to be changed.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -321,7 +348,7 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The identity provider attribute mapping to be changed.
+     * The IdP attribute mapping to be changed.
      * </p>
      * <p>
      * The method adds a new key-value pair into AttributeMapping parameter, and
@@ -358,11 +385,11 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      *
      * @return <p>
-     *         A list of identity provider identifiers.
+     *         A list of IdP identifiers.
      *         </p>
      */
     public java.util.List<String> getIdpIdentifiers() {
@@ -371,11 +398,11 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      *
      * @param idpIdentifiers <p>
-     *            A list of identity provider identifiers.
+     *            A list of IdP identifiers.
      *            </p>
      */
     public void setIdpIdentifiers(java.util.Collection<String> idpIdentifiers) {
@@ -389,14 +416,14 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param idpIdentifiers <p>
-     *            A list of identity provider identifiers.
+     *            A list of IdP identifiers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -413,14 +440,14 @@ public class UpdateIdentityProviderRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param idpIdentifiers <p>
-     *            A list of identity provider identifiers.
+     *            A list of IdP identifiers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

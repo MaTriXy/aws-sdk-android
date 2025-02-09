@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Determines the dominant language of the input text for a batch of documents.
  * For a list of languages that Amazon Comprehend can detect, see <a
- * href="http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+ * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
  * >Amazon Comprehend Supported Languages</a>.
  * </p>
  */
@@ -31,27 +31,25 @@ public class BatchDetectDominantLanguageRequest extends AmazonWebServiceRequest 
         Serializable {
     /**
      * <p>
-     * A list containing the text of the input documents. The list can contain a
-     * maximum of 25 documents. Each document should contain at least 20
-     * characters and must contain fewer than 5,000 bytes of UTF-8 encoded
-     * characters.
+     * A list containing the UTF-8 encoded text of the input documents. The list
+     * can contain a maximum of 25 documents. Each document should contain at
+     * least 20 characters. The maximum size of each document is 5 KB.
      * </p>
      */
     private java.util.List<String> textList;
 
     /**
      * <p>
-     * A list containing the text of the input documents. The list can contain a
-     * maximum of 25 documents. Each document should contain at least 20
-     * characters and must contain fewer than 5,000 bytes of UTF-8 encoded
-     * characters.
+     * A list containing the UTF-8 encoded text of the input documents. The list
+     * can contain a maximum of 25 documents. Each document should contain at
+     * least 20 characters. The maximum size of each document is 5 KB.
      * </p>
      *
      * @return <p>
-     *         A list containing the text of the input documents. The list can
-     *         contain a maximum of 25 documents. Each document should contain
-     *         at least 20 characters and must contain fewer than 5,000 bytes of
-     *         UTF-8 encoded characters.
+     *         A list containing the UTF-8 encoded text of the input documents.
+     *         The list can contain a maximum of 25 documents. Each document
+     *         should contain at least 20 characters. The maximum size of each
+     *         document is 5 KB.
      *         </p>
      */
     public java.util.List<String> getTextList() {
@@ -60,17 +58,16 @@ public class BatchDetectDominantLanguageRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list containing the text of the input documents. The list can contain a
-     * maximum of 25 documents. Each document should contain at least 20
-     * characters and must contain fewer than 5,000 bytes of UTF-8 encoded
-     * characters.
+     * A list containing the UTF-8 encoded text of the input documents. The list
+     * can contain a maximum of 25 documents. Each document should contain at
+     * least 20 characters. The maximum size of each document is 5 KB.
      * </p>
      *
      * @param textList <p>
-     *            A list containing the text of the input documents. The list
-     *            can contain a maximum of 25 documents. Each document should
-     *            contain at least 20 characters and must contain fewer than
-     *            5,000 bytes of UTF-8 encoded characters.
+     *            A list containing the UTF-8 encoded text of the input
+     *            documents. The list can contain a maximum of 25 documents.
+     *            Each document should contain at least 20 characters. The
+     *            maximum size of each document is 5 KB.
      *            </p>
      */
     public void setTextList(java.util.Collection<String> textList) {
@@ -84,20 +81,19 @@ public class BatchDetectDominantLanguageRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list containing the text of the input documents. The list can contain a
-     * maximum of 25 documents. Each document should contain at least 20
-     * characters and must contain fewer than 5,000 bytes of UTF-8 encoded
-     * characters.
+     * A list containing the UTF-8 encoded text of the input documents. The list
+     * can contain a maximum of 25 documents. Each document should contain at
+     * least 20 characters. The maximum size of each document is 5 KB.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param textList <p>
-     *            A list containing the text of the input documents. The list
-     *            can contain a maximum of 25 documents. Each document should
-     *            contain at least 20 characters and must contain fewer than
-     *            5,000 bytes of UTF-8 encoded characters.
+     *            A list containing the UTF-8 encoded text of the input
+     *            documents. The list can contain a maximum of 25 documents.
+     *            Each document should contain at least 20 characters. The
+     *            maximum size of each document is 5 KB.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -114,20 +110,19 @@ public class BatchDetectDominantLanguageRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * A list containing the text of the input documents. The list can contain a
-     * maximum of 25 documents. Each document should contain at least 20
-     * characters and must contain fewer than 5,000 bytes of UTF-8 encoded
-     * characters.
+     * A list containing the UTF-8 encoded text of the input documents. The list
+     * can contain a maximum of 25 documents. Each document should contain at
+     * least 20 characters. The maximum size of each document is 5 KB.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param textList <p>
-     *            A list containing the text of the input documents. The list
-     *            can contain a maximum of 25 documents. Each document should
-     *            contain at least 20 characters and must contain fewer than
-     *            5,000 bytes of UTF-8 encoded characters.
+     *            A list containing the UTF-8 encoded text of the input
+     *            documents. The list can contain a maximum of 25 documents.
+     *            Each document should contain at least 20 characters. The
+     *            maximum size of each document is 5 KB.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

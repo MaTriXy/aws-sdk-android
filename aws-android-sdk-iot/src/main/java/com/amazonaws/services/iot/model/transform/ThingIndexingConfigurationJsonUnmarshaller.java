@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,6 +43,27 @@ class ThingIndexingConfigurationJsonUnmarshaller implements
             } else if (name.equals("thingConnectivityIndexingMode")) {
                 thingIndexingConfiguration.setThingConnectivityIndexingMode(StringJsonUnmarshaller
                         .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("deviceDefenderIndexingMode")) {
+                thingIndexingConfiguration.setDeviceDefenderIndexingMode(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("namedShadowIndexingMode")) {
+                thingIndexingConfiguration.setNamedShadowIndexingMode(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("managedFields")) {
+                thingIndexingConfiguration.setManagedFields(new ListUnmarshaller<Field>(
+                        FieldJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("customFields")) {
+                thingIndexingConfiguration.setCustomFields(new ListUnmarshaller<Field>(
+                        FieldJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("filter")) {
+                thingIndexingConfiguration.setFilter(IndexingFilterJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

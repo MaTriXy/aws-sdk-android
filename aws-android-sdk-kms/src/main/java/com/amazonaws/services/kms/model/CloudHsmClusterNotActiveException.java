@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The request was rejected because the AWS CloudHSM cluster that is associated
- * with the custom key store is not active. Initialize and activate the cluster
- * and try the command again. For detailed instructions, see <a href=
- * "http://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html"
- * >Getting Started</a> in the <i>AWS CloudHSM User Guide</i>.
+ * The request was rejected because the CloudHSM cluster associated with the
+ * CloudHSM key store is not active. Initialize and activate the cluster and try
+ * the command again. For detailed instructions, see <a href=
+ * "https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html"
+ * >Getting Started</a> in the <i>CloudHSM User Guide</i>.
  * </p>
  */
 public class CloudHsmClusterNotActiveException extends AmazonServiceException {

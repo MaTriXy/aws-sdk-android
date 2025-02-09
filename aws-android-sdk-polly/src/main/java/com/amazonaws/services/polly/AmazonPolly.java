@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -95,14 +95,14 @@ public interface AmazonPolly {
 
     /**
      * <p>
-     * Deletes the specified pronunciation lexicon stored in an AWS Region. A
-     * lexicon which has been deleted is not available for speech synthesis, nor
-     * is it possible to retrieve it using either the <code>GetLexicon</code> or
-     * <code>ListLexicon</code> APIs.
+     * Deletes the specified pronunciation lexicon stored in an Amazon Web
+     * Services Region. A lexicon which has been deleted is not available for
+     * speech synthesis, nor is it possible to retrieve it using either the
+     * <code>GetLexicon</code> or <code>ListLexicon</code> APIs.
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
      * >Managing Lexicons</a>.
      * </p>
      * 
@@ -169,8 +169,8 @@ public interface AmazonPolly {
     /**
      * <p>
      * Returns the content of the specified pronunciation lexicon stored in an
-     * AWS Region. For more information, see <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+     * Amazon Web Services Region. For more information, see <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
      * >Managing Lexicons</a>.
      * </p>
      * 
@@ -219,9 +219,9 @@ public interface AmazonPolly {
 
     /**
      * <p>
-     * Returns a list of pronunciation lexicons stored in an AWS Region. For
-     * more information, see <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+     * Returns a list of pronunciation lexicons stored in an Amazon Web Services
+     * Region. For more information, see <a href=
+     * "https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
      * >Managing Lexicons</a>.
      * </p>
      * 
@@ -268,15 +268,15 @@ public interface AmazonPolly {
 
     /**
      * <p>
-     * Stores a pronunciation lexicon in an AWS Region. If a lexicon with the
-     * same name already exists in the region, it is overwritten by the new
-     * lexicon. Lexicon operations have eventual consistency, therefore, it
-     * might take some time before the lexicon is available to the
-     * SynthesizeSpeech operation.
+     * Stores a pronunciation lexicon in an Amazon Web Services Region. If a
+     * lexicon with the same name already exists in the region, it is
+     * overwritten by the new lexicon. Lexicon operations have eventual
+     * consistency, therefore, it might take some time before the lexicon is
+     * available to the SynthesizeSpeech operation.
      * </p>
      * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
      * >Managing Lexicons</a>.
      * </p>
      * 
@@ -307,10 +307,12 @@ public interface AmazonPolly {
      * <code>SpeechSynthesisTask</code>. This operation requires all the
      * standard information needed for speech synthesis, plus the name of an
      * Amazon S3 bucket for the service to store the output of the synthesis
-     * task and two optional parameters (OutputS3KeyPrefix and SnsTopicArn).
-     * Once the synthesis task is created, this operation will return a
-     * SpeechSynthesisTask object, which will include an identifier of this task
-     * as well as the current status.
+     * task and two optional parameters (<code>OutputS3KeyPrefix</code> and
+     * <code>SnsTopicArn</code>). Once the synthesis task is created, this
+     * operation will return a <code>SpeechSynthesisTask</code> object, which
+     * will include an identifier of this task as well as the current status.
+     * The <code>SpeechSynthesisTask</code> object is available for 72 hours
+     * after starting the asynchronous synthesis task.
      * </p>
      * 
      * @param startSpeechSynthesisTaskRequest
@@ -323,6 +325,7 @@ public interface AmazonPolly {
      * @throws InvalidSampleRateException
      * @throws InvalidSnsTopicArnException
      * @throws InvalidSsmlException
+     * @throws EngineNotSupportedException
      * @throws LexiconNotFoundException
      * @throws ServiceFailureException
      * @throws MarksNotSupportedForFormatException
@@ -347,7 +350,7 @@ public interface AmazonPolly {
      * available with all the voices (for example, Cyrillic might not be read at
      * all by English voices) unless phoneme mapping is used. For more
      * information, see <a href=
-     * "http://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html"
+     * "https://docs.aws.amazon.com/polly/latest/dg/how-text-to-speech-works.html"
      * >How it Works</a>.
      * </p>
      * 
@@ -362,6 +365,7 @@ public interface AmazonPolly {
      * @throws MarksNotSupportedForFormatException
      * @throws SsmlMarksNotSupportedForTextTypeException
      * @throws LanguageNotSupportedException
+     * @throws EngineNotSupportedException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
      *             handle the response. For example if a network connection is

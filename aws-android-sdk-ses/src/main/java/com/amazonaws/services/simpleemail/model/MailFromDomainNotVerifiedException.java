@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import com.amazonaws.AmazonServiceException;
  * read the MX record required to use the specified MAIL FROM domain. For
  * information about editing the custom MAIL FROM domain settings for an
  * identity, see the <a href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from-edit.html"
+ * "https://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from-edit.html"
  * >Amazon SES Developer Guide</a>.
  * </p>
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,10 @@ public class RegistrationConfig implements Serializable {
      * <p>
      * The template body.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 10240<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String templateBody;
 
@@ -42,8 +46,23 @@ public class RegistrationConfig implements Serializable {
 
     /**
      * <p>
+     * The name of the provisioning template.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 36<br/>
+     * <b>Pattern: </b>^[0-9A-Za-z_-]+$<br/>
+     */
+    private String templateName;
+
+    /**
+     * <p>
      * The template body.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 10240<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The template body.
@@ -57,6 +76,10 @@ public class RegistrationConfig implements Serializable {
      * <p>
      * The template body.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 10240<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param templateBody <p>
      *            The template body.
@@ -73,6 +96,10 @@ public class RegistrationConfig implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 10240<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param templateBody <p>
      *            The template body.
@@ -140,6 +167,63 @@ public class RegistrationConfig implements Serializable {
     }
 
     /**
+     * <p>
+     * The name of the provisioning template.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 36<br/>
+     * <b>Pattern: </b>^[0-9A-Za-z_-]+$<br/>
+     *
+     * @return <p>
+     *         The name of the provisioning template.
+     *         </p>
+     */
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    /**
+     * <p>
+     * The name of the provisioning template.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 36<br/>
+     * <b>Pattern: </b>^[0-9A-Za-z_-]+$<br/>
+     *
+     * @param templateName <p>
+     *            The name of the provisioning template.
+     *            </p>
+     */
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    /**
+     * <p>
+     * The name of the provisioning template.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 36<br/>
+     * <b>Pattern: </b>^[0-9A-Za-z_-]+$<br/>
+     *
+     * @param templateName <p>
+     *            The name of the provisioning template.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public RegistrationConfig withTemplateName(String templateName) {
+        this.templateName = templateName;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -153,7 +237,9 @@ public class RegistrationConfig implements Serializable {
         if (getTemplateBody() != null)
             sb.append("templateBody: " + getTemplateBody() + ",");
         if (getRoleArn() != null)
-            sb.append("roleArn: " + getRoleArn());
+            sb.append("roleArn: " + getRoleArn() + ",");
+        if (getTemplateName() != null)
+            sb.append("templateName: " + getTemplateName());
         sb.append("}");
         return sb.toString();
     }
@@ -166,6 +252,8 @@ public class RegistrationConfig implements Serializable {
         hashCode = prime * hashCode
                 + ((getTemplateBody() == null) ? 0 : getTemplateBody().hashCode());
         hashCode = prime * hashCode + ((getRoleArn() == null) ? 0 : getRoleArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getTemplateName() == null) ? 0 : getTemplateName().hashCode());
         return hashCode;
     }
 
@@ -188,6 +276,11 @@ public class RegistrationConfig implements Serializable {
         if (other.getRoleArn() == null ^ this.getRoleArn() == null)
             return false;
         if (other.getRoleArn() != null && other.getRoleArn().equals(this.getRoleArn()) == false)
+            return false;
+        if (other.getTemplateName() == null ^ this.getTemplateName() == null)
+            return false;
+        if (other.getTemplateName() != null
+                && other.getTemplateName().equals(this.getTemplateName()) == false)
             return false;
         return true;
     }

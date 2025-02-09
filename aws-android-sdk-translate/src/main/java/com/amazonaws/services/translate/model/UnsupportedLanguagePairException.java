@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ import com.amazonaws.AmazonServiceException;
 /**
  * <p>
  * Amazon Translate does not support translation from the language of the source
- * text into the requested target language. For more information, see
- * <a>how-to-error-msg</a>.
+ * text into the requested target language. For more information, see <a href=
+ * "https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html"
+ * >Supported languages</a>.
  * </p>
  */
 public class UnsupportedLanguagePairException extends AmazonServiceException {

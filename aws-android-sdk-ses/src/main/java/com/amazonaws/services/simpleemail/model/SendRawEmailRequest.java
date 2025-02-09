@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Composes an email message and immediately queues it for sending.
  * </p>
  * <p>
- * This operation is more flexible than the <code>SendEmail</code> API
- * operation. When you use the <code>SendRawEmail</code> operation, you can
- * specify the headers of the message as well as its content. This flexibility
- * is useful, for example, when you want to send a multipart MIME email (such a
- * message that contains both a text and an HTML version). You can also use this
+ * This operation is more flexible than the <code>SendEmail</code> operation.
+ * When you use the <code>SendRawEmail</code> operation, you can specify the
+ * headers of the message as well as its content. This flexibility is useful,
+ * for example, when you need to send a multipart MIME email (such a message
+ * that contains both a text and an HTML version). You can also use this
  * operation to send messages that include attachments.
  * </p>
  * <p>
@@ -38,7 +38,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <li>
  * <p>
  * You can only send email from <a href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+ * "https://docs.aws.amazon.com/ses/latest/dg/verify-addresses-and-domains.html"
  * >verified email addresses or domains</a>. If you try to send email from an
  * address that isn't verified, the operation results in an
  * "Email address not verified" error.
@@ -47,10 +47,10 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <li>
  * <p>
  * If your account is still in the <a href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html"
+ * "https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html"
  * >Amazon SES sandbox</a>, you can only send email to other verified addresses
  * in your account, or to addresses that are associated with the <a href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html"
+ * "https://docs.aws.amazon.com/ses/latest/dg/send-an-email-from-console.html"
  * >Amazon SES mailbox simulator</a>.
  * </p>
  * </li>
@@ -88,7 +88,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * message (for example, if you use open and click tracking), 8-bit content
  * isn't preserved. For this reason, we highly recommend that you encode all
  * content that isn't 7-bit ASCII. For more information, see <a href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html#send-email-mime-encoding"
+ * "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html#send-email-mime-encoding"
  * >MIME Encoding</a> in the <i>Amazon SES Developer Guide</i>.
  * </p>
  * </li>
@@ -101,10 +101,10 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <li>
  * <p>
  * Although you can customize the message headers when using the
- * <code>SendRawEmail</code> operation, Amazon SES will automatically apply its
- * own <code>Message-ID</code> and <code>Date</code> headers; if you passed
- * these headers when creating the message, they will be overwritten by the
- * values that Amazon SES provides.
+ * <code>SendRawEmail</code> operation, Amazon SES automatically applies its own
+ * <code>Message-ID</code> and <code>Date</code> headers; if you passed these
+ * headers when creating the message, they are overwritten by the values that
+ * Amazon SES provides.
  * </p>
  * </li>
  * <li>
@@ -113,8 +113,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <code>SendRawEmail</code> enables you to specify the cross-account identity
  * for the email's Source, From, and Return-Path parameters in one of two ways:
  * you can pass optional parameters <code>SourceArn</code>, <code>FromArn</code>
- * , and/or <code>ReturnPathArn</code> to the API, or you can include the
- * following X-headers in the header of your raw email:
+ * , and/or <code>ReturnPathArn</code>, or you can include the following
+ * X-headers in the header of your raw email:
  * </p>
  * <ul>
  * <li>
@@ -135,19 +135,18 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </ul>
  * <important>
  * <p>
- * Do not include these X-headers in the DKIM signature; Amazon SES will remove
- * them before sending the email.
+ * Don't include these X-headers in the DKIM signature. Amazon SES removes these
+ * before it sends the email.
  * </p>
  * </important>
  * <p>
- * For most common sending authorization scenarios, we recommend that you
- * specify the <code>SourceIdentityArn</code> parameter and not the
- * <code>FromIdentityArn</code> or <code>ReturnPathIdentityArn</code>
- * parameters. If you only specify the <code>SourceIdentityArn</code> parameter,
- * Amazon SES will set the From and Return Path addresses to the identity
- * specified in <code>SourceIdentityArn</code>. For more information about
- * sending authorization, see the <a href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+ * If you only specify the <code>SourceIdentityArn</code> parameter, Amazon SES
+ * sets the From and Return-Path addresses to the same identity that you
+ * specified.
+ * </p>
+ * <p>
+ * For more information about sending authorization, see the <a
+ * href="https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
  * >Using Sending Authorization with Amazon SES</a> in the <i>Amazon SES
  * Developer Guide.</i>
  * </p>
@@ -158,9 +157,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  * each recipient in the To:, CC: and BCC: fields) is counted against the
  * maximum number of emails you can send in a 24-hour period (your <i>sending
  * quota</i>). For more information about sending quotas in Amazon SES, see <a
- * href=
- * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/manage-sending-limits.html"
- * >Managing Your Amazon SES Sending Limits</a> in the <i>Amazon SES Developer
+ * href="https://docs.aws.amazon.com/ses/latest/dg/manage-sending-quotas.html">
+ * Managing Your Amazon SES Sending Limits</a> in the <i>Amazon SES Developer
  * Guide.</i>
  * </p>
  * </li>
@@ -177,25 +175,24 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * Amazon SES does not support the SMTPUTF8 extension, as described in<a
      * href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For this reason,
-     * the <i>local part</i> of a source email address (the part of the email
-     * address that precedes the @ sign) may only contain <a
-     * href="https://en.wikipedia.org/wiki/Email_address#Local-part">7-bit ASCII
-     * characters</a>. If the <i>domain part</i> of an address (the part after
-     * the @ sign) contains non-ASCII characters, they must be encoded using
-     * Punycode, as described in <a
-     * href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>. The sender
-     * name (also known as the <i>friendly name</i>) may contain non-ASCII
-     * characters. These characters must be encoded using MIME encoded-word
-     * syntax, as described in <a href="https://tools.ietf.org/html/rfc2047">RFC
-     * 2047</a>. MIME encoded-word syntax uses the following form:
-     * <code>=?charset?encoding?encoded-text?=</code>.
+     * the email address string must be 7-bit ASCII. If you want to send to or
+     * from email addresses that contain Unicode characters in the domain part
+     * of an address, you must encode the domain using Punycode. Punycode is not
+     * permitted in the local part of the email address (the part before the @
+     * sign) nor in the "friendly from" name. If you want to use Unicode
+     * characters in the "friendly from" name, you must encode the
+     * "friendly from" name using MIME encoded-word syntax, as described in <a
+     * href
+     * ="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html">Sending
+     * raw email using the Amazon SES API</a>. For more information about
+     * Punycode, see <a href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      * </p>
      * </note>
      * <p>
      * If you specify the <code>Source</code> parameter and have feedback
-     * forwarding enabled, then bounces and complaints will be sent to this
-     * email address. This takes precedence over any Return-Path header that you
-     * might include in the raw text of the message.
+     * forwarding enabled, then bounces and complaints are sent to this email
+     * address. This takes precedence over any Return-Path header that you might
+     * include in the raw text of the message.
      * </p>
      */
     private String source;
@@ -233,8 +230,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <li>
      * <p>
      * Attachments must be of a content type that Amazon SES supports. For a
-     * list on unsupported content types, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     * list on unsupported content types, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      * >Unsupported Attachment Types</a> in the <i>Amazon SES Developer
      * Guide</i>.
      * </p>
@@ -248,8 +245,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * If any of the MIME parts in your message contain content that is outside
      * of the 7-bit ASCII character range, we highly recommend that you encode
-     * that content. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     * that content. For more information, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      * >Sending Raw Email</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * </li>
@@ -281,7 +278,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -314,7 +311,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -348,7 +345,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -414,7 +411,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            Attachments must be of a content type that Amazon SES
      *            supports. For a list on unsupported content types, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      *            >Unsupported Attachment Types</a> in the <i>Amazon SES
      *            Developer Guide</i>.
      *            </p>
@@ -430,7 +427,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            is outside of the 7-bit ASCII character range, we highly
      *            recommend that you encode that content. For more information,
      *            see <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      *            >Sending Raw Email</a> in the <i>Amazon SES Developer
      *            Guide</i>.
      *            </p>
@@ -459,25 +456,24 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * Amazon SES does not support the SMTPUTF8 extension, as described in<a
      * href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For this reason,
-     * the <i>local part</i> of a source email address (the part of the email
-     * address that precedes the @ sign) may only contain <a
-     * href="https://en.wikipedia.org/wiki/Email_address#Local-part">7-bit ASCII
-     * characters</a>. If the <i>domain part</i> of an address (the part after
-     * the @ sign) contains non-ASCII characters, they must be encoded using
-     * Punycode, as described in <a
-     * href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>. The sender
-     * name (also known as the <i>friendly name</i>) may contain non-ASCII
-     * characters. These characters must be encoded using MIME encoded-word
-     * syntax, as described in <a href="https://tools.ietf.org/html/rfc2047">RFC
-     * 2047</a>. MIME encoded-word syntax uses the following form:
-     * <code>=?charset?encoding?encoded-text?=</code>.
+     * the email address string must be 7-bit ASCII. If you want to send to or
+     * from email addresses that contain Unicode characters in the domain part
+     * of an address, you must encode the domain using Punycode. Punycode is not
+     * permitted in the local part of the email address (the part before the @
+     * sign) nor in the "friendly from" name. If you want to use Unicode
+     * characters in the "friendly from" name, you must encode the
+     * "friendly from" name using MIME encoded-word syntax, as described in <a
+     * href
+     * ="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html">Sending
+     * raw email using the Amazon SES API</a>. For more information about
+     * Punycode, see <a href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      * </p>
      * </note>
      * <p>
      * If you specify the <code>Source</code> parameter and have feedback
-     * forwarding enabled, then bounces and complaints will be sent to this
-     * email address. This takes precedence over any Return-Path header that you
-     * might include in the raw text of the message.
+     * forwarding enabled, then bounces and complaints are sent to this email
+     * address. This takes precedence over any Return-Path header that you might
+     * include in the raw text of the message.
      * </p>
      *
      * @return <p>
@@ -489,28 +485,25 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *         <p>
      *         Amazon SES does not support the SMTPUTF8 extension, as described
      *         in<a href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For
-     *         this reason, the <i>local part</i> of a source email address (the
-     *         part of the email address that precedes the @ sign) may only
-     *         contain <a
-     *         href="https://en.wikipedia.org/wiki/Email_address#Local-part"
-     *         >7-bit ASCII characters</a>. If the <i>domain part</i> of an
-     *         address (the part after the @ sign) contains non-ASCII
-     *         characters, they must be encoded using Punycode, as described in
-     *         <a href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>.
-     *         The sender name (also known as the <i>friendly name</i>) may
-     *         contain non-ASCII characters. These characters must be encoded
-     *         using MIME encoded-word syntax, as described in <a
-     *         href="https://tools.ietf.org/html/rfc2047">RFC 2047</a>. MIME
-     *         encoded-word syntax uses the following form:
-     *         <code>=?charset?encoding?encoded-text?=</code>.
+     *         this reason, the email address string must be 7-bit ASCII. If you
+     *         want to send to or from email addresses that contain Unicode
+     *         characters in the domain part of an address, you must encode the
+     *         domain using Punycode. Punycode is not permitted in the local
+     *         part of the email address (the part before the @ sign) nor in the
+     *         "friendly from" name. If you want to use Unicode characters in
+     *         the "friendly from" name, you must encode the "friendly from"
+     *         name using MIME encoded-word syntax, as described in <a href=
+     *         "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
+     *         >Sending raw email using the Amazon SES API</a>. For more
+     *         information about Punycode, see <a
+     *         href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      *         </p>
      *         </note>
      *         <p>
      *         If you specify the <code>Source</code> parameter and have
-     *         feedback forwarding enabled, then bounces and complaints will be
-     *         sent to this email address. This takes precedence over any
-     *         Return-Path header that you might include in the raw text of the
-     *         message.
+     *         feedback forwarding enabled, then bounces and complaints are sent
+     *         to this email address. This takes precedence over any Return-Path
+     *         header that you might include in the raw text of the message.
      *         </p>
      */
     public String getSource() {
@@ -527,25 +520,24 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * Amazon SES does not support the SMTPUTF8 extension, as described in<a
      * href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For this reason,
-     * the <i>local part</i> of a source email address (the part of the email
-     * address that precedes the @ sign) may only contain <a
-     * href="https://en.wikipedia.org/wiki/Email_address#Local-part">7-bit ASCII
-     * characters</a>. If the <i>domain part</i> of an address (the part after
-     * the @ sign) contains non-ASCII characters, they must be encoded using
-     * Punycode, as described in <a
-     * href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>. The sender
-     * name (also known as the <i>friendly name</i>) may contain non-ASCII
-     * characters. These characters must be encoded using MIME encoded-word
-     * syntax, as described in <a href="https://tools.ietf.org/html/rfc2047">RFC
-     * 2047</a>. MIME encoded-word syntax uses the following form:
-     * <code>=?charset?encoding?encoded-text?=</code>.
+     * the email address string must be 7-bit ASCII. If you want to send to or
+     * from email addresses that contain Unicode characters in the domain part
+     * of an address, you must encode the domain using Punycode. Punycode is not
+     * permitted in the local part of the email address (the part before the @
+     * sign) nor in the "friendly from" name. If you want to use Unicode
+     * characters in the "friendly from" name, you must encode the
+     * "friendly from" name using MIME encoded-word syntax, as described in <a
+     * href
+     * ="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html">Sending
+     * raw email using the Amazon SES API</a>. For more information about
+     * Punycode, see <a href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      * </p>
      * </note>
      * <p>
      * If you specify the <code>Source</code> parameter and have feedback
-     * forwarding enabled, then bounces and complaints will be sent to this
-     * email address. This takes precedence over any Return-Path header that you
-     * might include in the raw text of the message.
+     * forwarding enabled, then bounces and complaints are sent to this email
+     * address. This takes precedence over any Return-Path header that you might
+     * include in the raw text of the message.
      * </p>
      *
      * @param source <p>
@@ -558,26 +550,25 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            Amazon SES does not support the SMTPUTF8 extension, as
      *            described in<a
      *            href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For
-     *            this reason, the <i>local part</i> of a source email address
-     *            (the part of the email address that precedes the @ sign) may
-     *            only contain <a href=
-     *            "https://en.wikipedia.org/wiki/Email_address#Local-part">7-bit
-     *            ASCII characters</a>. If the <i>domain part</i> of an address
-     *            (the part after the @ sign) contains non-ASCII characters,
-     *            they must be encoded using Punycode, as described in <a
-     *            href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>.
-     *            The sender name (also known as the <i>friendly name</i>) may
-     *            contain non-ASCII characters. These characters must be encoded
-     *            using MIME encoded-word syntax, as described in <a
-     *            href="https://tools.ietf.org/html/rfc2047">RFC 2047</a>. MIME
-     *            encoded-word syntax uses the following form:
-     *            <code>=?charset?encoding?encoded-text?=</code>.
+     *            this reason, the email address string must be 7-bit ASCII. If
+     *            you want to send to or from email addresses that contain
+     *            Unicode characters in the domain part of an address, you must
+     *            encode the domain using Punycode. Punycode is not permitted in
+     *            the local part of the email address (the part before the @
+     *            sign) nor in the "friendly from" name. If you want to use
+     *            Unicode characters in the "friendly from" name, you must
+     *            encode the "friendly from" name using MIME encoded-word
+     *            syntax, as described in <a href=
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
+     *            >Sending raw email using the Amazon SES API</a>. For more
+     *            information about Punycode, see <a
+     *            href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      *            </p>
      *            </note>
      *            <p>
      *            If you specify the <code>Source</code> parameter and have
-     *            feedback forwarding enabled, then bounces and complaints will
-     *            be sent to this email address. This takes precedence over any
+     *            feedback forwarding enabled, then bounces and complaints are
+     *            sent to this email address. This takes precedence over any
      *            Return-Path header that you might include in the raw text of
      *            the message.
      *            </p>
@@ -596,25 +587,24 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * Amazon SES does not support the SMTPUTF8 extension, as described in<a
      * href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For this reason,
-     * the <i>local part</i> of a source email address (the part of the email
-     * address that precedes the @ sign) may only contain <a
-     * href="https://en.wikipedia.org/wiki/Email_address#Local-part">7-bit ASCII
-     * characters</a>. If the <i>domain part</i> of an address (the part after
-     * the @ sign) contains non-ASCII characters, they must be encoded using
-     * Punycode, as described in <a
-     * href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>. The sender
-     * name (also known as the <i>friendly name</i>) may contain non-ASCII
-     * characters. These characters must be encoded using MIME encoded-word
-     * syntax, as described in <a href="https://tools.ietf.org/html/rfc2047">RFC
-     * 2047</a>. MIME encoded-word syntax uses the following form:
-     * <code>=?charset?encoding?encoded-text?=</code>.
+     * the email address string must be 7-bit ASCII. If you want to send to or
+     * from email addresses that contain Unicode characters in the domain part
+     * of an address, you must encode the domain using Punycode. Punycode is not
+     * permitted in the local part of the email address (the part before the @
+     * sign) nor in the "friendly from" name. If you want to use Unicode
+     * characters in the "friendly from" name, you must encode the
+     * "friendly from" name using MIME encoded-word syntax, as described in <a
+     * href
+     * ="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html">Sending
+     * raw email using the Amazon SES API</a>. For more information about
+     * Punycode, see <a href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      * </p>
      * </note>
      * <p>
      * If you specify the <code>Source</code> parameter and have feedback
-     * forwarding enabled, then bounces and complaints will be sent to this
-     * email address. This takes precedence over any Return-Path header that you
-     * might include in the raw text of the message.
+     * forwarding enabled, then bounces and complaints are sent to this email
+     * address. This takes precedence over any Return-Path header that you might
+     * include in the raw text of the message.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -630,26 +620,25 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            Amazon SES does not support the SMTPUTF8 extension, as
      *            described in<a
      *            href="https://tools.ietf.org/html/rfc6531">RFC6531</a>. For
-     *            this reason, the <i>local part</i> of a source email address
-     *            (the part of the email address that precedes the @ sign) may
-     *            only contain <a href=
-     *            "https://en.wikipedia.org/wiki/Email_address#Local-part">7-bit
-     *            ASCII characters</a>. If the <i>domain part</i> of an address
-     *            (the part after the @ sign) contains non-ASCII characters,
-     *            they must be encoded using Punycode, as described in <a
-     *            href="https://tools.ietf.org/html/rfc3492.html">RFC3492</a>.
-     *            The sender name (also known as the <i>friendly name</i>) may
-     *            contain non-ASCII characters. These characters must be encoded
-     *            using MIME encoded-word syntax, as described in <a
-     *            href="https://tools.ietf.org/html/rfc2047">RFC 2047</a>. MIME
-     *            encoded-word syntax uses the following form:
-     *            <code>=?charset?encoding?encoded-text?=</code>.
+     *            this reason, the email address string must be 7-bit ASCII. If
+     *            you want to send to or from email addresses that contain
+     *            Unicode characters in the domain part of an address, you must
+     *            encode the domain using Punycode. Punycode is not permitted in
+     *            the local part of the email address (the part before the @
+     *            sign) nor in the "friendly from" name. If you want to use
+     *            Unicode characters in the "friendly from" name, you must
+     *            encode the "friendly from" name using MIME encoded-word
+     *            syntax, as described in <a href=
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
+     *            >Sending raw email using the Amazon SES API</a>. For more
+     *            information about Punycode, see <a
+     *            href="http://tools.ietf.org/html/rfc3492">RFC 3492</a>.
      *            </p>
      *            </note>
      *            <p>
      *            If you specify the <code>Source</code> parameter and have
-     *            feedback forwarding enabled, then bounces and complaints will
-     *            be sent to this email address. This takes precedence over any
+     *            feedback forwarding enabled, then bounces and complaints are
+     *            sent to this email address. This takes precedence over any
      *            Return-Path header that you might include in the raw text of
      *            the message.
      *            </p>
@@ -768,8 +757,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <li>
      * <p>
      * Attachments must be of a content type that Amazon SES supports. For a
-     * list on unsupported content types, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     * list on unsupported content types, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      * >Unsupported Attachment Types</a> in the <i>Amazon SES Developer
      * Guide</i>.
      * </p>
@@ -783,8 +772,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * If any of the MIME parts in your message contain content that is outside
      * of the 7-bit ASCII character range, we highly recommend that you encode
-     * that content. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     * that content. For more information, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      * >Sending Raw Email</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * </li>
@@ -822,7 +811,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *         <p>
      *         Attachments must be of a content type that Amazon SES supports.
      *         For a list on unsupported content types, see <a href=
-     *         "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     *         "https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      *         >Unsupported Attachment Types</a> in the <i>Amazon SES Developer
      *         Guide</i>.
      *         </p>
@@ -837,7 +826,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *         If any of the MIME parts in your message contain content that is
      *         outside of the 7-bit ASCII character range, we highly recommend
      *         that you encode that content. For more information, see <a href=
-     *         "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     *         "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      *         >Sending Raw Email</a> in the <i>Amazon SES Developer Guide</i>.
      *         </p>
      *         </li>
@@ -880,8 +869,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <li>
      * <p>
      * Attachments must be of a content type that Amazon SES supports. For a
-     * list on unsupported content types, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     * list on unsupported content types, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      * >Unsupported Attachment Types</a> in the <i>Amazon SES Developer
      * Guide</i>.
      * </p>
@@ -895,8 +884,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * If any of the MIME parts in your message contain content that is outside
      * of the 7-bit ASCII character range, we highly recommend that you encode
-     * that content. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     * that content. For more information, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      * >Sending Raw Email</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * </li>
@@ -937,7 +926,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            Attachments must be of a content type that Amazon SES
      *            supports. For a list on unsupported content types, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      *            >Unsupported Attachment Types</a> in the <i>Amazon SES
      *            Developer Guide</i>.
      *            </p>
@@ -953,7 +942,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            is outside of the 7-bit ASCII character range, we highly
      *            recommend that you encode that content. For more information,
      *            see <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      *            >Sending Raw Email</a> in the <i>Amazon SES Developer
      *            Guide</i>.
      *            </p>
@@ -997,8 +986,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <li>
      * <p>
      * Attachments must be of a content type that Amazon SES supports. For a
-     * list on unsupported content types, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     * list on unsupported content types, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      * >Unsupported Attachment Types</a> in the <i>Amazon SES Developer
      * Guide</i>.
      * </p>
@@ -1012,8 +1001,8 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * If any of the MIME parts in your message contain content that is outside
      * of the 7-bit ASCII character range, we highly recommend that you encode
-     * that content. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     * that content. For more information, see <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      * >Sending Raw Email</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * </li>
@@ -1057,7 +1046,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            Attachments must be of a content type that Amazon SES
      *            supports. For a list on unsupported content types, see <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mime-types.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/mime-types.html"
      *            >Unsupported Attachment Types</a> in the <i>Amazon SES
      *            Developer Guide</i>.
      *            </p>
@@ -1073,7 +1062,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            is outside of the 7-bit ASCII character range, we highly
      *            recommend that you encode that content. For more information,
      *            see <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      *            >Sending Raw Email</a> in the <i>Amazon SES Developer
      *            Guide</i>.
      *            </p>
@@ -1112,7 +1101,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1135,7 +1124,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *         For information about when to use this parameter, see the
      *         description of <code>SendRawEmail</code> in this guide, or see
      *         the <a href=
-     *         "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *         "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *         >Amazon SES Developer Guide</a>.
      *         </p>
      *         </note>
@@ -1161,7 +1150,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1184,7 +1173,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            For information about when to use this parameter, see the
      *            description of <code>SendRawEmail</code> in this guide, or see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      *            </note>
@@ -1210,7 +1199,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1236,7 +1225,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            For information about when to use this parameter, see the
      *            description of <code>SendRawEmail</code> in this guide, or see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      *            </note>
@@ -1274,7 +1263,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1308,7 +1297,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *         For information about when to use this parameter, see the
      *         description of <code>SendRawEmail</code> in this guide, or see
      *         the <a href=
-     *         "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *         "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *         >Amazon SES Developer Guide</a>.
      *         </p>
      *         </note>
@@ -1343,7 +1332,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1377,7 +1366,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            For information about when to use this parameter, see the
      *            description of <code>SendRawEmail</code> in this guide, or see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      *            </note>
@@ -1412,7 +1401,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1449,7 +1438,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            For information about when to use this parameter, see the
      *            description of <code>SendRawEmail</code> in this guide, or see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      *            </note>
@@ -1488,7 +1477,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1522,7 +1511,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *         For information about when to use this parameter, see the
      *         description of <code>SendRawEmail</code> in this guide, or see
      *         the <a href=
-     *         "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *         "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *         >Amazon SES Developer Guide</a>.
      *         </p>
      *         </note>
@@ -1558,7 +1547,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1592,7 +1581,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            For information about when to use this parameter, see the
      *            description of <code>SendRawEmail</code> in this guide, or see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      *            </note>
@@ -1628,7 +1617,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * For information about when to use this parameter, see the description of
      * <code>SendRawEmail</code> in this guide, or see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * </note>
@@ -1665,7 +1654,7 @@ public class SendRawEmailRequest extends AmazonWebServiceRequest implements Seri
      *            For information about when to use this parameter, see the
      *            description of <code>SendRawEmail</code> in this guide, or see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization-delegate-sender-tasks-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization-delegate-sender-tasks-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      *            </note>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.cognitoidentityprovider.model.transform;
 
 import com.amazonaws.services.cognitoidentityprovider.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -35,6 +36,11 @@ class SmsConfigurationTypeJsonMarshaller {
             String externalId = smsConfigurationType.getExternalId();
             jsonWriter.name("ExternalId");
             jsonWriter.value(externalId);
+        }
+        if (smsConfigurationType.getSnsRegion() != null) {
+            String snsRegion = smsConfigurationType.getSnsRegion();
+            jsonWriter.name("SnsRegion");
+            jsonWriter.value(snsRegion);
         }
         jsonWriter.endObject();
     }

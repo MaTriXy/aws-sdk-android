@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,40 +21,89 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Retires a grant. To clean up, you can retire a grant when you're done using
- * it. You should revoke a grant when you intend to actively deny operations
- * that depend on it. The following are permitted to call this API:
+ * Deletes a grant. Typically, you retire a grant when you no longer need its
+ * permissions. To identify the grant to retire, use a <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+ * >grant token</a>, or both the grant ID and a key identifier (key ID or key
+ * ARN) of the KMS key. The <a>CreateGrant</a> operation returns both values.
+ * </p>
+ * <p>
+ * This operation can be called by the <i>retiring principal</i> for a grant, by
+ * the <i>grantee principal</i> if the grant allows the <code>RetireGrant</code>
+ * operation, and by the Amazon Web Services account in which the grant is
+ * created. It can also be called by principals to whom permission for retiring
+ * a grant is delegated. For details, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#grant-delete"
+ * >Retiring and revoking grants</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * For detailed information about grants, including grant terminology, see <a
+ * href
+ * ="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html">Grants
+ * in KMS</a> in the <i> <i>Key Management Service Developer Guide</i> </i>. For
+ * examples of working with grants in several programming languages, see <a
+ * href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-grants.html"
+ * >Programming grants</a>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: Yes. You can retire a grant on a KMS key in a
+ * different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: Permission to retire a grant is determined
+ * primarily by the grant. For details, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#grant-delete"
+ * >Retiring and revoking grants</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
  * </p>
  * <ul>
  * <li>
  * <p>
- * The AWS account (root user) under which the grant was created
+ * <a>CreateGrant</a>
  * </p>
  * </li>
  * <li>
  * <p>
- * The <code>RetiringPrincipal</code>, if present in the grant
+ * <a>ListGrants</a>
  * </p>
  * </li>
  * <li>
  * <p>
- * The <code>GranteePrincipal</code>, if <code>RetireGrant</code> is an
- * operation specified in the grant
+ * <a>ListRetirableGrants</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>RevokeGrant</a>
  * </p>
  * </li>
  * </ul>
  * <p>
- * You must identify the grant to retire by its grant token or by a combination
- * of the grant ID and the Amazon Resource Name (ARN) of the customer master key
- * (CMK). A grant token is a unique variable-length base64-encoded string. A
- * grant ID is a 64 character unique identifier of a grant. The
- * <a>CreateGrant</a> operation returns both.
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class RetireGrantRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * Token that identifies the grant to be retired.
+     * Identifies the grant to be retired. You can use a grant token to identify
+     * a new grant even before it has achieved eventual consistency.
+     * </p>
+     * <p>
+     * Only the <a>CreateGrant</a> operation returns a grant token. For details,
+     * see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     * >Eventual consistency</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -64,7 +113,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the CMK associated with the grant.
+     * The key ARN KMS key associated with the grant. To find the key ARN, use
+     * the <a>ListKeys</a> operation.
      * </p>
      * <p>
      * For example:
@@ -78,8 +128,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Unique identifier of the grant to retire. The grant ID is returned in the
-     * response to a <code>CreateGrant</code> operation.
+     * Identifies the grant to retire. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <ul>
      * <li>
@@ -97,14 +147,49 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Token that identifies the grant to be retired.
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     */
+    private Boolean dryRun;
+
+    /**
+     * <p>
+     * Identifies the grant to be retired. You can use a grant token to identify
+     * a new grant even before it has achieved eventual consistency.
+     * </p>
+     * <p>
+     * Only the <a>CreateGrant</a> operation returns a grant token. For details,
+     * see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     * >Eventual consistency</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 8192<br/>
      *
      * @return <p>
-     *         Token that identifies the grant to be retired.
+     *         Identifies the grant to be retired. You can use a grant token to
+     *         identify a new grant even before it has achieved eventual
+     *         consistency.
+     *         </p>
+     *         <p>
+     *         Only the <a>CreateGrant</a> operation returns a grant token. For
+     *         details, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *         >Grant token</a> and <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     *         >Eventual consistency</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
      *         </p>
      */
     public String getGrantToken() {
@@ -113,14 +198,35 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Token that identifies the grant to be retired.
+     * Identifies the grant to be retired. You can use a grant token to identify
+     * a new grant even before it has achieved eventual consistency.
+     * </p>
+     * <p>
+     * Only the <a>CreateGrant</a> operation returns a grant token. For details,
+     * see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     * >Eventual consistency</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 8192<br/>
      *
      * @param grantToken <p>
-     *            Token that identifies the grant to be retired.
+     *            Identifies the grant to be retired. You can use a grant token
+     *            to identify a new grant even before it has achieved eventual
+     *            consistency.
+     *            </p>
+     *            <p>
+     *            Only the <a>CreateGrant</a> operation returns a grant token.
+     *            For details, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *            >Grant token</a> and <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     *            >Eventual consistency</a> in the <i>Key Management Service
+     *            Developer Guide</i>.
      *            </p>
      */
     public void setGrantToken(String grantToken) {
@@ -129,7 +235,17 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Token that identifies the grant to be retired.
+     * Identifies the grant to be retired. You can use a grant token to identify
+     * a new grant even before it has achieved eventual consistency.
+     * </p>
+     * <p>
+     * Only the <a>CreateGrant</a> operation returns a grant token. For details,
+     * see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     * >Grant token</a> and <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     * >Eventual consistency</a> in the <i>Key Management Service Developer
+     * Guide</i>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -139,7 +255,18 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 8192<br/>
      *
      * @param grantToken <p>
-     *            Token that identifies the grant to be retired.
+     *            Identifies the grant to be retired. You can use a grant token
+     *            to identify a new grant even before it has achieved eventual
+     *            consistency.
+     *            </p>
+     *            <p>
+     *            Only the <a>CreateGrant</a> operation returns a grant token.
+     *            For details, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token"
+     *            >Grant token</a> and <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-eventual-consistency"
+     *            >Eventual consistency</a> in the <i>Key Management Service
+     *            Developer Guide</i>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -151,7 +278,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the CMK associated with the grant.
+     * The key ARN KMS key associated with the grant. To find the key ARN, use
+     * the <a>ListKeys</a> operation.
      * </p>
      * <p>
      * For example:
@@ -162,8 +290,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         The Amazon Resource Name (ARN) of the CMK associated with the
-     *         grant.
+     *         The key ARN KMS key associated with the grant. To find the key
+     *         ARN, use the <a>ListKeys</a> operation.
      *         </p>
      *         <p>
      *         For example:
@@ -176,7 +304,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the CMK associated with the grant.
+     * The key ARN KMS key associated with the grant. To find the key ARN, use
+     * the <a>ListKeys</a> operation.
      * </p>
      * <p>
      * For example:
@@ -187,8 +316,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The Amazon Resource Name (ARN) of the CMK associated with the
-     *            grant.
+     *            The key ARN KMS key associated with the grant. To find the key
+     *            ARN, use the <a>ListKeys</a> operation.
      *            </p>
      *            <p>
      *            For example:
@@ -201,7 +330,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the CMK associated with the grant.
+     * The key ARN KMS key associated with the grant. To find the key ARN, use
+     * the <a>ListKeys</a> operation.
      * </p>
      * <p>
      * For example:
@@ -215,8 +345,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            The Amazon Resource Name (ARN) of the CMK associated with the
-     *            grant.
+     *            The key ARN KMS key associated with the grant. To find the key
+     *            ARN, use the <a>ListKeys</a> operation.
      *            </p>
      *            <p>
      *            For example:
@@ -232,8 +362,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Unique identifier of the grant to retire. The grant ID is returned in the
-     * response to a <code>CreateGrant</code> operation.
+     * Identifies the grant to retire. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <ul>
      * <li>
@@ -248,8 +378,9 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 128<br/>
      *
      * @return <p>
-     *         Unique identifier of the grant to retire. The grant ID is
-     *         returned in the response to a <code>CreateGrant</code> operation.
+     *         Identifies the grant to retire. To get the grant ID, use
+     *         <a>CreateGrant</a>, <a>ListGrants</a>, or
+     *         <a>ListRetirableGrants</a>.
      *         </p>
      *         <ul>
      *         <li>
@@ -266,8 +397,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Unique identifier of the grant to retire. The grant ID is returned in the
-     * response to a <code>CreateGrant</code> operation.
+     * Identifies the grant to retire. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <ul>
      * <li>
@@ -282,9 +413,9 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 128<br/>
      *
      * @param grantId <p>
-     *            Unique identifier of the grant to retire. The grant ID is
-     *            returned in the response to a <code>CreateGrant</code>
-     *            operation.
+     *            Identifies the grant to retire. To get the grant ID, use
+     *            <a>CreateGrant</a>, <a>ListGrants</a>, or
+     *            <a>ListRetirableGrants</a>.
      *            </p>
      *            <ul>
      *            <li>
@@ -301,8 +432,8 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * Unique identifier of the grant to retire. The grant ID is returned in the
-     * response to a <code>CreateGrant</code> operation.
+     * Identifies the grant to retire. To get the grant ID, use
+     * <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.
      * </p>
      * <ul>
      * <li>
@@ -320,9 +451,9 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - 128<br/>
      *
      * @param grantId <p>
-     *            Unique identifier of the grant to retire. The grant ID is
-     *            returned in the response to a <code>CreateGrant</code>
-     *            operation.
+     *            Identifies the grant to retire. To get the grant ID, use
+     *            <a>CreateGrant</a>, <a>ListGrants</a>, or
+     *            <a>ListRetirableGrants</a>.
      *            </p>
      *            <ul>
      *            <li>
@@ -337,6 +468,120 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
      */
     public RetireGrantRequest withGrantId(String grantId) {
         this.grantId = grantId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         Checks if your request will succeed. <code>DryRun</code> is an
+     *         optional parameter.
+     *         </p>
+     *         <p>
+     *         To learn more about how to use this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *         >Testing your KMS API calls</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     */
+    public Boolean isDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @return <p>
+     *         Checks if your request will succeed. <code>DryRun</code> is an
+     *         optional parameter.
+     *         </p>
+     *         <p>
+     *         To learn more about how to use this parameter, see <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *         >Testing your KMS API calls</a> in the <i>Key Management Service
+     *         Developer Guide</i>.
+     *         </p>
+     */
+    public Boolean getDryRun() {
+        return dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     *
+     * @param dryRun <p>
+     *            Checks if your request will succeed. <code>DryRun</code> is an
+     *            optional parameter.
+     *            </p>
+     *            <p>
+     *            To learn more about how to use this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *            >Testing your KMS API calls</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     */
+    public void setDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
+    }
+
+    /**
+     * <p>
+     * Checks if your request will succeed. <code>DryRun</code> is an optional
+     * parameter.
+     * </p>
+     * <p>
+     * To learn more about how to use this parameter, see <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     * >Testing your KMS API calls</a> in the <i>Key Management Service
+     * Developer Guide</i>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param dryRun <p>
+     *            Checks if your request will succeed. <code>DryRun</code> is an
+     *            optional parameter.
+     *            </p>
+     *            <p>
+     *            To learn more about how to use this parameter, see <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html"
+     *            >Testing your KMS API calls</a> in the <i>Key Management
+     *            Service Developer Guide</i>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public RetireGrantRequest withDryRun(Boolean dryRun) {
+        this.dryRun = dryRun;
         return this;
     }
 
@@ -356,7 +601,9 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
         if (getKeyId() != null)
             sb.append("KeyId: " + getKeyId() + ",");
         if (getGrantId() != null)
-            sb.append("GrantId: " + getGrantId());
+            sb.append("GrantId: " + getGrantId() + ",");
+        if (getDryRun() != null)
+            sb.append("DryRun: " + getDryRun());
         sb.append("}");
         return sb.toString();
     }
@@ -369,6 +616,7 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
         hashCode = prime * hashCode + ((getGrantToken() == null) ? 0 : getGrantToken().hashCode());
         hashCode = prime * hashCode + ((getKeyId() == null) ? 0 : getKeyId().hashCode());
         hashCode = prime * hashCode + ((getGrantId() == null) ? 0 : getGrantId().hashCode());
+        hashCode = prime * hashCode + ((getDryRun() == null) ? 0 : getDryRun().hashCode());
         return hashCode;
     }
 
@@ -395,6 +643,10 @@ public class RetireGrantRequest extends AmazonWebServiceRequest implements Seria
         if (other.getGrantId() == null ^ this.getGrantId() == null)
             return false;
         if (other.getGrantId() != null && other.getGrantId().equals(this.getGrantId()) == false)
+            return false;
+        if (other.getDryRun() == null ^ this.getDryRun() == null)
+            return false;
+        if (other.getDryRun() != null && other.getDryRun().equals(this.getDryRun()) == false)
             return false;
         return true;
     }

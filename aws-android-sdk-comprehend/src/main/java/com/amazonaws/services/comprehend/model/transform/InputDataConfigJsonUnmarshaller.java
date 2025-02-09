@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,10 @@ class InputDataConfigJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("InputFormat")) {
                 inputDataConfig.setInputFormat(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("DocumentReaderConfig")) {
+                inputDataConfig.setDocumentReaderConfig(DocumentReaderConfigJsonUnmarshaller
+                        .getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

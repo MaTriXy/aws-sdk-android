@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,13 +33,23 @@ public class PostContentResultJsonUnmarshaller implements
             postContentResult.setContentType(context.getHeader("Content-Type"));
         if (context.getHeader("x-amz-lex-intent-name") != null)
             postContentResult.setIntentName(context.getHeader("x-amz-lex-intent-name"));
+        if (context.getHeader("x-amz-lex-nlu-intent-confidence") != null)
+            postContentResult.setNluIntentConfidence(context
+                    .getHeader("x-amz-lex-nlu-intent-confidence"));
+        if (context.getHeader("x-amz-lex-alternative-intents") != null)
+            postContentResult.setAlternativeIntents(context
+                    .getHeader("x-amz-lex-alternative-intents"));
         if (context.getHeader("x-amz-lex-slots") != null)
             postContentResult.setSlots(context.getHeader("x-amz-lex-slots"));
         if (context.getHeader("x-amz-lex-session-attributes") != null)
             postContentResult.setSessionAttributes(context
                     .getHeader("x-amz-lex-session-attributes"));
+        if (context.getHeader("x-amz-lex-sentiment") != null)
+            postContentResult.setSentimentResponse(context.getHeader("x-amz-lex-sentiment"));
         if (context.getHeader("x-amz-lex-message") != null)
             postContentResult.setMessage(context.getHeader("x-amz-lex-message"));
+        if (context.getHeader("x-amz-lex-encoded-message") != null)
+            postContentResult.setEncodedMessage(context.getHeader("x-amz-lex-encoded-message"));
         if (context.getHeader("x-amz-lex-message-format") != null)
             postContentResult.setMessageFormat(context.getHeader("x-amz-lex-message-format"));
         if (context.getHeader("x-amz-lex-dialog-state") != null)
@@ -48,12 +58,21 @@ public class PostContentResultJsonUnmarshaller implements
             postContentResult.setSlotToElicit(context.getHeader("x-amz-lex-slot-to-elicit"));
         if (context.getHeader("x-amz-lex-input-transcript") != null)
             postContentResult.setInputTranscript(context.getHeader("x-amz-lex-input-transcript"));
+        if (context.getHeader("x-amz-lex-encoded-input-transcript") != null)
+            postContentResult.setEncodedInputTranscript(context
+                    .getHeader("x-amz-lex-encoded-input-transcript"));
         java.io.InputStream is = context.getHttpResponse().getContent();
         if (is != null) {
             byte[] bytes = com.amazonaws.util.IOUtils.toByteArray(is);
             java.io.ByteArrayInputStream bis = new java.io.ByteArrayInputStream(bytes);
             postContentResult.setAudioStream(bis);
         }
+        if (context.getHeader("x-amz-lex-bot-version") != null)
+            postContentResult.setBotVersion(context.getHeader("x-amz-lex-bot-version"));
+        if (context.getHeader("x-amz-lex-session-id") != null)
+            postContentResult.setSessionId(context.getHeader("x-amz-lex-session-id"));
+        if (context.getHeader("x-amz-lex-active-contexts") != null)
+            postContentResult.setActiveContexts(context.getHeader("x-amz-lex-active-contexts"));
         return postContentResult;
     }
 

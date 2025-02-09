@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,35 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates the user import job.
+ * Creates a user import job.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class CreateUserImportJobRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -50,8 +77,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job.
+     * The role ARN for the Amazon CloudWatch Logs Logging role for the user
+     * import job.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -184,8 +211,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job.
+     * The role ARN for the Amazon CloudWatch Logs Logging role for the user
+     * import job.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -195,8 +222,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @return <p>
-     *         The role ARN for the Amazon CloudWatch Logging role for the user
-     *         import job.
+     *         The role ARN for the Amazon CloudWatch Logs Logging role for the
+     *         user import job.
      *         </p>
      */
     public String getCloudWatchLogsRoleArn() {
@@ -205,8 +232,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job.
+     * The role ARN for the Amazon CloudWatch Logs Logging role for the user
+     * import job.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -216,8 +243,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param cloudWatchLogsRoleArn <p>
-     *            The role ARN for the Amazon CloudWatch Logging role for the
-     *            user import job.
+     *            The role ARN for the Amazon CloudWatch Logs Logging role for
+     *            the user import job.
      *            </p>
      */
     public void setCloudWatchLogsRoleArn(String cloudWatchLogsRoleArn) {
@@ -226,8 +253,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job.
+     * The role ARN for the Amazon CloudWatch Logs Logging role for the user
+     * import job.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -240,8 +267,8 @@ public class CreateUserImportJobRequest extends AmazonWebServiceRequest implemen
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param cloudWatchLogsRoleArn <p>
-     *            The role ARN for the Amazon CloudWatch Logging role for the
-     *            user import job.
+     *            The role ARN for the Amazon CloudWatch Logs Logging role for
+     *            the user import job.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

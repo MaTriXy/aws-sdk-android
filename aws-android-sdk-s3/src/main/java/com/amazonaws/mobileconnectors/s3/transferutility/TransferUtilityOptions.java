@@ -15,6 +15,14 @@
 
 package com.amazonaws.mobileconnectors.s3.transferutility;
 
+import static com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility.DEFAULT_MINIMUM_UPLOAD_PART_SIZE_IN_BYTES;
+import static com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility.MAXIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES;
+import static com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility.MINIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES;
+
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
+import com.amazonaws.services.s3.internal.Constants;
+
 import java.io.Serializable;
 
 /**
@@ -25,7 +33,6 @@ import java.io.Serializable;
  * Create TransferUtilityOptions and pass it to {@link TransferUtility}.
  * 
  * TransferUtilityOptions tuOptions = new TransferUtilityOptions();
- * tuOptions.setTransferServiceCheckTimeInterval(5 * 60 * 1000); // Scan for unfinished transfers every 5 minutes.
  * tuOptions.setTransferThreadPoolSize(10); // 10 threads for upload and download operations.
  *
  * // Initializes TransferUtility
@@ -33,12 +40,14 @@ import java.io.Serializable;
  *     .builder()
  *     .s3Client(s3Client)
  *     .context(getApplicationContext())
- *     .transferUtilityConfiguration(tuConfig)
+ *     .transferUtilityConfiguration(tuOptions)
  *     .build();
  * </pre>
  *
  */
 public class TransferUtilityOptions implements Serializable {
+
+    private static final Log LOGGER = LogFactory.getLog(TransferUtilityOptions.class);
 
     /**
      * Default serial versionID.
@@ -64,6 +73,17 @@ public class TransferUtilityOptions implements Serializable {
      * Number of threads in the pool for the all the transfers.
      */
     private int transferThreadPoolSize;
+
+    /**
+     * Minimum part size for upload parts. Anything below this will use a
+     * single upload
+     */
+    private long minimumUploadPartSizeInBytes;
+
+    /**
+     * Type of connection to use for transfers.
+     */
+    protected TransferNetworkConnectionType transferNetworkConnectionType;
     
     /**
      * Constructor that sets the options to the
@@ -73,6 +93,24 @@ public class TransferUtilityOptions implements Serializable {
         super();
         this.transferServiceCheckTimeInterval = getDefaultCheckTimeInterval();
         this.transferThreadPoolSize = getDefaultThreadPoolSize();
+        this.transferNetworkConnectionType = getDefaultTransferNetworkConnectionType();
+        this.minimumUploadPartSizeInBytes = DEFAULT_MINIMUM_UPLOAD_PART_SIZE_IN_BYTES;
+    }
+
+    /**
+     * Constructor that sets the options to the
+     * default values.
+     *
+     * @param transferThreadPoolSize number of threads in the pool
+     * @param transferNetworkConnectionType type of network connection
+     */
+    public TransferUtilityOptions(int transferThreadPoolSize, 
+                                  TransferNetworkConnectionType transferNetworkConnectionType) {
+        super();
+        this.transferServiceCheckTimeInterval = getDefaultCheckTimeInterval();
+        this.transferThreadPoolSize = transferThreadPoolSize;
+        this.transferNetworkConnectionType = transferNetworkConnectionType;
+        this.minimumUploadPartSizeInBytes = DEFAULT_MINIMUM_UPLOAD_PART_SIZE_IN_BYTES;
     }
 
     /**
@@ -123,7 +161,16 @@ public class TransferUtilityOptions implements Serializable {
             this.transferThreadPoolSize = transferThreadPoolSize;
         }
     }
-    
+
+    /**
+     * Retrieve the transfer connection type.
+     *
+     * @return the TransferNetworkConnectionType
+     */
+    public TransferNetworkConnectionType getTransferNetworkConnectionType() {
+        return transferNetworkConnectionType;
+    }
+
     /**
      * Return the default thread pool size.
      * 
@@ -131,6 +178,49 @@ public class TransferUtilityOptions implements Serializable {
      */
     static int getDefaultThreadPoolSize() {
         return 2 * (Runtime.getRuntime().availableProcessors() + 1);
+    }
+
+    /**
+     * Retrieve minimum part size for upload parts in Bytes.
+     * @return the minimum upload part size in Bytes
+     */
+    protected long getMinimumUploadPartSizeInBytes() {
+        return minimumUploadPartSizeInBytes;
+    }
+
+    /**
+     * Retrieve minimum part size for upload parts in MB.
+     * @return the minimum upload part size in MB
+     */
+    public int getMinimumUploadPartSizeInMB() {
+        return (int) (minimumUploadPartSizeInBytes / Constants.MB);
+    }
+
+    /**
+     * Set the minimum part size in MB for upload parts.
+     * There maximum value allowed is 5GB. Anything higher will set minimum part size at a 5GB.
+     * There minimum value allowed is 5MB. Anything lower will set minimum part size at 5MB.
+     * @param minimumUploadPartSizeInMB the minimum part size to set in MB.
+     */
+    public void setMinimumUploadPartSizeInMB(final int minimumUploadPartSizeInMB) {
+        long minimumUploadPartSizeInBytes = minimumUploadPartSizeInMB * ((long) Constants.MB);
+        if (minimumUploadPartSizeInBytes > MAXIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES) {
+            LOGGER.warn(
+                    "The provided minimumUploadPartSize is greater than the maximum upload part " +
+                            "size limit. Setting upload part size to the maximum allowed value of"
+                            + (MINIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES / Constants.MB) + "MB."
+            );
+            this.minimumUploadPartSizeInBytes = MAXIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES;
+        } else if (minimumUploadPartSizeInBytes < MINIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES) {
+            LOGGER.warn(
+                    "The provided minimumUploadPartSize is less than the minimum upload part " +
+                            "size limit. Setting upload part size to the minimum allowed value of"
+                            + (MINIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES / Constants.MB) + "MB."
+            );
+            this.minimumUploadPartSizeInBytes = MINIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES;
+        } else {
+            this.minimumUploadPartSizeInBytes = minimumUploadPartSizeInBytes;
+        }
     }
 
     /**
@@ -144,5 +234,14 @@ public class TransferUtilityOptions implements Serializable {
     @Deprecated
     static long getDefaultCheckTimeInterval() {
         return 1 * MILLIS_IN_MINUTE;
+    }
+
+    /**
+     * Return the default connection type.
+     *
+     * @return The default connection type.
+     */
+    static TransferNetworkConnectionType getDefaultTransferNetworkConnectionType() {
+        return TransferNetworkConnectionType.ANY;
     }
 }

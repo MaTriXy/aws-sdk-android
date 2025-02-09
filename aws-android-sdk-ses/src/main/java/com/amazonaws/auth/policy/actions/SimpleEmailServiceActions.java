@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -150,6 +150,9 @@ public enum SimpleEmailServiceActions implements Action {
 
     /** Action for the ListVerifiedEmailAddresses operation. */
     ListVerifiedEmailAddresses("ses:ListVerifiedEmailAddresses"),
+
+    /** Action for the PutConfigurationSetDeliveryOptions operation. */
+    PutConfigurationSetDeliveryOptions("ses:PutConfigurationSetDeliveryOptions"),
 
     /** Action for the PutIdentityPolicy operation. */
     PutIdentityPolicy("ses:PutIdentityPolicy"),

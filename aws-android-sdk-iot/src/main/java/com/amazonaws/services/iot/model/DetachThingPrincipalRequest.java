@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,9 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Detaches the specified principal from the specified thing.
+ * Detaches the specified principal from the specified thing. A principal can be
+ * X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities
+ * or federated identities.
  * </p>
  * <note>
  * <p>
@@ -29,6 +31,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * to propagate.
  * </p>
  * </note>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >DetachThingPrincipal</a> action.
+ * </p>
  */
 public class DetachThingPrincipalRequest extends AmazonWebServiceRequest implements Serializable {
     /**

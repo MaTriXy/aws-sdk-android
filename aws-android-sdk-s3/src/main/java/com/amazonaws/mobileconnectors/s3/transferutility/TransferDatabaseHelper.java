@@ -22,8 +22,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 class TransferDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "awss3transfertable.db";
-    private static final int DATABASE_VERSION = 5;
 
+    // This represents the latest database version. Update this when
+    // the database is being upgraded.
+    private static final int DATABASE_VERSION = 6;
+
+    private final Context context;
     private int version;
 
     public TransferDatabaseHelper(Context context) {
@@ -32,6 +36,7 @@ class TransferDatabaseHelper extends SQLiteOpenHelper {
 
     public TransferDatabaseHelper(Context context, int version) {
         super(context, DATABASE_NAME, null, version);
+        this.context = context;
         this.version = version;
     }
 
@@ -45,4 +50,9 @@ class TransferDatabaseHelper extends SQLiteOpenHelper {
         TransferTable.onUpgrade(database, oldVersion, newVersion);
     }
 
+    @Override
+    public void onDowngrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        context.deleteDatabase(DATABASE_NAME);
+        onCreate(database);
+    }
 }

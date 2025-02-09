@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,18 +50,15 @@ public class GetFaceSearchResultJsonUnmarshaller implements
                         PersonMatchJsonUnmarshaller.getInstance()
                         )
                                 .unmarshall(context));
-            } else if (name.equals("BillableDurationSeconds")) {
-                getFaceSearchResult.setBillableDurationSeconds(IntegerJsonUnmarshaller
-                        .getInstance()
+            } else if (name.equals("JobId")) {
+                getFaceSearchResult.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("ErrorCode")) {
-                getFaceSearchResult.setErrorCode(StringJsonUnmarshaller.getInstance()
+            } else if (name.equals("Video")) {
+                getFaceSearchResult.setVideo(VideoJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("Warnings")) {
-                getFaceSearchResult.setWarnings(new ListUnmarshaller<Warning>(
-                        WarningJsonUnmarshaller.getInstance()
-                        )
-                                .unmarshall(context));
+            } else if (name.equals("JobTag")) {
+                getFaceSearchResult.setJobTag(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else {
                 reader.skipValue();
             }

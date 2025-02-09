@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,18 +51,15 @@ public class GetPersonTrackingResultJsonUnmarshaller implements
                         PersonDetectionJsonUnmarshaller.getInstance()
                         )
                                 .unmarshall(context));
-            } else if (name.equals("BillableDurationSeconds")) {
-                getPersonTrackingResult.setBillableDurationSeconds(IntegerJsonUnmarshaller
-                        .getInstance()
+            } else if (name.equals("JobId")) {
+                getPersonTrackingResult.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("ErrorCode")) {
-                getPersonTrackingResult.setErrorCode(StringJsonUnmarshaller.getInstance()
+            } else if (name.equals("Video")) {
+                getPersonTrackingResult.setVideo(VideoJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("Warnings")) {
-                getPersonTrackingResult.setWarnings(new ListUnmarshaller<Warning>(
-                        WarningJsonUnmarshaller.getInstance()
-                        )
-                                .unmarshall(context));
+            } else if (name.equals("JobTag")) {
+                getPersonTrackingResult.setJobTag(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else {
                 reader.skipValue();
             }

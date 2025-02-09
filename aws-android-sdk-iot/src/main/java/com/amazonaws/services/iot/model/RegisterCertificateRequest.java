@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,16 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Registers a device certificate with AWS IoT. If you have more than one CA
+ * Registers a device certificate with IoT in the same <a href=
+ * "https://docs.aws.amazon.com/iot/latest/apireference/API_CertificateDescription.html#iot-Type-CertificateDescription-certificateMode"
+ * >certificate mode</a> as the signing CA. If you have more than one CA
  * certificate that has the same subject field, you must specify the CA
  * certificate that was used to sign the device certificate being registered.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >RegisterCertificate</a> action.
  * </p>
  */
 public class RegisterCertificateRequest extends AmazonWebServiceRequest implements Serializable {
@@ -34,6 +41,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String certificatePem;
 
@@ -44,19 +52,25 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String caCertificatePem;
 
     /**
      * <p>
-     * A boolean value that specifies if the CA certificate is set to active.
+     * A boolean value that specifies if the certificate is set to active.
+     * </p>
+     * <p>
+     * Valid values: <code>ACTIVE | INACTIVE</code>
      * </p>
      */
     private Boolean setAsActive;
 
     /**
      * <p>
-     * The status of the register certificate request.
+     * The status of the register certificate request. Valid values that you can
+     * use include <code>ACTIVE</code>, <code>INACTIVE</code>, and
+     * <code>REVOKED</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -72,6 +86,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The certificate data, in PEM format.
@@ -88,6 +103,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param certificatePem <p>
      *            The certificate data, in PEM format.
@@ -107,6 +123,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param certificatePem <p>
      *            The certificate data, in PEM format.
@@ -126,6 +143,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The CA certificate used to sign the device certificate being
@@ -143,6 +161,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param caCertificatePem <p>
      *            The CA certificate used to sign the device certificate being
@@ -163,6 +182,7 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 65536<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param caCertificatePem <p>
      *            The CA certificate used to sign the device certificate being
@@ -178,12 +198,18 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * A boolean value that specifies if the CA certificate is set to active.
+     * A boolean value that specifies if the certificate is set to active.
+     * </p>
+     * <p>
+     * Valid values: <code>ACTIVE | INACTIVE</code>
      * </p>
      *
      * @return <p>
-     *         A boolean value that specifies if the CA certificate is set to
+     *         A boolean value that specifies if the certificate is set to
      *         active.
+     *         </p>
+     *         <p>
+     *         Valid values: <code>ACTIVE | INACTIVE</code>
      *         </p>
      */
     public Boolean isSetAsActive() {
@@ -192,12 +218,18 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * A boolean value that specifies if the CA certificate is set to active.
+     * A boolean value that specifies if the certificate is set to active.
+     * </p>
+     * <p>
+     * Valid values: <code>ACTIVE | INACTIVE</code>
      * </p>
      *
      * @return <p>
-     *         A boolean value that specifies if the CA certificate is set to
+     *         A boolean value that specifies if the certificate is set to
      *         active.
+     *         </p>
+     *         <p>
+     *         Valid values: <code>ACTIVE | INACTIVE</code>
      *         </p>
      */
     public Boolean getSetAsActive() {
@@ -206,12 +238,18 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * A boolean value that specifies if the CA certificate is set to active.
+     * A boolean value that specifies if the certificate is set to active.
+     * </p>
+     * <p>
+     * Valid values: <code>ACTIVE | INACTIVE</code>
      * </p>
      *
      * @param setAsActive <p>
-     *            A boolean value that specifies if the CA certificate is set to
+     *            A boolean value that specifies if the certificate is set to
      *            active.
+     *            </p>
+     *            <p>
+     *            Valid values: <code>ACTIVE | INACTIVE</code>
      *            </p>
      */
     public void setSetAsActive(Boolean setAsActive) {
@@ -220,15 +258,21 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * A boolean value that specifies if the CA certificate is set to active.
+     * A boolean value that specifies if the certificate is set to active.
+     * </p>
+     * <p>
+     * Valid values: <code>ACTIVE | INACTIVE</code>
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param setAsActive <p>
-     *            A boolean value that specifies if the CA certificate is set to
+     *            A boolean value that specifies if the certificate is set to
      *            active.
+     *            </p>
+     *            <p>
+     *            Valid values: <code>ACTIVE | INACTIVE</code>
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -240,7 +284,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The status of the register certificate request.
+     * The status of the register certificate request. Valid values that you can
+     * use include <code>ACTIVE</code>, <code>INACTIVE</code>, and
+     * <code>REVOKED</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -248,7 +294,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * REGISTER_INACTIVE, PENDING_ACTIVATION
      *
      * @return <p>
-     *         The status of the register certificate request.
+     *         The status of the register certificate request. Valid values that
+     *         you can use include <code>ACTIVE</code>, <code>INACTIVE</code>,
+     *         and <code>REVOKED</code>.
      *         </p>
      * @see CertificateStatus
      */
@@ -258,7 +306,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The status of the register certificate request.
+     * The status of the register certificate request. Valid values that you can
+     * use include <code>ACTIVE</code>, <code>INACTIVE</code>, and
+     * <code>REVOKED</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -266,7 +316,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * REGISTER_INACTIVE, PENDING_ACTIVATION
      *
      * @param status <p>
-     *            The status of the register certificate request.
+     *            The status of the register certificate request. Valid values
+     *            that you can use include <code>ACTIVE</code>,
+     *            <code>INACTIVE</code>, and <code>REVOKED</code>.
      *            </p>
      * @see CertificateStatus
      */
@@ -276,7 +328,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The status of the register certificate request.
+     * The status of the register certificate request. Valid values that you can
+     * use include <code>ACTIVE</code>, <code>INACTIVE</code>, and
+     * <code>REVOKED</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -287,7 +341,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * REGISTER_INACTIVE, PENDING_ACTIVATION
      *
      * @param status <p>
-     *            The status of the register certificate request.
+     *            The status of the register certificate request. Valid values
+     *            that you can use include <code>ACTIVE</code>,
+     *            <code>INACTIVE</code>, and <code>REVOKED</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -300,7 +356,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The status of the register certificate request.
+     * The status of the register certificate request. Valid values that you can
+     * use include <code>ACTIVE</code>, <code>INACTIVE</code>, and
+     * <code>REVOKED</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -308,7 +366,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * REGISTER_INACTIVE, PENDING_ACTIVATION
      *
      * @param status <p>
-     *            The status of the register certificate request.
+     *            The status of the register certificate request. Valid values
+     *            that you can use include <code>ACTIVE</code>,
+     *            <code>INACTIVE</code>, and <code>REVOKED</code>.
      *            </p>
      * @see CertificateStatus
      */
@@ -318,7 +378,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The status of the register certificate request.
+     * The status of the register certificate request. Valid values that you can
+     * use include <code>ACTIVE</code>, <code>INACTIVE</code>, and
+     * <code>REVOKED</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -329,7 +391,9 @@ public class RegisterCertificateRequest extends AmazonWebServiceRequest implemen
      * REGISTER_INACTIVE, PENDING_ACTIVATION
      *
      * @param status <p>
-     *            The status of the register certificate request.
+     *            The status of the register certificate request. Valid values
+     *            that you can use include <code>ACTIVE</code>,
+     *            <code>INACTIVE</code>, and <code>REVOKED</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

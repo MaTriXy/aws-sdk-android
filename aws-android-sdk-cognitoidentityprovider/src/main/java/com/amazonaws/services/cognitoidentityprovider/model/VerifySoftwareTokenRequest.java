@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,15 +21,28 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Use this API to register a user's entered TOTP code and mark the user's
- * software token MFA status as "verified" if successful. The request takes an
- * access token or a session string, but not both.
+ * Use this API to register a user's entered time-based one-time password (TOTP)
+ * code and mark the user's software token MFA status as "verified" if
+ * successful. The request takes an access token or a session string, but not
+ * both.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
+ * in requests for this API operation. For this operation, you can't use IAM
+ * credentials to authorize requests, and you can't grant IAM permissions in
+ * policies. For more information about authorization models in Amazon Cognito,
+ * see <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito native and OIDC APIs</a>.
+ * </p>
+ * </note>
  */
 public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose
+     * software token you want to verify.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -39,7 +52,7 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
+     * The session that should be passed both ways in challenge-response calls
      * to the service.
      * </p>
      * <p>
@@ -50,7 +63,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The one time password computed using the secret code returned by
+     * The one- time password computed using the secret code returned by <a
+     * href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     * >AssociateSoftwareToken</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -63,19 +79,24 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <p>
      * The friendly device name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String friendlyDeviceName;
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose
+     * software token you want to verify.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @return <p>
-     *         The access token.
+     *         A valid access token that Amazon Cognito issued to the user whose
+     *         software token you want to verify.
      *         </p>
      */
     public String getAccessToken() {
@@ -84,14 +105,16 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose
+     * software token you want to verify.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @param accessToken <p>
-     *            The access token.
+     *            A valid access token that Amazon Cognito issued to the user
+     *            whose software token you want to verify.
      *            </p>
      */
     public void setAccessToken(String accessToken) {
@@ -100,7 +123,8 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose
+     * software token you want to verify.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -110,7 +134,8 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @param accessToken <p>
-     *            The access token.
+     *            A valid access token that Amazon Cognito issued to the user
+     *            whose software token you want to verify.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -122,7 +147,7 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
+     * The session that should be passed both ways in challenge-response calls
      * to the service.
      * </p>
      * <p>
@@ -130,8 +155,8 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         The session which should be passed both ways in
-     *         challenge-response calls to the service.
+     *         The session that should be passed both ways in challenge-response
+     *         calls to the service.
      *         </p>
      */
     public String getSession() {
@@ -140,7 +165,7 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
+     * The session that should be passed both ways in challenge-response calls
      * to the service.
      * </p>
      * <p>
@@ -148,7 +173,7 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
+     *            The session that should be passed both ways in
      *            challenge-response calls to the service.
      *            </p>
      */
@@ -158,7 +183,7 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
+     * The session that should be passed both ways in challenge-response calls
      * to the service.
      * </p>
      * <p>
@@ -169,7 +194,7 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
+     *            The session that should be passed both ways in
      *            challenge-response calls to the service.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -182,7 +207,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The one time password computed using the secret code returned by
+     * The one- time password computed using the secret code returned by <a
+     * href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     * >AssociateSoftwareToken</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -190,7 +218,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>[0-9]+<br/>
      *
      * @return <p>
-     *         The one time password computed using the secret code returned by
+     *         The one- time password computed using the secret code returned by
+     *         <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     *         >AssociateSoftwareToken</a>.
      *         </p>
      */
     public String getUserCode() {
@@ -199,7 +230,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The one time password computed using the secret code returned by
+     * The one- time password computed using the secret code returned by <a
+     * href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     * >AssociateSoftwareToken</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -207,8 +241,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param userCode <p>
-     *            The one time password computed using the secret code returned
-     *            by
+     *            The one- time password computed using the secret code returned
+     *            by <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     *            >AssociateSoftwareToken</a>.
      *            </p>
      */
     public void setUserCode(String userCode) {
@@ -217,7 +253,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The one time password computed using the secret code returned by
+     * The one- time password computed using the secret code returned by <a
+     * href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     * >AssociateSoftwareToken</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -228,8 +267,10 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>[0-9]+<br/>
      *
      * @param userCode <p>
-     *            The one time password computed using the secret code returned
-     *            by
+     *            The one- time password computed using the secret code returned
+     *            by <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html"
+     *            >AssociateSoftwareToken</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -243,6 +284,9 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <p>
      * The friendly device name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The friendly device name.
@@ -256,6 +300,9 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <p>
      * The friendly device name.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param friendlyDeviceName <p>
      *            The friendly device name.
@@ -272,6 +319,9 @@ public class VerifySoftwareTokenRequest extends AmazonWebServiceRequest implemen
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param friendlyDeviceName <p>
      *            The friendly device name.

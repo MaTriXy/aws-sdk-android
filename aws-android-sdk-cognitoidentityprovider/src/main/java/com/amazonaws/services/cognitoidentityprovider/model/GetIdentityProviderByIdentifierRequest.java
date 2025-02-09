@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Gets the specified identity provider.
+ * Gets the specified IdP.
  * </p>
  */
 public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequest implements
@@ -39,7 +39,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
 
     /**
      * <p>
-     * The identity provider ID.
+     * The IdP identifier.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -107,7 +107,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
 
     /**
      * <p>
-     * The identity provider ID.
+     * The IdP identifier.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -115,7 +115,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
      * <b>Pattern: </b>[\w\s+=.@-]+<br/>
      *
      * @return <p>
-     *         The identity provider ID.
+     *         The IdP identifier.
      *         </p>
      */
     public String getIdpIdentifier() {
@@ -124,7 +124,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
 
     /**
      * <p>
-     * The identity provider ID.
+     * The IdP identifier.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -132,7 +132,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
      * <b>Pattern: </b>[\w\s+=.@-]+<br/>
      *
      * @param idpIdentifier <p>
-     *            The identity provider ID.
+     *            The IdP identifier.
      *            </p>
      */
     public void setIdpIdentifier(String idpIdentifier) {
@@ -141,7 +141,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
 
     /**
      * <p>
-     * The identity provider ID.
+     * The IdP identifier.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -152,7 +152,7 @@ public class GetIdentityProviderByIdentifierRequest extends AmazonWebServiceRequ
      * <b>Pattern: </b>[\w\s+=.@-]+<br/>
      *
      * @param idpIdentifier <p>
-     *            The identity provider ID.
+     *            The IdP identifier.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

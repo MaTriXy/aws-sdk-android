@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,10 +51,40 @@ public class GetFederationTokenRequestMarshaller implements
             String policy = getFederationTokenRequest.getPolicy();
             request.addParameter(prefix, StringUtils.fromString(policy));
         }
+        if (getFederationTokenRequest.getPolicyArns() != null) {
+            prefix = "PolicyArns";
+            java.util.List<PolicyDescriptorType> policyArns = getFederationTokenRequest
+                    .getPolicyArns();
+            int policyArnsIndex = 1;
+            String policyArnsPrefix = prefix;
+            for (PolicyDescriptorType policyArnsItem : policyArns) {
+                prefix = policyArnsPrefix + ".member." + policyArnsIndex;
+                if (policyArnsItem != null) {
+                    PolicyDescriptorTypeStaxMarshaller.getInstance().marshall(policyArnsItem,
+                            request, prefix + ".");
+                }
+                policyArnsIndex++;
+            }
+            prefix = policyArnsPrefix;
+        }
         if (getFederationTokenRequest.getDurationSeconds() != null) {
             prefix = "DurationSeconds";
             Integer durationSeconds = getFederationTokenRequest.getDurationSeconds();
             request.addParameter(prefix, StringUtils.fromInteger(durationSeconds));
+        }
+        if (getFederationTokenRequest.getTags() != null) {
+            prefix = "Tags";
+            java.util.List<Tag> tags = getFederationTokenRequest.getTags();
+            int tagsIndex = 1;
+            String tagsPrefix = prefix;
+            for (Tag tagsItem : tags) {
+                prefix = tagsPrefix + ".member." + tagsIndex;
+                if (tagsItem != null) {
+                    TagStaxMarshaller.getInstance().marshall(tagsItem, request, prefix + ".");
+                }
+                tagsIndex++;
+            }
+            prefix = tagsPrefix;
         }
 
         return request;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,6 +60,22 @@ public class AssumeRoleWithWebIdentityRequestMarshaller implements
             prefix = "ProviderId";
             String providerId = assumeRoleWithWebIdentityRequest.getProviderId();
             request.addParameter(prefix, StringUtils.fromString(providerId));
+        }
+        if (assumeRoleWithWebIdentityRequest.getPolicyArns() != null) {
+            prefix = "PolicyArns";
+            java.util.List<PolicyDescriptorType> policyArns = assumeRoleWithWebIdentityRequest
+                    .getPolicyArns();
+            int policyArnsIndex = 1;
+            String policyArnsPrefix = prefix;
+            for (PolicyDescriptorType policyArnsItem : policyArns) {
+                prefix = policyArnsPrefix + ".member." + policyArnsIndex;
+                if (policyArnsItem != null) {
+                    PolicyDescriptorTypeStaxMarshaller.getInstance().marshall(policyArnsItem,
+                            request, prefix + ".");
+                }
+                policyArnsIndex++;
+            }
+            prefix = policyArnsPrefix;
         }
         if (assumeRoleWithWebIdentityRequest.getPolicy() != null) {
             prefix = "Policy";

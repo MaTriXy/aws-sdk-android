@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,12 +21,17 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates an AWS IoT policy.
+ * Creates an IoT policy.
  * </p>
  * <p>
  * The created policy is the default version for the policy. This operation
  * creates a policy version with a version identifier of <b>1</b> and sets
  * <b>1</b> as the policy's default version.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreatePolicy</a> action.
  * </p>
  */
 public class CreatePolicyRequest extends AmazonWebServiceRequest implements Serializable {
@@ -47,8 +52,32 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
      * have a minimum length of 1, with a maximum length of 2048, excluding
      * whitespace.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String policyDocument;
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the policy.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
@@ -113,6 +142,10 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
      * have a minimum length of 1, with a maximum length of 2048, excluding
      * whitespace.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The JSON document that describes the policy.
@@ -130,6 +163,10 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
      * have a minimum length of 1, with a maximum length of 2048, excluding
      * whitespace.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param policyDocument <p>
      *            The JSON document that describes the policy.
@@ -150,6 +187,10 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param policyDocument <p>
      *            The JSON document that describes the policy.
@@ -161,6 +202,188 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
      */
     public CreatePolicyRequest withPolicyDocument(String policyDocument) {
         this.policyDocument = policyDocument;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the policy.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @return <p>
+     *         Metadata which can be used to manage the policy.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         For URI Request parameters use format:
+     *         ...key1=value1&amp;key2=value2...
+     *         </p>
+     *         <p>
+     *         For the CLI command-line parameter use format: &amp;&amp;tags
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         <p>
+     *         For the cli-input-json file use format: "tags":
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         </note>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the policy.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the policy.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the policy.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the policy.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreatePolicyRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the policy.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the policy.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreatePolicyRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
         return this;
     }
 
@@ -178,7 +401,9 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
         if (getPolicyName() != null)
             sb.append("policyName: " + getPolicyName() + ",");
         if (getPolicyDocument() != null)
-            sb.append("policyDocument: " + getPolicyDocument());
+            sb.append("policyDocument: " + getPolicyDocument() + ",");
+        if (getTags() != null)
+            sb.append("tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -191,6 +416,7 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
         hashCode = prime * hashCode + ((getPolicyName() == null) ? 0 : getPolicyName().hashCode());
         hashCode = prime * hashCode
                 + ((getPolicyDocument() == null) ? 0 : getPolicyDocument().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -214,6 +440,10 @@ public class CreatePolicyRequest extends AmazonWebServiceRequest implements Seri
             return false;
         if (other.getPolicyDocument() != null
                 && other.getPolicyDocument().equals(this.getPolicyDocument()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

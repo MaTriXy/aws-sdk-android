@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,25 +21,36 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Sends a message to all of a topic's subscribed endpoints. When a
- * <code>messageId</code> is returned, the message has been saved and Amazon SNS
- * will attempt to deliver it to the topic's subscribers shortly. The format of
- * the outgoing message to each subscribed endpoint depends on the notification
- * protocol.
+ * Sends a message to an Amazon SNS topic, a text message (SMS message) directly
+ * to a phone number, or a message to a mobile platform endpoint (when you
+ * specify the <code>TargetArn</code>).
  * </p>
  * <p>
- * To use the <code>Publish</code> action for sending a message to a mobile
+ * If you send a message to a topic, Amazon SNS delivers the message to each
+ * endpoint that is subscribed to the topic. The format of the message depends
+ * on the notification protocol for each subscribed endpoint.
+ * </p>
+ * <p>
+ * When a <code>messageId</code> is returned, the message is saved and Amazon
+ * SNS immediately delivers it to subscribers.
+ * </p>
+ * <p>
+ * To use the <code>Publish</code> action for publishing a message to a mobile
  * endpoint, such as an app on a Kindle device or mobile phone, you must specify
  * the EndpointArn for the TargetArn parameter. The EndpointArn is returned when
- * making a call with the <code>CreatePlatformEndpoint</code> action. The second
- * example below shows a request and response for publishing to a mobile
- * endpoint.
+ * making a call with the <code>CreatePlatformEndpoint</code> action.
  * </p>
  * <p>
  * For more information about formatting messages, see <a href=
- * "http://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-custommessage.html"
+ * "https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send-custommessage.html"
  * >Send Custom Platform-Specific Payloads in Messages to Mobile Devices</a>.
  * </p>
+ * <important>
+ * <p>
+ * You can publish messages only to topics and endpoints in the same Amazon Web
+ * Services Region.
+ * </p>
+ * </important>
  */
 public class PublishRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -55,9 +66,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
     private String topicArn;
 
     /**
-     * <p>
-     * Either TopicArn or EndpointArn, but not both.
-     * </p>
      * <p>
      * If you don't specify a value for the <code>TargetArn</code> parameter,
      * you must specify a value for the <code>PhoneNumber</code> or
@@ -81,22 +89,45 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The message you want to send to the topic.
+     * The message you want to send.
      * </p>
      * <p>
-     * If you want to send the same message to all transport protocols, include
-     * the text of the message as a String value.
-     * </p>
-     * <p>
-     * If you want to send different messages for each transport protocol, set
-     * the value of the <code>MessageStructure</code> parameter to
+     * If you are publishing to a topic and you want to send the same message to
+     * all transport protocols, include the text of the message as a String
+     * value. If you want to send different messages for each transport
+     * protocol, set the value of the <code>MessageStructure</code> parameter to
      * <code>json</code> and use a JSON object for the <code>Message</code>
-     * parameter. See the Examples section for the format of the JSON object.
+     * parameter.
+     * </p>
+     * <p/>
+     * <p>
+     * Constraints:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * With the exception of SMS, messages must be UTF-8 encoded strings and at
+     * most 256 KB in size (262,144 bytes, not 262,144 characters).
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For SMS, each message can contain up to 140 characters. This character
+     * limit depends on the encoding schema. For example, an SMS message can
+     * contain 160 GSM characters, 140 ASCII characters, or 70 UCS-2 characters.
      * </p>
      * <p>
-     * Constraints: Messages must be UTF-8 encoded strings at most 256 KB in
-     * size (262144 bytes, not 262144 characters).
+     * If you publish a message that exceeds this size limit, Amazon SNS sends
+     * the message as multiple messages, each fitting within the size limit.
+     * Messages aren't truncated mid-word but are cut off at whole-word
+     * boundaries.
      * </p>
+     * <p>
+     * The total size limit for a single SMS <code>Publish</code> action is
+     * 1,600 characters.
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * JSON-specific constraints:
      * </p>
@@ -196,13 +227,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * send to a specific transport protocol (e.g., "http").
      * </p>
      * <p>
-     * For information about sending different messages for each protocol using
-     * the AWS Management Console, go to <a href=
-     * "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     * >Create Different Messages for Each Protocol</a> in the <i>Amazon Simple
-     * Notification Service Getting Started Guide</i>.
-     * </p>
-     * <p>
      * Valid value: <code>json</code>
      * </p>
      */
@@ -214,6 +238,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * </p>
      */
     private java.util.Map<String, MessageAttributeValue> messageAttributes = new java.util.HashMap<String, MessageAttributeValue>();
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     */
+    private String messageDeduplicationId;
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     */
+    private String messageGroupId;
 
     /**
      * Default constructor for PublishRequest object. Callers should use the
@@ -237,23 +302,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      *            <code>PhoneNumber</code> or <code>TargetArn</code> parameters.
      *            </p>
      * @param message <p>
-     *            The message you want to send to the topic.
+     *            The message you want to send.
      *            </p>
      *            <p>
-     *            If you want to send the same message to all transport
-     *            protocols, include the text of the message as a String value.
+     *            If you are publishing to a topic and you want to send the same
+     *            message to all transport protocols, include the text of the
+     *            message as a String value. If you want to send different
+     *            messages for each transport protocol, set the value of the
+     *            <code>MessageStructure</code> parameter to <code>json</code>
+     *            and use a JSON object for the <code>Message</code> parameter.
+     *            </p>
+     *            <p/>
+     *            <p>
+     *            Constraints:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            With the exception of SMS, messages must be UTF-8 encoded
+     *            strings and at most 256 KB in size (262,144 bytes, not 262,144
+     *            characters).
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For SMS, each message can contain up to 140 characters. This
+     *            character limit depends on the encoding schema. For example,
+     *            an SMS message can contain 160 GSM characters, 140 ASCII
+     *            characters, or 70 UCS-2 characters.
      *            </p>
      *            <p>
-     *            If you want to send different messages for each transport
-     *            protocol, set the value of the <code>MessageStructure</code>
-     *            parameter to <code>json</code> and use a JSON object for the
-     *            <code>Message</code> parameter. See the Examples section for
-     *            the format of the JSON object.
+     *            If you publish a message that exceeds this size limit, Amazon
+     *            SNS sends the message as multiple messages, each fitting
+     *            within the size limit. Messages aren't truncated mid-word but
+     *            are cut off at whole-word boundaries.
      *            </p>
      *            <p>
-     *            Constraints: Messages must be UTF-8 encoded strings at most
-     *            256 KB in size (262144 bytes, not 262144 characters).
+     *            The total size limit for a single SMS <code>Publish</code>
+     *            action is 1,600 characters.
      *            </p>
+     *            </li>
+     *            </ul>
      *            <p>
      *            JSON-specific constraints:
      *            </p>
@@ -333,23 +422,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      *            <code>PhoneNumber</code> or <code>TargetArn</code> parameters.
      *            </p>
      * @param message <p>
-     *            The message you want to send to the topic.
+     *            The message you want to send.
      *            </p>
      *            <p>
-     *            If you want to send the same message to all transport
-     *            protocols, include the text of the message as a String value.
+     *            If you are publishing to a topic and you want to send the same
+     *            message to all transport protocols, include the text of the
+     *            message as a String value. If you want to send different
+     *            messages for each transport protocol, set the value of the
+     *            <code>MessageStructure</code> parameter to <code>json</code>
+     *            and use a JSON object for the <code>Message</code> parameter.
+     *            </p>
+     *            <p/>
+     *            <p>
+     *            Constraints:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            With the exception of SMS, messages must be UTF-8 encoded
+     *            strings and at most 256 KB in size (262,144 bytes, not 262,144
+     *            characters).
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For SMS, each message can contain up to 140 characters. This
+     *            character limit depends on the encoding schema. For example,
+     *            an SMS message can contain 160 GSM characters, 140 ASCII
+     *            characters, or 70 UCS-2 characters.
      *            </p>
      *            <p>
-     *            If you want to send different messages for each transport
-     *            protocol, set the value of the <code>MessageStructure</code>
-     *            parameter to <code>json</code> and use a JSON object for the
-     *            <code>Message</code> parameter. See the Examples section for
-     *            the format of the JSON object.
+     *            If you publish a message that exceeds this size limit, Amazon
+     *            SNS sends the message as multiple messages, each fitting
+     *            within the size limit. Messages aren't truncated mid-word but
+     *            are cut off at whole-word boundaries.
      *            </p>
      *            <p>
-     *            Constraints: Messages must be UTF-8 encoded strings at most
-     *            256 KB in size (262144 bytes, not 262144 characters).
+     *            The total size limit for a single SMS <code>Publish</code>
+     *            action is 1,600 characters.
      *            </p>
+     *            </li>
+     *            </ul>
      *            <p>
      *            JSON-specific constraints:
      *            </p>
@@ -505,18 +618,12 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * Either TopicArn or EndpointArn, but not both.
-     * </p>
-     * <p>
      * If you don't specify a value for the <code>TargetArn</code> parameter,
      * you must specify a value for the <code>PhoneNumber</code> or
      * <code>TopicArn</code> parameters.
      * </p>
      *
      * @return <p>
-     *         Either TopicArn or EndpointArn, but not both.
-     *         </p>
-     *         <p>
      *         If you don't specify a value for the <code>TargetArn</code>
      *         parameter, you must specify a value for the
      *         <code>PhoneNumber</code> or <code>TopicArn</code> parameters.
@@ -528,18 +635,12 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * Either TopicArn or EndpointArn, but not both.
-     * </p>
-     * <p>
      * If you don't specify a value for the <code>TargetArn</code> parameter,
      * you must specify a value for the <code>PhoneNumber</code> or
      * <code>TopicArn</code> parameters.
      * </p>
      *
      * @param targetArn <p>
-     *            Either TopicArn or EndpointArn, but not both.
-     *            </p>
-     *            <p>
      *            If you don't specify a value for the <code>TargetArn</code>
      *            parameter, you must specify a value for the
      *            <code>PhoneNumber</code> or <code>TopicArn</code> parameters.
@@ -551,9 +652,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * Either TopicArn or EndpointArn, but not both.
-     * </p>
-     * <p>
      * If you don't specify a value for the <code>TargetArn</code> parameter,
      * you must specify a value for the <code>PhoneNumber</code> or
      * <code>TopicArn</code> parameters.
@@ -563,9 +661,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * together.
      *
      * @param targetArn <p>
-     *            Either TopicArn or EndpointArn, but not both.
-     *            </p>
-     *            <p>
      *            If you don't specify a value for the <code>TargetArn</code>
      *            parameter, you must specify a value for the
      *            <code>PhoneNumber</code> or <code>TopicArn</code> parameters.
@@ -661,22 +756,45 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The message you want to send to the topic.
+     * The message you want to send.
      * </p>
      * <p>
-     * If you want to send the same message to all transport protocols, include
-     * the text of the message as a String value.
-     * </p>
-     * <p>
-     * If you want to send different messages for each transport protocol, set
-     * the value of the <code>MessageStructure</code> parameter to
+     * If you are publishing to a topic and you want to send the same message to
+     * all transport protocols, include the text of the message as a String
+     * value. If you want to send different messages for each transport
+     * protocol, set the value of the <code>MessageStructure</code> parameter to
      * <code>json</code> and use a JSON object for the <code>Message</code>
-     * parameter. See the Examples section for the format of the JSON object.
+     * parameter.
+     * </p>
+     * <p/>
+     * <p>
+     * Constraints:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * With the exception of SMS, messages must be UTF-8 encoded strings and at
+     * most 256 KB in size (262,144 bytes, not 262,144 characters).
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For SMS, each message can contain up to 140 characters. This character
+     * limit depends on the encoding schema. For example, an SMS message can
+     * contain 160 GSM characters, 140 ASCII characters, or 70 UCS-2 characters.
      * </p>
      * <p>
-     * Constraints: Messages must be UTF-8 encoded strings at most 256 KB in
-     * size (262144 bytes, not 262144 characters).
+     * If you publish a message that exceeds this size limit, Amazon SNS sends
+     * the message as multiple messages, each fitting within the size limit.
+     * Messages aren't truncated mid-word but are cut off at whole-word
+     * boundaries.
      * </p>
+     * <p>
+     * The total size limit for a single SMS <code>Publish</code> action is
+     * 1,600 characters.
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * JSON-specific constraints:
      * </p>
@@ -734,23 +852,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * </ul>
      *
      * @return <p>
-     *         The message you want to send to the topic.
+     *         The message you want to send.
      *         </p>
      *         <p>
-     *         If you want to send the same message to all transport protocols,
-     *         include the text of the message as a String value.
+     *         If you are publishing to a topic and you want to send the same
+     *         message to all transport protocols, include the text of the
+     *         message as a String value. If you want to send different messages
+     *         for each transport protocol, set the value of the
+     *         <code>MessageStructure</code> parameter to <code>json</code> and
+     *         use a JSON object for the <code>Message</code> parameter.
+     *         </p>
+     *         <p/>
+     *         <p>
+     *         Constraints:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         With the exception of SMS, messages must be UTF-8 encoded strings
+     *         and at most 256 KB in size (262,144 bytes, not 262,144
+     *         characters).
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For SMS, each message can contain up to 140 characters. This
+     *         character limit depends on the encoding schema. For example, an
+     *         SMS message can contain 160 GSM characters, 140 ASCII characters,
+     *         or 70 UCS-2 characters.
      *         </p>
      *         <p>
-     *         If you want to send different messages for each transport
-     *         protocol, set the value of the <code>MessageStructure</code>
-     *         parameter to <code>json</code> and use a JSON object for the
-     *         <code>Message</code> parameter. See the Examples section for the
-     *         format of the JSON object.
+     *         If you publish a message that exceeds this size limit, Amazon SNS
+     *         sends the message as multiple messages, each fitting within the
+     *         size limit. Messages aren't truncated mid-word but are cut off at
+     *         whole-word boundaries.
      *         </p>
      *         <p>
-     *         Constraints: Messages must be UTF-8 encoded strings at most 256
-     *         KB in size (262144 bytes, not 262144 characters).
+     *         The total size limit for a single SMS <code>Publish</code> action
+     *         is 1,600 characters.
      *         </p>
+     *         </li>
+     *         </ul>
      *         <p>
      *         JSON-specific constraints:
      *         </p>
@@ -816,22 +958,45 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The message you want to send to the topic.
+     * The message you want to send.
      * </p>
      * <p>
-     * If you want to send the same message to all transport protocols, include
-     * the text of the message as a String value.
-     * </p>
-     * <p>
-     * If you want to send different messages for each transport protocol, set
-     * the value of the <code>MessageStructure</code> parameter to
+     * If you are publishing to a topic and you want to send the same message to
+     * all transport protocols, include the text of the message as a String
+     * value. If you want to send different messages for each transport
+     * protocol, set the value of the <code>MessageStructure</code> parameter to
      * <code>json</code> and use a JSON object for the <code>Message</code>
-     * parameter. See the Examples section for the format of the JSON object.
+     * parameter.
+     * </p>
+     * <p/>
+     * <p>
+     * Constraints:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * With the exception of SMS, messages must be UTF-8 encoded strings and at
+     * most 256 KB in size (262,144 bytes, not 262,144 characters).
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For SMS, each message can contain up to 140 characters. This character
+     * limit depends on the encoding schema. For example, an SMS message can
+     * contain 160 GSM characters, 140 ASCII characters, or 70 UCS-2 characters.
      * </p>
      * <p>
-     * Constraints: Messages must be UTF-8 encoded strings at most 256 KB in
-     * size (262144 bytes, not 262144 characters).
+     * If you publish a message that exceeds this size limit, Amazon SNS sends
+     * the message as multiple messages, each fitting within the size limit.
+     * Messages aren't truncated mid-word but are cut off at whole-word
+     * boundaries.
      * </p>
+     * <p>
+     * The total size limit for a single SMS <code>Publish</code> action is
+     * 1,600 characters.
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * JSON-specific constraints:
      * </p>
@@ -889,23 +1054,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * </ul>
      *
      * @param message <p>
-     *            The message you want to send to the topic.
+     *            The message you want to send.
      *            </p>
      *            <p>
-     *            If you want to send the same message to all transport
-     *            protocols, include the text of the message as a String value.
+     *            If you are publishing to a topic and you want to send the same
+     *            message to all transport protocols, include the text of the
+     *            message as a String value. If you want to send different
+     *            messages for each transport protocol, set the value of the
+     *            <code>MessageStructure</code> parameter to <code>json</code>
+     *            and use a JSON object for the <code>Message</code> parameter.
+     *            </p>
+     *            <p/>
+     *            <p>
+     *            Constraints:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            With the exception of SMS, messages must be UTF-8 encoded
+     *            strings and at most 256 KB in size (262,144 bytes, not 262,144
+     *            characters).
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For SMS, each message can contain up to 140 characters. This
+     *            character limit depends on the encoding schema. For example,
+     *            an SMS message can contain 160 GSM characters, 140 ASCII
+     *            characters, or 70 UCS-2 characters.
      *            </p>
      *            <p>
-     *            If you want to send different messages for each transport
-     *            protocol, set the value of the <code>MessageStructure</code>
-     *            parameter to <code>json</code> and use a JSON object for the
-     *            <code>Message</code> parameter. See the Examples section for
-     *            the format of the JSON object.
+     *            If you publish a message that exceeds this size limit, Amazon
+     *            SNS sends the message as multiple messages, each fitting
+     *            within the size limit. Messages aren't truncated mid-word but
+     *            are cut off at whole-word boundaries.
      *            </p>
      *            <p>
-     *            Constraints: Messages must be UTF-8 encoded strings at most
-     *            256 KB in size (262144 bytes, not 262144 characters).
+     *            The total size limit for a single SMS <code>Publish</code>
+     *            action is 1,600 characters.
      *            </p>
+     *            </li>
+     *            </ul>
      *            <p>
      *            JSON-specific constraints:
      *            </p>
@@ -972,22 +1161,45 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
 
     /**
      * <p>
-     * The message you want to send to the topic.
+     * The message you want to send.
      * </p>
      * <p>
-     * If you want to send the same message to all transport protocols, include
-     * the text of the message as a String value.
-     * </p>
-     * <p>
-     * If you want to send different messages for each transport protocol, set
-     * the value of the <code>MessageStructure</code> parameter to
+     * If you are publishing to a topic and you want to send the same message to
+     * all transport protocols, include the text of the message as a String
+     * value. If you want to send different messages for each transport
+     * protocol, set the value of the <code>MessageStructure</code> parameter to
      * <code>json</code> and use a JSON object for the <code>Message</code>
-     * parameter. See the Examples section for the format of the JSON object.
+     * parameter.
+     * </p>
+     * <p/>
+     * <p>
+     * Constraints:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * With the exception of SMS, messages must be UTF-8 encoded strings and at
+     * most 256 KB in size (262,144 bytes, not 262,144 characters).
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * For SMS, each message can contain up to 140 characters. This character
+     * limit depends on the encoding schema. For example, an SMS message can
+     * contain 160 GSM characters, 140 ASCII characters, or 70 UCS-2 characters.
      * </p>
      * <p>
-     * Constraints: Messages must be UTF-8 encoded strings at most 256 KB in
-     * size (262144 bytes, not 262144 characters).
+     * If you publish a message that exceeds this size limit, Amazon SNS sends
+     * the message as multiple messages, each fitting within the size limit.
+     * Messages aren't truncated mid-word but are cut off at whole-word
+     * boundaries.
      * </p>
+     * <p>
+     * The total size limit for a single SMS <code>Publish</code> action is
+     * 1,600 characters.
+     * </p>
+     * </li>
+     * </ul>
      * <p>
      * JSON-specific constraints:
      * </p>
@@ -1048,23 +1260,47 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * together.
      *
      * @param message <p>
-     *            The message you want to send to the topic.
+     *            The message you want to send.
      *            </p>
      *            <p>
-     *            If you want to send the same message to all transport
-     *            protocols, include the text of the message as a String value.
+     *            If you are publishing to a topic and you want to send the same
+     *            message to all transport protocols, include the text of the
+     *            message as a String value. If you want to send different
+     *            messages for each transport protocol, set the value of the
+     *            <code>MessageStructure</code> parameter to <code>json</code>
+     *            and use a JSON object for the <code>Message</code> parameter.
+     *            </p>
+     *            <p/>
+     *            <p>
+     *            Constraints:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            With the exception of SMS, messages must be UTF-8 encoded
+     *            strings and at most 256 KB in size (262,144 bytes, not 262,144
+     *            characters).
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For SMS, each message can contain up to 140 characters. This
+     *            character limit depends on the encoding schema. For example,
+     *            an SMS message can contain 160 GSM characters, 140 ASCII
+     *            characters, or 70 UCS-2 characters.
      *            </p>
      *            <p>
-     *            If you want to send different messages for each transport
-     *            protocol, set the value of the <code>MessageStructure</code>
-     *            parameter to <code>json</code> and use a JSON object for the
-     *            <code>Message</code> parameter. See the Examples section for
-     *            the format of the JSON object.
+     *            If you publish a message that exceeds this size limit, Amazon
+     *            SNS sends the message as multiple messages, each fitting
+     *            within the size limit. Messages aren't truncated mid-word but
+     *            are cut off at whole-word boundaries.
      *            </p>
      *            <p>
-     *            Constraints: Messages must be UTF-8 encoded strings at most
-     *            256 KB in size (262144 bytes, not 262144 characters).
+     *            The total size limit for a single SMS <code>Publish</code>
+     *            action is 1,600 characters.
      *            </p>
+     *            </li>
+     *            </ul>
      *            <p>
      *            JSON-specific constraints:
      *            </p>
@@ -1251,13 +1487,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * send to a specific transport protocol (e.g., "http").
      * </p>
      * <p>
-     * For information about sending different messages for each protocol using
-     * the AWS Management Console, go to <a href=
-     * "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     * >Create Different Messages for Each Protocol</a> in the <i>Amazon Simple
-     * Notification Service Getting Started Guide</i>.
-     * </p>
-     * <p>
      * Valid value: <code>json</code>
      * </p>
      *
@@ -1285,13 +1514,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      *         <p>
      *         You can define other top-level keys that define the message you
      *         want to send to a specific transport protocol (e.g., "http").
-     *         </p>
-     *         <p>
-     *         For information about sending different messages for each
-     *         protocol using the AWS Management Console, go to <a href=
-     *         "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     *         >Create Different Messages for Each Protocol</a> in the <i>Amazon
-     *         Simple Notification Service Getting Started Guide</i>.
      *         </p>
      *         <p>
      *         Valid value: <code>json</code>
@@ -1328,13 +1550,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * send to a specific transport protocol (e.g., "http").
      * </p>
      * <p>
-     * For information about sending different messages for each protocol using
-     * the AWS Management Console, go to <a href=
-     * "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     * >Create Different Messages for Each Protocol</a> in the <i>Amazon Simple
-     * Notification Service Getting Started Guide</i>.
-     * </p>
-     * <p>
      * Valid value: <code>json</code>
      * </p>
      *
@@ -1364,14 +1579,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      *            You can define other top-level keys that define the message
      *            you want to send to a specific transport protocol (e.g.,
      *            "http").
-     *            </p>
-     *            <p>
-     *            For information about sending different messages for each
-     *            protocol using the AWS Management Console, go to <a href=
-     *            "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     *            >Create Different Messages for Each Protocol</a> in the
-     *            <i>Amazon Simple Notification Service Getting Started
-     *            Guide</i>.
      *            </p>
      *            <p>
      *            Valid value: <code>json</code>
@@ -1408,13 +1615,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      * send to a specific transport protocol (e.g., "http").
      * </p>
      * <p>
-     * For information about sending different messages for each protocol using
-     * the AWS Management Console, go to <a href=
-     * "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     * >Create Different Messages for Each Protocol</a> in the <i>Amazon Simple
-     * Notification Service Getting Started Guide</i>.
-     * </p>
-     * <p>
      * Valid value: <code>json</code>
      * </p>
      * <p>
@@ -1447,14 +1647,6 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
      *            You can define other top-level keys that define the message
      *            you want to send to a specific transport protocol (e.g.,
      *            "http").
-     *            </p>
-     *            <p>
-     *            For information about sending different messages for each
-     *            protocol using the AWS Management Console, go to <a href=
-     *            "http://docs.aws.amazon.com/sns/latest/gsg/Publish.html#sns-message-formatting-by-protocol"
-     *            >Create Different Messages for Each Protocol</a> in the
-     *            <i>Amazon Simple Notification Service Getting Started
-     *            Guide</i>.
      *            </p>
      *            <p>
      *            Valid value: <code>json</code>
@@ -1551,6 +1743,272 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
     }
 
     /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     *
+     * @return <p>
+     *         This parameter applies only to FIFO (first-in-first-out) topics.
+     *         The <code>MessageDeduplicationId</code> can contain up to 128
+     *         alphanumeric characters <code>(a-z, A-Z, 0-9)</code> and
+     *         punctuation
+     *         <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *         </p>
+     *         <p>
+     *         Every message must have a unique
+     *         <code>MessageDeduplicationId</code>, which is a token used for
+     *         deduplication of sent messages. If a message with a particular
+     *         <code>MessageDeduplicationId</code> is sent successfully, any
+     *         message sent with the same <code>MessageDeduplicationId</code>
+     *         during the 5-minute deduplication interval is treated as a
+     *         duplicate.
+     *         </p>
+     *         <p>
+     *         If the topic has <code>ContentBasedDeduplication</code> set, the
+     *         system generates a <code>MessageDeduplicationId</code> based on
+     *         the contents of the message. Your
+     *         <code>MessageDeduplicationId</code> overrides the generated one.
+     *         </p>
+     */
+    public String getMessageDeduplicationId() {
+        return messageDeduplicationId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     *
+     * @param messageDeduplicationId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageDeduplicationId</code> can contain up
+     *            to 128 alphanumeric characters <code>(a-z, A-Z, 0-9)</code>
+     *            and punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            Every message must have a unique
+     *            <code>MessageDeduplicationId</code>, which is a token used for
+     *            deduplication of sent messages. If a message with a particular
+     *            <code>MessageDeduplicationId</code> is sent successfully, any
+     *            message sent with the same <code>MessageDeduplicationId</code>
+     *            during the 5-minute deduplication interval is treated as a
+     *            duplicate.
+     *            </p>
+     *            <p>
+     *            If the topic has <code>ContentBasedDeduplication</code> set,
+     *            the system generates a <code>MessageDeduplicationId</code>
+     *            based on the contents of the message. Your
+     *            <code>MessageDeduplicationId</code> overrides the generated
+     *            one.
+     *            </p>
+     */
+    public void setMessageDeduplicationId(String messageDeduplicationId) {
+        this.messageDeduplicationId = messageDeduplicationId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageDeduplicationId</code> can contain up to 128 alphanumeric
+     * characters <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * Every message must have a unique <code>MessageDeduplicationId</code>,
+     * which is a token used for deduplication of sent messages. If a message
+     * with a particular <code>MessageDeduplicationId</code> is sent
+     * successfully, any message sent with the same
+     * <code>MessageDeduplicationId</code> during the 5-minute deduplication
+     * interval is treated as a duplicate.
+     * </p>
+     * <p>
+     * If the topic has <code>ContentBasedDeduplication</code> set, the system
+     * generates a <code>MessageDeduplicationId</code> based on the contents of
+     * the message. Your <code>MessageDeduplicationId</code> overrides the
+     * generated one.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param messageDeduplicationId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageDeduplicationId</code> can contain up
+     *            to 128 alphanumeric characters <code>(a-z, A-Z, 0-9)</code>
+     *            and punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            Every message must have a unique
+     *            <code>MessageDeduplicationId</code>, which is a token used for
+     *            deduplication of sent messages. If a message with a particular
+     *            <code>MessageDeduplicationId</code> is sent successfully, any
+     *            message sent with the same <code>MessageDeduplicationId</code>
+     *            during the 5-minute deduplication interval is treated as a
+     *            duplicate.
+     *            </p>
+     *            <p>
+     *            If the topic has <code>ContentBasedDeduplication</code> set,
+     *            the system generates a <code>MessageDeduplicationId</code>
+     *            based on the contents of the message. Your
+     *            <code>MessageDeduplicationId</code> overrides the generated
+     *            one.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PublishRequest withMessageDeduplicationId(String messageDeduplicationId) {
+        this.messageDeduplicationId = messageDeduplicationId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     *
+     * @return <p>
+     *         This parameter applies only to FIFO (first-in-first-out) topics.
+     *         The <code>MessageGroupId</code> can contain up to 128
+     *         alphanumeric characters <code>(a-z, A-Z, 0-9)</code> and
+     *         punctuation
+     *         <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *         </p>
+     *         <p>
+     *         The <code>MessageGroupId</code> is a tag that specifies that a
+     *         message belongs to a specific message group. Messages that belong
+     *         to the same message group are processed in a FIFO manner
+     *         (however, messages in different message groups might be processed
+     *         out of order). Every message must include a
+     *         <code>MessageGroupId</code>.
+     *         </p>
+     */
+    public String getMessageGroupId() {
+        return messageGroupId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     *
+     * @param messageGroupId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageGroupId</code> can contain up to 128
+     *            alphanumeric characters <code>(a-z, A-Z, 0-9)</code> and
+     *            punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            The <code>MessageGroupId</code> is a tag that specifies that a
+     *            message belongs to a specific message group. Messages that
+     *            belong to the same message group are processed in a FIFO
+     *            manner (however, messages in different message groups might be
+     *            processed out of order). Every message must include a
+     *            <code>MessageGroupId</code>.
+     *            </p>
+     */
+    public void setMessageGroupId(String messageGroupId) {
+        this.messageGroupId = messageGroupId;
+    }
+
+    /**
+     * <p>
+     * This parameter applies only to FIFO (first-in-first-out) topics. The
+     * <code>MessageGroupId</code> can contain up to 128 alphanumeric characters
+     * <code>(a-z, A-Z, 0-9)</code> and punctuation
+     * <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     * </p>
+     * <p>
+     * The <code>MessageGroupId</code> is a tag that specifies that a message
+     * belongs to a specific message group. Messages that belong to the same
+     * message group are processed in a FIFO manner (however, messages in
+     * different message groups might be processed out of order). Every message
+     * must include a <code>MessageGroupId</code>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param messageGroupId <p>
+     *            This parameter applies only to FIFO (first-in-first-out)
+     *            topics. The <code>MessageGroupId</code> can contain up to 128
+     *            alphanumeric characters <code>(a-z, A-Z, 0-9)</code> and
+     *            punctuation
+     *            <code>(!"#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~)</code>.
+     *            </p>
+     *            <p>
+     *            The <code>MessageGroupId</code> is a tag that specifies that a
+     *            message belongs to a specific message group. Messages that
+     *            belong to the same message group are processed in a FIFO
+     *            manner (however, messages in different message groups might be
+     *            processed out of order). Every message must include a
+     *            <code>MessageGroupId</code>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public PublishRequest withMessageGroupId(String messageGroupId) {
+        this.messageGroupId = messageGroupId;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -1574,7 +2032,11 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
         if (getMessageStructure() != null)
             sb.append("MessageStructure: " + getMessageStructure() + ",");
         if (getMessageAttributes() != null)
-            sb.append("MessageAttributes: " + getMessageAttributes());
+            sb.append("MessageAttributes: " + getMessageAttributes() + ",");
+        if (getMessageDeduplicationId() != null)
+            sb.append("MessageDeduplicationId: " + getMessageDeduplicationId() + ",");
+        if (getMessageGroupId() != null)
+            sb.append("MessageGroupId: " + getMessageGroupId());
         sb.append("}");
         return sb.toString();
     }
@@ -1594,6 +2056,12 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
                 + ((getMessageStructure() == null) ? 0 : getMessageStructure().hashCode());
         hashCode = prime * hashCode
                 + ((getMessageAttributes() == null) ? 0 : getMessageAttributes().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getMessageDeduplicationId() == null) ? 0 : getMessageDeduplicationId()
+                        .hashCode());
+        hashCode = prime * hashCode
+                + ((getMessageGroupId() == null) ? 0 : getMessageGroupId().hashCode());
         return hashCode;
     }
 
@@ -1639,6 +2107,16 @@ public class PublishRequest extends AmazonWebServiceRequest implements Serializa
             return false;
         if (other.getMessageAttributes() != null
                 && other.getMessageAttributes().equals(this.getMessageAttributes()) == false)
+            return false;
+        if (other.getMessageDeduplicationId() == null ^ this.getMessageDeduplicationId() == null)
+            return false;
+        if (other.getMessageDeduplicationId() != null
+                && other.getMessageDeduplicationId().equals(this.getMessageDeduplicationId()) == false)
+            return false;
+        if (other.getMessageGroupId() == null ^ this.getMessageGroupId() == null)
+            return false;
+        if (other.getMessageGroupId() != null
+                && other.getMessageGroupId().equals(this.getMessageGroupId()) == false)
             return false;
         return true;
     }

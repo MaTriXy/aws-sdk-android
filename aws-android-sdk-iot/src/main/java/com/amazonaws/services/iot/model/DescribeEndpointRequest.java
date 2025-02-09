@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,13 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Returns a unique endpoint specific to the AWS account making the call.
+ * Returns a unique endpoint specific to the Amazon Web Services account making
+ * the call.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >DescribeEndpoint</a> action.
  * </p>
  */
 public class DescribeEndpointRequest extends AmazonWebServiceRequest implements Serializable {
@@ -46,19 +52,28 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      * <ul>
      * <li>
      * <p>
-     * <code>iot:CredentialProvider</code> - Returns an AWS IoT credentials
-     * provider API endpoint.
+     * <code>iot:CredentialProvider</code> - Returns an IoT credentials provider
+     * API endpoint.
      * </p>
      * </li>
      * </ul>
      * <ul>
      * <li>
      * <p>
-     * <code>iot:Jobs</code> - Returns an AWS IoT device management Jobs API
+     * <code>iot:Jobs</code> - Returns an IoT device management Jobs API
      * endpoint.
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * We strongly recommend that customers use the newer
+     * <code>iot:Data-ATS</code> endpoint type to avoid issues related to the
+     * widespread distrust of Symantec certificate authorities.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 128<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String endpointType;
 
@@ -83,19 +98,28 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      * <ul>
      * <li>
      * <p>
-     * <code>iot:CredentialProvider</code> - Returns an AWS IoT credentials
-     * provider API endpoint.
+     * <code>iot:CredentialProvider</code> - Returns an IoT credentials provider
+     * API endpoint.
      * </p>
      * </li>
      * </ul>
      * <ul>
      * <li>
      * <p>
-     * <code>iot:Jobs</code> - Returns an AWS IoT device management Jobs API
+     * <code>iot:Jobs</code> - Returns an IoT device management Jobs API
      * endpoint.
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * We strongly recommend that customers use the newer
+     * <code>iot:Data-ATS</code> endpoint type to avoid issues related to the
+     * widespread distrust of Symantec certificate authorities.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 128<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The endpoint type. Valid endpoint types include:
@@ -117,19 +141,24 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      *         <ul>
      *         <li>
      *         <p>
-     *         <code>iot:CredentialProvider</code> - Returns an AWS IoT
-     *         credentials provider API endpoint.
+     *         <code>iot:CredentialProvider</code> - Returns an IoT credentials
+     *         provider API endpoint.
      *         </p>
      *         </li>
      *         </ul>
      *         <ul>
      *         <li>
      *         <p>
-     *         <code>iot:Jobs</code> - Returns an AWS IoT device management Jobs
-     *         API endpoint.
+     *         <code>iot:Jobs</code> - Returns an IoT device management Jobs API
+     *         endpoint.
      *         </p>
      *         </li>
      *         </ul>
+     *         <p>
+     *         We strongly recommend that customers use the newer
+     *         <code>iot:Data-ATS</code> endpoint type to avoid issues related
+     *         to the widespread distrust of Symantec certificate authorities.
+     *         </p>
      */
     public String getEndpointType() {
         return endpointType;
@@ -156,19 +185,28 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      * <ul>
      * <li>
      * <p>
-     * <code>iot:CredentialProvider</code> - Returns an AWS IoT credentials
-     * provider API endpoint.
+     * <code>iot:CredentialProvider</code> - Returns an IoT credentials provider
+     * API endpoint.
      * </p>
      * </li>
      * </ul>
      * <ul>
      * <li>
      * <p>
-     * <code>iot:Jobs</code> - Returns an AWS IoT device management Jobs API
+     * <code>iot:Jobs</code> - Returns an IoT device management Jobs API
      * endpoint.
      * </p>
      * </li>
      * </ul>
+     * <p>
+     * We strongly recommend that customers use the newer
+     * <code>iot:Data-ATS</code> endpoint type to avoid issues related to the
+     * widespread distrust of Symantec certificate authorities.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 128<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param endpointType <p>
      *            The endpoint type. Valid endpoint types include:
@@ -192,7 +230,7 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      *            <ul>
      *            <li>
      *            <p>
-     *            <code>iot:CredentialProvider</code> - Returns an AWS IoT
+     *            <code>iot:CredentialProvider</code> - Returns an IoT
      *            credentials provider API endpoint.
      *            </p>
      *            </li>
@@ -200,11 +238,17 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      *            <ul>
      *            <li>
      *            <p>
-     *            <code>iot:Jobs</code> - Returns an AWS IoT device management
-     *            Jobs API endpoint.
+     *            <code>iot:Jobs</code> - Returns an IoT device management Jobs
+     *            API endpoint.
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            We strongly recommend that customers use the newer
+     *            <code>iot:Data-ATS</code> endpoint type to avoid issues
+     *            related to the widespread distrust of Symantec certificate
+     *            authorities.
+     *            </p>
      */
     public void setEndpointType(String endpointType) {
         this.endpointType = endpointType;
@@ -231,22 +275,31 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      * <ul>
      * <li>
      * <p>
-     * <code>iot:CredentialProvider</code> - Returns an AWS IoT credentials
-     * provider API endpoint.
+     * <code>iot:CredentialProvider</code> - Returns an IoT credentials provider
+     * API endpoint.
      * </p>
      * </li>
      * </ul>
      * <ul>
      * <li>
      * <p>
-     * <code>iot:Jobs</code> - Returns an AWS IoT device management Jobs API
+     * <code>iot:Jobs</code> - Returns an IoT device management Jobs API
      * endpoint.
      * </p>
      * </li>
      * </ul>
      * <p>
+     * We strongly recommend that customers use the newer
+     * <code>iot:Data-ATS</code> endpoint type to avoid issues related to the
+     * widespread distrust of Symantec certificate authorities.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 128<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param endpointType <p>
      *            The endpoint type. Valid endpoint types include:
@@ -270,7 +323,7 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      *            <ul>
      *            <li>
      *            <p>
-     *            <code>iot:CredentialProvider</code> - Returns an AWS IoT
+     *            <code>iot:CredentialProvider</code> - Returns an IoT
      *            credentials provider API endpoint.
      *            </p>
      *            </li>
@@ -278,11 +331,17 @@ public class DescribeEndpointRequest extends AmazonWebServiceRequest implements 
      *            <ul>
      *            <li>
      *            <p>
-     *            <code>iot:Jobs</code> - Returns an AWS IoT device management
-     *            Jobs API endpoint.
+     *            <code>iot:Jobs</code> - Returns an IoT device management Jobs
+     *            API endpoint.
      *            </p>
      *            </li>
      *            </ul>
+     *            <p>
+     *            We strongly recommend that customers use the newer
+     *            <code>iot:Data-ATS</code> endpoint type to avoid issues
+     *            related to the widespread distrust of Symantec certificate
+     *            authorities.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */

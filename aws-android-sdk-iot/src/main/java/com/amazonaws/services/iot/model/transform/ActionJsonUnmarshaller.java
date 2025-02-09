@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,6 +68,9 @@ class ActionJsonUnmarshaller implements Unmarshaller<Action, JsonUnmarshallerCon
             } else if (name.equals("cloudwatchAlarm")) {
                 action.setCloudwatchAlarm(CloudwatchAlarmActionJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("cloudwatchLogs")) {
+                action.setCloudwatchLogs(CloudwatchLogsActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("elasticsearch")) {
                 action.setElasticsearch(ElasticsearchActionJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -80,8 +83,26 @@ class ActionJsonUnmarshaller implements Unmarshaller<Action, JsonUnmarshallerCon
             } else if (name.equals("iotEvents")) {
                 action.setIotEvents(IotEventsActionJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("iotSiteWise")) {
+                action.setIotSiteWise(IotSiteWiseActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("stepFunctions")) {
                 action.setStepFunctions(StepFunctionsActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("timestream")) {
+                action.setTimestream(TimestreamActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("http")) {
+                action.setHttp(HttpActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("kafka")) {
+                action.setKafka(KafkaActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("openSearch")) {
+                action.setOpenSearch(OpenSearchActionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("location")) {
+                action.setLocation(LocationActionJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

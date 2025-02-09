@@ -157,6 +157,18 @@ public enum Region {
     EU_Frankfurt("eu-central-1"),
 
     /**
+     * The EU (Zurich) Region. This region uses Amazon S3 servers
+     * located in Zurich.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-eu-central-2.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    EU_Zurich("eu-central-2"),
+
+    /**
      * The EU (Stockholm) Amazon S3 Region. This region uses Amazon S3 servers
      * located in Stockholm.
      * <p>
@@ -168,6 +180,18 @@ public enum Region {
      * </p>
      */
     EU_Stockholm("eu-north-1"),
+
+    /**
+     * The Asia Pacific (Hong Kong) Region. This region uses Amazon S3 servers
+     * located in Hong Kong.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-ap-east-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_HongKong("ap-east-1"),
 
     /**
      * The Asia Pacific (Mumbai) Region. This region uses Amazon S3 servers
@@ -269,7 +293,160 @@ public enum Region {
      * When using buckets in this region, you must set the client endpoint to
      * <code>s3.cn-northwest-1.amazonaws.com.cn</code>.
      */
-    CN_Ningxia("cn-northwest-1");
+    CN_Ningxia("cn-northwest-1"),
+
+    /**
+     * The Middle East (Bahrain) Region. This region uses Amazon S3 servers located in
+     * Bahrain.
+     * <p>
+     * When using buckets in this region, you must set the client endpoint to
+     * <code>s3.me-south-1.amazonaws.com</code>.
+     */
+    ME_Bahrain("me-south-1"),
+
+    /**
+     * The Europe (Milan) Region. This region uses Amazon S3 servers
+     * located in Milan.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-eu-south-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    EU_Milan("eu-south-1"),
+
+    /**
+     * The Europe (Spain) Region. This region uses Amazon S3 servers
+     * located in Spain.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-eu-south-2.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    EU_Spain("eu-south-2"),
+
+    /**
+     * The Africa (Cape Town) Region. This region uses Amazon S3 servers
+     * located in Cape Town.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-af-south-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_CapeTown("af-south-1"),
+
+    /**
+     * The Asia Pacific (Jakarta) Region. This region uses Amazon S3 servers
+     * located in Jakarta.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-ap-southeast-3.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_Jakarta("ap-southeast-3"),
+
+    /**
+     * The Middle East (UAE) Region. This region uses Amazon S3 servers
+     * located in UAE.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-me-central-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    ME_UAE("me-central-1"),
+
+    /**
+     * The Asia Pacific (Hyderabad) Region. This region uses Amazon S3 servers
+     * located in Hyderabad, India.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-ap-south-2.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_HYD("ap-south-2"),
+
+    /**
+     * The Asia Pacific (Melbourne) Region. This region uses Amazon S3 servers
+     * located in Melbourne.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-ap-southeast-4.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_Melbourne("ap-southeast-4"),
+
+    /**
+     * The Asia Pacific (Malaysia) Region. This region uses Amazon S3 servers
+     * located in Malaysia.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-ap-southeast-5.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_Malaysia("ap-southeast-5"),
+
+    /**
+     * The Asia Pacific (Bangkok) Region. This region uses Amazon S3 servers
+     * located in Bangkok.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-ap-southeast-7.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_Bangkok("ap-southeast-7"),
+
+    /**
+     * The Mexico Region. This region uses Amazon S3 servers
+     * located in Mexico.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-mx-central-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    MX_CENTRAL("mx-central-1"),
+
+    /**
+     * The Israel (Tel Aviv) Region. This region uses Amazon S3 servers
+     * located in Tel Aviv.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>s3-il-central-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    AP_TelAviv("il-central-1"),
+
+    /**
+     * The Canada West (Calgary) Region. This region uses Amazon S3 servers
+     * located in Calgary.
+     * <p>
+     * When using buckets in this region, set the client endpoint to
+     * <code>ca-west-1.amazonaws.com</code> on all requests to these buckets
+     * to reduce any latency experienced after the first hour of creating a
+     * bucket in this region.
+     * </p>
+     */
+    CA_Calgary("ca-west-1");
 
     /**
      * Used to extract the S3 regional id from an S3 end point. Note this

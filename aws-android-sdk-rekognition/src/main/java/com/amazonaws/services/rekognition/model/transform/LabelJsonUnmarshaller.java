@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,25 @@ class LabelJsonUnmarshaller implements Unmarshaller<Label, JsonUnmarshallerConte
             } else if (name.equals("Confidence")) {
                 label.setConfidence(FloatJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("Instances")) {
+                label.setInstances(new ListUnmarshaller<Instance>(InstanceJsonUnmarshaller
+                        .getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("Parents")) {
+                label.setParents(new ListUnmarshaller<Parent>(ParentJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("Aliases")) {
+                label.setAliases(new ListUnmarshaller<LabelAlias>(LabelAliasJsonUnmarshaller
+                        .getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("Categories")) {
+                label.setCategories(new ListUnmarshaller<LabelCategory>(
+                        LabelCategoryJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -35,10 +36,20 @@ class BehaviorJsonMarshaller {
             jsonWriter.name("metric");
             jsonWriter.value(metric);
         }
+        if (behavior.getMetricDimension() != null) {
+            MetricDimension metricDimension = behavior.getMetricDimension();
+            jsonWriter.name("metricDimension");
+            MetricDimensionJsonMarshaller.getInstance().marshall(metricDimension, jsonWriter);
+        }
         if (behavior.getCriteria() != null) {
             BehaviorCriteria criteria = behavior.getCriteria();
             jsonWriter.name("criteria");
             BehaviorCriteriaJsonMarshaller.getInstance().marshall(criteria, jsonWriter);
+        }
+        if (behavior.getSuppressAlerts() != null) {
+            Boolean suppressAlerts = behavior.getSuppressAlerts();
+            jsonWriter.name("suppressAlerts");
+            jsonWriter.value(suppressAlerts);
         }
         jsonWriter.endObject();
     }

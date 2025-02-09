@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,11 +21,16 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Lists the certificates registered in your AWS account.
+ * Lists the certificates registered in your Amazon Web Services account.
  * </p>
  * <p>
  * The results are paginated with a default page size of 25. You can use the
  * returned marker to retrieve additional results.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListCertificates</a> action.
  * </p>
  */
 public class ListCertificatesRequest extends AmazonWebServiceRequest implements Serializable {
@@ -45,6 +50,7 @@ public class ListCertificatesRequest extends AmazonWebServiceRequest implements 
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      */
     private String marker;
@@ -117,6 +123,7 @@ public class ListCertificatesRequest extends AmazonWebServiceRequest implements 
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @return <p>
@@ -133,6 +140,7 @@ public class ListCertificatesRequest extends AmazonWebServiceRequest implements 
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
@@ -152,6 +160,7 @@ public class ListCertificatesRequest extends AmazonWebServiceRequest implements 
      * together.
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>

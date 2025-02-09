@@ -17,13 +17,16 @@
 
 package com.amazonaws.mobileconnectors.cognitoauth;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 
+import com.amazonaws.internal.keyvaluestore.AWSKeyValueStore;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthInvalidParameterException;
 import com.amazonaws.mobileconnectors.cognitoauth.handlers.AuthHandler;
+import com.amazonaws.mobileconnectors.cognitoauth.util.ClientConstants;
 import com.amazonaws.mobileconnectors.cognitoauth.util.LocalDataManager;
 
 import org.json.JSONObject;
@@ -66,6 +69,11 @@ public final class Auth {
     private final Bundle customTabExtras;
 
     /**
+     * Reference to the store that manages secure storage of tokens
+     */
+    AWSKeyValueStore awsKeyValueStore;
+
+    /**
      * This identifies the settings for additional userPool features.
      */
     private boolean advancedSecurityDataCollectionFlag;
@@ -97,6 +105,11 @@ public final class Auth {
     private final String signOutRedirectUri;
 
     /**
+     * Optional string specifying the browser to open custom tabs. Defaults to Chrome if left null.
+     */
+    private String browserPackage;
+
+    /**
      * Scopes for the requested tokens.
      */
     private final Set<String> scopes;
@@ -107,7 +120,13 @@ public final class Auth {
     private AuthClient user;
 
     /**
-     * It enables user context data collection for frontline.
+     * Flag indicating if the tokens will be cached on device.
+     * By default, this is enabled.
+     */
+    private boolean isPersistenceEnabled = true;
+
+    /**
+     * It enables user context data collection.
      */
     public void setAdvancedSecurityDataCollection(boolean isEnabled) {
             this.advancedSecurityDataCollectionFlag = isEnabled;
@@ -119,6 +138,23 @@ public final class Auth {
      */
     public boolean isAdvancedSecurityDataCollectionEnabled() {
         return advancedSecurityDataCollectionFlag;
+    }
+
+    /**
+     * Enable or disable persistence
+     * @param isPersistenceEnabled flag if true indicates tokens are persisted.
+     */
+    public void setPersistenceEnabled(boolean isPersistenceEnabled) {
+        this.isPersistenceEnabled = isPersistenceEnabled;
+        awsKeyValueStore.setPersistenceEnabled(this.isPersistenceEnabled);
+    }
+
+    /**
+     * Update the browser package to use for launching a custom tab.
+     * @param browserPackage the browser package to use for launching a custom tab.
+     */
+    public void setBrowserPackage(String browserPackage) {
+        this.browserPackage = browserPackage;
     }
 
     /**
@@ -150,7 +186,8 @@ public final class Auth {
                  final boolean advancedSecurityDataCollectionFlag,
                  final String identityProvider,
                  final String idpIdentifier,
-                 final Bundle customTabExtras) {
+                 final Bundle customTabExtras,
+                 final boolean isPersistenceEnabled) {
         this.context = context;
         this.appWebDomain = appWebDomain;
         this.appId = appId;
@@ -159,13 +196,16 @@ public final class Auth {
         this.signOutRedirectUri = signOutRedirectUri;
         this.scopes = scopes;
         this.user = new AuthClient(context, this);
-        this.user = new AuthClient(context, this);
         this.user.setUserHandler(userHandler);
         this.userPoolId = userPoolId;
         this.advancedSecurityDataCollectionFlag = advancedSecurityDataCollectionFlag;
         this.identityProvider = identityProvider;
         this.idpIdentifier = idpIdentifier;
         this.customTabExtras = customTabExtras;
+        this.isPersistenceEnabled = isPersistenceEnabled;
+        this.awsKeyValueStore = new AWSKeyValueStore(context,
+                ClientConstants.APP_LOCAL_CACHE,
+                this.isPersistenceEnabled);
         getCurrentUser();
     }
 
@@ -242,13 +282,24 @@ public final class Auth {
         private boolean mAdvancedSecurityDataCollectionFlag = true;
 
         /**
+         * Flag indicating if the tokens will be cached on device.
+         * By default, this is enabled.
+         */
+        private boolean mIsCachingEnabled = true;
+
+        public Builder setPersistenceEnabled(boolean isPersistenceEnabled) {
+            this.mIsCachingEnabled = isPersistenceEnabled;
+            return this;
+        }
+
+        /**
          * Sets flag to enable user context data collection. By
          * default, the flag is set to true.
          * <p>
          *     Flag identifying if user context data should be collected for
          *     advanced security evaluation.
          * </p>
-         * @param flag value for data collection
+         * @param advancedSecurityDataCollectionFlag value for data collection
          * @return A reference to this builder.
          */
         public Builder setAdvancedSecurityDataCollection(final boolean advancedSecurityDataCollectionFlag) {
@@ -445,7 +496,8 @@ public final class Auth {
                     this.mAdvancedSecurityDataCollectionFlag,
                     this.mIdentityProvider,
                     this.mIdpIdentifier,
-                    this.mCustomTabsExtras);
+                    this.mCustomTabsExtras,
+                    this.mIsCachingEnabled);
         }
 
 
@@ -513,7 +565,7 @@ public final class Auth {
      * the device.
      */
     public Auth getCurrentUser() {
-        this.user.setUsername(LocalDataManager.getLastAuthUser(context, appId));
+        this.user.setUsername(LocalDataManager.getLastAuthUser(awsKeyValueStore, context, appId));
         return this;
     }
 
@@ -574,6 +626,13 @@ public final class Auth {
     }
 
     /**
+     * @return Optional browser package set for this {@link Auth} instance.
+     */
+    public String getBrowserPackage() {
+        return browserPackage;
+    }
+
+    /**
      * @return Identity Provider set for this {@link Auth} instance.
      */
     public String getIdentityProvider() {
@@ -605,14 +664,44 @@ public final class Auth {
      *     web interface is launched on Chrome Custom Tabs. The user credentials will be required to
      *     authenticate.
      *     <b>Note</b>: This SDK uses OAuth Code-Grant flow with PKCE, for authentication. To get
-     *     tokens after successful user authentication, the Amazom Cognito Auth returns the
+     *     tokens after successful user authentication, the Amazon Cognito Auth returns the
      *     authentication code through the redirect uri. Call {@link Auth#getTokens(Uri)} to
      *     get tokens from the authentication code. <i>Uri</i> is the redirect uri with the
      *     authentication code.
      * </p>
+     * @param activity Activity to launch custom tabs from and to listen for the intent completions.
      */
-    public void getSession() {
-        this.user.getSession();
+    public void getSession(final Activity activity) {
+        if (getBrowserPackage() != null) {
+            this.user.getSession(true, activity, getBrowserPackage());
+        } else {
+            this.user.getSession(true, activity);
+        }
+
+    }
+
+    /**
+     * Use this method to get tokens for a user, the tokens are returned though the callback.
+     * {@link AuthHandler#onSuccess(AuthUserSession)}. If the tokens are not available, it will not
+     * launch the browser to re-authenticate.
+     * <p>
+     *     If a username is available, this method looks for valid cached tokens on the device.
+     *     If the cached token have expired and the refresh token (if available) is used to get new
+     *     tokens.
+     *     If valid tokens are not available locally or if the username is not set, the error callback
+     *     will be invoked. It will not launch a sign in experience.
+     * </p>
+     */
+    public void getSessionWithoutWebUI() {
+        this.user.getSession(false, null);
+    }
+
+    /**
+     * Reset the AuthHandler on the client.
+     * @param authHandler
+     */
+    public void setAuthHandler(final AuthHandler authHandler) {
+        this.user.setUserHandler(authHandler);
     }
 
     /**
@@ -623,7 +712,25 @@ public final class Auth {
      * </p>
      */
     public void signOut() {
-        this.user.signOut();
+        if (getBrowserPackage() != null) {
+            this.user.signOut(false, getBrowserPackage());
+        } else {
+            this.user.signOut(false);
+        }
+    }
+
+    /**
+     * Sign out with options.
+     *
+     * @param clearLocalTokensOnly true if signs out the user from the client,
+     *                             but the session may still be alive from the browser.
+     */
+    public void signOut(final boolean clearLocalTokensOnly) {
+        if (getBrowserPackage() != null) {
+            this.user.signOut(clearLocalTokensOnly, getBrowserPackage());
+        } else {
+            this.user.signOut(clearLocalTokensOnly);
+        }
     }
 
     /**
@@ -647,6 +754,13 @@ public final class Auth {
     }
 
     /**
+     * Properly handles the event where a user cancels the auth flow before completing it.
+     */
+    public void handleFlowCancelled() {
+        this.user.handleCustomTabsCancelled();
+    }
+
+    /**
      * Set a username for the {@link Auth} instance.
      * @param username Required: The username of the user in your Cognito User-Pool.
      * @return {@link Auth}.
@@ -654,5 +768,12 @@ public final class Auth {
     public Auth setUsername(final String username) {
         this.user.setUsername(username);
         return this;
+    }
+
+    /**
+     * Release resources used by {@link Auth}
+     */
+    public void release() {
+        this.user.unbindServiceConnection();
     }
 }

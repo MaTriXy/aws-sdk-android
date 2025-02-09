@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -25,6 +26,11 @@ class AuditFindingJsonMarshaller {
 
     public void marshall(AuditFinding auditFinding, AwsJsonWriter jsonWriter) throws Exception {
         jsonWriter.beginObject();
+        if (auditFinding.getFindingId() != null) {
+            String findingId = auditFinding.getFindingId();
+            jsonWriter.name("findingId");
+            jsonWriter.value(findingId);
+        }
         if (auditFinding.getTaskId() != null) {
             String taskId = auditFinding.getTaskId();
             jsonWriter.name("taskId");
@@ -77,6 +83,11 @@ class AuditFindingJsonMarshaller {
             String reasonForNonComplianceCode = auditFinding.getReasonForNonComplianceCode();
             jsonWriter.name("reasonForNonComplianceCode");
             jsonWriter.value(reasonForNonComplianceCode);
+        }
+        if (auditFinding.getIsSuppressed() != null) {
+            Boolean isSuppressed = auditFinding.getIsSuppressed();
+            jsonWriter.name("isSuppressed");
+            jsonWriter.value(isSuppressed);
         }
         jsonWriter.endObject();
     }

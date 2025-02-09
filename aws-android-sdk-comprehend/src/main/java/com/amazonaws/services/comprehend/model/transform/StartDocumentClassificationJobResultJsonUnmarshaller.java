@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,10 +37,17 @@ public class StartDocumentClassificationJobResultJsonUnmarshaller implements
             if (name.equals("JobId")) {
                 startDocumentClassificationJobResult.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                startDocumentClassificationJobResult.setJobArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobStatus")) {
                 startDocumentClassificationJobResult.setJobStatus(StringJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
+            } else if (name.equals("DocumentClassifierArn")) {
+                startDocumentClassificationJobResult
+                        .setDocumentClassifierArn(StringJsonUnmarshaller.getInstance()
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

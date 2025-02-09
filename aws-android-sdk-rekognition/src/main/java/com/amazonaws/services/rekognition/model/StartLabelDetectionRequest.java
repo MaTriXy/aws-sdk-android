@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,10 +42,27 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * To get the results of the label detection operation, first check that the
  * status value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If
- * so, call and pass the job identifier (<code>JobId</code>) from the initial
- * call to <code>StartLabelDetection</code>.
+ * so, call <a>GetLabelDetection</a> and pass the job identifier (
+ * <code>JobId</code>) from the initial call to <code>StartLabelDetection</code>
+ * .
  * </p>
- * <p/>
+ * <p>
+ * <i>Optional Parameters</i>
+ * </p>
+ * <p>
+ * <code>StartLabelDetection</code> has the <code>GENERAL_LABELS</code> Feature
+ * applied by default. This feature allows you to provide filtering criteria to
+ * the <code>Settings</code> parameter. You can filter with sets of individual
+ * labels or with label categories. You can specify inclusive filters, exclusive
+ * filters, or a combination of inclusive and exclusive filters. For more
+ * information on filtering, see <a href=
+ * "https://docs.aws.amazon.com/rekognition/latest/dg/labels-detecting-labels-video.html"
+ * >Detecting labels in a video</a>.
+ * </p>
+ * <p>
+ * You can specify <code>MinConfidence</code> to control the confidence
+ * threshold for the labels returned. The default is 50.
+ * </p>
  */
 public class StartLabelDetectionRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -81,33 +98,55 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * If you don't specify <code>MinConfidence</code>, the operation returns
-     * labels with confidence values greater than or equal to 50 percent.
+     * labels and bounding boxes (if detected) with confidence values greater
+     * than or equal to 50 percent.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float minConfidence;
 
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the label detection operation to.
+     * completion status of the label detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      */
     private NotificationChannel notificationChannel;
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      */
     private String jobTag;
+
+    /**
+     * <p>
+     * The features to return after video analysis. You can specify that
+     * GENERAL_LABELS are returned.
+     * </p>
+     */
+    private java.util.List<String> features;
+
+    /**
+     * <p>
+     * The settings for a StartLabelDetection request.Contains the specified
+     * parameters for the label detection request of an asynchronous label
+     * analysis operation. Settings can include filters for GENERAL_LABELS.
+     * </p>
+     */
+    private LabelDetectionSettings settings;
 
     /**
      * <p>
@@ -251,11 +290,12 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * If you don't specify <code>MinConfidence</code>, the operation returns
-     * labels with confidence values greater than or equal to 50 percent.
+     * labels and bounding boxes (if detected) with confidence values greater
+     * than or equal to 50 percent.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Specifies the minimum confidence that Amazon Rekognition Video
@@ -267,8 +307,8 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      *         </p>
      *         <p>
      *         If you don't specify <code>MinConfidence</code>, the operation
-     *         returns labels with confidence values greater than or equal to 50
-     *         percent.
+     *         returns labels and bounding boxes (if detected) with confidence
+     *         values greater than or equal to 50 percent.
      *         </p>
      */
     public Float getMinConfidence() {
@@ -286,11 +326,12 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * If you don't specify <code>MinConfidence</code>, the operation returns
-     * labels with confidence values greater than or equal to 50 percent.
+     * labels and bounding boxes (if detected) with confidence values greater
+     * than or equal to 50 percent.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param minConfidence <p>
      *            Specifies the minimum confidence that Amazon Rekognition Video
@@ -303,8 +344,8 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      *            </p>
      *            <p>
      *            If you don't specify <code>MinConfidence</code>, the operation
-     *            returns labels with confidence values greater than or equal to
-     *            50 percent.
+     *            returns labels and bounding boxes (if detected) with
+     *            confidence values greater than or equal to 50 percent.
      *            </p>
      */
     public void setMinConfidence(Float minConfidence) {
@@ -322,14 +363,15 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      * </p>
      * <p>
      * If you don't specify <code>MinConfidence</code>, the operation returns
-     * labels with confidence values greater than or equal to 50 percent.
+     * labels and bounding boxes (if detected) with confidence values greater
+     * than or equal to 50 percent.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param minConfidence <p>
      *            Specifies the minimum confidence that Amazon Rekognition Video
@@ -342,8 +384,8 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      *            </p>
      *            <p>
      *            If you don't specify <code>MinConfidence</code>, the operation
-     *            returns labels with confidence values greater than or equal to
-     *            50 percent.
+     *            returns labels and bounding boxes (if detected) with
+     *            confidence values greater than or equal to 50 percent.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -356,13 +398,17 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the label detection operation to.
+     * completion status of the label detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      *
      * @return <p>
      *         The Amazon SNS topic ARN you want Amazon Rekognition Video to
      *         publish the completion status of the label detection operation
-     *         to.
+     *         to. The Amazon SNS topic must have a topic name that begins with
+     *         <i>AmazonRekognition</i> if you are using the
+     *         AmazonRekognitionServiceRole permissions policy.
      *         </p>
      */
     public NotificationChannel getNotificationChannel() {
@@ -372,13 +418,17 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the label detection operation to.
+     * completion status of the label detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      *
      * @param notificationChannel <p>
      *            The Amazon SNS topic ARN you want Amazon Rekognition Video to
      *            publish the completion status of the label detection operation
-     *            to.
+     *            to. The Amazon SNS topic must have a topic name that begins
+     *            with <i>AmazonRekognition</i> if you are using the
+     *            AmazonRekognitionServiceRole permissions policy.
      *            </p>
      */
     public void setNotificationChannel(NotificationChannel notificationChannel) {
@@ -388,7 +438,9 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
     /**
      * <p>
      * The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the
-     * completion status of the label detection operation to.
+     * completion status of the label detection operation to. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -397,7 +449,9 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
      * @param notificationChannel <p>
      *            The Amazon SNS topic ARN you want Amazon Rekognition Video to
      *            publish the completion status of the label detection operation
-     *            to.
+     *            to. The Amazon SNS topic must have a topic name that begins
+     *            with <i>AmazonRekognition</i> if you are using the
+     *            AmazonRekognitionServiceRole permissions policy.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -410,18 +464,22 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @return <p>
-     *         Unique identifier you specify to identify the job in the
-     *         completion status published to the Amazon Simple Notification
-     *         Service topic.
+     *         An identifier you specify that's returned in the completion
+     *         notification that's published to your Amazon Simple Notification
+     *         Service topic. For example, you can use <code>JobTag</code> to
+     *         group related jobs and identify them in the completion
+     *         notification.
      *         </p>
      */
     public String getJobTag() {
@@ -430,18 +488,22 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @param jobTag <p>
-     *            Unique identifier you specify to identify the job in the
-     *            completion status published to the Amazon Simple Notification
-     *            Service topic.
+     *            An identifier you specify that's returned in the completion
+     *            notification that's published to your Amazon Simple
+     *            Notification Service topic. For example, you can use
+     *            <code>JobTag</code> to group related jobs and identify them in
+     *            the completion notification.
      *            </p>
      */
     public void setJobTag(String jobTag) {
@@ -450,27 +512,173 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @param jobTag <p>
-     *            Unique identifier you specify to identify the job in the
-     *            completion status published to the Amazon Simple Notification
-     *            Service topic.
+     *            An identifier you specify that's returned in the completion
+     *            notification that's published to your Amazon Simple
+     *            Notification Service topic. For example, you can use
+     *            <code>JobTag</code> to group related jobs and identify them in
+     *            the completion notification.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public StartLabelDetectionRequest withJobTag(String jobTag) {
         this.jobTag = jobTag;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The features to return after video analysis. You can specify that
+     * GENERAL_LABELS are returned.
+     * </p>
+     *
+     * @return <p>
+     *         The features to return after video analysis. You can specify that
+     *         GENERAL_LABELS are returned.
+     *         </p>
+     */
+    public java.util.List<String> getFeatures() {
+        return features;
+    }
+
+    /**
+     * <p>
+     * The features to return after video analysis. You can specify that
+     * GENERAL_LABELS are returned.
+     * </p>
+     *
+     * @param features <p>
+     *            The features to return after video analysis. You can specify
+     *            that GENERAL_LABELS are returned.
+     *            </p>
+     */
+    public void setFeatures(java.util.Collection<String> features) {
+        if (features == null) {
+            this.features = null;
+            return;
+        }
+
+        this.features = new java.util.ArrayList<String>(features);
+    }
+
+    /**
+     * <p>
+     * The features to return after video analysis. You can specify that
+     * GENERAL_LABELS are returned.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param features <p>
+     *            The features to return after video analysis. You can specify
+     *            that GENERAL_LABELS are returned.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartLabelDetectionRequest withFeatures(String... features) {
+        if (getFeatures() == null) {
+            this.features = new java.util.ArrayList<String>(features.length);
+        }
+        for (String value : features) {
+            this.features.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * The features to return after video analysis. You can specify that
+     * GENERAL_LABELS are returned.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param features <p>
+     *            The features to return after video analysis. You can specify
+     *            that GENERAL_LABELS are returned.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartLabelDetectionRequest withFeatures(java.util.Collection<String> features) {
+        setFeatures(features);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The settings for a StartLabelDetection request.Contains the specified
+     * parameters for the label detection request of an asynchronous label
+     * analysis operation. Settings can include filters for GENERAL_LABELS.
+     * </p>
+     *
+     * @return <p>
+     *         The settings for a StartLabelDetection request.Contains the
+     *         specified parameters for the label detection request of an
+     *         asynchronous label analysis operation. Settings can include
+     *         filters for GENERAL_LABELS.
+     *         </p>
+     */
+    public LabelDetectionSettings getSettings() {
+        return settings;
+    }
+
+    /**
+     * <p>
+     * The settings for a StartLabelDetection request.Contains the specified
+     * parameters for the label detection request of an asynchronous label
+     * analysis operation. Settings can include filters for GENERAL_LABELS.
+     * </p>
+     *
+     * @param settings <p>
+     *            The settings for a StartLabelDetection request.Contains the
+     *            specified parameters for the label detection request of an
+     *            asynchronous label analysis operation. Settings can include
+     *            filters for GENERAL_LABELS.
+     *            </p>
+     */
+    public void setSettings(LabelDetectionSettings settings) {
+        this.settings = settings;
+    }
+
+    /**
+     * <p>
+     * The settings for a StartLabelDetection request.Contains the specified
+     * parameters for the label detection request of an asynchronous label
+     * analysis operation. Settings can include filters for GENERAL_LABELS.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param settings <p>
+     *            The settings for a StartLabelDetection request.Contains the
+     *            specified parameters for the label detection request of an
+     *            asynchronous label analysis operation. Settings can include
+     *            filters for GENERAL_LABELS.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartLabelDetectionRequest withSettings(LabelDetectionSettings settings) {
+        this.settings = settings;
         return this;
     }
 
@@ -494,7 +702,11 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
         if (getNotificationChannel() != null)
             sb.append("NotificationChannel: " + getNotificationChannel() + ",");
         if (getJobTag() != null)
-            sb.append("JobTag: " + getJobTag());
+            sb.append("JobTag: " + getJobTag() + ",");
+        if (getFeatures() != null)
+            sb.append("Features: " + getFeatures() + ",");
+        if (getSettings() != null)
+            sb.append("Settings: " + getSettings());
         sb.append("}");
         return sb.toString();
     }
@@ -512,6 +724,8 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
         hashCode = prime * hashCode
                 + ((getNotificationChannel() == null) ? 0 : getNotificationChannel().hashCode());
         hashCode = prime * hashCode + ((getJobTag() == null) ? 0 : getJobTag().hashCode());
+        hashCode = prime * hashCode + ((getFeatures() == null) ? 0 : getFeatures().hashCode());
+        hashCode = prime * hashCode + ((getSettings() == null) ? 0 : getSettings().hashCode());
         return hashCode;
     }
 
@@ -548,6 +762,14 @@ public class StartLabelDetectionRequest extends AmazonWebServiceRequest implemen
         if (other.getJobTag() == null ^ this.getJobTag() == null)
             return false;
         if (other.getJobTag() != null && other.getJobTag().equals(this.getJobTag()) == false)
+            return false;
+        if (other.getFeatures() == null ^ this.getFeatures() == null)
+            return false;
+        if (other.getFeatures() != null && other.getFeatures().equals(this.getFeatures()) == false)
+            return false;
+        if (other.getSettings() == null ^ this.getSettings() == null)
+            return false;
+        if (other.getSettings() != null && other.getSettings().equals(this.getSettings()) == false)
             return false;
         return true;
     }

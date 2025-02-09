@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -79,6 +79,46 @@ class KeyMetadataJsonUnmarshaller implements Unmarshaller<KeyMetadata, JsonUnmar
                         .unmarshall(context));
             } else if (name.equals("KeyManager")) {
                 keyMetadata.setKeyManager(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("CustomerMasterKeySpec")) {
+                keyMetadata.setCustomerMasterKeySpec(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("KeySpec")) {
+                keyMetadata.setKeySpec(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("EncryptionAlgorithms")) {
+                keyMetadata.setEncryptionAlgorithms(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("SigningAlgorithms")) {
+                keyMetadata.setSigningAlgorithms(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("KeyAgreementAlgorithms")) {
+                keyMetadata.setKeyAgreementAlgorithms(new ListUnmarshaller<String>(
+                        StringJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("MultiRegion")) {
+                keyMetadata.setMultiRegion(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("MultiRegionConfiguration")) {
+                keyMetadata.setMultiRegionConfiguration(MultiRegionConfigurationJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("PendingDeletionWindowInDays")) {
+                keyMetadata.setPendingDeletionWindowInDays(IntegerJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("MacAlgorithms")) {
+                keyMetadata.setMacAlgorithms(new ListUnmarshaller<String>(StringJsonUnmarshaller
+                        .getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("XksKeyConfiguration")) {
+                keyMetadata.setXksKeyConfiguration(XksKeyConfigurationTypeJsonUnmarshaller
+                        .getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

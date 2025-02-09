@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,6 +28,19 @@ public class StartStreamProcessorResultJsonUnmarshaller implements
 
     public StartStreamProcessorResult unmarshall(JsonUnmarshallerContext context) throws Exception {
         StartStreamProcessorResult startStreamProcessorResult = new StartStreamProcessorResult();
+
+        AwsJsonReader reader = context.getReader();
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            if (name.equals("SessionId")) {
+                startStreamProcessorResult.setSessionId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
 
         return startStreamProcessorResult;
     }

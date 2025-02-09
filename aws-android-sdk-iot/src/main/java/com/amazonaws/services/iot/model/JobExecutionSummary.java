@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,24 +36,22 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * queued.
+     * The time, in seconds since the epoch, when the job execution was queued.
      * </p>
      */
     private java.util.Date queuedAt;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution
-     * started.
+     * The time, in seconds since the epoch, when the job execution started.
      * </p>
      */
     private java.util.Date startedAt;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * last updated.
+     * The time, in seconds since the epoch, when the job execution was last
+     * updated.
      * </p>
      */
     private java.util.Date lastUpdatedAt;
@@ -66,6 +64,14 @@ public class JobExecutionSummary implements Serializable {
      * </p>
      */
     private Long executionNumber;
+
+    /**
+     * <p>
+     * The number that indicates how many retry attempts have been completed for
+     * this job on this device.
+     * </p>
+     */
+    private Integer retryAttempt;
 
     /**
      * <p>
@@ -171,13 +177,12 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * queued.
+     * The time, in seconds since the epoch, when the job execution was queued.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job execution
-     *         was queued.
+     *         The time, in seconds since the epoch, when the job execution was
+     *         queued.
      *         </p>
      */
     public java.util.Date getQueuedAt() {
@@ -186,13 +191,12 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * queued.
+     * The time, in seconds since the epoch, when the job execution was queued.
      * </p>
      *
      * @param queuedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            execution was queued.
+     *            The time, in seconds since the epoch, when the job execution
+     *            was queued.
      *            </p>
      */
     public void setQueuedAt(java.util.Date queuedAt) {
@@ -201,16 +205,15 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * queued.
+     * The time, in seconds since the epoch, when the job execution was queued.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param queuedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            execution was queued.
+     *            The time, in seconds since the epoch, when the job execution
+     *            was queued.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -222,12 +225,11 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution
-     * started.
+     * The time, in seconds since the epoch, when the job execution started.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job execution
+     *         The time, in seconds since the epoch, when the job execution
      *         started.
      *         </p>
      */
@@ -237,13 +239,12 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution
-     * started.
+     * The time, in seconds since the epoch, when the job execution started.
      * </p>
      *
      * @param startedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            execution started.
+     *            The time, in seconds since the epoch, when the job execution
+     *            started.
      *            </p>
      */
     public void setStartedAt(java.util.Date startedAt) {
@@ -252,16 +253,15 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution
-     * started.
+     * The time, in seconds since the epoch, when the job execution started.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param startedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            execution started.
+     *            The time, in seconds since the epoch, when the job execution
+     *            started.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -273,13 +273,13 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * last updated.
+     * The time, in seconds since the epoch, when the job execution was last
+     * updated.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job execution
-     *         was last updated.
+     *         The time, in seconds since the epoch, when the job execution was
+     *         last updated.
      *         </p>
      */
     public java.util.Date getLastUpdatedAt() {
@@ -288,13 +288,13 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * last updated.
+     * The time, in seconds since the epoch, when the job execution was last
+     * updated.
      * </p>
      *
      * @param lastUpdatedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            execution was last updated.
+     *            The time, in seconds since the epoch, when the job execution
+     *            was last updated.
      *            </p>
      */
     public void setLastUpdatedAt(java.util.Date lastUpdatedAt) {
@@ -303,16 +303,16 @@ public class JobExecutionSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job execution was
-     * last updated.
+     * The time, in seconds since the epoch, when the job execution was last
+     * updated.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastUpdatedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            execution was last updated.
+     *            The time, in seconds since the epoch, when the job execution
+     *            was last updated.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -383,6 +383,57 @@ public class JobExecutionSummary implements Serializable {
     }
 
     /**
+     * <p>
+     * The number that indicates how many retry attempts have been completed for
+     * this job on this device.
+     * </p>
+     *
+     * @return <p>
+     *         The number that indicates how many retry attempts have been
+     *         completed for this job on this device.
+     *         </p>
+     */
+    public Integer getRetryAttempt() {
+        return retryAttempt;
+    }
+
+    /**
+     * <p>
+     * The number that indicates how many retry attempts have been completed for
+     * this job on this device.
+     * </p>
+     *
+     * @param retryAttempt <p>
+     *            The number that indicates how many retry attempts have been
+     *            completed for this job on this device.
+     *            </p>
+     */
+    public void setRetryAttempt(Integer retryAttempt) {
+        this.retryAttempt = retryAttempt;
+    }
+
+    /**
+     * <p>
+     * The number that indicates how many retry attempts have been completed for
+     * this job on this device.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param retryAttempt <p>
+     *            The number that indicates how many retry attempts have been
+     *            completed for this job on this device.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public JobExecutionSummary withRetryAttempt(Integer retryAttempt) {
+        this.retryAttempt = retryAttempt;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -402,7 +453,9 @@ public class JobExecutionSummary implements Serializable {
         if (getLastUpdatedAt() != null)
             sb.append("lastUpdatedAt: " + getLastUpdatedAt() + ",");
         if (getExecutionNumber() != null)
-            sb.append("executionNumber: " + getExecutionNumber());
+            sb.append("executionNumber: " + getExecutionNumber() + ",");
+        if (getRetryAttempt() != null)
+            sb.append("retryAttempt: " + getRetryAttempt());
         sb.append("}");
         return sb.toString();
     }
@@ -419,6 +472,8 @@ public class JobExecutionSummary implements Serializable {
                 + ((getLastUpdatedAt() == null) ? 0 : getLastUpdatedAt().hashCode());
         hashCode = prime * hashCode
                 + ((getExecutionNumber() == null) ? 0 : getExecutionNumber().hashCode());
+        hashCode = prime * hashCode
+                + ((getRetryAttempt() == null) ? 0 : getRetryAttempt().hashCode());
         return hashCode;
     }
 
@@ -455,6 +510,11 @@ public class JobExecutionSummary implements Serializable {
             return false;
         if (other.getExecutionNumber() != null
                 && other.getExecutionNumber().equals(this.getExecutionNumber()) == false)
+            return false;
+        if (other.getRetryAttempt() == null ^ this.getRetryAttempt() == null)
+            return false;
+        if (other.getRetryAttempt() != null
+                && other.getRetryAttempt().equals(this.getRetryAttempt()) == false)
             return false;
         return true;
     }

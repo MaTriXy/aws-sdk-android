@@ -17,24 +17,30 @@
 
 package com.amazonaws.mobileconnectors.cognitoauth;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.customtabs.CustomTabsCallback;
-import android.support.customtabs.CustomTabsClient;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.customtabs.CustomTabsServiceConnection;
-import android.support.customtabs.CustomTabsSession;
+import androidx.browser.customtabs.CustomTabsClient;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsServiceConnection;
+import androidx.browser.customtabs.CustomTabsSession;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.amazonaws.cognito.clientcontext.data.UserContextDataProvider;
+import com.amazonaws.mobileconnectors.cognitoauth.activities.CustomTabsManagerActivity;
+import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthClientException;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthInvalidGrantException;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthNavigationException;
 import com.amazonaws.mobileconnectors.cognitoauth.exceptions.AuthServiceException;
+import com.amazonaws.mobileconnectors.cognitoauth.exceptions.BrowserNotInstalledException;
 import com.amazonaws.mobileconnectors.cognitoauth.util.AuthHttpResponseParser;
 import com.amazonaws.mobileconnectors.cognitoauth.handlers.AuthHandler;
 import com.amazonaws.mobileconnectors.cognitoauth.util.ClientConstants;
@@ -44,9 +50,15 @@ import com.amazonaws.mobileconnectors.cognitoauth.util.LocalDataManager;
 
 import java.net.URL;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import static androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION;
 
 /**
  * Local client for {@link Auth}.
@@ -59,6 +71,32 @@ import java.util.Set;
 
 @SuppressWarnings("checkstyle:javadocmethod")
 public class AuthClient {
+    /**
+     * A random code the custom tabs activity is launched under.
+     * This is needed by clients to listen for the result.
+     */
+    public static final int CUSTOM_TABS_ACTIVITY_CODE = 49281;
+
+    /**
+     * Namespace for logging client activities
+     */
+    private static final String TAG = AuthClient.class.getSimpleName();
+
+    /**
+     * Name of redirect activity in charge of handling auth responses.
+     */
+    private static final String REDIRECT_ACTIVITY_NAME = "HostedUIRedirectActivity";
+
+    /**
+     * Default timeout duration for auth redirects.
+     */
+    private static final long REDIRECT_TIMEOUT_SECONDS = 10;
+
+    /**
+     * Message returned for a bad request.
+     */
+    private static final String BAD_REQUEST_ERROR = "invalid_request";
+
     /**
      * Android application context.
      */
@@ -94,11 +132,33 @@ public class AuthClient {
      */
     private AuthHandler userHandler;
 
+    /**
+     * Remembers whether redirect activity was found in manifest or not.
+     */
+    private boolean isRedirectActivityDeclared;
+
+    /**
+     * Cache whether browser is installed on the device.
+     */
+    private boolean isBrowserInstalled;
+
+    /**
+     * Cache whether there is browser that supports custom tabs on the device.
+     */
+    private boolean isCustomTabSupported;
+
+    /**
+     * Cache the packageName of the custom-tabs-service that should be used.
+     */
+    private String customTabsPackageName;
+
     // - Chrome Custom Tabs Controls
     private CustomTabsClient mCustomTabsClient;
     private CustomTabsSession mCustomTabsSession;
     private CustomTabsIntent mCustomTabsIntent;
     private CustomTabsServiceConnection mCustomTabsServiceConnection;
+
+    private CountDownLatch cookiesCleared;
 
     /**
      * Constructs {@link AuthClient} with no user name.
@@ -119,7 +179,12 @@ public class AuthClient {
         this.context = context;
         this.pool = pool;
         this.userId = username;
-        preWarmChrome();
+        this.isRedirectActivityDeclared = false;
+        this.isBrowserInstalled = false;
+        this.isCustomTabSupported = false;
+        if (isCustomTabSupported()) {
+            preWarmCustomTabs();
+        }
     }
 
     /**
@@ -152,8 +217,31 @@ public class AuthClient {
      *     To exchange the code for tokens, the {@link Auth#getTokens(Uri)} method will use the
      *     state in the redirect uri to fetch the stored proof-key.
      * </p>
+     * @param showSignInIfExpired true if the web UI should launch when the session is expired
+     * @param activity The activity to launch the sign in experience from.
+     *                 This must not be null when showSignInIfExpired is true.
      */
-    protected void getSession() {
+    protected void getSession(final boolean showSignInIfExpired, final Activity activity) {
+        getSession(showSignInIfExpired, activity, null);
+    }
+
+    /**
+     * Launches user authentication screen and returns a redirect Uri through an {@link Intent}.
+     * <p>
+     *     Checks for cached, valid tokens and launches the Cognito Web UI if no valid tokens are
+     *     found. This method uses PKCE for authentication. This SDK, therefore, uses code-grant flow
+     *     to authenticate user. The proof-key and a state is generated and its hash is used in added
+     *     as query parameters to create the authentication FQDN.
+     *     The state value set this method is used to temporarily cache the proof-key on the device.
+     *     To exchange the code for tokens, the {@link Auth#getTokens(Uri)} method will use the
+     *     state in the redirect uri to fetch the stored proof-key.
+     * </p>
+     * @param showSignInIfExpired true if the web UI should launch when the session is expired
+     * @param activity The activity to launch the sign in experience from.
+     *                 This must not be null when showSignInIfExpired is true.
+     * @param browserPackage String specifying the browser package to launch the specified url.
+     */
+    protected void getSession(final boolean showSignInIfExpired, final Activity activity, final String browserPackage) {
         try {
             proofKey = Pkce.generateRandom();
             proofKeyHash = Pkce.generateHash(proofKey);
@@ -164,7 +252,7 @@ public class AuthClient {
 
         // Look for cached tokens
         AuthUserSession session =
-                LocalDataManager.getCachedSession(context, pool.getAppId(), userId, pool.getScopes());
+                LocalDataManager.getCachedSession(pool.awsKeyValueStore, context, pool.getAppId(), userId, pool.getScopes());
 
         // Check if the session is valid and returns tokens
         if (session.isValidForThreshold()) {
@@ -174,9 +262,18 @@ public class AuthClient {
 
         // Try refreshing the tokens
         if (session.getRefreshToken() != null && session.getRefreshToken().getToken() != null) {
-            refreshSession(session, pool.getSignInRedirectUri(), pool.getScopes(), userHandler);
+            refreshSession(
+                    session,
+                    pool.getSignInRedirectUri(),
+                    pool.getScopes(),
+                    userHandler,
+                    showSignInIfExpired,
+                    browserPackage,
+                    activity);
+        } else if (showSignInIfExpired) {
+            launchCognitoAuth(pool.getSignInRedirectUri(), pool.getScopes(), activity, browserPackage);
         } else {
-            launchCognitoAuth(pool.getSignInRedirectUri(), pool.getScopes());
+            userHandler.onFailure(new Exception("No cached session"));
         }
     }
 
@@ -195,8 +292,77 @@ public class AuthClient {
      * </p>
      */
     public void signOut() {
-        LocalDataManager.clearCache(context, pool.getAppId(), userId);
-        launchSignOut(pool.getSignOutRedirectUri());
+        signOut(null);
+    }
+
+    /**
+     * Signs-out a user.
+     * <p>
+     *     Clears cached tokens for the user. Launches the sign-out Cognito web end-point to
+     *     clear all Cognito Auth cookies stored by Chrome.
+     * </p>
+     *
+     * @param browserPackage String specifying the browser package to launch the specified url.
+     */
+    public void signOut(String browserPackage) {
+        signOut(false, browserPackage);
+    }
+
+    /**
+     * Signs-out a user.
+     * <p>
+     *     Clears cached tokens for the user. Launches the sign-out Cognito web end-point to
+     *     clear all Cognito Auth cookies stored by Chrome.
+     * </p>
+     *
+     * @param clearLocalTokensOnly true if signs out the user from the client,
+     *                             but the session may still be alive from the browser.
+     */
+    public void signOut(final boolean clearLocalTokensOnly) {
+        signOut(clearLocalTokensOnly, null);
+    }
+
+    /**
+     * Signs-out a user.
+     * <p>
+     *     Launches the sign-out Cognito web end-point to clear all Cognito Auth cookies stored
+     *     by Chrome. Cached tokens will be deleted if sign-out redirect is completed.
+     * </p>
+     *
+     * @param clearLocalTokensOnly true if signs out the user from the client,
+     *                             but the session may still be alive from the browser.
+     * @param browserPackage String specifying the browser package to launch the specified url.
+     */
+    public void signOut(final boolean clearLocalTokensOnly, final String browserPackage) {
+        if (!clearLocalTokensOnly) {
+            endSession(browserPackage);
+        }
+
+        // Delete local cache
+        LocalDataManager.clearCache(pool.awsKeyValueStore, context, pool.getAppId(), userId);
+        userId = null;
+    }
+
+    /**
+     * Ends current browser session.
+     * @param browserPackage browser package to launch sign-out endpoint from.
+     * @throws AuthClientException if sign-out redirect fails to resolve.
+     */
+    private void endSession(final String browserPackage) throws AuthClientException {
+        boolean redirectReceived;
+        try {
+            cookiesCleared = new CountDownLatch(1);
+            launchSignOut(pool.getSignOutRedirectUri(), browserPackage);
+            if (!isRedirectActivityDeclared()) {
+                cookiesCleared.countDown();
+            }
+            redirectReceived = cookiesCleared.await(REDIRECT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            throw new AuthNavigationException("User cancelled sign-out.");
+        }
+        if (!redirectReceived) {
+            throw new AuthServiceException("Timed out while waiting for sign-out redirect response.");
+        }
     }
 
     /**
@@ -205,7 +371,7 @@ public class AuthClient {
     @SuppressWarnings("checkstyle:hiddenfield")
     public boolean isAuthenticated() {
         AuthUserSession session =
-                LocalDataManager.getCachedSession(context, pool.getAppId(), userId, pool.getScopes());
+                LocalDataManager.getCachedSession(pool.awsKeyValueStore, context, pool.getAppId(), userId, pool.getScopes());
         return session.isValidForThreshold();
     }
 
@@ -219,6 +385,22 @@ public class AuthClient {
             return;
         }
         getTokens(uri, userHandler);
+    }
+
+    /**
+     * Properly handles the event where the user cancels out of the custom tabs auth flow either by closing it
+     * or navigating back away from it.
+     */
+    public void handleCustomTabsCancelled() {
+        userHandler.onFailure(new AuthNavigationException("user cancelled"));
+    }
+
+    /**
+     * Unbind {@link AuthClient#mCustomTabsServiceConnection}
+     */
+    public void unbindServiceConnection() {
+        if(mCustomTabsServiceConnection != null)
+            context.unbindService(mCustomTabsServiceConnection);
     }
 
     /**
@@ -262,8 +444,8 @@ public class AuthClient {
                         uri.getQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_STATE);
 
                 if (callbackState != null) {
-                    Set<String> tokenScopes = LocalDataManager.getCachedScopes(context, callbackState);
-                    String proofKeyPlain = LocalDataManager.getCachedProofKey(context, callbackState);
+                    Set<String> tokenScopes = LocalDataManager.getCachedScopes(pool.awsKeyValueStore, context, callbackState);
+                    String proofKeyPlain = LocalDataManager.getCachedProofKey(pool.awsKeyValueStore, context, callbackState);
 
                     if (proofKeyPlain == null) {
                         // The state value is unknown, exit.
@@ -274,10 +456,17 @@ public class AuthClient {
                             uri.getQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_ERROR);
 
                     if (errorText != null) {
+                        final String errorDescription = uri.getQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_ERROR_DESCRIPTION);
+                        final String errorMessage;
+                        if (errorText.equals(BAD_REQUEST_ERROR) && errorDescription != null) {
+                            errorMessage = errorDescription.trim();
+                        } else {
+                            errorMessage = errorText;
+                        }
                         returnCallback = new Runnable() {
                             @Override
                             public void run() {
-                                callback.onFailure(new AuthServiceException(errorText));
+                                callback.onFailure(new AuthServiceException(errorMessage));
                             }
                         };
                     } else {
@@ -293,7 +482,7 @@ public class AuthClient {
                             userId = session.getUsername();
 
                             // Cache tokens if successful
-                            LocalDataManager.cacheSession(context, pool.getAppId(), userId, session, tokenScopes);
+                            LocalDataManager.cacheSession(pool.awsKeyValueStore, context, pool.getAppId(), userId, session, tokenScopes);
 
                             // Return tokens
                             returnCallback = new Runnable() {
@@ -312,6 +501,11 @@ public class AuthClient {
                         }
                     }
                 } else {
+                    if (cookiesCleared != null) {
+                        cookiesCleared.countDown();
+                        Log.d(TAG, "Sign-out was successful.");
+                    }
+
                     // User sign-out.
                     returnCallback = new Runnable() {
                         @Override
@@ -335,19 +529,22 @@ public class AuthClient {
      * @param redirectUri Required: The redirect Uri, which will be launched after authentication.
      * @param tokenScopes Required: A {@link Set<String>} specifying all scopes for the tokens.
      * @param callback Required: {@link AuthHandler}.
+     * @param showSignInIfExpired true if the web UI should launch when the refresh token is expired
+     * @param browserPackage String specifying the browser package to launch the specified url.
+     * @param activity The activity to launch the sign in experience from.
+     *                 This must not be null if showSignInIfExpired is true.
      */
     private void refreshSession(final AuthUserSession session,
                                 final String redirectUri,
                                 final Set<String> tokenScopes,
-                                final AuthHandler callback) {
+                                final AuthHandler callback,
+                                final boolean showSignInIfExpired,
+                                final String browserPackage,
+                                final Activity activity) {
         new Thread(new Runnable() {
             final Handler handler = new Handler(context.getMainLooper());
-            Runnable returnCallback = new Runnable() {
-                @Override
-                public void run() {
-                    launchCognitoAuth(redirectUri, tokenScopes);
-                }
-            };
+            Runnable returnCallback;
+
             @Override
             public void run() {
                 final Uri fqdn = new Uri.Builder()
@@ -373,7 +570,7 @@ public class AuthClient {
                     final String username = refreshedSession.getUsername();
 
                     // Cache session
-                    LocalDataManager.cacheSession(context, pool.getAppId(), username, refreshedSession, pool.getScopes());
+                    LocalDataManager.cacheSession(pool.awsKeyValueStore, context, pool.getAppId(), username, refreshedSession, pool.getScopes());
 
                     // Return tokens
                     returnCallback = new Runnable() {
@@ -383,12 +580,21 @@ public class AuthClient {
                         }
                     };
                 } catch (final AuthInvalidGrantException invg) {
-                    returnCallback = new Runnable() {
-                        @Override
-                        public void run() {
-                            launchCognitoAuth(redirectUri, tokenScopes);
-                        }
-                    };
+                    if (showSignInIfExpired) {
+                        returnCallback = new Runnable() {
+                            @Override
+                            public void run() {
+                                launchCognitoAuth(redirectUri, tokenScopes, activity, browserPackage);
+                            }
+                        };
+                    } else {
+                        returnCallback = new Runnable() {
+                            @Override
+                            public void run() {
+                                userHandler.onFailure(invg);
+                            }
+                        };
+                    }
                 } catch (final Exception e) {
                     returnCallback = new Runnable() {
                         @Override
@@ -453,16 +659,26 @@ public class AuthClient {
         httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_REDIRECT_URI, redirectUri);
         httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_CLIENT_ID, pool.getAppId());
         httpBodyParams.put(ClientConstants.HTTP_REQUEST_REFRESH_TOKEN, session.getRefreshToken().getToken());
-        httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_USERCONTEXTDATA, getUserContextData());
-        return  httpBodyParams;
+        final String userContextData = getUserContextData();
+        if (userContextData != null) {
+            httpBodyParams.put(ClientConstants.DOMAIN_QUERY_PARAM_USERCONTEXTDATA, userContextData);
+        }
+        return httpBodyParams;
     }
 
     /**
      * Creates the FQDM for Cognito's authentication endpoint and launches Cognito Auth web-domain.
      * @param redirectUri Required: The redirect Uri, which will be launched after authentication.
      * @param tokenScopes Required: A {@link Set<String>} specifying all scopes for the tokens.
+     * @param activity The activity to launch the sign in experience from.
+     *                 This must not be null if showSignInIfExpired is true.
+     * @param browserPackage String specifying the browser package to launch the specified url.
      */
-    private void launchCognitoAuth(final String redirectUri, final Set<String> tokenScopes) {
+    private void launchCognitoAuth(
+            final String redirectUri,
+            final Set<String> tokenScopes,
+            final Activity activity,
+            final String browserPackage) {
         // Build the complete web domain to launch the login screen
         Uri.Builder builder = new Uri.Builder()
                 .scheme(ClientConstants.DOMAIN_SCHEME)
@@ -504,42 +720,120 @@ public class AuthClient {
         }
 
         final Uri fqdn = builder.build();
-        LocalDataManager.cacheState(context, state, proofKey, tokenScopes);
-        launchCustomTabs(fqdn);
+        LocalDataManager.cacheState(pool.awsKeyValueStore, context, state, proofKey, tokenScopes);
+        launchCustomTabs(fqdn, activity, browserPackage);
     }
 
     /**
      * Creates the FQDM for Cognito's sign-out endpoint and launches Cognito Auth Web-Domain to
      * sign-out.
      * @param redirectUri Required: The redirect Uri, which will be launched after authentication.
+     * @param browserPackage String specifying the browser package to launch the specified url.
      */
-    private void launchSignOut(final String redirectUri) {
+    private void launchSignOut(final String redirectUri, final String browserPackage) {
         Uri.Builder builder = new Uri.Builder()
                 .scheme(ClientConstants.DOMAIN_SCHEME)
                 .authority(pool.getAppWebDomain()).appendPath(ClientConstants.DOMAIN_PATH_SIGN_OUT)
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_CLIENT_ID, pool.getAppId())
                 .appendQueryParameter(ClientConstants.DOMAIN_QUERY_PARAM_LOGOUT_URI, redirectUri);
         final Uri fqdn = builder.build();
-        launchCustomTabs(fqdn);
+        launchCustomTabs(fqdn, null, browserPackage);
+    }
+
+    /***
+     * Check if a browser is installed on the device to launch HostedUI.
+     * @return true if a browser exists else false.
+     */
+    private boolean isBrowserInstalled() {
+        if (isBrowserInstalled) {
+            return true;
+        }
+        String url = "https://docs.amplify.aws/";
+        Uri webAddress = Uri.parse(url);
+        Intent intentWeb = new Intent(Intent.ACTION_VIEW, webAddress);
+        if (intentWeb.resolveActivity(context.getPackageManager()) != null) {
+            isBrowserInstalled = true;
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Launches App's Cognito webpage on Chrome Tab.
-     * @param uri Required: {@link Uri}.
+     * Get list of packages that support Custom Tabs Service.
+     * @return list of package names that support Custom Tabs.
      */
-    private void launchCustomTabs(final Uri uri) {
+    private List<String> getSupportedCustomTabsPackages() {
+        PackageManager packageManager = context.getPackageManager();
+        Intent serviceIntent = new Intent()
+                .setAction(ACTION_CUSTOM_TABS_CONNECTION);
+
+        // Get all services that can handle ACTION_CUSTOM_TABS_CONNECTION intents.
+        List<ResolveInfo> resolvedServicesList = packageManager.queryIntentServices(serviceIntent, 0);
+        List<String> packageNamesSupportingCustomTabs = new ArrayList<>();
+        for (ResolveInfo info : resolvedServicesList) {
+            packageNamesSupportingCustomTabs.add(info.serviceInfo.packageName);
+        }
+        return packageNamesSupportingCustomTabs;
+    }
+
+    /***
+     * Check if there are any browsers on the device that support custom tabs.
+     * @return true if custom tabs is supported by any browsers on the device else false.
+     */
+    private boolean isCustomTabSupported() {
+        if (isCustomTabSupported) {
+            return true;
+        }
+        List<String> supportedCustomTabsPackages = getSupportedCustomTabsPackages();
+        if (supportedCustomTabsPackages.size() > 0) {
+            isCustomTabSupported = true;
+            // get the preferred Custom Tabs package
+            customTabsPackageName = CustomTabsClient.getPackageName(
+                    context,
+                    supportedCustomTabsPackages
+            );
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Launches the HostedUI webpage on a Custom Tab.
+     * @param uri Required: {@link Uri}.
+     * @param activity Activity to launch custom tabs from and which will listen for the intent completion.
+     * @param browserPackage Optional string specifying the browser package to launch the specified url.
+     *                       Launches intent chooser if set to null.
+     */
+    private void launchCustomTabs(final Uri uri, final Activity activity, final String browserPackage) {
     	try {
-	        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(mCustomTabsSession);
-	        mCustomTabsIntent = builder.build();
-	        if(pool.getCustomTabExtras() != null)
-	            mCustomTabsIntent.intent.putExtras(pool.getCustomTabExtras());
-	        mCustomTabsIntent.intent.setPackage(ClientConstants.CHROME_PACKAGE);
-	        mCustomTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-	        mCustomTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	        mCustomTabsIntent.launchUrl(context, uri);
+            if(!isBrowserInstalled()) {
+                userHandler.onFailure(new BrowserNotInstalledException("No browsers installed."));
+                return;
+            }
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(mCustomTabsSession);
+            mCustomTabsIntent = builder.build();
+            if(pool.getCustomTabExtras() != null) {
+                mCustomTabsIntent.intent.putExtras(pool.getCustomTabExtras());
+            }
+            if(browserPackage != null) {
+                mCustomTabsIntent.intent.setPackage(browserPackage);
+            } else if (customTabsPackageName != null) {
+                mCustomTabsIntent.intent.setPackage(customTabsPackageName);
+            }
+            mCustomTabsIntent.intent.setData(uri);
+            if (activity != null) {
+                activity.startActivityForResult(
+                    CustomTabsManagerActivity.createStartIntent(context, mCustomTabsIntent.intent),
+                    CUSTOM_TABS_ACTIVITY_CODE
+                );
+            } else {
+                Intent startIntent = CustomTabsManagerActivity.createStartIntent(context, mCustomTabsIntent.intent);
+                startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(startIntent);
+            }
     	} catch (final Exception e) {
-    		userHandler.onFailure(e);
-    	}
+            userHandler.onFailure(e);
+        }
     }
 
     private String getUserContextData() {
@@ -553,15 +847,18 @@ public class AuthClient {
     }
 
     /**
-     * Connects to Chrome Service on the device.
+     * Connects to Custom Tabs Service on the device.
      */
-    private void preWarmChrome() {
+    private void preWarmCustomTabs() {
+        if (customTabsPackageName == null) {
+            return;
+        }
         mCustomTabsServiceConnection = new CustomTabsServiceConnection() {
             @Override
             public void onCustomTabsServiceConnected(final ComponentName name, final CustomTabsClient client) {
                 mCustomTabsClient = client;
                 mCustomTabsClient.warmup(0L);
-                mCustomTabsSession = mCustomTabsClient.newSession(customTabsCallback);
+                mCustomTabsSession = mCustomTabsClient.newSession(null);
             }
 
             @Override
@@ -569,20 +866,42 @@ public class AuthClient {
                 mCustomTabsClient = null;
             }
         };
-        boolean chromeState = CustomTabsClient.bindCustomTabsService(context,
-                ClientConstants.CHROME_PACKAGE, mCustomTabsServiceConnection);
+        CustomTabsClient.bindCustomTabsService(
+                context,
+                customTabsPackageName,
+                mCustomTabsServiceConnection
+        );
     }
 
-    /**
-     * Callback for Custom Tabs to track navigation.
-     */
-    private final CustomTabsCallback customTabsCallback = new CustomTabsCallback() {
-        @Override
-        public void onNavigationEvent(final int navigationEvent, final Bundle extras) {
-            super.onNavigationEvent(navigationEvent, extras);
-            if (navigationEvent == ClientConstants.CHROME_NAVIGATION_CANCELLED) {
-                userHandler.onFailure(new AuthNavigationException("user cancelled"));
-            }
+    // Inspects context to determine whether HostedUIRedirectActivity is declared in
+    // customer's AndroidManifest.xml.
+    private boolean isRedirectActivityDeclared() {
+        // If the activity was found at least once, then don't bother searching again.
+        if (isRedirectActivityDeclared) {
+            return true;
         }
-    };
+        if (context == null) {
+            Log.w(TAG, "Context is null. Failed to inspect packages.");
+            return false;
+        }
+        try {
+            List<PackageInfo> packages = context.getPackageManager()
+                    .getInstalledPackages(PackageManager.GET_ACTIVITIES);
+            for (PackageInfo packageInfo : packages) {
+                if (packageInfo.activities == null) {
+                    continue;
+                }
+                for (ActivityInfo activityInfo : packageInfo.activities) {
+                    if (activityInfo.name.contains(REDIRECT_ACTIVITY_NAME)) {
+                        isRedirectActivityDeclared = true;
+                        return true;
+                    }
+                }
+            }
+            Log.w(TAG, REDIRECT_ACTIVITY_NAME + " is not declared in AndroidManifest.");
+        } catch (Exception error) {
+            Log.w(TAG, "Failed to inspect packages.");
+        }
+        return false;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.iot.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -121,6 +124,55 @@ public class CreateJobRequestMarshaller implements
                 for (Tag tagsItem : tags) {
                     if (tagsItem != null) {
                         TagJsonMarshaller.getInstance().marshall(tagsItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
+            }
+            if (createJobRequest.getNamespaceId() != null) {
+                String namespaceId = createJobRequest.getNamespaceId();
+                jsonWriter.name("namespaceId");
+                jsonWriter.value(namespaceId);
+            }
+            if (createJobRequest.getJobTemplateArn() != null) {
+                String jobTemplateArn = createJobRequest.getJobTemplateArn();
+                jsonWriter.name("jobTemplateArn");
+                jsonWriter.value(jobTemplateArn);
+            }
+            if (createJobRequest.getJobExecutionsRetryConfig() != null) {
+                JobExecutionsRetryConfig jobExecutionsRetryConfig = createJobRequest
+                        .getJobExecutionsRetryConfig();
+                jsonWriter.name("jobExecutionsRetryConfig");
+                JobExecutionsRetryConfigJsonMarshaller.getInstance().marshall(
+                        jobExecutionsRetryConfig, jsonWriter);
+            }
+            if (createJobRequest.getDocumentParameters() != null) {
+                java.util.Map<String, String> documentParameters = createJobRequest
+                        .getDocumentParameters();
+                jsonWriter.name("documentParameters");
+                jsonWriter.beginObject();
+                for (java.util.Map.Entry<String, String> documentParametersEntry : documentParameters
+                        .entrySet()) {
+                    String documentParametersValue = documentParametersEntry.getValue();
+                    if (documentParametersValue != null) {
+                        jsonWriter.name(documentParametersEntry.getKey());
+                        jsonWriter.value(documentParametersValue);
+                    }
+                }
+                jsonWriter.endObject();
+            }
+            if (createJobRequest.getSchedulingConfig() != null) {
+                SchedulingConfig schedulingConfig = createJobRequest.getSchedulingConfig();
+                jsonWriter.name("schedulingConfig");
+                SchedulingConfigJsonMarshaller.getInstance().marshall(schedulingConfig, jsonWriter);
+            }
+            if (createJobRequest.getDestinationPackageVersions() != null) {
+                java.util.List<String> destinationPackageVersions = createJobRequest
+                        .getDestinationPackageVersions();
+                jsonWriter.name("destinationPackageVersions");
+                jsonWriter.beginArray();
+                for (String destinationPackageVersionsItem : destinationPackageVersions) {
+                    if (destinationPackageVersionsItem != null) {
+                        jsonWriter.value(destinationPackageVersionsItem);
                     }
                 }
                 jsonWriter.endArray();

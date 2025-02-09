@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,17 +21,36 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Gets a key policy attached to the specified customer master key (CMK). You
- * cannot perform this operation on a CMK in a different AWS account.
+ * Gets a key policy attached to the specified KMS key.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a KMS key
+ * in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:GetKeyPolicy</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/APIReference/API_PutKeyPolicy.html"
+ * >PutKeyPolicy</a>
+ * </p>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Gets the key policy for the specified KMS key.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -50,7 +69,7 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -61,7 +80,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Specifies the name of the key policy. The only valid name is
+     * Specifies the name of the key policy. If no policy name is specified, the
+     * default value is <code>default</code>. The only valid name is
      * <code>default</code>. To get the names of key policies, use
      * <a>ListKeyPolicies</a>.
      * </p>
@@ -74,10 +94,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Gets the key policy for the specified KMS key.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -96,7 +116,7 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -104,10 +124,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         A unique identifier for the customer master key (CMK).
+     *         Gets the key policy for the specified KMS key.
      *         </p>
      *         <p>
-     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         Specify the key ID or key ARN of the KMS key.
      *         </p>
      *         <p>
      *         For example:
@@ -126,8 +146,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      *         </li>
      *         </ul>
      *         <p>
-     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
-     *         <a>DescribeKey</a>.
+     *         To get the key ID and key ARN for a KMS key, use <a>ListKeys</a>
+     *         or <a>DescribeKey</a>.
      *         </p>
      */
     public String getKeyId() {
@@ -136,10 +156,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Gets the key policy for the specified KMS key.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -158,7 +178,7 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -166,11 +186,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Gets the key policy for the specified KMS key.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -189,8 +208,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -199,10 +218,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Gets the key policy for the specified KMS key.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -221,7 +240,7 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -232,11 +251,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Gets the key policy for the specified KMS key.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -255,8 +273,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -268,7 +286,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Specifies the name of the key policy. The only valid name is
+     * Specifies the name of the key policy. If no policy name is specified, the
+     * default value is <code>default</code>. The only valid name is
      * <code>default</code>. To get the names of key policies, use
      * <a>ListKeyPolicies</a>.
      * </p>
@@ -278,9 +297,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * <b>Pattern: </b>[\w]+<br/>
      *
      * @return <p>
-     *         Specifies the name of the key policy. The only valid name is
-     *         <code>default</code>. To get the names of key policies, use
-     *         <a>ListKeyPolicies</a>.
+     *         Specifies the name of the key policy. If no policy name is
+     *         specified, the default value is <code>default</code>. The only
+     *         valid name is <code>default</code>. To get the names of key
+     *         policies, use <a>ListKeyPolicies</a>.
      *         </p>
      */
     public String getPolicyName() {
@@ -289,7 +309,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Specifies the name of the key policy. The only valid name is
+     * Specifies the name of the key policy. If no policy name is specified, the
+     * default value is <code>default</code>. The only valid name is
      * <code>default</code>. To get the names of key policies, use
      * <a>ListKeyPolicies</a>.
      * </p>
@@ -299,9 +320,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * <b>Pattern: </b>[\w]+<br/>
      *
      * @param policyName <p>
-     *            Specifies the name of the key policy. The only valid name is
-     *            <code>default</code>. To get the names of key policies, use
-     *            <a>ListKeyPolicies</a>.
+     *            Specifies the name of the key policy. If no policy name is
+     *            specified, the default value is <code>default</code>. The only
+     *            valid name is <code>default</code>. To get the names of key
+     *            policies, use <a>ListKeyPolicies</a>.
      *            </p>
      */
     public void setPolicyName(String policyName) {
@@ -310,7 +332,8 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
 
     /**
      * <p>
-     * Specifies the name of the key policy. The only valid name is
+     * Specifies the name of the key policy. If no policy name is specified, the
+     * default value is <code>default</code>. The only valid name is
      * <code>default</code>. To get the names of key policies, use
      * <a>ListKeyPolicies</a>.
      * </p>
@@ -323,9 +346,10 @@ public class GetKeyPolicyRequest extends AmazonWebServiceRequest implements Seri
      * <b>Pattern: </b>[\w]+<br/>
      *
      * @param policyName <p>
-     *            Specifies the name of the key policy. The only valid name is
-     *            <code>default</code>. To get the names of key policies, use
-     *            <a>ListKeyPolicies</a>.
+     *            Specifies the name of the key policy. If no policy name is
+     *            specified, the default value is <code>default</code>. The only
+     *            valid name is <code>default</code>. To get the names of key
+     *            policies, use <a>ListKeyPolicies</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

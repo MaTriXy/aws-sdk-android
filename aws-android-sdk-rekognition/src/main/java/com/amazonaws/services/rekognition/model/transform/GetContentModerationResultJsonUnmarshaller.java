@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,17 +52,23 @@ public class GetContentModerationResultJsonUnmarshaller implements
             } else if (name.equals("NextToken")) {
                 getContentModerationResult.setNextToken(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("BillableDurationSeconds")) {
-                getContentModerationResult.setBillableDurationSeconds(IntegerJsonUnmarshaller
+            } else if (name.equals("ModerationModelVersion")) {
+                getContentModerationResult.setModerationModelVersion(StringJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
-            } else if (name.equals("ErrorCode")) {
-                getContentModerationResult.setErrorCode(StringJsonUnmarshaller.getInstance()
+            } else if (name.equals("JobId")) {
+                getContentModerationResult.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("Warnings")) {
-                getContentModerationResult.setWarnings(new ListUnmarshaller<Warning>(
-                        WarningJsonUnmarshaller.getInstance()
-                        )
+            } else if (name.equals("Video")) {
+                getContentModerationResult.setVideo(VideoJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("JobTag")) {
+                getContentModerationResult.setJobTag(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("GetRequestMetadata")) {
+                getContentModerationResult
+                        .setGetRequestMetadata(GetContentModerationRequestMetadataJsonUnmarshaller
+                                .getInstance()
                                 .unmarshall(context));
             } else {
                 reader.skipValue();

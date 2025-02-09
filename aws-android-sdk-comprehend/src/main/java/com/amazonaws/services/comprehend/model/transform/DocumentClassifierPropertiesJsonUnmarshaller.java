@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,6 +68,11 @@ class DocumentClassifierPropertiesJsonUnmarshaller implements
                         .setInputDataConfig(DocumentClassifierInputDataConfigJsonUnmarshaller
                                 .getInstance()
                                 .unmarshall(context));
+            } else if (name.equals("OutputDataConfig")) {
+                documentClassifierProperties
+                        .setOutputDataConfig(DocumentClassifierOutputDataConfigJsonUnmarshaller
+                                .getInstance()
+                                .unmarshall(context));
             } else if (name.equals("ClassifierMetadata")) {
                 documentClassifierProperties
                         .setClassifierMetadata(ClassifierMetadataJsonUnmarshaller.getInstance()
@@ -75,6 +80,27 @@ class DocumentClassifierPropertiesJsonUnmarshaller implements
             } else if (name.equals("DataAccessRoleArn")) {
                 documentClassifierProperties.setDataAccessRoleArn(StringJsonUnmarshaller
                         .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                documentClassifierProperties.setVolumeKmsKeyId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                documentClassifierProperties.setVpcConfig(VpcConfigJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("Mode")) {
+                documentClassifierProperties.setMode(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("ModelKmsKeyId")) {
+                documentClassifierProperties.setModelKmsKeyId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VersionName")) {
+                documentClassifierProperties.setVersionName(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("SourceModelArn")) {
+                documentClassifierProperties.setSourceModelArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("FlywheelArn")) {
+                documentClassifierProperties.setFlywheelArn(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

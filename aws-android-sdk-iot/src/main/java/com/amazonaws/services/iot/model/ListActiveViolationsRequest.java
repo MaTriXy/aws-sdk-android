@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Lists the active violations for a given Device Defender security profile.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListActiveViolations</a> action.
+ * </p>
  */
 public class ListActiveViolationsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -32,7 +37,6 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      */
     private String thingName;
 
@@ -47,6 +51,34 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      */
     private String securityProfileName;
+
+    /**
+     * <p>
+     * The criteria for a behavior.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>STATIC, STATISTICAL, MACHINE_LEARNING
+     */
+    private String behaviorCriteriaType;
+
+    /**
+     * <p>
+     * A list of all suppressed alerts.
+     * </p>
+     */
+    private Boolean listSuppressedAlerts;
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     */
+    private String verificationState;
 
     /**
      * <p>
@@ -72,7 +104,6 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @return <p>
      *         The name of the thing whose active violations are listed.
@@ -89,7 +120,6 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @param thingName <p>
      *            The name of the thing whose active violations are listed.
@@ -109,7 +139,6 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @param thingName <p>
      *            The name of the thing whose active violations are listed.
@@ -182,6 +211,264 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
      */
     public ListActiveViolationsRequest withSecurityProfileName(String securityProfileName) {
         this.securityProfileName = securityProfileName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The criteria for a behavior.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>STATIC, STATISTICAL, MACHINE_LEARNING
+     *
+     * @return <p>
+     *         The criteria for a behavior.
+     *         </p>
+     * @see BehaviorCriteriaType
+     */
+    public String getBehaviorCriteriaType() {
+        return behaviorCriteriaType;
+    }
+
+    /**
+     * <p>
+     * The criteria for a behavior.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>STATIC, STATISTICAL, MACHINE_LEARNING
+     *
+     * @param behaviorCriteriaType <p>
+     *            The criteria for a behavior.
+     *            </p>
+     * @see BehaviorCriteriaType
+     */
+    public void setBehaviorCriteriaType(String behaviorCriteriaType) {
+        this.behaviorCriteriaType = behaviorCriteriaType;
+    }
+
+    /**
+     * <p>
+     * The criteria for a behavior.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>STATIC, STATISTICAL, MACHINE_LEARNING
+     *
+     * @param behaviorCriteriaType <p>
+     *            The criteria for a behavior.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see BehaviorCriteriaType
+     */
+    public ListActiveViolationsRequest withBehaviorCriteriaType(String behaviorCriteriaType) {
+        this.behaviorCriteriaType = behaviorCriteriaType;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The criteria for a behavior.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>STATIC, STATISTICAL, MACHINE_LEARNING
+     *
+     * @param behaviorCriteriaType <p>
+     *            The criteria for a behavior.
+     *            </p>
+     * @see BehaviorCriteriaType
+     */
+    public void setBehaviorCriteriaType(BehaviorCriteriaType behaviorCriteriaType) {
+        this.behaviorCriteriaType = behaviorCriteriaType.toString();
+    }
+
+    /**
+     * <p>
+     * The criteria for a behavior.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>STATIC, STATISTICAL, MACHINE_LEARNING
+     *
+     * @param behaviorCriteriaType <p>
+     *            The criteria for a behavior.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see BehaviorCriteriaType
+     */
+    public ListActiveViolationsRequest withBehaviorCriteriaType(
+            BehaviorCriteriaType behaviorCriteriaType) {
+        this.behaviorCriteriaType = behaviorCriteriaType.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of all suppressed alerts.
+     * </p>
+     *
+     * @return <p>
+     *         A list of all suppressed alerts.
+     *         </p>
+     */
+    public Boolean isListSuppressedAlerts() {
+        return listSuppressedAlerts;
+    }
+
+    /**
+     * <p>
+     * A list of all suppressed alerts.
+     * </p>
+     *
+     * @return <p>
+     *         A list of all suppressed alerts.
+     *         </p>
+     */
+    public Boolean getListSuppressedAlerts() {
+        return listSuppressedAlerts;
+    }
+
+    /**
+     * <p>
+     * A list of all suppressed alerts.
+     * </p>
+     *
+     * @param listSuppressedAlerts <p>
+     *            A list of all suppressed alerts.
+     *            </p>
+     */
+    public void setListSuppressedAlerts(Boolean listSuppressedAlerts) {
+        this.listSuppressedAlerts = listSuppressedAlerts;
+    }
+
+    /**
+     * <p>
+     * A list of all suppressed alerts.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param listSuppressedAlerts <p>
+     *            A list of all suppressed alerts.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ListActiveViolationsRequest withListSuppressedAlerts(Boolean listSuppressedAlerts) {
+        this.listSuppressedAlerts = listSuppressedAlerts;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @return <p>
+     *         The verification state of the violation (detect alarm).
+     *         </p>
+     * @see VerificationState
+     */
+    public String getVerificationState() {
+        return verificationState;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @see VerificationState
+     */
+    public void setVerificationState(String verificationState) {
+        this.verificationState = verificationState;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see VerificationState
+     */
+    public ListActiveViolationsRequest withVerificationState(String verificationState) {
+        this.verificationState = verificationState;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @see VerificationState
+     */
+    public void setVerificationState(VerificationState verificationState) {
+        this.verificationState = verificationState.toString();
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see VerificationState
+     */
+    public ListActiveViolationsRequest withVerificationState(VerificationState verificationState) {
+        this.verificationState = verificationState.toString();
         return this;
     }
 
@@ -299,6 +586,12 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
             sb.append("thingName: " + getThingName() + ",");
         if (getSecurityProfileName() != null)
             sb.append("securityProfileName: " + getSecurityProfileName() + ",");
+        if (getBehaviorCriteriaType() != null)
+            sb.append("behaviorCriteriaType: " + getBehaviorCriteriaType() + ",");
+        if (getListSuppressedAlerts() != null)
+            sb.append("listSuppressedAlerts: " + getListSuppressedAlerts() + ",");
+        if (getVerificationState() != null)
+            sb.append("verificationState: " + getVerificationState() + ",");
         if (getNextToken() != null)
             sb.append("nextToken: " + getNextToken() + ",");
         if (getMaxResults() != null)
@@ -315,6 +608,12 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
         hashCode = prime * hashCode + ((getThingName() == null) ? 0 : getThingName().hashCode());
         hashCode = prime * hashCode
                 + ((getSecurityProfileName() == null) ? 0 : getSecurityProfileName().hashCode());
+        hashCode = prime * hashCode
+                + ((getBehaviorCriteriaType() == null) ? 0 : getBehaviorCriteriaType().hashCode());
+        hashCode = prime * hashCode
+                + ((getListSuppressedAlerts() == null) ? 0 : getListSuppressedAlerts().hashCode());
+        hashCode = prime * hashCode
+                + ((getVerificationState() == null) ? 0 : getVerificationState().hashCode());
         hashCode = prime * hashCode + ((getNextToken() == null) ? 0 : getNextToken().hashCode());
         hashCode = prime * hashCode + ((getMaxResults() == null) ? 0 : getMaxResults().hashCode());
         return hashCode;
@@ -340,6 +639,21 @@ public class ListActiveViolationsRequest extends AmazonWebServiceRequest impleme
             return false;
         if (other.getSecurityProfileName() != null
                 && other.getSecurityProfileName().equals(this.getSecurityProfileName()) == false)
+            return false;
+        if (other.getBehaviorCriteriaType() == null ^ this.getBehaviorCriteriaType() == null)
+            return false;
+        if (other.getBehaviorCriteriaType() != null
+                && other.getBehaviorCriteriaType().equals(this.getBehaviorCriteriaType()) == false)
+            return false;
+        if (other.getListSuppressedAlerts() == null ^ this.getListSuppressedAlerts() == null)
+            return false;
+        if (other.getListSuppressedAlerts() != null
+                && other.getListSuppressedAlerts().equals(this.getListSuppressedAlerts()) == false)
+            return false;
+        if (other.getVerificationState() == null ^ this.getVerificationState() == null)
+            return false;
+        if (other.getVerificationState() != null
+                && other.getVerificationState().equals(this.getVerificationState()) == false)
             return false;
         if (other.getNextToken() == null ^ this.getNextToken() == null)
             return false;

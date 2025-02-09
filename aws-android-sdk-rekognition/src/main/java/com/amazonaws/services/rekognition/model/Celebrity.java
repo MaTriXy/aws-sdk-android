@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Provides information about a celebrity recognized by the operation.
+ * Provides information about a celebrity recognized by the
+ * <a>RecognizeCelebrities</a> operation.
  * </p>
  */
 public class Celebrity implements Serializable {
@@ -59,14 +60,22 @@ public class Celebrity implements Serializable {
 
     /**
      * <p>
-     * The confidence, in percentage, that Rekognition has that the recognized
-     * face is the celebrity.
+     * The confidence, in percentage, that Amazon Rekognition has that the
+     * recognized face is the celebrity.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float matchConfidence;
+
+    /**
+     * <p>
+     * The known gender identity for the celebrity that matches the provided ID.
+     * The known gender identity can be Male, Female, Nonbinary, or Unlisted.
+     * </p>
+     */
+    private KnownGender knownGender;
 
     /**
      * <p>
@@ -310,16 +319,16 @@ public class Celebrity implements Serializable {
 
     /**
      * <p>
-     * The confidence, in percentage, that Rekognition has that the recognized
-     * face is the celebrity.
+     * The confidence, in percentage, that Amazon Rekognition has that the
+     * recognized face is the celebrity.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
-     *         The confidence, in percentage, that Rekognition has that the
-     *         recognized face is the celebrity.
+     *         The confidence, in percentage, that Amazon Rekognition has that
+     *         the recognized face is the celebrity.
      *         </p>
      */
     public Float getMatchConfidence() {
@@ -328,16 +337,16 @@ public class Celebrity implements Serializable {
 
     /**
      * <p>
-     * The confidence, in percentage, that Rekognition has that the recognized
-     * face is the celebrity.
+     * The confidence, in percentage, that Amazon Rekognition has that the
+     * recognized face is the celebrity.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param matchConfidence <p>
-     *            The confidence, in percentage, that Rekognition has that the
-     *            recognized face is the celebrity.
+     *            The confidence, in percentage, that Amazon Rekognition has
+     *            that the recognized face is the celebrity.
      *            </p>
      */
     public void setMatchConfidence(Float matchConfidence) {
@@ -346,25 +355,79 @@ public class Celebrity implements Serializable {
 
     /**
      * <p>
-     * The confidence, in percentage, that Rekognition has that the recognized
-     * face is the celebrity.
+     * The confidence, in percentage, that Amazon Rekognition has that the
+     * recognized face is the celebrity.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param matchConfidence <p>
-     *            The confidence, in percentage, that Rekognition has that the
-     *            recognized face is the celebrity.
+     *            The confidence, in percentage, that Amazon Rekognition has
+     *            that the recognized face is the celebrity.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public Celebrity withMatchConfidence(Float matchConfidence) {
         this.matchConfidence = matchConfidence;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The known gender identity for the celebrity that matches the provided ID.
+     * The known gender identity can be Male, Female, Nonbinary, or Unlisted.
+     * </p>
+     *
+     * @return <p>
+     *         The known gender identity for the celebrity that matches the
+     *         provided ID. The known gender identity can be Male, Female,
+     *         Nonbinary, or Unlisted.
+     *         </p>
+     */
+    public KnownGender getKnownGender() {
+        return knownGender;
+    }
+
+    /**
+     * <p>
+     * The known gender identity for the celebrity that matches the provided ID.
+     * The known gender identity can be Male, Female, Nonbinary, or Unlisted.
+     * </p>
+     *
+     * @param knownGender <p>
+     *            The known gender identity for the celebrity that matches the
+     *            provided ID. The known gender identity can be Male, Female,
+     *            Nonbinary, or Unlisted.
+     *            </p>
+     */
+    public void setKnownGender(KnownGender knownGender) {
+        this.knownGender = knownGender;
+    }
+
+    /**
+     * <p>
+     * The known gender identity for the celebrity that matches the provided ID.
+     * The known gender identity can be Male, Female, Nonbinary, or Unlisted.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param knownGender <p>
+     *            The known gender identity for the celebrity that matches the
+     *            provided ID. The known gender identity can be Male, Female,
+     *            Nonbinary, or Unlisted.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Celebrity withKnownGender(KnownGender knownGender) {
+        this.knownGender = knownGender;
         return this;
     }
 
@@ -388,7 +451,9 @@ public class Celebrity implements Serializable {
         if (getFace() != null)
             sb.append("Face: " + getFace() + ",");
         if (getMatchConfidence() != null)
-            sb.append("MatchConfidence: " + getMatchConfidence());
+            sb.append("MatchConfidence: " + getMatchConfidence() + ",");
+        if (getKnownGender() != null)
+            sb.append("KnownGender: " + getKnownGender());
         sb.append("}");
         return sb.toString();
     }
@@ -404,6 +469,8 @@ public class Celebrity implements Serializable {
         hashCode = prime * hashCode + ((getFace() == null) ? 0 : getFace().hashCode());
         hashCode = prime * hashCode
                 + ((getMatchConfidence() == null) ? 0 : getMatchConfidence().hashCode());
+        hashCode = prime * hashCode
+                + ((getKnownGender() == null) ? 0 : getKnownGender().hashCode());
         return hashCode;
     }
 
@@ -438,6 +505,11 @@ public class Celebrity implements Serializable {
             return false;
         if (other.getMatchConfidence() != null
                 && other.getMatchConfidence().equals(this.getMatchConfidence()) == false)
+            return false;
+        if (other.getKnownGender() == null ^ this.getKnownGender() == null)
+            return false;
+        if (other.getKnownGender() != null
+                && other.getKnownGender().equals(this.getKnownGender()) == false)
             return false;
         return true;
     }

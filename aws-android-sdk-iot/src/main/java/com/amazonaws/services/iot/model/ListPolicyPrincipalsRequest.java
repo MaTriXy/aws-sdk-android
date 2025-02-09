@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,8 +24,14 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Lists the principals associated with the specified policy.
  * </p>
  * <p>
- * <b>Note:</b> This API is deprecated. Please use <a>ListTargetsForPolicy</a>
+ * <b>Note:</b> This action is deprecated and works as expected for backward
+ * compatibility, but we won't add enhancements. Use <a>ListTargetsForPolicy</a>
  * instead.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListPolicyPrincipals</a> action.
  * </p>
  */
 public class ListPolicyPrincipalsRequest extends AmazonWebServiceRequest implements Serializable {
@@ -46,6 +52,7 @@ public class ListPolicyPrincipalsRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      */
     private String marker;
@@ -131,6 +138,7 @@ public class ListPolicyPrincipalsRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @return <p>
@@ -147,6 +155,7 @@ public class ListPolicyPrincipalsRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
@@ -166,6 +175,7 @@ public class ListPolicyPrincipalsRequest extends AmazonWebServiceRequest impleme
      * together.
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>

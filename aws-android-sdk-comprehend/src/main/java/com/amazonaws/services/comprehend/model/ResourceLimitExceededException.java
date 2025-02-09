@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The maximum number of recognizers per account has been exceeded. Review the
- * recognizers, perform cleanup, and then try your request again.
+ * The maximum number of resources per account has been exceeded. Review the
+ * resources, and then try your request again.
  * </p>
  */
 public class ResourceLimitExceededException extends AmazonServiceException {

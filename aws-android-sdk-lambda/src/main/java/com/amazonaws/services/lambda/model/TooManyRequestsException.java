@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,9 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * Request throughput limit exceeded
+ * The request throughput limit was exceeded. For more information, see <a href=
+ * "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html#api-requests"
+ * >Lambda quotas</a>.
  * </p>
  */
 public class TooManyRequestsException extends AmazonServiceException {
@@ -97,7 +99,8 @@ public class TooManyRequestsException extends AmazonServiceException {
      * <b>Allowed Values: </b>ConcurrentInvocationLimitExceeded,
      * FunctionInvocationRateLimitExceeded,
      * ReservedFunctionConcurrentInvocationLimitExceeded,
-     * ReservedFunctionInvocationRateLimitExceeded, CallerRateLimitExceeded
+     * ReservedFunctionInvocationRateLimitExceeded, CallerRateLimitExceeded,
+     * ConcurrentSnapshotCreateLimitExceeded
      *
      * @return The value of the reason property for this object.
      * @see ThrottleReason
@@ -113,7 +116,8 @@ public class TooManyRequestsException extends AmazonServiceException {
      * <b>Allowed Values: </b>ConcurrentInvocationLimitExceeded,
      * FunctionInvocationRateLimitExceeded,
      * ReservedFunctionConcurrentInvocationLimitExceeded,
-     * ReservedFunctionInvocationRateLimitExceeded, CallerRateLimitExceeded
+     * ReservedFunctionInvocationRateLimitExceeded, CallerRateLimitExceeded,
+     * ConcurrentSnapshotCreateLimitExceeded
      *
      * @param reason The new value for the reason property for this object.
      * @see ThrottleReason

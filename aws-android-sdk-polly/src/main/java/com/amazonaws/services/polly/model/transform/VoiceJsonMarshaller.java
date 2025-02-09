@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.polly.model.transform;
 
 import com.amazonaws.services.polly.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -57,6 +58,17 @@ class VoiceJsonMarshaller {
             for (String additionalLanguageCodesItem : additionalLanguageCodes) {
                 if (additionalLanguageCodesItem != null) {
                     jsonWriter.value(additionalLanguageCodesItem);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (voice.getSupportedEngines() != null) {
+            java.util.List<String> supportedEngines = voice.getSupportedEngines();
+            jsonWriter.name("SupportedEngines");
+            jsonWriter.beginArray();
+            for (String supportedEnginesItem : supportedEngines) {
+                if (supportedEnginesItem != null) {
+                    jsonWriter.value(supportedEnginesItem);
                 }
             }
             jsonWriter.endArray();

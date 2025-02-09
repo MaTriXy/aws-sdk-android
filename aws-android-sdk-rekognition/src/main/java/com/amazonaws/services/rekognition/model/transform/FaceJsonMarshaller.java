@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -50,10 +51,15 @@ class FaceJsonMarshaller {
             jsonWriter.name("Confidence");
             jsonWriter.value(confidence);
         }
-        if (face.getAssociationScore() != null) {
-            Float associationScore = face.getAssociationScore();
-            jsonWriter.name("AssociationScore");
-            jsonWriter.value(associationScore);
+        if (face.getIndexFacesModelVersion() != null) {
+            String indexFacesModelVersion = face.getIndexFacesModelVersion();
+            jsonWriter.name("IndexFacesModelVersion");
+            jsonWriter.value(indexFacesModelVersion);
+        }
+        if (face.getUserId() != null) {
+            String userId = face.getUserId();
+            jsonWriter.name("UserId");
+            jsonWriter.value(userId);
         }
         jsonWriter.endObject();
     }

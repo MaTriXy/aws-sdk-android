@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,13 +21,16 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Deletes a vocabulary from Amazon Transcribe.
+ * Deletes a custom vocabulary. To use this operation, specify the name of the
+ * custom vocabulary you want to delete using <code>VocabularyName</code>.
+ * Custom vocabulary names are case sensitive.
  * </p>
  */
 public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The name of the vocabulary to delete.
+     * The name of the custom vocabulary you want to delete. Custom vocabulary
+     * names are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -38,7 +41,8 @@ public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The name of the vocabulary to delete.
+     * The name of the custom vocabulary you want to delete. Custom vocabulary
+     * names are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -46,7 +50,8 @@ public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements 
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @return <p>
-     *         The name of the vocabulary to delete.
+     *         The name of the custom vocabulary you want to delete. Custom
+     *         vocabulary names are case sensitive.
      *         </p>
      */
     public String getVocabularyName() {
@@ -55,7 +60,8 @@ public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The name of the vocabulary to delete.
+     * The name of the custom vocabulary you want to delete. Custom vocabulary
+     * names are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -63,7 +69,8 @@ public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements 
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param vocabularyName <p>
-     *            The name of the vocabulary to delete.
+     *            The name of the custom vocabulary you want to delete. Custom
+     *            vocabulary names are case sensitive.
      *            </p>
      */
     public void setVocabularyName(String vocabularyName) {
@@ -72,7 +79,8 @@ public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The name of the vocabulary to delete.
+     * The name of the custom vocabulary you want to delete. Custom vocabulary
+     * names are case sensitive.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -83,7 +91,8 @@ public class DeleteVocabularyRequest extends AmazonWebServiceRequest implements 
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param vocabularyName <p>
-     *            The name of the vocabulary to delete.
+     *            The name of the custom vocabulary you want to delete. Custom
+     *            vocabulary names are case sensitive.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

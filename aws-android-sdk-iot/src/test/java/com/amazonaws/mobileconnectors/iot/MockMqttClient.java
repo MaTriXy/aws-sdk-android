@@ -2,6 +2,7 @@
 package com.amazonaws.mobileconnectors.iot;
 
 import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.internal.Token;
 
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ public class MockMqttClient extends MqttAsyncClient {
     public boolean isConnected;
     public MqttCallback mockCallback;
     public IMqttActionListener mockConnectionStatusCallback;
+    public IMqttActionListener mockSubscriptionStatusCallback;
     public boolean throwsExceptionOnConnect;
     public MqttException connectException;
     public boolean throwsExceptionOnPublish;
@@ -30,11 +32,11 @@ public class MockMqttClient extends MqttAsyncClient {
 
     public HashMap<String, Integer> mockSubscriptions;
 
-    IMqttToken testToken = new MqttToken("unit-test");
+    IMqttToken testToken = new TestMqttToken("unit-test");
     IMqttDeliveryToken testDeliveryToken = new MqttDeliveryToken();
 
     MockMqttClient() throws MqttException {
-        super("local://mockendpoint.example.com", "mock-id");
+        super("wss://mockendpoint.example.com", "mock-id");
         mockSubscriptions = new HashMap<String, Integer>();
         isConnected = false;
         throwsExceptionOnConnect = false;
@@ -102,6 +104,18 @@ public class MockMqttClient extends MqttAsyncClient {
         return testToken;
     }
 
+    public IMqttToken subscribe(String topicFilter, int qos, Object userContext,
+                                IMqttActionListener callback) throws MqttException {
+        if (throwsExceptionOnSubscribe) {
+            throw new MqttException(MqttException.REASON_CODE_CLIENT_EXCEPTION);
+        }
+        ++subscribeCalls;
+        mockSubscriptionStatusCallback = callback;
+        mockSubscriptions.put(topicFilter, qos);
+        callback.onSuccess(testToken);
+        return testToken;
+    }
+
     public IMqttToken unsubscribe(String topicFilter) throws MqttException {
         if (throwsExceptionOnUnsubscribe) {
             throw new MqttException(MqttException.REASON_CODE_CLIENT_EXCEPTION);
@@ -132,5 +146,22 @@ public class MockMqttClient extends MqttAsyncClient {
     public void mockDisconnect() {
         isConnected = false;
         mockCallback.connectionLost(new Exception("disconnect"));
+    }
+
+    private class TestToken extends Token {
+
+        public TestToken(String logContext) {
+            super(logContext);
+        }
+
+        @Override
+        public void waitForCompletion(long timeout) throws MqttException {}
+    }
+
+    private class TestMqttToken extends MqttToken {
+
+        public TestMqttToken(String logContext) {
+            internalTok = new TestToken(logContext);
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,13 +40,17 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      */
     private String id;
 
@@ -56,10 +60,11 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      */
     private String languageCode;
 
@@ -91,6 +96,15 @@ public class Voice implements Serializable {
      * </p>
      */
     private java.util.List<String> additionalLanguageCodes;
+
+    /**
+     * <p>
+     * Specifies which engines (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) are supported by a
+     * given voice.
+     * </p>
+     */
+    private java.util.List<String> supportedEngines;
 
     /**
      * <p>
@@ -196,13 +210,17 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @return <p>
      *         Amazon Polly assigned voice ID. This is the ID that you specify
@@ -221,13 +239,17 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param id <p>
      *            Amazon Polly assigned voice ID. This is the ID that you
@@ -250,13 +272,17 @@ public class Voice implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param id <p>
      *            Amazon Polly assigned voice ID. This is the ID that you
@@ -279,13 +305,17 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param id <p>
      *            Amazon Polly assigned voice ID. This is the ID that you
@@ -308,13 +338,17 @@ public class Voice implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>Geraint, Gwyneth, Mads, Naja, Hans, Marlene,
-     * Nicole, Russell, Amy, Brian, Emma, Raveena, Ivy, Joanna, Joey, Justin,
-     * Kendra, Kimberly, Matthew, Salli, Conchita, Enrique, Miguel, Penelope,
-     * Chantal, Celine, Lea, Mathieu, Dora, Karl, Carla, Giorgio, Mizuki, Liv,
-     * Lotte, Ruben, Ewa, Jacek, Jan, Maja, Ricardo, Vitoria, Cristiano, Ines,
-     * Carmen, Maxim, Tatyana, Astrid, Filiz, Vicki, Takumi, Seoyeon, Aditi,
-     * Zhiyu, Bianca, Lucia, Mia
+     * <b>Allowed Values: </b>Aditi, Amy, Astrid, Bianca, Brian, Camila, Carla,
+     * Carmen, Celine, Chantal, Conchita, Cristiano, Dora, Emma, Enrique, Ewa,
+     * Filiz, Gabrielle, Geraint, Giorgio, Gwyneth, Hans, Ines, Ivy, Jacek, Jan,
+     * Joanna, Joey, Justin, Karl, Kendra, Kevin, Kimberly, Lea, Liv, Lotte,
+     * Lucia, Lupe, Mads, Maja, Marlene, Mathieu, Matthew, Maxim, Mia, Miguel,
+     * Mizuki, Naja, Nicole, Olivia, Penelope, Raveena, Ricardo, Ruben, Russell,
+     * Salli, Seoyeon, Takumi, Tatyana, Vicki, Vitoria, Zeina, Zhiyu, Aria,
+     * Ayanda, Arlet, Hannah, Arthur, Daniel, Liam, Pedro, Kajal, Hiujin, Laura,
+     * Elin, Ida, Suvi, Ola, Hala, Andres, Sergio, Remi, Adriano, Thiago, Ruth,
+     * Stephen, Kazuha, Tomoko, Niamh, Sofie, Lisa, Isabelle, Zayd, Danielle,
+     * Gregory, Burcu
      *
      * @param id <p>
      *            Amazon Polly assigned voice ID. This is the ID that you
@@ -336,10 +370,11 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @return <p>
      *         Language code of the voice.
@@ -356,10 +391,11 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            Language code of the voice.
@@ -379,10 +415,11 @@ public class Voice implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            Language code of the voice.
@@ -402,10 +439,11 @@ public class Voice implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            Language code of the voice.
@@ -425,10 +463,11 @@ public class Voice implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
+     * <b>Allowed Values: </b>arb, cmn-CN, cy-GB, da-DK, de-DE, en-AU, en-GB,
      * en-GB-WLS, en-IN, en-US, es-ES, es-MX, es-US, fr-CA, fr-FR, is-IS, it-IT,
      * ja-JP, hi-IN, ko-KR, nb-NO, nl-NL, pl-PL, pt-BR, pt-PT, ro-RO, ru-RU,
-     * sv-SE, tr-TR
+     * sv-SE, tr-TR, en-NZ, en-ZA, ca-ES, de-AT, yue-CN, ar-AE, fi-FI, en-IE,
+     * nl-BE, fr-BE
      *
      * @param languageCode <p>
      *            Language code of the voice.
@@ -673,6 +712,96 @@ public class Voice implements Serializable {
     }
 
     /**
+     * <p>
+     * Specifies which engines (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) are supported by a
+     * given voice.
+     * </p>
+     *
+     * @return <p>
+     *         Specifies which engines (<code>standard</code>,
+     *         <code>neural</code>, <code>long-form</code> or
+     *         <code>generative</code>) are supported by a given voice.
+     *         </p>
+     */
+    public java.util.List<String> getSupportedEngines() {
+        return supportedEngines;
+    }
+
+    /**
+     * <p>
+     * Specifies which engines (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) are supported by a
+     * given voice.
+     * </p>
+     *
+     * @param supportedEngines <p>
+     *            Specifies which engines (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) are supported by a given voice.
+     *            </p>
+     */
+    public void setSupportedEngines(java.util.Collection<String> supportedEngines) {
+        if (supportedEngines == null) {
+            this.supportedEngines = null;
+            return;
+        }
+
+        this.supportedEngines = new java.util.ArrayList<String>(supportedEngines);
+    }
+
+    /**
+     * <p>
+     * Specifies which engines (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) are supported by a
+     * given voice.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param supportedEngines <p>
+     *            Specifies which engines (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) are supported by a given voice.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Voice withSupportedEngines(String... supportedEngines) {
+        if (getSupportedEngines() == null) {
+            this.supportedEngines = new java.util.ArrayList<String>(supportedEngines.length);
+        }
+        for (String value : supportedEngines) {
+            this.supportedEngines.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies which engines (<code>standard</code>, <code>neural</code>,
+     * <code>long-form</code> or <code>generative</code>) are supported by a
+     * given voice.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param supportedEngines <p>
+     *            Specifies which engines (<code>standard</code>,
+     *            <code>neural</code>, <code>long-form</code> or
+     *            <code>generative</code>) are supported by a given voice.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Voice withSupportedEngines(java.util.Collection<String> supportedEngines) {
+        setSupportedEngines(supportedEngines);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -694,7 +823,9 @@ public class Voice implements Serializable {
         if (getName() != null)
             sb.append("Name: " + getName() + ",");
         if (getAdditionalLanguageCodes() != null)
-            sb.append("AdditionalLanguageCodes: " + getAdditionalLanguageCodes());
+            sb.append("AdditionalLanguageCodes: " + getAdditionalLanguageCodes() + ",");
+        if (getSupportedEngines() != null)
+            sb.append("SupportedEngines: " + getSupportedEngines());
         sb.append("}");
         return sb.toString();
     }
@@ -715,6 +846,8 @@ public class Voice implements Serializable {
                 * hashCode
                 + ((getAdditionalLanguageCodes() == null) ? 0 : getAdditionalLanguageCodes()
                         .hashCode());
+        hashCode = prime * hashCode
+                + ((getSupportedEngines() == null) ? 0 : getSupportedEngines().hashCode());
         return hashCode;
     }
 
@@ -755,6 +888,11 @@ public class Voice implements Serializable {
             return false;
         if (other.getAdditionalLanguageCodes() != null
                 && other.getAdditionalLanguageCodes().equals(this.getAdditionalLanguageCodes()) == false)
+            return false;
+        if (other.getSupportedEngines() == null ^ this.getSupportedEngines() == null)
+            return false;
+        if (other.getSupportedEngines() != null
+                && other.getSupportedEngines().equals(this.getSupportedEngines()) == false)
             return false;
         return true;
     }

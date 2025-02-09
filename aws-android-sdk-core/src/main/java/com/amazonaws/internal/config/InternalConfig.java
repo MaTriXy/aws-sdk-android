@@ -109,21 +109,26 @@ public class InternalConfig {
         final Map<String, HttpClientConfig> ret = new HashMap<String, HttpClientConfig>();
         ret.put("AmazonCloudWatchClient", new HttpClientConfig("monitoring"));
         ret.put("AmazonCloudWatchLogsClient", new HttpClientConfig("logs"));
-        ret.put("AmazonSimpleDBClient", new HttpClientConfig("sdb"));
-        ret.put("AmazonSimpleEmailServiceClient", new HttpClientConfig("email"));
-        ret.put("AWSSecurityTokenServiceClient", new HttpClientConfig("sts"));
         ret.put("AmazonCognitoIdentityClient", new HttpClientConfig("cognito-identity"));
         ret.put("AmazonCognitoIdentityProviderClient", new HttpClientConfig("cognito-idp"));
         ret.put("AmazonCognitoSyncClient", new HttpClientConfig("cognito-sync"));
+        ret.put("AmazonComprehendClient", new HttpClientConfig("comprehend"));
+        ret.put("AmazonConnectClient", new HttpClientConfig("connect"));
         ret.put("AmazonKinesisFirehoseClient", new HttpClientConfig("firehose"));
+        ret.put("AWSKinesisVideoArchivedMediaClient", new HttpClientConfig("kinesisvideo"));
+        ret.put("AWSKinesisVideoSignalingClient", new HttpClientConfig("kinesisvideo"));
         ret.put("AWSIotClient", new HttpClientConfig("execute-api"));
-        ret.put("AmazonLexRuntimeClient", new HttpClientConfig("runtime.lex"));
+        ret.put("AmazonLexRuntimeClient", new HttpClientConfig("lex"));
         ret.put("AmazonPinpointClient", new HttpClientConfig("mobiletargeting"));
         ret.put("AmazonPinpointAnalyticsClient", new HttpClientConfig("mobileanalytics"));
+        //signer uses the servicename 'sagemaker' for Sagemaker Runtime
+        ret.put("AmazonSageMakerRuntimeClient", new HttpClientConfig("sagemaker"));
+        ret.put("AmazonSimpleDBClient", new HttpClientConfig("sdb"));
+        ret.put("AmazonSimpleEmailServiceClient", new HttpClientConfig("email"));
+        ret.put("AWSSecurityTokenServiceClient", new HttpClientConfig("sts"));
+        ret.put("AmazonTextractClient", new HttpClientConfig("textract"));
         ret.put("AmazonTranscribeClient", new HttpClientConfig("transcribe"));
         ret.put("AmazonTranslateClient", new HttpClientConfig("translate"));
-        ret.put("AmazonComprehendClient", new HttpClientConfig("comprehend"));
-        ret.put("AWSKinesisVideoArchivedMediaClient", new HttpClientConfig("kinesisvideo"));
         return ret;
     }
 
@@ -145,6 +150,10 @@ public class InternalConfig {
         ret.put("s3/ap-south-1", new SignerConfig("AWSS3V4SignerType"));
         ret.put("s3/ap-northeast-2", new SignerConfig("AWSS3V4SignerType"));
         ret.put("s3/eu-west-2", new SignerConfig("AWSS3V4SignerType"));
+        ret.put("lex/eu-central-1", new SignerConfig("AmazonLexV4Signer"));
+        ret.put("lex/cn-north-1", new SignerConfig("AmazonLexV4Signer"));
+        ret.put("polly/eu-central-1", new SignerConfig("AmazonPollyCustomPresigner"));
+        ret.put("polly/cn-north-1", new SignerConfig("AmazonPollyCustomPresigner"));
         return ret;
     }
 
@@ -152,10 +161,10 @@ public class InternalConfig {
         // map from abbreviated service name to signer type
         final Map<String, SignerConfig> ret = new HashMap<String, SignerConfig>();
         ret.put("ec2", new SignerConfig("QueryStringSignerType"));
-        ret.put("email", new SignerConfig("AWS3SignerType"));
-        ret.put("s3", new SignerConfig("S3SignerType"));
+        ret.put("email", new SignerConfig("AWS4SignerType"));
+        ret.put("s3", new SignerConfig("AWSS3V4SignerType"));
         ret.put("sdb", new SignerConfig("QueryStringSignerType"));
-        ret.put("runtime.lex", new SignerConfig("AmazonLexV4Signer"));
+        ret.put("lex", new SignerConfig("AmazonLexV4Signer"));
         ret.put("polly", new SignerConfig("AmazonPollyCustomPresigner"));
         return ret;
     }

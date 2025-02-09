@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,17 +21,45 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Sets all the user settings for a specified user name. Works on any user.
+ * <i>This action is no longer supported.</i> You can use it to configure only
+ * SMS MFA. You can't use it to configure time-based one-time password (TOTP)
+ * software token MFA. To configure either type of MFA, use <a href=
+ * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminSetUserMFAPreference.html"
+ * >AdminSetUserMFAPreference</a> instead.
  * </p>
+ * <note>
  * <p>
- * Requires developer credentials.
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
  * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The user pool ID for the user pool where you want to set the user's
-     * settings, such as MFA options.
+     * The ID of the user pool that contains the user whose options you're
+     * setting.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -42,7 +70,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The user name of the user for whom you wish to set user settings.
+     * The user name of the user whose options you're setting.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -53,15 +81,16 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * You can use this parameter only to set an SMS configuration that uses SMS
+     * for delivery.
      * </p>
      */
     private java.util.List<MFAOptionType> mFAOptions;
 
     /**
      * <p>
-     * The user pool ID for the user pool where you want to set the user's
-     * settings, such as MFA options.
+     * The ID of the user pool that contains the user whose options you're
+     * setting.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -69,8 +98,8 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[\w-]+_[0-9a-zA-Z]+<br/>
      *
      * @return <p>
-     *         The user pool ID for the user pool where you want to set the
-     *         user's settings, such as MFA options.
+     *         The ID of the user pool that contains the user whose options
+     *         you're setting.
      *         </p>
      */
     public String getUserPoolId() {
@@ -79,8 +108,8 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The user pool ID for the user pool where you want to set the user's
-     * settings, such as MFA options.
+     * The ID of the user pool that contains the user whose options you're
+     * setting.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -88,8 +117,8 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[\w-]+_[0-9a-zA-Z]+<br/>
      *
      * @param userPoolId <p>
-     *            The user pool ID for the user pool where you want to set the
-     *            user's settings, such as MFA options.
+     *            The ID of the user pool that contains the user whose options
+     *            you're setting.
      *            </p>
      */
     public void setUserPoolId(String userPoolId) {
@@ -98,8 +127,8 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The user pool ID for the user pool where you want to set the user's
-     * settings, such as MFA options.
+     * The ID of the user pool that contains the user whose options you're
+     * setting.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -110,8 +139,8 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[\w-]+_[0-9a-zA-Z]+<br/>
      *
      * @param userPoolId <p>
-     *            The user pool ID for the user pool where you want to set the
-     *            user's settings, such as MFA options.
+     *            The ID of the user pool that contains the user whose options
+     *            you're setting.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -123,7 +152,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The user name of the user for whom you wish to set user settings.
+     * The user name of the user whose options you're setting.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -131,7 +160,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The user name of the user for whom you wish to set user settings.
+     *         The user name of the user whose options you're setting.
      *         </p>
      */
     public String getUsername() {
@@ -140,7 +169,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The user name of the user for whom you wish to set user settings.
+     * The user name of the user whose options you're setting.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -148,8 +177,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param username <p>
-     *            The user name of the user for whom you wish to set user
-     *            settings.
+     *            The user name of the user whose options you're setting.
      *            </p>
      */
     public void setUsername(String username) {
@@ -158,7 +186,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The user name of the user for whom you wish to set user settings.
+     * The user name of the user whose options you're setting.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -169,8 +197,7 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param username <p>
-     *            The user name of the user for whom you wish to set user
-     *            settings.
+     *            The user name of the user whose options you're setting.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -182,11 +209,13 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * You can use this parameter only to set an SMS configuration that uses SMS
+     * for delivery.
      * </p>
      *
      * @return <p>
-     *         Specifies the options for MFA (e.g., email or phone number).
+     *         You can use this parameter only to set an SMS configuration that
+     *         uses SMS for delivery.
      *         </p>
      */
     public java.util.List<MFAOptionType> getMFAOptions() {
@@ -195,11 +224,13 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * You can use this parameter only to set an SMS configuration that uses SMS
+     * for delivery.
      * </p>
      *
      * @param mFAOptions <p>
-     *            Specifies the options for MFA (e.g., email or phone number).
+     *            You can use this parameter only to set an SMS configuration
+     *            that uses SMS for delivery.
      *            </p>
      */
     public void setMFAOptions(java.util.Collection<MFAOptionType> mFAOptions) {
@@ -213,14 +244,16 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * You can use this parameter only to set an SMS configuration that uses SMS
+     * for delivery.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param mFAOptions <p>
-     *            Specifies the options for MFA (e.g., email or phone number).
+     *            You can use this parameter only to set an SMS configuration
+     *            that uses SMS for delivery.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -237,14 +270,16 @@ public class AdminSetUserSettingsRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * Specifies the options for MFA (e.g., email or phone number).
+     * You can use this parameter only to set an SMS configuration that uses SMS
+     * for delivery.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param mFAOptions <p>
-     *            Specifies the options for MFA (e.g., email or phone number).
+     *            You can use this parameter only to set an SMS configuration
+     *            that uses SMS for delivery.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

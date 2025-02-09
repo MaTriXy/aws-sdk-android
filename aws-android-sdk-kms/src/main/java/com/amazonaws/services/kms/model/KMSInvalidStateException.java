@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,12 +23,30 @@ import com.amazonaws.AmazonServiceException;
  * valid for this request.
  * </p>
  * <p>
- * For more information about how key state affects the use of a CMK, see <a
- * href
- * ="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html">How
- * Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
- * Management Service Developer Guide</i>.
+ * This exceptions means one of the following:
  * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * The key state of the KMS key is not compatible with the operation.
+ * </p>
+ * <p>
+ * To find the key state, use the <a>DescribeKey</a> operation. For more
+ * information about which key states are compatible with each KMS operation,
+ * see <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >Key states of KMS keys</a> in the <i> <i>Key Management Service Developer
+ * Guide</i> </i>.
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * For cryptographic operations on KMS keys in custom key stores, this exception
+ * represents a general failure with many possible causes. To identify the
+ * cause, see the error message that accompanies the exception.
+ * </p>
+ * </li>
+ * </ul>
  */
 public class KMSInvalidStateException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;

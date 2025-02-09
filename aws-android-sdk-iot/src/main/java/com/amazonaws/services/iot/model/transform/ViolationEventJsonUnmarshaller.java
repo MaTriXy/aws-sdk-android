@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,8 +51,19 @@ class ViolationEventJsonUnmarshaller implements
             } else if (name.equals("metricValue")) {
                 violationEvent.setMetricValue(MetricValueJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("violationEventAdditionalInfo")) {
+                violationEvent
+                        .setViolationEventAdditionalInfo(ViolationEventAdditionalInfoJsonUnmarshaller
+                                .getInstance()
+                                .unmarshall(context));
             } else if (name.equals("violationEventType")) {
                 violationEvent.setViolationEventType(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("verificationState")) {
+                violationEvent.setVerificationState(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("verificationStateDescription")) {
+                violationEvent.setVerificationStateDescription(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else if (name.equals("violationEventTime")) {
                 violationEvent.setViolationEventTime(DateJsonUnmarshaller.getInstance()

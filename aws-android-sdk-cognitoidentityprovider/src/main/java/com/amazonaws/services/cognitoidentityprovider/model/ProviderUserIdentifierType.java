@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,14 +19,13 @@ import java.io.Serializable;
 
 /**
  * <p>
- * A container for information about an identity provider for a user pool.
+ * A container for information about an IdP for a user pool.
  * </p>
  */
 public class ProviderUserIdentifierType implements Serializable {
     /**
      * <p>
-     * The name of the provider, for example, Facebook, Google, or Login with
-     * Amazon.
+     * The name of the provider, such as Facebook, Google, or Login with Amazon.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -37,24 +36,29 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The name of the provider attribute to link to, for example,
+     * The name of the provider attribute to link to, such as
      * <code>NameID</code>.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String providerAttributeName;
 
     /**
      * <p>
-     * The value of the provider attribute to link to, for example,
+     * The value of the provider attribute to link to, such as
      * <code>xxxxx_account</code>.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String providerAttributeValue;
 
     /**
      * <p>
-     * The name of the provider, for example, Facebook, Google, or Login with
-     * Amazon.
+     * The name of the provider, such as Facebook, Google, or Login with Amazon.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -62,8 +66,8 @@ public class ProviderUserIdentifierType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The name of the provider, for example, Facebook, Google, or Login
-     *         with Amazon.
+     *         The name of the provider, such as Facebook, Google, or Login with
+     *         Amazon.
      *         </p>
      */
     public String getProviderName() {
@@ -72,8 +76,7 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The name of the provider, for example, Facebook, Google, or Login with
-     * Amazon.
+     * The name of the provider, such as Facebook, Google, or Login with Amazon.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -81,8 +84,8 @@ public class ProviderUserIdentifierType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The name of the provider, for example, Facebook, Google, or
-     *            Login with Amazon.
+     *            The name of the provider, such as Facebook, Google, or Login
+     *            with Amazon.
      *            </p>
      */
     public void setProviderName(String providerName) {
@@ -91,8 +94,7 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The name of the provider, for example, Facebook, Google, or Login with
-     * Amazon.
+     * The name of the provider, such as Facebook, Google, or Login with Amazon.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -103,8 +105,8 @@ public class ProviderUserIdentifierType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The name of the provider, for example, Facebook, Google, or
-     *            Login with Amazon.
+     *            The name of the provider, such as Facebook, Google, or Login
+     *            with Amazon.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -116,12 +118,15 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The name of the provider attribute to link to, for example,
+     * The name of the provider attribute to link to, such as
      * <code>NameID</code>.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
-     *         The name of the provider attribute to link to, for example,
+     *         The name of the provider attribute to link to, such as
      *         <code>NameID</code>.
      *         </p>
      */
@@ -131,12 +136,15 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The name of the provider attribute to link to, for example,
+     * The name of the provider attribute to link to, such as
      * <code>NameID</code>.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param providerAttributeName <p>
-     *            The name of the provider attribute to link to, for example,
+     *            The name of the provider attribute to link to, such as
      *            <code>NameID</code>.
      *            </p>
      */
@@ -146,15 +154,18 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The name of the provider attribute to link to, for example,
+     * The name of the provider attribute to link to, such as
      * <code>NameID</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param providerAttributeName <p>
-     *            The name of the provider attribute to link to, for example,
+     *            The name of the provider attribute to link to, such as
      *            <code>NameID</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -167,12 +178,15 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The value of the provider attribute to link to, for example,
+     * The value of the provider attribute to link to, such as
      * <code>xxxxx_account</code>.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
-     *         The value of the provider attribute to link to, for example,
+     *         The value of the provider attribute to link to, such as
      *         <code>xxxxx_account</code>.
      *         </p>
      */
@@ -182,12 +196,15 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The value of the provider attribute to link to, for example,
+     * The value of the provider attribute to link to, such as
      * <code>xxxxx_account</code>.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param providerAttributeValue <p>
-     *            The value of the provider attribute to link to, for example,
+     *            The value of the provider attribute to link to, such as
      *            <code>xxxxx_account</code>.
      *            </p>
      */
@@ -197,15 +214,18 @@ public class ProviderUserIdentifierType implements Serializable {
 
     /**
      * <p>
-     * The value of the provider attribute to link to, for example,
+     * The value of the provider attribute to link to, such as
      * <code>xxxxx_account</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param providerAttributeValue <p>
-     *            The value of the provider attribute to link to, for example,
+     *            The value of the provider attribute to link to, such as
      *            <code>xxxxx_account</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be

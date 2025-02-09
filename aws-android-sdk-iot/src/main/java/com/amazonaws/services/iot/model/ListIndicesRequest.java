@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,12 +23,17 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Lists the search indices.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListIndices</a> action.
+ * </p>
  */
 public class ListIndicesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      */
     private String nextToken;
@@ -45,13 +50,13 @@ public class ListIndicesRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      *
      * @return <p>
-     *         The token used to get the next set of results, or <b>null</b> if
-     *         there are no additional results.
+     *         The token used to get the next set of results, or
+     *         <code>null</code> if there are no additional results.
      *         </p>
      */
     public String getNextToken() {
@@ -60,13 +65,13 @@ public class ListIndicesRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      *
      * @param nextToken <p>
-     *            The token used to get the next set of results, or <b>null</b>
-     *            if there are no additional results.
+     *            The token used to get the next set of results, or
+     *            <code>null</code> if there are no additional results.
      *            </p>
      */
     public void setNextToken(String nextToken) {
@@ -75,16 +80,16 @@ public class ListIndicesRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param nextToken <p>
-     *            The token used to get the next set of results, or <b>null</b>
-     *            if there are no additional results.
+     *            The token used to get the next set of results, or
+     *            <code>null</code> if there are no additional results.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

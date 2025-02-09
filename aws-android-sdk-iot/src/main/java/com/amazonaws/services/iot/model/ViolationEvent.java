@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,7 +41,6 @@ public class ViolationEvent implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      */
     private String thingName;
 
@@ -58,7 +57,7 @@ public class ViolationEvent implements Serializable {
 
     /**
      * <p>
-     * The behavior which was violated.
+     * The behavior that was violated.
      * </p>
      */
     private Behavior behavior;
@@ -72,6 +71,13 @@ public class ViolationEvent implements Serializable {
 
     /**
      * <p>
+     * The details of a violation event.
+     * </p>
+     */
+    private ViolationEventAdditionalInfo violationEventAdditionalInfo;
+
+    /**
+     * <p>
      * The type of violation event.
      * </p>
      * <p>
@@ -79,6 +85,28 @@ public class ViolationEvent implements Serializable {
      * <b>Allowed Values: </b>in-alarm, alarm-cleared, alarm-invalidated
      */
     private String violationEventType;
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     */
+    private String verificationState;
+
+    /**
+     * <p>
+     * The description of the verification state of the violation.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1000<br/>
+     * <b>Pattern: </b>[^\p{Cntrl}]*<br/>
+     */
+    private String verificationStateDescription;
 
     /**
      * <p>
@@ -151,7 +179,6 @@ public class ViolationEvent implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @return <p>
      *         The name of the thing responsible for the violation event.
@@ -168,7 +195,6 @@ public class ViolationEvent implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @param thingName <p>
      *            The name of the thing responsible for the violation event.
@@ -188,7 +214,6 @@ public class ViolationEvent implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - 128<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @param thingName <p>
      *            The name of the thing responsible for the violation event.
@@ -260,11 +285,11 @@ public class ViolationEvent implements Serializable {
 
     /**
      * <p>
-     * The behavior which was violated.
+     * The behavior that was violated.
      * </p>
      *
      * @return <p>
-     *         The behavior which was violated.
+     *         The behavior that was violated.
      *         </p>
      */
     public Behavior getBehavior() {
@@ -273,11 +298,11 @@ public class ViolationEvent implements Serializable {
 
     /**
      * <p>
-     * The behavior which was violated.
+     * The behavior that was violated.
      * </p>
      *
      * @param behavior <p>
-     *            The behavior which was violated.
+     *            The behavior that was violated.
      *            </p>
      */
     public void setBehavior(Behavior behavior) {
@@ -286,14 +311,14 @@ public class ViolationEvent implements Serializable {
 
     /**
      * <p>
-     * The behavior which was violated.
+     * The behavior that was violated.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param behavior <p>
-     *            The behavior which was violated.
+     *            The behavior that was violated.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -345,6 +370,53 @@ public class ViolationEvent implements Serializable {
      */
     public ViolationEvent withMetricValue(MetricValue metricValue) {
         this.metricValue = metricValue;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The details of a violation event.
+     * </p>
+     *
+     * @return <p>
+     *         The details of a violation event.
+     *         </p>
+     */
+    public ViolationEventAdditionalInfo getViolationEventAdditionalInfo() {
+        return violationEventAdditionalInfo;
+    }
+
+    /**
+     * <p>
+     * The details of a violation event.
+     * </p>
+     *
+     * @param violationEventAdditionalInfo <p>
+     *            The details of a violation event.
+     *            </p>
+     */
+    public void setViolationEventAdditionalInfo(
+            ViolationEventAdditionalInfo violationEventAdditionalInfo) {
+        this.violationEventAdditionalInfo = violationEventAdditionalInfo;
+    }
+
+    /**
+     * <p>
+     * The details of a violation event.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param violationEventAdditionalInfo <p>
+     *            The details of a violation event.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ViolationEvent withViolationEventAdditionalInfo(
+            ViolationEventAdditionalInfo violationEventAdditionalInfo) {
+        this.violationEventAdditionalInfo = violationEventAdditionalInfo;
         return this;
     }
 
@@ -447,6 +519,165 @@ public class ViolationEvent implements Serializable {
 
     /**
      * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @return <p>
+     *         The verification state of the violation (detect alarm).
+     *         </p>
+     * @see VerificationState
+     */
+    public String getVerificationState() {
+        return verificationState;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @see VerificationState
+     */
+    public void setVerificationState(String verificationState) {
+        this.verificationState = verificationState;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see VerificationState
+     */
+    public ViolationEvent withVerificationState(String verificationState) {
+        this.verificationState = verificationState;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @see VerificationState
+     */
+    public void setVerificationState(VerificationState verificationState) {
+        this.verificationState = verificationState.toString();
+    }
+
+    /**
+     * <p>
+     * The verification state of the violation (detect alarm).
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Allowed Values: </b>FALSE_POSITIVE, BENIGN_POSITIVE, TRUE_POSITIVE,
+     * UNKNOWN
+     *
+     * @param verificationState <p>
+     *            The verification state of the violation (detect alarm).
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     * @see VerificationState
+     */
+    public ViolationEvent withVerificationState(VerificationState verificationState) {
+        this.verificationState = verificationState.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * The description of the verification state of the violation.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1000<br/>
+     * <b>Pattern: </b>[^\p{Cntrl}]*<br/>
+     *
+     * @return <p>
+     *         The description of the verification state of the violation.
+     *         </p>
+     */
+    public String getVerificationStateDescription() {
+        return verificationStateDescription;
+    }
+
+    /**
+     * <p>
+     * The description of the verification state of the violation.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1000<br/>
+     * <b>Pattern: </b>[^\p{Cntrl}]*<br/>
+     *
+     * @param verificationStateDescription <p>
+     *            The description of the verification state of the violation.
+     *            </p>
+     */
+    public void setVerificationStateDescription(String verificationStateDescription) {
+        this.verificationStateDescription = verificationStateDescription;
+    }
+
+    /**
+     * <p>
+     * The description of the verification state of the violation.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1000<br/>
+     * <b>Pattern: </b>[^\p{Cntrl}]*<br/>
+     *
+     * @param verificationStateDescription <p>
+     *            The description of the verification state of the violation.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ViolationEvent withVerificationStateDescription(String verificationStateDescription) {
+        this.verificationStateDescription = verificationStateDescription;
+        return this;
+    }
+
+    /**
+     * <p>
      * The time the violation event occurred.
      * </p>
      *
@@ -511,8 +742,14 @@ public class ViolationEvent implements Serializable {
             sb.append("behavior: " + getBehavior() + ",");
         if (getMetricValue() != null)
             sb.append("metricValue: " + getMetricValue() + ",");
+        if (getViolationEventAdditionalInfo() != null)
+            sb.append("violationEventAdditionalInfo: " + getViolationEventAdditionalInfo() + ",");
         if (getViolationEventType() != null)
             sb.append("violationEventType: " + getViolationEventType() + ",");
+        if (getVerificationState() != null)
+            sb.append("verificationState: " + getVerificationState() + ",");
+        if (getVerificationStateDescription() != null)
+            sb.append("verificationStateDescription: " + getVerificationStateDescription() + ",");
         if (getViolationEventTime() != null)
             sb.append("violationEventTime: " + getViolationEventTime());
         sb.append("}");
@@ -532,8 +769,18 @@ public class ViolationEvent implements Serializable {
         hashCode = prime * hashCode + ((getBehavior() == null) ? 0 : getBehavior().hashCode());
         hashCode = prime * hashCode
                 + ((getMetricValue() == null) ? 0 : getMetricValue().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getViolationEventAdditionalInfo() == null) ? 0
+                        : getViolationEventAdditionalInfo().hashCode());
         hashCode = prime * hashCode
                 + ((getViolationEventType() == null) ? 0 : getViolationEventType().hashCode());
+        hashCode = prime * hashCode
+                + ((getVerificationState() == null) ? 0 : getVerificationState().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getVerificationStateDescription() == null) ? 0
+                        : getVerificationStateDescription().hashCode());
         hashCode = prime * hashCode
                 + ((getViolationEventTime() == null) ? 0 : getViolationEventTime().hashCode());
         return hashCode;
@@ -574,10 +821,29 @@ public class ViolationEvent implements Serializable {
         if (other.getMetricValue() != null
                 && other.getMetricValue().equals(this.getMetricValue()) == false)
             return false;
+        if (other.getViolationEventAdditionalInfo() == null
+                ^ this.getViolationEventAdditionalInfo() == null)
+            return false;
+        if (other.getViolationEventAdditionalInfo() != null
+                && other.getViolationEventAdditionalInfo().equals(
+                        this.getViolationEventAdditionalInfo()) == false)
+            return false;
         if (other.getViolationEventType() == null ^ this.getViolationEventType() == null)
             return false;
         if (other.getViolationEventType() != null
                 && other.getViolationEventType().equals(this.getViolationEventType()) == false)
+            return false;
+        if (other.getVerificationState() == null ^ this.getVerificationState() == null)
+            return false;
+        if (other.getVerificationState() != null
+                && other.getVerificationState().equals(this.getVerificationState()) == false)
+            return false;
+        if (other.getVerificationStateDescription() == null
+                ^ this.getVerificationStateDescription() == null)
+            return false;
+        if (other.getVerificationStateDescription() != null
+                && other.getVerificationStateDescription().equals(
+                        this.getVerificationStateDescription()) == false)
             return false;
         if (other.getViolationEventTime() == null ^ this.getViolationEventTime() == null)
             return false;

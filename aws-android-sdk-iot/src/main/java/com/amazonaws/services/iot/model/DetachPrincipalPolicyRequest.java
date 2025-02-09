@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,14 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Removes the specified policy from the specified certificate.
  * </p>
  * <p>
- * <b>Note:</b> This API is deprecated. Please use <a>DetachPolicy</a> instead.
+ * <b>Note:</b> This action is deprecated and works as expected for backward
+ * compatibility, but we won't add enhancements. Use <a>DetachPolicy</a>
+ * instead.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >DetachPrincipalPolicy</a> action.
  * </p>
  */
 public class DetachPrincipalPolicyRequest extends AmazonWebServiceRequest implements Serializable {
@@ -44,8 +51,11 @@ public class DetachPrincipalPolicyRequest extends AmazonWebServiceRequest implem
      * The principal.
      * </p>
      * <p>
-     * If the principal is a certificate, specify the certificate ARN. If the
-     * principal is an Amazon Cognito identity, specify the identity ID.
+     * Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      */
     private String principal;
@@ -112,17 +122,23 @@ public class DetachPrincipalPolicyRequest extends AmazonWebServiceRequest implem
      * The principal.
      * </p>
      * <p>
-     * If the principal is a certificate, specify the certificate ARN. If the
-     * principal is an Amazon Cognito identity, specify the identity ID.
+     * Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      *
      * @return <p>
      *         The principal.
      *         </p>
      *         <p>
-     *         If the principal is a certificate, specify the certificate ARN.
-     *         If the principal is an Amazon Cognito identity, specify the
-     *         identity ID.
+     *         Valid principals are CertificateArn
+     *         (arn:aws:iot:<i>region</i>:<i>
+     *         accountId</i>:cert/<i>certificateId</i>), thingGroupArn
+     *         (arn:aws:iot
+     *         :<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and
+     *         CognitoId (<i>region</i>:<i>id</i>).
      *         </p>
      */
     public String getPrincipal() {
@@ -134,17 +150,22 @@ public class DetachPrincipalPolicyRequest extends AmazonWebServiceRequest implem
      * The principal.
      * </p>
      * <p>
-     * If the principal is a certificate, specify the certificate ARN. If the
-     * principal is an Amazon Cognito identity, specify the identity ID.
+     * Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      *
      * @param principal <p>
      *            The principal.
      *            </p>
      *            <p>
-     *            If the principal is a certificate, specify the certificate
-     *            ARN. If the principal is an Amazon Cognito identity, specify
-     *            the identity ID.
+     *            Valid principals are CertificateArn
+     *            (arn:aws:iot:<i>region</i>:
+     *            <i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn
+     *            (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>
+     *            groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).
      *            </p>
      */
     public void setPrincipal(String principal) {
@@ -156,8 +177,11 @@ public class DetachPrincipalPolicyRequest extends AmazonWebServiceRequest implem
      * The principal.
      * </p>
      * <p>
-     * If the principal is a certificate, specify the certificate ARN. If the
-     * principal is an Amazon Cognito identity, specify the identity ID.
+     * Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -167,9 +191,11 @@ public class DetachPrincipalPolicyRequest extends AmazonWebServiceRequest implem
      *            The principal.
      *            </p>
      *            <p>
-     *            If the principal is a certificate, specify the certificate
-     *            ARN. If the principal is an Amazon Cognito identity, specify
-     *            the identity ID.
+     *            Valid principals are CertificateArn
+     *            (arn:aws:iot:<i>region</i>:
+     *            <i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn
+     *            (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>
+     *            groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

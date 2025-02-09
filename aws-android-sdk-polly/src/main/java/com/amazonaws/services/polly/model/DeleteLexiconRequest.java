@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,14 +21,14 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Deletes the specified pronunciation lexicon stored in an AWS Region. A
- * lexicon which has been deleted is not available for speech synthesis, nor is
- * it possible to retrieve it using either the <code>GetLexicon</code> or
- * <code>ListLexicon</code> APIs.
+ * Deletes the specified pronunciation lexicon stored in an Amazon Web Services
+ * Region. A lexicon which has been deleted is not available for speech
+ * synthesis, nor is it possible to retrieve it using either the
+ * <code>GetLexicon</code> or <code>ListLexicon</code> APIs.
  * </p>
  * <p>
  * For more information, see <a
- * href="http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+ * href="https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
  * >Managing Lexicons</a>.
  * </p>
  */

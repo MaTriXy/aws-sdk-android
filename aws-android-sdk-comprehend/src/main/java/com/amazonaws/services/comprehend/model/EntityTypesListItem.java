@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,32 +19,52 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Information about an individual item on a list of entity types.
+ * An entity type within a labeled training dataset that Amazon Comprehend uses
+ * to train a custom entity recognizer.
  * </p>
  */
 public class EntityTypesListItem implements Serializable {
     /**
      * <p>
-     * Entity type of an item on an entity type list.
+     * An entity type within a labeled training dataset that Amazon Comprehend
+     * uses to train a custom entity recognizer.
+     * </p>
+     * <p>
+     * Entity types must not contain the following invalid characters: \n (line
+     * break), \\n (escaped line break, \r (carriage return), \\r (escaped
+     * carriage return), \t (tab), \\t (escaped tab), space, and , (comma).
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 64<br/>
-     * <b>Pattern: </b>[_A-Z0-9]+<br/>
+     * <b>Pattern: </b>^(?![^\n\r\t,]*\\n|\\r|\\t)[^\n\r\t,]+$<br/>
      */
     private String type;
 
     /**
      * <p>
-     * Entity type of an item on an entity type list.
+     * An entity type within a labeled training dataset that Amazon Comprehend
+     * uses to train a custom entity recognizer.
+     * </p>
+     * <p>
+     * Entity types must not contain the following invalid characters: \n (line
+     * break), \\n (escaped line break, \r (carriage return), \\r (escaped
+     * carriage return), \t (tab), \\t (escaped tab), space, and , (comma).
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 64<br/>
-     * <b>Pattern: </b>[_A-Z0-9]+<br/>
+     * <b>Pattern: </b>^(?![^\n\r\t,]*\\n|\\r|\\t)[^\n\r\t,]+$<br/>
      *
      * @return <p>
-     *         Entity type of an item on an entity type list.
+     *         An entity type within a labeled training dataset that Amazon
+     *         Comprehend uses to train a custom entity recognizer.
+     *         </p>
+     *         <p>
+     *         Entity types must not contain the following invalid characters:
+     *         \n (line break), \\n (escaped line break, \r (carriage return),
+     *         \\r (escaped carriage return), \t (tab), \\t (escaped tab),
+     *         space, and , (comma).
      *         </p>
      */
     public String getType() {
@@ -53,15 +73,28 @@ public class EntityTypesListItem implements Serializable {
 
     /**
      * <p>
-     * Entity type of an item on an entity type list.
+     * An entity type within a labeled training dataset that Amazon Comprehend
+     * uses to train a custom entity recognizer.
+     * </p>
+     * <p>
+     * Entity types must not contain the following invalid characters: \n (line
+     * break), \\n (escaped line break, \r (carriage return), \\r (escaped
+     * carriage return), \t (tab), \\t (escaped tab), space, and , (comma).
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 64<br/>
-     * <b>Pattern: </b>[_A-Z0-9]+<br/>
+     * <b>Pattern: </b>^(?![^\n\r\t,]*\\n|\\r|\\t)[^\n\r\t,]+$<br/>
      *
      * @param type <p>
-     *            Entity type of an item on an entity type list.
+     *            An entity type within a labeled training dataset that Amazon
+     *            Comprehend uses to train a custom entity recognizer.
+     *            </p>
+     *            <p>
+     *            Entity types must not contain the following invalid
+     *            characters: \n (line break), \\n (escaped line break, \r
+     *            (carriage return), \\r (escaped carriage return), \t (tab),
+     *            \\t (escaped tab), space, and , (comma).
      *            </p>
      */
     public void setType(String type) {
@@ -70,7 +103,13 @@ public class EntityTypesListItem implements Serializable {
 
     /**
      * <p>
-     * Entity type of an item on an entity type list.
+     * An entity type within a labeled training dataset that Amazon Comprehend
+     * uses to train a custom entity recognizer.
+     * </p>
+     * <p>
+     * Entity types must not contain the following invalid characters: \n (line
+     * break), \\n (escaped line break, \r (carriage return), \\r (escaped
+     * carriage return), \t (tab), \\t (escaped tab), space, and , (comma).
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -78,10 +117,17 @@ public class EntityTypesListItem implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 64<br/>
-     * <b>Pattern: </b>[_A-Z0-9]+<br/>
+     * <b>Pattern: </b>^(?![^\n\r\t,]*\\n|\\r|\\t)[^\n\r\t,]+$<br/>
      *
      * @param type <p>
-     *            Entity type of an item on an entity type list.
+     *            An entity type within a labeled training dataset that Amazon
+     *            Comprehend uses to train a custom entity recognizer.
+     *            </p>
+     *            <p>
+     *            Entity types must not contain the following invalid
+     *            characters: \n (line break), \\n (escaped line break, \r
+     *            (carriage return), \\r (escaped carriage return), \t (tab),
+     *            \\t (escaped tab), space, and , (comma).
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

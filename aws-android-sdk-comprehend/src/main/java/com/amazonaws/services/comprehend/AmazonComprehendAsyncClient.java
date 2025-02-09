@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,10 +33,10 @@ import com.amazonaws.services.comprehend.model.*;
 /**
  * Interface for accessing Amazon Comprehend asynchronously.
  * <p>
- * Amazon Comprehend is an AWS service for gaining insight into the content of
- * documents. Use these actions to determine the topics contained in your
- * documents, the topics they discuss, the predominant sentiment expressed in
- * them, the predominant language used, and more.
+ * Amazon Comprehend is an Amazon Web Services service for gaining insight into
+ * the content of documents. Use these actions to determine the topics contained
+ * in your documents, the topics they discuss, the predominant sentiment
+ * expressed in them, the predominant language used, and more.
  * </p>
  **/
 public class AmazonComprehendAsyncClient extends AmazonComprehendClient implements
@@ -265,7 +265,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * Determines the dominant language of the input text for a batch of
      * documents. For a list of languages that Amazon Comprehend can detect, see
      * <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -300,7 +300,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * Determines the dominant language of the input text for a batch of
      * documents. For a list of languages that Amazon Comprehend can detect, see
      * <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -342,8 +342,10 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
     /**
      * <p>
      * Inspects the text of a batch of documents for named entities and returns
-     * information about them. For more information about named entities, see
-     * <a>how-entities</a>
+     * information about them. For more information about named entities, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html">
+     * Entities</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectEntitiesRequest
@@ -376,8 +378,10 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
     /**
      * <p>
      * Inspects the text of a batch of documents for named entities and returns
-     * information about them. For more information about named entities, see
-     * <a>how-entities</a>
+     * information about them. For more information about named entities, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html">
+     * Entities</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectEntitiesRequest
@@ -570,7 +574,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * <p>
      * Inspects the text of a batch of documents for the syntax and part of
      * speech of the words in the document and returns information about them.
-     * For more information, see <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectSyntaxRequest
@@ -604,7 +610,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * <p>
      * Inspects the text of a batch of documents for the syntax and part of
      * speech of the words in the document and returns information about them.
-     * For more information, see <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param batchDetectSyntaxRequest
@@ -645,11 +653,362 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Inspects a batch of documents and returns a sentiment analysis for each
+     * entity identified in the documents.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param batchDetectTargetedSentimentRequest
+     * @return A Java Future object containing the response from the
+     *         BatchDetectTargetedSentiment service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws BatchSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<BatchDetectTargetedSentimentResult> batchDetectTargetedSentimentAsync(
+            final BatchDetectTargetedSentimentRequest batchDetectTargetedSentimentRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<BatchDetectTargetedSentimentResult>() {
+            public BatchDetectTargetedSentimentResult call() throws Exception {
+                return batchDetectTargetedSentiment(batchDetectTargetedSentimentRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Inspects a batch of documents and returns a sentiment analysis for each
+     * entity identified in the documents.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param batchDetectTargetedSentimentRequest
+     * @return A Java Future object containing the response from the
+     *         BatchDetectTargetedSentiment service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws BatchSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<BatchDetectTargetedSentimentResult> batchDetectTargetedSentimentAsync(
+            final BatchDetectTargetedSentimentRequest batchDetectTargetedSentimentRequest,
+            final AsyncHandler<BatchDetectTargetedSentimentRequest, BatchDetectTargetedSentimentResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<BatchDetectTargetedSentimentResult>() {
+            public BatchDetectTargetedSentimentResult call() throws Exception {
+                BatchDetectTargetedSentimentResult result = null;
+                try {
+                    result = batchDetectTargetedSentiment(batchDetectTargetedSentimentRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(batchDetectTargetedSentimentRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a new document classification request to analyze a single
+     * document in real-time, using a previously created and trained custom
+     * model and an endpoint.
+     * </p>
+     * <p>
+     * You can input plain text or you can upload a single-page input document
+     * (text, PDF, Word, or image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> that
+     * describes the errors.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
+     * </p>
+     * 
+     * @param classifyDocumentRequest
+     * @return A Java Future object containing the response from the
+     *         ClassifyDocument service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
+     * @throws TextSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ClassifyDocumentResult> classifyDocumentAsync(
+            final ClassifyDocumentRequest classifyDocumentRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<ClassifyDocumentResult>() {
+            public ClassifyDocumentResult call() throws Exception {
+                return classifyDocument(classifyDocumentRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a new document classification request to analyze a single
+     * document in real-time, using a previously created and trained custom
+     * model and an endpoint.
+     * </p>
+     * <p>
+     * You can input plain text or you can upload a single-page input document
+     * (text, PDF, Word, or image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> that
+     * describes the errors.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
+     * </p>
+     * 
+     * @param classifyDocumentRequest
+     * @return A Java Future object containing the response from the
+     *         ClassifyDocument service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
+     * @throws TextSizeLimitExceededException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ClassifyDocumentResult> classifyDocumentAsync(
+            final ClassifyDocumentRequest classifyDocumentRequest,
+            final AsyncHandler<ClassifyDocumentRequest, ClassifyDocumentResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ClassifyDocumentResult>() {
+            public ClassifyDocumentResult call() throws Exception {
+                ClassifyDocumentResult result = null;
+                try {
+                    result = classifyDocument(classifyDocumentRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(classifyDocumentRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Analyzes input text for the presence of personally identifiable
+     * information (PII) and returns the labels of identified PII entity types
+     * such as name, address, bank account number, or phone number.
+     * </p>
+     * 
+     * @param containsPiiEntitiesRequest
+     * @return A Java Future object containing the response from the
+     *         ContainsPiiEntities service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ContainsPiiEntitiesResult> containsPiiEntitiesAsync(
+            final ContainsPiiEntitiesRequest containsPiiEntitiesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ContainsPiiEntitiesResult>() {
+            public ContainsPiiEntitiesResult call() throws Exception {
+                return containsPiiEntities(containsPiiEntitiesRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Analyzes input text for the presence of personally identifiable
+     * information (PII) and returns the labels of identified PII entity types
+     * such as name, address, bank account number, or phone number.
+     * </p>
+     * 
+     * @param containsPiiEntitiesRequest
+     * @return A Java Future object containing the response from the
+     *         ContainsPiiEntities service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ContainsPiiEntitiesResult> containsPiiEntitiesAsync(
+            final ContainsPiiEntitiesRequest containsPiiEntitiesRequest,
+            final AsyncHandler<ContainsPiiEntitiesRequest, ContainsPiiEntitiesResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ContainsPiiEntitiesResult>() {
+            public ContainsPiiEntitiesResult call() throws Exception {
+                ContainsPiiEntitiesResult result = null;
+                try {
+                    result = containsPiiEntities(containsPiiEntitiesRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(containsPiiEntitiesRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a dataset to upload training or test data for a model associated
+     * with a flywheel. For more information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createDatasetRequest
+     * @return A Java Future object containing the response from the
+     *         CreateDataset service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<CreateDatasetResult> createDatasetAsync(
+            final CreateDatasetRequest createDatasetRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<CreateDatasetResult>() {
+            public CreateDatasetResult call() throws Exception {
+                return createDataset(createDatasetRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a dataset to upload training or test data for a model associated
+     * with a flywheel. For more information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createDatasetRequest
+     * @return A Java Future object containing the response from the
+     *         CreateDataset service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<CreateDatasetResult> createDatasetAsync(
+            final CreateDatasetRequest createDatasetRequest,
+            final AsyncHandler<CreateDatasetRequest, CreateDatasetResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<CreateDatasetResult>() {
+            public CreateDatasetResult call() throws Exception {
+                CreateDatasetResult result = null;
+                try {
+                    result = createDataset(createDatasetRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(createDatasetRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Creates a new document classifier that you can use to categorize
-     * documents. To create a classifier you provide a set of training documents
-     * that labeled with the categories that you want to use. After the
-     * classifier is trained you can use it to categorize a set of labeled
-     * documents into the categories.
+     * documents. To create a classifier, you provide a set of training
+     * documents that are labeled with the categories that you want to use. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/training-classifier-model.html"
+     * >Training classifier models</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param createDocumentClassifierRequest
@@ -658,9 +1017,11 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -683,10 +1044,11 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
     /**
      * <p>
      * Creates a new document classifier that you can use to categorize
-     * documents. To create a classifier you provide a set of training documents
-     * that labeled with the categories that you want to use. After the
-     * classifier is trained you can use it to categorize a set of labeled
-     * documents into the categories.
+     * documents. To create a classifier, you provide a set of training
+     * documents that are labeled with the categories that you want to use. For
+     * more information, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/training-classifier-model.html"
+     * >Training classifier models</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param createDocumentClassifierRequest
@@ -695,9 +1057,11 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -728,9 +1092,94 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Creates a model-specific endpoint for synchronous inference for a
+     * previously trained custom model For information about endpoints, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param createEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         CreateEndpoint service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws TooManyRequestsException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<CreateEndpointResult> createEndpointAsync(
+            final CreateEndpointRequest createEndpointRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<CreateEndpointResult>() {
+            public CreateEndpointResult call() throws Exception {
+                return createEndpoint(createEndpointRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a model-specific endpoint for synchronous inference for a
+     * previously trained custom model For information about endpoints, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param createEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         CreateEndpoint service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws TooManyRequestsException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<CreateEndpointResult> createEndpointAsync(
+            final CreateEndpointRequest createEndpointRequest,
+            final AsyncHandler<CreateEndpointRequest, CreateEndpointResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<CreateEndpointResult>() {
+            public CreateEndpointResult call() throws Exception {
+                CreateEndpointResult result = null;
+                try {
+                    result = createEndpoint(createEndpointRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(createEndpointRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Creates an entity recognizer using submitted files. After your
      * <code>CreateEntityRecognizer</code> request is submitted, you can check
-     * job status using the API.
+     * job status using the <code>DescribeEntityRecognizer</code> API.
      * </p>
      * 
      * @param createEntityRecognizerRequest
@@ -739,9 +1188,11 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -765,7 +1216,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * <p>
      * Creates an entity recognizer using submitted files. After your
      * <code>CreateEntityRecognizer</code> request is submitted, you can check
-     * job status using the API.
+     * job status using the <code>DescribeEntityRecognizer</code> API.
      * </p>
      * 
      * @param createEntityRecognizerRequest
@@ -774,9 +1225,11 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws ResourceInUseException
+     * @throws TooManyTagsException
      * @throws TooManyRequestsException
      * @throws ResourceLimitExceededException
      * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -800,6 +1253,131 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(createEntityRecognizerRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * A flywheel is an Amazon Web Services resource that orchestrates the
+     * ongoing training of a model for custom classification or custom entity
+     * recognition. You can create a flywheel to start with an existing trained
+     * model, or Comprehend can create and train a new model.
+     * </p>
+     * <p>
+     * When you create the flywheel, Comprehend creates a data lake in your
+     * account. The data lake holds the training data and test data for all
+     * versions of the model.
+     * </p>
+     * <p>
+     * To use a flywheel with an existing trained model, you specify the active
+     * model version. Comprehend copies the model's training data and test data
+     * into the flywheel's data lake.
+     * </p>
+     * <p>
+     * To use the flywheel with a new model, you need to provide a dataset for
+     * training data (and optional test data) when you create the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         CreateFlywheel service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<CreateFlywheelResult> createFlywheelAsync(
+            final CreateFlywheelRequest createFlywheelRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<CreateFlywheelResult>() {
+            public CreateFlywheelResult call() throws Exception {
+                return createFlywheel(createFlywheelRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * A flywheel is an Amazon Web Services resource that orchestrates the
+     * ongoing training of a model for custom classification or custom entity
+     * recognition. You can create a flywheel to start with an existing trained
+     * model, or Comprehend can create and train a new model.
+     * </p>
+     * <p>
+     * When you create the flywheel, Comprehend creates a data lake in your
+     * account. The data lake holds the training data and test data for all
+     * versions of the model.
+     * </p>
+     * <p>
+     * To use a flywheel with an existing trained model, you specify the active
+     * model version. Comprehend copies the model's training data and test data
+     * into the flywheel's data lake.
+     * </p>
+     * <p>
+     * To use the flywheel with a new model, you need to provide a dataset for
+     * training data (and optional test data) when you create the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param createFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         CreateFlywheel service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<CreateFlywheelResult> createFlywheelAsync(
+            final CreateFlywheelRequest createFlywheelRequest,
+            final AsyncHandler<CreateFlywheelRequest, CreateFlywheelResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<CreateFlywheelResult>() {
+            public CreateFlywheelResult call() throws Exception {
+                CreateFlywheelResult result = null;
+                try {
+                    result = createFlywheel(createFlywheelRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(createFlywheelRequest, result);
                 return result;
             }
         });
@@ -904,6 +1482,85 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Deletes a model-specific endpoint for a previously-trained custom model.
+     * All endpoints must be deleted in order for the model to be deleted. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param deleteEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         DeleteEndpoint service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DeleteEndpointResult> deleteEndpointAsync(
+            final DeleteEndpointRequest deleteEndpointRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<DeleteEndpointResult>() {
+            public DeleteEndpointResult call() throws Exception {
+                return deleteEndpoint(deleteEndpointRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Deletes a model-specific endpoint for a previously-trained custom model.
+     * All endpoints must be deleted in order for the model to be deleted. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param deleteEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         DeleteEndpoint service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DeleteEndpointResult> deleteEndpointAsync(
+            final DeleteEndpointRequest deleteEndpointRequest,
+            final AsyncHandler<DeleteEndpointRequest, DeleteEndpointResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DeleteEndpointResult>() {
+            public DeleteEndpointResult call() throws Exception {
+                DeleteEndpointResult result = null;
+                try {
+                    result = deleteEndpoint(deleteEndpointRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(deleteEndpointRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Deletes an entity recognizer.
      * </p>
      * <p>
@@ -994,6 +1651,235 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(deleteEntityRecognizerRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Deletes a flywheel. When you delete the flywheel, Amazon Comprehend does
+     * not delete the data lake or the model associated with the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param deleteFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         DeleteFlywheel service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DeleteFlywheelResult> deleteFlywheelAsync(
+            final DeleteFlywheelRequest deleteFlywheelRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<DeleteFlywheelResult>() {
+            public DeleteFlywheelResult call() throws Exception {
+                return deleteFlywheel(deleteFlywheelRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Deletes a flywheel. When you delete the flywheel, Amazon Comprehend does
+     * not delete the data lake or the model associated with the flywheel.
+     * </p>
+     * <p>
+     * For more information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param deleteFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         DeleteFlywheel service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DeleteFlywheelResult> deleteFlywheelAsync(
+            final DeleteFlywheelRequest deleteFlywheelRequest,
+            final AsyncHandler<DeleteFlywheelRequest, DeleteFlywheelResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DeleteFlywheelResult>() {
+            public DeleteFlywheelResult call() throws Exception {
+                DeleteFlywheelResult result = null;
+                try {
+                    result = deleteFlywheel(deleteFlywheelRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(deleteFlywheelRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Deletes a resource-based policy that is attached to a custom model.
+     * </p>
+     * 
+     * @param deleteResourcePolicyRequest
+     * @return A Java Future object containing the response from the
+     *         DeleteResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DeleteResourcePolicyResult> deleteResourcePolicyAsync(
+            final DeleteResourcePolicyRequest deleteResourcePolicyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DeleteResourcePolicyResult>() {
+            public DeleteResourcePolicyResult call() throws Exception {
+                return deleteResourcePolicy(deleteResourcePolicyRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Deletes a resource-based policy that is attached to a custom model.
+     * </p>
+     * 
+     * @param deleteResourcePolicyRequest
+     * @return A Java Future object containing the response from the
+     *         DeleteResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DeleteResourcePolicyResult> deleteResourcePolicyAsync(
+            final DeleteResourcePolicyRequest deleteResourcePolicyRequest,
+            final AsyncHandler<DeleteResourcePolicyRequest, DeleteResourcePolicyResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DeleteResourcePolicyResult>() {
+            public DeleteResourcePolicyResult call() throws Exception {
+                DeleteResourcePolicyResult result = null;
+                try {
+                    result = deleteResourcePolicy(deleteResourcePolicyRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(deleteResourcePolicyRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Returns information about the dataset that you specify. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeDatasetRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeDataset service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeDatasetResult> describeDatasetAsync(
+            final DescribeDatasetRequest describeDatasetRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<DescribeDatasetResult>() {
+            public DescribeDatasetResult call() throws Exception {
+                return describeDataset(describeDatasetRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Returns information about the dataset that you specify. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeDatasetRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeDataset service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeDatasetResult> describeDatasetAsync(
+            final DescribeDatasetRequest describeDatasetRequest,
+            final AsyncHandler<DescribeDatasetRequest, DescribeDatasetResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeDatasetResult>() {
+            public DescribeDatasetResult call() throws Exception {
+                DescribeDatasetResult result = null;
+                try {
+                    result = describeDataset(describeDatasetRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeDatasetRequest, result);
                 return result;
             }
         });
@@ -1218,6 +2104,85 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Gets the properties associated with a specific endpoint. Use this
+     * operation to get the status of an endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param describeEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeEndpoint service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeEndpointResult> describeEndpointAsync(
+            final DescribeEndpointRequest describeEndpointRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<DescribeEndpointResult>() {
+            public DescribeEndpointResult call() throws Exception {
+                return describeEndpoint(describeEndpointRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the properties associated with a specific endpoint. Use this
+     * operation to get the status of an endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param describeEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeEndpoint service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeEndpointResult> describeEndpointAsync(
+            final DescribeEndpointRequest describeEndpointRequest,
+            final AsyncHandler<DescribeEndpointRequest, DescribeEndpointResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeEndpointResult>() {
+            public DescribeEndpointResult call() throws Exception {
+                DescribeEndpointResult result = null;
+                try {
+                    result = describeEndpoint(describeEndpointRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeEndpointRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Gets the properties associated with an entities detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -1364,6 +2329,231 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Gets the status and details of an events detection job.
+     * </p>
+     * 
+     * @param describeEventsDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeEventsDetectionJobResult> describeEventsDetectionJobAsync(
+            final DescribeEventsDetectionJobRequest describeEventsDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeEventsDetectionJobResult>() {
+            public DescribeEventsDetectionJobResult call() throws Exception {
+                return describeEventsDetectionJob(describeEventsDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the status and details of an events detection job.
+     * </p>
+     * 
+     * @param describeEventsDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeEventsDetectionJobResult> describeEventsDetectionJobAsync(
+            final DescribeEventsDetectionJobRequest describeEventsDetectionJobRequest,
+            final AsyncHandler<DescribeEventsDetectionJobRequest, DescribeEventsDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeEventsDetectionJobResult>() {
+            public DescribeEventsDetectionJobResult call() throws Exception {
+                DescribeEventsDetectionJobResult result = null;
+                try {
+                    result = describeEventsDetectionJob(describeEventsDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeEventsDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Provides configuration information about the flywheel. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeFlywheel service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeFlywheelResult> describeFlywheelAsync(
+            final DescribeFlywheelRequest describeFlywheelRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<DescribeFlywheelResult>() {
+            public DescribeFlywheelResult call() throws Exception {
+                return describeFlywheel(describeFlywheelRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Provides configuration information about the flywheel. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeFlywheel service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeFlywheelResult> describeFlywheelAsync(
+            final DescribeFlywheelRequest describeFlywheelRequest,
+            final AsyncHandler<DescribeFlywheelRequest, DescribeFlywheelResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeFlywheelResult>() {
+            public DescribeFlywheelResult call() throws Exception {
+                DescribeFlywheelResult result = null;
+                try {
+                    result = describeFlywheel(describeFlywheelRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeFlywheelRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Retrieve the configuration properties of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelIterationRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeFlywheelIterationResult> describeFlywheelIterationAsync(
+            final DescribeFlywheelIterationRequest describeFlywheelIterationRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeFlywheelIterationResult>() {
+            public DescribeFlywheelIterationResult call() throws Exception {
+                return describeFlywheelIteration(describeFlywheelIterationRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Retrieve the configuration properties of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param describeFlywheelIterationRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeFlywheelIterationResult> describeFlywheelIterationAsync(
+            final DescribeFlywheelIterationRequest describeFlywheelIterationRequest,
+            final AsyncHandler<DescribeFlywheelIterationRequest, DescribeFlywheelIterationResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeFlywheelIterationResult>() {
+            public DescribeFlywheelIterationResult call() throws Exception {
+                DescribeFlywheelIterationResult result = null;
+                try {
+                    result = describeFlywheelIteration(describeFlywheelIterationRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeFlywheelIterationRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Gets the properties associated with a key phrases detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -1437,6 +2627,150 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Gets the properties associated with a PII entities detection job. For
+     * example, you can use this operation to get the job status.
+     * </p>
+     * 
+     * @param describePiiEntitiesDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         DescribePiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribePiiEntitiesDetectionJobResult> describePiiEntitiesDetectionJobAsync(
+            final DescribePiiEntitiesDetectionJobRequest describePiiEntitiesDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribePiiEntitiesDetectionJobResult>() {
+            public DescribePiiEntitiesDetectionJobResult call() throws Exception {
+                return describePiiEntitiesDetectionJob(describePiiEntitiesDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the properties associated with a PII entities detection job. For
+     * example, you can use this operation to get the job status.
+     * </p>
+     * 
+     * @param describePiiEntitiesDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         DescribePiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribePiiEntitiesDetectionJobResult> describePiiEntitiesDetectionJobAsync(
+            final DescribePiiEntitiesDetectionJobRequest describePiiEntitiesDetectionJobRequest,
+            final AsyncHandler<DescribePiiEntitiesDetectionJobRequest, DescribePiiEntitiesDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribePiiEntitiesDetectionJobResult>() {
+            public DescribePiiEntitiesDetectionJobResult call() throws Exception {
+                DescribePiiEntitiesDetectionJobResult result = null;
+                try {
+                    result = describePiiEntitiesDetectionJob(describePiiEntitiesDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describePiiEntitiesDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the details of a resource-based policy that is attached to a custom
+     * model, including the JSON body of the policy.
+     * </p>
+     * 
+     * @param describeResourcePolicyRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeResourcePolicyResult> describeResourcePolicyAsync(
+            final DescribeResourcePolicyRequest describeResourcePolicyRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeResourcePolicyResult>() {
+            public DescribeResourcePolicyResult call() throws Exception {
+                return describeResourcePolicy(describeResourcePolicyRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the details of a resource-based policy that is attached to a custom
+     * model, including the JSON body of the policy.
+     * </p>
+     * 
+     * @param describeResourcePolicyRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeResourcePolicyResult> describeResourcePolicyAsync(
+            final DescribeResourcePolicyRequest describeResourcePolicyRequest,
+            final AsyncHandler<DescribeResourcePolicyRequest, DescribeResourcePolicyResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeResourcePolicyResult>() {
+            public DescribeResourcePolicyResult call() throws Exception {
+                DescribeResourcePolicyResult result = null;
+                try {
+                    result = describeResourcePolicy(describeResourcePolicyRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeResourcePolicyRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Gets the properties associated with a sentiment detection job. Use this
      * operation to get the status of a detection job.
      * </p>
@@ -1503,6 +2837,79 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(describeSentimentDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the properties associated with a targeted sentiment detection job.
+     * Use this operation to get the status of the job.
+     * </p>
+     * 
+     * @param describeTargetedSentimentDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeTargetedSentimentDetectionJob service method, as returned
+     *         by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeTargetedSentimentDetectionJobResult> describeTargetedSentimentDetectionJobAsync(
+            final DescribeTargetedSentimentDetectionJobRequest describeTargetedSentimentDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeTargetedSentimentDetectionJobResult>() {
+            public DescribeTargetedSentimentDetectionJobResult call() throws Exception {
+                return describeTargetedSentimentDetectionJob(describeTargetedSentimentDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets the properties associated with a targeted sentiment detection job.
+     * Use this operation to get the status of the job.
+     * </p>
+     * 
+     * @param describeTargetedSentimentDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         DescribeTargetedSentimentDetectionJob service method, as returned
+     *         by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DescribeTargetedSentimentDetectionJobResult> describeTargetedSentimentDetectionJobAsync(
+            final DescribeTargetedSentimentDetectionJobRequest describeTargetedSentimentDetectionJobRequest,
+            final AsyncHandler<DescribeTargetedSentimentDetectionJobRequest, DescribeTargetedSentimentDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DescribeTargetedSentimentDetectionJobResult>() {
+            public DescribeTargetedSentimentDetectionJobResult call() throws Exception {
+                DescribeTargetedSentimentDetectionJobResult result = null;
+                try {
+                    result = describeTargetedSentimentDetectionJob(describeTargetedSentimentDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(describeTargetedSentimentDetectionJobRequest, result);
                 return result;
             }
         });
@@ -1585,7 +2992,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * <p>
      * Determines the dominant language of the input text. For a list of
      * languages that Amazon Comprehend can detect, see <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -1618,7 +3025,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * <p>
      * Determines the dominant language of the input text. For a list of
      * languages that Amazon Comprehend can detect, see <a href=
-     * "http://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-languages.html"
      * >Amazon Comprehend Supported Languages</a>.
      * </p>
      * 
@@ -1658,14 +3065,39 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
-     * Inspects text for named entities, and returns information about them. For
-     * more information, about named entities, see <a>how-entities</a>.
+     * Detects named entities in input text when you use the pre-trained model.
+     * Detects custom entities if you have a custom entity recognition model.
+     * </p>
+     * <p>
+     * When detecting named entities using the pre-trained model, use plain text
+     * as the input. For more information about named entities, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html"
+     * >Entities</a> in the Comprehend Developer Guide.
+     * </p>
+     * <p>
+     * When you use a custom entity recognition model, you can input plain text
+     * or you can upload a single-page input document (text, PDF, Word, or
+     * image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> for
+     * each error.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
      * </p>
      * 
      * @param detectEntitiesRequest
      * @return A Java Future object containing the response from the
      *         DetectEntities service method, as returned by Amazon Comprehend.
      * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
      * @throws TextSizeLimitExceededException
      * @throws UnsupportedLanguageException
      * @throws InternalServerException
@@ -1689,14 +3121,39 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
-     * Inspects text for named entities, and returns information about them. For
-     * more information, about named entities, see <a>how-entities</a>.
+     * Detects named entities in input text when you use the pre-trained model.
+     * Detects custom entities if you have a custom entity recognition model.
+     * </p>
+     * <p>
+     * When detecting named entities using the pre-trained model, use plain text
+     * as the input. For more information about named entities, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-entities.html"
+     * >Entities</a> in the Comprehend Developer Guide.
+     * </p>
+     * <p>
+     * When you use a custom entity recognition model, you can input plain text
+     * or you can upload a single-page input document (text, PDF, Word, or
+     * image).
+     * </p>
+     * <p>
+     * If the system detects errors while processing a page in the input
+     * document, the API response includes an entry in <code>Errors</code> for
+     * each error.
+     * </p>
+     * <p>
+     * If the system detects a document-level error in your input document, the
+     * API returns an <code>InvalidRequestException</code> error response. For
+     * details about this exception, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/idp-inputs-sync-err.html"
+     * > Errors in semi-structured documents</a> in the Comprehend Developer
+     * Guide.
      * </p>
      * 
      * @param detectEntitiesRequest
      * @return A Java Future object containing the response from the
      *         DetectEntities service method, as returned by Amazon Comprehend.
      * @throws InvalidRequestException
+     * @throws ResourceUnavailableException
      * @throws TextSizeLimitExceededException
      * @throws UnsupportedLanguageException
      * @throws InternalServerException
@@ -1800,6 +3257,79 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Inspects the input text for entities that contain personally identifiable
+     * information (PII) and returns information about them.
+     * </p>
+     * 
+     * @param detectPiiEntitiesRequest
+     * @return A Java Future object containing the response from the
+     *         DetectPiiEntities service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DetectPiiEntitiesResult> detectPiiEntitiesAsync(
+            final DetectPiiEntitiesRequest detectPiiEntitiesRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<DetectPiiEntitiesResult>() {
+            public DetectPiiEntitiesResult call() throws Exception {
+                return detectPiiEntities(detectPiiEntitiesRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Inspects the input text for entities that contain personally identifiable
+     * information (PII) and returns information about them.
+     * </p>
+     * 
+     * @param detectPiiEntitiesRequest
+     * @return A Java Future object containing the response from the
+     *         DetectPiiEntities service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DetectPiiEntitiesResult> detectPiiEntitiesAsync(
+            final DetectPiiEntitiesRequest detectPiiEntitiesRequest,
+            final AsyncHandler<DetectPiiEntitiesRequest, DetectPiiEntitiesResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DetectPiiEntitiesResult>() {
+            public DetectPiiEntitiesResult call() throws Exception {
+                DetectPiiEntitiesResult result = null;
+                try {
+                    result = detectPiiEntities(detectPiiEntitiesRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(detectPiiEntitiesRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Inspects text and returns an inference of the prevailing sentiment (
      * <code>POSITIVE</code>, <code>NEUTRAL</code>, <code>MIXED</code>, or
      * <code>NEGATIVE</code>).
@@ -1874,7 +3404,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
     /**
      * <p>
      * Inspects text for syntax and the part of speech of words in the document.
-     * For more information, <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param detectSyntaxRequest
@@ -1905,7 +3437,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
     /**
      * <p>
      * Inspects text for syntax and the part of speech of words in the document.
-     * For more information, <a>how-syntax</a>.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * 
      * @param detectSyntaxRequest
@@ -1937,6 +3471,265 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(detectSyntaxRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Inspects the input text and returns a sentiment analysis for each entity
+     * identified in the text.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param detectTargetedSentimentRequest
+     * @return A Java Future object containing the response from the
+     *         DetectTargetedSentiment service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DetectTargetedSentimentResult> detectTargetedSentimentAsync(
+            final DetectTargetedSentimentRequest detectTargetedSentimentRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DetectTargetedSentimentResult>() {
+            public DetectTargetedSentimentResult call() throws Exception {
+                return detectTargetedSentiment(detectTargetedSentimentRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Inspects the input text and returns a sentiment analysis for each entity
+     * identified in the text.
+     * </p>
+     * <p>
+     * For more information about targeted sentiment, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/how-targeted-sentiment.html"
+     * >Targeted sentiment</a>.
+     * </p>
+     * 
+     * @param detectTargetedSentimentRequest
+     * @return A Java Future object containing the response from the
+     *         DetectTargetedSentiment service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TextSizeLimitExceededException
+     * @throws UnsupportedLanguageException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<DetectTargetedSentimentResult> detectTargetedSentimentAsync(
+            final DetectTargetedSentimentRequest detectTargetedSentimentRequest,
+            final AsyncHandler<DetectTargetedSentimentRequest, DetectTargetedSentimentResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<DetectTargetedSentimentResult>() {
+            public DetectTargetedSentimentResult call() throws Exception {
+                DetectTargetedSentimentResult result = null;
+                try {
+                    result = detectTargetedSentiment(detectTargetedSentimentRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(detectTargetedSentimentRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a new custom model that replicates a source custom model that you
+     * import. The source model can be in your Amazon Web Services account or
+     * another one.
+     * </p>
+     * <p>
+     * If the source model is in another Amazon Web Services account, then it
+     * must have a resource-based policy that authorizes you to import it.
+     * </p>
+     * <p>
+     * The source model must be in the same Amazon Web Services Region that
+     * you're using when you import. You can't import a model that's in a
+     * different Region.
+     * </p>
+     * 
+     * @param importModelRequest
+     * @return A Java Future object containing the response from the ImportModel
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws ResourceInUseException
+     * @throws ResourceUnavailableException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws KmsKeyValidationException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ImportModelResult> importModelAsync(final ImportModelRequest importModelRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ImportModelResult>() {
+            public ImportModelResult call() throws Exception {
+                return importModel(importModelRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Creates a new custom model that replicates a source custom model that you
+     * import. The source model can be in your Amazon Web Services account or
+     * another one.
+     * </p>
+     * <p>
+     * If the source model is in another Amazon Web Services account, then it
+     * must have a resource-based policy that authorizes you to import it.
+     * </p>
+     * <p>
+     * The source model must be in the same Amazon Web Services Region that
+     * you're using when you import. You can't import a model that's in a
+     * different Region.
+     * </p>
+     * 
+     * @param importModelRequest
+     * @return A Java Future object containing the response from the ImportModel
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws ResourceInUseException
+     * @throws ResourceUnavailableException
+     * @throws TooManyTagsException
+     * @throws TooManyRequestsException
+     * @throws ResourceLimitExceededException
+     * @throws KmsKeyValidationException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ImportModelResult> importModelAsync(final ImportModelRequest importModelRequest,
+            final AsyncHandler<ImportModelRequest, ImportModelResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ImportModelResult>() {
+            public ImportModelResult call() throws Exception {
+                ImportModelResult result = null;
+                try {
+                    result = importModel(importModelRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(importModelRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * List the datasets that you have configured in this Region. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listDatasetsRequest
+     * @return A Java Future object containing the response from the
+     *         ListDatasets service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListDatasetsResult> listDatasetsAsync(
+            final ListDatasetsRequest listDatasetsRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<ListDatasetsResult>() {
+            public ListDatasetsResult call() throws Exception {
+                return listDatasets(listDatasetsRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * List the datasets that you have configured in this Region. For more
+     * information about datasets, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listDatasetsRequest
+     * @return A Java Future object containing the response from the
+     *         ListDatasets service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListDatasetsResult> listDatasetsAsync(
+            final ListDatasetsRequest listDatasetsRequest,
+            final AsyncHandler<ListDatasetsRequest, ListDatasetsResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListDatasetsResult>() {
+            public ListDatasetsResult call() throws Exception {
+                ListDatasetsResult result = null;
+                try {
+                    result = listDatasets(listDatasetsRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listDatasetsRequest, result);
                 return result;
             }
         });
@@ -2010,6 +3803,77 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(listDocumentClassificationJobsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of summaries of the document classifiers that you have
+     * created
+     * </p>
+     * 
+     * @param listDocumentClassifierSummariesRequest
+     * @return A Java Future object containing the response from the
+     *         ListDocumentClassifierSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListDocumentClassifierSummariesResult> listDocumentClassifierSummariesAsync(
+            final ListDocumentClassifierSummariesRequest listDocumentClassifierSummariesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListDocumentClassifierSummariesResult>() {
+            public ListDocumentClassifierSummariesResult call() throws Exception {
+                return listDocumentClassifierSummaries(listDocumentClassifierSummariesRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of summaries of the document classifiers that you have
+     * created
+     * </p>
+     * 
+     * @param listDocumentClassifierSummariesRequest
+     * @return A Java Future object containing the response from the
+     *         ListDocumentClassifierSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListDocumentClassifierSummariesResult> listDocumentClassifierSummariesAsync(
+            final ListDocumentClassifierSummariesRequest listDocumentClassifierSummariesRequest,
+            final AsyncHandler<ListDocumentClassifierSummariesRequest, ListDocumentClassifierSummariesResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListDocumentClassifierSummariesResult>() {
+            public ListDocumentClassifierSummariesResult call() throws Exception {
+                ListDocumentClassifierSummariesResult result = null;
+                try {
+                    result = listDocumentClassifierSummaries(listDocumentClassifierSummariesRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listDocumentClassifierSummariesRequest, result);
                 return result;
             }
         });
@@ -2161,6 +4025,79 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Gets a list of all existing endpoints that you've created. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param listEndpointsRequest
+     * @return A Java Future object containing the response from the
+     *         ListEndpoints service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListEndpointsResult> listEndpointsAsync(
+            final ListEndpointsRequest listEndpointsRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<ListEndpointsResult>() {
+            public ListEndpointsResult call() throws Exception {
+                return listEndpoints(listEndpointsRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of all existing endpoints that you've created. For
+     * information about endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param listEndpointsRequest
+     * @return A Java Future object containing the response from the
+     *         ListEndpoints service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListEndpointsResult> listEndpointsAsync(
+            final ListEndpointsRequest listEndpointsRequest,
+            final AsyncHandler<ListEndpointsRequest, ListEndpointsResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListEndpointsResult>() {
+            public ListEndpointsResult call() throws Exception {
+                ListEndpointsResult result = null;
+                try {
+                    result = listEndpoints(listEndpointsRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listEndpointsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Gets a list of the entity detection jobs that you have submitted.
      * </p>
      * 
@@ -2225,6 +4162,77 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(listEntitiesDetectionJobsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of summaries for the entity recognizers that you have
+     * created.
+     * </p>
+     * 
+     * @param listEntityRecognizerSummariesRequest
+     * @return A Java Future object containing the response from the
+     *         ListEntityRecognizerSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListEntityRecognizerSummariesResult> listEntityRecognizerSummariesAsync(
+            final ListEntityRecognizerSummariesRequest listEntityRecognizerSummariesRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListEntityRecognizerSummariesResult>() {
+            public ListEntityRecognizerSummariesResult call() throws Exception {
+                return listEntityRecognizerSummaries(listEntityRecognizerSummariesRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of summaries for the entity recognizers that you have
+     * created.
+     * </p>
+     * 
+     * @param listEntityRecognizerSummariesRequest
+     * @return A Java Future object containing the response from the
+     *         ListEntityRecognizerSummaries service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListEntityRecognizerSummariesResult> listEntityRecognizerSummariesAsync(
+            final ListEntityRecognizerSummariesRequest listEntityRecognizerSummariesRequest,
+            final AsyncHandler<ListEntityRecognizerSummariesRequest, ListEntityRecognizerSummariesResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListEntityRecognizerSummariesResult>() {
+            public ListEntityRecognizerSummariesResult call() throws Exception {
+                ListEntityRecognizerSummariesResult result = null;
+                try {
+                    result = listEntityRecognizerSummaries(listEntityRecognizerSummariesRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listEntityRecognizerSummariesRequest, result);
                 return result;
             }
         });
@@ -2319,6 +4327,225 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Gets a list of the events detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listEventsDetectionJobsRequest
+     * @return A Java Future object containing the response from the
+     *         ListEventsDetectionJobs service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListEventsDetectionJobsResult> listEventsDetectionJobsAsync(
+            final ListEventsDetectionJobsRequest listEventsDetectionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListEventsDetectionJobsResult>() {
+            public ListEventsDetectionJobsResult call() throws Exception {
+                return listEventsDetectionJobs(listEventsDetectionJobsRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of the events detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listEventsDetectionJobsRequest
+     * @return A Java Future object containing the response from the
+     *         ListEventsDetectionJobs service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListEventsDetectionJobsResult> listEventsDetectionJobsAsync(
+            final ListEventsDetectionJobsRequest listEventsDetectionJobsRequest,
+            final AsyncHandler<ListEventsDetectionJobsRequest, ListEventsDetectionJobsResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListEventsDetectionJobsResult>() {
+            public ListEventsDetectionJobsResult call() throws Exception {
+                ListEventsDetectionJobsResult result = null;
+                try {
+                    result = listEventsDetectionJobs(listEventsDetectionJobsRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listEventsDetectionJobsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Information about the history of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listFlywheelIterationHistoryRequest
+     * @return A Java Future object containing the response from the
+     *         ListFlywheelIterationHistory service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListFlywheelIterationHistoryResult> listFlywheelIterationHistoryAsync(
+            final ListFlywheelIterationHistoryRequest listFlywheelIterationHistoryRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListFlywheelIterationHistoryResult>() {
+            public ListFlywheelIterationHistoryResult call() throws Exception {
+                return listFlywheelIterationHistory(listFlywheelIterationHistoryRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Information about the history of a flywheel iteration. For more
+     * information about flywheels, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param listFlywheelIterationHistoryRequest
+     * @return A Java Future object containing the response from the
+     *         ListFlywheelIterationHistory service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListFlywheelIterationHistoryResult> listFlywheelIterationHistoryAsync(
+            final ListFlywheelIterationHistoryRequest listFlywheelIterationHistoryRequest,
+            final AsyncHandler<ListFlywheelIterationHistoryRequest, ListFlywheelIterationHistoryResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListFlywheelIterationHistoryResult>() {
+            public ListFlywheelIterationHistoryResult call() throws Exception {
+                ListFlywheelIterationHistoryResult result = null;
+                try {
+                    result = listFlywheelIterationHistory(listFlywheelIterationHistoryRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listFlywheelIterationHistoryRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of the flywheels that you have created.
+     * </p>
+     * 
+     * @param listFlywheelsRequest
+     * @return A Java Future object containing the response from the
+     *         ListFlywheels service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListFlywheelsResult> listFlywheelsAsync(
+            final ListFlywheelsRequest listFlywheelsRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<ListFlywheelsResult>() {
+            public ListFlywheelsResult call() throws Exception {
+                return listFlywheels(listFlywheelsRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of the flywheels that you have created.
+     * </p>
+     * 
+     * @param listFlywheelsRequest
+     * @return A Java Future object containing the response from the
+     *         ListFlywheels service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListFlywheelsResult> listFlywheelsAsync(
+            final ListFlywheelsRequest listFlywheelsRequest,
+            final AsyncHandler<ListFlywheelsRequest, ListFlywheelsResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListFlywheelsResult>() {
+            public ListFlywheelsResult call() throws Exception {
+                ListFlywheelsResult result = null;
+                try {
+                    result = listFlywheels(listFlywheelsRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listFlywheelsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Get a list of key phrase detection jobs that you have submitted.
      * </p>
      * 
@@ -2383,6 +4610,77 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(listKeyPhrasesDetectionJobsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of the PII entity detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listPiiEntitiesDetectionJobsRequest
+     * @return A Java Future object containing the response from the
+     *         ListPiiEntitiesDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListPiiEntitiesDetectionJobsResult> listPiiEntitiesDetectionJobsAsync(
+            final ListPiiEntitiesDetectionJobsRequest listPiiEntitiesDetectionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListPiiEntitiesDetectionJobsResult>() {
+            public ListPiiEntitiesDetectionJobsResult call() throws Exception {
+                return listPiiEntitiesDetectionJobs(listPiiEntitiesDetectionJobsRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of the PII entity detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listPiiEntitiesDetectionJobsRequest
+     * @return A Java Future object containing the response from the
+     *         ListPiiEntitiesDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListPiiEntitiesDetectionJobsResult> listPiiEntitiesDetectionJobsAsync(
+            final ListPiiEntitiesDetectionJobsRequest listPiiEntitiesDetectionJobsRequest,
+            final AsyncHandler<ListPiiEntitiesDetectionJobsRequest, ListPiiEntitiesDetectionJobsResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListPiiEntitiesDetectionJobsResult>() {
+            public ListPiiEntitiesDetectionJobsResult call() throws Exception {
+                ListPiiEntitiesDetectionJobsResult result = null;
+                try {
+                    result = listPiiEntitiesDetectionJobs(listPiiEntitiesDetectionJobsRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listPiiEntitiesDetectionJobsRequest, result);
                 return result;
             }
         });
@@ -2461,6 +4759,146 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Lists all tags associated with a given Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return A Java Future object containing the response from the
+     *         ListTagsForResource service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListTagsForResourceResult> listTagsForResourceAsync(
+            final ListTagsForResourceRequest listTagsForResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListTagsForResourceResult>() {
+            public ListTagsForResourceResult call() throws Exception {
+                return listTagsForResource(listTagsForResourceRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Lists all tags associated with a given Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param listTagsForResourceRequest
+     * @return A Java Future object containing the response from the
+     *         ListTagsForResource service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListTagsForResourceResult> listTagsForResourceAsync(
+            final ListTagsForResourceRequest listTagsForResourceRequest,
+            final AsyncHandler<ListTagsForResourceRequest, ListTagsForResourceResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListTagsForResourceResult>() {
+            public ListTagsForResourceResult call() throws Exception {
+                ListTagsForResourceResult result = null;
+                try {
+                    result = listTagsForResource(listTagsForResourceRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listTagsForResourceRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of targeted sentiment detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listTargetedSentimentDetectionJobsRequest
+     * @return A Java Future object containing the response from the
+     *         ListTargetedSentimentDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListTargetedSentimentDetectionJobsResult> listTargetedSentimentDetectionJobsAsync(
+            final ListTargetedSentimentDetectionJobsRequest listTargetedSentimentDetectionJobsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListTargetedSentimentDetectionJobsResult>() {
+            public ListTargetedSentimentDetectionJobsResult call() throws Exception {
+                return listTargetedSentimentDetectionJobs(listTargetedSentimentDetectionJobsRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Gets a list of targeted sentiment detection jobs that you have submitted.
+     * </p>
+     * 
+     * @param listTargetedSentimentDetectionJobsRequest
+     * @return A Java Future object containing the response from the
+     *         ListTargetedSentimentDetectionJobs service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws InvalidFilterException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<ListTargetedSentimentDetectionJobsResult> listTargetedSentimentDetectionJobsAsync(
+            final ListTargetedSentimentDetectionJobsRequest listTargetedSentimentDetectionJobsRequest,
+            final AsyncHandler<ListTargetedSentimentDetectionJobsRequest, ListTargetedSentimentDetectionJobsResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<ListTargetedSentimentDetectionJobsResult>() {
+            public ListTargetedSentimentDetectionJobsResult call() throws Exception {
+                ListTargetedSentimentDetectionJobsResult result = null;
+                try {
+                    result = listTargetedSentimentDetectionJobs(listTargetedSentimentDetectionJobsRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(listTargetedSentimentDetectionJobsRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Gets a list of the topic detection jobs that you have submitted.
      * </p>
      * 
@@ -2532,8 +4970,84 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
-     * Starts an asynchronous document classification job. Use the operation to
-     * track the progress of the job.
+     * Attaches a resource-based policy to a custom model. You can use this
+     * policy to authorize an entity in another Amazon Web Services account to
+     * import the custom model, which replicates it in Amazon Comprehend in
+     * their account.
+     * </p>
+     * 
+     * @param putResourcePolicyRequest
+     * @return A Java Future object containing the response from the
+     *         PutResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<PutResourcePolicyResult> putResourcePolicyAsync(
+            final PutResourcePolicyRequest putResourcePolicyRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<PutResourcePolicyResult>() {
+            public PutResourcePolicyResult call() throws Exception {
+                return putResourcePolicy(putResourcePolicyRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Attaches a resource-based policy to a custom model. You can use this
+     * policy to authorize an entity in another Amazon Web Services account to
+     * import the custom model, which replicates it in Amazon Comprehend in
+     * their account.
+     * </p>
+     * 
+     * @param putResourcePolicyRequest
+     * @return A Java Future object containing the response from the
+     *         PutResourcePolicy service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<PutResourcePolicyResult> putResourcePolicyAsync(
+            final PutResourcePolicyRequest putResourcePolicyRequest,
+            final AsyncHandler<PutResourcePolicyRequest, PutResourcePolicyResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<PutResourcePolicyResult>() {
+            public PutResourcePolicyResult call() throws Exception {
+                PutResourcePolicyResult result = null;
+                try {
+                    result = putResourcePolicy(putResourcePolicyRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(putResourcePolicyRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Starts an asynchronous document classification job. Use the
+     * <code>DescribeDocumentClassificationJob</code> operation to track the
+     * progress of the job.
      * </p>
      * 
      * @param startDocumentClassificationJobRequest
@@ -2544,6 +5058,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2565,8 +5082,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
-     * Starts an asynchronous document classification job. Use the operation to
-     * track the progress of the job.
+     * Starts an asynchronous document classification job. Use the
+     * <code>DescribeDocumentClassificationJob</code> operation to track the
+     * progress of the job.
      * </p>
      * 
      * @param startDocumentClassificationJobRequest
@@ -2577,6 +5095,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2617,6 +5138,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Amazon Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2648,6 +5172,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Amazon Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2696,6 +5223,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2735,6 +5265,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * @throws TooManyRequestsException
      * @throws ResourceNotFoundException
      * @throws ResourceUnavailableException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2765,6 +5298,162 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Starts an asynchronous event detection job for a collection of documents.
+     * </p>
+     * 
+     * @param startEventsDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StartEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartEventsDetectionJobResult> startEventsDetectionJobAsync(
+            final StartEventsDetectionJobRequest startEventsDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartEventsDetectionJobResult>() {
+            public StartEventsDetectionJobResult call() throws Exception {
+                return startEventsDetectionJob(startEventsDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Starts an asynchronous event detection job for a collection of documents.
+     * </p>
+     * 
+     * @param startEventsDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StartEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartEventsDetectionJobResult> startEventsDetectionJobAsync(
+            final StartEventsDetectionJobRequest startEventsDetectionJobRequest,
+            final AsyncHandler<StartEventsDetectionJobRequest, StartEventsDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartEventsDetectionJobResult>() {
+            public StartEventsDetectionJobResult call() throws Exception {
+                StartEventsDetectionJobResult result = null;
+                try {
+                    result = startEventsDetectionJob(startEventsDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(startEventsDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Start the flywheel iteration.This operation uses any new datasets to
+     * train a new model version. For more information about flywheels, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param startFlywheelIterationRequest
+     * @return A Java Future object containing the response from the
+     *         StartFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartFlywheelIterationResult> startFlywheelIterationAsync(
+            final StartFlywheelIterationRequest startFlywheelIterationRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartFlywheelIterationResult>() {
+            public StartFlywheelIterationResult call() throws Exception {
+                return startFlywheelIteration(startFlywheelIterationRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Start the flywheel iteration.This operation uses any new datasets to
+     * train a new model version. For more information about flywheels, see <a
+     * href
+     * ="https://docs.aws.amazon.com/comprehend/latest/dg/flywheels-about.html">
+     * Flywheel overview</a> in the <i>Amazon Comprehend Developer Guide</i>.
+     * </p>
+     * 
+     * @param startFlywheelIterationRequest
+     * @return A Java Future object containing the response from the
+     *         StartFlywheelIteration service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartFlywheelIterationResult> startFlywheelIterationAsync(
+            final StartFlywheelIterationRequest startFlywheelIterationRequest,
+            final AsyncHandler<StartFlywheelIterationRequest, StartFlywheelIterationResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartFlywheelIterationResult>() {
+            public StartFlywheelIterationResult call() throws Exception {
+                StartFlywheelIterationResult result = null;
+                try {
+                    result = startFlywheelIteration(startFlywheelIterationRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(startFlywheelIterationRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Starts an asynchronous key phrase detection job for a collection of
      * documents. Use the operation to track the status of a job.
      * </p>
@@ -2775,6 +5464,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2806,6 +5498,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2836,8 +5531,85 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Starts an asynchronous PII entity detection job for a collection of
+     * documents.
+     * </p>
+     * 
+     * @param startPiiEntitiesDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StartPiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartPiiEntitiesDetectionJobResult> startPiiEntitiesDetectionJobAsync(
+            final StartPiiEntitiesDetectionJobRequest startPiiEntitiesDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartPiiEntitiesDetectionJobResult>() {
+            public StartPiiEntitiesDetectionJobResult call() throws Exception {
+                return startPiiEntitiesDetectionJob(startPiiEntitiesDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Starts an asynchronous PII entity detection job for a collection of
+     * documents.
+     * </p>
+     * 
+     * @param startPiiEntitiesDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StartPiiEntitiesDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartPiiEntitiesDetectionJobResult> startPiiEntitiesDetectionJobAsync(
+            final StartPiiEntitiesDetectionJobRequest startPiiEntitiesDetectionJobRequest,
+            final AsyncHandler<StartPiiEntitiesDetectionJobRequest, StartPiiEntitiesDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartPiiEntitiesDetectionJobResult>() {
+            public StartPiiEntitiesDetectionJobResult call() throws Exception {
+                StartPiiEntitiesDetectionJobResult result = null;
+                try {
+                    result = startPiiEntitiesDetectionJob(startPiiEntitiesDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(startPiiEntitiesDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Starts an asynchronous sentiment detection job for a collection of
-     * documents. use the operation to track the status of a job.
+     * documents. Use the operation to track the status of a job.
      * </p>
      * 
      * @param startSentimentDetectionJobRequest
@@ -2846,6 +5618,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2868,7 +5643,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
     /**
      * <p>
      * Starts an asynchronous sentiment detection job for a collection of
-     * documents. use the operation to track the status of a job.
+     * documents. Use the operation to track the status of a job.
      * </p>
      * 
      * @param startSentimentDetectionJobRequest
@@ -2877,6 +5652,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2907,6 +5685,85 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Starts an asynchronous targeted sentiment detection job for a collection
+     * of documents. Use the <code>DescribeTargetedSentimentDetectionJob</code>
+     * operation to track the status of a job.
+     * </p>
+     * 
+     * @param startTargetedSentimentDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StartTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartTargetedSentimentDetectionJobResult> startTargetedSentimentDetectionJobAsync(
+            final StartTargetedSentimentDetectionJobRequest startTargetedSentimentDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartTargetedSentimentDetectionJobResult>() {
+            public StartTargetedSentimentDetectionJobResult call() throws Exception {
+                return startTargetedSentimentDetectionJob(startTargetedSentimentDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Starts an asynchronous targeted sentiment detection job for a collection
+     * of documents. Use the <code>DescribeTargetedSentimentDetectionJob</code>
+     * operation to track the status of a job.
+     * </p>
+     * 
+     * @param startTargetedSentimentDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StartTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StartTargetedSentimentDetectionJobResult> startTargetedSentimentDetectionJobAsync(
+            final StartTargetedSentimentDetectionJobRequest startTargetedSentimentDetectionJobRequest,
+            final AsyncHandler<StartTargetedSentimentDetectionJobRequest, StartTargetedSentimentDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StartTargetedSentimentDetectionJobResult>() {
+            public StartTargetedSentimentDetectionJobResult call() throws Exception {
+                StartTargetedSentimentDetectionJobResult result = null;
+                try {
+                    result = startTargetedSentimentDetectionJob(startTargetedSentimentDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(startTargetedSentimentDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Starts an asynchronous topic detection job. Use the
      * <code>DescribeTopicDetectionJob</code> operation to track the status of a
      * job.
@@ -2918,6 +5775,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -2950,6 +5810,9 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      *         Comprehend.
      * @throws InvalidRequestException
      * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws TooManyTagsException
+     * @throws ResourceInUseException
      * @throws InternalServerException
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -3182,6 +6045,75 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Stops an events detection job in progress.
+     * </p>
+     * 
+     * @param stopEventsDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StopEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopEventsDetectionJobResult> stopEventsDetectionJobAsync(
+            final StopEventsDetectionJobRequest stopEventsDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopEventsDetectionJobResult>() {
+            public StopEventsDetectionJobResult call() throws Exception {
+                return stopEventsDetectionJob(stopEventsDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops an events detection job in progress.
+     * </p>
+     * 
+     * @param stopEventsDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StopEventsDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopEventsDetectionJobResult> stopEventsDetectionJobAsync(
+            final StopEventsDetectionJobRequest stopEventsDetectionJobRequest,
+            final AsyncHandler<StopEventsDetectionJobRequest, StopEventsDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopEventsDetectionJobResult>() {
+            public StopEventsDetectionJobResult call() throws Exception {
+                StopEventsDetectionJobResult result = null;
+                try {
+                    result = stopEventsDetectionJob(stopEventsDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(stopEventsDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Stops a key phrases detection job in progress.
      * </p>
      * <p>
@@ -3283,10 +6215,79 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
 
     /**
      * <p>
+     * Stops a PII entities detection job in progress.
+     * </p>
+     * 
+     * @param stopPiiEntitiesDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StopPiiEntitiesDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopPiiEntitiesDetectionJobResult> stopPiiEntitiesDetectionJobAsync(
+            final StopPiiEntitiesDetectionJobRequest stopPiiEntitiesDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopPiiEntitiesDetectionJobResult>() {
+            public StopPiiEntitiesDetectionJobResult call() throws Exception {
+                return stopPiiEntitiesDetectionJob(stopPiiEntitiesDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops a PII entities detection job in progress.
+     * </p>
+     * 
+     * @param stopPiiEntitiesDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StopPiiEntitiesDetectionJob service method, as returned by Amazon
+     *         Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopPiiEntitiesDetectionJobResult> stopPiiEntitiesDetectionJobAsync(
+            final StopPiiEntitiesDetectionJobRequest stopPiiEntitiesDetectionJobRequest,
+            final AsyncHandler<StopPiiEntitiesDetectionJobRequest, StopPiiEntitiesDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopPiiEntitiesDetectionJobResult>() {
+            public StopPiiEntitiesDetectionJobResult call() throws Exception {
+                StopPiiEntitiesDetectionJobResult result = null;
+                try {
+                    result = stopPiiEntitiesDetectionJob(stopPiiEntitiesDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(stopPiiEntitiesDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
      * Stops a sentiment detection job in progress.
      * </p>
      * <p>
-     * If the job state is <code>IN_PROGRESS</code> the job is marked for
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
      * termination and put into the <code>STOP_REQUESTED</code> state. If the
      * job completes before it can be stopped, it is put into the
      * <code>COMPLETED</code> state; otherwise the job is be stopped and put
@@ -3332,7 +6333,7 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
      * Stops a sentiment detection job in progress.
      * </p>
      * <p>
-     * If the job state is <code>IN_PROGRESS</code> the job is marked for
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
      * termination and put into the <code>STOP_REQUESTED</code> state. If the
      * job completes before it can be stopped, it is put into the
      * <code>COMPLETED</code> state; otherwise the job is be stopped and put
@@ -3377,6 +6378,579 @@ public class AmazonComprehendAsyncClient extends AmazonComprehendClient implemen
                     throw ex;
                 }
                 asyncHandler.onSuccess(stopSentimentDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops a targeted sentiment detection job in progress.
+     * </p>
+     * <p>
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * job completes before it can be stopped, it is put into the
+     * <code>COMPLETED</code> state; otherwise the job is be stopped and put
+     * into the <code>STOPPED</code> state.
+     * </p>
+     * <p>
+     * If the job is in the <code>COMPLETED</code> or <code>FAILED</code> state
+     * when you call the <code>StopDominantLanguageDetectionJob</code>
+     * operation, the operation returns a 400 Internal Request Exception.
+     * </p>
+     * <p>
+     * When a job is stopped, any documents already processed are written to the
+     * output location.
+     * </p>
+     * 
+     * @param stopTargetedSentimentDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StopTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopTargetedSentimentDetectionJobResult> stopTargetedSentimentDetectionJobAsync(
+            final StopTargetedSentimentDetectionJobRequest stopTargetedSentimentDetectionJobRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopTargetedSentimentDetectionJobResult>() {
+            public StopTargetedSentimentDetectionJobResult call() throws Exception {
+                return stopTargetedSentimentDetectionJob(stopTargetedSentimentDetectionJobRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops a targeted sentiment detection job in progress.
+     * </p>
+     * <p>
+     * If the job state is <code>IN_PROGRESS</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * job completes before it can be stopped, it is put into the
+     * <code>COMPLETED</code> state; otherwise the job is be stopped and put
+     * into the <code>STOPPED</code> state.
+     * </p>
+     * <p>
+     * If the job is in the <code>COMPLETED</code> or <code>FAILED</code> state
+     * when you call the <code>StopDominantLanguageDetectionJob</code>
+     * operation, the operation returns a 400 Internal Request Exception.
+     * </p>
+     * <p>
+     * When a job is stopped, any documents already processed are written to the
+     * output location.
+     * </p>
+     * 
+     * @param stopTargetedSentimentDetectionJobRequest
+     * @return A Java Future object containing the response from the
+     *         StopTargetedSentimentDetectionJob service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws JobNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopTargetedSentimentDetectionJobResult> stopTargetedSentimentDetectionJobAsync(
+            final StopTargetedSentimentDetectionJobRequest stopTargetedSentimentDetectionJobRequest,
+            final AsyncHandler<StopTargetedSentimentDetectionJobRequest, StopTargetedSentimentDetectionJobResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopTargetedSentimentDetectionJobResult>() {
+            public StopTargetedSentimentDetectionJobResult call() throws Exception {
+                StopTargetedSentimentDetectionJobResult result = null;
+                try {
+                    result = stopTargetedSentimentDetectionJob(stopTargetedSentimentDetectionJobRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(stopTargetedSentimentDetectionJobRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops a document classifier training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and put into
+     * the <code>STOPPED</code> state and the service sends back an HTTP 200
+     * response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingDocumentClassifierRequest
+     * @return A Java Future object containing the response from the
+     *         StopTrainingDocumentClassifier service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopTrainingDocumentClassifierResult> stopTrainingDocumentClassifierAsync(
+            final StopTrainingDocumentClassifierRequest stopTrainingDocumentClassifierRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopTrainingDocumentClassifierResult>() {
+            public StopTrainingDocumentClassifierResult call() throws Exception {
+                return stopTrainingDocumentClassifier(stopTrainingDocumentClassifierRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops a document classifier training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and put into
+     * the <code>STOPPED</code> state and the service sends back an HTTP 200
+     * response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingDocumentClassifierRequest
+     * @return A Java Future object containing the response from the
+     *         StopTrainingDocumentClassifier service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopTrainingDocumentClassifierResult> stopTrainingDocumentClassifierAsync(
+            final StopTrainingDocumentClassifierRequest stopTrainingDocumentClassifierRequest,
+            final AsyncHandler<StopTrainingDocumentClassifierRequest, StopTrainingDocumentClassifierResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopTrainingDocumentClassifierResult>() {
+            public StopTrainingDocumentClassifierResult call() throws Exception {
+                StopTrainingDocumentClassifierResult result = null;
+                try {
+                    result = stopTrainingDocumentClassifier(stopTrainingDocumentClassifierRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(stopTrainingDocumentClassifierRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops an entity recognizer training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and putted
+     * into the <code>STOPPED</code> state and the service sends back an HTTP
+     * 200 response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingEntityRecognizerRequest
+     * @return A Java Future object containing the response from the
+     *         StopTrainingEntityRecognizer service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopTrainingEntityRecognizerResult> stopTrainingEntityRecognizerAsync(
+            final StopTrainingEntityRecognizerRequest stopTrainingEntityRecognizerRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopTrainingEntityRecognizerResult>() {
+            public StopTrainingEntityRecognizerResult call() throws Exception {
+                return stopTrainingEntityRecognizer(stopTrainingEntityRecognizerRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Stops an entity recognizer training job while in progress.
+     * </p>
+     * <p>
+     * If the training job state is <code>TRAINING</code>, the job is marked for
+     * termination and put into the <code>STOP_REQUESTED</code> state. If the
+     * training job completes before it can be stopped, it is put into the
+     * <code>TRAINED</code>; otherwise the training job is stopped and putted
+     * into the <code>STOPPED</code> state and the service sends back an HTTP
+     * 200 response with an empty HTTP body.
+     * </p>
+     * 
+     * @param stopTrainingEntityRecognizerRequest
+     * @return A Java Future object containing the response from the
+     *         StopTrainingEntityRecognizer service method, as returned by
+     *         Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<StopTrainingEntityRecognizerResult> stopTrainingEntityRecognizerAsync(
+            final StopTrainingEntityRecognizerRequest stopTrainingEntityRecognizerRequest,
+            final AsyncHandler<StopTrainingEntityRecognizerRequest, StopTrainingEntityRecognizerResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<StopTrainingEntityRecognizerResult>() {
+            public StopTrainingEntityRecognizerResult call() throws Exception {
+                StopTrainingEntityRecognizerResult result = null;
+                try {
+                    result = stopTrainingEntityRecognizer(stopTrainingEntityRecognizerRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(stopTrainingEntityRecognizerRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Associates a specific tag with an Amazon Comprehend resource. A tag is a
+     * key-value pair that adds as a metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return A Java Future object containing the response from the TagResource
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<TagResourceResult> tagResourceAsync(final TagResourceRequest tagResourceRequest)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<TagResourceResult>() {
+            public TagResourceResult call() throws Exception {
+                return tagResource(tagResourceRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Associates a specific tag with an Amazon Comprehend resource. A tag is a
+     * key-value pair that adds as a metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     * 
+     * @param tagResourceRequest
+     * @return A Java Future object containing the response from the TagResource
+     *         service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws TooManyTagsException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<TagResourceResult> tagResourceAsync(final TagResourceRequest tagResourceRequest,
+            final AsyncHandler<TagResourceRequest, TagResourceResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<TagResourceResult>() {
+            public TagResourceResult call() throws Exception {
+                TagResourceResult result = null;
+                try {
+                    result = tagResource(tagResourceRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(tagResourceRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Removes a specific tag associated with an Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return A Java Future object containing the response from the
+     *         UntagResource service method, as returned by Amazon Comprehend.
+     * @throws TooManyTagKeysException
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<UntagResourceResult> untagResourceAsync(
+            final UntagResourceRequest untagResourceRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<UntagResourceResult>() {
+            public UntagResourceResult call() throws Exception {
+                return untagResource(untagResourceRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Removes a specific tag associated with an Amazon Comprehend resource.
+     * </p>
+     * 
+     * @param untagResourceRequest
+     * @return A Java Future object containing the response from the
+     *         UntagResource service method, as returned by Amazon Comprehend.
+     * @throws TooManyTagKeysException
+     * @throws InvalidRequestException
+     * @throws ConcurrentModificationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<UntagResourceResult> untagResourceAsync(
+            final UntagResourceRequest untagResourceRequest,
+            final AsyncHandler<UntagResourceRequest, UntagResourceResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<UntagResourceResult>() {
+            public UntagResourceResult call() throws Exception {
+                UntagResourceResult result = null;
+                try {
+                    result = untagResource(untagResourceRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(untagResourceRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Updates information about the specified endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param updateEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         UpdateEndpoint service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<UpdateEndpointResult> updateEndpointAsync(
+            final UpdateEndpointRequest updateEndpointRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<UpdateEndpointResult>() {
+            public UpdateEndpointResult call() throws Exception {
+                return updateEndpoint(updateEndpointRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Updates information about the specified endpoint. For information about
+     * endpoints, see <a href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints.html"
+     * >Managing endpoints</a>.
+     * </p>
+     * 
+     * @param updateEndpointRequest
+     * @return A Java Future object containing the response from the
+     *         UpdateEndpoint service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws ResourceInUseException
+     * @throws ResourceLimitExceededException
+     * @throws ResourceNotFoundException
+     * @throws ResourceUnavailableException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<UpdateEndpointResult> updateEndpointAsync(
+            final UpdateEndpointRequest updateEndpointRequest,
+            final AsyncHandler<UpdateEndpointRequest, UpdateEndpointResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<UpdateEndpointResult>() {
+            public UpdateEndpointResult call() throws Exception {
+                UpdateEndpointResult result = null;
+                try {
+                    result = updateEndpoint(updateEndpointRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(updateEndpointRequest, result);
+                return result;
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Update the configuration information for an existing flywheel.
+     * </p>
+     * 
+     * @param updateFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         UpdateFlywheel service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<UpdateFlywheelResult> updateFlywheelAsync(
+            final UpdateFlywheelRequest updateFlywheelRequest) throws AmazonServiceException,
+            AmazonClientException {
+        return executorService.submit(new Callable<UpdateFlywheelResult>() {
+            public UpdateFlywheelResult call() throws Exception {
+                return updateFlywheel(updateFlywheelRequest);
+            }
+        });
+    }
+
+    /**
+     * <p>
+     * Update the configuration information for an existing flywheel.
+     * </p>
+     * 
+     * @param updateFlywheelRequest
+     * @return A Java Future object containing the response from the
+     *         UpdateFlywheel service method, as returned by Amazon Comprehend.
+     * @throws InvalidRequestException
+     * @throws TooManyRequestsException
+     * @throws KmsKeyValidationException
+     * @throws ResourceNotFoundException
+     * @throws InternalServerException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Comprehend indicating either a problem with the data in the
+     *             request, or a server side issue.
+     */
+    public Future<UpdateFlywheelResult> updateFlywheelAsync(
+            final UpdateFlywheelRequest updateFlywheelRequest,
+            final AsyncHandler<UpdateFlywheelRequest, UpdateFlywheelResult> asyncHandler)
+            throws AmazonServiceException, AmazonClientException {
+        return executorService.submit(new Callable<UpdateFlywheelResult>() {
+            public UpdateFlywheelResult call() throws Exception {
+                UpdateFlywheelResult result = null;
+                try {
+                    result = updateFlywheel(updateFlywheelRequest);
+                } catch (Exception ex) {
+                    asyncHandler.onError(ex);
+                    throw ex;
+                }
+                asyncHandler.onSuccess(updateFlywheelRequest, result);
                 return result;
             }
         });

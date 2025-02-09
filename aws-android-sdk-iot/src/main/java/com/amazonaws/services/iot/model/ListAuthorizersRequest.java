@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Lists the authorizers registered in your account.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListAuthorizers</a> action.
+ * </p>
  */
 public class ListAuthorizersRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -41,6 +46,7 @@ public class ListAuthorizersRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      */
     private String marker;
@@ -122,6 +128,7 @@ public class ListAuthorizersRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @return <p>
@@ -138,6 +145,7 @@ public class ListAuthorizersRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>
@@ -157,6 +165,7 @@ public class ListAuthorizersRequest extends AmazonWebServiceRequest implements S
      * together.
      * <p>
      * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 1024<br/>
      * <b>Pattern: </b>[A-Za-z0-9+/]+={0,2}<br/>
      *
      * @param marker <p>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ public class GetCallerIdentityResult implements Serializable {
     /**
      * <p>
      * The unique identifier of the calling entity. The exact value depends on
-     * the type of entity making the call. The values returned are those listed
-     * in the <b>aws:userid</b> column in the <a href=
-     * "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     * the type of entity that is making the call. The values returned are those
+     * listed in the <b>aws:userid</b> column in the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      * >Principal table</a> found on the <b>Policy Variables</b> reference page
      * in the <i>IAM User Guide</i>.
      * </p>
@@ -38,15 +38,15 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS account ID number of the account that owns or contains the
-     * calling entity.
+     * The Amazon Web Services account ID number of the account that owns or
+     * contains the calling entity.
      * </p>
      */
     private String account;
 
     /**
      * <p>
-     * The AWS ARN associated with the calling entity.
+     * The Amazon Web Services ARN associated with the calling entity.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -59,19 +59,19 @@ public class GetCallerIdentityResult implements Serializable {
     /**
      * <p>
      * The unique identifier of the calling entity. The exact value depends on
-     * the type of entity making the call. The values returned are those listed
-     * in the <b>aws:userid</b> column in the <a href=
-     * "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     * the type of entity that is making the call. The values returned are those
+     * listed in the <b>aws:userid</b> column in the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      * >Principal table</a> found on the <b>Policy Variables</b> reference page
      * in the <i>IAM User Guide</i>.
      * </p>
      *
      * @return <p>
      *         The unique identifier of the calling entity. The exact value
-     *         depends on the type of entity making the call. The values
+     *         depends on the type of entity that is making the call. The values
      *         returned are those listed in the <b>aws:userid</b> column in the
      *         <a href=
-     *         "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     *         "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      *         >Principal table</a> found on the <b>Policy Variables</b>
      *         reference page in the <i>IAM User Guide</i>.
      *         </p>
@@ -83,19 +83,19 @@ public class GetCallerIdentityResult implements Serializable {
     /**
      * <p>
      * The unique identifier of the calling entity. The exact value depends on
-     * the type of entity making the call. The values returned are those listed
-     * in the <b>aws:userid</b> column in the <a href=
-     * "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     * the type of entity that is making the call. The values returned are those
+     * listed in the <b>aws:userid</b> column in the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      * >Principal table</a> found on the <b>Policy Variables</b> reference page
      * in the <i>IAM User Guide</i>.
      * </p>
      *
      * @param userId <p>
      *            The unique identifier of the calling entity. The exact value
-     *            depends on the type of entity making the call. The values
-     *            returned are those listed in the <b>aws:userid</b> column in
-     *            the <a href=
-     *            "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     *            depends on the type of entity that is making the call. The
+     *            values returned are those listed in the <b>aws:userid</b>
+     *            column in the <a href=
+     *            "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      *            >Principal table</a> found on the <b>Policy Variables</b>
      *            reference page in the <i>IAM User Guide</i>.
      *            </p>
@@ -107,9 +107,9 @@ public class GetCallerIdentityResult implements Serializable {
     /**
      * <p>
      * The unique identifier of the calling entity. The exact value depends on
-     * the type of entity making the call. The values returned are those listed
-     * in the <b>aws:userid</b> column in the <a href=
-     * "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     * the type of entity that is making the call. The values returned are those
+     * listed in the <b>aws:userid</b> column in the <a href=
+     * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      * >Principal table</a> found on the <b>Policy Variables</b> reference page
      * in the <i>IAM User Guide</i>.
      * </p>
@@ -119,10 +119,10 @@ public class GetCallerIdentityResult implements Serializable {
      *
      * @param userId <p>
      *            The unique identifier of the calling entity. The exact value
-     *            depends on the type of entity making the call. The values
-     *            returned are those listed in the <b>aws:userid</b> column in
-     *            the <a href=
-     *            "http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
+     *            depends on the type of entity that is making the call. The
+     *            values returned are those listed in the <b>aws:userid</b>
+     *            column in the <a href=
+     *            "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_variables.html#principaltable"
      *            >Principal table</a> found on the <b>Policy Variables</b>
      *            reference page in the <i>IAM User Guide</i>.
      *            </p>
@@ -136,13 +136,13 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS account ID number of the account that owns or contains the
-     * calling entity.
+     * The Amazon Web Services account ID number of the account that owns or
+     * contains the calling entity.
      * </p>
      *
      * @return <p>
-     *         The AWS account ID number of the account that owns or contains
-     *         the calling entity.
+     *         The Amazon Web Services account ID number of the account that
+     *         owns or contains the calling entity.
      *         </p>
      */
     public String getAccount() {
@@ -151,13 +151,13 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS account ID number of the account that owns or contains the
-     * calling entity.
+     * The Amazon Web Services account ID number of the account that owns or
+     * contains the calling entity.
      * </p>
      *
      * @param account <p>
-     *            The AWS account ID number of the account that owns or contains
-     *            the calling entity.
+     *            The Amazon Web Services account ID number of the account that
+     *            owns or contains the calling entity.
      *            </p>
      */
     public void setAccount(String account) {
@@ -166,16 +166,16 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS account ID number of the account that owns or contains the
-     * calling entity.
+     * The Amazon Web Services account ID number of the account that owns or
+     * contains the calling entity.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param account <p>
-     *            The AWS account ID number of the account that owns or contains
-     *            the calling entity.
+     *            The Amazon Web Services account ID number of the account that
+     *            owns or contains the calling entity.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -187,7 +187,7 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS ARN associated with the calling entity.
+     * The Amazon Web Services ARN associated with the calling entity.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -196,7 +196,7 @@ public class GetCallerIdentityResult implements Serializable {
      * -\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFD\u10000-\u10FFFF]+<br/>
      *
      * @return <p>
-     *         The AWS ARN associated with the calling entity.
+     *         The Amazon Web Services ARN associated with the calling entity.
      *         </p>
      */
     public String getArn() {
@@ -205,7 +205,7 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS ARN associated with the calling entity.
+     * The Amazon Web Services ARN associated with the calling entity.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -214,7 +214,8 @@ public class GetCallerIdentityResult implements Serializable {
      * -\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFD\u10000-\u10FFFF]+<br/>
      *
      * @param arn <p>
-     *            The AWS ARN associated with the calling entity.
+     *            The Amazon Web Services ARN associated with the calling
+     *            entity.
      *            </p>
      */
     public void setArn(String arn) {
@@ -223,7 +224,7 @@ public class GetCallerIdentityResult implements Serializable {
 
     /**
      * <p>
-     * The AWS ARN associated with the calling entity.
+     * The Amazon Web Services ARN associated with the calling entity.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -235,7 +236,8 @@ public class GetCallerIdentityResult implements Serializable {
      * -\u007E\u0085\u00A0-\uD7FF\uE000-\uFFFD\u10000-\u10FFFF]+<br/>
      *
      * @param arn <p>
-     *            The AWS ARN associated with the calling entity.
+     *            The Amazon Web Services ARN associated with the calling
+     *            entity.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

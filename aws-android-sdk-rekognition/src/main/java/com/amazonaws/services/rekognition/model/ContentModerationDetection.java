@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,34 +19,74 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Information about a moderation label detection in a stored video.
+ * Information about an inappropriate, unwanted, or offensive content label
+ * detection in a stored video.
  * </p>
  */
 public class ContentModerationDetection implements Serializable {
     /**
      * <p>
-     * Time, in milliseconds from the beginning of the video, that the
-     * moderation label was detected.
+     * Time, in milliseconds from the beginning of the video, that the content
+     * moderation label was detected. Note that <code>Timestamp</code> is not
+     * guaranteed to be accurate to the individual frame where the moderated
+     * content first appears.
      * </p>
      */
     private Long timestamp;
 
     /**
      * <p>
-     * The moderation label detected by in the stored video.
+     * The content moderation label detected by in the stored video.
      * </p>
      */
     private ModerationLabel moderationLabel;
 
     /**
      * <p>
-     * Time, in milliseconds from the beginning of the video, that the
-     * moderation label was detected.
+     * The time in milliseconds defining the start of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     */
+    private Long startTimestampMillis;
+
+    /**
+     * <p>
+     * The time in milliseconds defining the end of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     */
+    private Long endTimestampMillis;
+
+    /**
+     * <p>
+     * The time duration of a segment in milliseconds, I.e. time elapsed from
+     * StartTimestampMillis to EndTimestampMillis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     */
+    private Long durationMillis;
+
+    /**
+     * <p>
+     * Time, in milliseconds from the beginning of the video, that the content
+     * moderation label was detected. Note that <code>Timestamp</code> is not
+     * guaranteed to be accurate to the individual frame where the moderated
+     * content first appears.
      * </p>
      *
      * @return <p>
      *         Time, in milliseconds from the beginning of the video, that the
-     *         moderation label was detected.
+     *         content moderation label was detected. Note that
+     *         <code>Timestamp</code> is not guaranteed to be accurate to the
+     *         individual frame where the moderated content first appears.
      *         </p>
      */
     public Long getTimestamp() {
@@ -55,13 +95,17 @@ public class ContentModerationDetection implements Serializable {
 
     /**
      * <p>
-     * Time, in milliseconds from the beginning of the video, that the
-     * moderation label was detected.
+     * Time, in milliseconds from the beginning of the video, that the content
+     * moderation label was detected. Note that <code>Timestamp</code> is not
+     * guaranteed to be accurate to the individual frame where the moderated
+     * content first appears.
      * </p>
      *
      * @param timestamp <p>
      *            Time, in milliseconds from the beginning of the video, that
-     *            the moderation label was detected.
+     *            the content moderation label was detected. Note that
+     *            <code>Timestamp</code> is not guaranteed to be accurate to the
+     *            individual frame where the moderated content first appears.
      *            </p>
      */
     public void setTimestamp(Long timestamp) {
@@ -70,8 +114,10 @@ public class ContentModerationDetection implements Serializable {
 
     /**
      * <p>
-     * Time, in milliseconds from the beginning of the video, that the
-     * moderation label was detected.
+     * Time, in milliseconds from the beginning of the video, that the content
+     * moderation label was detected. Note that <code>Timestamp</code> is not
+     * guaranteed to be accurate to the individual frame where the moderated
+     * content first appears.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -79,7 +125,9 @@ public class ContentModerationDetection implements Serializable {
      *
      * @param timestamp <p>
      *            Time, in milliseconds from the beginning of the video, that
-     *            the moderation label was detected.
+     *            the content moderation label was detected. Note that
+     *            <code>Timestamp</code> is not guaranteed to be accurate to the
+     *            individual frame where the moderated content first appears.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -91,11 +139,11 @@ public class ContentModerationDetection implements Serializable {
 
     /**
      * <p>
-     * The moderation label detected by in the stored video.
+     * The content moderation label detected by in the stored video.
      * </p>
      *
      * @return <p>
-     *         The moderation label detected by in the stored video.
+     *         The content moderation label detected by in the stored video.
      *         </p>
      */
     public ModerationLabel getModerationLabel() {
@@ -104,11 +152,11 @@ public class ContentModerationDetection implements Serializable {
 
     /**
      * <p>
-     * The moderation label detected by in the stored video.
+     * The content moderation label detected by in the stored video.
      * </p>
      *
      * @param moderationLabel <p>
-     *            The moderation label detected by in the stored video.
+     *            The content moderation label detected by in the stored video.
      *            </p>
      */
     public void setModerationLabel(ModerationLabel moderationLabel) {
@@ -117,20 +165,200 @@ public class ContentModerationDetection implements Serializable {
 
     /**
      * <p>
-     * The moderation label detected by in the stored video.
+     * The content moderation label detected by in the stored video.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param moderationLabel <p>
-     *            The moderation label detected by in the stored video.
+     *            The content moderation label detected by in the stored video.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public ContentModerationDetection withModerationLabel(ModerationLabel moderationLabel) {
         this.moderationLabel = moderationLabel;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The time in milliseconds defining the start of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @return <p>
+     *         The time in milliseconds defining the start of the timeline
+     *         segment containing a continuously detected moderation label.
+     *         </p>
+     */
+    public Long getStartTimestampMillis() {
+        return startTimestampMillis;
+    }
+
+    /**
+     * <p>
+     * The time in milliseconds defining the start of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param startTimestampMillis <p>
+     *            The time in milliseconds defining the start of the timeline
+     *            segment containing a continuously detected moderation label.
+     *            </p>
+     */
+    public void setStartTimestampMillis(Long startTimestampMillis) {
+        this.startTimestampMillis = startTimestampMillis;
+    }
+
+    /**
+     * <p>
+     * The time in milliseconds defining the start of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param startTimestampMillis <p>
+     *            The time in milliseconds defining the start of the timeline
+     *            segment containing a continuously detected moderation label.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ContentModerationDetection withStartTimestampMillis(Long startTimestampMillis) {
+        this.startTimestampMillis = startTimestampMillis;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The time in milliseconds defining the end of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @return <p>
+     *         The time in milliseconds defining the end of the timeline segment
+     *         containing a continuously detected moderation label.
+     *         </p>
+     */
+    public Long getEndTimestampMillis() {
+        return endTimestampMillis;
+    }
+
+    /**
+     * <p>
+     * The time in milliseconds defining the end of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param endTimestampMillis <p>
+     *            The time in milliseconds defining the end of the timeline
+     *            segment containing a continuously detected moderation label.
+     *            </p>
+     */
+    public void setEndTimestampMillis(Long endTimestampMillis) {
+        this.endTimestampMillis = endTimestampMillis;
+    }
+
+    /**
+     * <p>
+     * The time in milliseconds defining the end of the timeline segment
+     * containing a continuously detected moderation label.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param endTimestampMillis <p>
+     *            The time in milliseconds defining the end of the timeline
+     *            segment containing a continuously detected moderation label.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ContentModerationDetection withEndTimestampMillis(Long endTimestampMillis) {
+        this.endTimestampMillis = endTimestampMillis;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The time duration of a segment in milliseconds, I.e. time elapsed from
+     * StartTimestampMillis to EndTimestampMillis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @return <p>
+     *         The time duration of a segment in milliseconds, I.e. time elapsed
+     *         from StartTimestampMillis to EndTimestampMillis.
+     *         </p>
+     */
+    public Long getDurationMillis() {
+        return durationMillis;
+    }
+
+    /**
+     * <p>
+     * The time duration of a segment in milliseconds, I.e. time elapsed from
+     * StartTimestampMillis to EndTimestampMillis.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param durationMillis <p>
+     *            The time duration of a segment in milliseconds, I.e. time
+     *            elapsed from StartTimestampMillis to EndTimestampMillis.
+     *            </p>
+     */
+    public void setDurationMillis(Long durationMillis) {
+        this.durationMillis = durationMillis;
+    }
+
+    /**
+     * <p>
+     * The time duration of a segment in milliseconds, I.e. time elapsed from
+     * StartTimestampMillis to EndTimestampMillis.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Range: </b>0 - <br/>
+     *
+     * @param durationMillis <p>
+     *            The time duration of a segment in milliseconds, I.e. time
+     *            elapsed from StartTimestampMillis to EndTimestampMillis.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ContentModerationDetection withDurationMillis(Long durationMillis) {
+        this.durationMillis = durationMillis;
         return this;
     }
 
@@ -148,7 +376,13 @@ public class ContentModerationDetection implements Serializable {
         if (getTimestamp() != null)
             sb.append("Timestamp: " + getTimestamp() + ",");
         if (getModerationLabel() != null)
-            sb.append("ModerationLabel: " + getModerationLabel());
+            sb.append("ModerationLabel: " + getModerationLabel() + ",");
+        if (getStartTimestampMillis() != null)
+            sb.append("StartTimestampMillis: " + getStartTimestampMillis() + ",");
+        if (getEndTimestampMillis() != null)
+            sb.append("EndTimestampMillis: " + getEndTimestampMillis() + ",");
+        if (getDurationMillis() != null)
+            sb.append("DurationMillis: " + getDurationMillis());
         sb.append("}");
         return sb.toString();
     }
@@ -161,6 +395,12 @@ public class ContentModerationDetection implements Serializable {
         hashCode = prime * hashCode + ((getTimestamp() == null) ? 0 : getTimestamp().hashCode());
         hashCode = prime * hashCode
                 + ((getModerationLabel() == null) ? 0 : getModerationLabel().hashCode());
+        hashCode = prime * hashCode
+                + ((getStartTimestampMillis() == null) ? 0 : getStartTimestampMillis().hashCode());
+        hashCode = prime * hashCode
+                + ((getEndTimestampMillis() == null) ? 0 : getEndTimestampMillis().hashCode());
+        hashCode = prime * hashCode
+                + ((getDurationMillis() == null) ? 0 : getDurationMillis().hashCode());
         return hashCode;
     }
 
@@ -184,6 +424,21 @@ public class ContentModerationDetection implements Serializable {
             return false;
         if (other.getModerationLabel() != null
                 && other.getModerationLabel().equals(this.getModerationLabel()) == false)
+            return false;
+        if (other.getStartTimestampMillis() == null ^ this.getStartTimestampMillis() == null)
+            return false;
+        if (other.getStartTimestampMillis() != null
+                && other.getStartTimestampMillis().equals(this.getStartTimestampMillis()) == false)
+            return false;
+        if (other.getEndTimestampMillis() == null ^ this.getEndTimestampMillis() == null)
+            return false;
+        if (other.getEndTimestampMillis() != null
+                && other.getEndTimestampMillis().equals(this.getEndTimestampMillis()) == false)
+            return false;
+        if (other.getDurationMillis() == null ^ this.getDurationMillis() == null)
+            return false;
+        if (other.getDurationMillis() != null
+                && other.getDurationMillis().equals(this.getDurationMillis()) == false)
             return false;
         return true;
     }

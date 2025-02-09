@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,6 +61,12 @@ class AuthorizerDescriptionJsonUnmarshaller implements
                         .unmarshall(context));
             } else if (name.equals("lastModifiedDate")) {
                 authorizerDescription.setLastModifiedDate(DateJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("signingDisabled")) {
+                authorizerDescription.setSigningDisabled(BooleanJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("enableCachingForHttp")) {
+                authorizerDescription.setEnableCachingForHttp(BooleanJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

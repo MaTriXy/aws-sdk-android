@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,10 +25,19 @@ import java.io.Serializable;
 public class PresignedUrlConfig implements Serializable {
     /**
      * <p>
-     * The ARN of an IAM role that grants grants permission to download files
-     * from the S3 bucket where the job data/updates are stored. The role must
-     * also grant permission for IoT to download the files.
+     * The ARN of an IAM role that grants permission to download files from the
+     * S3 bucket where the job data/updates are stored. The role must also grant
+     * permission for IoT to download the files.
      * </p>
+     * <important>
+     * <p>
+     * For information about addressing the confused deputy problem, see <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     * >cross-service confused deputy prevention</a> in the <i>Amazon Web
+     * Services IoT Core developer guide</i>.
+     * </p>
+     * </important>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
@@ -49,20 +58,37 @@ public class PresignedUrlConfig implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that grants grants permission to download files
-     * from the S3 bucket where the job data/updates are stored. The role must
-     * also grant permission for IoT to download the files.
+     * The ARN of an IAM role that grants permission to download files from the
+     * S3 bucket where the job data/updates are stored. The role must also grant
+     * permission for IoT to download the files.
      * </p>
+     * <important>
+     * <p>
+     * For information about addressing the confused deputy problem, see <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     * >cross-service confused deputy prevention</a> in the <i>Amazon Web
+     * Services IoT Core developer guide</i>.
+     * </p>
+     * </important>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         The ARN of an IAM role that grants grants permission to download
-     *         files from the S3 bucket where the job data/updates are stored.
-     *         The role must also grant permission for IoT to download the
-     *         files.
+     *         The ARN of an IAM role that grants permission to download files
+     *         from the S3 bucket where the job data/updates are stored. The
+     *         role must also grant permission for IoT to download the files.
      *         </p>
+     *         <important>
+     *         <p>
+     *         For information about addressing the confused deputy problem, see
+     *         <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     *         >cross-service confused deputy prevention</a> in the <i>Amazon
+     *         Web Services IoT Core developer guide</i>.
+     *         </p>
+     *         </important>
      */
     public String getRoleArn() {
         return roleArn;
@@ -70,20 +96,38 @@ public class PresignedUrlConfig implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that grants grants permission to download files
-     * from the S3 bucket where the job data/updates are stored. The role must
-     * also grant permission for IoT to download the files.
+     * The ARN of an IAM role that grants permission to download files from the
+     * S3 bucket where the job data/updates are stored. The role must also grant
+     * permission for IoT to download the files.
      * </p>
+     * <important>
+     * <p>
+     * For information about addressing the confused deputy problem, see <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     * >cross-service confused deputy prevention</a> in the <i>Amazon Web
+     * Services IoT Core developer guide</i>.
+     * </p>
+     * </important>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param roleArn <p>
-     *            The ARN of an IAM role that grants grants permission to
-     *            download files from the S3 bucket where the job data/updates
-     *            are stored. The role must also grant permission for IoT to
+     *            The ARN of an IAM role that grants permission to download
+     *            files from the S3 bucket where the job data/updates are
+     *            stored. The role must also grant permission for IoT to
      *            download the files.
      *            </p>
+     *            <important>
+     *            <p>
+     *            For information about addressing the confused deputy problem,
+     *            see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     *            >cross-service confused deputy prevention</a> in the <i>Amazon
+     *            Web Services IoT Core developer guide</i>.
+     *            </p>
+     *            </important>
      */
     public void setRoleArn(String roleArn) {
         this.roleArn = roleArn;
@@ -91,10 +135,19 @@ public class PresignedUrlConfig implements Serializable {
 
     /**
      * <p>
-     * The ARN of an IAM role that grants grants permission to download files
-     * from the S3 bucket where the job data/updates are stored. The role must
-     * also grant permission for IoT to download the files.
+     * The ARN of an IAM role that grants permission to download files from the
+     * S3 bucket where the job data/updates are stored. The role must also grant
+     * permission for IoT to download the files.
      * </p>
+     * <important>
+     * <p>
+     * For information about addressing the confused deputy problem, see <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     * >cross-service confused deputy prevention</a> in the <i>Amazon Web
+     * Services IoT Core developer guide</i>.
+     * </p>
+     * </important>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -103,11 +156,20 @@ public class PresignedUrlConfig implements Serializable {
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param roleArn <p>
-     *            The ARN of an IAM role that grants grants permission to
-     *            download files from the S3 bucket where the job data/updates
-     *            are stored. The role must also grant permission for IoT to
+     *            The ARN of an IAM role that grants permission to download
+     *            files from the S3 bucket where the job data/updates are
+     *            stored. The role must also grant permission for IoT to
      *            download the files.
      *            </p>
+     *            <important>
+     *            <p>
+     *            For information about addressing the confused deputy problem,
+     *            see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html"
+     *            >cross-service confused deputy prevention</a> in the <i>Amazon
+     *            Web Services IoT Core developer guide</i>.
+     *            </p>
+     *            </important>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */

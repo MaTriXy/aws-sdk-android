@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,13 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Lists the findings (results) of a Device Defender audit or of the audits
- * performed during a specified time period. (Findings are retained for 180
+ * performed during a specified time period. (Findings are retained for 90
  * days.)
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListAuditFindings</a> action.
  * </p>
  */
 public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements Serializable {
@@ -48,7 +53,7 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Information identifying the non-compliant resource.
+     * Information identifying the noncompliant resource.
      * </p>
      */
     private ResourceIdentifier resourceIdentifier;
@@ -87,6 +92,15 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
      * </p>
      */
     private java.util.Date endTime;
+
+    /**
+     * <p>
+     * Boolean flag indicating whether only the suppressed findings or the
+     * unsuppressed findings should be listed. If this parameter isn't provided,
+     * the response will list both suppressed and unsuppressed findings.
+     * </p>
+     */
+    private Boolean listSuppressedFindings;
 
     /**
      * <p>
@@ -204,11 +218,11 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Information identifying the non-compliant resource.
+     * Information identifying the noncompliant resource.
      * </p>
      *
      * @return <p>
-     *         Information identifying the non-compliant resource.
+     *         Information identifying the noncompliant resource.
      *         </p>
      */
     public ResourceIdentifier getResourceIdentifier() {
@@ -217,11 +231,11 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Information identifying the non-compliant resource.
+     * Information identifying the noncompliant resource.
      * </p>
      *
      * @param resourceIdentifier <p>
-     *            Information identifying the non-compliant resource.
+     *            Information identifying the noncompliant resource.
      *            </p>
      */
     public void setResourceIdentifier(ResourceIdentifier resourceIdentifier) {
@@ -230,14 +244,14 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
 
     /**
      * <p>
-     * Information identifying the non-compliant resource.
+     * Information identifying the noncompliant resource.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param resourceIdentifier <p>
-     *            Information identifying the non-compliant resource.
+     *            Information identifying the noncompliant resource.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -464,6 +478,84 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
     }
 
     /**
+     * <p>
+     * Boolean flag indicating whether only the suppressed findings or the
+     * unsuppressed findings should be listed. If this parameter isn't provided,
+     * the response will list both suppressed and unsuppressed findings.
+     * </p>
+     *
+     * @return <p>
+     *         Boolean flag indicating whether only the suppressed findings or
+     *         the unsuppressed findings should be listed. If this parameter
+     *         isn't provided, the response will list both suppressed and
+     *         unsuppressed findings.
+     *         </p>
+     */
+    public Boolean isListSuppressedFindings() {
+        return listSuppressedFindings;
+    }
+
+    /**
+     * <p>
+     * Boolean flag indicating whether only the suppressed findings or the
+     * unsuppressed findings should be listed. If this parameter isn't provided,
+     * the response will list both suppressed and unsuppressed findings.
+     * </p>
+     *
+     * @return <p>
+     *         Boolean flag indicating whether only the suppressed findings or
+     *         the unsuppressed findings should be listed. If this parameter
+     *         isn't provided, the response will list both suppressed and
+     *         unsuppressed findings.
+     *         </p>
+     */
+    public Boolean getListSuppressedFindings() {
+        return listSuppressedFindings;
+    }
+
+    /**
+     * <p>
+     * Boolean flag indicating whether only the suppressed findings or the
+     * unsuppressed findings should be listed. If this parameter isn't provided,
+     * the response will list both suppressed and unsuppressed findings.
+     * </p>
+     *
+     * @param listSuppressedFindings <p>
+     *            Boolean flag indicating whether only the suppressed findings
+     *            or the unsuppressed findings should be listed. If this
+     *            parameter isn't provided, the response will list both
+     *            suppressed and unsuppressed findings.
+     *            </p>
+     */
+    public void setListSuppressedFindings(Boolean listSuppressedFindings) {
+        this.listSuppressedFindings = listSuppressedFindings;
+    }
+
+    /**
+     * <p>
+     * Boolean flag indicating whether only the suppressed findings or the
+     * unsuppressed findings should be listed. If this parameter isn't provided,
+     * the response will list both suppressed and unsuppressed findings.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param listSuppressedFindings <p>
+     *            Boolean flag indicating whether only the suppressed findings
+     *            or the unsuppressed findings should be listed. If this
+     *            parameter isn't provided, the response will list both
+     *            suppressed and unsuppressed findings.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ListAuditFindingsRequest withListSuppressedFindings(Boolean listSuppressedFindings) {
+        this.listSuppressedFindings = listSuppressedFindings;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -487,7 +579,9 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
         if (getStartTime() != null)
             sb.append("startTime: " + getStartTime() + ",");
         if (getEndTime() != null)
-            sb.append("endTime: " + getEndTime());
+            sb.append("endTime: " + getEndTime() + ",");
+        if (getListSuppressedFindings() != null)
+            sb.append("listSuppressedFindings: " + getListSuppressedFindings());
         sb.append("}");
         return sb.toString();
     }
@@ -505,6 +599,10 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
         hashCode = prime * hashCode + ((getNextToken() == null) ? 0 : getNextToken().hashCode());
         hashCode = prime * hashCode + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
         hashCode = prime * hashCode + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getListSuppressedFindings() == null) ? 0 : getListSuppressedFindings()
+                        .hashCode());
         return hashCode;
     }
 
@@ -551,6 +649,11 @@ public class ListAuditFindingsRequest extends AmazonWebServiceRequest implements
         if (other.getEndTime() == null ^ this.getEndTime() == null)
             return false;
         if (other.getEndTime() != null && other.getEndTime().equals(this.getEndTime()) == false)
+            return false;
+        if (other.getListSuppressedFindings() == null ^ this.getListSuppressedFindings() == null)
+            return false;
+        if (other.getListSuppressedFindings() != null
+                && other.getListSuppressedFindings().equals(this.getListSuppressedFindings()) == false)
             return false;
         return true;
     }

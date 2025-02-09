@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,28 +21,90 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Deletes the specified alias. You cannot perform this operation on an alias in
- * a different AWS account.
+ * Deletes the specified alias.
+ * </p>
+ * <note>
+ * <p>
+ * Adding, deleting, or updating an alias can allow or deny permission to the
+ * KMS key. For details, see <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/abac.html">ABAC
+ * for KMS</a> in the <i>Key Management Service Developer Guide</i>.
+ * </p>
+ * </note>
+ * <p>
+ * Because an alias is not a property of a KMS key, you can delete and change
+ * the aliases of a KMS key without affecting the KMS key. Also, aliases do not
+ * appear in the response from the <a>DescribeKey</a> operation. To get the
+ * aliases of all KMS keys, use the <a>ListAliases</a> operation.
  * </p>
  * <p>
- * Because an alias is not a property of a CMK, you can delete and change the
- * aliases of a CMK without affecting the CMK. Also, aliases do not appear in
- * the response from the <a>DescribeKey</a> operation. To get the aliases of all
- * CMKs, use the <a>ListAliases</a> operation.
- * </p>
- * <p>
- * Each CMK can have multiple aliases. To change the alias of a CMK, use
+ * Each KMS key can have multiple aliases. To change the alias of a KMS key, use
  * <a>DeleteAlias</a> to delete the current alias and <a>CreateAlias</a> to
- * create a new alias. To associate an existing alias with a different customer
- * master key (CMK), call <a>UpdateAlias</a>.
+ * create a new alias. To associate an existing alias with a different KMS key,
+ * call <a>UpdateAlias</a>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on an alias
+ * in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:DeleteAlias</a> on the alias (IAM policy).
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:DeleteAlias</a> on the KMS key (key policy).
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * For details, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-alias.html#alias-access"
+ * >Controlling access to aliases</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>CreateAlias</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListAliases</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>UpdateAlias</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class DeleteAliasRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The alias to be deleted. The name must start with the word "alias"
-     * followed by a forward slash (alias/). Aliases that begin with "alias/aws"
-     * are reserved.
+     * The alias to be deleted. The alias name must begin with
+     * <code>alias/</code> followed by the alias name, such as
+     * <code>alias/ExampleAlias</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -53,9 +115,9 @@ public class DeleteAliasRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The alias to be deleted. The name must start with the word "alias"
-     * followed by a forward slash (alias/). Aliases that begin with "alias/aws"
-     * are reserved.
+     * The alias to be deleted. The alias name must begin with
+     * <code>alias/</code> followed by the alias name, such as
+     * <code>alias/ExampleAlias</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -63,9 +125,9 @@ public class DeleteAliasRequest extends AmazonWebServiceRequest implements Seria
      * <b>Pattern: </b>^[a-zA-Z0-9:/_-]+$<br/>
      *
      * @return <p>
-     *         The alias to be deleted. The name must start with the word
-     *         "alias" followed by a forward slash (alias/). Aliases that begin
-     *         with "alias/aws" are reserved.
+     *         The alias to be deleted. The alias name must begin with
+     *         <code>alias/</code> followed by the alias name, such as
+     *         <code>alias/ExampleAlias</code>.
      *         </p>
      */
     public String getAliasName() {
@@ -74,9 +136,9 @@ public class DeleteAliasRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The alias to be deleted. The name must start with the word "alias"
-     * followed by a forward slash (alias/). Aliases that begin with "alias/aws"
-     * are reserved.
+     * The alias to be deleted. The alias name must begin with
+     * <code>alias/</code> followed by the alias name, such as
+     * <code>alias/ExampleAlias</code>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -84,9 +146,9 @@ public class DeleteAliasRequest extends AmazonWebServiceRequest implements Seria
      * <b>Pattern: </b>^[a-zA-Z0-9:/_-]+$<br/>
      *
      * @param aliasName <p>
-     *            The alias to be deleted. The name must start with the word
-     *            "alias" followed by a forward slash (alias/). Aliases that
-     *            begin with "alias/aws" are reserved.
+     *            The alias to be deleted. The alias name must begin with
+     *            <code>alias/</code> followed by the alias name, such as
+     *            <code>alias/ExampleAlias</code>.
      *            </p>
      */
     public void setAliasName(String aliasName) {
@@ -95,9 +157,9 @@ public class DeleteAliasRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The alias to be deleted. The name must start with the word "alias"
-     * followed by a forward slash (alias/). Aliases that begin with "alias/aws"
-     * are reserved.
+     * The alias to be deleted. The alias name must begin with
+     * <code>alias/</code> followed by the alias name, such as
+     * <code>alias/ExampleAlias</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -108,9 +170,9 @@ public class DeleteAliasRequest extends AmazonWebServiceRequest implements Seria
      * <b>Pattern: </b>^[a-zA-Z0-9:/_-]+$<br/>
      *
      * @param aliasName <p>
-     *            The alias to be deleted. The name must start with the word
-     *            "alias" followed by a forward slash (alias/). Aliases that
-     *            begin with "alias/aws" are reserved.
+     *            The alias to be deleted. The alias name must begin with
+     *            <code>alias/</code> followed by the alias name, such as
+     *            <code>alias/ExampleAlias</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

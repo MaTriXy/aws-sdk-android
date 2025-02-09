@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -104,8 +104,25 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Write data to an Amazon Elasticsearch Service domain.
+     * Send data to CloudWatch Logs.
      * </p>
+     */
+    private CloudwatchLogsAction cloudwatchLogs;
+
+    /**
+     * <p>
+     * Write data to an Amazon OpenSearch Service domain.
+     * </p>
+     * <note>
+     * <p>
+     * The <code>Elasticsearch</code> action can only be used by existing rule
+     * actions. To create a new rule action or to update an existing rule
+     * action, use the <code>OpenSearch</code> rule action instead. For more
+     * information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     * >OpenSearchAction</a>.
+     * </p>
+     * </note>
      */
     private ElasticsearchAction elasticsearch;
 
@@ -118,17 +135,25 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends message data to an AWS IoT Analytics channel.
+     * Sends message data to an IoT Analytics channel.
      * </p>
      */
     private IotAnalyticsAction iotAnalytics;
 
     /**
      * <p>
-     * Sends an input to an AWS IoT Events detector.
+     * Sends an input to an IoT Events detector.
      * </p>
      */
     private IotEventsAction iotEvents;
+
+    /**
+     * <p>
+     * Sends data from the MQTT message that triggered the rule to IoT SiteWise
+     * asset properties.
+     * </p>
+     */
+    private IotSiteWiseAction iotSiteWise;
 
     /**
      * <p>
@@ -136,6 +161,47 @@ public class Action implements Serializable {
      * </p>
      */
     private StepFunctionsAction stepFunctions;
+
+    /**
+     * <p>
+     * The Timestream rule action writes attributes (measures) from an MQTT
+     * message into an Amazon Timestream table. For more information, see the <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     * >Timestream</a> topic rule action documentation.
+     * </p>
+     */
+    private TimestreamAction timestream;
+
+    /**
+     * <p>
+     * Send data to an HTTPS endpoint.
+     * </p>
+     */
+    private HttpAction http;
+
+    /**
+     * <p>
+     * Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon
+     * MSK) or self-managed Apache Kafka cluster.
+     * </p>
+     */
+    private KafkaAction kafka;
+
+    /**
+     * <p>
+     * Write data to an Amazon OpenSearch Service domain.
+     * </p>
+     */
+    private OpenSearchAction openSearch;
+
+    /**
+     * <p>
+     * The Amazon Location Service rule action sends device location updates
+     * from an MQTT message to an Amazon Location tracker resource.
+     * </p>
+     */
+    private LocationAction location;
 
     /**
      * <p>
@@ -646,12 +712,77 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Write data to an Amazon Elasticsearch Service domain.
+     * Send data to CloudWatch Logs.
      * </p>
      *
      * @return <p>
-     *         Write data to an Amazon Elasticsearch Service domain.
+     *         Send data to CloudWatch Logs.
      *         </p>
+     */
+    public CloudwatchLogsAction getCloudwatchLogs() {
+        return cloudwatchLogs;
+    }
+
+    /**
+     * <p>
+     * Send data to CloudWatch Logs.
+     * </p>
+     *
+     * @param cloudwatchLogs <p>
+     *            Send data to CloudWatch Logs.
+     *            </p>
+     */
+    public void setCloudwatchLogs(CloudwatchLogsAction cloudwatchLogs) {
+        this.cloudwatchLogs = cloudwatchLogs;
+    }
+
+    /**
+     * <p>
+     * Send data to CloudWatch Logs.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param cloudwatchLogs <p>
+     *            Send data to CloudWatch Logs.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withCloudwatchLogs(CloudwatchLogsAction cloudwatchLogs) {
+        this.cloudwatchLogs = cloudwatchLogs;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Write data to an Amazon OpenSearch Service domain.
+     * </p>
+     * <note>
+     * <p>
+     * The <code>Elasticsearch</code> action can only be used by existing rule
+     * actions. To create a new rule action or to update an existing rule
+     * action, use the <code>OpenSearch</code> rule action instead. For more
+     * information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     * >OpenSearchAction</a>.
+     * </p>
+     * </note>
+     *
+     * @return <p>
+     *         Write data to an Amazon OpenSearch Service domain.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         The <code>Elasticsearch</code> action can only be used by
+     *         existing rule actions. To create a new rule action or to update
+     *         an existing rule action, use the <code>OpenSearch</code> rule
+     *         action instead. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     *         >OpenSearchAction</a>.
+     *         </p>
+     *         </note>
      */
     public ElasticsearchAction getElasticsearch() {
         return elasticsearch;
@@ -659,12 +790,33 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Write data to an Amazon Elasticsearch Service domain.
+     * Write data to an Amazon OpenSearch Service domain.
      * </p>
+     * <note>
+     * <p>
+     * The <code>Elasticsearch</code> action can only be used by existing rule
+     * actions. To create a new rule action or to update an existing rule
+     * action, use the <code>OpenSearch</code> rule action instead. For more
+     * information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     * >OpenSearchAction</a>.
+     * </p>
+     * </note>
      *
      * @param elasticsearch <p>
-     *            Write data to an Amazon Elasticsearch Service domain.
+     *            Write data to an Amazon OpenSearch Service domain.
      *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>Elasticsearch</code> action can only be used by
+     *            existing rule actions. To create a new rule action or to
+     *            update an existing rule action, use the
+     *            <code>OpenSearch</code> rule action instead. For more
+     *            information, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     *            >OpenSearchAction</a>.
+     *            </p>
+     *            </note>
      */
     public void setElasticsearch(ElasticsearchAction elasticsearch) {
         this.elasticsearch = elasticsearch;
@@ -672,15 +824,36 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Write data to an Amazon Elasticsearch Service domain.
+     * Write data to an Amazon OpenSearch Service domain.
      * </p>
+     * <note>
+     * <p>
+     * The <code>Elasticsearch</code> action can only be used by existing rule
+     * actions. To create a new rule action or to update an existing rule
+     * action, use the <code>OpenSearch</code> rule action instead. For more
+     * information, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     * >OpenSearchAction</a>.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param elasticsearch <p>
-     *            Write data to an Amazon Elasticsearch Service domain.
+     *            Write data to an Amazon OpenSearch Service domain.
      *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>Elasticsearch</code> action can only be used by
+     *            existing rule actions. To create a new rule action or to
+     *            update an existing rule action, use the
+     *            <code>OpenSearch</code> rule action instead. For more
+     *            information, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/apireference/API_OpenSearchAction.html"
+     *            >OpenSearchAction</a>.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -736,11 +909,11 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends message data to an AWS IoT Analytics channel.
+     * Sends message data to an IoT Analytics channel.
      * </p>
      *
      * @return <p>
-     *         Sends message data to an AWS IoT Analytics channel.
+     *         Sends message data to an IoT Analytics channel.
      *         </p>
      */
     public IotAnalyticsAction getIotAnalytics() {
@@ -749,11 +922,11 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends message data to an AWS IoT Analytics channel.
+     * Sends message data to an IoT Analytics channel.
      * </p>
      *
      * @param iotAnalytics <p>
-     *            Sends message data to an AWS IoT Analytics channel.
+     *            Sends message data to an IoT Analytics channel.
      *            </p>
      */
     public void setIotAnalytics(IotAnalyticsAction iotAnalytics) {
@@ -762,14 +935,14 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends message data to an AWS IoT Analytics channel.
+     * Sends message data to an IoT Analytics channel.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param iotAnalytics <p>
-     *            Sends message data to an AWS IoT Analytics channel.
+     *            Sends message data to an IoT Analytics channel.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -781,11 +954,11 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends an input to an AWS IoT Events detector.
+     * Sends an input to an IoT Events detector.
      * </p>
      *
      * @return <p>
-     *         Sends an input to an AWS IoT Events detector.
+     *         Sends an input to an IoT Events detector.
      *         </p>
      */
     public IotEventsAction getIotEvents() {
@@ -794,11 +967,11 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends an input to an AWS IoT Events detector.
+     * Sends an input to an IoT Events detector.
      * </p>
      *
      * @param iotEvents <p>
-     *            Sends an input to an AWS IoT Events detector.
+     *            Sends an input to an IoT Events detector.
      *            </p>
      */
     public void setIotEvents(IotEventsAction iotEvents) {
@@ -807,20 +980,71 @@ public class Action implements Serializable {
 
     /**
      * <p>
-     * Sends an input to an AWS IoT Events detector.
+     * Sends an input to an IoT Events detector.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param iotEvents <p>
-     *            Sends an input to an AWS IoT Events detector.
+     *            Sends an input to an IoT Events detector.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public Action withIotEvents(IotEventsAction iotEvents) {
         this.iotEvents = iotEvents;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Sends data from the MQTT message that triggered the rule to IoT SiteWise
+     * asset properties.
+     * </p>
+     *
+     * @return <p>
+     *         Sends data from the MQTT message that triggered the rule to IoT
+     *         SiteWise asset properties.
+     *         </p>
+     */
+    public IotSiteWiseAction getIotSiteWise() {
+        return iotSiteWise;
+    }
+
+    /**
+     * <p>
+     * Sends data from the MQTT message that triggered the rule to IoT SiteWise
+     * asset properties.
+     * </p>
+     *
+     * @param iotSiteWise <p>
+     *            Sends data from the MQTT message that triggered the rule to
+     *            IoT SiteWise asset properties.
+     *            </p>
+     */
+    public void setIotSiteWise(IotSiteWiseAction iotSiteWise) {
+        this.iotSiteWise = iotSiteWise;
+    }
+
+    /**
+     * <p>
+     * Sends data from the MQTT message that triggered the rule to IoT SiteWise
+     * asset properties.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param iotSiteWise <p>
+     *            Sends data from the MQTT message that triggered the rule to
+     *            IoT SiteWise asset properties.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withIotSiteWise(IotSiteWiseAction iotSiteWise) {
+        this.iotSiteWise = iotSiteWise;
         return this;
     }
 
@@ -870,6 +1094,270 @@ public class Action implements Serializable {
     }
 
     /**
+     * <p>
+     * The Timestream rule action writes attributes (measures) from an MQTT
+     * message into an Amazon Timestream table. For more information, see the <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     * >Timestream</a> topic rule action documentation.
+     * </p>
+     *
+     * @return <p>
+     *         The Timestream rule action writes attributes (measures) from an
+     *         MQTT message into an Amazon Timestream table. For more
+     *         information, see the <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     *         >Timestream</a> topic rule action documentation.
+     *         </p>
+     */
+    public TimestreamAction getTimestream() {
+        return timestream;
+    }
+
+    /**
+     * <p>
+     * The Timestream rule action writes attributes (measures) from an MQTT
+     * message into an Amazon Timestream table. For more information, see the <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     * >Timestream</a> topic rule action documentation.
+     * </p>
+     *
+     * @param timestream <p>
+     *            The Timestream rule action writes attributes (measures) from
+     *            an MQTT message into an Amazon Timestream table. For more
+     *            information, see the <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     *            >Timestream</a> topic rule action documentation.
+     *            </p>
+     */
+    public void setTimestream(TimestreamAction timestream) {
+        this.timestream = timestream;
+    }
+
+    /**
+     * <p>
+     * The Timestream rule action writes attributes (measures) from an MQTT
+     * message into an Amazon Timestream table. For more information, see the <a
+     * href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     * >Timestream</a> topic rule action documentation.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param timestream <p>
+     *            The Timestream rule action writes attributes (measures) from
+     *            an MQTT message into an Amazon Timestream table. For more
+     *            information, see the <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/timestream-rule-action.html"
+     *            >Timestream</a> topic rule action documentation.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withTimestream(TimestreamAction timestream) {
+        this.timestream = timestream;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Send data to an HTTPS endpoint.
+     * </p>
+     *
+     * @return <p>
+     *         Send data to an HTTPS endpoint.
+     *         </p>
+     */
+    public HttpAction getHttp() {
+        return http;
+    }
+
+    /**
+     * <p>
+     * Send data to an HTTPS endpoint.
+     * </p>
+     *
+     * @param http <p>
+     *            Send data to an HTTPS endpoint.
+     *            </p>
+     */
+    public void setHttp(HttpAction http) {
+        this.http = http;
+    }
+
+    /**
+     * <p>
+     * Send data to an HTTPS endpoint.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param http <p>
+     *            Send data to an HTTPS endpoint.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withHttp(HttpAction http) {
+        this.http = http;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon
+     * MSK) or self-managed Apache Kafka cluster.
+     * </p>
+     *
+     * @return <p>
+     *         Send messages to an Amazon Managed Streaming for Apache Kafka
+     *         (Amazon MSK) or self-managed Apache Kafka cluster.
+     *         </p>
+     */
+    public KafkaAction getKafka() {
+        return kafka;
+    }
+
+    /**
+     * <p>
+     * Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon
+     * MSK) or self-managed Apache Kafka cluster.
+     * </p>
+     *
+     * @param kafka <p>
+     *            Send messages to an Amazon Managed Streaming for Apache Kafka
+     *            (Amazon MSK) or self-managed Apache Kafka cluster.
+     *            </p>
+     */
+    public void setKafka(KafkaAction kafka) {
+        this.kafka = kafka;
+    }
+
+    /**
+     * <p>
+     * Send messages to an Amazon Managed Streaming for Apache Kafka (Amazon
+     * MSK) or self-managed Apache Kafka cluster.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param kafka <p>
+     *            Send messages to an Amazon Managed Streaming for Apache Kafka
+     *            (Amazon MSK) or self-managed Apache Kafka cluster.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withKafka(KafkaAction kafka) {
+        this.kafka = kafka;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Write data to an Amazon OpenSearch Service domain.
+     * </p>
+     *
+     * @return <p>
+     *         Write data to an Amazon OpenSearch Service domain.
+     *         </p>
+     */
+    public OpenSearchAction getOpenSearch() {
+        return openSearch;
+    }
+
+    /**
+     * <p>
+     * Write data to an Amazon OpenSearch Service domain.
+     * </p>
+     *
+     * @param openSearch <p>
+     *            Write data to an Amazon OpenSearch Service domain.
+     *            </p>
+     */
+    public void setOpenSearch(OpenSearchAction openSearch) {
+        this.openSearch = openSearch;
+    }
+
+    /**
+     * <p>
+     * Write data to an Amazon OpenSearch Service domain.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param openSearch <p>
+     *            Write data to an Amazon OpenSearch Service domain.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withOpenSearch(OpenSearchAction openSearch) {
+        this.openSearch = openSearch;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Location Service rule action sends device location updates
+     * from an MQTT message to an Amazon Location tracker resource.
+     * </p>
+     *
+     * @return <p>
+     *         The Amazon Location Service rule action sends device location
+     *         updates from an MQTT message to an Amazon Location tracker
+     *         resource.
+     *         </p>
+     */
+    public LocationAction getLocation() {
+        return location;
+    }
+
+    /**
+     * <p>
+     * The Amazon Location Service rule action sends device location updates
+     * from an MQTT message to an Amazon Location tracker resource.
+     * </p>
+     *
+     * @param location <p>
+     *            The Amazon Location Service rule action sends device location
+     *            updates from an MQTT message to an Amazon Location tracker
+     *            resource.
+     *            </p>
+     */
+    public void setLocation(LocationAction location) {
+        this.location = location;
+    }
+
+    /**
+     * <p>
+     * The Amazon Location Service rule action sends device location updates
+     * from an MQTT message to an Amazon Location tracker resource.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param location <p>
+     *            The Amazon Location Service rule action sends device location
+     *            updates from an MQTT message to an Amazon Location tracker
+     *            resource.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Action withLocation(LocationAction location) {
+        this.location = location;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -902,6 +1390,8 @@ public class Action implements Serializable {
             sb.append("cloudwatchMetric: " + getCloudwatchMetric() + ",");
         if (getCloudwatchAlarm() != null)
             sb.append("cloudwatchAlarm: " + getCloudwatchAlarm() + ",");
+        if (getCloudwatchLogs() != null)
+            sb.append("cloudwatchLogs: " + getCloudwatchLogs() + ",");
         if (getElasticsearch() != null)
             sb.append("elasticsearch: " + getElasticsearch() + ",");
         if (getSalesforce() != null)
@@ -910,8 +1400,20 @@ public class Action implements Serializable {
             sb.append("iotAnalytics: " + getIotAnalytics() + ",");
         if (getIotEvents() != null)
             sb.append("iotEvents: " + getIotEvents() + ",");
+        if (getIotSiteWise() != null)
+            sb.append("iotSiteWise: " + getIotSiteWise() + ",");
         if (getStepFunctions() != null)
-            sb.append("stepFunctions: " + getStepFunctions());
+            sb.append("stepFunctions: " + getStepFunctions() + ",");
+        if (getTimestream() != null)
+            sb.append("timestream: " + getTimestream() + ",");
+        if (getHttp() != null)
+            sb.append("http: " + getHttp() + ",");
+        if (getKafka() != null)
+            sb.append("kafka: " + getKafka() + ",");
+        if (getOpenSearch() != null)
+            sb.append("openSearch: " + getOpenSearch() + ",");
+        if (getLocation() != null)
+            sb.append("location: " + getLocation());
         sb.append("}");
         return sb.toString();
     }
@@ -935,13 +1437,22 @@ public class Action implements Serializable {
         hashCode = prime * hashCode
                 + ((getCloudwatchAlarm() == null) ? 0 : getCloudwatchAlarm().hashCode());
         hashCode = prime * hashCode
+                + ((getCloudwatchLogs() == null) ? 0 : getCloudwatchLogs().hashCode());
+        hashCode = prime * hashCode
                 + ((getElasticsearch() == null) ? 0 : getElasticsearch().hashCode());
         hashCode = prime * hashCode + ((getSalesforce() == null) ? 0 : getSalesforce().hashCode());
         hashCode = prime * hashCode
                 + ((getIotAnalytics() == null) ? 0 : getIotAnalytics().hashCode());
         hashCode = prime * hashCode + ((getIotEvents() == null) ? 0 : getIotEvents().hashCode());
         hashCode = prime * hashCode
+                + ((getIotSiteWise() == null) ? 0 : getIotSiteWise().hashCode());
+        hashCode = prime * hashCode
                 + ((getStepFunctions() == null) ? 0 : getStepFunctions().hashCode());
+        hashCode = prime * hashCode + ((getTimestream() == null) ? 0 : getTimestream().hashCode());
+        hashCode = prime * hashCode + ((getHttp() == null) ? 0 : getHttp().hashCode());
+        hashCode = prime * hashCode + ((getKafka() == null) ? 0 : getKafka().hashCode());
+        hashCode = prime * hashCode + ((getOpenSearch() == null) ? 0 : getOpenSearch().hashCode());
+        hashCode = prime * hashCode + ((getLocation() == null) ? 0 : getLocation().hashCode());
         return hashCode;
     }
 
@@ -1004,6 +1515,11 @@ public class Action implements Serializable {
         if (other.getCloudwatchAlarm() != null
                 && other.getCloudwatchAlarm().equals(this.getCloudwatchAlarm()) == false)
             return false;
+        if (other.getCloudwatchLogs() == null ^ this.getCloudwatchLogs() == null)
+            return false;
+        if (other.getCloudwatchLogs() != null
+                && other.getCloudwatchLogs().equals(this.getCloudwatchLogs()) == false)
+            return false;
         if (other.getElasticsearch() == null ^ this.getElasticsearch() == null)
             return false;
         if (other.getElasticsearch() != null
@@ -1024,10 +1540,37 @@ public class Action implements Serializable {
         if (other.getIotEvents() != null
                 && other.getIotEvents().equals(this.getIotEvents()) == false)
             return false;
+        if (other.getIotSiteWise() == null ^ this.getIotSiteWise() == null)
+            return false;
+        if (other.getIotSiteWise() != null
+                && other.getIotSiteWise().equals(this.getIotSiteWise()) == false)
+            return false;
         if (other.getStepFunctions() == null ^ this.getStepFunctions() == null)
             return false;
         if (other.getStepFunctions() != null
                 && other.getStepFunctions().equals(this.getStepFunctions()) == false)
+            return false;
+        if (other.getTimestream() == null ^ this.getTimestream() == null)
+            return false;
+        if (other.getTimestream() != null
+                && other.getTimestream().equals(this.getTimestream()) == false)
+            return false;
+        if (other.getHttp() == null ^ this.getHttp() == null)
+            return false;
+        if (other.getHttp() != null && other.getHttp().equals(this.getHttp()) == false)
+            return false;
+        if (other.getKafka() == null ^ this.getKafka() == null)
+            return false;
+        if (other.getKafka() != null && other.getKafka().equals(this.getKafka()) == false)
+            return false;
+        if (other.getOpenSearch() == null ^ this.getOpenSearch() == null)
+            return false;
+        if (other.getOpenSearch() != null
+                && other.getOpenSearch().equals(this.getOpenSearch()) == false)
+            return false;
+        if (other.getLocation() == null ^ this.getLocation() == null)
+            return false;
+        if (other.getLocation() != null && other.getLocation().equals(this.getLocation()) == false)
             return false;
         return true;
     }

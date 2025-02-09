@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Lists OTA updates.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListOTAUpdates</a> action.
  * </p>
  */
 public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Serializable {
@@ -49,7 +54,7 @@ public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CREATE_PENDING, CREATE_IN_PROGRESS,
-     * CREATE_COMPLETE, CREATE_FAILED
+     * CREATE_COMPLETE, CREATE_FAILED, DELETE_IN_PROGRESS, DELETE_FAILED
      */
     private String otaUpdateStatus;
 
@@ -159,7 +164,7 @@ public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CREATE_PENDING, CREATE_IN_PROGRESS,
-     * CREATE_COMPLETE, CREATE_FAILED
+     * CREATE_COMPLETE, CREATE_FAILED, DELETE_IN_PROGRESS, DELETE_FAILED
      *
      * @return <p>
      *         The OTA update job status.
@@ -177,7 +182,7 @@ public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CREATE_PENDING, CREATE_IN_PROGRESS,
-     * CREATE_COMPLETE, CREATE_FAILED
+     * CREATE_COMPLETE, CREATE_FAILED, DELETE_IN_PROGRESS, DELETE_FAILED
      *
      * @param otaUpdateStatus <p>
      *            The OTA update job status.
@@ -198,7 +203,7 @@ public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CREATE_PENDING, CREATE_IN_PROGRESS,
-     * CREATE_COMPLETE, CREATE_FAILED
+     * CREATE_COMPLETE, CREATE_FAILED, DELETE_IN_PROGRESS, DELETE_FAILED
      *
      * @param otaUpdateStatus <p>
      *            The OTA update job status.
@@ -219,7 +224,7 @@ public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CREATE_PENDING, CREATE_IN_PROGRESS,
-     * CREATE_COMPLETE, CREATE_FAILED
+     * CREATE_COMPLETE, CREATE_FAILED, DELETE_IN_PROGRESS, DELETE_FAILED
      *
      * @param otaUpdateStatus <p>
      *            The OTA update job status.
@@ -240,7 +245,7 @@ public class ListOTAUpdatesRequest extends AmazonWebServiceRequest implements Se
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CREATE_PENDING, CREATE_IN_PROGRESS,
-     * CREATE_COMPLETE, CREATE_FAILED
+     * CREATE_COMPLETE, CREATE_FAILED, DELETE_IN_PROGRESS, DELETE_FAILED
      *
      * @param otaUpdateStatus <p>
      *            The OTA update job status.

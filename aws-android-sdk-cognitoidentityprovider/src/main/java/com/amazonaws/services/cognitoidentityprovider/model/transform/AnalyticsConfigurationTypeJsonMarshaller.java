@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.cognitoidentityprovider.model.transform;
 
 import com.amazonaws.services.cognitoidentityprovider.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -30,6 +31,11 @@ class AnalyticsConfigurationTypeJsonMarshaller {
             String applicationId = analyticsConfigurationType.getApplicationId();
             jsonWriter.name("ApplicationId");
             jsonWriter.value(applicationId);
+        }
+        if (analyticsConfigurationType.getApplicationArn() != null) {
+            String applicationArn = analyticsConfigurationType.getApplicationArn();
+            jsonWriter.name("ApplicationArn");
+            jsonWriter.value(applicationArn);
         }
         if (analyticsConfigurationType.getRoleArn() != null) {
             String roleArn = analyticsConfigurationType.getRoleArn();

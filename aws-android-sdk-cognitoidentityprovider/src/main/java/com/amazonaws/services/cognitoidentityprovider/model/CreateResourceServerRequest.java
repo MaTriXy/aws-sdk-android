@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,35 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Creates a new OAuth2.0 resource server and defines custom scopes in it.
+ * Creates a new OAuth2.0 resource server and defines custom scopes within it.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class CreateResourceServerRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -39,7 +66,7 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * A unique resource server identifier for the resource server. This could
-     * be an HTTPS endpoint where the resource server is located. For example,
+     * be an HTTPS endpoint where the resource server is located, such as
      * <code>https://my-weather-api.example.com</code>.
      * </p>
      * <p>
@@ -62,8 +89,8 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A list of scopes. Each scope is map, where the keys are <code>name</code>
-     * and <code>description</code>.
+     * A list of scopes. Each scope is a key-value map with the keys
+     * <code>name</code> and <code>description</code>.
      * </p>
      */
     private java.util.List<ResourceServerScopeType> scopes;
@@ -128,7 +155,7 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * A unique resource server identifier for the resource server. This could
-     * be an HTTPS endpoint where the resource server is located. For example,
+     * be an HTTPS endpoint where the resource server is located, such as
      * <code>https://my-weather-api.example.com</code>.
      * </p>
      * <p>
@@ -138,8 +165,8 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
      *
      * @return <p>
      *         A unique resource server identifier for the resource server. This
-     *         could be an HTTPS endpoint where the resource server is located.
-     *         For example, <code>https://my-weather-api.example.com</code>.
+     *         could be an HTTPS endpoint where the resource server is located,
+     *         such as <code>https://my-weather-api.example.com</code>.
      *         </p>
      */
     public String getIdentifier() {
@@ -149,7 +176,7 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * A unique resource server identifier for the resource server. This could
-     * be an HTTPS endpoint where the resource server is located. For example,
+     * be an HTTPS endpoint where the resource server is located, such as
      * <code>https://my-weather-api.example.com</code>.
      * </p>
      * <p>
@@ -160,7 +187,7 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
      * @param identifier <p>
      *            A unique resource server identifier for the resource server.
      *            This could be an HTTPS endpoint where the resource server is
-     *            located. For example,
+     *            located, such as
      *            <code>https://my-weather-api.example.com</code>.
      *            </p>
      */
@@ -171,7 +198,7 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
     /**
      * <p>
      * A unique resource server identifier for the resource server. This could
-     * be an HTTPS endpoint where the resource server is located. For example,
+     * be an HTTPS endpoint where the resource server is located, such as
      * <code>https://my-weather-api.example.com</code>.
      * </p>
      * <p>
@@ -185,7 +212,7 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
      * @param identifier <p>
      *            A unique resource server identifier for the resource server.
      *            This could be an HTTPS endpoint where the resource server is
-     *            located. For example,
+     *            located, such as
      *            <code>https://my-weather-api.example.com</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -255,12 +282,12 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A list of scopes. Each scope is map, where the keys are <code>name</code>
-     * and <code>description</code>.
+     * A list of scopes. Each scope is a key-value map with the keys
+     * <code>name</code> and <code>description</code>.
      * </p>
      *
      * @return <p>
-     *         A list of scopes. Each scope is map, where the keys are
+     *         A list of scopes. Each scope is a key-value map with the keys
      *         <code>name</code> and <code>description</code>.
      *         </p>
      */
@@ -270,12 +297,12 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A list of scopes. Each scope is map, where the keys are <code>name</code>
-     * and <code>description</code>.
+     * A list of scopes. Each scope is a key-value map with the keys
+     * <code>name</code> and <code>description</code>.
      * </p>
      *
      * @param scopes <p>
-     *            A list of scopes. Each scope is map, where the keys are
+     *            A list of scopes. Each scope is a key-value map with the keys
      *            <code>name</code> and <code>description</code>.
      *            </p>
      */
@@ -290,15 +317,15 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A list of scopes. Each scope is map, where the keys are <code>name</code>
-     * and <code>description</code>.
+     * A list of scopes. Each scope is a key-value map with the keys
+     * <code>name</code> and <code>description</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param scopes <p>
-     *            A list of scopes. Each scope is map, where the keys are
+     *            A list of scopes. Each scope is a key-value map with the keys
      *            <code>name</code> and <code>description</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -316,15 +343,15 @@ public class CreateResourceServerRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * A list of scopes. Each scope is map, where the keys are <code>name</code>
-     * and <code>description</code>.
+     * A list of scopes. Each scope is a key-value map with the keys
+     * <code>name</code> and <code>description</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param scopes <p>
-     *            A list of scopes. Each scope is map, where the keys are
+     *            A list of scopes. Each scope is a key-value map with the keys
      *            <code>name</code> and <code>description</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be

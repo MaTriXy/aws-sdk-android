@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,14 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Gets the celebrity recognition results for a Amazon Rekognition Video
- * analysis started by .
+ * analysis started by <a>StartCelebrityRecognition</a>.
  * </p>
  * <p>
  * Celebrity recognition in a video is an asynchronous operation. Analysis is
- * started by a call to which returns a job identifier (<code>JobId</code>).
+ * started by a call to <a>StartCelebrityRecognition</a> which returns a job
+ * identifier (<code>JobId</code>).
+ * </p>
+ * <p>
  * When the celebrity recognition operation finishes, Amazon Rekognition Video
  * publishes a completion status to the Amazon Simple Notification Service topic
  * registered in the initial call to <code>StartCelebrityRecognition</code>. To
@@ -42,17 +45,21 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </p>
  * <p>
  * <code>GetCelebrityRecognition</code> returns detected celebrities and the
- * time(s) they are detected in an array (<code>Celebrities</code>) of objects.
- * Each <code>CelebrityRecognition</code> contains information about the
- * celebrity in a object and the time, <code>Timestamp</code>, the celebrity was
- * detected.
+ * time(s) they are detected in an array (<code>Celebrities</code>) of
+ * <a>CelebrityRecognition</a> objects. Each <code>CelebrityRecognition</code>
+ * contains information about the celebrity in a <a>CelebrityDetail</a> object
+ * and the time, <code>Timestamp</code>, the celebrity was detected. This
+ * <a>CelebrityDetail</a> object stores information about the detected
+ * celebrity's face attributes, a face bounding box, known gender, the
+ * celebrity's name, and a confidence estimate.
  * </p>
  * <note>
  * <p>
  * <code>GetCelebrityRecognition</code> only returns the default facial
  * attributes (<code>BoundingBox</code>, <code>Confidence</code>,
  * <code>Landmarks</code>, <code>Pose</code>, and <code>Quality</code>). The
- * other facial attributes listed in the <code>Face</code> object of the
+ * <code>BoundingBox</code> field only applies to the detected face instance.
+ * The other facial attributes listed in the <code>Face</code> object of the
  * following response syntax are not returned. For more information, see
  * FaceDetail in the Amazon Rekognition Developer Guide.
  * </p>
@@ -66,7 +73,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * The <code>CelebrityDetail</code> object includes the celebrity identifer and
  * additional information urls. If you don't store the additional information
- * urls, you can get them later by calling with the celebrity identifer.
+ * urls, you can get them later by calling <a>GetCelebrityInfo</a> with the
+ * celebrity identifer.
  * </p>
  * <p>
  * No information is returned for faces not recognized as celebrities.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Information identifying the non-compliant resource.
+ * Information that identifies the noncompliant resource.
  * </p>
  */
 public class ResourceIdentifier implements Serializable {
@@ -47,7 +47,7 @@ public class ResourceIdentifier implements Serializable {
 
     /**
      * <p>
-     * The ID of the Cognito Identity Pool.
+     * The ID of the Amazon Cognito identity pool.
      * </p>
      */
     private String cognitoIdentityPoolId;
@@ -76,6 +76,40 @@ public class ResourceIdentifier implements Serializable {
      * <b>Pattern: </b>[0-9]+<br/>
      */
     private String account;
+
+    /**
+     * <p>
+     * The ARN of the IAM role that has overly permissive actions.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     */
+    private String iamRoleArn;
+
+    /**
+     * <p>
+     * The ARN of the role alias that has overly permissive actions.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     */
+    private String roleAliasArn;
+
+    /**
+     * <p>
+     * The issuer certificate identifier.
+     * </p>
+     */
+    private IssuerCertificateIdentifier issuerCertificateIdentifier;
+
+    /**
+     * <p>
+     * The ARN of the identified device certificate.
+     * </p>
+     */
+    private String deviceCertificateArn;
 
     /**
      * <p>
@@ -195,11 +229,11 @@ public class ResourceIdentifier implements Serializable {
 
     /**
      * <p>
-     * The ID of the Cognito Identity Pool.
+     * The ID of the Amazon Cognito identity pool.
      * </p>
      *
      * @return <p>
-     *         The ID of the Cognito Identity Pool.
+     *         The ID of the Amazon Cognito identity pool.
      *         </p>
      */
     public String getCognitoIdentityPoolId() {
@@ -208,11 +242,11 @@ public class ResourceIdentifier implements Serializable {
 
     /**
      * <p>
-     * The ID of the Cognito Identity Pool.
+     * The ID of the Amazon Cognito identity pool.
      * </p>
      *
      * @param cognitoIdentityPoolId <p>
-     *            The ID of the Cognito Identity Pool.
+     *            The ID of the Amazon Cognito identity pool.
      *            </p>
      */
     public void setCognitoIdentityPoolId(String cognitoIdentityPoolId) {
@@ -221,14 +255,14 @@ public class ResourceIdentifier implements Serializable {
 
     /**
      * <p>
-     * The ID of the Cognito Identity Pool.
+     * The ID of the Amazon Cognito identity pool.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param cognitoIdentityPoolId <p>
-     *            The ID of the Cognito Identity Pool.
+     *            The ID of the Amazon Cognito identity pool.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -387,6 +421,206 @@ public class ResourceIdentifier implements Serializable {
     }
 
     /**
+     * <p>
+     * The ARN of the IAM role that has overly permissive actions.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     *
+     * @return <p>
+     *         The ARN of the IAM role that has overly permissive actions.
+     *         </p>
+     */
+    public String getIamRoleArn() {
+        return iamRoleArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the IAM role that has overly permissive actions.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     *
+     * @param iamRoleArn <p>
+     *            The ARN of the IAM role that has overly permissive actions.
+     *            </p>
+     */
+    public void setIamRoleArn(String iamRoleArn) {
+        this.iamRoleArn = iamRoleArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the IAM role that has overly permissive actions.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>20 - 2048<br/>
+     *
+     * @param iamRoleArn <p>
+     *            The ARN of the IAM role that has overly permissive actions.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ResourceIdentifier withIamRoleArn(String iamRoleArn) {
+        this.iamRoleArn = iamRoleArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ARN of the role alias that has overly permissive actions.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     *
+     * @return <p>
+     *         The ARN of the role alias that has overly permissive actions.
+     *         </p>
+     */
+    public String getRoleAliasArn() {
+        return roleAliasArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the role alias that has overly permissive actions.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     *
+     * @param roleAliasArn <p>
+     *            The ARN of the role alias that has overly permissive actions.
+     *            </p>
+     */
+    public void setRoleAliasArn(String roleAliasArn) {
+        this.roleAliasArn = roleAliasArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the role alias that has overly permissive actions.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 2048<br/>
+     *
+     * @param roleAliasArn <p>
+     *            The ARN of the role alias that has overly permissive actions.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ResourceIdentifier withRoleAliasArn(String roleAliasArn) {
+        this.roleAliasArn = roleAliasArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The issuer certificate identifier.
+     * </p>
+     *
+     * @return <p>
+     *         The issuer certificate identifier.
+     *         </p>
+     */
+    public IssuerCertificateIdentifier getIssuerCertificateIdentifier() {
+        return issuerCertificateIdentifier;
+    }
+
+    /**
+     * <p>
+     * The issuer certificate identifier.
+     * </p>
+     *
+     * @param issuerCertificateIdentifier <p>
+     *            The issuer certificate identifier.
+     *            </p>
+     */
+    public void setIssuerCertificateIdentifier(
+            IssuerCertificateIdentifier issuerCertificateIdentifier) {
+        this.issuerCertificateIdentifier = issuerCertificateIdentifier;
+    }
+
+    /**
+     * <p>
+     * The issuer certificate identifier.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param issuerCertificateIdentifier <p>
+     *            The issuer certificate identifier.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ResourceIdentifier withIssuerCertificateIdentifier(
+            IssuerCertificateIdentifier issuerCertificateIdentifier) {
+        this.issuerCertificateIdentifier = issuerCertificateIdentifier;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ARN of the identified device certificate.
+     * </p>
+     *
+     * @return <p>
+     *         The ARN of the identified device certificate.
+     *         </p>
+     */
+    public String getDeviceCertificateArn() {
+        return deviceCertificateArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the identified device certificate.
+     * </p>
+     *
+     * @param deviceCertificateArn <p>
+     *            The ARN of the identified device certificate.
+     *            </p>
+     */
+    public void setDeviceCertificateArn(String deviceCertificateArn) {
+        this.deviceCertificateArn = deviceCertificateArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the identified device certificate.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param deviceCertificateArn <p>
+     *            The ARN of the identified device certificate.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ResourceIdentifier withDeviceCertificateArn(String deviceCertificateArn) {
+        this.deviceCertificateArn = deviceCertificateArn;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -408,7 +642,15 @@ public class ResourceIdentifier implements Serializable {
         if (getPolicyVersionIdentifier() != null)
             sb.append("policyVersionIdentifier: " + getPolicyVersionIdentifier() + ",");
         if (getAccount() != null)
-            sb.append("account: " + getAccount());
+            sb.append("account: " + getAccount() + ",");
+        if (getIamRoleArn() != null)
+            sb.append("iamRoleArn: " + getIamRoleArn() + ",");
+        if (getRoleAliasArn() != null)
+            sb.append("roleAliasArn: " + getRoleAliasArn() + ",");
+        if (getIssuerCertificateIdentifier() != null)
+            sb.append("issuerCertificateIdentifier: " + getIssuerCertificateIdentifier() + ",");
+        if (getDeviceCertificateArn() != null)
+            sb.append("deviceCertificateArn: " + getDeviceCertificateArn());
         sb.append("}");
         return sb.toString();
     }
@@ -431,6 +673,15 @@ public class ResourceIdentifier implements Serializable {
                 + ((getPolicyVersionIdentifier() == null) ? 0 : getPolicyVersionIdentifier()
                         .hashCode());
         hashCode = prime * hashCode + ((getAccount() == null) ? 0 : getAccount().hashCode());
+        hashCode = prime * hashCode + ((getIamRoleArn() == null) ? 0 : getIamRoleArn().hashCode());
+        hashCode = prime * hashCode
+                + ((getRoleAliasArn() == null) ? 0 : getRoleAliasArn().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getIssuerCertificateIdentifier() == null) ? 0
+                        : getIssuerCertificateIdentifier().hashCode());
+        hashCode = prime * hashCode
+                + ((getDeviceCertificateArn() == null) ? 0 : getDeviceCertificateArn().hashCode());
         return hashCode;
     }
 
@@ -472,6 +723,28 @@ public class ResourceIdentifier implements Serializable {
         if (other.getAccount() == null ^ this.getAccount() == null)
             return false;
         if (other.getAccount() != null && other.getAccount().equals(this.getAccount()) == false)
+            return false;
+        if (other.getIamRoleArn() == null ^ this.getIamRoleArn() == null)
+            return false;
+        if (other.getIamRoleArn() != null
+                && other.getIamRoleArn().equals(this.getIamRoleArn()) == false)
+            return false;
+        if (other.getRoleAliasArn() == null ^ this.getRoleAliasArn() == null)
+            return false;
+        if (other.getRoleAliasArn() != null
+                && other.getRoleAliasArn().equals(this.getRoleAliasArn()) == false)
+            return false;
+        if (other.getIssuerCertificateIdentifier() == null
+                ^ this.getIssuerCertificateIdentifier() == null)
+            return false;
+        if (other.getIssuerCertificateIdentifier() != null
+                && other.getIssuerCertificateIdentifier().equals(
+                        this.getIssuerCertificateIdentifier()) == false)
+            return false;
+        if (other.getDeviceCertificateArn() == null ^ this.getDeviceCertificateArn() == null)
+            return false;
+        if (other.getDeviceCertificateArn() != null
+                && other.getDeviceCertificateArn().equals(this.getDeviceCertificateArn()) == false)
             return false;
         return true;
     }

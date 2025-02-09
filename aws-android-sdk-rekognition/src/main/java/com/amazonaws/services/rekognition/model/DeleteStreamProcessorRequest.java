@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,9 +22,10 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Deletes the stream processor identified by <code>Name</code>. You assign the
- * value for <code>Name</code> when you create the stream processor with . You
- * might not be able to use the same name for a stream processor for a few
- * seconds after calling <code>DeleteStreamProcessor</code>.
+ * value for <code>Name</code> when you create the stream processor with
+ * <a>CreateStreamProcessor</a>. You might not be able to use the same name for
+ * a stream processor for a few seconds after calling
+ * <code>DeleteStreamProcessor</code>.
  * </p>
  */
 public class DeleteStreamProcessorRequest extends AmazonWebServiceRequest implements Serializable {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,35 +22,86 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Disconnects the <a href=
- * "http://docs.aws.amazon.com/kms/latest/developerguide/key-store-overview.html"
- * >custom key store</a> from its associated AWS CloudHSM cluster. While a
- * custom key store is disconnected, you can manage the custom key store and its
- * customer master keys (CMKs), but you cannot create or use CMKs in the custom
- * key store. You can reconnect the custom key store at any time.
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+ * >custom key store</a> from its backing key store. This operation disconnects
+ * an CloudHSM key store from its associated CloudHSM cluster or disconnects an
+ * external key store from the external key store proxy that communicates with
+ * your external key manager.
+ * </p>
+ * <p>
+ * This operation is part of the <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+ * >custom key stores</a> feature in KMS, which combines the convenience and
+ * extensive integration of KMS with the isolation and control of a key store
+ * that you own and manage.
+ * </p>
+ * <p>
+ * While a custom key store is disconnected, you can manage the custom key store
+ * and its KMS keys, but you cannot create or use its KMS keys. You can
+ * reconnect the custom key store at any time.
  * </p>
  * <note>
  * <p>
- * While a custom key store is disconnected, all attempts to create customer
- * master keys (CMKs) in the custom key store or to use existing CMKs in
- * cryptographic operations will fail. This action can prevent users from
+ * While a custom key store is disconnected, all attempts to create KMS keys in
+ * the custom key store or to use existing KMS keys in <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+ * >cryptographic operations</a> will fail. This action can prevent users from
  * storing and accessing sensitive data.
  * </p>
  * </note>
- * <p/>
  * <p>
- * To find the connection state of a custom key store, use the
- * <a>DescribeCustomKeyStores</a> operation. To reconnect a custom key store,
- * use the <a>ConnectCustomKeyStore</a> operation.
+ * When you disconnect a custom key store, its <code>ConnectionState</code>
+ * changes to <code>Disconnected</code>. To find the connection state of a
+ * custom key store, use the <a>DescribeCustomKeyStores</a> operation. To
+ * reconnect a custom key store, use the <a>ConnectCustomKeyStore</a> operation.
  * </p>
  * <p>
  * If the operation succeeds, it returns a JSON object with no properties.
  * </p>
  * <p>
- * This operation is part of the <a href=
- * "http://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
- * >Custom Key Store feature</a> feature in AWS KMS, which combines the
- * convenience and extensive integration of AWS KMS with the isolation and
- * control of a single-tenant key store.
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a custom
+ * key store in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:DisconnectCustomKeyStore</a> (IAM policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>ConnectCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>CreateCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DeleteCustomKeyStore</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeCustomKeyStores</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>UpdateCustomKeyStore</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class DisconnectCustomKeyStoreRequest extends AmazonWebServiceRequest implements

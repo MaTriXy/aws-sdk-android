@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import com.amazonaws.AmazonServiceException;
 /**
  * <p>
  * The file size or duration of the supplied media is too large. The maximum
- * file size is 8GB. The maximum duration is 2 hours.
+ * file size is 10GB. The maximum duration is 6 hours.
  * </p>
  */
 public class VideoTooLargeException extends AmazonServiceException {

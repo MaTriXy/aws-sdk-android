@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -115,16 +115,27 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * Constructs a new client to invoke service methods on AmazonLexRuntime
      * using the specified AWS account credentials.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonLexRuntimeClient client = new AmazonLexRuntimeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -141,16 +152,27 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials and client configuration
      * options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonLexRuntimeClient client = new AmazonLexRuntimeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -170,16 +192,27 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * Constructs a new client to invoke service methods on AmazonLexRuntime
      * using the specified AWS account credentials provider.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonLexRuntimeClient client = new AmazonLexRuntimeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -197,16 +230,27 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials provider and client
      * configuration options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonLexRuntimeClient client = new AmazonLexRuntimeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -255,6 +299,28 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * using the specified AWS account credentials provider, client
      * configuration options and request metric collector.
      * <p>
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonLexRuntimeClient client = new AmazonLexRuntimeClient(AWSMobileClient.getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
+     * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
      *
@@ -291,6 +357,7 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
         jsonErrorUnmarshallers.add(new JsonErrorUnmarshaller());
 
         // calling this.setEndPoint(...) will also modify the signer accordingly
+        setServiceNameIntern("lex");
         this.setEndpoint("runtime.lex.us-east-1.amazonaws.com");
         this.endpointPrefix = "runtime.lex";
 
@@ -305,6 +372,105 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
         ClientConfiguration config = orig;
 
         return config;
+    }
+
+    /**
+     * <p>
+     * Removes session information for a specified bot, alias, and user ID.
+     * </p>
+     * 
+     * @param deleteSessionRequest
+     * @return deleteSessionResult The response from the DeleteSession service
+     *         method, as returned by Amazon Lex Runtime Service.
+     * @throws NotFoundException
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Lex Runtime Service indicating either a problem with the data
+     *             in the request, or a server side issue.
+     */
+    public DeleteSessionResult deleteSession(DeleteSessionRequest deleteSessionRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(deleteSessionRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<DeleteSessionRequest> request = null;
+        Response<DeleteSessionResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new DeleteSessionRequestMarshaller().marshall(deleteSessionRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<DeleteSessionResult, JsonUnmarshallerContext> unmarshaller = new DeleteSessionResultJsonUnmarshaller();
+            JsonResponseHandler<DeleteSessionResult> responseHandler = new JsonResponseHandler<DeleteSessionResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Returns session information for a specified bot, alias, and user ID.
+     * </p>
+     * 
+     * @param getSessionRequest
+     * @return getSessionResult The response from the GetSession service method,
+     *         as returned by Amazon Lex Runtime Service.
+     * @throws NotFoundException
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Lex Runtime Service indicating either a problem with the data
+     *             in the request, or a server side issue.
+     */
+    public GetSessionResult getSession(GetSessionRequest getSessionRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(getSessionRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<GetSessionRequest> request = null;
+        Response<GetSessionResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new GetSessionRequestMarshaller().marshall(getSessionRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<GetSessionResult, JsonUnmarshallerContext> unmarshaller = new GetSessionResultJsonUnmarshaller();
+            JsonResponseHandler<GetSessionResult> responseHandler = new JsonResponseHandler<GetSessionResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
     }
 
     /**
@@ -408,7 +574,7 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * <p>
      * In addition, Amazon Lex also returns your application-specific
      * <code>sessionAttributes</code>. For more information, see <a
-     * href="http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html"
+     * href="https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html"
      * >Managing Conversation Context</a>.
      * </p>
      * 
@@ -465,10 +631,9 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
 
     /**
      * <p>
-     * Sends user input (text-only) to Amazon Lex. Client applications can use
-     * this API to send requests to Amazon Lex at runtime. Amazon Lex then
-     * interprets the user input using the machine learning model it built for
-     * the bot.
+     * Sends user input to Amazon Lex. Client applications can use this API to
+     * send requests to Amazon Lex at runtime. Amazon Lex then interprets the
+     * user input using the machine learning model it built for the bot.
      * </p>
      * <p>
      * In response, Amazon Lex returns the next <code>message</code> to convey
@@ -558,7 +723,7 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
      * <p>
      * In addition, Amazon Lex also returns your application-specific
      * <code>sessionAttributes</code>. For more information, see <a
-     * href="http://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html"
+     * href="https://docs.aws.amazon.com/lex/latest/dg/context-mgmt.html"
      * >Managing Conversation Context</a>.
      * </p>
      * 
@@ -599,6 +764,66 @@ public class AmazonLexRuntimeClient extends AmazonWebServiceClient implements Am
             }
             Unmarshaller<PostTextResult, JsonUnmarshallerContext> unmarshaller = new PostTextResultJsonUnmarshaller();
             JsonResponseHandler<PostTextResult> responseHandler = new JsonResponseHandler<PostTextResult>(
+                    unmarshaller);
+
+            response = invoke(request, responseHandler, executionContext);
+
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response, LOGGING_AWS_REQUEST_METRIC);
+        }
+    }
+
+    /**
+     * <p>
+     * Creates a new session or modifies an existing session with an Amazon Lex
+     * bot. Use this operation to enable your application to set the state of
+     * the bot.
+     * </p>
+     * <p>
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/lex/latest/dg/how-session-api.html"
+     * >Managing Sessions</a>.
+     * </p>
+     * 
+     * @param putSessionRequest
+     * @return putSessionResult The response from the PutSession service method,
+     *         as returned by Amazon Lex Runtime Service.
+     * @throws NotFoundException
+     * @throws BadRequestException
+     * @throws LimitExceededException
+     * @throws InternalFailureException
+     * @throws ConflictException
+     * @throws NotAcceptableException
+     * @throws DependencyFailedException
+     * @throws BadGatewayException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Lex Runtime Service indicating either a problem with the data
+     *             in the request, or a server side issue.
+     */
+    public PutSessionResult putSession(PutSessionRequest putSessionRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(putSessionRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PutSessionRequest> request = null;
+        Response<PutSessionResult> response = null;
+        try {
+            awsRequestMetrics.startEvent(Field.RequestMarshallTime);
+            try {
+                request = new PutSessionRequestMarshaller().marshall(putSessionRequest);
+                // Binds the request metrics to the current request.
+                request.setAWSRequestMetrics(awsRequestMetrics);
+            } finally {
+                awsRequestMetrics.endEvent(Field.RequestMarshallTime);
+            }
+            Unmarshaller<PutSessionResult, JsonUnmarshallerContext> unmarshaller = new PutSessionResultJsonUnmarshaller();
+            JsonResponseHandler<PutSessionResult> responseHandler = new JsonResponseHandler<PutSessionResult>(
                     unmarshaller);
 
             response = invoke(request, responseHandler, executionContext);

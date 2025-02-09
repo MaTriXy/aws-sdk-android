@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -31,6 +32,29 @@ class ThingGroupIndexingConfigurationJsonMarshaller {
                     .getThingGroupIndexingMode();
             jsonWriter.name("thingGroupIndexingMode");
             jsonWriter.value(thingGroupIndexingMode);
+        }
+        if (thingGroupIndexingConfiguration.getManagedFields() != null) {
+            java.util.List<Field> managedFields = thingGroupIndexingConfiguration
+                    .getManagedFields();
+            jsonWriter.name("managedFields");
+            jsonWriter.beginArray();
+            for (Field managedFieldsItem : managedFields) {
+                if (managedFieldsItem != null) {
+                    FieldJsonMarshaller.getInstance().marshall(managedFieldsItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (thingGroupIndexingConfiguration.getCustomFields() != null) {
+            java.util.List<Field> customFields = thingGroupIndexingConfiguration.getCustomFields();
+            jsonWriter.name("customFields");
+            jsonWriter.beginArray();
+            for (Field customFieldsItem : customFields) {
+                if (customFieldsItem != null) {
+                    FieldJsonMarshaller.getInstance().marshall(customFieldsItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
         }
         jsonWriter.endObject();
     }

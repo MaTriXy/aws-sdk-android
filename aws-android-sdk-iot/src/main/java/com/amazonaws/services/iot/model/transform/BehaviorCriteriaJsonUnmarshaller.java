@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,6 +45,23 @@ class BehaviorCriteriaJsonUnmarshaller implements
             } else if (name.equals("durationSeconds")) {
                 behaviorCriteria.setDurationSeconds(IntegerJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("consecutiveDatapointsToAlarm")) {
+                behaviorCriteria.setConsecutiveDatapointsToAlarm(IntegerJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("consecutiveDatapointsToClear")) {
+                behaviorCriteria.setConsecutiveDatapointsToClear(IntegerJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("statisticalThreshold")) {
+                behaviorCriteria.setStatisticalThreshold(StatisticalThresholdJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("mlDetectionConfig")) {
+                behaviorCriteria
+                        .setMlDetectionConfig(MachineLearningDetectionConfigJsonUnmarshaller
+                                .getInstance()
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import com.amazonaws.AmazonWebServiceRequest;
 public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * A UTF-8 text string. Each string must contain fewer that 5,000 bytes of
-     * UTF-8 encoded characters.
+     * A UTF-8 text string. The string must contain less than 100 KB of UTF-8
+     * encoded characters.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -38,27 +38,28 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      */
     private String languageCode;
 
     /**
      * <p>
-     * A UTF-8 text string. Each string must contain fewer that 5,000 bytes of
-     * UTF-8 encoded characters.
+     * A UTF-8 text string. The string must contain less than 100 KB of UTF-8
+     * encoded characters.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - <br/>
      *
      * @return <p>
-     *         A UTF-8 text string. Each string must contain fewer that 5,000
-     *         bytes of UTF-8 encoded characters.
+     *         A UTF-8 text string. The string must contain less than 100 KB of
+     *         UTF-8 encoded characters.
      *         </p>
      */
     public String getText() {
@@ -67,16 +68,16 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * A UTF-8 text string. Each string must contain fewer that 5,000 bytes of
-     * UTF-8 encoded characters.
+     * A UTF-8 text string. The string must contain less than 100 KB of UTF-8
+     * encoded characters.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - <br/>
      *
      * @param text <p>
-     *            A UTF-8 text string. Each string must contain fewer that 5,000
-     *            bytes of UTF-8 encoded characters.
+     *            A UTF-8 text string. The string must contain less than 100 KB
+     *            of UTF-8 encoded characters.
      *            </p>
      */
     public void setText(String text) {
@@ -85,8 +86,8 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * A UTF-8 text string. Each string must contain fewer that 5,000 bytes of
-     * UTF-8 encoded characters.
+     * A UTF-8 text string. The string must contain less than 100 KB of UTF-8
+     * encoded characters.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -96,8 +97,8 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
      * <b>Length: </b>1 - <br/>
      *
      * @param text <p>
-     *            A UTF-8 text string. Each string must contain fewer that 5,000
-     *            bytes of UTF-8 encoded characters.
+     *            A UTF-8 text string. The string must contain less than 100 KB
+     *            of UTF-8 encoded characters.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -109,17 +110,18 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @return <p>
-     *         The language of the input documents. You can specify English
-     *         ("en") or Spanish ("es"). All documents must be in the same
-     *         language.
+     *         The language of the input documents. You can specify any of the
+     *         primary languages supported by Amazon Comprehend. All documents
+     *         must be in the same language.
      *         </p>
      * @see LanguageCode
      */
@@ -129,17 +131,18 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @see LanguageCode
      */
@@ -149,20 +152,21 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -175,17 +179,18 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @see LanguageCode
      */
@@ -195,20 +200,21 @@ public class DetectKeyPhrasesRequest extends AmazonWebServiceRequest implements 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

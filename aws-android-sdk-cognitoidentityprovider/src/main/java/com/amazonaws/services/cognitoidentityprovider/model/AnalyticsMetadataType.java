@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,11 @@ import java.io.Serializable;
  * </p>
  * <p>
  * An endpoint uniquely identifies a mobile device, email address, or phone
- * number that can receive messages from Amazon Pinpoint analytics.
+ * number that can receive messages from Amazon Pinpoint analytics. For more
+ * information about Amazon Web Services Regions that can contain Amazon
+ * Pinpoint resources for use with Amazon Cognito user pools, see <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-pinpoint-integration.html"
+ * >Using Amazon Pinpoint analytics with Amazon Cognito user pools</a>.
  * </p>
  */
 public class AnalyticsMetadataType implements Serializable {
@@ -31,6 +35,9 @@ public class AnalyticsMetadataType implements Serializable {
      * <p>
      * The endpoint ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      */
     private String analyticsEndpointId;
 
@@ -38,6 +45,9 @@ public class AnalyticsMetadataType implements Serializable {
      * <p>
      * The endpoint ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @return <p>
      *         The endpoint ID.
@@ -51,6 +61,9 @@ public class AnalyticsMetadataType implements Serializable {
      * <p>
      * The endpoint ID.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param analyticsEndpointId <p>
      *            The endpoint ID.
@@ -67,6 +80,9 @@ public class AnalyticsMetadataType implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 131072<br/>
      *
      * @param analyticsEndpointId <p>
      *            The endpoint ID.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,18 +21,25 @@ import java.io.Serializable;
  * <p>
  * The Amazon Simple Notification Service topic to which Amazon Rekognition
  * publishes the completion status of a video analysis operation. For more
- * information, see <a>api-video</a>.
+ * information, see <a
+ * href="https://docs.aws.amazon.com/rekognition/latest/dg/api-video.html"
+ * >Calling Amazon Rekognition Video operations</a>. Note that the Amazon SNS
+ * topic must have a topic name that begins with <i>AmazonRekognition</i> if you
+ * are using the AmazonRekognitionServiceRole permissions policy to access the
+ * topic. For more information, see <a href=
+ * "https://docs.aws.amazon.com/rekognition/latest/dg/api-video-roles.html#api-video-roles-all-topics"
+ * >Giving access to multiple Amazon SNS topics</a>.
  * </p>
  */
 public class NotificationChannel implements Serializable {
     /**
      * <p>
-     * The Amazon SNS topic to which Amazon Rekognition to posts the completion
+     * The Amazon SNS topic to which Amazon Rekognition posts the completion
      * status.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>(^arn:([a-z\d-]+):sns:.*:\w{12}:.+$)<br/>
+     * <b>Pattern: </b>(^arn:aws:sns:.*:\w{12}:.+$)<br/>
      */
     private String sNSTopicArn;
 
@@ -43,22 +50,21 @@ public class NotificationChannel implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      */
     private String roleArn;
 
     /**
      * <p>
-     * The Amazon SNS topic to which Amazon Rekognition to posts the completion
+     * The Amazon SNS topic to which Amazon Rekognition posts the completion
      * status.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>(^arn:([a-z\d-]+):sns:.*:\w{12}:.+$)<br/>
+     * <b>Pattern: </b>(^arn:aws:sns:.*:\w{12}:.+$)<br/>
      *
      * @return <p>
-     *         The Amazon SNS topic to which Amazon Rekognition to posts the
+     *         The Amazon SNS topic to which Amazon Rekognition posts the
      *         completion status.
      *         </p>
      */
@@ -68,15 +74,15 @@ public class NotificationChannel implements Serializable {
 
     /**
      * <p>
-     * The Amazon SNS topic to which Amazon Rekognition to posts the completion
+     * The Amazon SNS topic to which Amazon Rekognition posts the completion
      * status.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>(^arn:([a-z\d-]+):sns:.*:\w{12}:.+$)<br/>
+     * <b>Pattern: </b>(^arn:aws:sns:.*:\w{12}:.+$)<br/>
      *
      * @param sNSTopicArn <p>
-     *            The Amazon SNS topic to which Amazon Rekognition to posts the
+     *            The Amazon SNS topic to which Amazon Rekognition posts the
      *            completion status.
      *            </p>
      */
@@ -86,7 +92,7 @@ public class NotificationChannel implements Serializable {
 
     /**
      * <p>
-     * The Amazon SNS topic to which Amazon Rekognition to posts the completion
+     * The Amazon SNS topic to which Amazon Rekognition posts the completion
      * status.
      * </p>
      * <p>
@@ -94,10 +100,10 @@ public class NotificationChannel implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>(^arn:([a-z\d-]+):sns:.*:\w{12}:.+$)<br/>
+     * <b>Pattern: </b>(^arn:aws:sns:.*:\w{12}:.+$)<br/>
      *
      * @param sNSTopicArn <p>
-     *            The Amazon SNS topic to which Amazon Rekognition to posts the
+     *            The Amazon SNS topic to which Amazon Rekognition posts the
      *            completion status.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -115,8 +121,7 @@ public class NotificationChannel implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      *
      * @return <p>
      *         The ARN of an IAM role that gives Amazon Rekognition publishing
@@ -134,8 +139,7 @@ public class NotificationChannel implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      *
      * @param roleArn <p>
      *            The ARN of an IAM role that gives Amazon Rekognition
@@ -156,8 +160,7 @@ public class NotificationChannel implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Pattern: </b>arn:([a-z\d-]+):iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+
-     * <br/>
+     * <b>Pattern: </b>arn:aws:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+<br/>
      *
      * @param roleArn <p>
      *            The ARN of an IAM role that gives Amazon Rekognition

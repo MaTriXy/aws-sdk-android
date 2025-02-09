@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * The query search index.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >SearchIndex</a> action.
+ * </p>
  */
 public class SearchIndexRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -38,7 +43,10 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The search query string.
+     * The search query string. For more information about the search query
+     * syntax, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     * >Query syntax</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -48,8 +56,8 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      */
     private String nextToken;
@@ -130,14 +138,20 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The search query string.
+     * The search query string. For more information about the search query
+     * syntax, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     * >Query syntax</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - <br/>
      *
      * @return <p>
-     *         The search query string.
+     *         The search query string. For more information about the search
+     *         query syntax, see <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     *         >Query syntax</a>.
      *         </p>
      */
     public String getQueryString() {
@@ -146,14 +160,20 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The search query string.
+     * The search query string. For more information about the search query
+     * syntax, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     * >Query syntax</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>1 - <br/>
      *
      * @param queryString <p>
-     *            The search query string.
+     *            The search query string. For more information about the search
+     *            query syntax, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     *            >Query syntax</a>.
      *            </p>
      */
     public void setQueryString(String queryString) {
@@ -162,7 +182,10 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The search query string.
+     * The search query string. For more information about the search query
+     * syntax, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     * >Query syntax</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -172,7 +195,10 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
      * <b>Length: </b>1 - <br/>
      *
      * @param queryString <p>
-     *            The search query string.
+     *            The search query string. For more information about the search
+     *            query syntax, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html"
+     *            >Query syntax</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -184,13 +210,13 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      *
      * @return <p>
-     *         The token used to get the next set of results, or <b>null</b> if
-     *         there are no additional results.
+     *         The token used to get the next set of results, or
+     *         <code>null</code> if there are no additional results.
      *         </p>
      */
     public String getNextToken() {
@@ -199,13 +225,13 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      *
      * @param nextToken <p>
-     *            The token used to get the next set of results, or <b>null</b>
-     *            if there are no additional results.
+     *            The token used to get the next set of results, or
+     *            <code>null</code> if there are no additional results.
      *            </p>
      */
     public void setNextToken(String nextToken) {
@@ -214,16 +240,16 @@ public class SearchIndexRequest extends AmazonWebServiceRequest implements Seria
 
     /**
      * <p>
-     * The token used to get the next set of results, or <b>null</b> if there
-     * are no additional results.
+     * The token used to get the next set of results, or <code>null</code> if
+     * there are no additional results.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param nextToken <p>
-     *            The token used to get the next set of results, or <b>null</b>
-     *            if there are no additional results.
+     *            The token used to get the next set of results, or
+     *            <code>null</code> if there are no additional results.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

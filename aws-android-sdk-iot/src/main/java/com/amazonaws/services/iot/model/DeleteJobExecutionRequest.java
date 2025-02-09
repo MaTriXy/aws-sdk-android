@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Deletes a job execution.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >DeleteJobExecution</a> action.
  * </p>
  */
 public class DeleteJobExecutionRequest extends AmazonWebServiceRequest implements Serializable {
@@ -78,6 +83,29 @@ public class DeleteJobExecutionRequest extends AmazonWebServiceRequest implement
      * </note>
      */
     private Boolean force;
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     */
+    private String namespaceId;
 
     /**
      * <p>
@@ -434,6 +462,141 @@ public class DeleteJobExecutionRequest extends AmazonWebServiceRequest implement
     }
 
     /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @return <p>
+     *         The namespace used to indicate that a job is a customer-managed
+     *         job.
+     *         </p>
+     *         <p>
+     *         When you specify a value for this parameter, Amazon Web Services
+     *         IoT Core sends jobs notifications to MQTT topics that contain the
+     *         value in the following format.
+     *         </p>
+     *         <p>
+     *         <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *         </p>
+     *         <note>
+     *         <p>
+     *         The <code>namespaceId</code> feature is in public preview.
+     *         </p>
+     *         </note>
+     */
+    public String getNamespaceId() {
+        return namespaceId;
+    }
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @param namespaceId <p>
+     *            The namespace used to indicate that a job is a
+     *            customer-managed job.
+     *            </p>
+     *            <p>
+     *            When you specify a value for this parameter, Amazon Web
+     *            Services IoT Core sends jobs notifications to MQTT topics that
+     *            contain the value in the following format.
+     *            </p>
+     *            <p>
+     *            <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>namespaceId</code> feature is in public preview.
+     *            </p>
+     *            </note>
+     */
+    public void setNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+    }
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @param namespaceId <p>
+     *            The namespace used to indicate that a job is a
+     *            customer-managed job.
+     *            </p>
+     *            <p>
+     *            When you specify a value for this parameter, Amazon Web
+     *            Services IoT Core sends jobs notifications to MQTT topics that
+     *            contain the value in the following format.
+     *            </p>
+     *            <p>
+     *            <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>namespaceId</code> feature is in public preview.
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public DeleteJobExecutionRequest withNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -451,7 +614,9 @@ public class DeleteJobExecutionRequest extends AmazonWebServiceRequest implement
         if (getExecutionNumber() != null)
             sb.append("executionNumber: " + getExecutionNumber() + ",");
         if (getForce() != null)
-            sb.append("force: " + getForce());
+            sb.append("force: " + getForce() + ",");
+        if (getNamespaceId() != null)
+            sb.append("namespaceId: " + getNamespaceId());
         sb.append("}");
         return sb.toString();
     }
@@ -466,6 +631,8 @@ public class DeleteJobExecutionRequest extends AmazonWebServiceRequest implement
         hashCode = prime * hashCode
                 + ((getExecutionNumber() == null) ? 0 : getExecutionNumber().hashCode());
         hashCode = prime * hashCode + ((getForce() == null) ? 0 : getForce().hashCode());
+        hashCode = prime * hashCode
+                + ((getNamespaceId() == null) ? 0 : getNamespaceId().hashCode());
         return hashCode;
     }
 
@@ -497,6 +664,11 @@ public class DeleteJobExecutionRequest extends AmazonWebServiceRequest implement
         if (other.getForce() == null ^ this.getForce() == null)
             return false;
         if (other.getForce() != null && other.getForce().equals(this.getForce()) == false)
+            return false;
+        if (other.getNamespaceId() == null ^ this.getNamespaceId() == null)
+            return false;
+        if (other.getNamespaceId() != null
+                && other.getNamespaceId().equals(this.getNamespaceId()) == false)
             return false;
         return true;
     }

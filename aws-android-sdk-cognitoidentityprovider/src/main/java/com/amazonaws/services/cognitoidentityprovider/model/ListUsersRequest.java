@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,8 +21,35 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Lists the users in the Amazon Cognito user pool.
+ * Lists users and their basic details in a user pool.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class ListUsersRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -39,9 +66,10 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
 
     /**
      * <p>
-     * An array of strings, where each string is the name of a user attribute to
-     * be returned for each user in the search results. If the array is null,
-     * all attributes are returned.
+     * A JSON array of user attribute names, for example <code>given_name</code>
+     * , that you want Amazon Cognito to include in the response for each user.
+     * When you don't provide an <code>AttributesToGet</code> parameter, Amazon
+     * Cognito returns all attributes for each user.
      * </p>
      */
     private java.util.List<String> attributesToGet;
@@ -158,13 +186,33 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      * </li>
      * </ul>
      * <p>
-     * Custom attributes are not searchable.
+     * Custom attributes aren't searchable.
+     * </p>
+     * <note>
+     * <p>
+     * You can also list users with a client-side filter. The server-side filter
+     * matches no more than one attribute. For an advanced search, use a
+     * client-side filter with the <code>--query</code> parameter of the
+     * <code>list-users</code> action in the CLI. When you use a client-side
+     * filter, ListUsers returns a paginated list of zero or more users. You can
+     * receive multiple pages in a row with zero results. Repeat the query with
+     * each pagination token that is returned until you receive a null
+     * pagination token value, and then review the combined result.
      * </p>
      * <p>
+     * For more information about server-side and client-side filtering, see <a
+     * href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >FilteringCLI output</a> in the <a href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >Command Line Interface User Guide</a>.
+     * </p>
+     * </note>
+     * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      * >Searching for Users Using the ListUsers API</a> and <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      * >Examples of Using the ListUsers API</a> in the <i>Amazon Cognito
      * Developer Guide</i>.
      * </p>
@@ -239,15 +287,18 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
 
     /**
      * <p>
-     * An array of strings, where each string is the name of a user attribute to
-     * be returned for each user in the search results. If the array is null,
-     * all attributes are returned.
+     * A JSON array of user attribute names, for example <code>given_name</code>
+     * , that you want Amazon Cognito to include in the response for each user.
+     * When you don't provide an <code>AttributesToGet</code> parameter, Amazon
+     * Cognito returns all attributes for each user.
      * </p>
      *
      * @return <p>
-     *         An array of strings, where each string is the name of a user
-     *         attribute to be returned for each user in the search results. If
-     *         the array is null, all attributes are returned.
+     *         A JSON array of user attribute names, for example
+     *         <code>given_name</code>, that you want Amazon Cognito to include
+     *         in the response for each user. When you don't provide an
+     *         <code>AttributesToGet</code> parameter, Amazon Cognito returns
+     *         all attributes for each user.
      *         </p>
      */
     public java.util.List<String> getAttributesToGet() {
@@ -256,15 +307,18 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
 
     /**
      * <p>
-     * An array of strings, where each string is the name of a user attribute to
-     * be returned for each user in the search results. If the array is null,
-     * all attributes are returned.
+     * A JSON array of user attribute names, for example <code>given_name</code>
+     * , that you want Amazon Cognito to include in the response for each user.
+     * When you don't provide an <code>AttributesToGet</code> parameter, Amazon
+     * Cognito returns all attributes for each user.
      * </p>
      *
      * @param attributesToGet <p>
-     *            An array of strings, where each string is the name of a user
-     *            attribute to be returned for each user in the search results.
-     *            If the array is null, all attributes are returned.
+     *            A JSON array of user attribute names, for example
+     *            <code>given_name</code>, that you want Amazon Cognito to
+     *            include in the response for each user. When you don't provide
+     *            an <code>AttributesToGet</code> parameter, Amazon Cognito
+     *            returns all attributes for each user.
      *            </p>
      */
     public void setAttributesToGet(java.util.Collection<String> attributesToGet) {
@@ -278,18 +332,21 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
 
     /**
      * <p>
-     * An array of strings, where each string is the name of a user attribute to
-     * be returned for each user in the search results. If the array is null,
-     * all attributes are returned.
+     * A JSON array of user attribute names, for example <code>given_name</code>
+     * , that you want Amazon Cognito to include in the response for each user.
+     * When you don't provide an <code>AttributesToGet</code> parameter, Amazon
+     * Cognito returns all attributes for each user.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param attributesToGet <p>
-     *            An array of strings, where each string is the name of a user
-     *            attribute to be returned for each user in the search results.
-     *            If the array is null, all attributes are returned.
+     *            A JSON array of user attribute names, for example
+     *            <code>given_name</code>, that you want Amazon Cognito to
+     *            include in the response for each user. When you don't provide
+     *            an <code>AttributesToGet</code> parameter, Amazon Cognito
+     *            returns all attributes for each user.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -306,18 +363,21 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
 
     /**
      * <p>
-     * An array of strings, where each string is the name of a user attribute to
-     * be returned for each user in the search results. If the array is null,
-     * all attributes are returned.
+     * A JSON array of user attribute names, for example <code>given_name</code>
+     * , that you want Amazon Cognito to include in the response for each user.
+     * When you don't provide an <code>AttributesToGet</code> parameter, Amazon
+     * Cognito returns all attributes for each user.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param attributesToGet <p>
-     *            An array of strings, where each string is the name of a user
-     *            attribute to be returned for each user in the search results.
-     *            If the array is null, all attributes are returned.
+     *            A JSON array of user attribute names, for example
+     *            <code>given_name</code>, that you want Amazon Cognito to
+     *            include in the response for each user. When you don't provide
+     *            an <code>AttributesToGet</code> parameter, Amazon Cognito
+     *            returns all attributes for each user.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -537,13 +597,33 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      * </li>
      * </ul>
      * <p>
-     * Custom attributes are not searchable.
+     * Custom attributes aren't searchable.
+     * </p>
+     * <note>
+     * <p>
+     * You can also list users with a client-side filter. The server-side filter
+     * matches no more than one attribute. For an advanced search, use a
+     * client-side filter with the <code>--query</code> parameter of the
+     * <code>list-users</code> action in the CLI. When you use a client-side
+     * filter, ListUsers returns a paginated list of zero or more users. You can
+     * receive multiple pages in a row with zero results. Repeat the query with
+     * each pagination token that is returned until you receive a null
+     * pagination token value, and then review the combined result.
      * </p>
      * <p>
+     * For more information about server-side and client-side filtering, see <a
+     * href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >FilteringCLI output</a> in the <a href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >Command Line Interface User Guide</a>.
+     * </p>
+     * </note>
+     * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      * >Searching for Users Using the ListUsers API</a> and <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      * >Examples of Using the ListUsers API</a> in the <i>Amazon Cognito
      * Developer Guide</i>.
      * </p>
@@ -640,13 +720,34 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      *         </li>
      *         </ul>
      *         <p>
-     *         Custom attributes are not searchable.
+     *         Custom attributes aren't searchable.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         You can also list users with a client-side filter. The
+     *         server-side filter matches no more than one attribute. For an
+     *         advanced search, use a client-side filter with the
+     *         <code>--query</code> parameter of the <code>list-users</code>
+     *         action in the CLI. When you use a client-side filter, ListUsers
+     *         returns a paginated list of zero or more users. You can receive
+     *         multiple pages in a row with zero results. Repeat the query with
+     *         each pagination token that is returned until you receive a null
+     *         pagination token value, and then review the combined result.
      *         </p>
      *         <p>
+     *         For more information about server-side and client-side filtering,
+     *         see <a href=
+     *         "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     *         >FilteringCLI output</a> in the <a href=
+     *         "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     *         >Command Line Interface User Guide</a>.
+     *         </p>
+     *         </note>
+     *         <p>
      *         For more information, see <a href=
-     *         "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      *         >Searching for Users Using the ListUsers API</a> and <a href=
-     *         "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      *         >Examples of Using the ListUsers API</a> in the <i>Amazon Cognito
      *         Developer Guide</i>.
      *         </p>
@@ -745,13 +846,33 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      * </li>
      * </ul>
      * <p>
-     * Custom attributes are not searchable.
+     * Custom attributes aren't searchable.
+     * </p>
+     * <note>
+     * <p>
+     * You can also list users with a client-side filter. The server-side filter
+     * matches no more than one attribute. For an advanced search, use a
+     * client-side filter with the <code>--query</code> parameter of the
+     * <code>list-users</code> action in the CLI. When you use a client-side
+     * filter, ListUsers returns a paginated list of zero or more users. You can
+     * receive multiple pages in a row with zero results. Repeat the query with
+     * each pagination token that is returned until you receive a null
+     * pagination token value, and then review the combined result.
      * </p>
      * <p>
+     * For more information about server-side and client-side filtering, see <a
+     * href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >FilteringCLI output</a> in the <a href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >Command Line Interface User Guide</a>.
+     * </p>
+     * </note>
+     * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      * >Searching for Users Using the ListUsers API</a> and <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      * >Examples of Using the ListUsers API</a> in the <i>Amazon Cognito
      * Developer Guide</i>.
      * </p>
@@ -849,13 +970,35 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      *            </li>
      *            </ul>
      *            <p>
-     *            Custom attributes are not searchable.
+     *            Custom attributes aren't searchable.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            You can also list users with a client-side filter. The
+     *            server-side filter matches no more than one attribute. For an
+     *            advanced search, use a client-side filter with the
+     *            <code>--query</code> parameter of the <code>list-users</code>
+     *            action in the CLI. When you use a client-side filter,
+     *            ListUsers returns a paginated list of zero or more users. You
+     *            can receive multiple pages in a row with zero results. Repeat
+     *            the query with each pagination token that is returned until
+     *            you receive a null pagination token value, and then review the
+     *            combined result.
      *            </p>
      *            <p>
+     *            For more information about server-side and client-side
+     *            filtering, see <a href=
+     *            "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     *            >FilteringCLI output</a> in the <a href=
+     *            "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     *            >Command Line Interface User Guide</a>.
+     *            </p>
+     *            </note>
+     *            <p>
      *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      *            >Searching for Users Using the ListUsers API</a> and <a href=
-     *            "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      *            >Examples of Using the ListUsers API</a> in the <i>Amazon
      *            Cognito Developer Guide</i>.
      *            </p>
@@ -954,13 +1097,33 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      * </li>
      * </ul>
      * <p>
-     * Custom attributes are not searchable.
+     * Custom attributes aren't searchable.
+     * </p>
+     * <note>
+     * <p>
+     * You can also list users with a client-side filter. The server-side filter
+     * matches no more than one attribute. For an advanced search, use a
+     * client-side filter with the <code>--query</code> parameter of the
+     * <code>list-users</code> action in the CLI. When you use a client-side
+     * filter, ListUsers returns a paginated list of zero or more users. You can
+     * receive multiple pages in a row with zero results. Repeat the query with
+     * each pagination token that is returned until you receive a null
+     * pagination token value, and then review the combined result.
      * </p>
      * <p>
+     * For more information about server-side and client-side filtering, see <a
+     * href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >FilteringCLI output</a> in the <a href=
+     * "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     * >Command Line Interface User Guide</a>.
+     * </p>
+     * </note>
+     * <p>
      * For more information, see <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      * >Searching for Users Using the ListUsers API</a> and <a href=
-     * "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      * >Examples of Using the ListUsers API</a> in the <i>Amazon Cognito
      * Developer Guide</i>.
      * </p>
@@ -1061,13 +1224,35 @@ public class ListUsersRequest extends AmazonWebServiceRequest implements Seriali
      *            </li>
      *            </ul>
      *            <p>
-     *            Custom attributes are not searchable.
+     *            Custom attributes aren't searchable.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            You can also list users with a client-side filter. The
+     *            server-side filter matches no more than one attribute. For an
+     *            advanced search, use a client-side filter with the
+     *            <code>--query</code> parameter of the <code>list-users</code>
+     *            action in the CLI. When you use a client-side filter,
+     *            ListUsers returns a paginated list of zero or more users. You
+     *            can receive multiple pages in a row with zero results. Repeat
+     *            the query with each pagination token that is returned until
+     *            you receive a null pagination token value, and then review the
+     *            combined result.
      *            </p>
      *            <p>
+     *            For more information about server-side and client-side
+     *            filtering, see <a href=
+     *            "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     *            >FilteringCLI output</a> in the <a href=
+     *            "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+     *            >Command Line Interface User Guide</a>.
+     *            </p>
+     *            </note>
+     *            <p>
      *            For more information, see <a href=
-     *            "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api"
      *            >Searching for Users Using the ListUsers API</a> and <a href=
-     *            "http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples"
      *            >Examples of Using the ListUsers API</a> in the <i>Amazon
      *            Cognito Developer Guide</i>.
      *            </p>

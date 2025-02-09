@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,6 +39,15 @@ public class DetectModerationLabelsResultJsonUnmarshaller implements
                         .setModerationLabels(new ListUnmarshaller<ModerationLabel>(
                                 ModerationLabelJsonUnmarshaller.getInstance()
                         )
+                                .unmarshall(context));
+            } else if (name.equals("ModerationModelVersion")) {
+                detectModerationLabelsResult.setModerationModelVersion(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("HumanLoopActivationOutput")) {
+                detectModerationLabelsResult
+                        .setHumanLoopActivationOutput(HumanLoopActivationOutputJsonUnmarshaller
+                                .getInstance()
                                 .unmarshall(context));
             } else {
                 reader.skipValue();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,21 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Deletes a subscription. If the subscription requires authentication for
  * deletion, only the owner of the subscription or the topic's owner can
- * unsubscribe, and an AWS signature is required. If the
+ * unsubscribe, and an Amazon Web Services signature is required. If the
  * <code>Unsubscribe</code> call does not require authentication and the
  * requester is not the subscription owner, a final cancellation message is
  * delivered to the endpoint, so that the endpoint owner can easily resubscribe
  * to the topic if the <code>Unsubscribe</code> request was unintended.
+ * </p>
+ * <note>
+ * <p>
+ * Amazon SQS queue subscriptions require authentication for deletion. Only the
+ * owner of the subscription, or the owner of the topic can unsubscribe using
+ * the required Amazon Web Services signature.
+ * </p>
+ * </note>
+ * <p>
+ * This action is throttled at 100 transactions per second (TPS).
  * </p>
  */
 public class UnsubscribeRequest extends AmazonWebServiceRequest implements Serializable {

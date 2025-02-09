@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Creates an entity recognizer using submitted files. After your
  * <code>CreateEntityRecognizer</code> request is submitted, you can check job
- * status using the API.
+ * status using the <code>DescribeEntityRecognizer</code> API.
  * </p>
  */
 public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest implements Serializable {
@@ -32,19 +32,33 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * The name given to the newly created recognizer. Recognizer names can be a
      * maximum of 256 characters. Alphanumeric characters, hyphens (-) and
      * underscores (_) are allowed. The name must be unique in the
-     * account/region.
+     * account/Region.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 63<br/>
-     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
      */
     private String recognizerName;
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The version name given to the newly created recognizer. Version names can
+     * be a maximum of 256 characters. Alphanumeric characters, hyphens (-) and
+     * underscores (_) are allowed. The version name must be unique among all
+     * models with the same recognizer name in the account/Region.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     */
+    private String versionName;
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -55,8 +69,18 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
+     * Tags to associate with the entity recognizer. A tag is a key-value pair
+     * that adds as a metadata to a resource used by Amazon Comprehend. For
+     * example, a tag with "Sales" as the key might be added to a resource to
+     * indicate its use by the sales department.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
+
+    /**
+     * <p>
      * Specifies the format and location of the input data. The S3 bucket
-     * containing the input data must be located in the same region as the
+     * containing the input data must be located in the same Region as the
      * entity recognizer being created.
      * </p>
      */
@@ -76,32 +100,128 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The language of the input documents. All documents must be in the same
-     * language. Only English ("en") is currently supported.
+     * You can specify any of the following languages: English ("en"), Spanish
+     * ("es"), French ("fr"), Italian ("it"), German ("de"), or Portuguese
+     * ("pt"). If you plan to use this entity recognizer with PDF, Word, or
+     * image input files, you must specify English as the language. All training
+     * documents must be in the same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      */
     private String languageCode;
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String volumeKmsKeyId;
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your custom entity
+     * recognizer. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     */
+    private VpcConfig vpcConfig;
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String modelKmsKeyId;
+
+    /**
+     * <p>
+     * The JSON resource-based policy to attach to your custom entity recognizer
+     * model. You can use this policy to allow another Amazon Web Services
+     * account to import your custom model.
+     * </p>
+     * <p>
+     * Provide your JSON as a UTF-8 encoded string without line breaks. To
+     * provide valid JSON for your policy, enclose the attribute names and
+     * values in double quotes. If the JSON body is also enclosed in double
+     * quotes, then you must escape the double quotes that are inside the
+     * policy:
+     * </p>
+     * <p>
+     * <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     * </p>
+     * <p>
+     * To avoid escaping quotes, you can use single quotes to enclose the policy
+     * and double quotes to enclose the JSON names and values:
+     * </p>
+     * <p>
+     * <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 20000<br/>
+     * <b>Pattern: </b>[ -\u00FF]+<br/>
+     */
+    private String modelPolicy;
 
     /**
      * <p>
      * The name given to the newly created recognizer. Recognizer names can be a
      * maximum of 256 characters. Alphanumeric characters, hyphens (-) and
      * underscores (_) are allowed. The name must be unique in the
-     * account/region.
+     * account/Region.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 63<br/>
-     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
      *
      * @return <p>
      *         The name given to the newly created recognizer. Recognizer names
      *         can be a maximum of 256 characters. Alphanumeric characters,
      *         hyphens (-) and underscores (_) are allowed. The name must be
-     *         unique in the account/region.
+     *         unique in the account/Region.
      *         </p>
      */
     public String getRecognizerName() {
@@ -113,18 +233,18 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * The name given to the newly created recognizer. Recognizer names can be a
      * maximum of 256 characters. Alphanumeric characters, hyphens (-) and
      * underscores (_) are allowed. The name must be unique in the
-     * account/region.
+     * account/Region.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 63<br/>
-     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
      *
      * @param recognizerName <p>
      *            The name given to the newly created recognizer. Recognizer
      *            names can be a maximum of 256 characters. Alphanumeric
      *            characters, hyphens (-) and underscores (_) are allowed. The
-     *            name must be unique in the account/region.
+     *            name must be unique in the account/Region.
      *            </p>
      */
     public void setRecognizerName(String recognizerName) {
@@ -136,7 +256,7 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * The name given to the newly created recognizer. Recognizer names can be a
      * maximum of 256 characters. Alphanumeric characters, hyphens (-) and
      * underscores (_) are allowed. The name must be unique in the
-     * account/region.
+     * account/Region.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -144,13 +264,13 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 63<br/>
-     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
      *
      * @param recognizerName <p>
      *            The name given to the newly created recognizer. Recognizer
      *            names can be a maximum of 256 characters. Alphanumeric
      *            characters, hyphens (-) and underscores (_) are allowed. The
-     *            name must be unique in the account/region.
+     *            name must be unique in the account/Region.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -162,8 +282,86 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The version name given to the newly created recognizer. Version names can
+     * be a maximum of 256 characters. Alphanumeric characters, hyphens (-) and
+     * underscores (_) are allowed. The version name must be unique among all
+     * models with the same recognizer name in the account/Region.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @return <p>
+     *         The version name given to the newly created recognizer. Version
+     *         names can be a maximum of 256 characters. Alphanumeric
+     *         characters, hyphens (-) and underscores (_) are allowed. The
+     *         version name must be unique among all models with the same
+     *         recognizer name in the account/Region.
+     *         </p>
+     */
+    public String getVersionName() {
+        return versionName;
+    }
+
+    /**
+     * <p>
+     * The version name given to the newly created recognizer. Version names can
+     * be a maximum of 256 characters. Alphanumeric characters, hyphens (-) and
+     * underscores (_) are allowed. The version name must be unique among all
+     * models with the same recognizer name in the account/Region.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param versionName <p>
+     *            The version name given to the newly created recognizer.
+     *            Version names can be a maximum of 256 characters. Alphanumeric
+     *            characters, hyphens (-) and underscores (_) are allowed. The
+     *            version name must be unique among all models with the same
+     *            recognizer name in the account/Region.
+     *            </p>
+     */
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
+    }
+
+    /**
+     * <p>
+     * The version name given to the newly created recognizer. Version names can
+     * be a maximum of 256 characters. Alphanumeric characters, hyphens (-) and
+     * underscores (_) are allowed. The version name must be unique among all
+     * models with the same recognizer name in the account/Region.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 63<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9](-*[a-zA-Z0-9])*$<br/>
+     *
+     * @param versionName <p>
+     *            The version name given to the newly created recognizer.
+     *            Version names can be a maximum of 256 characters. Alphanumeric
+     *            characters, hyphens (-) and underscores (_) are allowed. The
+     *            version name must be unique among all models with the same
+     *            recognizer name in the account/Region.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withVersionName(String versionName) {
+        this.versionName = versionName;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -171,9 +369,8 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @return <p>
-     *         The Amazon Resource Name (ARN) of the AWS Identity and Management
-     *         (IAM) role that grants Amazon Comprehend read access to your
-     *         input data.
+     *         The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     *         Comprehend read access to your input data.
      *         </p>
      */
     public String getDataAccessRoleArn() {
@@ -182,8 +379,8 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -191,9 +388,8 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data.
      *            </p>
      */
     public void setDataAccessRoleArn(String dataAccessRoleArn) {
@@ -202,8 +398,8 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Management (IAM)
-     * role that grants Amazon Comprehend read access to your input data.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -214,9 +410,8 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -228,15 +423,117 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
+     * Tags to associate with the entity recognizer. A tag is a key-value pair
+     * that adds as a metadata to a resource used by Amazon Comprehend. For
+     * example, a tag with "Sales" as the key might be added to a resource to
+     * indicate its use by the sales department.
+     * </p>
+     *
+     * @return <p>
+     *         Tags to associate with the entity recognizer. A tag is a
+     *         key-value pair that adds as a metadata to a resource used by
+     *         Amazon Comprehend. For example, a tag with "Sales" as the key
+     *         might be added to a resource to indicate its use by the sales
+     *         department.
+     *         </p>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the entity recognizer. A tag is a key-value pair
+     * that adds as a metadata to a resource used by Amazon Comprehend. For
+     * example, a tag with "Sales" as the key might be added to a resource to
+     * indicate its use by the sales department.
+     * </p>
+     *
+     * @param tags <p>
+     *            Tags to associate with the entity recognizer. A tag is a
+     *            key-value pair that adds as a metadata to a resource used by
+     *            Amazon Comprehend. For example, a tag with "Sales" as the key
+     *            might be added to a resource to indicate its use by the sales
+     *            department.
+     *            </p>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the entity recognizer. A tag is a key-value pair
+     * that adds as a metadata to a resource used by Amazon Comprehend. For
+     * example, a tag with "Sales" as the key might be added to a resource to
+     * indicate its use by the sales department.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Tags to associate with the entity recognizer. A tag is a
+     *            key-value pair that adds as a metadata to a resource used by
+     *            Amazon Comprehend. For example, a tag with "Sales" as the key
+     *            might be added to a resource to indicate its use by the sales
+     *            department.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the entity recognizer. A tag is a key-value pair
+     * that adds as a metadata to a resource used by Amazon Comprehend. For
+     * example, a tag with "Sales" as the key might be added to a resource to
+     * indicate its use by the sales department.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Tags to associate with the entity recognizer. A tag is a
+     *            key-value pair that adds as a metadata to a resource used by
+     *            Amazon Comprehend. For example, a tag with "Sales" as the key
+     *            might be added to a resource to indicate its use by the sales
+     *            department.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
+     * <p>
      * Specifies the format and location of the input data. The S3 bucket
-     * containing the input data must be located in the same region as the
+     * containing the input data must be located in the same Region as the
      * entity recognizer being created.
      * </p>
      *
      * @return <p>
      *         Specifies the format and location of the input data. The S3
      *         bucket containing the input data must be located in the same
-     *         region as the entity recognizer being created.
+     *         Region as the entity recognizer being created.
      *         </p>
      */
     public EntityRecognizerInputDataConfig getInputDataConfig() {
@@ -246,14 +543,14 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
     /**
      * <p>
      * Specifies the format and location of the input data. The S3 bucket
-     * containing the input data must be located in the same region as the
+     * containing the input data must be located in the same Region as the
      * entity recognizer being created.
      * </p>
      *
      * @param inputDataConfig <p>
      *            Specifies the format and location of the input data. The S3
      *            bucket containing the input data must be located in the same
-     *            region as the entity recognizer being created.
+     *            Region as the entity recognizer being created.
      *            </p>
      */
     public void setInputDataConfig(EntityRecognizerInputDataConfig inputDataConfig) {
@@ -263,7 +560,7 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
     /**
      * <p>
      * Specifies the format and location of the input data. The S3 bucket
-     * containing the input data must be located in the same region as the
+     * containing the input data must be located in the same Region as the
      * entity recognizer being created.
      * </p>
      * <p>
@@ -273,7 +570,7 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      * @param inputDataConfig <p>
      *            Specifies the format and location of the input data. The S3
      *            bucket containing the input data must be located in the same
-     *            region as the entity recognizer being created.
+     *            Region as the entity recognizer being created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -349,16 +646,22 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The language of the input documents. All documents must be in the same
-     * language. Only English ("en") is currently supported.
+     * You can specify any of the following languages: English ("en"), Spanish
+     * ("es"), French ("fr"), Italian ("it"), German ("de"), or Portuguese
+     * ("pt"). If you plan to use this entity recognizer with PDF, Word, or
+     * image input files, you must specify English as the language. All training
+     * documents must be in the same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @return <p>
-     *         The language of the input documents. All documents must be in the
-     *         same language. Only English ("en") is currently supported.
+     *         You can specify any of the following languages: English ("en"),
+     *         Spanish ("es"), French ("fr"), Italian ("it"), German ("de"), or
+     *         Portuguese ("pt"). If you plan to use this entity recognizer with
+     *         PDF, Word, or image input files, you must specify English as the
+     *         language. All training documents must be in the same language.
      *         </p>
      * @see LanguageCode
      */
@@ -368,16 +671,23 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The language of the input documents. All documents must be in the same
-     * language. Only English ("en") is currently supported.
+     * You can specify any of the following languages: English ("en"), Spanish
+     * ("es"), French ("fr"), Italian ("it"), German ("de"), or Portuguese
+     * ("pt"). If you plan to use this entity recognizer with PDF, Word, or
+     * image input files, you must specify English as the language. All training
+     * documents must be in the same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. All documents must be in
-     *            the same language. Only English ("en") is currently supported.
+     *            You can specify any of the following languages: English
+     *            ("en"), Spanish ("es"), French ("fr"), Italian ("it"), German
+     *            ("de"), or Portuguese ("pt"). If you plan to use this entity
+     *            recognizer with PDF, Word, or image input files, you must
+     *            specify English as the language. All training documents must
+     *            be in the same language.
      *            </p>
      * @see LanguageCode
      */
@@ -387,19 +697,26 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The language of the input documents. All documents must be in the same
-     * language. Only English ("en") is currently supported.
+     * You can specify any of the following languages: English ("en"), Spanish
+     * ("es"), French ("fr"), Italian ("it"), German ("de"), or Portuguese
+     * ("pt"). If you plan to use this entity recognizer with PDF, Word, or
+     * image input files, you must specify English as the language. All training
+     * documents must be in the same language.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. All documents must be in
-     *            the same language. Only English ("en") is currently supported.
+     *            You can specify any of the following languages: English
+     *            ("en"), Spanish ("es"), French ("fr"), Italian ("it"), German
+     *            ("de"), or Portuguese ("pt"). If you plan to use this entity
+     *            recognizer with PDF, Word, or image input files, you must
+     *            specify English as the language. All training documents must
+     *            be in the same language.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -412,16 +729,23 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The language of the input documents. All documents must be in the same
-     * language. Only English ("en") is currently supported.
+     * You can specify any of the following languages: English ("en"), Spanish
+     * ("es"), French ("fr"), Italian ("it"), German ("de"), or Portuguese
+     * ("pt"). If you plan to use this entity recognizer with PDF, Word, or
+     * image input files, you must specify English as the language. All training
+     * documents must be in the same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. All documents must be in
-     *            the same language. Only English ("en") is currently supported.
+     *            You can specify any of the following languages: English
+     *            ("en"), Spanish ("es"), French ("fr"), Italian ("it"), German
+     *            ("de"), or Portuguese ("pt"). If you plan to use this entity
+     *            recognizer with PDF, Word, or image input files, you must
+     *            specify English as the language. All training documents must
+     *            be in the same language.
      *            </p>
      * @see LanguageCode
      */
@@ -431,19 +755,26 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
 
     /**
      * <p>
-     * The language of the input documents. All documents must be in the same
-     * language. Only English ("en") is currently supported.
+     * You can specify any of the following languages: English ("en"), Spanish
+     * ("es"), French ("fr"), Italian ("it"), German ("de"), or Portuguese
+     * ("pt"). If you plan to use this entity recognizer with PDF, Word, or
+     * image input files, you must specify English as the language. All training
+     * documents must be in the same language.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. All documents must be in
-     *            the same language. Only English ("en") is currently supported.
+     *            You can specify any of the following languages: English
+     *            ("en"), Spanish ("es"), French ("fr"), Italian ("it"), German
+     *            ("de"), or Portuguese ("pt"). If you plan to use this entity
+     *            recognizer with PDF, Word, or image input files, you must
+     *            specify English as the language. All training documents must
+     *            be in the same language.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -451,6 +782,554 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
      */
     public CreateEntityRecognizerRequest withLanguageCode(LanguageCode languageCode) {
         this.languageCode = languageCode.toString();
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the Amazon Web Services Key Management Service (KMS) key
+     *         that Amazon Comprehend uses to encrypt data on the storage volume
+     *         attached to the ML compute instance(s) that process the analysis
+     *         job. The VolumeKmsKeyId can be either of the following formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getVolumeKmsKeyId() {
+        return volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your custom entity
+     * recognizer. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Configuration parameters for an optional private Virtual Private
+     *         Cloud (VPC) containing the resources you are using for your
+     *         custom entity recognizer. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *         >Amazon VPC</a>.
+     *         </p>
+     */
+    public VpcConfig getVpcConfig() {
+        return vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your custom entity
+     * recognizer. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for an optional private Virtual
+     *            Private Cloud (VPC) containing the resources you are using for
+     *            your custom entity recognizer. For more information, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     */
+    public void setVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your custom entity
+     * recognizer. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for an optional private Virtual
+     *            Private Cloud (VPC) containing the resources you are using for
+     *            your custom entity recognizer. For more information, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the KMS key that Amazon Comprehend uses to encrypt trained
+     *         custom models. The ModelKmsKeyId can be either of the following
+     *         formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getModelKmsKeyId() {
+        return modelKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param modelKmsKeyId <p>
+     *            ID for the KMS key that Amazon Comprehend uses to encrypt
+     *            trained custom models. The ModelKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setModelKmsKeyId(String modelKmsKeyId) {
+        this.modelKmsKeyId = modelKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the KMS key that Amazon Comprehend uses to encrypt trained custom
+     * models. The ModelKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param modelKmsKeyId <p>
+     *            ID for the KMS key that Amazon Comprehend uses to encrypt
+     *            trained custom models. The ModelKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withModelKmsKeyId(String modelKmsKeyId) {
+        this.modelKmsKeyId = modelKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The JSON resource-based policy to attach to your custom entity recognizer
+     * model. You can use this policy to allow another Amazon Web Services
+     * account to import your custom model.
+     * </p>
+     * <p>
+     * Provide your JSON as a UTF-8 encoded string without line breaks. To
+     * provide valid JSON for your policy, enclose the attribute names and
+     * values in double quotes. If the JSON body is also enclosed in double
+     * quotes, then you must escape the double quotes that are inside the
+     * policy:
+     * </p>
+     * <p>
+     * <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     * </p>
+     * <p>
+     * To avoid escaping quotes, you can use single quotes to enclose the policy
+     * and double quotes to enclose the JSON names and values:
+     * </p>
+     * <p>
+     * <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 20000<br/>
+     * <b>Pattern: </b>[ -\u00FF]+<br/>
+     *
+     * @return <p>
+     *         The JSON resource-based policy to attach to your custom entity
+     *         recognizer model. You can use this policy to allow another Amazon
+     *         Web Services account to import your custom model.
+     *         </p>
+     *         <p>
+     *         Provide your JSON as a UTF-8 encoded string without line breaks.
+     *         To provide valid JSON for your policy, enclose the attribute
+     *         names and values in double quotes. If the JSON body is also
+     *         enclosed in double quotes, then you must escape the double quotes
+     *         that are inside the policy:
+     *         </p>
+     *         <p>
+     *         <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     *         </p>
+     *         <p>
+     *         To avoid escaping quotes, you can use single quotes to enclose
+     *         the policy and double quotes to enclose the JSON names and
+     *         values:
+     *         </p>
+     *         <p>
+     *         <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     *         </p>
+     */
+    public String getModelPolicy() {
+        return modelPolicy;
+    }
+
+    /**
+     * <p>
+     * The JSON resource-based policy to attach to your custom entity recognizer
+     * model. You can use this policy to allow another Amazon Web Services
+     * account to import your custom model.
+     * </p>
+     * <p>
+     * Provide your JSON as a UTF-8 encoded string without line breaks. To
+     * provide valid JSON for your policy, enclose the attribute names and
+     * values in double quotes. If the JSON body is also enclosed in double
+     * quotes, then you must escape the double quotes that are inside the
+     * policy:
+     * </p>
+     * <p>
+     * <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     * </p>
+     * <p>
+     * To avoid escaping quotes, you can use single quotes to enclose the policy
+     * and double quotes to enclose the JSON names and values:
+     * </p>
+     * <p>
+     * <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 20000<br/>
+     * <b>Pattern: </b>[ -\u00FF]+<br/>
+     *
+     * @param modelPolicy <p>
+     *            The JSON resource-based policy to attach to your custom entity
+     *            recognizer model. You can use this policy to allow another
+     *            Amazon Web Services account to import your custom model.
+     *            </p>
+     *            <p>
+     *            Provide your JSON as a UTF-8 encoded string without line
+     *            breaks. To provide valid JSON for your policy, enclose the
+     *            attribute names and values in double quotes. If the JSON body
+     *            is also enclosed in double quotes, then you must escape the
+     *            double quotes that are inside the policy:
+     *            </p>
+     *            <p>
+     *            <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     *            </p>
+     *            <p>
+     *            To avoid escaping quotes, you can use single quotes to enclose
+     *            the policy and double quotes to enclose the JSON names and
+     *            values:
+     *            </p>
+     *            <p>
+     *            <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     *            </p>
+     */
+    public void setModelPolicy(String modelPolicy) {
+        this.modelPolicy = modelPolicy;
+    }
+
+    /**
+     * <p>
+     * The JSON resource-based policy to attach to your custom entity recognizer
+     * model. You can use this policy to allow another Amazon Web Services
+     * account to import your custom model.
+     * </p>
+     * <p>
+     * Provide your JSON as a UTF-8 encoded string without line breaks. To
+     * provide valid JSON for your policy, enclose the attribute names and
+     * values in double quotes. If the JSON body is also enclosed in double
+     * quotes, then you must escape the double quotes that are inside the
+     * policy:
+     * </p>
+     * <p>
+     * <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     * </p>
+     * <p>
+     * To avoid escaping quotes, you can use single quotes to enclose the policy
+     * and double quotes to enclose the JSON names and values:
+     * </p>
+     * <p>
+     * <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 20000<br/>
+     * <b>Pattern: </b>[ -\u00FF]+<br/>
+     *
+     * @param modelPolicy <p>
+     *            The JSON resource-based policy to attach to your custom entity
+     *            recognizer model. You can use this policy to allow another
+     *            Amazon Web Services account to import your custom model.
+     *            </p>
+     *            <p>
+     *            Provide your JSON as a UTF-8 encoded string without line
+     *            breaks. To provide valid JSON for your policy, enclose the
+     *            attribute names and values in double quotes. If the JSON body
+     *            is also enclosed in double quotes, then you must escape the
+     *            double quotes that are inside the policy:
+     *            </p>
+     *            <p>
+     *            <code>"{\"attribute\": \"value\", \"attribute\": [\"value\"]}"</code>
+     *            </p>
+     *            <p>
+     *            To avoid escaping quotes, you can use single quotes to enclose
+     *            the policy and double quotes to enclose the JSON names and
+     *            values:
+     *            </p>
+     *            <p>
+     *            <code>'{"attribute": "value", "attribute": ["value"]}'</code>
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateEntityRecognizerRequest withModelPolicy(String modelPolicy) {
+        this.modelPolicy = modelPolicy;
         return this;
     }
 
@@ -467,14 +1346,26 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
         sb.append("{");
         if (getRecognizerName() != null)
             sb.append("RecognizerName: " + getRecognizerName() + ",");
+        if (getVersionName() != null)
+            sb.append("VersionName: " + getVersionName() + ",");
         if (getDataAccessRoleArn() != null)
             sb.append("DataAccessRoleArn: " + getDataAccessRoleArn() + ",");
+        if (getTags() != null)
+            sb.append("Tags: " + getTags() + ",");
         if (getInputDataConfig() != null)
             sb.append("InputDataConfig: " + getInputDataConfig() + ",");
         if (getClientRequestToken() != null)
             sb.append("ClientRequestToken: " + getClientRequestToken() + ",");
         if (getLanguageCode() != null)
-            sb.append("LanguageCode: " + getLanguageCode());
+            sb.append("LanguageCode: " + getLanguageCode() + ",");
+        if (getVolumeKmsKeyId() != null)
+            sb.append("VolumeKmsKeyId: " + getVolumeKmsKeyId() + ",");
+        if (getVpcConfig() != null)
+            sb.append("VpcConfig: " + getVpcConfig() + ",");
+        if (getModelKmsKeyId() != null)
+            sb.append("ModelKmsKeyId: " + getModelKmsKeyId() + ",");
+        if (getModelPolicy() != null)
+            sb.append("ModelPolicy: " + getModelPolicy());
         sb.append("}");
         return sb.toString();
     }
@@ -487,13 +1378,23 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
         hashCode = prime * hashCode
                 + ((getRecognizerName() == null) ? 0 : getRecognizerName().hashCode());
         hashCode = prime * hashCode
+                + ((getVersionName() == null) ? 0 : getVersionName().hashCode());
+        hashCode = prime * hashCode
                 + ((getDataAccessRoleArn() == null) ? 0 : getDataAccessRoleArn().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         hashCode = prime * hashCode
                 + ((getInputDataConfig() == null) ? 0 : getInputDataConfig().hashCode());
         hashCode = prime * hashCode
                 + ((getClientRequestToken() == null) ? 0 : getClientRequestToken().hashCode());
         hashCode = prime * hashCode
                 + ((getLanguageCode() == null) ? 0 : getLanguageCode().hashCode());
+        hashCode = prime * hashCode
+                + ((getVolumeKmsKeyId() == null) ? 0 : getVolumeKmsKeyId().hashCode());
+        hashCode = prime * hashCode + ((getVpcConfig() == null) ? 0 : getVpcConfig().hashCode());
+        hashCode = prime * hashCode
+                + ((getModelKmsKeyId() == null) ? 0 : getModelKmsKeyId().hashCode());
+        hashCode = prime * hashCode
+                + ((getModelPolicy() == null) ? 0 : getModelPolicy().hashCode());
         return hashCode;
     }
 
@@ -513,10 +1414,19 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
         if (other.getRecognizerName() != null
                 && other.getRecognizerName().equals(this.getRecognizerName()) == false)
             return false;
+        if (other.getVersionName() == null ^ this.getVersionName() == null)
+            return false;
+        if (other.getVersionName() != null
+                && other.getVersionName().equals(this.getVersionName()) == false)
+            return false;
         if (other.getDataAccessRoleArn() == null ^ this.getDataAccessRoleArn() == null)
             return false;
         if (other.getDataAccessRoleArn() != null
                 && other.getDataAccessRoleArn().equals(this.getDataAccessRoleArn()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         if (other.getInputDataConfig() == null ^ this.getInputDataConfig() == null)
             return false;
@@ -532,6 +1442,26 @@ public class CreateEntityRecognizerRequest extends AmazonWebServiceRequest imple
             return false;
         if (other.getLanguageCode() != null
                 && other.getLanguageCode().equals(this.getLanguageCode()) == false)
+            return false;
+        if (other.getVolumeKmsKeyId() == null ^ this.getVolumeKmsKeyId() == null)
+            return false;
+        if (other.getVolumeKmsKeyId() != null
+                && other.getVolumeKmsKeyId().equals(this.getVolumeKmsKeyId()) == false)
+            return false;
+        if (other.getVpcConfig() == null ^ this.getVpcConfig() == null)
+            return false;
+        if (other.getVpcConfig() != null
+                && other.getVpcConfig().equals(this.getVpcConfig()) == false)
+            return false;
+        if (other.getModelKmsKeyId() == null ^ this.getModelKmsKeyId() == null)
+            return false;
+        if (other.getModelKmsKeyId() != null
+                && other.getModelKmsKeyId().equals(this.getModelKmsKeyId()) == false)
+            return false;
+        if (other.getModelPolicy() == null ^ this.getModelPolicy() == null)
+            return false;
+        if (other.getModelPolicy() != null
+                && other.getModelPolicy().equals(this.getModelPolicy()) == false)
             return false;
         return true;
     }

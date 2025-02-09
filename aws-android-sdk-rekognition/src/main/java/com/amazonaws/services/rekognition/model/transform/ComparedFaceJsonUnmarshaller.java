@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,14 @@ class ComparedFaceJsonUnmarshaller implements Unmarshaller<ComparedFace, JsonUnm
                         .unmarshall(context));
             } else if (name.equals("Quality")) {
                 comparedFace.setQuality(ImageQualityJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("Emotions")) {
+                comparedFace.setEmotions(new ListUnmarshaller<Emotion>(EmotionJsonUnmarshaller
+                        .getInstance()
+                        )
+                                .unmarshall(context));
+            } else if (name.equals("Smile")) {
+                comparedFace.setSmile(SmileJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

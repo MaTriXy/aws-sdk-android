@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Stops a sentiment detection job in progress.
  * </p>
  * <p>
- * If the job state is <code>IN_PROGRESS</code> the job is marked for
+ * If the job state is <code>IN_PROGRESS</code>, the job is marked for
  * termination and put into the <code>STOP_REQUESTED</code> state. If the job
  * completes before it can be stopped, it is put into the <code>COMPLETED</code>
  * state; otherwise the job is be stopped and put into the <code>STOPPED</code>

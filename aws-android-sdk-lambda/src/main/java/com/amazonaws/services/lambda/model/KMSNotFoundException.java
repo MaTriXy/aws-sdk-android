@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * Lambda was unable to decrypt the environment variables because the KMS key
- * was not found. Check the function's KMS key settings.
+ * Lambda couldn't decrypt the environment variables because the KMS key was not
+ * found. Check the function's KMS key settings.
  * </p>
  */
 public class KMSNotFoundException extends AmazonServiceException {

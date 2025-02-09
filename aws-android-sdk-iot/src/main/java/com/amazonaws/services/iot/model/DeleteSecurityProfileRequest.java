@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Deletes a Device Defender security profile.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >DeleteSecurityProfile</a> action.
+ * </p>
  */
 public class DeleteSecurityProfileRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -40,7 +45,7 @@ public class DeleteSecurityProfileRequest extends AmazonWebServiceRequest implem
      * <p>
      * The expected version of the security profile. A new version is generated
      * whenever the security profile is updated. If you specify a value that is
-     * different than the actual version, a
+     * different from the actual version, a
      * <code>VersionConflictException</code> is thrown.
      * </p>
      */
@@ -107,14 +112,14 @@ public class DeleteSecurityProfileRequest extends AmazonWebServiceRequest implem
      * <p>
      * The expected version of the security profile. A new version is generated
      * whenever the security profile is updated. If you specify a value that is
-     * different than the actual version, a
+     * different from the actual version, a
      * <code>VersionConflictException</code> is thrown.
      * </p>
      *
      * @return <p>
      *         The expected version of the security profile. A new version is
      *         generated whenever the security profile is updated. If you
-     *         specify a value that is different than the actual version, a
+     *         specify a value that is different from the actual version, a
      *         <code>VersionConflictException</code> is thrown.
      *         </p>
      */
@@ -126,14 +131,14 @@ public class DeleteSecurityProfileRequest extends AmazonWebServiceRequest implem
      * <p>
      * The expected version of the security profile. A new version is generated
      * whenever the security profile is updated. If you specify a value that is
-     * different than the actual version, a
+     * different from the actual version, a
      * <code>VersionConflictException</code> is thrown.
      * </p>
      *
      * @param expectedVersion <p>
      *            The expected version of the security profile. A new version is
      *            generated whenever the security profile is updated. If you
-     *            specify a value that is different than the actual version, a
+     *            specify a value that is different from the actual version, a
      *            <code>VersionConflictException</code> is thrown.
      *            </p>
      */
@@ -145,7 +150,7 @@ public class DeleteSecurityProfileRequest extends AmazonWebServiceRequest implem
      * <p>
      * The expected version of the security profile. A new version is generated
      * whenever the security profile is updated. If you specify a value that is
-     * different than the actual version, a
+     * different from the actual version, a
      * <code>VersionConflictException</code> is thrown.
      * </p>
      * <p>
@@ -155,7 +160,7 @@ public class DeleteSecurityProfileRequest extends AmazonWebServiceRequest implem
      * @param expectedVersion <p>
      *            The expected version of the security profile. A new version is
      *            generated whenever the security profile is updated. If you
-     *            specify a value that is different than the actual version, a
+     *            specify a value that is different from the actual version, a
      *            <code>VersionConflictException</code> is thrown.
      *            </p>
      * @return A reference to this updated object so that method calls can be

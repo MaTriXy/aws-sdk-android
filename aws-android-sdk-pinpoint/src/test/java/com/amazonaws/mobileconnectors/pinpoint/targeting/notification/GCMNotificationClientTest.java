@@ -15,15 +15,16 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.targeting.notification;
 
+import android.app.Service;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent;
-import com.amazonaws.mobileconnectors.pinpoint.internal.event.EventRecorder;
+import android.os.Bundle;
+import androidx.test.core.app.ApplicationProvider;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -31,51 +32,38 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.rule.PowerMockRule;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
+
 import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsClient;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.MobileAnalyticsTestBase;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.utils.AnalyticsContextBuilder;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.PinpointContext;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.configuration.AndroidPreferencesConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.system.MockSystem;
+import com.amazonaws.mobileconnectors.pinpoint.internal.event.EventRecorder;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.TargetingClient;
 import com.amazonaws.services.pinpoint.model.ChannelType;
 
-import android.app.Service;
-import android.os.Bundle;
-import org.robolectric.shadows.ShadowBitmap;
-
 import java.util.Map;
 
-import static junit.framework.Assert.assertTrue;
+import static com.amazonaws.mobileconnectors.pinpoint.targeting.notification.NotificationClient.GCM_INTENT_ACTION;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
 
 @RunWith(RobolectricTestRunner.class)
-//@PowerMockIgnore({ "org.mockito.*", "org.robolectric.*", "android.*" })
-//@PrepareForTest(Static.class)
-@Config(manifest = Config.NONE)
 public class GCMNotificationClientTest extends MobileAnalyticsTestBase {
-
-//    @Rule
-//    public PowerMockRule rule = new PowerMockRule();
-
     @Mock
     AndroidPreferencesConfiguration mockConfiguration;
     private NotificationClient target;
@@ -95,8 +83,7 @@ public class GCMNotificationClientTest extends MobileAnalyticsTestBase {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        final Context roboContext = RuntimeEnvironment.application
-            .getApplicationContext();
+        Context roboContext = ApplicationProvider.getApplicationContext();
         spiedRoboContext = Mockito.spy(roboContext);
         mockPinpointContext = new AnalyticsContextBuilder()
                                                       .withSystem(new MockSystem("JIMMY_CRACKED_CORN.and"))
@@ -140,16 +127,71 @@ public class GCMNotificationClientTest extends MobileAnalyticsTestBase {
         pushBundle.putString("gcm.notification.title", "Robots are Red");
         pushBundle.putString("gcm.notification.body", "My Class is New");
         pushBundle.putString("gcm.notification.color", "#FF0000");
-        JSONObject campaignJson = new JSONObject();
-        campaignJson.put("campaign_id", "Customers rule");
-        campaignJson.put("campaign_activity_id", "the brink of dawn");
-        JSONObject engageJson = new JSONObject();
-        engageJson.put("openApp", "true");
-        engageJson.put("url", "http://amazon.com");
-        engageJson.put("deeplink", "http://amazon.com");
-        engageJson.put("campaign", campaignJson);
+        JSONObject engageJson = new JSONObject()
+            .put("openApp", "true")
+            .put("url", "http://amazon.com")
+            .put("deeplink", "http://amazon.com");
         pushBundle.putString("pinpoint", engageJson.toString());
         return pushBundle;
+    }
+
+    private Bundle buildJourneyPushBundle() throws JSONException {
+        Bundle pushBundle = new Bundle();
+        pushBundle.putString("gcm.notification.title", "Robots are Red");
+        pushBundle.putString("gcm.notification.body", "My Class is New");
+        pushBundle.putString("gcm.notification.color", "#FF0000");
+        JSONObject engageJson = new JSONObject()
+            .put("openApp", "true")
+            .put("url", "http://amazon.com")
+            .put("deeplink", "http://amazon.com")
+            .put("journey", new JSONObject()
+                .put("journey_id", "fake_journey_id")
+                .put("journey_activity_id", "fake_journey_activity_id")
+                .put("journey_run_id", "fake_journey_run_id")
+                .put("feedback", "random_feedback")
+                .put("endpoint_id", "fake_endpoint_id")
+                .put("user_id", "fake_user_id")
+            );
+        pushBundle.putString("pinpoint", engageJson.toString());
+        return pushBundle;
+    }
+
+    @Test
+    public void testGCMJourneyMessageReceivedDefaultDoNotPostNotificationInForeground() throws JSONException {
+        // Force the app to be in the background
+        final AnalyticsEvent expectedEvent = new AnalyticsClient(mockPinpointContext).createEvent("_journey.received_background")
+            .withAttribute("journey_id", "fake_journey_id")
+            .withAttribute("journey_activity_id", "fake_journey_activity_id")
+            .withAttribute("journey_run_id", "fake_journey_run_id")
+            .withAttribute("feedback", "random_feedback")
+            .withAttribute("endpoint_id", "fake_endpoint_id")
+            .withAttribute("user_id", "fake_user_id")
+            .withAttribute("isOptedOut", "true")
+            .withAttribute("isAppInForeground", "false");
+
+        final AppUtil appUtil = Mockito.mock(AppUtil.class);
+        Whitebox.setInternalState(target.notificationClientBase, "appUtil", appUtil);
+        Mockito.when(appUtil.isAppInForeground()).thenReturn(false);
+
+        NotificationDetails.NotificationDetailsBuilder notificationDetailsBuilder =
+                NotificationDetails.builder()
+                        .from("12345")
+                        .bundle(buildJourneyPushBundle())
+                        .serviceClass(Service.class)
+                        .intentAction(GCM_INTENT_ACTION);
+
+        NotificationClient.PushResult pushResult
+                = target.handleNotificationReceived(notificationDetailsBuilder.build());
+
+        assertEquals(NotificationClient.PushResult.OPTED_OUT, pushResult);
+
+        ArgumentCaptor<AnalyticsEvent> eventCaptor = ArgumentCaptor.forClass(AnalyticsEvent.class);
+        verify(mockEventRecorder, times(1)).recordEvent(eventCaptor.capture());
+
+        final AnalyticsEvent receivedEvent = eventCaptor.getAllValues().get(0);
+        assertTrue(receivedEvent.getEventTimestamp() > 0);
+        assertEquals("_journey.received_background", receivedEvent.getEventType());
+        assertEquals(expectedEvent.getAllAttributes(), receivedEvent.getAllAttributes());
     }
 
     @Test

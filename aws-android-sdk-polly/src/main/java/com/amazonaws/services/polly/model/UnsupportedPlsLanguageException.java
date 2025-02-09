@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.amazonaws.AmazonServiceException;
  * <p>
  * The language specified in the lexicon is unsupported. For a list of supported
  * languages, see <a href=
- * "http://docs.aws.amazon.com/polly/latest/dg/API_LexiconAttributes.html"
+ * "https://docs.aws.amazon.com/polly/latest/dg/API_LexiconAttributes.html"
  * >Lexicon Attributes</a>.
  * </p>
  */

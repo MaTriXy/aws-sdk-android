@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.comprehend.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -66,10 +69,26 @@ public class CreateDocumentClassifierRequestMarshaller implements
                 jsonWriter.name("DocumentClassifierName");
                 jsonWriter.value(documentClassifierName);
             }
+            if (createDocumentClassifierRequest.getVersionName() != null) {
+                String versionName = createDocumentClassifierRequest.getVersionName();
+                jsonWriter.name("VersionName");
+                jsonWriter.value(versionName);
+            }
             if (createDocumentClassifierRequest.getDataAccessRoleArn() != null) {
                 String dataAccessRoleArn = createDocumentClassifierRequest.getDataAccessRoleArn();
                 jsonWriter.name("DataAccessRoleArn");
                 jsonWriter.value(dataAccessRoleArn);
+            }
+            if (createDocumentClassifierRequest.getTags() != null) {
+                java.util.List<Tag> tags = createDocumentClassifierRequest.getTags();
+                jsonWriter.name("Tags");
+                jsonWriter.beginArray();
+                for (Tag tagsItem : tags) {
+                    if (tagsItem != null) {
+                        TagJsonMarshaller.getInstance().marshall(tagsItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
             }
             if (createDocumentClassifierRequest.getInputDataConfig() != null) {
                 DocumentClassifierInputDataConfig inputDataConfig = createDocumentClassifierRequest
@@ -77,6 +96,13 @@ public class CreateDocumentClassifierRequestMarshaller implements
                 jsonWriter.name("InputDataConfig");
                 DocumentClassifierInputDataConfigJsonMarshaller.getInstance().marshall(
                         inputDataConfig, jsonWriter);
+            }
+            if (createDocumentClassifierRequest.getOutputDataConfig() != null) {
+                DocumentClassifierOutputDataConfig outputDataConfig = createDocumentClassifierRequest
+                        .getOutputDataConfig();
+                jsonWriter.name("OutputDataConfig");
+                DocumentClassifierOutputDataConfigJsonMarshaller.getInstance().marshall(
+                        outputDataConfig, jsonWriter);
             }
             if (createDocumentClassifierRequest.getClientRequestToken() != null) {
                 String clientRequestToken = createDocumentClassifierRequest.getClientRequestToken();
@@ -87,6 +113,31 @@ public class CreateDocumentClassifierRequestMarshaller implements
                 String languageCode = createDocumentClassifierRequest.getLanguageCode();
                 jsonWriter.name("LanguageCode");
                 jsonWriter.value(languageCode);
+            }
+            if (createDocumentClassifierRequest.getVolumeKmsKeyId() != null) {
+                String volumeKmsKeyId = createDocumentClassifierRequest.getVolumeKmsKeyId();
+                jsonWriter.name("VolumeKmsKeyId");
+                jsonWriter.value(volumeKmsKeyId);
+            }
+            if (createDocumentClassifierRequest.getVpcConfig() != null) {
+                VpcConfig vpcConfig = createDocumentClassifierRequest.getVpcConfig();
+                jsonWriter.name("VpcConfig");
+                VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
+            }
+            if (createDocumentClassifierRequest.getMode() != null) {
+                String mode = createDocumentClassifierRequest.getMode();
+                jsonWriter.name("Mode");
+                jsonWriter.value(mode);
+            }
+            if (createDocumentClassifierRequest.getModelKmsKeyId() != null) {
+                String modelKmsKeyId = createDocumentClassifierRequest.getModelKmsKeyId();
+                jsonWriter.name("ModelKmsKeyId");
+                jsonWriter.value(modelKmsKeyId);
+            }
+            if (createDocumentClassifierRequest.getModelPolicy() != null) {
+                String modelPolicy = createDocumentClassifierRequest.getModelPolicy();
+                jsonWriter.name("ModelPolicy");
+                jsonWriter.value(modelPolicy);
             }
 
             jsonWriter.endObject();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,6 +41,10 @@ class DominantLanguageDetectionJobPropertiesJsonUnmarshaller implements
                 dominantLanguageDetectionJobProperties.setJobId(StringJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                dominantLanguageDetectionJobProperties.setJobArn(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobName")) {
                 dominantLanguageDetectionJobProperties.setJobName(StringJsonUnmarshaller
                         .getInstance()
@@ -71,6 +75,14 @@ class DominantLanguageDetectionJobPropertiesJsonUnmarshaller implements
                                 .unmarshall(context));
             } else if (name.equals("DataAccessRoleArn")) {
                 dominantLanguageDetectionJobProperties.setDataAccessRoleArn(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                dominantLanguageDetectionJobProperties.setVolumeKmsKeyId(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                dominantLanguageDetectionJobProperties.setVpcConfig(VpcConfigJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
             } else {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.io.Serializable;
 public class AuditCheckDetails implements Serializable {
     /**
      * <p>
-     * The completion status of this check, one of "IN_PROGRESS",
+     * The completion status of this check. One of "IN_PROGRESS",
      * "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      * "COMPLETED_NON_COMPLIANT", or "FAILED".
      * </p>
@@ -38,7 +38,7 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * True if the check completed and found all resources compliant.
+     * True if the check is complete and found all resources compliant.
      * </p>
      */
     private Boolean checkCompliant;
@@ -52,23 +52,31 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The number of resources that the check found non-compliant.
+     * The number of resources that were found noncompliant during the check.
      * </p>
      */
     private Long nonCompliantResourcesCount;
 
     /**
      * <p>
-     * The code of any error encountered when performing this check during this
-     * audit. One of "INSUFFICIENT_PERMISSIONS", or "AUDIT_CHECK_DISABLED".
+     * Describes how many of the non-compliant resources created during the
+     * evaluation of an audit check were marked as suppressed.
+     * </p>
+     */
+    private Long suppressedNonCompliantResourcesCount;
+
+    /**
+     * <p>
+     * The code of any error encountered when this check is performed during
+     * this audit. One of "INSUFFICIENT_PERMISSIONS" or "AUDIT_CHECK_DISABLED".
      * </p>
      */
     private String errorCode;
 
     /**
      * <p>
-     * The message associated with any error encountered when performing this
-     * check during this audit.
+     * The message associated with any error encountered when this check is
+     * performed during this audit.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -78,7 +86,7 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The completion status of this check, one of "IN_PROGRESS",
+     * The completion status of this check. One of "IN_PROGRESS",
      * "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      * "COMPLETED_NON_COMPLIANT", or "FAILED".
      * </p>
@@ -88,7 +96,7 @@ public class AuditCheckDetails implements Serializable {
      * CANCELED, COMPLETED_COMPLIANT, COMPLETED_NON_COMPLIANT, FAILED
      *
      * @return <p>
-     *         The completion status of this check, one of "IN_PROGRESS",
+     *         The completion status of this check. One of "IN_PROGRESS",
      *         "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      *         "COMPLETED_NON_COMPLIANT", or "FAILED".
      *         </p>
@@ -100,7 +108,7 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The completion status of this check, one of "IN_PROGRESS",
+     * The completion status of this check. One of "IN_PROGRESS",
      * "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      * "COMPLETED_NON_COMPLIANT", or "FAILED".
      * </p>
@@ -110,7 +118,7 @@ public class AuditCheckDetails implements Serializable {
      * CANCELED, COMPLETED_COMPLIANT, COMPLETED_NON_COMPLIANT, FAILED
      *
      * @param checkRunStatus <p>
-     *            The completion status of this check, one of "IN_PROGRESS",
+     *            The completion status of this check. One of "IN_PROGRESS",
      *            "WAITING_FOR_DATA_COLLECTION", "CANCELED",
      *            "COMPLETED_COMPLIANT", "COMPLETED_NON_COMPLIANT", or "FAILED".
      *            </p>
@@ -122,7 +130,7 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The completion status of this check, one of "IN_PROGRESS",
+     * The completion status of this check. One of "IN_PROGRESS",
      * "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      * "COMPLETED_NON_COMPLIANT", or "FAILED".
      * </p>
@@ -135,7 +143,7 @@ public class AuditCheckDetails implements Serializable {
      * CANCELED, COMPLETED_COMPLIANT, COMPLETED_NON_COMPLIANT, FAILED
      *
      * @param checkRunStatus <p>
-     *            The completion status of this check, one of "IN_PROGRESS",
+     *            The completion status of this check. One of "IN_PROGRESS",
      *            "WAITING_FOR_DATA_COLLECTION", "CANCELED",
      *            "COMPLETED_COMPLIANT", "COMPLETED_NON_COMPLIANT", or "FAILED".
      *            </p>
@@ -150,7 +158,7 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The completion status of this check, one of "IN_PROGRESS",
+     * The completion status of this check. One of "IN_PROGRESS",
      * "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      * "COMPLETED_NON_COMPLIANT", or "FAILED".
      * </p>
@@ -160,7 +168,7 @@ public class AuditCheckDetails implements Serializable {
      * CANCELED, COMPLETED_COMPLIANT, COMPLETED_NON_COMPLIANT, FAILED
      *
      * @param checkRunStatus <p>
-     *            The completion status of this check, one of "IN_PROGRESS",
+     *            The completion status of this check. One of "IN_PROGRESS",
      *            "WAITING_FOR_DATA_COLLECTION", "CANCELED",
      *            "COMPLETED_COMPLIANT", "COMPLETED_NON_COMPLIANT", or "FAILED".
      *            </p>
@@ -172,7 +180,7 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The completion status of this check, one of "IN_PROGRESS",
+     * The completion status of this check. One of "IN_PROGRESS",
      * "WAITING_FOR_DATA_COLLECTION", "CANCELED", "COMPLETED_COMPLIANT",
      * "COMPLETED_NON_COMPLIANT", or "FAILED".
      * </p>
@@ -185,7 +193,7 @@ public class AuditCheckDetails implements Serializable {
      * CANCELED, COMPLETED_COMPLIANT, COMPLETED_NON_COMPLIANT, FAILED
      *
      * @param checkRunStatus <p>
-     *            The completion status of this check, one of "IN_PROGRESS",
+     *            The completion status of this check. One of "IN_PROGRESS",
      *            "WAITING_FOR_DATA_COLLECTION", "CANCELED",
      *            "COMPLETED_COMPLIANT", "COMPLETED_NON_COMPLIANT", or "FAILED".
      *            </p>
@@ -200,11 +208,11 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * True if the check completed and found all resources compliant.
+     * True if the check is complete and found all resources compliant.
      * </p>
      *
      * @return <p>
-     *         True if the check completed and found all resources compliant.
+     *         True if the check is complete and found all resources compliant.
      *         </p>
      */
     public Boolean isCheckCompliant() {
@@ -213,11 +221,11 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * True if the check completed and found all resources compliant.
+     * True if the check is complete and found all resources compliant.
      * </p>
      *
      * @return <p>
-     *         True if the check completed and found all resources compliant.
+     *         True if the check is complete and found all resources compliant.
      *         </p>
      */
     public Boolean getCheckCompliant() {
@@ -226,11 +234,12 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * True if the check completed and found all resources compliant.
+     * True if the check is complete and found all resources compliant.
      * </p>
      *
      * @param checkCompliant <p>
-     *            True if the check completed and found all resources compliant.
+     *            True if the check is complete and found all resources
+     *            compliant.
      *            </p>
      */
     public void setCheckCompliant(Boolean checkCompliant) {
@@ -239,14 +248,15 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * True if the check completed and found all resources compliant.
+     * True if the check is complete and found all resources compliant.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param checkCompliant <p>
-     *            True if the check completed and found all resources compliant.
+     *            True if the check is complete and found all resources
+     *            compliant.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -303,11 +313,12 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The number of resources that the check found non-compliant.
+     * The number of resources that were found noncompliant during the check.
      * </p>
      *
      * @return <p>
-     *         The number of resources that the check found non-compliant.
+     *         The number of resources that were found noncompliant during the
+     *         check.
      *         </p>
      */
     public Long getNonCompliantResourcesCount() {
@@ -316,11 +327,12 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The number of resources that the check found non-compliant.
+     * The number of resources that were found noncompliant during the check.
      * </p>
      *
      * @param nonCompliantResourcesCount <p>
-     *            The number of resources that the check found non-compliant.
+     *            The number of resources that were found noncompliant during
+     *            the check.
      *            </p>
      */
     public void setNonCompliantResourcesCount(Long nonCompliantResourcesCount) {
@@ -329,14 +341,15 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The number of resources that the check found non-compliant.
+     * The number of resources that were found noncompliant during the check.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param nonCompliantResourcesCount <p>
-     *            The number of resources that the check found non-compliant.
+     *            The number of resources that were found noncompliant during
+     *            the check.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -348,13 +361,67 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The code of any error encountered when performing this check during this
-     * audit. One of "INSUFFICIENT_PERMISSIONS", or "AUDIT_CHECK_DISABLED".
+     * Describes how many of the non-compliant resources created during the
+     * evaluation of an audit check were marked as suppressed.
      * </p>
      *
      * @return <p>
-     *         The code of any error encountered when performing this check
-     *         during this audit. One of "INSUFFICIENT_PERMISSIONS", or
+     *         Describes how many of the non-compliant resources created during
+     *         the evaluation of an audit check were marked as suppressed.
+     *         </p>
+     */
+    public Long getSuppressedNonCompliantResourcesCount() {
+        return suppressedNonCompliantResourcesCount;
+    }
+
+    /**
+     * <p>
+     * Describes how many of the non-compliant resources created during the
+     * evaluation of an audit check were marked as suppressed.
+     * </p>
+     *
+     * @param suppressedNonCompliantResourcesCount <p>
+     *            Describes how many of the non-compliant resources created
+     *            during the evaluation of an audit check were marked as
+     *            suppressed.
+     *            </p>
+     */
+    public void setSuppressedNonCompliantResourcesCount(Long suppressedNonCompliantResourcesCount) {
+        this.suppressedNonCompliantResourcesCount = suppressedNonCompliantResourcesCount;
+    }
+
+    /**
+     * <p>
+     * Describes how many of the non-compliant resources created during the
+     * evaluation of an audit check were marked as suppressed.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param suppressedNonCompliantResourcesCount <p>
+     *            Describes how many of the non-compliant resources created
+     *            during the evaluation of an audit check were marked as
+     *            suppressed.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AuditCheckDetails withSuppressedNonCompliantResourcesCount(
+            Long suppressedNonCompliantResourcesCount) {
+        this.suppressedNonCompliantResourcesCount = suppressedNonCompliantResourcesCount;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The code of any error encountered when this check is performed during
+     * this audit. One of "INSUFFICIENT_PERMISSIONS" or "AUDIT_CHECK_DISABLED".
+     * </p>
+     *
+     * @return <p>
+     *         The code of any error encountered when this check is performed
+     *         during this audit. One of "INSUFFICIENT_PERMISSIONS" or
      *         "AUDIT_CHECK_DISABLED".
      *         </p>
      */
@@ -364,13 +431,13 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The code of any error encountered when performing this check during this
-     * audit. One of "INSUFFICIENT_PERMISSIONS", or "AUDIT_CHECK_DISABLED".
+     * The code of any error encountered when this check is performed during
+     * this audit. One of "INSUFFICIENT_PERMISSIONS" or "AUDIT_CHECK_DISABLED".
      * </p>
      *
      * @param errorCode <p>
-     *            The code of any error encountered when performing this check
-     *            during this audit. One of "INSUFFICIENT_PERMISSIONS", or
+     *            The code of any error encountered when this check is performed
+     *            during this audit. One of "INSUFFICIENT_PERMISSIONS" or
      *            "AUDIT_CHECK_DISABLED".
      *            </p>
      */
@@ -380,16 +447,16 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The code of any error encountered when performing this check during this
-     * audit. One of "INSUFFICIENT_PERMISSIONS", or "AUDIT_CHECK_DISABLED".
+     * The code of any error encountered when this check is performed during
+     * this audit. One of "INSUFFICIENT_PERMISSIONS" or "AUDIT_CHECK_DISABLED".
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param errorCode <p>
-     *            The code of any error encountered when performing this check
-     *            during this audit. One of "INSUFFICIENT_PERMISSIONS", or
+     *            The code of any error encountered when this check is performed
+     *            during this audit. One of "INSUFFICIENT_PERMISSIONS" or
      *            "AUDIT_CHECK_DISABLED".
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -402,16 +469,16 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The message associated with any error encountered when performing this
-     * check during this audit.
+     * The message associated with any error encountered when this check is
+     * performed during this audit.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 2048<br/>
      *
      * @return <p>
-     *         The message associated with any error encountered when performing
-     *         this check during this audit.
+     *         The message associated with any error encountered when this check
+     *         is performed during this audit.
      *         </p>
      */
     public String getMessage() {
@@ -420,16 +487,16 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The message associated with any error encountered when performing this
-     * check during this audit.
+     * The message associated with any error encountered when this check is
+     * performed during this audit.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b> - 2048<br/>
      *
      * @param message <p>
-     *            The message associated with any error encountered when
-     *            performing this check during this audit.
+     *            The message associated with any error encountered when this
+     *            check is performed during this audit.
      *            </p>
      */
     public void setMessage(String message) {
@@ -438,8 +505,8 @@ public class AuditCheckDetails implements Serializable {
 
     /**
      * <p>
-     * The message associated with any error encountered when performing this
-     * check during this audit.
+     * The message associated with any error encountered when this check is
+     * performed during this audit.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -449,8 +516,8 @@ public class AuditCheckDetails implements Serializable {
      * <b>Length: </b> - 2048<br/>
      *
      * @param message <p>
-     *            The message associated with any error encountered when
-     *            performing this check during this audit.
+     *            The message associated with any error encountered when this
+     *            check is performed during this audit.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -479,6 +546,9 @@ public class AuditCheckDetails implements Serializable {
             sb.append("totalResourcesCount: " + getTotalResourcesCount() + ",");
         if (getNonCompliantResourcesCount() != null)
             sb.append("nonCompliantResourcesCount: " + getNonCompliantResourcesCount() + ",");
+        if (getSuppressedNonCompliantResourcesCount() != null)
+            sb.append("suppressedNonCompliantResourcesCount: "
+                    + getSuppressedNonCompliantResourcesCount() + ",");
         if (getErrorCode() != null)
             sb.append("errorCode: " + getErrorCode() + ",");
         if (getMessage() != null)
@@ -502,6 +572,10 @@ public class AuditCheckDetails implements Serializable {
                 * hashCode
                 + ((getNonCompliantResourcesCount() == null) ? 0 : getNonCompliantResourcesCount()
                         .hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getSuppressedNonCompliantResourcesCount() == null) ? 0
+                        : getSuppressedNonCompliantResourcesCount().hashCode());
         hashCode = prime * hashCode + ((getErrorCode() == null) ? 0 : getErrorCode().hashCode());
         hashCode = prime * hashCode + ((getMessage() == null) ? 0 : getMessage().hashCode());
         return hashCode;
@@ -539,6 +613,13 @@ public class AuditCheckDetails implements Serializable {
         if (other.getNonCompliantResourcesCount() != null
                 && other.getNonCompliantResourcesCount().equals(
                         this.getNonCompliantResourcesCount()) == false)
+            return false;
+        if (other.getSuppressedNonCompliantResourcesCount() == null
+                ^ this.getSuppressedNonCompliantResourcesCount() == null)
+            return false;
+        if (other.getSuppressedNonCompliantResourcesCount() != null
+                && other.getSuppressedNonCompliantResourcesCount().equals(
+                        this.getSuppressedNonCompliantResourcesCount()) == false)
             return false;
         if (other.getErrorCode() == null ^ this.getErrorCode() == null)
             return false;

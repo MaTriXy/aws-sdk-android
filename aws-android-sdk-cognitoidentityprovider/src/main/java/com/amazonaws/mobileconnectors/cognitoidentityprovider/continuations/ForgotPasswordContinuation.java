@@ -21,6 +21,9 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This is a Continuation to set the password in the forgot password processing.
  */
@@ -40,6 +43,7 @@ public class ForgotPasswordContinuation implements CognitoIdentityProviderContin
     private final CognitoUser user;
     private final CognitoUserCodeDeliveryDetails parameters;
     private final boolean runInBackground;
+    private final Map<String, String> clientMetadata;
 
     private String password = null;
     private String verificationCode = null;
@@ -60,6 +64,7 @@ public class ForgotPasswordContinuation implements CognitoIdentityProviderContin
         this.user = user;
         this.parameters = parameters;
         this.runInBackground = runInBackground;
+        this.clientMetadata = new HashMap<>();
     }
 
     /**
@@ -77,9 +82,9 @@ public class ForgotPasswordContinuation implements CognitoIdentityProviderContin
     @Override
     public void continueTask() {
         if (runInBackground) {
-            user.confirmPasswordInBackground(verificationCode, password, callback);
+            user.confirmPasswordInBackground(verificationCode, password, clientMetadata, callback);
         } else {
-            user.confirmPassword(verificationCode, password, callback);
+            user.confirmPassword(verificationCode, password, clientMetadata, callback);
         }
     }
 
@@ -99,5 +104,17 @@ public class ForgotPasswordContinuation implements CognitoIdentityProviderContin
      */
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    /**
+     * Sets clientMetadata for forgot password flows.
+     *
+     * @param clientMetadata
+     */
+    public void setClientMetadata(final Map<String, String> clientMetadata) {
+        this.clientMetadata.clear();
+        if (clientMetadata != null) {
+            this.clientMetadata.putAll(clientMetadata);
+        }
     }
 }

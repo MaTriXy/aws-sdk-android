@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.io.Serializable;
 public class Behavior implements Serializable {
     /**
      * <p>
-     * The name you have given to the behavior.
+     * The name you've given to the behavior.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -43,6 +43,16 @@ public class Behavior implements Serializable {
 
     /**
      * <p>
+     * The dimension for a metric in your behavior. For example, using a
+     * <code>TOPIC_FILTER</code> dimension, you can narrow down the scope of the
+     * metric to only MQTT topics where the name matches the pattern specified
+     * in the dimension. This can't be used with custom metrics.
+     * </p>
+     */
+    private MetricDimension metricDimension;
+
+    /**
+     * <p>
      * The criteria that determine if a device is behaving normally in regard to
      * the <code>metric</code>.
      * </p>
@@ -51,7 +61,14 @@ public class Behavior implements Serializable {
 
     /**
      * <p>
-     * The name you have given to the behavior.
+     * Suppresses alerts.
+     * </p>
+     */
+    private Boolean suppressAlerts;
+
+    /**
+     * <p>
+     * The name you've given to the behavior.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -59,7 +76,7 @@ public class Behavior implements Serializable {
      * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @return <p>
-     *         The name you have given to the behavior.
+     *         The name you've given to the behavior.
      *         </p>
      */
     public String getName() {
@@ -68,7 +85,7 @@ public class Behavior implements Serializable {
 
     /**
      * <p>
-     * The name you have given to the behavior.
+     * The name you've given to the behavior.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -76,7 +93,7 @@ public class Behavior implements Serializable {
      * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @param name <p>
-     *            The name you have given to the behavior.
+     *            The name you've given to the behavior.
      *            </p>
      */
     public void setName(String name) {
@@ -85,7 +102,7 @@ public class Behavior implements Serializable {
 
     /**
      * <p>
-     * The name you have given to the behavior.
+     * The name you've given to the behavior.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -96,7 +113,7 @@ public class Behavior implements Serializable {
      * <b>Pattern: </b>[a-zA-Z0-9:_-]+<br/>
      *
      * @param name <p>
-     *            The name you have given to the behavior.
+     *            The name you've given to the behavior.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -153,6 +170,72 @@ public class Behavior implements Serializable {
 
     /**
      * <p>
+     * The dimension for a metric in your behavior. For example, using a
+     * <code>TOPIC_FILTER</code> dimension, you can narrow down the scope of the
+     * metric to only MQTT topics where the name matches the pattern specified
+     * in the dimension. This can't be used with custom metrics.
+     * </p>
+     *
+     * @return <p>
+     *         The dimension for a metric in your behavior. For example, using a
+     *         <code>TOPIC_FILTER</code> dimension, you can narrow down the
+     *         scope of the metric to only MQTT topics where the name matches
+     *         the pattern specified in the dimension. This can't be used with
+     *         custom metrics.
+     *         </p>
+     */
+    public MetricDimension getMetricDimension() {
+        return metricDimension;
+    }
+
+    /**
+     * <p>
+     * The dimension for a metric in your behavior. For example, using a
+     * <code>TOPIC_FILTER</code> dimension, you can narrow down the scope of the
+     * metric to only MQTT topics where the name matches the pattern specified
+     * in the dimension. This can't be used with custom metrics.
+     * </p>
+     *
+     * @param metricDimension <p>
+     *            The dimension for a metric in your behavior. For example,
+     *            using a <code>TOPIC_FILTER</code> dimension, you can narrow
+     *            down the scope of the metric to only MQTT topics where the
+     *            name matches the pattern specified in the dimension. This
+     *            can't be used with custom metrics.
+     *            </p>
+     */
+    public void setMetricDimension(MetricDimension metricDimension) {
+        this.metricDimension = metricDimension;
+    }
+
+    /**
+     * <p>
+     * The dimension for a metric in your behavior. For example, using a
+     * <code>TOPIC_FILTER</code> dimension, you can narrow down the scope of the
+     * metric to only MQTT topics where the name matches the pattern specified
+     * in the dimension. This can't be used with custom metrics.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param metricDimension <p>
+     *            The dimension for a metric in your behavior. For example,
+     *            using a <code>TOPIC_FILTER</code> dimension, you can narrow
+     *            down the scope of the metric to only MQTT topics where the
+     *            name matches the pattern specified in the dimension. This
+     *            can't be used with custom metrics.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Behavior withMetricDimension(MetricDimension metricDimension) {
+        this.metricDimension = metricDimension;
+        return this;
+    }
+
+    /**
+     * <p>
      * The criteria that determine if a device is behaving normally in regard to
      * the <code>metric</code>.
      * </p>
@@ -203,6 +286,64 @@ public class Behavior implements Serializable {
     }
 
     /**
+     * <p>
+     * Suppresses alerts.
+     * </p>
+     *
+     * @return <p>
+     *         Suppresses alerts.
+     *         </p>
+     */
+    public Boolean isSuppressAlerts() {
+        return suppressAlerts;
+    }
+
+    /**
+     * <p>
+     * Suppresses alerts.
+     * </p>
+     *
+     * @return <p>
+     *         Suppresses alerts.
+     *         </p>
+     */
+    public Boolean getSuppressAlerts() {
+        return suppressAlerts;
+    }
+
+    /**
+     * <p>
+     * Suppresses alerts.
+     * </p>
+     *
+     * @param suppressAlerts <p>
+     *            Suppresses alerts.
+     *            </p>
+     */
+    public void setSuppressAlerts(Boolean suppressAlerts) {
+        this.suppressAlerts = suppressAlerts;
+    }
+
+    /**
+     * <p>
+     * Suppresses alerts.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param suppressAlerts <p>
+     *            Suppresses alerts.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Behavior withSuppressAlerts(Boolean suppressAlerts) {
+        this.suppressAlerts = suppressAlerts;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -217,8 +358,12 @@ public class Behavior implements Serializable {
             sb.append("name: " + getName() + ",");
         if (getMetric() != null)
             sb.append("metric: " + getMetric() + ",");
+        if (getMetricDimension() != null)
+            sb.append("metricDimension: " + getMetricDimension() + ",");
         if (getCriteria() != null)
-            sb.append("criteria: " + getCriteria());
+            sb.append("criteria: " + getCriteria() + ",");
+        if (getSuppressAlerts() != null)
+            sb.append("suppressAlerts: " + getSuppressAlerts());
         sb.append("}");
         return sb.toString();
     }
@@ -230,7 +375,11 @@ public class Behavior implements Serializable {
 
         hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
         hashCode = prime * hashCode + ((getMetric() == null) ? 0 : getMetric().hashCode());
+        hashCode = prime * hashCode
+                + ((getMetricDimension() == null) ? 0 : getMetricDimension().hashCode());
         hashCode = prime * hashCode + ((getCriteria() == null) ? 0 : getCriteria().hashCode());
+        hashCode = prime * hashCode
+                + ((getSuppressAlerts() == null) ? 0 : getSuppressAlerts().hashCode());
         return hashCode;
     }
 
@@ -253,9 +402,19 @@ public class Behavior implements Serializable {
             return false;
         if (other.getMetric() != null && other.getMetric().equals(this.getMetric()) == false)
             return false;
+        if (other.getMetricDimension() == null ^ this.getMetricDimension() == null)
+            return false;
+        if (other.getMetricDimension() != null
+                && other.getMetricDimension().equals(this.getMetricDimension()) == false)
+            return false;
         if (other.getCriteria() == null ^ this.getCriteria() == null)
             return false;
         if (other.getCriteria() != null && other.getCriteria().equals(this.getCriteria()) == false)
+            return false;
+        if (other.getSuppressAlerts() == null ^ this.getSuppressAlerts() == null)
+            return false;
+        if (other.getSuppressAlerts() != null
+                && other.getSuppressAlerts().equals(this.getSuppressAlerts()) == false)
             return false;
         return true;
     }

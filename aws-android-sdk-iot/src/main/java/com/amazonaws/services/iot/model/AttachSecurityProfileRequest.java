@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,14 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Associates a Device Defender security profile with a thing group or with this
+ * Associates a Device Defender security profile with a thing group or this
  * account. Each thing group or account can have up to five security profiles
  * associated with it.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >AttachSecurityProfile</a> action.
  * </p>
  */
 public class AttachSecurityProfileRequest extends AmazonWebServiceRequest implements Serializable {

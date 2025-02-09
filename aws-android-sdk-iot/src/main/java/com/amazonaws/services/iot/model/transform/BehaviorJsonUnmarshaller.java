@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,8 +41,14 @@ class BehaviorJsonUnmarshaller implements Unmarshaller<Behavior, JsonUnmarshalle
             } else if (name.equals("metric")) {
                 behavior.setMetric(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("metricDimension")) {
+                behavior.setMetricDimension(MetricDimensionJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("criteria")) {
                 behavior.setCriteria(BehaviorCriteriaJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("suppressAlerts")) {
+                behavior.setSuppressAlerts(BooleanJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

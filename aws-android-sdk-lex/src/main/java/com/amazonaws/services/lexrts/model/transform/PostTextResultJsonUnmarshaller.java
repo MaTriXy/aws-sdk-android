@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,15 @@ public class PostTextResultJsonUnmarshaller implements
             if (name.equals("intentName")) {
                 postTextResult.setIntentName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("nluIntentConfidence")) {
+                postTextResult.setNluIntentConfidence(IntentConfidenceJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("alternativeIntents")) {
+                postTextResult.setAlternativeIntents(new ListUnmarshaller<PredictedIntent>(
+                        PredictedIntentJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else if (name.equals("slots")) {
                 postTextResult.setSlots(new MapUnmarshaller<String>(StringJsonUnmarshaller
                         .getInstance()
@@ -49,6 +58,9 @@ public class PostTextResultJsonUnmarshaller implements
             } else if (name.equals("message")) {
                 postTextResult.setMessage(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("sentimentResponse")) {
+                postTextResult.setSentimentResponse(SentimentResponseJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("messageFormat")) {
                 postTextResult.setMessageFormat(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -61,6 +73,17 @@ public class PostTextResultJsonUnmarshaller implements
             } else if (name.equals("responseCard")) {
                 postTextResult.setResponseCard(ResponseCardJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("sessionId")) {
+                postTextResult.setSessionId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("botVersion")) {
+                postTextResult.setBotVersion(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("activeContexts")) {
+                postTextResult.setActiveContexts(new ListUnmarshaller<ActiveContext>(
+                        ActiveContextJsonUnmarshaller.getInstance()
+                        )
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

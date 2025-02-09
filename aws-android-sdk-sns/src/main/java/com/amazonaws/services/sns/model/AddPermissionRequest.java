@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,8 +22,15 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Adds a statement to a topic's access control policy, granting access for the
- * specified AWS accounts to the specified actions.
+ * specified Amazon Web Services accounts to the specified actions.
  * </p>
+ * <note>
+ * <p>
+ * To remove the ability to change topic permissions, you must deny permissions
+ * to the <code>AddPermission</code>, <code>RemovePermission</code>, and
+ * <code>SetTopicAttributes</code> actions in your IAM policy.
+ * </p>
+ * </note>
  */
 public class AddPermissionRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -42,9 +49,9 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The AWS account IDs of the users (principals) who will be given access to
-     * the specified actions. The users must have AWS accounts, but do not need
-     * to be signed up for this service.
+     * The Amazon Web Services account IDs of the users (principals) who will be
+     * given access to the specified actions. The users must have Amazon Web
+     * Services account, but do not need to be signed up for this service.
      * </p>
      */
     private java.util.List<String> aWSAccountIds = new java.util.ArrayList<String>();
@@ -54,7 +61,8 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      * The action you want to allow for the specified principal(s).
      * </p>
      * <p>
-     * Valid values: any Amazon SNS action name.
+     * Valid values: Any Amazon SNS action name, for example
+     * <code>Publish</code>.
      * </p>
      */
     private java.util.List<String> actionNames = new java.util.ArrayList<String>();
@@ -80,15 +88,17 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      *            A unique identifier for the new policy statement.
      *            </p>
      * @param aWSAccountIds <p>
-     *            The AWS account IDs of the users (principals) who will be
-     *            given access to the specified actions. The users must have AWS
-     *            accounts, but do not need to be signed up for this service.
+     *            The Amazon Web Services account IDs of the users (principals)
+     *            who will be given access to the specified actions. The users
+     *            must have Amazon Web Services account, but do not need to be
+     *            signed up for this service.
      *            </p>
      * @param actionNames <p>
      *            The action you want to allow for the specified principal(s).
      *            </p>
      *            <p>
-     *            Valid values: any Amazon SNS action name.
+     *            Valid values: Any Amazon SNS action name, for example
+     *            <code>Publish</code>.
      *            </p>
      */
     public AddPermissionRequest(String topicArn, String label,
@@ -194,15 +204,16 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The AWS account IDs of the users (principals) who will be given access to
-     * the specified actions. The users must have AWS accounts, but do not need
-     * to be signed up for this service.
+     * The Amazon Web Services account IDs of the users (principals) who will be
+     * given access to the specified actions. The users must have Amazon Web
+     * Services account, but do not need to be signed up for this service.
      * </p>
      *
      * @return <p>
-     *         The AWS account IDs of the users (principals) who will be given
-     *         access to the specified actions. The users must have AWS
-     *         accounts, but do not need to be signed up for this service.
+     *         The Amazon Web Services account IDs of the users (principals) who
+     *         will be given access to the specified actions. The users must
+     *         have Amazon Web Services account, but do not need to be signed up
+     *         for this service.
      *         </p>
      */
     public java.util.List<String> getAWSAccountIds() {
@@ -211,15 +222,16 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The AWS account IDs of the users (principals) who will be given access to
-     * the specified actions. The users must have AWS accounts, but do not need
-     * to be signed up for this service.
+     * The Amazon Web Services account IDs of the users (principals) who will be
+     * given access to the specified actions. The users must have Amazon Web
+     * Services account, but do not need to be signed up for this service.
      * </p>
      *
      * @param aWSAccountIds <p>
-     *            The AWS account IDs of the users (principals) who will be
-     *            given access to the specified actions. The users must have AWS
-     *            accounts, but do not need to be signed up for this service.
+     *            The Amazon Web Services account IDs of the users (principals)
+     *            who will be given access to the specified actions. The users
+     *            must have Amazon Web Services account, but do not need to be
+     *            signed up for this service.
      *            </p>
      */
     public void setAWSAccountIds(java.util.Collection<String> aWSAccountIds) {
@@ -233,18 +245,19 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The AWS account IDs of the users (principals) who will be given access to
-     * the specified actions. The users must have AWS accounts, but do not need
-     * to be signed up for this service.
+     * The Amazon Web Services account IDs of the users (principals) who will be
+     * given access to the specified actions. The users must have Amazon Web
+     * Services account, but do not need to be signed up for this service.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param aWSAccountIds <p>
-     *            The AWS account IDs of the users (principals) who will be
-     *            given access to the specified actions. The users must have AWS
-     *            accounts, but do not need to be signed up for this service.
+     *            The Amazon Web Services account IDs of the users (principals)
+     *            who will be given access to the specified actions. The users
+     *            must have Amazon Web Services account, but do not need to be
+     *            signed up for this service.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -261,18 +274,19 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The AWS account IDs of the users (principals) who will be given access to
-     * the specified actions. The users must have AWS accounts, but do not need
-     * to be signed up for this service.
+     * The Amazon Web Services account IDs of the users (principals) who will be
+     * given access to the specified actions. The users must have Amazon Web
+     * Services account, but do not need to be signed up for this service.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param aWSAccountIds <p>
-     *            The AWS account IDs of the users (principals) who will be
-     *            given access to the specified actions. The users must have AWS
-     *            accounts, but do not need to be signed up for this service.
+     *            The Amazon Web Services account IDs of the users (principals)
+     *            who will be given access to the specified actions. The users
+     *            must have Amazon Web Services account, but do not need to be
+     *            signed up for this service.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -287,14 +301,16 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      * The action you want to allow for the specified principal(s).
      * </p>
      * <p>
-     * Valid values: any Amazon SNS action name.
+     * Valid values: Any Amazon SNS action name, for example
+     * <code>Publish</code>.
      * </p>
      *
      * @return <p>
      *         The action you want to allow for the specified principal(s).
      *         </p>
      *         <p>
-     *         Valid values: any Amazon SNS action name.
+     *         Valid values: Any Amazon SNS action name, for example
+     *         <code>Publish</code>.
      *         </p>
      */
     public java.util.List<String> getActionNames() {
@@ -306,14 +322,16 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      * The action you want to allow for the specified principal(s).
      * </p>
      * <p>
-     * Valid values: any Amazon SNS action name.
+     * Valid values: Any Amazon SNS action name, for example
+     * <code>Publish</code>.
      * </p>
      *
      * @param actionNames <p>
      *            The action you want to allow for the specified principal(s).
      *            </p>
      *            <p>
-     *            Valid values: any Amazon SNS action name.
+     *            Valid values: Any Amazon SNS action name, for example
+     *            <code>Publish</code>.
      *            </p>
      */
     public void setActionNames(java.util.Collection<String> actionNames) {
@@ -330,7 +348,8 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      * The action you want to allow for the specified principal(s).
      * </p>
      * <p>
-     * Valid values: any Amazon SNS action name.
+     * Valid values: Any Amazon SNS action name, for example
+     * <code>Publish</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -340,7 +359,8 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      *            The action you want to allow for the specified principal(s).
      *            </p>
      *            <p>
-     *            Valid values: any Amazon SNS action name.
+     *            Valid values: Any Amazon SNS action name, for example
+     *            <code>Publish</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -360,7 +380,8 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      * The action you want to allow for the specified principal(s).
      * </p>
      * <p>
-     * Valid values: any Amazon SNS action name.
+     * Valid values: Any Amazon SNS action name, for example
+     * <code>Publish</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -370,7 +391,8 @@ public class AddPermissionRequest extends AmazonWebServiceRequest implements Ser
      *            The action you want to allow for the specified principal(s).
      *            </p>
      *            <p>
-     *            Valid values: any Amazon SNS action name.
+     *            Valid values: Any Amazon SNS action name, for example
+     *            <code>Publish</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

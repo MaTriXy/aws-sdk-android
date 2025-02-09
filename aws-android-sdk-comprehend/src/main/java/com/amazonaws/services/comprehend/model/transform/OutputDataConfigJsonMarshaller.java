@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -30,6 +31,11 @@ class OutputDataConfigJsonMarshaller {
             String s3Uri = outputDataConfig.getS3Uri();
             jsonWriter.name("S3Uri");
             jsonWriter.value(s3Uri);
+        }
+        if (outputDataConfig.getKmsKeyId() != null) {
+            String kmsKeyId = outputDataConfig.getKmsKeyId();
+            jsonWriter.name("KmsKeyId");
+            jsonWriter.value(kmsKeyId);
         }
         jsonWriter.endObject();
     }

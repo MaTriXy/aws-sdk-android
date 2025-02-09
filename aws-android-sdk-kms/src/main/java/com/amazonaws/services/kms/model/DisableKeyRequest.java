@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,32 +21,51 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Sets the state of a customer master key (CMK) to disabled, thereby preventing
- * its use for cryptographic operations. You cannot perform this operation on a
- * CMK in a different AWS account.
+ * Sets the state of a KMS key to disabled. This change temporarily prevents use
+ * of the KMS key for <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#cryptographic-operations"
+ * >cryptographic operations</a>.
  * </p>
  * <p>
- * For more information about how key state affects the use of a CMK, see <a
+ * For more information about how key state affects the use of a KMS key, see <a
  * href
- * ="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html">How
- * Key State Affects the Use of a Customer Master Key</a> in the <i>AWS Key
- * Management Service Developer Guide</i>.
+ * ="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html">Key
+ * states of KMS keys</a> in the <i> <i>Key Management Service Developer
+ * Guide</i> </i>.
  * </p>
  * <p>
- * The result of this operation varies with the key state of the CMK. For
- * details, see <a
- * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
- * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
- * Management Service Developer Guide</i>.
+ * The KMS key that you use for this operation must be in a compatible key
+ * state. For details, see <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >Key states of KMS keys</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a KMS key
+ * in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:DisableKey</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations</b>: <a>EnableKey</a>
+ * </p>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class DisableKeyRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies the KMS key to disable.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -65,7 +84,7 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -76,10 +95,10 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies the KMS key to disable.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -98,7 +117,7 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -106,10 +125,10 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         A unique identifier for the customer master key (CMK).
+     *         Identifies the KMS key to disable.
      *         </p>
      *         <p>
-     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         Specify the key ID or key ARN of the KMS key.
      *         </p>
      *         <p>
      *         For example:
@@ -128,8 +147,8 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      *         </li>
      *         </ul>
      *         <p>
-     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
-     *         <a>DescribeKey</a>.
+     *         To get the key ID and key ARN for a KMS key, use <a>ListKeys</a>
+     *         or <a>DescribeKey</a>.
      *         </p>
      */
     public String getKeyId() {
@@ -138,10 +157,10 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies the KMS key to disable.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -160,7 +179,7 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -168,11 +187,10 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Identifies the KMS key to disable.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -191,8 +209,8 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -201,10 +219,10 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies the KMS key to disable.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -223,7 +241,7 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -234,11 +252,10 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Identifies the KMS key to disable.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -257,8 +274,8 @@ public class DisableKeyRequest extends AmazonWebServiceRequest implements Serial
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

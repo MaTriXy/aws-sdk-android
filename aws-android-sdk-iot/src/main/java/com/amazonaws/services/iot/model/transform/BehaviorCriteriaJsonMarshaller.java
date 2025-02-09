@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -40,6 +41,31 @@ class BehaviorCriteriaJsonMarshaller {
             Integer durationSeconds = behaviorCriteria.getDurationSeconds();
             jsonWriter.name("durationSeconds");
             jsonWriter.value(durationSeconds);
+        }
+        if (behaviorCriteria.getConsecutiveDatapointsToAlarm() != null) {
+            Integer consecutiveDatapointsToAlarm = behaviorCriteria
+                    .getConsecutiveDatapointsToAlarm();
+            jsonWriter.name("consecutiveDatapointsToAlarm");
+            jsonWriter.value(consecutiveDatapointsToAlarm);
+        }
+        if (behaviorCriteria.getConsecutiveDatapointsToClear() != null) {
+            Integer consecutiveDatapointsToClear = behaviorCriteria
+                    .getConsecutiveDatapointsToClear();
+            jsonWriter.name("consecutiveDatapointsToClear");
+            jsonWriter.value(consecutiveDatapointsToClear);
+        }
+        if (behaviorCriteria.getStatisticalThreshold() != null) {
+            StatisticalThreshold statisticalThreshold = behaviorCriteria.getStatisticalThreshold();
+            jsonWriter.name("statisticalThreshold");
+            StatisticalThresholdJsonMarshaller.getInstance().marshall(statisticalThreshold,
+                    jsonWriter);
+        }
+        if (behaviorCriteria.getMlDetectionConfig() != null) {
+            MachineLearningDetectionConfig mlDetectionConfig = behaviorCriteria
+                    .getMlDetectionConfig();
+            jsonWriter.name("mlDetectionConfig");
+            MachineLearningDetectionConfigJsonMarshaller.getInstance().marshall(mlDetectionConfig,
+                    jsonWriter);
         }
         jsonWriter.endObject();
     }

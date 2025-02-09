@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.cognitoidentityprovider.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -80,6 +83,23 @@ public class CreateUserPoolClientRequestMarshaller implements
                         .getRefreshTokenValidity();
                 jsonWriter.name("RefreshTokenValidity");
                 jsonWriter.value(refreshTokenValidity);
+            }
+            if (createUserPoolClientRequest.getAccessTokenValidity() != null) {
+                Integer accessTokenValidity = createUserPoolClientRequest.getAccessTokenValidity();
+                jsonWriter.name("AccessTokenValidity");
+                jsonWriter.value(accessTokenValidity);
+            }
+            if (createUserPoolClientRequest.getIdTokenValidity() != null) {
+                Integer idTokenValidity = createUserPoolClientRequest.getIdTokenValidity();
+                jsonWriter.name("IdTokenValidity");
+                jsonWriter.value(idTokenValidity);
+            }
+            if (createUserPoolClientRequest.getTokenValidityUnits() != null) {
+                TokenValidityUnitsType tokenValidityUnits = createUserPoolClientRequest
+                        .getTokenValidityUnits();
+                jsonWriter.name("TokenValidityUnits");
+                TokenValidityUnitsTypeJsonMarshaller.getInstance().marshall(tokenValidityUnits,
+                        jsonWriter);
             }
             if (createUserPoolClientRequest.getReadAttributes() != null) {
                 java.util.List<String> readAttributes = createUserPoolClientRequest
@@ -192,6 +212,29 @@ public class CreateUserPoolClientRequestMarshaller implements
                 jsonWriter.name("AnalyticsConfiguration");
                 AnalyticsConfigurationTypeJsonMarshaller.getInstance().marshall(
                         analyticsConfiguration, jsonWriter);
+            }
+            if (createUserPoolClientRequest.getPreventUserExistenceErrors() != null) {
+                String preventUserExistenceErrors = createUserPoolClientRequest
+                        .getPreventUserExistenceErrors();
+                jsonWriter.name("PreventUserExistenceErrors");
+                jsonWriter.value(preventUserExistenceErrors);
+            }
+            if (createUserPoolClientRequest.getEnableTokenRevocation() != null) {
+                Boolean enableTokenRevocation = createUserPoolClientRequest
+                        .getEnableTokenRevocation();
+                jsonWriter.name("EnableTokenRevocation");
+                jsonWriter.value(enableTokenRevocation);
+            }
+            if (createUserPoolClientRequest.getEnablePropagateAdditionalUserContextData() != null) {
+                Boolean enablePropagateAdditionalUserContextData = createUserPoolClientRequest
+                        .getEnablePropagateAdditionalUserContextData();
+                jsonWriter.name("EnablePropagateAdditionalUserContextData");
+                jsonWriter.value(enablePropagateAdditionalUserContextData);
+            }
+            if (createUserPoolClientRequest.getAuthSessionValidity() != null) {
+                Integer authSessionValidity = createUserPoolClientRequest.getAuthSessionValidity();
+                jsonWriter.name("AuthSessionValidity");
+                jsonWriter.value(authSessionValidity);
             }
 
             jsonWriter.endObject();

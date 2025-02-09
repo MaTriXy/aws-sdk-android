@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,16 +21,24 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Gets information about a vocabulary. Note that vocabularies for en-AU, en-UK,
- * and fr-CA languages that are in preview are not available. In the console,
- * the vocabulary section will be greyed-out and SDK will return error message.
+ * Provides information about the specified custom vocabulary.
+ * </p>
+ * <p>
+ * To view the status of the specified custom vocabulary, check the
+ * <code>VocabularyState</code> field. If the status is <code>READY</code>, your
+ * custom vocabulary is available to use. If the status is <code>FAILED</code>,
+ * <code>FailureReason</code> provides details on why your custom vocabulary
+ * failed.
+ * </p>
+ * <p>
+ * To get a list of your custom vocabularies, use the operation.
  * </p>
  */
 public class GetVocabularyRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The name of the vocabulary to return information about. The name is
-     * case-sensitive.
+     * The name of the custom vocabulary you want information about. Custom
+     * vocabulary names are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -41,8 +49,8 @@ public class GetVocabularyRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The name of the vocabulary to return information about. The name is
-     * case-sensitive.
+     * The name of the custom vocabulary you want information about. Custom
+     * vocabulary names are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -50,8 +58,8 @@ public class GetVocabularyRequest extends AmazonWebServiceRequest implements Ser
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @return <p>
-     *         The name of the vocabulary to return information about. The name
-     *         is case-sensitive.
+     *         The name of the custom vocabulary you want information about.
+     *         Custom vocabulary names are case sensitive.
      *         </p>
      */
     public String getVocabularyName() {
@@ -60,8 +68,8 @@ public class GetVocabularyRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The name of the vocabulary to return information about. The name is
-     * case-sensitive.
+     * The name of the custom vocabulary you want information about. Custom
+     * vocabulary names are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -69,8 +77,8 @@ public class GetVocabularyRequest extends AmazonWebServiceRequest implements Ser
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param vocabularyName <p>
-     *            The name of the vocabulary to return information about. The
-     *            name is case-sensitive.
+     *            The name of the custom vocabulary you want information about.
+     *            Custom vocabulary names are case sensitive.
      *            </p>
      */
     public void setVocabularyName(String vocabularyName) {
@@ -79,8 +87,8 @@ public class GetVocabularyRequest extends AmazonWebServiceRequest implements Ser
 
     /**
      * <p>
-     * The name of the vocabulary to return information about. The name is
-     * case-sensitive.
+     * The name of the custom vocabulary you want information about. Custom
+     * vocabulary names are case sensitive.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -91,8 +99,8 @@ public class GetVocabularyRequest extends AmazonWebServiceRequest implements Ser
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param vocabularyName <p>
-     *            The name of the vocabulary to return information about. The
-     *            name is case-sensitive.
+     *            The name of the custom vocabulary you want information about.
+     *            Custom vocabulary names are case sensitive.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

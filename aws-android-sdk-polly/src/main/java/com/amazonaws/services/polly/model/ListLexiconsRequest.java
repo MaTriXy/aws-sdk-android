@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Returns a list of pronunciation lexicons stored in an AWS Region. For more
- * information, see <a
- * href="http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+ * Returns a list of pronunciation lexicons stored in an Amazon Web Services
+ * Region. For more information, see <a
+ * href="https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
  * >Managing Lexicons</a>.
  * </p>
  */
@@ -34,6 +34,9 @@ public class ListLexiconsRequest extends AmazonWebServiceRequest implements Seri
      * <code>ListLexicons</code> operation. If present, indicates where to
      * continue the list of lexicons.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      */
     private String nextToken;
 
@@ -43,6 +46,9 @@ public class ListLexiconsRequest extends AmazonWebServiceRequest implements Seri
      * <code>ListLexicons</code> operation. If present, indicates where to
      * continue the list of lexicons.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      *
      * @return <p>
      *         An opaque pagination token returned from previous
@@ -60,6 +66,9 @@ public class ListLexiconsRequest extends AmazonWebServiceRequest implements Seri
      * <code>ListLexicons</code> operation. If present, indicates where to
      * continue the list of lexicons.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      *
      * @param nextToken <p>
      *            An opaque pagination token returned from previous
@@ -80,6 +89,9 @@ public class ListLexiconsRequest extends AmazonWebServiceRequest implements Seri
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 4096<br/>
      *
      * @param nextToken <p>
      *            An opaque pagination token returned from previous

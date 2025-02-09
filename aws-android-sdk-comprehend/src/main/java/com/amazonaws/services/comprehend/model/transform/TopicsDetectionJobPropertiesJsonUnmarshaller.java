@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ class TopicsDetectionJobPropertiesJsonUnmarshaller implements
             if (name.equals("JobId")) {
                 topicsDetectionJobProperties.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                topicsDetectionJobProperties.setJobArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobName")) {
                 topicsDetectionJobProperties.setJobName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -66,6 +69,16 @@ class TopicsDetectionJobPropertiesJsonUnmarshaller implements
             } else if (name.equals("NumberOfTopics")) {
                 topicsDetectionJobProperties.setNumberOfTopics(IntegerJsonUnmarshaller
                         .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("DataAccessRoleArn")) {
+                topicsDetectionJobProperties.setDataAccessRoleArn(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                topicsDetectionJobProperties.setVolumeKmsKeyId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                topicsDetectionJobProperties.setVpcConfig(VpcConfigJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

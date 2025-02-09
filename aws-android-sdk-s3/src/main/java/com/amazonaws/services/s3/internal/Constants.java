@@ -28,14 +28,28 @@ import com.amazonaws.logging.LogFactory;
  */
 public class Constants {
 
+    /** Prefix for the S3 service endpoint */
+    public static final String S3_ENDPOINT_PREFIX = "s3";
     /** Default hostname for the S3 service endpoint */
     public static final String S3_HOSTNAME = "s3.amazonaws.com";
     /** Hostname for the s3-external-1 service endpoint */
     public static final String S3_EXTERNAL_1_HOSTNAME = "s3-external-1.amazonaws.com";
     /** Service hostname for accessing accelerated S3 buckets */
     public static final String S3_ACCELERATE_HOSTNAME = "s3-accelerate.amazonaws.com";
+    /** Service hostname for accessing dualstack S3 buckets; format argument is the region */
+    public static final String S3_DUALSTACK_HOSTNAME = "s3.dualstack.%s.amazonaws.com";
     /** Service hostname for accessing dualstack accelerated S3 buckets */
     public static final String S3_ACCELERATE_DUALSTACK_HOSTNAME = "s3-accelerate.dualstack.amazonaws.com";
+
+    /** Parameter name to indicate permission to dangerously connect to HTTP endpoint */
+    public static final String LOCAL_TESTING_FLAG_NAME = "DangerouslyConnectToHTTPEndpointForTesting";
+
+    /**
+     * Default endpoint for the local S3 storage testing
+     *
+     * Android emulator uses 10.0.2.2 to connect to localhost instead of 127.0.0.1 (reserved for emulator itself)
+     */
+    public static final String LOCAL_TESTING_ENDPOINT = "http://10.0.2.2:20005";
 
     /** Dualstack qualifier for S3 */
     public static final String S3_DUALSTACK_QUALIFIER = "dualstack";

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The filter specified for the <code>ListDocumentClassificationJobs</code>
- * operation is invalid. Specify a different filter.
+ * The filter specified for the operation is invalid. Specify a different
+ * filter.
  * </p>
  */
 public class InvalidFilterException extends AmazonServiceException {

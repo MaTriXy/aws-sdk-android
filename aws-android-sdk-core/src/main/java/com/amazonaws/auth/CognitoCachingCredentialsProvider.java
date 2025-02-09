@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2011-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
 package com.amazonaws.auth;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.amazonaws.ClientConfiguration;
+import com.amazonaws.internal.keyvaluestore.AWSKeyValueStore;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentityClient;
@@ -77,30 +78,39 @@ import java.util.Map;
 public class CognitoCachingCredentialsProvider
         extends CognitoCredentialsProvider {
 
-    private final String DEFAULT_SHAREDPREFERENCES_NAME = "com.amazonaws.android.auth";
     private static final String USER_AGENT = CognitoCachingCredentialsProvider.class.getName()
             + "/" + VersionInfoUtils.getVersion();
-    private final SharedPreferences prefs;
-    private String identityId;
+    private static final Log LOG = LogFactory.getLog(CognitoCachingCredentialsProvider.class);
 
-    private static final String ID_KEY = "identityId";
-    private static final String AK_KEY = "accessKey";
-    private static final String SK_KEY = "secretKey";
-    private static final String ST_KEY = "sessionToken";
-    private static final String EXP_KEY = "expirationDate";
+    private static final String AWS_KEY_VALUE_STORE_NAMESPACE_IDENTIFIER;
+    private static final String ID_KEY;
+    private static final String AK_KEY;
+    private static final String SK_KEY;
+    private static final String ST_KEY;
+    private static final String EXP_KEY;
+
+    static {
+        AWS_KEY_VALUE_STORE_NAMESPACE_IDENTIFIER = "com.amazonaws.android.auth";
+        ID_KEY = "identityId";
+        AK_KEY = "accessKey";
+        SK_KEY = "secretKey";
+        ST_KEY = "sessionToken";
+        EXP_KEY = "expirationDate";
+    }
 
     volatile boolean needIdentityRefresh = false;
-
-    private static final String TAG = "CognitoCachingCredentialsProvider";
-
+    AWSKeyValueStore awsKeyValueStore;
+    private String identityId;
     private final IdentityChangedListener listener = new IdentityChangedListener() {
         @Override
         public void identityChanged(String oldIdentityId, String newIdentityId) {
-            Log.d(TAG, "Identity id is changed");
+            LOG.debug("Identity id is changed");
             saveIdentityId(newIdentityId);
             clearCredentials();
         }
     };
+    private boolean isPersistenceEnabled = true;
+    private String userAgentOverride;
 
     /**
      * Constructs a new {@link CognitoCachingCredentialsProvider}, which will
@@ -124,9 +134,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -158,9 +166,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -187,9 +193,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -229,9 +233,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -265,9 +267,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -303,9 +303,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -330,9 +328,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -358,9 +354,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -392,9 +386,7 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
     /**
@@ -428,12 +420,16 @@ public class CognitoCachingCredentialsProvider
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }
-        this.prefs = context.getSharedPreferences(DEFAULT_SHAREDPREFERENCES_NAME,
-                Context.MODE_PRIVATE);
-        initialize();
+        initialize(context);
     }
 
-    private void initialize() {
+    /**
+     * @param context the Android application context
+     */
+    private void initialize(Context context) {
+        awsKeyValueStore = new AWSKeyValueStore(context,
+                AWS_KEY_VALUE_STORE_NAMESPACE_IDENTIFIER,
+                isPersistenceEnabled);
         checkUpgrade();
         this.identityId = getCachedIdentityId();
         loadCachedCredentials();
@@ -472,7 +468,7 @@ public class CognitoCachingCredentialsProvider
     public AWSSessionCredentials getCredentials() {
     	credentialsLock.writeLock().lock();
         try {
-        	// return only if the credentials are valid
+            // return only if the credentials are valid
         	if (sessionCredentials == null) {
         		loadCachedCredentials();
         	}
@@ -482,6 +478,7 @@ public class CognitoCachingCredentialsProvider
         	}
         	// super will validate loaded credentials
         	// and fetch if necessary
+            LOG.debug("Making a network call to fetch credentials.");
         	super.getCredentials();
 
         	// null check before saving credentials
@@ -491,7 +488,7 @@ public class CognitoCachingCredentialsProvider
         	}
         	return sessionCredentials;
         } catch (NotAuthorizedException e) {
-            Log.e(TAG, "Failure to get credentials", e);
+            LOG.error("Failure to get credentials", e);
             if (getLogins() != null) {
                 // If the fetch failed then the credentials don't
                 // match the current id, so clear them
@@ -547,7 +544,9 @@ public class CognitoCachingCredentialsProvider
         super.clear();
 
         // clear cached identity id and credentials
-        prefs.edit().clear().apply();
+        if (awsKeyValueStore != null) {
+            awsKeyValueStore.clear();
+        }
     }
 
     /*
@@ -560,13 +559,11 @@ public class CognitoCachingCredentialsProvider
     	credentialsLock.writeLock().lock();
     	try {
 	        super.clearCredentials();
-	        Log.d(TAG, "Clearing credentials from SharedPreferences");
-	        prefs.edit()
-	                .remove(namespace(AK_KEY))
-	                .remove(namespace(SK_KEY))
-	                .remove(namespace(ST_KEY))
-	                .remove(namespace(EXP_KEY))
-	                .apply();
+            LOG.debug("Clearing credentials from SharedPreferences");
+            awsKeyValueStore.remove(namespace(AK_KEY));
+            awsKeyValueStore.remove(namespace(SK_KEY));
+            awsKeyValueStore.remove(namespace(ST_KEY));
+            awsKeyValueStore.remove(namespace(EXP_KEY));
     	} finally {
     		credentialsLock.writeLock().unlock();
     	}
@@ -578,7 +575,7 @@ public class CognitoCachingCredentialsProvider
      * @return cached identity id, null if it doesn't exist
      */
     public String getCachedIdentityId() {
-        String cachedIdentityId = prefs.getString(namespace(ID_KEY), null);
+        String cachedIdentityId = awsKeyValueStore.get(namespace(ID_KEY));
         if (cachedIdentityId != null && identityId == null) {
             super.setIdentityId(cachedIdentityId);
         }
@@ -588,57 +585,87 @@ public class CognitoCachingCredentialsProvider
     /**
      * Load the credentials from prefs
      */
-    void loadCachedCredentials() {
-        Log.d(TAG, "Loading credentials from SharedPreferences");
-        sessionCredentialsExpiration = new Date(prefs.getLong(namespace(EXP_KEY), 0));
-        // make sure we have valid data in prefs
-        boolean hasAK = prefs.contains(namespace(AK_KEY));
-        boolean hasSK = prefs.contains(namespace(SK_KEY));
-        boolean hasST = prefs.contains(namespace(ST_KEY));
-        if (!hasAK || !hasSK || !hasST) {
-            Log.d(TAG, "No valid credentials found in SharedPreferences");
+    private void loadCachedCredentials() {
+        LOG.debug("Loading credentials from SharedPreferences");
+
+        // Expire the credentials if the expiration key is not present or if the
+        // expiration key is tampered or not parseable into a date format.
+        final String expirationKeyInString = awsKeyValueStore.get(namespace(EXP_KEY));
+        if (expirationKeyInString != null) {
+            try {
+                long expirationKeyInLong = Long.parseLong(expirationKeyInString);
+                sessionCredentialsExpiration = new Date(expirationKeyInLong);
+            } catch (NumberFormatException longNotParsed) {
+                sessionCredentialsExpiration = null;
+                return;
+            }
+        } else {
             sessionCredentialsExpiration = null;
             return;
         }
-        String AK = prefs.getString(namespace(AK_KEY), null);
-        String SK = prefs.getString(namespace(SK_KEY), null);
-        String ST = prefs.getString(namespace(ST_KEY), null);
 
-        sessionCredentials = new BasicSessionCredentials(AK, SK, ST);
+        if (!hasCredentials()) {
+            sessionCredentialsExpiration = null;
+            return;
+        }
+
+        final String accessKey = awsKeyValueStore.get(namespace(AK_KEY));
+        final String secretAccessKey = awsKeyValueStore.get(namespace(SK_KEY));
+        final String sessionToken = awsKeyValueStore.get(namespace(ST_KEY));
+        if (accessKey == null || secretAccessKey == null || sessionToken == null) {
+            LOG.debug("No valid credentials found in SharedPreferences");
+            sessionCredentialsExpiration = null;
+            return;
+        }
+        sessionCredentials = new BasicSessionCredentials(accessKey, secretAccessKey, sessionToken);
+    }
+
+    private boolean hasCredentials() {
+        final boolean hasAccessKey = awsKeyValueStore.contains(namespace(AK_KEY));
+        final boolean hasSecretKey = awsKeyValueStore.contains(namespace(SK_KEY));
+        final boolean hasSessionToken = awsKeyValueStore.contains(namespace(ST_KEY));
+
+        if (hasAccessKey || hasSecretKey || hasSessionToken) {
+            LOG.debug("No valid credentials found in SharedPreferences");
+            return true;
+        }
+        return false;
     }
 
     /**
      * Save the credentials to {@link android.content.SharedPreferences}.
      */
-    private void saveCredentials(AWSSessionCredentials sessionCredentials,
-            long time) {
-        Log.d(TAG, "Saving credentials to SharedPreferences");
+    private void saveCredentials(final AWSSessionCredentials sessionCredentials, final long time) {
+        LOG.debug("Saving credentials to SharedPreferences");
         if (sessionCredentials != null) {
-            prefs.edit()
-                    .putString(namespace(AK_KEY), sessionCredentials.getAWSAccessKeyId())
-                    .putString(namespace(SK_KEY), sessionCredentials.getAWSSecretKey())
-                    .putString(namespace(ST_KEY), sessionCredentials.getSessionToken())
-                    .putLong(namespace(EXP_KEY), time)
-                    .apply();
+            awsKeyValueStore.put(namespace(AK_KEY), sessionCredentials.getAWSAccessKeyId());
+            awsKeyValueStore.put(namespace(SK_KEY), sessionCredentials.getAWSSecretKey());
+            awsKeyValueStore.put(namespace(ST_KEY), sessionCredentials.getSessionToken());
+            awsKeyValueStore.put(namespace(EXP_KEY), String.valueOf(time));
         }
     }
 
     /**
-     * clear cached identity id and credentials Save the Amazon Cognito Identity
-     * Id to {@link android.content.SharedPreferences}.
+     * Clear cached identity id and credentials.
+     * Save the Amazon Cognito Identity Id to
+     * {@link android.content.SharedPreferences}.
+     *
+     * @param identityId the Cognito Identity Id
      */
     private void saveIdentityId(String identityId) {
-        Log.d(TAG, "Saving identity id to SharedPreferences");
+        LOG.debug("Saving identity id to SharedPreferences");
         this.identityId = identityId;
 
-        prefs.edit()
-                .putString(namespace(ID_KEY), identityId)
-                .apply();
+        awsKeyValueStore.put(namespace(ID_KEY), identityId);
     }
 
     @Override
     protected String getUserAgent() {
-        return USER_AGENT;
+        if (userAgentOverride != null) {
+            return userAgentOverride;
+        } else {
+            return USER_AGENT;
+        }
     }
 
     // To support multiple identity pools in the same app, namespacing the keys
@@ -648,19 +675,39 @@ public class CognitoCachingCredentialsProvider
     // namespace.
     private void checkUpgrade() {
         // check identity id without namespace
-        if (prefs.contains(ID_KEY)) {
-            Log.i(TAG,
-                    "Identity id without namespace is detected. It will be saved under new namespace.");
+        if (awsKeyValueStore.contains(ID_KEY)) {
+            LOG.info("Identity id without namespace is detected. It will be saved under new namespace.");
             // save identity id
-            String identityId = prefs.getString(ID_KEY, null);
-            prefs.edit().clear() // clear old data
-                    .putString(namespace(ID_KEY), identityId)
-                    .apply();
+            String identityId = awsKeyValueStore.get(ID_KEY);
+            awsKeyValueStore.clear();
+            awsKeyValueStore.put(namespace(ID_KEY), identityId);
         }
     }
 
     // prefix the key with identity pool id
     private String namespace(String key) {
         return getIdentityPoolId() + "." + key;
+    }
+
+    /**
+     * Set the flag that determines if the credentials and identityId
+     * will be stored in memory or SharedPreferences.
+     *
+     * @param isPersistenceEnabled flag that indicates if the
+     *                         credentials need to be persisted or not
+     */
+    public void setPersistenceEnabled(boolean isPersistenceEnabled) {
+        this.isPersistenceEnabled = isPersistenceEnabled;
+        this.awsKeyValueStore.setPersistenceEnabled(isPersistenceEnabled);
+    }
+
+    /**
+     * The user agent string is sometimes combined with other strings. If this property is set, it instructs the
+     * client to only use this as the full user agent string.
+     *
+     * @param userAgentOverride The string to use as the full user agent when sending requests.
+     */
+    public void setUserAgentOverride(String userAgentOverride) {
+        this.userAgentOverride = userAgentOverride;
     }
 }

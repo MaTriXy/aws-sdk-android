@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,9 @@ import java.io.Serializable;
 public class RespondToAuthChallengeResult implements Serializable {
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -37,11 +39,10 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If the caller must pass another challenge, they return a
+     * session with other challenge parameters. This session should be passed as
+     * it is to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -51,7 +52,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. For more information, see .
+     * The challenge parameters. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      */
     private java.util.Map<String, String> challengeParameters;
@@ -66,7 +69,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -75,7 +80,9 @@ public class RespondToAuthChallengeResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @return <p>
-     *         The challenge name. For more information, see .
+     *         The challenge name. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *         >InitiateAuth</a>.
      *         </p>
      * @see ChallengeNameType
      */
@@ -85,7 +92,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -94,7 +103,9 @@ public class RespondToAuthChallengeResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *            >InitiateAuth</a>.
      *            </p>
      * @see ChallengeNameType
      */
@@ -104,7 +115,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -116,7 +129,9 @@ public class RespondToAuthChallengeResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *            >InitiateAuth</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -129,7 +144,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -138,7 +155,9 @@ public class RespondToAuthChallengeResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *            >InitiateAuth</a>.
      *            </p>
      * @see ChallengeNameType
      */
@@ -148,7 +167,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -160,7 +181,9 @@ public class RespondToAuthChallengeResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *            >InitiateAuth</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -173,20 +196,18 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If the caller must pass another challenge, they return a
+     * session with other challenge parameters. This session should be passed as
+     * it is to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         The session which should be passed both ways in
-     *         challenge-response calls to the service. If the or API call
-     *         determines that the caller needs to go through another challenge,
+     *         The session that should be passed both ways in challenge-response
+     *         calls to the service. If the caller must pass another challenge,
      *         they return a session with other challenge parameters. This
      *         session should be passed as it is to the next
      *         <code>RespondToAuthChallenge</code> API call.
@@ -198,23 +219,21 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If the caller must pass another challenge, they return a
+     * session with other challenge parameters. This session should be passed as
+     * it is to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
-     *            challenge-response calls to the service. If the or API call
-     *            determines that the caller needs to go through another
-     *            challenge, they return a session with other challenge
-     *            parameters. This session should be passed as it is to the next
-     *            <code>RespondToAuthChallenge</code> API call.
+     *            The session that should be passed both ways in
+     *            challenge-response calls to the service. If the caller must
+     *            pass another challenge, they return a session with other
+     *            challenge parameters. This session should be passed as it is
+     *            to the next <code>RespondToAuthChallenge</code> API call.
      *            </p>
      */
     public void setSession(String session) {
@@ -223,11 +242,10 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If the caller must pass another challenge, they return a
+     * session with other challenge parameters. This session should be passed as
+     * it is to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -237,12 +255,11 @@ public class RespondToAuthChallengeResult implements Serializable {
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
-     *            challenge-response calls to the service. If the or API call
-     *            determines that the caller needs to go through another
-     *            challenge, they return a session with other challenge
-     *            parameters. This session should be passed as it is to the next
-     *            <code>RespondToAuthChallenge</code> API call.
+     *            The session that should be passed both ways in
+     *            challenge-response calls to the service. If the caller must
+     *            pass another challenge, they return a session with other
+     *            challenge parameters. This session should be passed as it is
+     *            to the next <code>RespondToAuthChallenge</code> API call.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -254,11 +271,15 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. For more information, see .
+     * The challenge parameters. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      *
      * @return <p>
-     *         The challenge parameters. For more information, see .
+     *         The challenge parameters. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *         >InitiateAuth</a>.
      *         </p>
      */
     public java.util.Map<String, String> getChallengeParameters() {
@@ -267,11 +288,15 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. For more information, see .
+     * The challenge parameters. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      *
      * @param challengeParameters <p>
-     *            The challenge parameters. For more information, see .
+     *            The challenge parameters. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *            >InitiateAuth</a>.
      *            </p>
      */
     public void setChallengeParameters(java.util.Map<String, String> challengeParameters) {
@@ -280,14 +305,18 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. For more information, see .
+     * The challenge parameters. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param challengeParameters <p>
-     *            The challenge parameters. For more information, see .
+     *            The challenge parameters. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     *            >InitiateAuth</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -300,7 +329,9 @@ public class RespondToAuthChallengeResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. For more information, see .
+     * The challenge parameters. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html"
+     * >InitiateAuth</a>.
      * </p>
      * <p>
      * The method adds a new key-value pair into ChallengeParameters parameter,

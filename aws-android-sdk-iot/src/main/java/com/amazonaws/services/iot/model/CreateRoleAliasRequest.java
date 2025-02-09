@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Creates a role alias.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreateRoleAlias</a> action.
  * </p>
  */
 public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements Serializable {
@@ -49,13 +54,38 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * How long (in seconds) the credentials will be valid.
+     * How long (in seconds) the credentials will be valid. The default value is
+     * 3,600 seconds.
+     * </p>
+     * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      */
     private Integer credentialDurationSeconds;
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the role alias.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
@@ -176,14 +206,24 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * How long (in seconds) the credentials will be valid.
+     * How long (in seconds) the credentials will be valid. The default value is
+     * 3,600 seconds.
+     * </p>
+     * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @return <p>
-     *         How long (in seconds) the credentials will be valid.
+     *         How long (in seconds) the credentials will be valid. The default
+     *         value is 3,600 seconds.
+     *         </p>
+     *         <p>
+     *         This value must be less than or equal to the maximum session
+     *         duration of the IAM role that the role alias references.
      *         </p>
      */
     public Integer getCredentialDurationSeconds() {
@@ -192,14 +232,24 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * How long (in seconds) the credentials will be valid.
+     * How long (in seconds) the credentials will be valid. The default value is
+     * 3,600 seconds.
+     * </p>
+     * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @param credentialDurationSeconds <p>
-     *            How long (in seconds) the credentials will be valid.
+     *            How long (in seconds) the credentials will be valid. The
+     *            default value is 3,600 seconds.
+     *            </p>
+     *            <p>
+     *            This value must be less than or equal to the maximum session
+     *            duration of the IAM role that the role alias references.
      *            </p>
      */
     public void setCredentialDurationSeconds(Integer credentialDurationSeconds) {
@@ -208,23 +258,215 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * How long (in seconds) the credentials will be valid.
+     * How long (in seconds) the credentials will be valid. The default value is
+     * 3,600 seconds.
+     * </p>
+     * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @param credentialDurationSeconds <p>
-     *            How long (in seconds) the credentials will be valid.
+     *            How long (in seconds) the credentials will be valid. The
+     *            default value is 3,600 seconds.
+     *            </p>
+     *            <p>
+     *            This value must be less than or equal to the maximum session
+     *            duration of the IAM role that the role alias references.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public CreateRoleAliasRequest withCredentialDurationSeconds(Integer credentialDurationSeconds) {
         this.credentialDurationSeconds = credentialDurationSeconds;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the role alias.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @return <p>
+     *         Metadata which can be used to manage the role alias.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         For URI Request parameters use format:
+     *         ...key1=value1&amp;key2=value2...
+     *         </p>
+     *         <p>
+     *         For the CLI command-line parameter use format: &amp;&amp;tags
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         <p>
+     *         For the cli-input-json file use format: "tags":
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         </note>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the role alias.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the role alias.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the role alias.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the role alias.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateRoleAliasRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the role alias.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the role alias.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateRoleAliasRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
         return this;
     }
 
@@ -244,7 +486,9 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
         if (getRoleArn() != null)
             sb.append("roleArn: " + getRoleArn() + ",");
         if (getCredentialDurationSeconds() != null)
-            sb.append("credentialDurationSeconds: " + getCredentialDurationSeconds());
+            sb.append("credentialDurationSeconds: " + getCredentialDurationSeconds() + ",");
+        if (getTags() != null)
+            sb.append("tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -260,6 +504,7 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
                 * hashCode
                 + ((getCredentialDurationSeconds() == null) ? 0 : getCredentialDurationSeconds()
                         .hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -288,6 +533,10 @@ public class CreateRoleAliasRequest extends AmazonWebServiceRequest implements S
             return false;
         if (other.getCredentialDurationSeconds() != null
                 && other.getCredentialDurationSeconds().equals(this.getCredentialDurationSeconds()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

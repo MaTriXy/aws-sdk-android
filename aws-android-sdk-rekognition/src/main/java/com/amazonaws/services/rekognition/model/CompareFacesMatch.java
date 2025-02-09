@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * <p>
  * Provides information about a face in a target image that matches the source
- * image face analysed by <code>CompareFaces</code>. The <code>Face</code>
+ * image face analyzed by <code>CompareFaces</code>. The <code>Face</code>
  * property contains the bounding box of the face in the target image. The
  * <code>Similarity</code> property is the confidence that the source image face
  * matches the face in the bounding box.
@@ -33,7 +33,7 @@ public class CompareFacesMatch implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float similarity;
 
@@ -51,7 +51,7 @@ public class CompareFacesMatch implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Level of confidence that the faces match.
@@ -67,7 +67,7 @@ public class CompareFacesMatch implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param similarity <p>
      *            Level of confidence that the faces match.
@@ -86,7 +86,7 @@ public class CompareFacesMatch implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param similarity <p>
      *            Level of confidence that the faces match.

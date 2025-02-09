@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,18 +43,50 @@ import com.amazonaws.services.simpleemail.model.transform.*;
  * href="https://aws.amazon.com/ses/">Amazon Simple Email Service</a> (Amazon
  * SES) API, version 2010-12-01. This document is best used in conjunction with
  * the <a
- * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html"
+ * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html"
  * >Amazon SES Developer Guide</a>.
  * </p>
  * <note>
  * <p>
  * For a list of Amazon SES endpoints to use in service requests, see <a
- * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/regions.html"
+ * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/regions.html"
  * >Regions and Amazon SES</a> in the <a
- * href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html"
+ * href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html"
  * >Amazon SES Developer Guide</a>.
  * </p>
  * </note>
+ * <p>
+ * This documentation contains reference information related to the following:
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/ses/latest/APIReference/API_Operations.html"
+ * >Amazon SES API Actions</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href="https://docs.aws.amazon.com/ses/latest/APIReference/API_Types.html">
+ * Amazon SES API Data Types</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/ses/latest/APIReference/CommonParameters.html"
+ * >Common Parameters</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/ses/latest/APIReference/CommonErrors.html"
+ * >Common Errors</a>
+ * </p>
+ * </li>
+ * </ul>
  */
 public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient implements
         AmazonSimpleEmailService {
@@ -116,16 +148,28 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * Constructs a new client to invoke service methods on
      * AmazonSimpleEmailService using the specified AWS account credentials.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(AWSMobileClient
+     *                 .getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -142,16 +186,28 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * AmazonSimpleEmailService using the specified AWS account credentials and
      * client configuration options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided in this constructor. Static AWSCredentials can be passed for
+     * quick testing. However, it is strongly recommended to use Amazon Cognito
+     * vended temporary credentials for use in production. This can be achieved
+     * by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(AWSMobileClient
+     *                 .getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -172,16 +228,28 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * AmazonSimpleEmailService using the specified AWS account credentials
      * provider.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(AWSMobileClient
+     *                 .getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -199,16 +267,28 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * AmazonSimpleEmailService using the specified AWS account credentials
      * provider and client configuration options.
      * <p>
-     * If AWS session credentials are passed in, then those credentials will be
-     * used to authenticate requests. Otherwise, if AWS long-term credentials
-     * are passed in, then session management will be handled automatically by
-     * the SDK. Callers are encouraged to use long-term credentials and let the
-     * SDK handle starting and renewing sessions.
-     * <p>
-     * Automatically managed sessions will be shared among all clients that use
-     * the same credentials and service endpoint. To opt out of this behavior,
-     * explicitly provide an instance of {@link AWSCredentialsProvider} that
-     * returns {@link AWSSessionCredentials}.
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(AWSMobileClient
+     *                 .getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
      * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
@@ -257,6 +337,29 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * AmazonSimpleEmailService using the specified AWS account credentials
      * provider, client configuration options and request metric collector.
      * <p>
+     * The client requests are authenticated using the {@link AWSCredentials}
+     * provided by the {@link AWSCredentialsProvider}. Static AWSCredentials can
+     * be passed for quick testing. However, it is strongly recommended to use
+     * Amazon Cognito vended temporary credentials for use in production. This
+     * can be achieved by using {@link AWSMobileClient}. Please see
+     * https://aws-amplify.github.io/docs/android/authentication for
+     * instructions on how to enable {@link AWSMobileClient}.
+     *
+     * <pre>
+     * AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback&lt;UserStateDetails&gt;() {
+     *     &#064;Override
+     *     public void onResult(final UserStateDetails details) {
+     *         AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(AWSMobileClient
+     *                 .getInstance());
+     *     }
+     * 
+     *     &#064;Override
+     *     public void onError(final Exception e) {
+     *         e.printStackTrace();
+     *     }
+     * });
+     * </pre>
+     * <p>
      * All service calls made using this new client object are blocking, and
      * will not return until the service call completes.
      *
@@ -295,6 +398,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
         exceptionUnmarshallers.add(new FromEmailAddressNotVerifiedExceptionUnmarshaller());
         exceptionUnmarshallers.add(new InvalidCloudWatchDestinationExceptionUnmarshaller());
         exceptionUnmarshallers.add(new InvalidConfigurationSetExceptionUnmarshaller());
+        exceptionUnmarshallers.add(new InvalidDeliveryOptionsExceptionUnmarshaller());
         exceptionUnmarshallers.add(new InvalidFirehoseDestinationExceptionUnmarshaller());
         exceptionUnmarshallers.add(new InvalidLambdaFunctionExceptionUnmarshaller());
         exceptionUnmarshallers.add(new InvalidPolicyExceptionUnmarshaller());
@@ -341,7 +445,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about setting up rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-receipt-rule-set.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html#receiving-email-concepts-rules"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -352,7 +456,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to create a receipt rule set by cloning
      *            an existing one. You use receipt rule sets to receive email
      *            with Amazon SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return cloneReceiptRuleSetResult The response from the
@@ -398,7 +502,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * Configuration sets enable you to publish email sending events. For
      * information about using configuration sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -410,7 +514,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Configuration sets enable you to publish email sending events.
      *            For information about using configuration sets, see the <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return createConfigurationSetResult The response from the
@@ -461,10 +565,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * </note>
      * <p>
-     * An event destination is the AWS service to which Amazon SES publishes the
-     * email sending events associated with a configuration set. For information
-     * about using configuration sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * An event destination is the Amazon Web Services service to which Amazon
+     * SES publishes the email sending events associated with a configuration
+     * set. For information about using configuration sets, see the <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -475,10 +579,11 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to create a configuration set event
      *            destination. A configuration set event destination, which can
      *            be either Amazon CloudWatch or Amazon Kinesis Firehose,
-     *            describes an AWS service in which Amazon SES publishes the
-     *            email sending events associated with a configuration set. For
-     *            information about using configuration sets, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            describes an Amazon Web Services service in which Amazon SES
+     *            publishes the email sending events associated with a
+     *            configuration set. For information about using configuration
+     *            sets, see the <a href=
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return createConfigurationSetEventDestinationResult The response from
@@ -531,7 +636,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * hosted on domains operated by Amazon SES. You can configure a subdomain
      * of your own to handle these events. For information about using custom
      * domains, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/configure-custom-open-click-domains.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -583,7 +688,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about custom verification email templates, see <a
      * href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      * >Using Custom Verification Email Templates</a> in the <i>Amazon SES
      * Developer Guide</i>.
      * </p>
@@ -633,7 +738,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about setting up IP address filters, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-ip-filters.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-ip-filtering-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -644,7 +749,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to create a new IP address filter. You
      *            use IP address filters when you receive email with Amazon SES.
      *            For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return createReceiptFilterResult The response from the
@@ -688,7 +793,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about setting up receipt rules, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-receipt-rules.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -699,7 +804,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to create a receipt rule. You use receipt
      *            rules to receive email with Amazon SES. For more information,
      *            see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return createReceiptRuleResult The response from the CreateReceiptRule
@@ -746,7 +851,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about setting up receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-receipt-rule-set.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html#receiving-email-concepts-rules"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -757,7 +862,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to create an empty receipt rule set. You
      *            use receipt rule sets to receive email with Amazon SES. For
      *            more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return createReceiptRuleSetResult The response from the
@@ -798,9 +903,9 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Creates an email template. Email templates enable you to send
-     * personalized email to one or more destinations in a single API operation.
-     * For more information, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     * personalized email to one or more destinations in a single operation. For
+     * more information, see the <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -810,7 +915,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * @param createTemplateRequest <p>
      *            Represents a request to create an email template. For more
      *            information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return createTemplateResult The response from the CreateTemplate service
@@ -850,7 +955,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * Deletes a configuration set. Configuration sets enable you to publish
      * email sending events. For information about using configuration sets, see
      * the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -862,7 +967,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Configuration sets enable you to publish email sending events.
      *            For information about using configuration sets, see the <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteConfigurationSetResult The response from the
@@ -905,7 +1010,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * destinations are associated with configuration sets, which enable you to
      * publish email sending events. For information about using configuration
      * sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -918,7 +1023,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            associated with configuration sets, which enable you to
      *            publish email sending events. For information about using
      *            configuration sets, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteConfigurationSetEventDestinationResult The response from
@@ -967,12 +1072,12 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * hosted on domains operated by Amazon SES. You can configure a subdomain
      * of your own to handle these events. For information about using custom
      * domains, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/configure-custom-open-click-domains.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <note>
      * <p>
-     * Deleting this kind of association will result in emails sent using the
+     * Deleting this kind of association results in emails sent using the
      * specified configuration set to capture open and click events using the
      * standard, Amazon SES-operated domains.
      * </p>
@@ -1025,7 +1130,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about custom verification email templates, see <a
      * href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      * >Using Custom Verification Email Templates</a> in the <i>Amazon SES
      * Developer Guide</i>.
      * </p>
@@ -1110,20 +1215,20 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Deletes the specified sending authorization policy for the given identity
-     * (an email address or a domain). This API returns successfully even if a
-     * policy with the specified name does not exist.
+     * (an email address or a domain). This operation returns successfully even
+     * if a policy with the specified name does not exist.
      * </p>
      * <note>
      * <p>
-     * This API is for the identity owner only. If you have not verified the
-     * identity, this API will return an error.
+     * This operation is for the identity owner only. If you have not verified
+     * the identity, it returns an error.
      * </p>
      * </note>
      * <p>
      * Sending authorization is a feature that enables an identity owner to
      * authorize other senders to use its identities. For information about
      * using sending authorization, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1135,7 +1240,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            for an identity. Sending authorization is an Amazon SES
      *            feature that enables you to authorize other senders to use
      *            your identities. For information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteIdentityPolicyResult The response from the
@@ -1177,7 +1282,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about managing IP address filters, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-ip-filters.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-ip-filtering-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1188,7 +1293,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to delete an IP address filter. You use
      *            IP address filters when you receive email with Amazon SES. For
      *            more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteReceiptFilterResult The response from the
@@ -1230,7 +1335,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about managing receipt rules, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rules.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1241,7 +1346,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to delete a receipt rule. You use receipt
      *            rules to receive email with Amazon SES. For more information,
      *            see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteReceiptRuleResult The response from the DeleteReceiptRule
@@ -1288,7 +1393,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </note>
      * <p>
      * For information about managing receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rule-sets.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1300,7 +1405,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            the receipt rules it contains. You use receipt rule sets to
      *            receive email with Amazon SES. For more information, see the
      *            <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteReceiptRuleSetResult The response from the
@@ -1348,7 +1453,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * @param deleteTemplateRequest <p>
      *            Represents a request to delete an email template. For more
      *            information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return deleteTemplateResult The response from the DeleteTemplate service
@@ -1388,8 +1493,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * 
      * @param deleteVerifiedEmailAddressRequest <p>
      *            Represents a request to delete an email address from the list
-     *            of email addresses you have attempted to verify under your AWS
-     *            account.
+     *            of email addresses you have attempted to verify under your
+     *            Amazon Web Services account.
      *            </p>
      * @throws AmazonClientException If any internal errors are encountered
      *             inside the client while attempting to make the request or
@@ -1426,7 +1531,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about setting up receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-receipt-rule-set.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html#receiving-email-concepts-rules"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1438,7 +1543,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            for the receipt rule set that is currently active. You use
      *            receipt rule sets to receive email with Amazon SES. For more
      *            information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return describeActiveReceiptRuleSetResult The response from the
@@ -1478,7 +1583,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * Returns the details of the specified configuration set. For information
      * about using configuration sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1490,7 +1595,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            set. Configuration sets enable you to publish email sending
      *            events. For information about using configuration sets, see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return describeConfigurationSetResult The response from the
@@ -1533,7 +1638,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about setting up receipt rules, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-receipt-rules.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1544,7 +1649,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to return the details of a receipt rule.
      *            You use receipt rules to receive email with Amazon SES. For
      *            more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return describeReceiptRuleResult The response from the
@@ -1588,7 +1693,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about managing receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rule-sets.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1599,7 +1704,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to return the details of a receipt rule
      *            set. You use receipt rule sets to receive email with Amazon
      *            SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return describeReceiptRuleSetResult The response from the
@@ -1639,7 +1744,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Returns the email sending status of the Amazon SES account for the
-     * current region.
+     * current Region.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -1687,7 +1792,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about custom verification email templates, see <a
      * href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      * >Using Custom Verification Email Templates</a> in the <i>Amazon SES
      * Developer Guide</i>.
      * </p>
@@ -1772,7 +1877,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about creating DNS records using DKIM tokens, go to
      * the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim-dns-records.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-email-authentication-dkim-easy-managing.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -1783,7 +1888,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            signing, and whether Amazon SES successfully verified that
      *            these tokens were published. For more information about Easy
      *            DKIM, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-authentication-dkim-easy.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return getIdentityDkimAttributesResult The response from the
@@ -1833,7 +1938,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to return the Amazon SES custom MAIL FROM
      *            attributes for a list of identities. For information about
      *            using a custom MAIL FROM domain, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/mail-from.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return getIdentityMailFromDomainAttributesResult The response from the
@@ -1882,7 +1987,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about using notifications with Amazon SES, see the
      * <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -1890,7 +1995,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to return the notification attributes for
      *            a list of identities you verified with Amazon SES. For
      *            information about Amazon SES notifications, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return getIdentityNotificationAttributesResult The response from the
@@ -1935,15 +2040,15 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <note>
      * <p>
-     * This API is for the identity owner only. If you have not verified the
-     * identity, this API will return an error.
+     * This operation is for the identity owner only. If you have not verified
+     * the identity, it returns an error.
      * </p>
      * </note>
      * <p>
      * Sending authorization is a feature that enables an identity owner to
      * authorize other senders to use its identities. For information about
      * using sending authorization, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -1956,7 +2061,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            is an Amazon SES feature that enables you to authorize other
      *            senders to use your identities. For information, see the <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return getIdentityPoliciesResult The response from the
@@ -2004,9 +2109,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * SES sent to that address. If the email address owner clicks the link
      * within 24 hours, the verification status of the email address changes to
      * "Success". If the link is not clicked within 24 hours, the verification
-     * status changes to "Failed." In that case, if you still want to verify the
-     * email address, you must restart the verification process from the
-     * beginning.
+     * status changes to "Failed." In that case, to verify the email address,
+     * you must restart the verification process from the beginning.
      * </p>
      * <p>
      * For domain identities, the domain's verification status is "Pending" as
@@ -2014,8 +2118,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * the domain. When Amazon SES detects the record, the domain's verification
      * status changes to "Success". If Amazon SES is unable to detect the record
      * within 72 hours, the domain's verification status changes to "Failed." In
-     * that case, if you still want to verify the domain, you must restart the
-     * verification process from the beginning.
+     * that case, to verify the domain, you must restart the verification
+     * process from the beginning.
      * </p>
      * <p>
      * This operation is throttled at one request per second and can only get
@@ -2027,7 +2131,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            status of a list of identities. For domain identities, this
      *            request also returns the verification token. For information
      *            about verifying identities with Amazon SES, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return getIdentityVerificationAttributesResult The response from the
@@ -2103,10 +2207,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Provides sending statistics for the current AWS Region. The result is a
-     * list of data points, representing the last two weeks of sending activity.
-     * Each data point in the list contains statistics for a 15-minute period of
-     * time.
+     * Provides sending statistics for the current Amazon Web Services Region.
+     * The result is a list of data points, representing the last two weeks of
+     * sending activity. Each data point in the list contains statistics for a
+     * 15-minute period of time.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -2187,17 +2291,17 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Provides a list of the configuration sets associated with your Amazon SES
-     * account in the current AWS Region. For information about using
-     * configuration sets, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * account in the current Amazon Web Services Region. For information about
+     * using configuration sets, see <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Monitoring Your Amazon SES Sending Activity</a> in the <i>Amazon SES
      * Developer Guide.</i>
      * </p>
      * <p>
      * You can execute this operation no more than once per second. This
-     * operation will return up to 1,000 configuration sets each time it is run.
-     * If your Amazon SES account has more than 1,000 configuration sets, this
-     * operation will also return a NextToken element. You can then execute the
+     * operation returns up to 1,000 configuration sets each time it is run. If
+     * your Amazon SES account has more than 1,000 configuration sets, this
+     * operation also returns <code>NextToken</code>. You can then execute the
      * <code>ListConfigurationSets</code> operation again, passing the
      * <code>NextToken</code> parameter and the value of the NextToken element
      * to retrieve additional results.
@@ -2205,10 +2309,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * 
      * @param listConfigurationSetsRequest <p>
      *            Represents a request to list the configuration sets associated
-     *            with your AWS account. Configuration sets enable you to
-     *            publish email sending events. For information about using
-     *            configuration sets, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            with your Amazon Web Services account. Configuration sets
+     *            enable you to publish email sending events. For information
+     *            about using configuration sets, see the <a href=
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return listConfigurationSetsResult The response from the
@@ -2247,12 +2351,12 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Lists the existing custom verification email templates for your account
-     * in the current AWS Region.
+     * in the current Amazon Web Services Region.
      * </p>
      * <p>
      * For more information about custom verification email templates, see <a
      * href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      * >Using Custom Verification Email Templates</a> in the <i>Amazon SES
      * Developer Guide</i>.
      * </p>
@@ -2267,7 +2371,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            <p>
      *            For more information about custom verification email
      *            templates, see <a href=
-     *            "ses/latest/DeveloperGuide/custom-verification-emails.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      *            >Using Custom Verification Email Templates</a> in the
      *            <i>Amazon SES Developer Guide</i>.
      *            </p>
@@ -2308,17 +2412,31 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Returns a list containing all of the identities (email addresses and
-     * domains) for your AWS account in the current AWS Region, regardless of
-     * verification status.
+     * domains) for your Amazon Web Services account in the current Amazon Web
+     * Services Region, regardless of verification status.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
      * </p>
+     * <note>
+     * <p>
+     * It's recommended that for successive pagination calls of this API, you
+     * continue to the use the same parameter/value pairs as used in the
+     * original call, e.g., if you used <code>IdentityType=Domain</code> in the
+     * the original call and received a <code>NextToken</code> in the response,
+     * you should continue providing the <code>IdentityType=Domain</code>
+     * parameter for further <code>NextToken</code> calls; however, if you
+     * didn't provide the <code>IdentityType</code> parameter in the original
+     * call, then continue to not provide it for successive pagination calls.
+     * Using this protocol will ensure consistent results.
+     * </p>
+     * </note>
      * 
      * @param listIdentitiesRequest <p>
      *            Represents a request to return a list of all identities (email
      *            addresses and domains) that you have attempted to verify under
-     *            your AWS account, regardless of verification status.
+     *            your Amazon Web Services account, regardless of verification
+     *            status.
      *            </p>
      * @return listIdentitiesResult The response from the ListIdentities service
      *         method, as returned by Amazon Simple Email Service.
@@ -2352,21 +2470,21 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Returns a list of sending authorization policies that are attached to the
-     * given identity (an email address or a domain). This API returns only a
-     * list. If you want the actual policy content, you can use
+     * given identity (an email address or a domain). This operation returns
+     * only a list. To get the actual policy content, use
      * <code>GetIdentityPolicies</code>.
      * </p>
      * <note>
      * <p>
-     * This API is for the identity owner only. If you have not verified the
-     * identity, this API will return an error.
+     * This operation is for the identity owner only. If you have not verified
+     * the identity, it returns an error.
      * </p>
      * </note>
      * <p>
      * Sending authorization is a feature that enables an identity owner to
      * authorize other senders to use its identities. For information about
      * using sending authorization, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -2379,7 +2497,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            authorization is an Amazon SES feature that enables you to
      *            authorize other senders to use your identities. For
      *            information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return listIdentityPoliciesResult The response from the
@@ -2417,12 +2535,12 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Lists the IP address filters associated with your AWS account in the
-     * current AWS Region.
+     * Lists the IP address filters associated with your Amazon Web Services
+     * account in the current Amazon Web Services Region.
      * </p>
      * <p>
      * For information about managing IP address filters, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-ip-filters.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-ip-filtering-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -2431,10 +2549,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * 
      * @param listReceiptFiltersRequest <p>
      *            Represents a request to list the IP address filters that exist
-     *            under your AWS account. You use IP address filters when you
-     *            receive email with Amazon SES. For more information, see the
-     *            <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            under your Amazon Web Services account. You use IP address
+     *            filters when you receive email with Amazon SES. For more
+     *            information, see the <a href=
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return listReceiptFiltersResult The response from the ListReceiptFilters
@@ -2470,15 +2588,15 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Lists the receipt rule sets that exist under your AWS account in the
-     * current AWS Region. If there are additional receipt rule sets to be
-     * retrieved, you will receive a <code>NextToken</code> that you can provide
-     * to the next call to <code>ListReceiptRuleSets</code> to retrieve the
-     * additional entries.
+     * Lists the receipt rule sets that exist under your Amazon Web Services
+     * account in the current Amazon Web Services Region. If there are
+     * additional receipt rule sets to be retrieved, you receive a
+     * <code>NextToken</code> that you can provide to the next call to
+     * <code>ListReceiptRuleSets</code> to retrieve the additional entries.
      * </p>
      * <p>
      * For information about managing receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rule-sets.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -2487,9 +2605,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * 
      * @param listReceiptRuleSetsRequest <p>
      *            Represents a request to list the receipt rule sets that exist
-     *            under your AWS account. You use receipt rule sets to receive
-     *            email with Amazon SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            under your Amazon Web Services account. You use receipt rule
+     *            sets to receive email with Amazon SES. For more information,
+     *            see the <a href=
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return listReceiptRuleSetsResult The response from the
@@ -2528,7 +2647,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Lists the email templates present in your Amazon SES account in the
-     * current AWS Region.
+     * current Amazon Web Services Region.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -2606,20 +2725,65 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
+     * Adds or updates the delivery options for a configuration set.
+     * </p>
+     * 
+     * @param putConfigurationSetDeliveryOptionsRequest <p>
+     *            A request to modify the delivery options for a configuration
+     *            set.
+     *            </p>
+     * @return putConfigurationSetDeliveryOptionsResult The response from the
+     *         PutConfigurationSetDeliveryOptions service method, as returned by
+     *         Amazon Simple Email Service.
+     * @throws ConfigurationSetDoesNotExistException
+     * @throws InvalidDeliveryOptionsException
+     * @throws AmazonClientException If any internal errors are encountered
+     *             inside the client while attempting to make the request or
+     *             handle the response. For example if a network connection is
+     *             not available.
+     * @throws AmazonServiceException If an error response is returned by Amazon
+     *             Simple Email Service indicating either a problem with the
+     *             data in the request, or a server side issue.
+     */
+    public PutConfigurationSetDeliveryOptionsResult putConfigurationSetDeliveryOptions(
+            PutConfigurationSetDeliveryOptionsRequest putConfigurationSetDeliveryOptionsRequest)
+            throws AmazonServiceException, AmazonClientException {
+        ExecutionContext executionContext = createExecutionContext(putConfigurationSetDeliveryOptionsRequest);
+        AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+        awsRequestMetrics.startEvent(Field.ClientExecuteTime);
+        Request<PutConfigurationSetDeliveryOptionsRequest> request = null;
+        Response<PutConfigurationSetDeliveryOptionsResult> response = null;
+        try {
+            request = new PutConfigurationSetDeliveryOptionsRequestMarshaller()
+                    .marshall(putConfigurationSetDeliveryOptionsRequest);
+            // Binds the request metrics to the current request.
+            request.setAWSRequestMetrics(awsRequestMetrics);
+            response = invoke(request,
+                    new PutConfigurationSetDeliveryOptionsResultStaxUnmarshaller(),
+                    executionContext);
+            return response.getAwsResponse();
+        } finally {
+            awsRequestMetrics.endEvent(Field.ClientExecuteTime);
+            endClientExecution(awsRequestMetrics, request, response);
+        }
+    }
+
+    /**
+     * <p>
      * Adds or updates a sending authorization policy for the specified identity
      * (an email address or a domain).
      * </p>
      * <note>
      * <p>
-     * This API is for the identity owner only. If you have not verified the
-     * identity, this API will return an error.
+     * This operation is for the identity owner only. If you have not verified
+     * the identity, it returns an error.
      * </p>
      * </note>
      * <p>
      * Sending authorization is a feature that enables an identity owner to
      * authorize other senders to use its identities. For information about
      * using sending authorization, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -2631,7 +2795,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            policy for an identity. Sending authorization is an Amazon SES
      *            feature that enables you to authorize other senders to use
      *            your identities. For information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return putIdentityPolicyResult The response from the PutIdentityPolicy
@@ -2673,13 +2837,13 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <note>
      * <p>
      * All of the rules in the rule set must be represented in this request.
-     * That is, this API will return an error if the reorder request doesn't
-     * explicitly position all of the rules.
+     * That is, it is error if the reorder request doesn't explicitly position
+     * all of the rules.
      * </p>
      * </note>
      * <p>
      * For information about managing receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rule-sets.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -2690,7 +2854,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to reorder the receipt rules within a
      *            receipt rule set. You use receipt rule sets to receive email
      *            with Amazon SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return reorderReceiptRuleSetResult The response from the
@@ -2731,20 +2895,20 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Generates and sends a bounce message to the sender of an email you
-     * received through Amazon SES. You can only use this API on an email up to
-     * 24 hours after you receive it.
+     * received through Amazon SES. You can only use this operation on an email
+     * up to 24 hours after you receive it.
      * </p>
      * <note>
      * <p>
-     * You cannot use this API to send generic bounces for mail that was not
-     * received by Amazon SES.
+     * You cannot use this operation to send generic bounces for mail that was
+     * not received by Amazon SES.
      * </p>
      * </note>
      * <p>
      * For information about receiving email through Amazon SES, see the <a
      * href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email.html"
-     * >Amazon SES Developer Guide</a>.
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email.html">Amazon
+     * SES Developer Guide</a>.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -2790,14 +2954,14 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * created using an email template.
      * </p>
      * <p>
-     * In order to send email using the <code>SendBulkTemplatedEmail</code>
-     * operation, your call to the API must meet the following requirements:
+     * To send email using this operation, your call must meet the following
+     * requirements:
      * </p>
      * <ul>
      * <li>
      * <p>
      * The call must refer to an existing email template. You can create email
-     * templates using the <a>CreateTemplate</a> operation.
+     * templates using <a>CreateTemplate</a>.
      * </p>
      * </li>
      * <li>
@@ -2807,10 +2971,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </li>
      * <li>
      * <p>
-     * If your account is still in the Amazon SES sandbox, you may only send to
+     * If your account is still in the Amazon SES sandbox, you may send only to
      * verified addresses or domains, or to email addresses associated with the
      * Amazon SES Mailbox Simulator. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/verify-addresses-and-domains.html"
      * >Verifying Email Addresses and Domains</a> in the <i>Amazon SES Developer
      * Guide.</i>
      * </p>
@@ -2826,9 +2990,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * recipient email address. The recipient address can be a To: address, a
      * CC: address, or a BCC: address. If a recipient email address is invalid
      * (that is, it is not in the format
-     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message
-     * will be rejected, even if the message contains other recipients that are
-     * valid.
+     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message is
+     * rejected, even if the message contains other recipients that are valid.
      * </p>
      * </li>
      * <li>
@@ -2842,8 +3005,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </li>
      * <li>
      * <p>
-     * The number of destinations you can contact in a single call to the API
-     * may be limited by your account's maximum sending rate.
+     * The number of destinations you can contact in a single call can be
+     * limited by your account's maximum sending rate.
      * </p>
      * </li>
      * </ul>
@@ -2852,7 +3015,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to send a templated email to multiple
      *            destinations using Amazon SES. For more information, see the
      *            <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return sendBulkTemplatedEmailResult The response from the
@@ -2897,15 +3060,15 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Adds an email address to the list of identities for your Amazon SES
-     * account in the current AWS Region and attempts to verify it. As a result
-     * of executing this operation, a customized verification email is sent to
-     * the specified address.
+     * account in the current Amazon Web Services Region and attempts to verify
+     * it. As a result of executing this operation, a customized verification
+     * email is sent to the specified address.
      * </p>
      * <p>
      * To use this operation, you must first create a custom verification email
      * template. For more information about creating and using custom
      * verification email templates, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      * >Using Custom Verification Email Templates</a> in the <i>Amazon SES
      * Developer Guide</i>.
      * </p>
@@ -2957,16 +3120,16 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Composes an email message and immediately queues it for sending. In order
-     * to send email using the <code>SendEmail</code> operation, your message
-     * must meet the following requirements:
+     * Composes an email message and immediately queues it for sending. To send
+     * email using this operation, your message must meet the following
+     * requirements:
      * </p>
      * <ul>
      * <li>
      * <p>
      * The message must be sent from a verified email address or domain. If you
      * attempt to send email using a non-verified address or domain, the
-     * operation will result in an "Email address not verified" error.
+     * operation results in an "Email address not verified" error.
      * </p>
      * </li>
      * <li>
@@ -2974,7 +3137,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * If your account is still in the Amazon SES sandbox, you may only send to
      * verified addresses or domains, or to email addresses associated with the
      * Amazon SES Mailbox Simulator. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/verify-addresses-and-domains.html"
      * >Verifying Email Addresses and Domains</a> in the <i>Amazon SES Developer
      * Guide.</i>
      * </p>
@@ -2989,9 +3152,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * The message must include at least one recipient email address. The
      * recipient address can be a To: address, a CC: address, or a BCC: address.
      * If a recipient email address is invalid (that is, it is not in the format
-     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message
-     * will be rejected, even if the message contains other recipients that are
-     * valid.
+     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message is
+     * rejected, even if the message contains other recipients that are valid.
      * </p>
      * </li>
      * <li>
@@ -3011,7 +3173,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * against the maximum number of emails you can send in a 24-hour period
      * (your <i>sending quota</i>). For more information about sending quotas in
      * Amazon SES, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/manage-sending-limits.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/manage-sending-quotas.html"
      * >Managing Your Amazon SES Sending Limits</a> in the <i>Amazon SES
      * Developer Guide.</i>
      * </p>
@@ -3020,7 +3182,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * @param sendEmailRequest <p>
      *            Represents a request to send a single formatted email using
      *            Amazon SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-formatted.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-formatted.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return sendEmailResult The response from the SendEmail service method,
@@ -3062,10 +3224,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * Composes an email message and immediately queues it for sending.
      * </p>
      * <p>
-     * This operation is more flexible than the <code>SendEmail</code> API
+     * This operation is more flexible than the <code>SendEmail</code>
      * operation. When you use the <code>SendRawEmail</code> operation, you can
      * specify the headers of the message as well as its content. This
-     * flexibility is useful, for example, when you want to send a multipart
+     * flexibility is useful, for example, when you need to send a multipart
      * MIME email (such a message that contains both a text and an HTML
      * version). You can also use this operation to send messages that include
      * attachments.
@@ -3077,7 +3239,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <li>
      * <p>
      * You can only send email from <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/verify-addresses-and-domains.html"
      * >verified email addresses or domains</a>. If you try to send email from
      * an address that isn't verified, the operation results in an
      * "Email address not verified" error.
@@ -3086,11 +3248,11 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <li>
      * <p>
      * If your account is still in the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html"
      * >Amazon SES sandbox</a>, you can only send email to other verified
      * addresses in your account, or to addresses that are associated with the
      * <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mailbox-simulator.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-an-email-from-console.html"
      * >Amazon SES mailbox simulator</a>.
      * </p>
      * </li>
@@ -3128,7 +3290,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * message (for example, if you use open and click tracking), 8-bit content
      * isn't preserved. For this reason, we highly recommend that you encode all
      * content that isn't 7-bit ASCII. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html#send-email-mime-encoding"
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html#send-email-mime-encoding"
      * >MIME Encoding</a> in the <i>Amazon SES Developer Guide</i>.
      * </p>
      * </li>
@@ -3141,10 +3303,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <li>
      * <p>
      * Although you can customize the message headers when using the
-     * <code>SendRawEmail</code> operation, Amazon SES will automatically apply
-     * its own <code>Message-ID</code> and <code>Date</code> headers; if you
-     * passed these headers when creating the message, they will be overwritten
-     * by the values that Amazon SES provides.
+     * <code>SendRawEmail</code> operation, Amazon SES automatically applies its
+     * own <code>Message-ID</code> and <code>Date</code> headers; if you passed
+     * these headers when creating the message, they are overwritten by the
+     * values that Amazon SES provides.
      * </p>
      * </li>
      * <li>
@@ -3153,8 +3315,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <code>SendRawEmail</code> enables you to specify the cross-account
      * identity for the email's Source, From, and Return-Path parameters in one
      * of two ways: you can pass optional parameters <code>SourceArn</code>,
-     * <code>FromArn</code>, and/or <code>ReturnPathArn</code> to the API, or
-     * you can include the following X-headers in the header of your raw email:
+     * <code>FromArn</code>, and/or <code>ReturnPathArn</code>, or you can
+     * include the following X-headers in the header of your raw email:
      * </p>
      * <ul>
      * <li>
@@ -3175,19 +3337,18 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </ul>
      * <important>
      * <p>
-     * Do not include these X-headers in the DKIM signature; Amazon SES will
-     * remove them before sending the email.
+     * Don't include these X-headers in the DKIM signature. Amazon SES removes
+     * these before it sends the email.
      * </p>
      * </important>
      * <p>
-     * For most common sending authorization scenarios, we recommend that you
-     * specify the <code>SourceIdentityArn</code> parameter and not the
-     * <code>FromIdentityArn</code> or <code>ReturnPathIdentityArn</code>
-     * parameters. If you only specify the <code>SourceIdentityArn</code>
-     * parameter, Amazon SES will set the From and Return Path addresses to the
-     * identity specified in <code>SourceIdentityArn</code>. For more
-     * information about sending authorization, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html"
+     * If you only specify the <code>SourceIdentityArn</code> parameter, Amazon
+     * SES sets the From and Return-Path addresses to the same identity that you
+     * specified.
+     * </p>
+     * <p>
+     * For more information about sending authorization, see the <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/sending-authorization.html"
      * >Using Sending Authorization with Amazon SES</a> in the <i>Amazon SES
      * Developer Guide.</i>
      * </p>
@@ -3199,7 +3360,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * against the maximum number of emails you can send in a 24-hour period
      * (your <i>sending quota</i>). For more information about sending quotas in
      * Amazon SES, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/manage-sending-limits.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/manage-sending-quotas.html"
      * >Managing Your Amazon SES Sending Limits</a> in the <i>Amazon SES
      * Developer Guide.</i>
      * </p>
@@ -3209,7 +3370,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * @param sendRawEmailRequest <p>
      *            Represents a request to send a single raw email using Amazon
      *            SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-raw.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-raw.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return sendRawEmailResult The response from the SendRawEmail service
@@ -3252,8 +3413,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * it for sending.
      * </p>
      * <p>
-     * In order to send email using the <code>SendTemplatedEmail</code>
-     * operation, your call to the API must meet the following requirements:
+     * To send email using this operation, your call must meet the following
+     * requirements:
      * </p>
      * <ul>
      * <li>
@@ -3272,7 +3433,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * If your account is still in the Amazon SES sandbox, you may only send to
      * verified addresses or domains, or to email addresses associated with the
      * Amazon SES Mailbox Simulator. For more information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/verify-addresses-and-domains.html"
      * >Verifying Email Addresses and Domains</a> in the <i>Amazon SES Developer
      * Guide.</i>
      * </p>
@@ -3286,7 +3447,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * Calls to the <code>SendTemplatedEmail</code> operation may only include
      * one <code>Destination</code> parameter. A destination is a set of
-     * recipients who will receive the same version of the email. The
+     * recipients that receives the same version of the email. The
      * <code>Destination</code> parameter can include up to 50 recipients,
      * across the To:, CC: and BCC: fields.
      * </p>
@@ -3297,9 +3458,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * recipient email address. The recipient address can be a To: address, a
      * CC: address, or a BCC: address. If a recipient email address is invalid
      * (that is, it is not in the format
-     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message
-     * will be rejected, even if the message contains other recipients that are
-     * valid.
+     * <i>UserName@[SubDomain.]Domain.TopLevelDomain</i>), the entire message is
+     * rejected, even if the message contains other recipients that are valid.
      * </p>
      * </li>
      * </ul>
@@ -3316,7 +3476,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * For these reasons, we highly recommend that you set up Amazon SES to send
      * you notifications when Rendering Failure events occur. For more
      * information, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      * >Sending Personalized Email Using the Amazon SES API</a> in the <i>Amazon
      * Simple Email Service Developer Guide</i>.
      * </p>
@@ -3325,7 +3485,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * @param sendTemplatedEmailRequest <p>
      *            Represents a request to send a templated email using Amazon
      *            SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return sendTemplatedEmailResult The response from the SendTemplatedEmail
@@ -3372,12 +3532,12 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <note>
      * <p>
      * To disable your email-receiving through Amazon SES completely, you can
-     * call this API with RuleSetName set to null.
+     * call this operation with <code>RuleSetName</code> set to null.
      * </p>
      * </note>
      * <p>
      * For information about managing receipt rule sets, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rule-sets.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -3388,7 +3548,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to set a receipt rule set as the active
      *            receipt rule set. You use receipt rule sets to receive email
      *            with Amazon SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setActiveReceiptRuleSetResult The response from the
@@ -3427,36 +3587,30 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Enables or disables Easy DKIM signing of email sent from an identity:
+     * Enables or disables Easy DKIM signing of email sent from an identity. If
+     * Easy DKIM signing is enabled for a domain, then Amazon SES uses DKIM to
+     * sign all email that it sends from addresses on that domain. If Easy DKIM
+     * signing is enabled for an email address, then Amazon SES uses DKIM to
+     * sign all email it sends from that address.
      * </p>
-     * <ul>
-     * <li>
-     * <p>
-     * If Easy DKIM signing is enabled for a domain name identity (such as
-     * <code>example.com</code>), then Amazon SES will DKIM-sign all email sent
-     * by addresses under that domain name (for example,
-     * <code>user@example.com</code>).
-     * </p>
-     * </li>
-     * <li>
-     * <p>
-     * If Easy DKIM signing is enabled for an email address, then Amazon SES
-     * will DKIM-sign all email sent by that email address.
-     * </p>
-     * </li>
-     * </ul>
+     * <note>
      * <p>
      * For email addresses (for example, <code>user@example.com</code>), you can
-     * only enable Easy DKIM signing if the corresponding domain (in this case,
-     * <code>example.com</code>) has been set up for Easy DKIM using the AWS
-     * Console or the <code>VerifyDomainDkim</code> operation.
+     * only enable DKIM signing if the corresponding domain (in this case,
+     * <code>example.com</code>) has been set up to use Easy DKIM.
+     * </p>
+     * </note>
+     * <p>
+     * You can enable DKIM signing for an identity at any time after you start
+     * the verification process for the identity, even if the verification
+     * process isn't complete.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
      * </p>
      * <p>
      * For more information about Easy DKIM signing, go to the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-email-authentication-dkim-easy.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -3464,7 +3618,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to enable or disable Amazon SES Easy DKIM
      *            signing for an identity. For more information about setting up
      *            Easy DKIM, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-authentication-dkim-easy.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setIdentityDkimEnabledResult The response from the
@@ -3520,7 +3674,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about using notifications with Amazon SES, see the
      * <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -3529,7 +3683,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            forwards you bounce and complaint notifications through email.
      *            For information about email feedback forwarding, see the <a
      *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications-via-email.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications-email.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setIdentityFeedbackForwardingEnabledResult The response from the
@@ -3578,7 +3732,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about using notifications with Amazon SES, see the
      * <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -3587,7 +3741,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            original email headers in the Amazon SNS notifications of a
      *            specified type. For information about notifications, see the
      *            <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications-via-sns.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications-sns.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setIdentityHeadersInNotificationsEnabledResult The response from
@@ -3632,11 +3786,11 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <important>
      * <p>
      * To send emails using the specified MAIL FROM domain, you must add an MX
-     * record to your MAIL FROM domain's DNS settings. If you want your emails
-     * to pass Sender Policy Framework (SPF) checks, you must also add or update
-     * an SPF record. For more information, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from-set.html"
-     * >Amazon SES Developer Guide</a>.
+     * record to your MAIL FROM domain's DNS settings. To ensure that your
+     * emails pass Sender Policy Framework (SPF) checks, you must also add or
+     * update an SPF record. For more information, see the <a
+     * href="https://docs.aws.amazon.com/ses/latest/dg/mail-from.html">Amazon
+     * SES Developer Guide</a>.
      * </p>
      * </important>
      * <p>
@@ -3647,8 +3801,8 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to enable or disable the Amazon SES
      *            custom MAIL FROM domain setup for a verified identity. For
      *            information about using a custom MAIL FROM domain, see the <a
-     *            href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from.html"
+     *            href
+     *            ="https://docs.aws.amazon.com/ses/latest/dg/mail-from.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setIdentityMailFromDomainResult The response from the
@@ -3699,17 +3853,17 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For more information about feedback notification, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
      * @param setIdentityNotificationTopicRequest <p>
      *            Represents a request to specify the Amazon SNS topic to which
-     *            Amazon SES will publish bounce, complaint, or delivery
+     *            Amazon SES publishes bounce, complaint, or delivery
      *            notifications for emails sent with that identity as the
-     *            Source. For information about Amazon SES notifications, see
+     *            source. For information about Amazon SES notifications, see
      *            the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/notifications-via-sns.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity-using-notifications-sns.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setIdentityNotificationTopicResult The response from the
@@ -3751,7 +3905,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about managing receipt rules, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rules.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -3762,7 +3916,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to set the position of a receipt rule in
      *            a receipt rule set. You use receipt rule sets to receive email
      *            with Amazon SES. For more information, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return setReceiptRulePositionResult The response from the
@@ -3847,10 +4001,11 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Enables or disables email sending across your entire Amazon SES account
-     * in the current AWS Region. You can use this operation in conjunction with
-     * Amazon CloudWatch alarms to temporarily pause email sending across your
-     * Amazon SES account in a given AWS Region when reputation metrics (such as
-     * your bounce or complaint rates) reach certain thresholds.
+     * in the current Amazon Web Services Region. You can use this operation in
+     * conjunction with Amazon CloudWatch alarms to temporarily pause email
+     * sending across your Amazon SES account in a given Amazon Web Services
+     * Region when reputation metrics (such as your bounce or complaint rates)
+     * reach certain thresholds.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -3895,7 +4050,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * sending events to Amazon CloudWatch, Amazon Kinesis Firehose, or Amazon
      * Simple Notification Service (Amazon SNS). For information about using
      * configuration sets, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      * >Monitoring Your Amazon SES Sending Activity</a> in the <i>Amazon SES
      * Developer Guide.</i>
      * </p>
@@ -3915,7 +4070,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            configuration set. Configuration sets enable you to publish
      *            email sending events. For information about using
      *            configuration sets, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/monitor-sending-activity.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/monitor-sending-activity.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return updateConfigurationSetEventDestinationResult The response from
@@ -3960,10 +4115,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Enables or disables the publishing of reputation metrics for emails sent
-     * using a specific configuration set in a given AWS Region. Reputation
-     * metrics include bounce and complaint rates. These metrics are published
-     * to Amazon CloudWatch. By using CloudWatch, you can create alarms when
-     * bounce or complaint rates exceed certain thresholds.
+     * using a specific configuration set in a given Amazon Web Services Region.
+     * Reputation metrics include bounce and complaint rates. These metrics are
+     * published to Amazon CloudWatch. By using CloudWatch, you can create
+     * alarms when bounce or complaint rates exceed certain thresholds.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -4005,11 +4160,11 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Enables or disables email sending for messages sent using a specific
-     * configuration set in a given AWS Region. You can use this operation in
-     * conjunction with Amazon CloudWatch alarms to temporarily pause email
-     * sending for a configuration set when the reputation metrics for that
-     * configuration set (such as your bounce on complaint rate) exceed certain
-     * thresholds.
+     * configuration set in a given Amazon Web Services Region. You can use this
+     * operation in conjunction with Amazon CloudWatch alarms to temporarily
+     * pause email sending for a configuration set when the reputation metrics
+     * for that configuration set (such as your bounce on complaint rate) exceed
+     * certain thresholds.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -4058,7 +4213,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * hosted on domains operated by Amazon SES. You can configure a subdomain
      * of your own to handle these events. For information about using custom
      * domains, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/configure-custom-open-click-domains.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/configure-custom-open-click-domains.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * 
@@ -4110,7 +4265,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * <p>
      * For more information about custom verification email templates, see <a
      * href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/custom-verification-emails.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#send-email-verify-address-custom"
      * >Using Custom Verification Email Templates</a> in the <i>Amazon SES
      * Developer Guide</i>.
      * </p>
@@ -4159,7 +4314,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      * </p>
      * <p>
      * For information about managing receipt rules, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-managing-receipt-rules.html"
+     * "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-receipt-rules-console-walkthrough.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -4170,7 +4325,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to update a receipt rule. You use receipt
      *            rules to receive email with Amazon SES. For more information,
      *            see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-concepts.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/receiving-email-concepts.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return updateReceiptRuleResult The response from the UpdateReceiptRule
@@ -4213,9 +4368,9 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Updates an email template. Email templates enable you to send
-     * personalized email to one or more destinations in a single API operation.
-     * For more information, see the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html"
+     * personalized email to one or more destinations in a single operation. For
+     * more information, see the <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-personalized-email-api.html"
      * >Amazon SES Developer Guide</a>.
      * </p>
      * <p>
@@ -4256,33 +4411,67 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Returns a set of DKIM tokens for a domain. DKIM <i>tokens</i> are
-     * character strings that represent your domain's identity. Using these
-     * tokens, you will need to create DNS CNAME records that point to DKIM
-     * public keys hosted by Amazon SES. Amazon Web Services will eventually
-     * detect that you have updated your DNS records; this detection process may
-     * take up to 72 hours. Upon successful detection, Amazon SES will be able
-     * to DKIM-sign email originating from that domain.
+     * Returns a set of DKIM tokens for a domain identity.
+     * </p>
+     * <important>
+     * <p>
+     * When you execute the <code>VerifyDomainDkim</code> operation, the domain
+     * that you specify is added to the list of identities that are associated
+     * with your account. This is true even if you haven't already associated
+     * the domain with your account by using the
+     * <code>VerifyDomainIdentity</code> operation. However, you can't send
+     * email from the domain until you either successfully <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#verify-domain-procedure"
+     * >verify it</a> or you successfully <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/send-email-authentication-dkim-easy.html"
+     * >set up DKIM for it</a>.
+     * </p>
+     * </important>
+     * <p>
+     * You use the tokens that are generated by this operation to create CNAME
+     * records. When Amazon SES detects that you've added these records to the
+     * DNS configuration for a domain, you can start sending email from that
+     * domain. You can start sending email even if you haven't added the TXT
+     * record provided by the VerifyDomainIdentity operation to the DNS
+     * configuration for your domain. All email that you send from the domain is
+     * authenticated using DKIM.
+     * </p>
+     * <p>
+     * To create the CNAME records for DKIM authentication, use the following
+     * values:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * <b>Name</b>: <i>token</i>._domainkey.<i>example.com</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Type</b>: CNAME
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * <b>Value</b>: <i>token</i>.dkim.amazonses.com
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * In the preceding example, replace <i>token</i> with one of the tokens
+     * that are generated when you execute this operation. Replace
+     * <i>example.com</i> with your domain. Repeat this process for each token
+     * that's generated by this operation.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
-     * </p>
-     * <p>
-     * To enable or disable Easy DKIM signing for a domain, use the
-     * <code>SetIdentityDkimEnabled</code> operation.
-     * </p>
-     * <p>
-     * For more information about creating DNS records using DKIM tokens, go to
-     * the <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim-dns-records.html"
-     * >Amazon SES Developer Guide</a>.
      * </p>
      * 
      * @param verifyDomainDkimRequest <p>
      *            Represents a request to generate the CNAME records needed to
      *            set up Easy DKIM with Amazon SES. For more information about
      *            setting up Easy DKIM, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/send-email-authentication-dkim-easy.html"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return verifyDomainDkimResult The response from the VerifyDomainDkim
@@ -4318,9 +4507,9 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Adds a domain to the list of identities for your Amazon SES account in
-     * the current AWS Region and attempts to verify it. For more information
-     * about verifying domains, see <a href=
-     * "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-addresses-and-domains.html"
+     * the current Amazon Web Services Region and attempts to verify it. For
+     * more information about verifying domains, see <a href=
+     * "https://docs.aws.amazon.com/ses/latest/dg/verify-addresses-and-domains.html"
      * >Verifying Email Addresses and Domains</a> in the <i>Amazon SES Developer
      * Guide.</i>
      * </p>
@@ -4333,7 +4522,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            and to generate the TXT records that you must publish to the
      *            DNS server of your domain to complete the verification. For
      *            information about domain verification, see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-domains.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#verify-domain-procedure"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return verifyDomainIdentityResult The response from the
@@ -4379,7 +4568,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to begin email address verification with
      *            Amazon SES. For information about email address verification,
      *            see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#verify-email-addresses-procedure"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @throws AmazonClientException If any internal errors are encountered
@@ -4411,9 +4600,9 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Adds an email address to the list of identities for your Amazon SES
-     * account in the current AWS region and attempts to verify it. As a result
-     * of executing this operation, a verification email is sent to the
-     * specified address.
+     * account in the current Amazon Web Services Region and attempts to verify
+     * it. As a result of executing this operation, a verification email is sent
+     * to the specified address.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -4423,7 +4612,7 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
      *            Represents a request to begin email address verification with
      *            Amazon SES. For information about email address verification,
      *            see the <a href=
-     *            "http://docs.aws.amazon.com/ses/latest/DeveloperGuide/verify-email-addresses.html"
+     *            "https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html#verify-email-addresses-procedure"
      *            >Amazon SES Developer Guide</a>.
      *            </p>
      * @return verifyEmailIdentityResult The response from the
@@ -4484,10 +4673,10 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
 
     /**
      * <p>
-     * Provides sending statistics for the current AWS Region. The result is a
-     * list of data points, representing the last two weeks of sending activity.
-     * Each data point in the list contains statistics for a 15-minute period of
-     * time.
+     * Provides sending statistics for the current Amazon Web Services Region.
+     * The result is a list of data points, representing the last two weeks of
+     * sending activity. Each data point in the list contains statistics for a
+     * 15-minute period of time.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
@@ -4512,12 +4701,25 @@ public class AmazonSimpleEmailServiceClient extends AmazonWebServiceClient imple
     /**
      * <p>
      * Returns a list containing all of the identities (email addresses and
-     * domains) for your AWS account in the current AWS Region, regardless of
-     * verification status.
+     * domains) for your Amazon Web Services account in the current Amazon Web
+     * Services Region, regardless of verification status.
      * </p>
      * <p>
      * You can execute this operation no more than once per second.
      * </p>
+     * <note>
+     * <p>
+     * It's recommended that for successive pagination calls of this API, you
+     * continue to the use the same parameter/value pairs as used in the
+     * original call, e.g., if you used <code>IdentityType=Domain</code> in the
+     * the original call and received a <code>NextToken</code> in the response,
+     * you should continue providing the <code>IdentityType=Domain</code>
+     * parameter for further <code>NextToken</code> calls; however, if you
+     * didn't provide the <code>IdentityType</code> parameter in the original
+     * call, then continue to not provide it for successive pagination calls.
+     * Using this protocol will ensure consistent results.
+     * </p>
+     * </note>
      * 
      * @return listIdentitiesResult The response from the ListIdentities service
      *         method, as returned by Amazon Simple Email Service.

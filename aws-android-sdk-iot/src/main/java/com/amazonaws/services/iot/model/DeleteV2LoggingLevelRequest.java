@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Deletes a logging level.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >DeleteV2LoggingLevel</a> action.
+ * </p>
  */
 public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -32,7 +37,8 @@ public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      */
     private String targetType;
 
@@ -50,7 +56,8 @@ public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @return <p>
      *         The type of resource for which you are configuring logging. Must
@@ -69,7 +76,8 @@ public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -91,7 +99,8 @@ public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest impleme
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -113,7 +122,8 @@ public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest impleme
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.
@@ -135,7 +145,8 @@ public class DeleteV2LoggingLevelRequest extends AmazonWebServiceRequest impleme
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>DEFAULT, THING_GROUP
+     * <b>Allowed Values: </b>DEFAULT, THING_GROUP, CLIENT_ID, SOURCE_IP,
+     * PRINCIPAL_ID
      *
      * @param targetType <p>
      *            The type of resource for which you are configuring logging.

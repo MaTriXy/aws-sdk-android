@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -45,6 +45,10 @@ public class GetPolicyVersionResult implements Serializable {
      * <p>
      * The JSON document that describes the policy.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String policyDocument;
 
@@ -67,14 +71,14 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was created.
+     * The date the policy was created.
      * </p>
      */
     private java.util.Date creationDate;
 
     /**
      * <p>
-     * The date the policy version was last modified.
+     * The date the policy was last modified.
      * </p>
      */
     private java.util.Date lastModifiedDate;
@@ -192,6 +196,10 @@ public class GetPolicyVersionResult implements Serializable {
      * <p>
      * The JSON document that describes the policy.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The JSON document that describes the policy.
@@ -205,6 +213,10 @@ public class GetPolicyVersionResult implements Serializable {
      * <p>
      * The JSON document that describes the policy.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param policyDocument <p>
      *            The JSON document that describes the policy.
@@ -221,6 +233,10 @@ public class GetPolicyVersionResult implements Serializable {
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>0 - 404600<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param policyDocument <p>
      *            The JSON document that describes the policy.
@@ -347,11 +363,11 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was created.
+     * The date the policy was created.
      * </p>
      *
      * @return <p>
-     *         The date the policy version was created.
+     *         The date the policy was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -360,11 +376,11 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was created.
+     * The date the policy was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The date the policy version was created.
+     *            The date the policy was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -373,14 +389,14 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was created.
+     * The date the policy was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The date the policy version was created.
+     *            The date the policy was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -392,11 +408,11 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was last modified.
+     * The date the policy was last modified.
      * </p>
      *
      * @return <p>
-     *         The date the policy version was last modified.
+     *         The date the policy was last modified.
      *         </p>
      */
     public java.util.Date getLastModifiedDate() {
@@ -405,11 +421,11 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was last modified.
+     * The date the policy was last modified.
      * </p>
      *
      * @param lastModifiedDate <p>
-     *            The date the policy version was last modified.
+     *            The date the policy was last modified.
      *            </p>
      */
     public void setLastModifiedDate(java.util.Date lastModifiedDate) {
@@ -418,14 +434,14 @@ public class GetPolicyVersionResult implements Serializable {
 
     /**
      * <p>
-     * The date the policy version was last modified.
+     * The date the policy was last modified.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastModifiedDate <p>
-     *            The date the policy version was last modified.
+     *            The date the policy was last modified.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

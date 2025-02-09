@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.rekognition.model.transform;
 
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -55,6 +56,22 @@ class ComparedFaceJsonMarshaller {
             ImageQuality quality = comparedFace.getQuality();
             jsonWriter.name("Quality");
             ImageQualityJsonMarshaller.getInstance().marshall(quality, jsonWriter);
+        }
+        if (comparedFace.getEmotions() != null) {
+            java.util.List<Emotion> emotions = comparedFace.getEmotions();
+            jsonWriter.name("Emotions");
+            jsonWriter.beginArray();
+            for (Emotion emotionsItem : emotions) {
+                if (emotionsItem != null) {
+                    EmotionJsonMarshaller.getInstance().marshall(emotionsItem, jsonWriter);
+                }
+            }
+            jsonWriter.endArray();
+        }
+        if (comparedFace.getSmile() != null) {
+            Smile smile = comparedFace.getSmile();
+            jsonWriter.name("Smile");
+            SmileJsonMarshaller.getInstance().marshall(smile, jsonWriter);
         }
         jsonWriter.endObject();
     }

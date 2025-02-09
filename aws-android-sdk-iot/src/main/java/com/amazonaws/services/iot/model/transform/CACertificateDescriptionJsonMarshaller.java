@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -80,6 +81,11 @@ class CACertificateDescriptionJsonMarshaller {
             CertificateValidity validity = cACertificateDescription.getValidity();
             jsonWriter.name("validity");
             CertificateValidityJsonMarshaller.getInstance().marshall(validity, jsonWriter);
+        }
+        if (cACertificateDescription.getCertificateMode() != null) {
+            String certificateMode = cACertificateDescription.getCertificateMode();
+            jsonWriter.name("certificateMode");
+            jsonWriter.value(certificateMode);
         }
         jsonWriter.endObject();
     }

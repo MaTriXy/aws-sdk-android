@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.cognitoidentityprovider.model.transform;
 
 import com.amazonaws.services.cognitoidentityprovider.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -34,6 +35,12 @@ class EventRiskTypeJsonMarshaller {
             String riskLevel = eventRiskType.getRiskLevel();
             jsonWriter.name("RiskLevel");
             jsonWriter.value(riskLevel);
+        }
+        if (eventRiskType.getCompromisedCredentialsDetected() != null) {
+            Boolean compromisedCredentialsDetected = eventRiskType
+                    .getCompromisedCredentialsDetected();
+            jsonWriter.name("CompromisedCredentialsDetected");
+            jsonWriter.value(compromisedCredentialsDetected);
         }
         jsonWriter.endObject();
     }

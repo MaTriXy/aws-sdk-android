@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,9 +23,56 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Responds to an authentication challenge, as an administrator.
  * </p>
+ * <note>
  * <p>
- * Requires developer credentials.
+ * This action might generate an SMS text message. Starting June 1, 2021, US
+ * telecom carriers require you to register an origination phone number before
+ * you can send SMS messages to US phone numbers. If you use SMS text messages
+ * in Amazon Cognito, you must register a phone number with <a
+ * href="https://console.aws.amazon.com/pinpoint/home/">Amazon Pinpoint</a>.
+ * Amazon Cognito uses the registered number automatically. Otherwise, Amazon
+ * Cognito users who must receive SMS messages might not be able to sign up,
+ * activate their accounts, or sign in.
  * </p>
+ * <p>
+ * If you have never used SMS text messages with Amazon Cognito or any other
+ * Amazon Web Service, Amazon Simple Notification Service might place your
+ * account in the SMS sandbox. In <i> <a
+ * href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
+ * mode</a> </i>, you can send messages only to verified phone numbers. After
+ * you test your app while in the sandbox environment, you can move out of the
+ * sandbox and into production. For more information, see <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html"
+ * > SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon
+ * Cognito Developer Guide</i>.
+ * </p>
+ * </note> <note>
+ * <p>
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
+ * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest implements
         Serializable {
@@ -53,7 +100,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     * >AdminInitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -83,7 +132,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
      * configured with client secret).
      * </p>
-     * </li>
+     * <note>
+     * <p>
+     * <code>PASSWORD_VERIFIER</code> requires <code>DEVICE_KEY</code> when
+     * signing in with a remembered device.
+     * </p>
+     * </note></li>
      * <li>
      * <p>
      * <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -93,30 +147,59 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other
-     * required attributes, <code>USERNAME</code>, <code>SECRET_HASH</code> (if
-     * app client is configured with client secret).
+     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
+     * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
+     * configured with client secret). To set any required attributes that
+     * Amazon Cognito returned as <code>requiredAttributes</code> in the
+     * <code>AdminInitiateAuth</code> response, add a
+     * <code>userAttributes.<i>attributename</i> </code> parameter. This
+     * parameter can also set values for writable attributes that aren't
+     * required by your user pool.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>AdminRespondToAuthChallenge</code>, set a value for any keys that
+     * Amazon Cognito returned in the <code>requiredAttributes</code> parameter,
+     * then use the <code>AdminUpdateUserAttributes</code> API operation to
+     * modify the value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus you must use
+     * the session value returned by <code>VerifySoftwareToken</code> in the
+     * <code>Session</code> parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
      * The value of the <code>USERNAME</code> attribute must be the user's
-     * actual username, not an alias (such as email address or phone number). To
-     * make this easier, the <code>AdminInitiateAuth</code> response includes
-     * the actual username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     * attribute, even if you specified an alias in your call to
-     * <code>AdminInitiateAuth</code>.
+     * actual username, not an alias (such as an email address or phone number).
+     * To make this simpler, the <code>AdminInitiateAuth</code> response
+     * includes the actual username value in the
+     * <code>USERNAMEUSER_ID_FOR_SRP</code> attribute. This happens even if you
+     * specified an alias in your call to <code>AdminInitiateAuth</code>.
+     * </p>
+     * <p>
+     * For more information about <code>SECRET_HASH</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     * >Computing secret hash values</a>. For information about
+     * <code>DEVICE_KEY</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     * >Working with user devices in your user pool</a>.
      * </p>
      */
     private java.util.Map<String, String> challengeResponses;
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If <code>InitiateAuth</code> or
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If an <code>InitiateAuth</code> or
      * <code>RespondToAuthChallenge</code> API call determines that the caller
-     * needs to go through another challenge, they return a session with other
-     * challenge parameters. This session should be passed as it is to the next
+     * must pass another challenge, it returns a session with other challenge
+     * parameters. This session should be passed as it is to the next
      * <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
@@ -135,12 +218,111 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon
-     * Cognito advanced security.
+     * Contextual data about your user session, such as the device fingerprint,
+     * IP address, or location. Amazon Cognito advanced security evaluates the
+     * risk of an authentication event based on the context that your app
+     * generates and passes to Amazon Cognito when it makes API requests.
      * </p>
      */
     private ContextDataType contextData;
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminRespondToAuthChallenge API action, Amazon
+     * Cognito invokes any functions that you have assigned to the following
+     * triggers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * pre sign-up
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * custom message
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * post authentication
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * user migration
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * pre token generation
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * define auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * create auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * verify auth challenge response
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * When Amazon Cognito invokes any of these functions, it passes a JSON
+     * payload, which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute that provides the data that you
+     * assigned to the ClientMetadata parameter in your
+     * AdminRespondToAuthChallenge request. In your function code in Lambda, you
+     * can process the <code>clientMetadata</code> value to enhance your
+     * workflow for your specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     */
+    private java.util.Map<String, String> clientMetadata;
 
     /**
      * <p>
@@ -258,7 +440,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     * >AdminInitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -267,7 +451,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @return <p>
-     *         The challenge name. For more information, see .
+     *         The challenge name. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     *         >AdminInitiateAuth</a>.
      *         </p>
      * @see ChallengeNameType
      */
@@ -277,7 +463,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     * >AdminInitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -286,7 +474,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     *            >AdminInitiateAuth</a>.
      *            </p>
      * @see ChallengeNameType
      */
@@ -296,7 +486,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     * >AdminInitiateAuth</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -308,7 +500,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     *            >AdminInitiateAuth</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -321,7 +515,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     * >AdminInitiateAuth</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -330,7 +526,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     *            >AdminInitiateAuth</a>.
      *            </p>
      * @see ChallengeNameType
      */
@@ -340,7 +538,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The challenge name. For more information, see .
+     * The challenge name. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     * >AdminInitiateAuth</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -352,7 +552,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The challenge name. For more information, see .
+     *            The challenge name. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html"
+     *            >AdminInitiateAuth</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -383,7 +585,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
      * configured with client secret).
      * </p>
-     * </li>
+     * <note>
+     * <p>
+     * <code>PASSWORD_VERIFIER</code> requires <code>DEVICE_KEY</code> when
+     * signing in with a remembered device.
+     * </p>
+     * </note></li>
      * <li>
      * <p>
      * <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -393,19 +600,48 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other
-     * required attributes, <code>USERNAME</code>, <code>SECRET_HASH</code> (if
-     * app client is configured with client secret).
+     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
+     * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
+     * configured with client secret). To set any required attributes that
+     * Amazon Cognito returned as <code>requiredAttributes</code> in the
+     * <code>AdminInitiateAuth</code> response, add a
+     * <code>userAttributes.<i>attributename</i> </code> parameter. This
+     * parameter can also set values for writable attributes that aren't
+     * required by your user pool.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>AdminRespondToAuthChallenge</code>, set a value for any keys that
+     * Amazon Cognito returned in the <code>requiredAttributes</code> parameter,
+     * then use the <code>AdminUpdateUserAttributes</code> API operation to
+     * modify the value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus you must use
+     * the session value returned by <code>VerifySoftwareToken</code> in the
+     * <code>Session</code> parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
      * The value of the <code>USERNAME</code> attribute must be the user's
-     * actual username, not an alias (such as email address or phone number). To
-     * make this easier, the <code>AdminInitiateAuth</code> response includes
-     * the actual username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     * attribute, even if you specified an alias in your call to
-     * <code>AdminInitiateAuth</code>.
+     * actual username, not an alias (such as an email address or phone number).
+     * To make this simpler, the <code>AdminInitiateAuth</code> response
+     * includes the actual username value in the
+     * <code>USERNAMEUSER_ID_FOR_SRP</code> attribute. This happens even if you
+     * specified an alias in your call to <code>AdminInitiateAuth</code>.
+     * </p>
+     * <p>
+     * For more information about <code>SECRET_HASH</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     * >Computing secret hash values</a>. For information about
+     * <code>DEVICE_KEY</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     * >Working with user devices in your user pool</a>.
      * </p>
      *
      * @return <p>
@@ -428,7 +664,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      *         <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
      *         configured with client secret).
      *         </p>
-     *         </li>
+     *         <note>
+     *         <p>
+     *         <code>PASSWORD_VERIFIER</code> requires <code>DEVICE_KEY</code>
+     *         when signing in with a remembered device.
+     *         </p>
+     *         </note></li>
      *         <li>
      *         <p>
      *         <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -439,20 +680,50 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      *         <li>
      *         <p>
      *         <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
-     *         any other required attributes, <code>USERNAME</code>,
-     *         <code>SECRET_HASH</code> (if app client is configured with client
-     *         secret).
+     *         <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
+     *         configured with client secret). To set any required attributes
+     *         that Amazon Cognito returned as <code>requiredAttributes</code>
+     *         in the <code>AdminInitiateAuth</code> response, add a
+     *         <code>userAttributes.<i>attributename</i> </code> parameter. This
+     *         parameter can also set values for writable attributes that aren't
+     *         required by your user pool.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you
+     *         can't modify a required attribute that already has a value. In
+     *         <code>AdminRespondToAuthChallenge</code>, set a value for any
+     *         keys that Amazon Cognito returned in the
+     *         <code>requiredAttributes</code> parameter, then use the
+     *         <code>AdminUpdateUserAttributes</code> API operation to modify
+     *         the value of any additional attributes.
+     *         </p>
+     *         </note></li>
+     *         <li>
+     *         <p>
+     *         <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus you
+     *         must use the session value returned by
+     *         <code>VerifySoftwareToken</code> in the <code>Session</code>
+     *         parameter.
      *         </p>
      *         </li>
      *         </ul>
      *         <p>
      *         The value of the <code>USERNAME</code> attribute must be the
-     *         user's actual username, not an alias (such as email address or
-     *         phone number). To make this easier, the
+     *         user's actual username, not an alias (such as an email address or
+     *         phone number). To make this simpler, the
      *         <code>AdminInitiateAuth</code> response includes the actual
      *         username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     *         attribute, even if you specified an alias in your call to
-     *         <code>AdminInitiateAuth</code>.
+     *         attribute. This happens even if you specified an alias in your
+     *         call to <code>AdminInitiateAuth</code>.
+     *         </p>
+     *         <p>
+     *         For more information about <code>SECRET_HASH</code>, see <a href=
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     *         >Computing secret hash values</a>. For information about
+     *         <code>DEVICE_KEY</code>, see <a href=
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     *         >Working with user devices in your user pool</a>.
      *         </p>
      */
     public java.util.Map<String, String> getChallengeResponses() {
@@ -479,7 +750,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
      * configured with client secret).
      * </p>
-     * </li>
+     * <note>
+     * <p>
+     * <code>PASSWORD_VERIFIER</code> requires <code>DEVICE_KEY</code> when
+     * signing in with a remembered device.
+     * </p>
+     * </note></li>
      * <li>
      * <p>
      * <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -489,19 +765,48 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other
-     * required attributes, <code>USERNAME</code>, <code>SECRET_HASH</code> (if
-     * app client is configured with client secret).
+     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
+     * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
+     * configured with client secret). To set any required attributes that
+     * Amazon Cognito returned as <code>requiredAttributes</code> in the
+     * <code>AdminInitiateAuth</code> response, add a
+     * <code>userAttributes.<i>attributename</i> </code> parameter. This
+     * parameter can also set values for writable attributes that aren't
+     * required by your user pool.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>AdminRespondToAuthChallenge</code>, set a value for any keys that
+     * Amazon Cognito returned in the <code>requiredAttributes</code> parameter,
+     * then use the <code>AdminUpdateUserAttributes</code> API operation to
+     * modify the value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus you must use
+     * the session value returned by <code>VerifySoftwareToken</code> in the
+     * <code>Session</code> parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
      * The value of the <code>USERNAME</code> attribute must be the user's
-     * actual username, not an alias (such as email address or phone number). To
-     * make this easier, the <code>AdminInitiateAuth</code> response includes
-     * the actual username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     * attribute, even if you specified an alias in your call to
-     * <code>AdminInitiateAuth</code>.
+     * actual username, not an alias (such as an email address or phone number).
+     * To make this simpler, the <code>AdminInitiateAuth</code> response
+     * includes the actual username value in the
+     * <code>USERNAMEUSER_ID_FOR_SRP</code> attribute. This happens even if you
+     * specified an alias in your call to <code>AdminInitiateAuth</code>.
+     * </p>
+     * <p>
+     * For more information about <code>SECRET_HASH</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     * >Computing secret hash values</a>. For information about
+     * <code>DEVICE_KEY</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     * >Working with user devices in your user pool</a>.
      * </p>
      *
      * @param challengeResponses <p>
@@ -525,7 +830,13 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      *            <code>SECRET_HASH</code> (if app client is configured with
      *            client secret).
      *            </p>
-     *            </li>
+     *            <note>
+     *            <p>
+     *            <code>PASSWORD_VERIFIER</code> requires
+     *            <code>DEVICE_KEY</code> when signing in with a remembered
+     *            device.
+     *            </p>
+     *            </note></li>
      *            <li>
      *            <p>
      *            <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -536,20 +847,52 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      *            <li>
      *            <p>
      *            <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
-     *            any other required attributes, <code>USERNAME</code>,
-     *            <code>SECRET_HASH</code> (if app client is configured with
-     *            client secret).
+     *            <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client
+     *            is configured with client secret). To set any required
+     *            attributes that Amazon Cognito returned as
+     *            <code>requiredAttributes</code> in the
+     *            <code>AdminInitiateAuth</code> response, add a
+     *            <code>userAttributes.<i>attributename</i> </code> parameter.
+     *            This parameter can also set values for writable attributes
+     *            that aren't required by your user pool.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            In a <code>NEW_PASSWORD_REQUIRED</code> challenge response,
+     *            you can't modify a required attribute that already has a
+     *            value. In <code>AdminRespondToAuthChallenge</code>, set a
+     *            value for any keys that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter, then use the
+     *            <code>AdminUpdateUserAttributes</code> API operation to modify
+     *            the value of any additional attributes.
+     *            </p>
+     *            </note></li>
+     *            <li>
+     *            <p>
+     *            <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus
+     *            you must use the session value returned by
+     *            <code>VerifySoftwareToken</code> in the <code>Session</code>
+     *            parameter.
      *            </p>
      *            </li>
      *            </ul>
      *            <p>
      *            The value of the <code>USERNAME</code> attribute must be the
-     *            user's actual username, not an alias (such as email address or
-     *            phone number). To make this easier, the
+     *            user's actual username, not an alias (such as an email address
+     *            or phone number). To make this simpler, the
      *            <code>AdminInitiateAuth</code> response includes the actual
      *            username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     *            attribute, even if you specified an alias in your call to
-     *            <code>AdminInitiateAuth</code>.
+     *            attribute. This happens even if you specified an alias in your
+     *            call to <code>AdminInitiateAuth</code>.
+     *            </p>
+     *            <p>
+     *            For more information about <code>SECRET_HASH</code>, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     *            >Computing secret hash values</a>. For information about
+     *            <code>DEVICE_KEY</code>, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     *            >Working with user devices in your user pool</a>.
      *            </p>
      */
     public void setChallengeResponses(java.util.Map<String, String> challengeResponses) {
@@ -576,7 +919,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
      * configured with client secret).
      * </p>
-     * </li>
+     * <note>
+     * <p>
+     * <code>PASSWORD_VERIFIER</code> requires <code>DEVICE_KEY</code> when
+     * signing in with a remembered device.
+     * </p>
+     * </note></li>
      * <li>
      * <p>
      * <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -586,19 +934,48 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other
-     * required attributes, <code>USERNAME</code>, <code>SECRET_HASH</code> (if
-     * app client is configured with client secret).
+     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
+     * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
+     * configured with client secret). To set any required attributes that
+     * Amazon Cognito returned as <code>requiredAttributes</code> in the
+     * <code>AdminInitiateAuth</code> response, add a
+     * <code>userAttributes.<i>attributename</i> </code> parameter. This
+     * parameter can also set values for writable attributes that aren't
+     * required by your user pool.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>AdminRespondToAuthChallenge</code>, set a value for any keys that
+     * Amazon Cognito returned in the <code>requiredAttributes</code> parameter,
+     * then use the <code>AdminUpdateUserAttributes</code> API operation to
+     * modify the value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus you must use
+     * the session value returned by <code>VerifySoftwareToken</code> in the
+     * <code>Session</code> parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
      * The value of the <code>USERNAME</code> attribute must be the user's
-     * actual username, not an alias (such as email address or phone number). To
-     * make this easier, the <code>AdminInitiateAuth</code> response includes
-     * the actual username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     * attribute, even if you specified an alias in your call to
-     * <code>AdminInitiateAuth</code>.
+     * actual username, not an alias (such as an email address or phone number).
+     * To make this simpler, the <code>AdminInitiateAuth</code> response
+     * includes the actual username value in the
+     * <code>USERNAMEUSER_ID_FOR_SRP</code> attribute. This happens even if you
+     * specified an alias in your call to <code>AdminInitiateAuth</code>.
+     * </p>
+     * <p>
+     * For more information about <code>SECRET_HASH</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     * >Computing secret hash values</a>. For information about
+     * <code>DEVICE_KEY</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     * >Working with user devices in your user pool</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -625,7 +1002,13 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      *            <code>SECRET_HASH</code> (if app client is configured with
      *            client secret).
      *            </p>
-     *            </li>
+     *            <note>
+     *            <p>
+     *            <code>PASSWORD_VERIFIER</code> requires
+     *            <code>DEVICE_KEY</code> when signing in with a remembered
+     *            device.
+     *            </p>
+     *            </note></li>
      *            <li>
      *            <p>
      *            <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -636,20 +1019,52 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      *            <li>
      *            <p>
      *            <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
-     *            any other required attributes, <code>USERNAME</code>,
-     *            <code>SECRET_HASH</code> (if app client is configured with
-     *            client secret).
+     *            <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client
+     *            is configured with client secret). To set any required
+     *            attributes that Amazon Cognito returned as
+     *            <code>requiredAttributes</code> in the
+     *            <code>AdminInitiateAuth</code> response, add a
+     *            <code>userAttributes.<i>attributename</i> </code> parameter.
+     *            This parameter can also set values for writable attributes
+     *            that aren't required by your user pool.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            In a <code>NEW_PASSWORD_REQUIRED</code> challenge response,
+     *            you can't modify a required attribute that already has a
+     *            value. In <code>AdminRespondToAuthChallenge</code>, set a
+     *            value for any keys that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter, then use the
+     *            <code>AdminUpdateUserAttributes</code> API operation to modify
+     *            the value of any additional attributes.
+     *            </p>
+     *            </note></li>
+     *            <li>
+     *            <p>
+     *            <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus
+     *            you must use the session value returned by
+     *            <code>VerifySoftwareToken</code> in the <code>Session</code>
+     *            parameter.
      *            </p>
      *            </li>
      *            </ul>
      *            <p>
      *            The value of the <code>USERNAME</code> attribute must be the
-     *            user's actual username, not an alias (such as email address or
-     *            phone number). To make this easier, the
+     *            user's actual username, not an alias (such as an email address
+     *            or phone number). To make this simpler, the
      *            <code>AdminInitiateAuth</code> response includes the actual
      *            username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     *            attribute, even if you specified an alias in your call to
-     *            <code>AdminInitiateAuth</code>.
+     *            attribute. This happens even if you specified an alias in your
+     *            call to <code>AdminInitiateAuth</code>.
+     *            </p>
+     *            <p>
+     *            For more information about <code>SECRET_HASH</code>, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     *            >Computing secret hash values</a>. For information about
+     *            <code>DEVICE_KEY</code>, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     *            >Working with user devices in your user pool</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -680,7 +1095,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
      * configured with client secret).
      * </p>
-     * </li>
+     * <note>
+     * <p>
+     * <code>PASSWORD_VERIFIER</code> requires <code>DEVICE_KEY</code> when
+     * signing in with a remembered device.
+     * </p>
+     * </note></li>
      * <li>
      * <p>
      * <code>ADMIN_NO_SRP_AUTH</code>: <code>PASSWORD</code>,
@@ -690,19 +1110,48 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other
-     * required attributes, <code>USERNAME</code>, <code>SECRET_HASH</code> (if
-     * app client is configured with client secret).
+     * <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>,
+     * <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is
+     * configured with client secret). To set any required attributes that
+     * Amazon Cognito returned as <code>requiredAttributes</code> in the
+     * <code>AdminInitiateAuth</code> response, add a
+     * <code>userAttributes.<i>attributename</i> </code> parameter. This
+     * parameter can also set values for writable attributes that aren't
+     * required by your user pool.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>AdminRespondToAuthChallenge</code>, set a value for any keys that
+     * Amazon Cognito returned in the <code>requiredAttributes</code> parameter,
+     * then use the <code>AdminUpdateUserAttributes</code> API operation to
+     * modify the value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code> requires <code>USERNAME</code>, plus you must use
+     * the session value returned by <code>VerifySoftwareToken</code> in the
+     * <code>Session</code> parameter.
      * </p>
      * </li>
      * </ul>
      * <p>
      * The value of the <code>USERNAME</code> attribute must be the user's
-     * actual username, not an alias (such as email address or phone number). To
-     * make this easier, the <code>AdminInitiateAuth</code> response includes
-     * the actual username value in the <code>USERNAMEUSER_ID_FOR_SRP</code>
-     * attribute, even if you specified an alias in your call to
-     * <code>AdminInitiateAuth</code>.
+     * actual username, not an alias (such as an email address or phone number).
+     * To make this simpler, the <code>AdminInitiateAuth</code> response
+     * includes the actual username value in the
+     * <code>USERNAMEUSER_ID_FOR_SRP</code> attribute. This happens even if you
+     * specified an alias in your call to <code>AdminInitiateAuth</code>.
+     * </p>
+     * <p>
+     * For more information about <code>SECRET_HASH</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash"
+     * >Computing secret hash values</a>. For information about
+     * <code>DEVICE_KEY</code>, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html"
+     * >Working with user devices in your user pool</a>.
      * </p>
      * <p>
      * The method adds a new key-value pair into ChallengeResponses parameter,
@@ -739,11 +1188,11 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If <code>InitiateAuth</code> or
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If an <code>InitiateAuth</code> or
      * <code>RespondToAuthChallenge</code> API call determines that the caller
-     * needs to go through another challenge, they return a session with other
-     * challenge parameters. This session should be passed as it is to the next
+     * must pass another challenge, it returns a session with other challenge
+     * parameters. This session should be passed as it is to the next
      * <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
@@ -751,13 +1200,12 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         The session which should be passed both ways in
-     *         challenge-response calls to the service. If
-     *         <code>InitiateAuth</code> or <code>RespondToAuthChallenge</code>
-     *         API call determines that the caller needs to go through another
-     *         challenge, they return a session with other challenge parameters.
-     *         This session should be passed as it is to the next
-     *         <code>RespondToAuthChallenge</code> API call.
+     *         The session that should be passed both ways in challenge-response
+     *         calls to the service. If an <code>InitiateAuth</code> or
+     *         <code>RespondToAuthChallenge</code> API call determines that the
+     *         caller must pass another challenge, it returns a session with
+     *         other challenge parameters. This session should be passed as it
+     *         is to the next <code>RespondToAuthChallenge</code> API call.
      *         </p>
      */
     public String getSession() {
@@ -766,11 +1214,11 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If <code>InitiateAuth</code> or
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If an <code>InitiateAuth</code> or
      * <code>RespondToAuthChallenge</code> API call determines that the caller
-     * needs to go through another challenge, they return a session with other
-     * challenge parameters. This session should be passed as it is to the next
+     * must pass another challenge, it returns a session with other challenge
+     * parameters. This session should be passed as it is to the next
      * <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
@@ -778,14 +1226,14 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
-     *            challenge-response calls to the service. If
+     *            The session that should be passed both ways in
+     *            challenge-response calls to the service. If an
      *            <code>InitiateAuth</code> or
      *            <code>RespondToAuthChallenge</code> API call determines that
-     *            the caller needs to go through another challenge, they return
-     *            a session with other challenge parameters. This session should
-     *            be passed as it is to the next
-     *            <code>RespondToAuthChallenge</code> API call.
+     *            the caller must pass another challenge, it returns a session
+     *            with other challenge parameters. This session should be passed
+     *            as it is to the next <code>RespondToAuthChallenge</code> API
+     *            call.
      *            </p>
      */
     public void setSession(String session) {
@@ -794,11 +1242,11 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If <code>InitiateAuth</code> or
+     * The session that should be passed both ways in challenge-response calls
+     * to the service. If an <code>InitiateAuth</code> or
      * <code>RespondToAuthChallenge</code> API call determines that the caller
-     * needs to go through another challenge, they return a session with other
-     * challenge parameters. This session should be passed as it is to the next
+     * must pass another challenge, it returns a session with other challenge
+     * parameters. This session should be passed as it is to the next
      * <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
@@ -809,14 +1257,14 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
-     *            challenge-response calls to the service. If
+     *            The session that should be passed both ways in
+     *            challenge-response calls to the service. If an
      *            <code>InitiateAuth</code> or
      *            <code>RespondToAuthChallenge</code> API call determines that
-     *            the caller needs to go through another challenge, they return
-     *            a session with other challenge parameters. This session should
-     *            be passed as it is to the next
-     *            <code>RespondToAuthChallenge</code> API call.
+     *            the caller must pass another challenge, it returns a session
+     *            with other challenge parameters. This session should be passed
+     *            as it is to the next <code>RespondToAuthChallenge</code> API
+     *            call.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -880,15 +1328,18 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon
-     * Cognito advanced security.
+     * Contextual data about your user session, such as the device fingerprint,
+     * IP address, or location. Amazon Cognito advanced security evaluates the
+     * risk of an authentication event based on the context that your app
+     * generates and passes to Amazon Cognito when it makes API requests.
      * </p>
      *
      * @return <p>
-     *         Contextual data such as the user's device fingerprint, IP
-     *         address, or location used for evaluating the risk of an
-     *         unexpected event by Amazon Cognito advanced security.
+     *         Contextual data about your user session, such as the device
+     *         fingerprint, IP address, or location. Amazon Cognito advanced
+     *         security evaluates the risk of an authentication event based on
+     *         the context that your app generates and passes to Amazon Cognito
+     *         when it makes API requests.
      *         </p>
      */
     public ContextDataType getContextData() {
@@ -897,15 +1348,18 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon
-     * Cognito advanced security.
+     * Contextual data about your user session, such as the device fingerprint,
+     * IP address, or location. Amazon Cognito advanced security evaluates the
+     * risk of an authentication event based on the context that your app
+     * generates and passes to Amazon Cognito when it makes API requests.
      * </p>
      *
      * @param contextData <p>
-     *            Contextual data such as the user's device fingerprint, IP
-     *            address, or location used for evaluating the risk of an
-     *            unexpected event by Amazon Cognito advanced security.
+     *            Contextual data about your user session, such as the device
+     *            fingerprint, IP address, or location. Amazon Cognito advanced
+     *            security evaluates the risk of an authentication event based
+     *            on the context that your app generates and passes to Amazon
+     *            Cognito when it makes API requests.
      *            </p>
      */
     public void setContextData(ContextDataType contextData) {
@@ -914,24 +1368,753 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon
-     * Cognito advanced security.
+     * Contextual data about your user session, such as the device fingerprint,
+     * IP address, or location. Amazon Cognito advanced security evaluates the
+     * risk of an authentication event based on the context that your app
+     * generates and passes to Amazon Cognito when it makes API requests.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param contextData <p>
-     *            Contextual data such as the user's device fingerprint, IP
-     *            address, or location used for evaluating the risk of an
-     *            unexpected event by Amazon Cognito advanced security.
+     *            Contextual data about your user session, such as the device
+     *            fingerprint, IP address, or location. Amazon Cognito advanced
+     *            security evaluates the risk of an authentication event based
+     *            on the context that your app generates and passes to Amazon
+     *            Cognito when it makes API requests.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public AdminRespondToAuthChallengeRequest withContextData(ContextDataType contextData) {
         this.contextData = contextData;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminRespondToAuthChallenge API action, Amazon
+     * Cognito invokes any functions that you have assigned to the following
+     * triggers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * pre sign-up
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * custom message
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * post authentication
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * user migration
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * pre token generation
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * define auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * create auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * verify auth challenge response
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * When Amazon Cognito invokes any of these functions, it passes a JSON
+     * payload, which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute that provides the data that you
+     * assigned to the ClientMetadata parameter in your
+     * AdminRespondToAuthChallenge request. In your function code in Lambda, you
+     * can process the <code>clientMetadata</code> value to enhance your
+     * workflow for your specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     *
+     * @return <p>
+     *         A map of custom key-value pairs that you can provide as input for
+     *         any custom workflows that this action triggers.
+     *         </p>
+     *         <p>
+     *         You create custom workflows by assigning Lambda functions to user
+     *         pool triggers. When you use the AdminRespondToAuthChallenge API
+     *         action, Amazon Cognito invokes any functions that you have
+     *         assigned to the following triggers:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         pre sign-up
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         custom message
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         post authentication
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         user migration
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         pre token generation
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         define auth challenge
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         create auth challenge
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         verify auth challenge response
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         <p>
+     *         When Amazon Cognito invokes any of these functions, it passes a
+     *         JSON payload, which the function receives as input. This payload
+     *         contains a <code>clientMetadata</code> attribute that provides
+     *         the data that you assigned to the ClientMetadata parameter in
+     *         your AdminRespondToAuthChallenge request. In your function code
+     *         in Lambda, you can process the <code>clientMetadata</code> value
+     *         to enhance your workflow for your specific needs.
+     *         </p>
+     *         <p>
+     *         For more information, see <a href=
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     *         > Customizing user pool Workflows with Lambda Triggers</a> in the
+     *         <i>Amazon Cognito Developer Guide</i>.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         When you use the ClientMetadata parameter, remember that Amazon
+     *         Cognito won't do the following:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         Store the ClientMetadata value. This data is available only to
+     *         Lambda triggers that are assigned to a user pool to support
+     *         custom workflows. If your user pool configuration doesn't include
+     *         triggers, the ClientMetadata parameter serves no purpose.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Validate the ClientMetadata value.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Encrypt the ClientMetadata value. Don't use Amazon Cognito to
+     *         provide sensitive information.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </note>
+     */
+    public java.util.Map<String, String> getClientMetadata() {
+        return clientMetadata;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminRespondToAuthChallenge API action, Amazon
+     * Cognito invokes any functions that you have assigned to the following
+     * triggers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * pre sign-up
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * custom message
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * post authentication
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * user migration
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * pre token generation
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * define auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * create auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * verify auth challenge response
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * When Amazon Cognito invokes any of these functions, it passes a JSON
+     * payload, which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute that provides the data that you
+     * assigned to the ClientMetadata parameter in your
+     * AdminRespondToAuthChallenge request. In your function code in Lambda, you
+     * can process the <code>clientMetadata</code> value to enhance your
+     * workflow for your specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     *
+     * @param clientMetadata <p>
+     *            A map of custom key-value pairs that you can provide as input
+     *            for any custom workflows that this action triggers.
+     *            </p>
+     *            <p>
+     *            You create custom workflows by assigning Lambda functions to
+     *            user pool triggers. When you use the
+     *            AdminRespondToAuthChallenge API action, Amazon Cognito invokes
+     *            any functions that you have assigned to the following
+     *            triggers:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            pre sign-up
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            custom message
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            post authentication
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            user migration
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            pre token generation
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            define auth challenge
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            create auth challenge
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            verify auth challenge response
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            When Amazon Cognito invokes any of these functions, it passes
+     *            a JSON payload, which the function receives as input. This
+     *            payload contains a <code>clientMetadata</code> attribute that
+     *            provides the data that you assigned to the ClientMetadata
+     *            parameter in your AdminRespondToAuthChallenge request. In your
+     *            function code in Lambda, you can process the
+     *            <code>clientMetadata</code> value to enhance your workflow for
+     *            your specific needs.
+     *            </p>
+     *            <p>
+     *            For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     *            > Customizing user pool Workflows with Lambda Triggers</a> in
+     *            the <i>Amazon Cognito Developer Guide</i>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            When you use the ClientMetadata parameter, remember that
+     *            Amazon Cognito won't do the following:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Store the ClientMetadata value. This data is available only to
+     *            Lambda triggers that are assigned to a user pool to support
+     *            custom workflows. If your user pool configuration doesn't
+     *            include triggers, the ClientMetadata parameter serves no
+     *            purpose.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Validate the ClientMetadata value.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Encrypt the ClientMetadata value. Don't use Amazon Cognito to
+     *            provide sensitive information.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </note>
+     */
+    public void setClientMetadata(java.util.Map<String, String> clientMetadata) {
+        this.clientMetadata = clientMetadata;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminRespondToAuthChallenge API action, Amazon
+     * Cognito invokes any functions that you have assigned to the following
+     * triggers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * pre sign-up
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * custom message
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * post authentication
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * user migration
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * pre token generation
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * define auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * create auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * verify auth challenge response
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * When Amazon Cognito invokes any of these functions, it passes a JSON
+     * payload, which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute that provides the data that you
+     * assigned to the ClientMetadata parameter in your
+     * AdminRespondToAuthChallenge request. In your function code in Lambda, you
+     * can process the <code>clientMetadata</code> value to enhance your
+     * workflow for your specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param clientMetadata <p>
+     *            A map of custom key-value pairs that you can provide as input
+     *            for any custom workflows that this action triggers.
+     *            </p>
+     *            <p>
+     *            You create custom workflows by assigning Lambda functions to
+     *            user pool triggers. When you use the
+     *            AdminRespondToAuthChallenge API action, Amazon Cognito invokes
+     *            any functions that you have assigned to the following
+     *            triggers:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            pre sign-up
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            custom message
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            post authentication
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            user migration
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            pre token generation
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            define auth challenge
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            create auth challenge
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            verify auth challenge response
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            <p>
+     *            When Amazon Cognito invokes any of these functions, it passes
+     *            a JSON payload, which the function receives as input. This
+     *            payload contains a <code>clientMetadata</code> attribute that
+     *            provides the data that you assigned to the ClientMetadata
+     *            parameter in your AdminRespondToAuthChallenge request. In your
+     *            function code in Lambda, you can process the
+     *            <code>clientMetadata</code> value to enhance your workflow for
+     *            your specific needs.
+     *            </p>
+     *            <p>
+     *            For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     *            > Customizing user pool Workflows with Lambda Triggers</a> in
+     *            the <i>Amazon Cognito Developer Guide</i>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            When you use the ClientMetadata parameter, remember that
+     *            Amazon Cognito won't do the following:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Store the ClientMetadata value. This data is available only to
+     *            Lambda triggers that are assigned to a user pool to support
+     *            custom workflows. If your user pool configuration doesn't
+     *            include triggers, the ClientMetadata parameter serves no
+     *            purpose.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Validate the ClientMetadata value.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Encrypt the ClientMetadata value. Don't use Amazon Cognito to
+     *            provide sensitive information.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AdminRespondToAuthChallengeRequest withClientMetadata(
+            java.util.Map<String, String> clientMetadata) {
+        this.clientMetadata = clientMetadata;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminRespondToAuthChallenge API action, Amazon
+     * Cognito invokes any functions that you have assigned to the following
+     * triggers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * pre sign-up
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * custom message
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * post authentication
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * user migration
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * pre token generation
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * define auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * create auth challenge
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * verify auth challenge response
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * When Amazon Cognito invokes any of these functions, it passes a JSON
+     * payload, which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute that provides the data that you
+     * assigned to the ClientMetadata parameter in your
+     * AdminRespondToAuthChallenge request. In your function code in Lambda, you
+     * can process the <code>clientMetadata</code> value to enhance your
+     * workflow for your specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     * <p>
+     * The method adds a new key-value pair into ClientMetadata parameter, and
+     * returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param key The key of the entry to be added into ClientMetadata.
+     * @param value The corresponding value of the entry to be added into
+     *            ClientMetadata.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AdminRespondToAuthChallengeRequest addClientMetadataEntry(String key, String value) {
+        if (null == this.clientMetadata) {
+            this.clientMetadata = new java.util.HashMap<String, String>();
+        }
+        if (this.clientMetadata.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString()
+                    + ") are provided.");
+        this.clientMetadata.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into ClientMetadata.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     */
+    public AdminRespondToAuthChallengeRequest clearClientMetadataEntries() {
+        this.clientMetadata = null;
         return this;
     }
 
@@ -959,7 +2142,9 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
         if (getAnalyticsMetadata() != null)
             sb.append("AnalyticsMetadata: " + getAnalyticsMetadata() + ",");
         if (getContextData() != null)
-            sb.append("ContextData: " + getContextData());
+            sb.append("ContextData: " + getContextData() + ",");
+        if (getClientMetadata() != null)
+            sb.append("ClientMetadata: " + getClientMetadata());
         sb.append("}");
         return sb.toString();
     }
@@ -980,6 +2165,8 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
                 + ((getAnalyticsMetadata() == null) ? 0 : getAnalyticsMetadata().hashCode());
         hashCode = prime * hashCode
                 + ((getContextData() == null) ? 0 : getContextData().hashCode());
+        hashCode = prime * hashCode
+                + ((getClientMetadata() == null) ? 0 : getClientMetadata().hashCode());
         return hashCode;
     }
 
@@ -1026,6 +2213,11 @@ public class AdminRespondToAuthChallengeRequest extends AmazonWebServiceRequest 
             return false;
         if (other.getContextData() != null
                 && other.getContextData().equals(this.getContextData()) == false)
+            return false;
+        if (other.getClientMetadata() == null ^ this.getClientMetadata() == null)
+            return false;
+        if (other.getClientMetadata() != null
+                && other.getClientMetadata().equals(this.getClientMetadata()) == false)
             return false;
         return true;
     }

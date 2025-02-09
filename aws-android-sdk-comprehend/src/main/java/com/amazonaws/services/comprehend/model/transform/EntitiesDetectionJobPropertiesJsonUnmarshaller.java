@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ class EntitiesDetectionJobPropertiesJsonUnmarshaller implements
             if (name.equals("JobId")) {
                 entitiesDetectionJobProperties.setJobId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
+            } else if (name.equals("JobArn")) {
+                entitiesDetectionJobProperties.setJobArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
             } else if (name.equals("JobName")) {
                 entitiesDetectionJobProperties.setJobName(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
@@ -73,6 +76,16 @@ class EntitiesDetectionJobPropertiesJsonUnmarshaller implements
             } else if (name.equals("DataAccessRoleArn")) {
                 entitiesDetectionJobProperties.setDataAccessRoleArn(StringJsonUnmarshaller
                         .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                entitiesDetectionJobProperties.setVolumeKmsKeyId(StringJsonUnmarshaller
+                        .getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                entitiesDetectionJobProperties.setVpcConfig(VpcConfigJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("FlywheelArn")) {
+                entitiesDetectionJobProperties.setFlywheelArn(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

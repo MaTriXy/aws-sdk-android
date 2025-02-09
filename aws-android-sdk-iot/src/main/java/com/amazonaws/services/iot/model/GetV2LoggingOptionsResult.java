@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class GetV2LoggingOptionsResult implements Serializable {
     /**
      * <p>
-     * The IAM role ARN AWS IoT uses to write to your CloudWatch logs.
+     * The IAM role ARN IoT uses to write to your CloudWatch logs.
      * </p>
      */
     private String roleArn;
@@ -44,11 +44,11 @@ public class GetV2LoggingOptionsResult implements Serializable {
 
     /**
      * <p>
-     * The IAM role ARN AWS IoT uses to write to your CloudWatch logs.
+     * The IAM role ARN IoT uses to write to your CloudWatch logs.
      * </p>
      *
      * @return <p>
-     *         The IAM role ARN AWS IoT uses to write to your CloudWatch logs.
+     *         The IAM role ARN IoT uses to write to your CloudWatch logs.
      *         </p>
      */
     public String getRoleArn() {
@@ -57,12 +57,11 @@ public class GetV2LoggingOptionsResult implements Serializable {
 
     /**
      * <p>
-     * The IAM role ARN AWS IoT uses to write to your CloudWatch logs.
+     * The IAM role ARN IoT uses to write to your CloudWatch logs.
      * </p>
      *
      * @param roleArn <p>
-     *            The IAM role ARN AWS IoT uses to write to your CloudWatch
-     *            logs.
+     *            The IAM role ARN IoT uses to write to your CloudWatch logs.
      *            </p>
      */
     public void setRoleArn(String roleArn) {
@@ -71,15 +70,14 @@ public class GetV2LoggingOptionsResult implements Serializable {
 
     /**
      * <p>
-     * The IAM role ARN AWS IoT uses to write to your CloudWatch logs.
+     * The IAM role ARN IoT uses to write to your CloudWatch logs.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param roleArn <p>
-     *            The IAM role ARN AWS IoT uses to write to your CloudWatch
-     *            logs.
+     *            The IAM role ARN IoT uses to write to your CloudWatch logs.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

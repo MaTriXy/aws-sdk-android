@@ -25,11 +25,10 @@ import com.amazonaws.mobileconnectors.pinpoint.internal.core.PinpointContext;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.util.Preconditions;
 import com.amazonaws.mobileconnectors.pinpoint.internal.core.util.SDKInfo;
 import com.amazonaws.mobileconnectors.pinpoint.internal.validate.EncodingValidator;
-import com.amazonaws.mobileconnectors.pinpoint.internal.validate.PermissionValidator;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.TargetingClient;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.DeviceTokenRegisteredHandler;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.NotificationClient;
-import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationReceiver;
+import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationActivity;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.pinpoint.AmazonPinpointClient;
 import com.amazonaws.services.pinpoint.model.ChannelType;
@@ -52,9 +51,6 @@ public class PinpointManager {
     private static final String SDK_NAME = "aws-sdk-android";
     private static final SDKInfo SDK_INFO = new SDKInfo(SDK_NAME, SDK_VERSION);
     private static final Log log = LogFactory.getLog(PinpointManager.class);
-    private static final PermissionValidator INTERNET_PERMISSION_VALIDATOR = new PermissionValidator("android.permission.INTERNET");
-    private static final PermissionValidator ACCESS_NETWORK_STATE_PERMISSION_VALIDATOR = new PermissionValidator(
-        "android.permission.ACCESS_NETWORK_STATE");
     private static final EncodingValidator ENCODING_VALIDATOR = new EncodingValidator("UTF-8");
 
     private final PinpointContext pinpointContext;
@@ -86,14 +82,12 @@ public class PinpointManager {
 
             final AmazonPinpointClient targetingServiceClient = new AmazonPinpointClient(credentialsProvider, config.getClientConfiguration());
 
-            INTERNET_PERMISSION_VALIDATOR.validate(appContext);
-            ACCESS_NETWORK_STATE_PERMISSION_VALIDATOR.validate(appContext);
             ENCODING_VALIDATOR.validate();
 
             this.pinpointContext = new PinpointContext(analyticsServiceClient, targetingServiceClient, appContext, appId, SDK_INFO, config);
             this.notificationClient = NotificationClient.createClient(this.pinpointContext, channelType);
             this.pinpointContext.setNotificationClient(this.notificationClient);
-            PinpointNotificationReceiver.setNotificationClient(this.notificationClient);
+            PinpointNotificationActivity.setNotificationClient(this.notificationClient);
 
             if (config.getEnableEvents()) {
                 this.analyticsClient = new AnalyticsClient(this.pinpointContext);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * has permission to create rules will be able to access data processed by the
  * rule.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreateTopicRule</a> action.
+ * </p>
  */
 public class CreateTopicRuleRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -44,6 +49,26 @@ public class CreateTopicRuleRequest extends AmazonWebServiceRequest implements S
      * </p>
      */
     private TopicRulePayload topicRulePayload;
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the topic rule.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: --tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     */
+    private String tags;
 
     /**
      * <p>
@@ -148,6 +173,132 @@ public class CreateTopicRuleRequest extends AmazonWebServiceRequest implements S
     }
 
     /**
+     * <p>
+     * Metadata which can be used to manage the topic rule.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: --tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @return <p>
+     *         Metadata which can be used to manage the topic rule.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         For URI Request parameters use format:
+     *         ...key1=value1&amp;key2=value2...
+     *         </p>
+     *         <p>
+     *         For the CLI command-line parameter use format: --tags
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         <p>
+     *         For the cli-input-json file use format: "tags":
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         </note>
+     */
+    public String getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the topic rule.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: --tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the topic rule.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: --tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     */
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the topic rule.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: --tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the topic rule.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: --tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateTopicRuleRequest withTags(String tags) {
+        this.tags = tags;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -161,7 +312,9 @@ public class CreateTopicRuleRequest extends AmazonWebServiceRequest implements S
         if (getRuleName() != null)
             sb.append("ruleName: " + getRuleName() + ",");
         if (getTopicRulePayload() != null)
-            sb.append("topicRulePayload: " + getTopicRulePayload());
+            sb.append("topicRulePayload: " + getTopicRulePayload() + ",");
+        if (getTags() != null)
+            sb.append("tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -174,6 +327,7 @@ public class CreateTopicRuleRequest extends AmazonWebServiceRequest implements S
         hashCode = prime * hashCode + ((getRuleName() == null) ? 0 : getRuleName().hashCode());
         hashCode = prime * hashCode
                 + ((getTopicRulePayload() == null) ? 0 : getTopicRulePayload().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -196,6 +350,10 @@ public class CreateTopicRuleRequest extends AmazonWebServiceRequest implements S
             return false;
         if (other.getTopicRulePayload() != null
                 && other.getTopicRulePayload().equals(this.getTopicRulePayload()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,14 +68,32 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * The shadow.
+     * The unnamed shadow and named shadow.
+     * </p>
+     * <p>
+     * For more information about shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
      * </p>
      */
     private String shadow;
 
     /**
      * <p>
-     * Indicates whether or not the thing is connected to the AWS IoT service.
+     * Contains Device Defender data.
+     * </p>
+     * <p>
+     * For more information about Device Defender, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     * >Device Defender</a>.
+     * </p>
+     */
+    private String deviceDefender;
+
+    /**
+     * <p>
+     * Indicates whether the thing is connected to the Amazon Web Services IoT
+     * Core service.
      * </p>
      */
     private ThingConnectivity connectivity;
@@ -397,11 +415,21 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * The shadow.
+     * The unnamed shadow and named shadow.
+     * </p>
+     * <p>
+     * For more information about shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
      * </p>
      *
      * @return <p>
-     *         The shadow.
+     *         The unnamed shadow and named shadow.
+     *         </p>
+     *         <p>
+     *         For more information about shadows, see <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *         >IoT Device Shadow service.</a>
      *         </p>
      */
     public String getShadow() {
@@ -410,11 +438,21 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * The shadow.
+     * The unnamed shadow and named shadow.
+     * </p>
+     * <p>
+     * For more information about shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
      * </p>
      *
      * @param shadow <p>
-     *            The shadow.
+     *            The unnamed shadow and named shadow.
+     *            </p>
+     *            <p>
+     *            For more information about shadows, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *            >IoT Device Shadow service.</a>
      *            </p>
      */
     public void setShadow(String shadow) {
@@ -423,14 +461,24 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * The shadow.
+     * The unnamed shadow and named shadow.
+     * </p>
+     * <p>
+     * For more information about shadows, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     * >IoT Device Shadow service.</a>
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param shadow <p>
-     *            The shadow.
+     *            The unnamed shadow and named shadow.
+     *            </p>
+     *            <p>
+     *            For more information about shadows, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+     *            >IoT Device Shadow service.</a>
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -442,12 +490,88 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * Indicates whether or not the thing is connected to the AWS IoT service.
+     * Contains Device Defender data.
+     * </p>
+     * <p>
+     * For more information about Device Defender, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     * >Device Defender</a>.
      * </p>
      *
      * @return <p>
-     *         Indicates whether or not the thing is connected to the AWS IoT
-     *         service.
+     *         Contains Device Defender data.
+     *         </p>
+     *         <p>
+     *         For more information about Device Defender, see <a href=
+     *         "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     *         >Device Defender</a>.
+     *         </p>
+     */
+    public String getDeviceDefender() {
+        return deviceDefender;
+    }
+
+    /**
+     * <p>
+     * Contains Device Defender data.
+     * </p>
+     * <p>
+     * For more information about Device Defender, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     * >Device Defender</a>.
+     * </p>
+     *
+     * @param deviceDefender <p>
+     *            Contains Device Defender data.
+     *            </p>
+     *            <p>
+     *            For more information about Device Defender, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     *            >Device Defender</a>.
+     *            </p>
+     */
+    public void setDeviceDefender(String deviceDefender) {
+        this.deviceDefender = deviceDefender;
+    }
+
+    /**
+     * <p>
+     * Contains Device Defender data.
+     * </p>
+     * <p>
+     * For more information about Device Defender, see <a href=
+     * "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     * >Device Defender</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param deviceDefender <p>
+     *            Contains Device Defender data.
+     *            </p>
+     *            <p>
+     *            For more information about Device Defender, see <a href=
+     *            "https://docs.aws.amazon.com/iot/latest/developerguide/device-defender.html"
+     *            >Device Defender</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public ThingDocument withDeviceDefender(String deviceDefender) {
+        this.deviceDefender = deviceDefender;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether the thing is connected to the Amazon Web Services IoT
+     * Core service.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether the thing is connected to the Amazon Web
+     *         Services IoT Core service.
      *         </p>
      */
     public ThingConnectivity getConnectivity() {
@@ -456,12 +580,13 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * Indicates whether or not the thing is connected to the AWS IoT service.
+     * Indicates whether the thing is connected to the Amazon Web Services IoT
+     * Core service.
      * </p>
      *
      * @param connectivity <p>
-     *            Indicates whether or not the thing is connected to the AWS IoT
-     *            service.
+     *            Indicates whether the thing is connected to the Amazon Web
+     *            Services IoT Core service.
      *            </p>
      */
     public void setConnectivity(ThingConnectivity connectivity) {
@@ -470,15 +595,16 @@ public class ThingDocument implements Serializable {
 
     /**
      * <p>
-     * Indicates whether or not the thing is connected to the AWS IoT service.
+     * Indicates whether the thing is connected to the Amazon Web Services IoT
+     * Core service.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param connectivity <p>
-     *            Indicates whether or not the thing is connected to the AWS IoT
-     *            service.
+     *            Indicates whether the thing is connected to the Amazon Web
+     *            Services IoT Core service.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -511,6 +637,8 @@ public class ThingDocument implements Serializable {
             sb.append("attributes: " + getAttributes() + ",");
         if (getShadow() != null)
             sb.append("shadow: " + getShadow() + ",");
+        if (getDeviceDefender() != null)
+            sb.append("deviceDefender: " + getDeviceDefender() + ",");
         if (getConnectivity() != null)
             sb.append("connectivity: " + getConnectivity());
         sb.append("}");
@@ -530,6 +658,8 @@ public class ThingDocument implements Serializable {
                 + ((getThingGroupNames() == null) ? 0 : getThingGroupNames().hashCode());
         hashCode = prime * hashCode + ((getAttributes() == null) ? 0 : getAttributes().hashCode());
         hashCode = prime * hashCode + ((getShadow() == null) ? 0 : getShadow().hashCode());
+        hashCode = prime * hashCode
+                + ((getDeviceDefender() == null) ? 0 : getDeviceDefender().hashCode());
         hashCode = prime * hashCode
                 + ((getConnectivity() == null) ? 0 : getConnectivity().hashCode());
         return hashCode;
@@ -573,6 +703,11 @@ public class ThingDocument implements Serializable {
         if (other.getShadow() == null ^ this.getShadow() == null)
             return false;
         if (other.getShadow() != null && other.getShadow().equals(this.getShadow()) == false)
+            return false;
+        if (other.getDeviceDefender() == null ^ this.getDeviceDefender() == null)
+            return false;
+        if (other.getDeviceDefender() != null
+                && other.getDeviceDefender().equals(this.getDeviceDefender()) == false)
             return false;
         if (other.getConnectivity() == null ^ this.getConnectivity() == null)
             return false;

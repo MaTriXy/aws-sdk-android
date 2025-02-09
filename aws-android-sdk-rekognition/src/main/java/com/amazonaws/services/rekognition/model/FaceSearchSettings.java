@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ import java.io.Serializable;
 /**
  * <p>
  * Input face recognition parameters for an Amazon Rekognition stream processor.
- * <code>FaceRecognitionSettings</code> is a request parameter for .
+ * Includes the collection to use for face recognition and the face attributes
+ * to detect. Defining the settings is required in the request parameter for
+ * <a>CreateStreamProcessor</a>.
  * </p>
  */
 public class FaceSearchSettings implements Serializable {
@@ -38,12 +40,13 @@ public class FaceSearchSettings implements Serializable {
     /**
      * <p>
      * Minimum face match confidence score that must be met to return a result
-     * for a recognized face. Default is 70. 0 is the lowest confidence. 100 is
-     * the highest confidence.
+     * for a recognized face. The default is 80. 0 is the lowest confidence. 100
+     * is the highest confidence. Values between 0 and 100 are accepted, and
+     * values lower than 80 are set to 80.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float faceMatchThreshold;
 
@@ -110,17 +113,19 @@ public class FaceSearchSettings implements Serializable {
     /**
      * <p>
      * Minimum face match confidence score that must be met to return a result
-     * for a recognized face. Default is 70. 0 is the lowest confidence. 100 is
-     * the highest confidence.
+     * for a recognized face. The default is 80. 0 is the lowest confidence. 100
+     * is the highest confidence. Values between 0 and 100 are accepted, and
+     * values lower than 80 are set to 80.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Minimum face match confidence score that must be met to return a
-     *         result for a recognized face. Default is 70. 0 is the lowest
-     *         confidence. 100 is the highest confidence.
+     *         result for a recognized face. The default is 80. 0 is the lowest
+     *         confidence. 100 is the highest confidence. Values between 0 and
+     *         100 are accepted, and values lower than 80 are set to 80.
      *         </p>
      */
     public Float getFaceMatchThreshold() {
@@ -130,17 +135,20 @@ public class FaceSearchSettings implements Serializable {
     /**
      * <p>
      * Minimum face match confidence score that must be met to return a result
-     * for a recognized face. Default is 70. 0 is the lowest confidence. 100 is
-     * the highest confidence.
+     * for a recognized face. The default is 80. 0 is the lowest confidence. 100
+     * is the highest confidence. Values between 0 and 100 are accepted, and
+     * values lower than 80 are set to 80.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param faceMatchThreshold <p>
      *            Minimum face match confidence score that must be met to return
-     *            a result for a recognized face. Default is 70. 0 is the lowest
-     *            confidence. 100 is the highest confidence.
+     *            a result for a recognized face. The default is 80. 0 is the
+     *            lowest confidence. 100 is the highest confidence. Values
+     *            between 0 and 100 are accepted, and values lower than 80 are
+     *            set to 80.
      *            </p>
      */
     public void setFaceMatchThreshold(Float faceMatchThreshold) {
@@ -150,20 +158,23 @@ public class FaceSearchSettings implements Serializable {
     /**
      * <p>
      * Minimum face match confidence score that must be met to return a result
-     * for a recognized face. Default is 70. 0 is the lowest confidence. 100 is
-     * the highest confidence.
+     * for a recognized face. The default is 80. 0 is the lowest confidence. 100
+     * is the highest confidence. Values between 0 and 100 are accepted, and
+     * values lower than 80 are set to 80.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param faceMatchThreshold <p>
      *            Minimum face match confidence score that must be met to return
-     *            a result for a recognized face. Default is 70. 0 is the lowest
-     *            confidence. 100 is the highest confidence.
+     *            a result for a recognized face. The default is 80. 0 is the
+     *            lowest confidence. 100 is the highest confidence. Values
+     *            between 0 and 100 are accepted, and values lower than 80 are
+     *            set to 80.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

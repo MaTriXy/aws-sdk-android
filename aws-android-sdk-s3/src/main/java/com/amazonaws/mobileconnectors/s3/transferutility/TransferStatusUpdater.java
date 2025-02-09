@@ -16,6 +16,8 @@
 package com.amazonaws.mobileconnectors.s3.transferutility;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -25,12 +27,13 @@ import com.amazonaws.event.ProgressListener;
 import com.amazonaws.logging.Log;
 import com.amazonaws.logging.LogFactory;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -44,36 +47,35 @@ class TransferStatusUpdater {
      */
     private static final HashSet<TransferState> STATES_NOT_TO_NOTIFY = new HashSet<TransferState>(
             Arrays.asList(TransferState.PART_COMPLETED,
-                    TransferState.PENDING_CANCEL, TransferState.PENDING_PAUSE,
+                    TransferState.PENDING_CANCEL,
+                    TransferState.PENDING_PAUSE,
                     TransferState.PENDING_NETWORK_DISCONNECT));
-    /**
-     * The threshold to update progress in milliseconds to prevent triggering
-     * listeners too often.
-     */
-    private static final int UPDATE_THRESHOLD_MS = 1000;
 
     /**
      * A map of listeners.
      */
-    static final Map<Integer, List<TransferListener>> LISTENERS = new HashMap<Integer, List<TransferListener>>();
+    static final Map<Integer, List<TransferListener>> LISTENERS = new ConcurrentHashMap<Integer, List<TransferListener>>() {
+    };
 
     /**
      * A map of active transfers.
      */
     private final Map<Integer, TransferRecord> transfers;
-    /**
-     * A map of transfer to its last update time to prevent events from being
-     * fired too often.
-     */
-    private final Map<Integer, Long> lastUpdateTime;
+
     /**
      * Database util to update transfer status.
      */
     private static TransferDBUtil dbUtil;
+    
     /**
      * The handler of main thread that runs callbacks.
      */
     private final Handler mainHandler;
+
+    /**
+     * Context required to stop TransferService on all transfers completed
+     */
+    private Context context;
 
     /**
      * The Singleton instance.
@@ -81,15 +83,23 @@ class TransferStatusUpdater {
     private static TransferStatusUpdater transferStatusUpdater;
 
     /**
+     * Prefix for temporary File created when client uploads an InputStream.   When the 
+     * upload completes, the File is deleted, if it was created by the library, but not if it was
+     * provided by the client.   To ensure we don't delete any File objects provided by the client,
+     * a random UUID is included in the prefix.
+     */
+    static final String TEMP_FILE_PREFIX = "aws-s3-d861b25a-1edf-11eb-adc1-0242ac120002";
+
+    /**
      * This class is instantiated by TransferService and TransferUtility.
      * The updater is made a singleton. Use #getInstance for getting
      * the object of the updater.
      */
-    TransferStatusUpdater(TransferDBUtil dbUtilInstance) {
+    TransferStatusUpdater(TransferDBUtil dbUtilInstance, Context context) {
         dbUtil = dbUtilInstance;
+        this.context = context;
         mainHandler = new Handler(Looper.getMainLooper());
-        transfers = new HashMap<Integer, TransferRecord>();
-        lastUpdateTime = new HashMap<Integer, Long>();
+        transfers = new ConcurrentHashMap<Integer, TransferRecord>();
     }
 
     /**
@@ -101,7 +111,7 @@ class TransferStatusUpdater {
     public static synchronized TransferStatusUpdater getInstance(Context context) {
         if (transferStatusUpdater == null) {
             dbUtil = new TransferDBUtil(context);
-            transferStatusUpdater = new TransferStatusUpdater(dbUtil);
+            transferStatusUpdater = new TransferStatusUpdater(dbUtil, context);
         }
         return transferStatusUpdater;
     }
@@ -140,9 +150,10 @@ class TransferStatusUpdater {
      * @param id id of the transfer to remove
      */
     synchronized void removeTransfer(int id) {
+        synchronized (LISTENERS) {
+            LISTENERS.remove(id);
+        }
         transfers.remove(id);
-        LISTENERS.remove(id);
-        lastUpdateTime.remove(id);
     }
     
     /**
@@ -151,6 +162,15 @@ class TransferStatusUpdater {
      * @param id id of the transfer to remove
      */
     synchronized void removeTransferRecordFromDB(final int id) {
+        // Remove temporary file
+        TransferRecord transferRecord = dbUtil.getTransferById(id);
+        if (transferRecord != null) {
+            String path = transferRecord.file;
+            String fileName = new File(path).getName();
+            if (fileName.startsWith(TEMP_FILE_PREFIX)) {
+                new File(path).delete();
+            }
+        }
         S3ClientReference.remove(id);
         dbUtil.deleteTransferRecords(id);
     }
@@ -198,27 +218,31 @@ class TransferStatusUpdater {
             removeTransferRecordFromDB(id);
         }
 
-        final List<TransferListener> list = LISTENERS.get(id);
-        if (list == null || list.isEmpty()) {
-            return;
-        }
-
-        // invoke TransferListener callback on main thread
-        for (final TransferListener l : list) {
-            mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    l.onStateChanged(id, newState);
+        synchronized (LISTENERS) {
+            final List<TransferListener> list = LISTENERS.get(id);
+            if (list != null && !list.isEmpty()) {
+                // invoke TransferListener callback on main thread
+                for (final TransferListener l : list) {
+                    // If instance is TransferStatusListener, post immediately.
+                    // Posting to main thread can cause a missed status.
+                    if (l instanceof TransferObserver.TransferStatusListener) {
+                        l.onStateChanged(id, newState);
+                    } else {
+                        mainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                l.onStateChanged(id, newState);
+                            }
+                        });
+                    }
                 }
-            });
-        }
 
-        // remove all LISTENERS when the transfer is in a final state so
-        // as to release resources ASAP.
-        if (TransferState.COMPLETED.equals(newState) ||
-            TransferState.FAILED.equals(newState) ||
-            TransferState.CANCELED.equals(newState)) {
-            list.clear();
+                // remove all LISTENERS when the transfer is in a final state so
+                // as to release resources ASAP.
+                if (TransferState.isFinalState(newState)) {
+                    list.clear();
+                }
+            }
         }
     }
 
@@ -231,31 +255,31 @@ class TransferStatusUpdater {
      * @param bytesCurrent current transferred bytes
      * @param bytesTotal total bytes
      */
-    synchronized void updateProgress(final int id, final long bytesCurrent, final long bytesTotal) {
+    synchronized void updateProgress(final int id, 
+        final long bytesCurrent, 
+        final long bytesTotal, 
+        final boolean notifyListener) {
+
         final TransferRecord transfer = transfers.get(id);
         if (transfer != null) {
             transfer.bytesCurrent = bytesCurrent;
             transfer.bytesTotal = bytesTotal;
         }
 
-        // Don't fire off the update too frequently, but still fire when it
-        // comes to the last byte.
-        final long timeInMillis = System.currentTimeMillis();
-
         // update bytes transferred so that the transfer observer may pick it
         // up.
         dbUtil.updateBytesTransferred(id, bytesCurrent);
 
-        // invoke LISTENERS
-        final List<TransferListener> list = LISTENERS.get(id);
-        if (list == null || list.isEmpty()) {
+        if (!notifyListener) {
             return;
         }
 
-        if (!lastUpdateTime.containsKey(id) ||
-            timeInMillis - lastUpdateTime.get(id) > UPDATE_THRESHOLD_MS ||
-            bytesCurrent == bytesTotal) {
-            lastUpdateTime.put(id, timeInMillis);
+        // invoke LISTENERS
+        synchronized (LISTENERS) {
+            final List<TransferListener> list = LISTENERS.get(id);
+            if (list == null || list.isEmpty()) {
+                return;
+            }
 
             for (final TransferListener l : list) {
                 // invoke on main thread
@@ -278,19 +302,21 @@ class TransferStatusUpdater {
      */
     void throwError(final int id, final Exception e) {
         // invoke LISTENERS
-        final List<TransferListener> list = LISTENERS.get(id);
-        if (list == null || list.isEmpty()) {
-            return;
-        }
+        synchronized (LISTENERS) {
+            final List<TransferListener> list = LISTENERS.get(id);
+            if (list == null || list.isEmpty()) {
+                return;
+            }
 
-        for (final TransferListener l : list) {
-            // invoke on main thread
-            mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    l.onError(id, e);
-                }
-            });
+            for (final TransferListener l : list) {
+                // invoke on main thread
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        l.onError(id, e);
+                    }
+                });
+            }
         }
     }
 
@@ -298,9 +324,10 @@ class TransferStatusUpdater {
      * Clears all transfers, LISTENERS, etc.
      */
     synchronized void clear() {
-        LISTENERS.clear();
+        synchronized (LISTENERS) {
+            LISTENERS.clear();
+        }
         transfers.clear();
-        lastUpdateTime.clear();
     }
 
     /**
@@ -353,12 +380,12 @@ class TransferStatusUpdater {
     private class TransferProgressListener implements ProgressListener {
 
         private final TransferRecord transfer;
+        
         /*
-         * Current transfer progress per task. In a multipart upload, this value
-         * is per upload part task. The purpose is to reset the progress upon a
+         * Current transfer progress per task. The purpose is to reset the progress upon a
          * reset event.
          */
-        private long bytesCurrent;
+        private long bytesTransferredSoFar;
 
         public TransferProgressListener(TransferRecord transfer) {
             this.transfer = transfer;
@@ -366,16 +393,21 @@ class TransferStatusUpdater {
 
         @Override
         public synchronized void progressChanged(ProgressEvent progressEvent) {
-            if (progressEvent.getEventCode() == ProgressEvent.RESET_EVENT_CODE) {
-                // Reset will discard what's been transferred, so subtract the
-                // bytes transferred in this task from the total progress.
-                transfer.bytesCurrent -= bytesCurrent;
-                bytesCurrent = 0;
+            if (ProgressEvent.RESET_EVENT_CODE == progressEvent.getEventCode()) {
+                // Reset will discard what's been transferred
+                LOGGER.info("Reset Event triggered. Resetting the bytesCurrent to 0.");
+                // Reset the local counter to 0.
+                bytesTransferredSoFar = 0;
             } else {
-                bytesCurrent += progressEvent.getBytesTransferred();
-                transfer.bytesCurrent += progressEvent.getBytesTransferred();
+                bytesTransferredSoFar += progressEvent.getBytesTransferred();
+                // Update the transfer.bytesCurrent and notify the callback
+                // when the accumulated bytesCurrent exceeds the previously
+                // reported transfer.bytesCurrent.
+                if (bytesTransferredSoFar > transfer.bytesCurrent) {
+                    transfer.bytesCurrent = bytesTransferredSoFar;
+                    updateProgress(transfer.id, transfer.bytesCurrent, transfer.bytesTotal, true);
+                }
             }
-            updateProgress(transfer.id, transfer.bytesCurrent, transfer.bytesTotal);
         }
     }
 
@@ -383,15 +415,19 @@ class TransferStatusUpdater {
      * Creates a {@link ProgressListener} for the given transfer with current
      * transferred bytes and total bytes.
      *
+     * The GetObjectRequest, PutObjectRequest, UploadPartRequest objects can have 
+     * a ProgressListener which will be invoked when there is a progress update.
+     *
      * @param id id of the transfer
      * @return a progress listener
      */
     synchronized ProgressListener newProgressListener(int id) {
         final TransferRecord transfer = getTransfer(id);
         if (transfer == null) {
+            LOGGER.info("TransferStatusUpdater doesn't track the transfer: " + id);
             throw new IllegalArgumentException("transfer " + id + " doesn't exist");
         }
+        LOGGER.info("Creating a new progress listener for transfer: " + id);
         return new TransferProgressListener(transfer);
     }
 }
-

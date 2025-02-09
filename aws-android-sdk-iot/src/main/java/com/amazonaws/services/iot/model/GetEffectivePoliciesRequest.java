@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,13 +22,22 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Gets a list of the policies that have an effect on the authorization behavior
- * of the specified device when it connects to the AWS IoT device gateway.
+ * of the specified device when it connects to the IoT device gateway.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >GetEffectivePolicies</a> action.
  * </p>
  */
 public class GetEffectivePoliciesRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The principal.
+     * The principal. Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      */
     private String principal;
@@ -53,11 +62,20 @@ public class GetEffectivePoliciesRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal.
+     * The principal. Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      *
      * @return <p>
-     *         The principal.
+     *         The principal. Valid principals are CertificateArn
+     *         (arn:aws:iot:<i
+     *         >region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     *         thingGroupArn
+     *         (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup
+     *         /<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).
      *         </p>
      */
     public String getPrincipal() {
@@ -66,11 +84,20 @@ public class GetEffectivePoliciesRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal.
+     * The principal. Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      *
      * @param principal <p>
-     *            The principal.
+     *            The principal. Valid principals are CertificateArn
+     *            (arn:aws:iot
+     *            :<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     *            thingGroupArn
+     *            (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup
+     *            /<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).
      *            </p>
      */
     public void setPrincipal(String principal) {
@@ -79,14 +106,23 @@ public class GetEffectivePoliciesRequest extends AmazonWebServiceRequest impleme
 
     /**
      * <p>
-     * The principal.
+     * The principal. Valid principals are CertificateArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     * thingGroupArn
+     * (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>)
+     * and CognitoId (<i>region</i>:<i>id</i>).
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param principal <p>
-     *            The principal.
+     *            The principal. Valid principals are CertificateArn
+     *            (arn:aws:iot
+     *            :<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>),
+     *            thingGroupArn
+     *            (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup
+     *            /<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

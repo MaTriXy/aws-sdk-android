@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The Amazon Translate service is temporarily unavailable. Please wait a bit
- * and then retry your request.
+ * The Amazon Translate service is temporarily unavailable. Wait a bit and then
+ * retry your request.
  * </p>
  */
 public class ServiceUnavailableException extends AmazonServiceException {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Updates a role alias.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >UpdateRoleAlias</a> action.
  * </p>
  */
 public class UpdateRoleAliasRequest extends AmazonWebServiceRequest implements Serializable {
@@ -51,8 +56,12 @@ public class UpdateRoleAliasRequest extends AmazonWebServiceRequest implements S
      * The number of seconds the credential will be valid.
      * </p>
      * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      */
     private Integer credentialDurationSeconds;
 
@@ -172,11 +181,19 @@ public class UpdateRoleAliasRequest extends AmazonWebServiceRequest implements S
      * The number of seconds the credential will be valid.
      * </p>
      * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @return <p>
      *         The number of seconds the credential will be valid.
+     *         </p>
+     *         <p>
+     *         This value must be less than or equal to the maximum session
+     *         duration of the IAM role that the role alias references.
      *         </p>
      */
     public Integer getCredentialDurationSeconds() {
@@ -188,11 +205,19 @@ public class UpdateRoleAliasRequest extends AmazonWebServiceRequest implements S
      * The number of seconds the credential will be valid.
      * </p>
      * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
+     * </p>
+     * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @param credentialDurationSeconds <p>
      *            The number of seconds the credential will be valid.
+     *            </p>
+     *            <p>
+     *            This value must be less than or equal to the maximum session
+     *            duration of the IAM role that the role alias references.
      *            </p>
      */
     public void setCredentialDurationSeconds(Integer credentialDurationSeconds) {
@@ -204,14 +229,22 @@ public class UpdateRoleAliasRequest extends AmazonWebServiceRequest implements S
      * The number of seconds the credential will be valid.
      * </p>
      * <p>
+     * This value must be less than or equal to the maximum session duration of
+     * the IAM role that the role alias references.
+     * </p>
+     * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>900 - 3600<br/>
+     * <b>Range: </b>900 - 43200<br/>
      *
      * @param credentialDurationSeconds <p>
      *            The number of seconds the credential will be valid.
+     *            </p>
+     *            <p>
+     *            This value must be less than or equal to the maximum session
+     *            duration of the IAM role that the role alias references.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

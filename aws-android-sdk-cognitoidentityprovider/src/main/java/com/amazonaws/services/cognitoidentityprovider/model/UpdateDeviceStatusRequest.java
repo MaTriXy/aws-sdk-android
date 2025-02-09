@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,11 +23,23 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Updates the device status.
  * </p>
+ * <note>
+ * <p>
+ * Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
+ * in requests for this API operation. For this operation, you can't use IAM
+ * credentials to authorize requests, and you can't grant IAM permissions in
+ * policies. For more information about authorization models in Amazon Cognito,
+ * see <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito native and OIDC APIs</a>.
+ * </p>
+ * </note>
  */
 public class UpdateDeviceStatusRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose device
+     * status you want to update.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -58,14 +70,16 @@ public class UpdateDeviceStatusRequest extends AmazonWebServiceRequest implement
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose device
+     * status you want to update.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @return <p>
-     *         The access token.
+     *         A valid access token that Amazon Cognito issued to the user whose
+     *         device status you want to update.
      *         </p>
      */
     public String getAccessToken() {
@@ -74,14 +88,16 @@ public class UpdateDeviceStatusRequest extends AmazonWebServiceRequest implement
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose device
+     * status you want to update.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @param accessToken <p>
-     *            The access token.
+     *            A valid access token that Amazon Cognito issued to the user
+     *            whose device status you want to update.
      *            </p>
      */
     public void setAccessToken(String accessToken) {
@@ -90,7 +106,8 @@ public class UpdateDeviceStatusRequest extends AmazonWebServiceRequest implement
 
     /**
      * <p>
-     * The access token.
+     * A valid access token that Amazon Cognito issued to the user whose device
+     * status you want to update.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -100,7 +117,8 @@ public class UpdateDeviceStatusRequest extends AmazonWebServiceRequest implement
      * <b>Pattern: </b>[A-Za-z0-9-_=.]+<br/>
      *
      * @param accessToken <p>
-     *            The access token.
+     *            A valid access token that Amazon Cognito issued to the user
+     *            whose device status you want to update.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

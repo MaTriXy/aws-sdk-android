@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * A container for information about an identity provider.
+ * A container for information about an IdP.
  * </p>
  */
 public class IdentityProviderType implements Serializable {
@@ -36,7 +36,7 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -47,47 +47,228 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      */
     private String providerType;
 
     /**
      * <p>
-     * The identity provider details, such as <code>MetadataURL</code> and
-     * <code>MetadataFile</code>.
+     * The IdP details. The following list describes the provider detail keys
+     * for each IdP type.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For Google and Login with Amazon:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Facebook:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * api_version
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Sign in with Apple:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * team_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * key_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * private_key
+     * </p>
+     * <p>
+     * <i>You can submit a private_key when you add or update an IdP. Describe
+     * operations don't return the private key.</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For OIDC providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_request_method
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * oidc_issuer
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The following keys are only present if Amazon Cognito didn't discover
+     * them at the <code>oidc_issuer</code> URL.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * authorize_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * token_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * jwks_uri
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Cognito sets the value of the following keys automatically. They
+     * are read-only.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * attributes_url_add_attributes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For SAML providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * MetadataFile or MetadataURL
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * IDPSignout <i>optional</i>
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
      */
     private java.util.Map<String, String> providerDetails;
 
     /**
      * <p>
-     * A mapping of identity provider attributes to standard and custom user
-     * pool attributes.
+     * A mapping of IdP attributes to standard and custom user pool attributes.
      * </p>
      */
     private java.util.Map<String, String> attributeMapping;
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      */
     private java.util.List<String> idpIdentifiers;
 
     /**
      * <p>
-     * The date the identity provider was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      */
     private java.util.Date lastModifiedDate;
 
     /**
      * <p>
-     * The date the identity provider was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      */
     private java.util.Date creationDate;
@@ -151,7 +332,7 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -159,7 +340,7 @@ public class IdentityProviderType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @return <p>
-     *         The identity provider name.
+     *         The IdP name.
      *         </p>
      */
     public String getProviderName() {
@@ -168,7 +349,7 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -176,7 +357,7 @@ public class IdentityProviderType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The identity provider name.
+     *            The IdP name.
      *            </p>
      */
     public void setProviderName(String providerName) {
@@ -185,7 +366,7 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider name.
+     * The IdP name.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -196,7 +377,7 @@ public class IdentityProviderType implements Serializable {
      * <b>Pattern: </b>[\p{L}\p{M}\p{S}\p{N}\p{P}]+<br/>
      *
      * @param providerName <p>
-     *            The identity provider name.
+     *            The IdP name.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -208,14 +389,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @return <p>
-     *         The identity provider type.
+     *         The IdP type.
      *         </p>
      * @see IdentityProviderTypeType
      */
@@ -225,14 +407,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @see IdentityProviderTypeType
      */
@@ -242,17 +425,18 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -265,14 +449,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @see IdentityProviderTypeType
      */
@@ -282,17 +467,18 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider type.
+     * The IdP type.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon, OIDC
+     * <b>Allowed Values: </b>SAML, Facebook, Google, LoginWithAmazon,
+     * SignInWithApple, OIDC
      *
      * @param providerType <p>
-     *            The identity provider type.
+     *            The IdP type.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -305,14 +491,368 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider details, such as <code>MetadataURL</code> and
-     * <code>MetadataFile</code>.
+     * The IdP details. The following list describes the provider detail keys
+     * for each IdP type.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For Google and Login with Amazon:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Facebook:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * api_version
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Sign in with Apple:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * team_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * key_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * private_key
+     * </p>
+     * <p>
+     * <i>You can submit a private_key when you add or update an IdP. Describe
+     * operations don't return the private key.</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For OIDC providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_request_method
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * oidc_issuer
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The following keys are only present if Amazon Cognito didn't discover
+     * them at the <code>oidc_issuer</code> URL.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * authorize_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * token_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * jwks_uri
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Cognito sets the value of the following keys automatically. They
+     * are read-only.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * attributes_url_add_attributes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For SAML providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * MetadataFile or MetadataURL
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * IDPSignout <i>optional</i>
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
      *
      * @return <p>
-     *         The identity provider details, such as <code>MetadataURL</code>
-     *         and <code>MetadataFile</code>.
+     *         The IdP details. The following list describes the provider detail
+     *         keys for each IdP type.
      *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         For Google and Login with Amazon:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         client_id
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         client_secret
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         authorize_scopes
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For Facebook:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         client_id
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         client_secret
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         authorize_scopes
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         api_version
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For Sign in with Apple:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         client_id
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         team_id
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         key_id
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         private_key
+     *         </p>
+     *         <p>
+     *         <i>You can submit a private_key when you add or update an IdP.
+     *         Describe operations don't return the private key.</i>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         authorize_scopes
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For OIDC providers:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         client_id
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         client_secret
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         attributes_request_method
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         oidc_issuer
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         authorize_scopes
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         The following keys are only present if Amazon Cognito didn't
+     *         discover them at the <code>oidc_issuer</code> URL.
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         authorize_url
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         token_url
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         attributes_url
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         jwks_uri
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Cognito sets the value of the following keys
+     *         automatically. They are read-only.
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         attributes_url_add_attributes
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         For SAML providers:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         MetadataFile or MetadataURL
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         IDPSignout <i>optional</i>
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </li>
+     *         </ul>
      */
     public java.util.Map<String, String> getProviderDetails() {
         return providerDetails;
@@ -320,14 +860,368 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider details, such as <code>MetadataURL</code> and
-     * <code>MetadataFile</code>.
+     * The IdP details. The following list describes the provider detail keys
+     * for each IdP type.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For Google and Login with Amazon:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Facebook:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * api_version
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Sign in with Apple:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * team_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * key_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * private_key
+     * </p>
+     * <p>
+     * <i>You can submit a private_key when you add or update an IdP. Describe
+     * operations don't return the private key.</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For OIDC providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_request_method
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * oidc_issuer
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The following keys are only present if Amazon Cognito didn't discover
+     * them at the <code>oidc_issuer</code> URL.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * authorize_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * token_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * jwks_uri
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Cognito sets the value of the following keys automatically. They
+     * are read-only.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * attributes_url_add_attributes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For SAML providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * MetadataFile or MetadataURL
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * IDPSignout <i>optional</i>
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
      *
      * @param providerDetails <p>
-     *            The identity provider details, such as
-     *            <code>MetadataURL</code> and <code>MetadataFile</code>.
+     *            The IdP details. The following list describes the provider
+     *            detail keys for each IdP type.
      *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            For Google and Login with Amazon:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            client_secret
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For Facebook:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            client_secret
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            api_version
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For Sign in with Apple:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            team_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            key_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            private_key
+     *            </p>
+     *            <p>
+     *            <i>You can submit a private_key when you add or update an IdP.
+     *            Describe operations don't return the private key.</i>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For OIDC providers:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            client_secret
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            attributes_request_method
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            oidc_issuer
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            The following keys are only present if Amazon Cognito didn't
+     *            discover them at the <code>oidc_issuer</code> URL.
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            authorize_url
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            token_url
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            attributes_url
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            jwks_uri
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Cognito sets the value of the following keys
+     *            automatically. They are read-only.
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            attributes_url_add_attributes
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For SAML providers:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            MetadataFile or MetadataURL
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            IDPSignout <i>optional</i>
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            </ul>
      */
     public void setProviderDetails(java.util.Map<String, String> providerDetails) {
         this.providerDetails = providerDetails;
@@ -335,17 +1229,371 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider details, such as <code>MetadataURL</code> and
-     * <code>MetadataFile</code>.
+     * The IdP details. The following list describes the provider detail keys
+     * for each IdP type.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For Google and Login with Amazon:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Facebook:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * api_version
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Sign in with Apple:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * team_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * key_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * private_key
+     * </p>
+     * <p>
+     * <i>You can submit a private_key when you add or update an IdP. Describe
+     * operations don't return the private key.</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For OIDC providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_request_method
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * oidc_issuer
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The following keys are only present if Amazon Cognito didn't discover
+     * them at the <code>oidc_issuer</code> URL.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * authorize_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * token_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * jwks_uri
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Cognito sets the value of the following keys automatically. They
+     * are read-only.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * attributes_url_add_attributes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For SAML providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * MetadataFile or MetadataURL
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * IDPSignout <i>optional</i>
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param providerDetails <p>
-     *            The identity provider details, such as
-     *            <code>MetadataURL</code> and <code>MetadataFile</code>.
+     *            The IdP details. The following list describes the provider
+     *            detail keys for each IdP type.
      *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            For Google and Login with Amazon:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            client_secret
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For Facebook:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            client_secret
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            api_version
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For Sign in with Apple:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            team_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            key_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            private_key
+     *            </p>
+     *            <p>
+     *            <i>You can submit a private_key when you add or update an IdP.
+     *            Describe operations don't return the private key.</i>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For OIDC providers:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            client_id
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            client_secret
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            attributes_request_method
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            oidc_issuer
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            authorize_scopes
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            The following keys are only present if Amazon Cognito didn't
+     *            discover them at the <code>oidc_issuer</code> URL.
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            authorize_url
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            token_url
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            attributes_url
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            jwks_uri
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Cognito sets the value of the following keys
+     *            automatically. They are read-only.
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            attributes_url_add_attributes
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            For SAML providers:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            MetadataFile or MetadataURL
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            IDPSignout <i>optional</i>
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </li>
+     *            </ul>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
@@ -356,9 +1604,186 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The identity provider details, such as <code>MetadataURL</code> and
-     * <code>MetadataFile</code>.
+     * The IdP details. The following list describes the provider detail keys
+     * for each IdP type.
      * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * For Google and Login with Amazon:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Facebook:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * api_version
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For Sign in with Apple:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * team_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * key_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * private_key
+     * </p>
+     * <p>
+     * <i>You can submit a private_key when you add or update an IdP. Describe
+     * operations don't return the private key.</i>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For OIDC providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * client_id
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * client_secret
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_request_method
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * oidc_issuer
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * authorize_scopes
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * The following keys are only present if Amazon Cognito didn't discover
+     * them at the <code>oidc_issuer</code> URL.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * authorize_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * token_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * attributes_url
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * jwks_uri
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Cognito sets the value of the following keys automatically. They
+     * are read-only.
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * attributes_url_add_attributes
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
+     * </li>
+     * <li>
+     * <p>
+     * For SAML providers:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * MetadataFile or MetadataURL
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * IDPSignout <i>optional</i>
+     * </p>
+     * </li>
+     * </ul>
+     * </li>
+     * </ul>
      * <p>
      * The method adds a new key-value pair into ProviderDetails parameter, and
      * returns a reference to this object so that method calls can be chained
@@ -394,13 +1819,12 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A mapping of identity provider attributes to standard and custom user
-     * pool attributes.
+     * A mapping of IdP attributes to standard and custom user pool attributes.
      * </p>
      *
      * @return <p>
-     *         A mapping of identity provider attributes to standard and custom
-     *         user pool attributes.
+     *         A mapping of IdP attributes to standard and custom user pool
+     *         attributes.
      *         </p>
      */
     public java.util.Map<String, String> getAttributeMapping() {
@@ -409,13 +1833,12 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A mapping of identity provider attributes to standard and custom user
-     * pool attributes.
+     * A mapping of IdP attributes to standard and custom user pool attributes.
      * </p>
      *
      * @param attributeMapping <p>
-     *            A mapping of identity provider attributes to standard and
-     *            custom user pool attributes.
+     *            A mapping of IdP attributes to standard and custom user pool
+     *            attributes.
      *            </p>
      */
     public void setAttributeMapping(java.util.Map<String, String> attributeMapping) {
@@ -424,16 +1847,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A mapping of identity provider attributes to standard and custom user
-     * pool attributes.
+     * A mapping of IdP attributes to standard and custom user pool attributes.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param attributeMapping <p>
-     *            A mapping of identity provider attributes to standard and
-     *            custom user pool attributes.
+     *            A mapping of IdP attributes to standard and custom user pool
+     *            attributes.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -445,8 +1867,7 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A mapping of identity provider attributes to standard and custom user
-     * pool attributes.
+     * A mapping of IdP attributes to standard and custom user pool attributes.
      * </p>
      * <p>
      * The method adds a new key-value pair into AttributeMapping parameter, and
@@ -483,11 +1904,11 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      *
      * @return <p>
-     *         A list of identity provider identifiers.
+     *         A list of IdP identifiers.
      *         </p>
      */
     public java.util.List<String> getIdpIdentifiers() {
@@ -496,11 +1917,11 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      *
      * @param idpIdentifiers <p>
-     *            A list of identity provider identifiers.
+     *            A list of IdP identifiers.
      *            </p>
      */
     public void setIdpIdentifiers(java.util.Collection<String> idpIdentifiers) {
@@ -514,14 +1935,14 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param idpIdentifiers <p>
-     *            A list of identity provider identifiers.
+     *            A list of IdP identifiers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -538,14 +1959,14 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * A list of identity provider identifiers.
+     * A list of IdP identifiers.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param idpIdentifiers <p>
-     *            A list of identity provider identifiers.
+     *            A list of IdP identifiers.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -557,11 +1978,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The date the identity provider was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @return <p>
-     *         The date the identity provider was last modified.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was modified.
      *         </p>
      */
     public java.util.Date getLastModifiedDate() {
@@ -570,11 +1995,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The date the identity provider was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      *
      * @param lastModifiedDate <p>
-     *            The date the identity provider was last modified.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      */
     public void setLastModifiedDate(java.util.Date lastModifiedDate) {
@@ -583,14 +2012,18 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The date the identity provider was last modified.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was modified.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastModifiedDate <p>
-     *            The date the identity provider was last modified.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was modified.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -602,11 +2035,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The date the identity provider was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @return <p>
-     *         The date the identity provider was created.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -615,11 +2052,15 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The date the identity provider was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The date the identity provider was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -628,14 +2069,18 @@ public class IdentityProviderType implements Serializable {
 
     /**
      * <p>
-     * The date the identity provider was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The date the identity provider was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

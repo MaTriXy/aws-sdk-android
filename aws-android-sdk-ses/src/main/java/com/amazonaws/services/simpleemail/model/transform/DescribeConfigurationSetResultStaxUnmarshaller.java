@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -63,6 +63,12 @@ public class DescribeConfigurationSetResultStaxUnmarshaller implements
                 if (context.testExpression("TrackingOptions", targetDepth)) {
                     describeConfigurationSetResult
                             .setTrackingOptions(TrackingOptionsStaxUnmarshaller.getInstance()
+                                    .unmarshall(context));
+                    continue;
+                }
+                if (context.testExpression("DeliveryOptions", targetDepth)) {
+                    describeConfigurationSetResult
+                            .setDeliveryOptions(DeliveryOptionsStaxUnmarshaller.getInstance()
                                     .unmarshall(context));
                     continue;
                 }

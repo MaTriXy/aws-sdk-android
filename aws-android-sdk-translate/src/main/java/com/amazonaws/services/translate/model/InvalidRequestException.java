@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import com.amazonaws.AmazonServiceException;
 
 /**
  * <p>
- * The request that you made is invalid. Check your request to determine why
- * it's invalid and then retry the request.
+ * The request that you made is not valid. Check your request to determine why
+ * it's not valid and then retry the request.
  * </p>
  */
 public class InvalidRequestException extends AmazonServiceException {

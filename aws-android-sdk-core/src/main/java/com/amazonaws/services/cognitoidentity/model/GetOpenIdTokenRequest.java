@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import com.amazonaws.AmazonWebServiceRequest;
  * identity. Supplying multiple logins creates an implicit link.
  * </p>
  * <p>
- * The OpenId token is valid for 15 minutes.
+ * The OpenID token is valid for 10 minutes.
  * </p>
  * <p>
  * This is a public API. You do not need any credentials to call this API.
@@ -49,8 +49,8 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      * A set of optional name-value pairs that map provider names to provider
      * tokens. When using graph.facebook.com and www.amazon.com, supply the
      * access_token returned from the provider's authflow. For
-     * accounts.google.com, an Amazon Cognito Identity Provider, or any other
-     * OpenId Connect provider, always include the <code>id_token</code>.
+     * accounts.google.com, an Amazon Cognito user pool provider, or any other
+     * OpenID Connect provider, always include the <code>id_token</code>.
      * </p>
      */
     private java.util.Map<String, String> logins;
@@ -117,8 +117,8 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      * A set of optional name-value pairs that map provider names to provider
      * tokens. When using graph.facebook.com and www.amazon.com, supply the
      * access_token returned from the provider's authflow. For
-     * accounts.google.com, an Amazon Cognito Identity Provider, or any other
-     * OpenId Connect provider, always include the <code>id_token</code>.
+     * accounts.google.com, an Amazon Cognito user pool provider, or any other
+     * OpenID Connect provider, always include the <code>id_token</code>.
      * </p>
      *
      * @return <p>
@@ -126,7 +126,7 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      *         provider tokens. When using graph.facebook.com and
      *         www.amazon.com, supply the access_token returned from the
      *         provider's authflow. For accounts.google.com, an Amazon Cognito
-     *         Identity Provider, or any other OpenId Connect provider, always
+     *         user pool provider, or any other OpenID Connect provider, always
      *         include the <code>id_token</code>.
      *         </p>
      */
@@ -139,8 +139,8 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      * A set of optional name-value pairs that map provider names to provider
      * tokens. When using graph.facebook.com and www.amazon.com, supply the
      * access_token returned from the provider's authflow. For
-     * accounts.google.com, an Amazon Cognito Identity Provider, or any other
-     * OpenId Connect provider, always include the <code>id_token</code>.
+     * accounts.google.com, an Amazon Cognito user pool provider, or any other
+     * OpenID Connect provider, always include the <code>id_token</code>.
      * </p>
      *
      * @param logins <p>
@@ -148,7 +148,7 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      *            provider tokens. When using graph.facebook.com and
      *            www.amazon.com, supply the access_token returned from the
      *            provider's authflow. For accounts.google.com, an Amazon
-     *            Cognito Identity Provider, or any other OpenId Connect
+     *            Cognito user pool provider, or any other OpenID Connect
      *            provider, always include the <code>id_token</code>.
      *            </p>
      */
@@ -161,8 +161,8 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      * A set of optional name-value pairs that map provider names to provider
      * tokens. When using graph.facebook.com and www.amazon.com, supply the
      * access_token returned from the provider's authflow. For
-     * accounts.google.com, an Amazon Cognito Identity Provider, or any other
-     * OpenId Connect provider, always include the <code>id_token</code>.
+     * accounts.google.com, an Amazon Cognito user pool provider, or any other
+     * OpenID Connect provider, always include the <code>id_token</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -173,7 +173,7 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      *            provider tokens. When using graph.facebook.com and
      *            www.amazon.com, supply the access_token returned from the
      *            provider's authflow. For accounts.google.com, an Amazon
-     *            Cognito Identity Provider, or any other OpenId Connect
+     *            Cognito user pool provider, or any other OpenID Connect
      *            provider, always include the <code>id_token</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -189,8 +189,8 @@ public class GetOpenIdTokenRequest extends AmazonWebServiceRequest implements Se
      * A set of optional name-value pairs that map provider names to provider
      * tokens. When using graph.facebook.com and www.amazon.com, supply the
      * access_token returned from the provider's authflow. For
-     * accounts.google.com, an Amazon Cognito Identity Provider, or any other
-     * OpenId Connect provider, always include the <code>id_token</code>.
+     * accounts.google.com, an Amazon Cognito user pool provider, or any other
+     * OpenID Connect provider, always include the <code>id_token</code>.
      * </p>
      * <p>
      * The method adds a new key-value pair into Logins parameter, and returns a

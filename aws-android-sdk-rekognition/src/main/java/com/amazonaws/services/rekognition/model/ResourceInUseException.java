@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,9 @@ package com.amazonaws.services.rekognition.model;
 import com.amazonaws.AmazonServiceException;
 
 /**
- * <p/>
+ * <p>
+ * The specified resource is already being used.
+ * </p>
  */
 public class ResourceInUseException extends AmazonServiceException {
     private static final long serialVersionUID = 1L;

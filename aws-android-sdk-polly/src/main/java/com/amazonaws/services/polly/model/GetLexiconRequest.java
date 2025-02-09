@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Returns the content of the specified pronunciation lexicon stored in an AWS
- * Region. For more information, see <a
- * href="http://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+ * Returns the content of the specified pronunciation lexicon stored in an
+ * Amazon Web Services Region. For more information, see <a
+ * href="https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
  * >Managing Lexicons</a>.
  * </p>
  */

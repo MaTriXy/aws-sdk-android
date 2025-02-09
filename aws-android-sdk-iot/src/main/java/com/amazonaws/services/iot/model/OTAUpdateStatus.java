@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,9 @@ public enum OTAUpdateStatus {
     CREATE_PENDING("CREATE_PENDING"),
     CREATE_IN_PROGRESS("CREATE_IN_PROGRESS"),
     CREATE_COMPLETE("CREATE_COMPLETE"),
-    CREATE_FAILED("CREATE_FAILED");
+    CREATE_FAILED("CREATE_FAILED"),
+    DELETE_IN_PROGRESS("DELETE_IN_PROGRESS"),
+    DELETE_FAILED("DELETE_FAILED");
 
     private String value;
 
@@ -46,6 +48,8 @@ public enum OTAUpdateStatus {
         enumMap.put("CREATE_IN_PROGRESS", CREATE_IN_PROGRESS);
         enumMap.put("CREATE_COMPLETE", CREATE_COMPLETE);
         enumMap.put("CREATE_FAILED", CREATE_FAILED);
+        enumMap.put("DELETE_IN_PROGRESS", DELETE_IN_PROGRESS);
+        enumMap.put("DELETE_FAILED", DELETE_FAILED);
     }
 
     /**

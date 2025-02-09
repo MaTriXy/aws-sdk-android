@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,9 +33,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Notification Service topic that you specify in
  * <code>NotificationChannel</code>. To get the search results, first check that
  * the status value published to the Amazon SNS topic is <code>SUCCEEDED</code>.
- * If so, call and pass the job identifier (<code>JobId</code>) from the initial
- * call to <code>StartFaceSearch</code>. For more information, see
- * <a>procedure-person-search-videos</a>.
+ * If so, call <a>GetFaceSearch</a> and pass the job identifier (
+ * <code>JobId</code>) from the initial call to <code>StartFaceSearch</code>.
+ * For more information, see <a href=
+ * "https://docs.aws.amazon.com/rekognition/latest/dg/procedure-person-search-videos.html"
+ * >Searching stored videos for faces</a>.
  * </p>
  */
 public class StartFaceSearchRequest extends AmazonWebServiceRequest implements Serializable {
@@ -64,11 +66,12 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     /**
      * <p>
      * The minimum confidence in the person match to return. For example, don't
-     * return any matches where confidence in matches is less than 70%.
+     * return any matches where confidence in matches is less than 70%. The
+     * default value is 80%.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float faceMatchThreshold;
 
@@ -84,27 +87,27 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     private String collectionId;
 
     /**
-     * The new value for the enablePersonTracking property for this object.
-     */
-    private Boolean enablePersonTracking;
-
-    /**
      * <p>
      * The ARN of the Amazon SNS topic to which you want Amazon Rekognition
-     * Video to publish the completion status of the search.
+     * Video to publish the completion status of the search. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy to
+     * access the topic.
      * </p>
      */
     private NotificationChannel notificationChannel;
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      */
     private String jobTag;
 
@@ -240,16 +243,17 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     /**
      * <p>
      * The minimum confidence in the person match to return. For example, don't
-     * return any matches where confidence in matches is less than 70%.
+     * return any matches where confidence in matches is less than 70%. The
+     * default value is 80%.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         The minimum confidence in the person match to return. For
      *         example, don't return any matches where confidence in matches is
-     *         less than 70%.
+     *         less than 70%. The default value is 80%.
      *         </p>
      */
     public Float getFaceMatchThreshold() {
@@ -259,16 +263,17 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     /**
      * <p>
      * The minimum confidence in the person match to return. For example, don't
-     * return any matches where confidence in matches is less than 70%.
+     * return any matches where confidence in matches is less than 70%. The
+     * default value is 80%.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param faceMatchThreshold <p>
      *            The minimum confidence in the person match to return. For
      *            example, don't return any matches where confidence in matches
-     *            is less than 70%.
+     *            is less than 70%. The default value is 80%.
      *            </p>
      */
     public void setFaceMatchThreshold(Float faceMatchThreshold) {
@@ -278,19 +283,20 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     /**
      * <p>
      * The minimum confidence in the person match to return. For example, don't
-     * return any matches where confidence in matches is less than 70%.
+     * return any matches where confidence in matches is less than 70%. The
+     * default value is 80%.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param faceMatchThreshold <p>
      *            The minimum confidence in the person match to return. For
      *            example, don't return any matches where confidence in matches
-     *            is less than 70%.
+     *            is less than 70%. The default value is 80%.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -361,58 +367,21 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     }
 
     /**
-     * Returns the value of the enablePersonTracking property for this object.
-     *
-     * @return The value of the enablePersonTracking property for this object.
-     */
-    public Boolean isEnablePersonTracking() {
-        return enablePersonTracking;
-    }
-
-    /**
-     * Returns the value of the enablePersonTracking property for this object.
-     *
-     * @return The value of the enablePersonTracking property for this object.
-     */
-    public Boolean getEnablePersonTracking() {
-        return enablePersonTracking;
-    }
-
-    /**
-     * Sets the value of enablePersonTracking
-     *
-     * @param enablePersonTracking The new value for the enablePersonTracking
-     *            property for this object.
-     */
-    public void setEnablePersonTracking(Boolean enablePersonTracking) {
-        this.enablePersonTracking = enablePersonTracking;
-    }
-
-    /**
-     * Sets the value of the enablePersonTracking property for this object.
-     * <p>
-     * Returns a reference to this object so that method calls can be chained
-     * together.
-     *
-     * @param enablePersonTracking The new value for the enablePersonTracking
-     *            property for this object.
-     * @return A reference to this updated object so that method calls can be
-     *         chained together.
-     */
-    public StartFaceSearchRequest withEnablePersonTracking(Boolean enablePersonTracking) {
-        this.enablePersonTracking = enablePersonTracking;
-        return this;
-    }
-
-    /**
      * <p>
      * The ARN of the Amazon SNS topic to which you want Amazon Rekognition
-     * Video to publish the completion status of the search.
+     * Video to publish the completion status of the search. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy to
+     * access the topic.
      * </p>
      *
      * @return <p>
      *         The ARN of the Amazon SNS topic to which you want Amazon
      *         Rekognition Video to publish the completion status of the search.
+     *         The Amazon SNS topic must have a topic name that begins with
+     *         <i>AmazonRekognition</i> if you are using the
+     *         AmazonRekognitionServiceRole permissions policy to access the
+     *         topic.
      *         </p>
      */
     public NotificationChannel getNotificationChannel() {
@@ -422,13 +391,19 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     /**
      * <p>
      * The ARN of the Amazon SNS topic to which you want Amazon Rekognition
-     * Video to publish the completion status of the search.
+     * Video to publish the completion status of the search. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy to
+     * access the topic.
      * </p>
      *
      * @param notificationChannel <p>
      *            The ARN of the Amazon SNS topic to which you want Amazon
      *            Rekognition Video to publish the completion status of the
-     *            search.
+     *            search. The Amazon SNS topic must have a topic name that
+     *            begins with <i>AmazonRekognition</i> if you are using the
+     *            AmazonRekognitionServiceRole permissions policy to access the
+     *            topic.
      *            </p>
      */
     public void setNotificationChannel(NotificationChannel notificationChannel) {
@@ -438,7 +413,10 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
     /**
      * <p>
      * The ARN of the Amazon SNS topic to which you want Amazon Rekognition
-     * Video to publish the completion status of the search.
+     * Video to publish the completion status of the search. The Amazon SNS
+     * topic must have a topic name that begins with <i>AmazonRekognition</i> if
+     * you are using the AmazonRekognitionServiceRole permissions policy to
+     * access the topic.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -447,7 +425,10 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
      * @param notificationChannel <p>
      *            The ARN of the Amazon SNS topic to which you want Amazon
      *            Rekognition Video to publish the completion status of the
-     *            search.
+     *            search. The Amazon SNS topic must have a topic name that
+     *            begins with <i>AmazonRekognition</i> if you are using the
+     *            AmazonRekognitionServiceRole permissions policy to access the
+     *            topic.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -459,18 +440,22 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @return <p>
-     *         Unique identifier you specify to identify the job in the
-     *         completion status published to the Amazon Simple Notification
-     *         Service topic.
+     *         An identifier you specify that's returned in the completion
+     *         notification that's published to your Amazon Simple Notification
+     *         Service topic. For example, you can use <code>JobTag</code> to
+     *         group related jobs and identify them in the completion
+     *         notification.
      *         </p>
      */
     public String getJobTag() {
@@ -479,18 +464,22 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @param jobTag <p>
-     *            Unique identifier you specify to identify the job in the
-     *            completion status published to the Amazon Simple Notification
-     *            Service topic.
+     *            An identifier you specify that's returned in the completion
+     *            notification that's published to your Amazon Simple
+     *            Notification Service topic. For example, you can use
+     *            <code>JobTag</code> to group related jobs and identify them in
+     *            the completion notification.
      *            </p>
      */
     public void setJobTag(String jobTag) {
@@ -499,21 +488,25 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Unique identifier you specify to identify the job in the completion
-     * status published to the Amazon Simple Notification Service topic.
+     * An identifier you specify that's returned in the completion notification
+     * that's published to your Amazon Simple Notification Service topic. For
+     * example, you can use <code>JobTag</code> to group related jobs and
+     * identify them in the completion notification.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>1 - 256<br/>
-     * <b>Pattern: </b>[a-zA-Z0-9_.\-:]+<br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
      * @param jobTag <p>
-     *            Unique identifier you specify to identify the job in the
-     *            completion status published to the Amazon Simple Notification
-     *            Service topic.
+     *            An identifier you specify that's returned in the completion
+     *            notification that's published to your Amazon Simple
+     *            Notification Service topic. For example, you can use
+     *            <code>JobTag</code> to group related jobs and identify them in
+     *            the completion notification.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -542,8 +535,6 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
             sb.append("FaceMatchThreshold: " + getFaceMatchThreshold() + ",");
         if (getCollectionId() != null)
             sb.append("CollectionId: " + getCollectionId() + ",");
-        if (getEnablePersonTracking() != null)
-            sb.append("EnablePersonTracking: " + getEnablePersonTracking() + ",");
         if (getNotificationChannel() != null)
             sb.append("NotificationChannel: " + getNotificationChannel() + ",");
         if (getJobTag() != null)
@@ -564,8 +555,6 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
                 + ((getFaceMatchThreshold() == null) ? 0 : getFaceMatchThreshold().hashCode());
         hashCode = prime * hashCode
                 + ((getCollectionId() == null) ? 0 : getCollectionId().hashCode());
-        hashCode = prime * hashCode
-                + ((getEnablePersonTracking() == null) ? 0 : getEnablePersonTracking().hashCode());
         hashCode = prime * hashCode
                 + ((getNotificationChannel() == null) ? 0 : getNotificationChannel().hashCode());
         hashCode = prime * hashCode + ((getJobTag() == null) ? 0 : getJobTag().hashCode());
@@ -601,11 +590,6 @@ public class StartFaceSearchRequest extends AmazonWebServiceRequest implements S
             return false;
         if (other.getCollectionId() != null
                 && other.getCollectionId().equals(this.getCollectionId()) == false)
-            return false;
-        if (other.getEnablePersonTracking() == null ^ this.getEnablePersonTracking() == null)
-            return false;
-        if (other.getEnablePersonTracking() != null
-                && other.getEnablePersonTracking().equals(this.getEnablePersonTracking()) == false)
             return false;
         if (other.getNotificationChannel() == null ^ this.getNotificationChannel() == null)
             return false;

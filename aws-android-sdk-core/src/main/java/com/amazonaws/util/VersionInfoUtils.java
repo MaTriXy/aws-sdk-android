@@ -15,6 +15,7 @@
 
 package com.amazonaws.util;
 
+import com.amazonaws.BuildConfig;
 import com.amazonaws.logging.Log;
 import com.amazonaws.logging.LogFactory;
 
@@ -26,7 +27,7 @@ public class VersionInfoUtils {
     private static final int DEFAULT_STRING_LENGTH = 128;
 
     /** SDK version info */
-    private static volatile String version = "2.11.0";
+    private static volatile String version = BuildConfig.VERSION_NAME;
                                                                 // changed build
                                                                 // logic
 
@@ -131,6 +132,9 @@ public class VersionInfoUtils {
      * @return the input with spaces replaced by underscores
      */
     private static String replaceSpaces(final String input) {
-        return input.replace(' ', '_');
+        if (input != null){
+            return input.replace(' ', '_');
+        }
+        return input;
     }
 }

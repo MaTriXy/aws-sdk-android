@@ -26,6 +26,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.util.CognitoServic
 import com.amazonaws.services.cognitoidentityprovider.model.RespondToAuthChallengeRequest;
 import com.amazonaws.services.cognitoidentityprovider.model.RespondToAuthChallengeResult;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
      */
     public static final boolean RUN_IN_CURRENT = false;
 
+    protected final Map<String, String> challengeResponses;
     private final RespondToAuthChallengeResult challengeResult;
     private final Context context;
     private final String clientId;
@@ -52,8 +54,8 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
     private final CognitoUser user;
     private final String username;
     private final AuthenticationHandler callback;
-    protected Map<String, String> challengeResponses;
     private final boolean runInBackground;
+    private final Map<String, String> clientMetaData;
 
     /**
      * Constructs a continuation for a challenge to be presented to the user.
@@ -84,7 +86,30 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
         this.username = username;
         this.callback = callback;
         this.runInBackground = runInBackground;
-        challengeResponses = new HashMap<String, String>();
+        this.challengeResponses = new HashMap<>();
+        this.clientMetaData = new HashMap<>();
+    }
+
+    /**
+     * <p>
+     * <code>clientMetadata</code> is a map of custom key-value pairs that you can provide as input for any
+     * custom work flows. Accessor method for <code>clientMetadata</code>.
+     * </p>
+     * @return ClientMetadata
+     */
+    public Map<String, String> getClientMetaData() {
+        return Collections.unmodifiableMap(clientMetaData);
+    }
+
+    /**
+     * Mutator for <code>clientMetadata</code>.
+     * @param clientMetaData MetaData to be passed as input to the lambda triggers.
+     */
+    public void setClientMetaData(Map<String, String> clientMetaData) {
+        this.clientMetaData.clear();
+        if (clientMetaData != null) {
+            this.clientMetaData.putAll(clientMetaData);
+        }
     }
 
     /**
@@ -140,6 +165,9 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
         respondToAuthChallengeRequest.setSession(challengeResult.getSession());
         respondToAuthChallengeRequest.setClientId(clientId);
         respondToAuthChallengeRequest.setChallengeResponses(challengeResponses);
+        if (!clientMetaData.isEmpty()) {
+            respondToAuthChallengeRequest.setClientMetadata(clientMetaData);
+        }
         if (runInBackground) {
             new Thread(new Runnable() {
                 @Override
@@ -147,7 +175,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
                     final Handler handler = new Handler(context.getMainLooper());
                     Runnable nextStep;
                     try {
-                        nextStep = user.respondToChallenge(respondToAuthChallengeRequest, callback, RUN_IN_BACKGROUND);
+                        nextStep = user.respondToChallenge(clientMetaData, respondToAuthChallengeRequest, callback, RUN_IN_BACKGROUND);
                     } catch (final Exception e) {
                         nextStep = new Runnable() {
                             @Override
@@ -162,7 +190,7 @@ public class ChallengeContinuation implements CognitoIdentityProviderContinuatio
         } else {
             Runnable nextStep;
             try {
-                nextStep = user.respondToChallenge(respondToAuthChallengeRequest, callback, RUN_IN_CURRENT);
+                nextStep = user.respondToChallenge(clientMetaData, respondToAuthChallengeRequest, callback, RUN_IN_CURRENT);
             } catch (final Exception e) {
                 nextStep = new Runnable() {
                     @Override

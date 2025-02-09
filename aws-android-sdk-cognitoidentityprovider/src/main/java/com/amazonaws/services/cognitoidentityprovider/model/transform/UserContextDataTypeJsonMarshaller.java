@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.cognitoidentityprovider.model.transform;
 
 import com.amazonaws.services.cognitoidentityprovider.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -26,6 +27,11 @@ class UserContextDataTypeJsonMarshaller {
     public void marshall(UserContextDataType userContextDataType, AwsJsonWriter jsonWriter)
             throws Exception {
         jsonWriter.beginObject();
+        if (userContextDataType.getIpAddress() != null) {
+            String ipAddress = userContextDataType.getIpAddress();
+            jsonWriter.name("IpAddress");
+            jsonWriter.value(ipAddress);
+        }
         if (userContextDataType.getEncodedData() != null) {
             String encodedData = userContextDataType.getEncodedData();
             jsonWriter.name("EncodedData");

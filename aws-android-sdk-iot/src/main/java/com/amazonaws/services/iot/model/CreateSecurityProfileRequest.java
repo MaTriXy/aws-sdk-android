@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Creates a Device Defender security profile.
+ * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreateSecurityProfile</a> action.
  * </p>
  */
 public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implements Serializable {
@@ -66,7 +71,32 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Metadata which can be used to manage the security profile.
+     * <i>Please use
+     * <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2</a>
+     * instead.</i>
+     * </p>
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     */
+    private java.util.List<String> additionalMetricsToRetain;
+
+    /**
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     */
+    private java.util.List<MetricToRetain> additionalMetricsToRetainV2;
+
+    /**
+     * <p>
+     * Metadata that can be used to manage the security profile.
      * </p>
      */
     private java.util.List<Tag> tags;
@@ -367,11 +397,263 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Metadata which can be used to manage the security profile.
+     * <i>Please use
+     * <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2</a>
+     * instead.</i>
+     * </p>
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
      * </p>
      *
      * @return <p>
-     *         Metadata which can be used to manage the security profile.
+     *         <i>Please use
+     *         <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2</a>
+     *         instead.</i>
+     *         </p>
+     *         <p>
+     *         A list of metrics whose data is retained (stored). By default,
+     *         data is retained for any metric used in the profile's
+     *         <code>behaviors</code>, but it is also retained for any metric
+     *         specified here. Can be used with custom metrics; cannot be used
+     *         with dimensions.
+     *         </p>
+     */
+    public java.util.List<String> getAdditionalMetricsToRetain() {
+        return additionalMetricsToRetain;
+    }
+
+    /**
+     * <p>
+     * <i>Please use
+     * <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2</a>
+     * instead.</i>
+     * </p>
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     *
+     * @param additionalMetricsToRetain <p>
+     *            <i>Please use
+     *            <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2
+     *            </a> instead.</i>
+     *            </p>
+     *            <p>
+     *            A list of metrics whose data is retained (stored). By default,
+     *            data is retained for any metric used in the profile's
+     *            <code>behaviors</code>, but it is also retained for any metric
+     *            specified here. Can be used with custom metrics; cannot be
+     *            used with dimensions.
+     *            </p>
+     */
+    public void setAdditionalMetricsToRetain(java.util.Collection<String> additionalMetricsToRetain) {
+        if (additionalMetricsToRetain == null) {
+            this.additionalMetricsToRetain = null;
+            return;
+        }
+
+        this.additionalMetricsToRetain = new java.util.ArrayList<String>(additionalMetricsToRetain);
+    }
+
+    /**
+     * <p>
+     * <i>Please use
+     * <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2</a>
+     * instead.</i>
+     * </p>
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param additionalMetricsToRetain <p>
+     *            <i>Please use
+     *            <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2
+     *            </a> instead.</i>
+     *            </p>
+     *            <p>
+     *            A list of metrics whose data is retained (stored). By default,
+     *            data is retained for any metric used in the profile's
+     *            <code>behaviors</code>, but it is also retained for any metric
+     *            specified here. Can be used with custom metrics; cannot be
+     *            used with dimensions.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateSecurityProfileRequest withAdditionalMetricsToRetain(
+            String... additionalMetricsToRetain) {
+        if (getAdditionalMetricsToRetain() == null) {
+            this.additionalMetricsToRetain = new java.util.ArrayList<String>(
+                    additionalMetricsToRetain.length);
+        }
+        for (String value : additionalMetricsToRetain) {
+            this.additionalMetricsToRetain.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * <i>Please use
+     * <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2</a>
+     * instead.</i>
+     * </p>
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param additionalMetricsToRetain <p>
+     *            <i>Please use
+     *            <a>CreateSecurityProfileRequest$additionalMetricsToRetainV2
+     *            </a> instead.</i>
+     *            </p>
+     *            <p>
+     *            A list of metrics whose data is retained (stored). By default,
+     *            data is retained for any metric used in the profile's
+     *            <code>behaviors</code>, but it is also retained for any metric
+     *            specified here. Can be used with custom metrics; cannot be
+     *            used with dimensions.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateSecurityProfileRequest withAdditionalMetricsToRetain(
+            java.util.Collection<String> additionalMetricsToRetain) {
+        setAdditionalMetricsToRetain(additionalMetricsToRetain);
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     *
+     * @return <p>
+     *         A list of metrics whose data is retained (stored). By default,
+     *         data is retained for any metric used in the profile's
+     *         <code>behaviors</code>, but it is also retained for any metric
+     *         specified here. Can be used with custom metrics; cannot be used
+     *         with dimensions.
+     *         </p>
+     */
+    public java.util.List<MetricToRetain> getAdditionalMetricsToRetainV2() {
+        return additionalMetricsToRetainV2;
+    }
+
+    /**
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     *
+     * @param additionalMetricsToRetainV2 <p>
+     *            A list of metrics whose data is retained (stored). By default,
+     *            data is retained for any metric used in the profile's
+     *            <code>behaviors</code>, but it is also retained for any metric
+     *            specified here. Can be used with custom metrics; cannot be
+     *            used with dimensions.
+     *            </p>
+     */
+    public void setAdditionalMetricsToRetainV2(
+            java.util.Collection<MetricToRetain> additionalMetricsToRetainV2) {
+        if (additionalMetricsToRetainV2 == null) {
+            this.additionalMetricsToRetainV2 = null;
+            return;
+        }
+
+        this.additionalMetricsToRetainV2 = new java.util.ArrayList<MetricToRetain>(
+                additionalMetricsToRetainV2);
+    }
+
+    /**
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param additionalMetricsToRetainV2 <p>
+     *            A list of metrics whose data is retained (stored). By default,
+     *            data is retained for any metric used in the profile's
+     *            <code>behaviors</code>, but it is also retained for any metric
+     *            specified here. Can be used with custom metrics; cannot be
+     *            used with dimensions.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateSecurityProfileRequest withAdditionalMetricsToRetainV2(
+            MetricToRetain... additionalMetricsToRetainV2) {
+        if (getAdditionalMetricsToRetainV2() == null) {
+            this.additionalMetricsToRetainV2 = new java.util.ArrayList<MetricToRetain>(
+                    additionalMetricsToRetainV2.length);
+        }
+        for (MetricToRetain value : additionalMetricsToRetainV2) {
+            this.additionalMetricsToRetainV2.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * A list of metrics whose data is retained (stored). By default, data is
+     * retained for any metric used in the profile's <code>behaviors</code>, but
+     * it is also retained for any metric specified here. Can be used with
+     * custom metrics; cannot be used with dimensions.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param additionalMetricsToRetainV2 <p>
+     *            A list of metrics whose data is retained (stored). By default,
+     *            data is retained for any metric used in the profile's
+     *            <code>behaviors</code>, but it is also retained for any metric
+     *            specified here. Can be used with custom metrics; cannot be
+     *            used with dimensions.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateSecurityProfileRequest withAdditionalMetricsToRetainV2(
+            java.util.Collection<MetricToRetain> additionalMetricsToRetainV2) {
+        setAdditionalMetricsToRetainV2(additionalMetricsToRetainV2);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata that can be used to manage the security profile.
+     * </p>
+     *
+     * @return <p>
+     *         Metadata that can be used to manage the security profile.
      *         </p>
      */
     public java.util.List<Tag> getTags() {
@@ -380,11 +662,11 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Metadata which can be used to manage the security profile.
+     * Metadata that can be used to manage the security profile.
      * </p>
      *
      * @param tags <p>
-     *            Metadata which can be used to manage the security profile.
+     *            Metadata that can be used to manage the security profile.
      *            </p>
      */
     public void setTags(java.util.Collection<Tag> tags) {
@@ -398,14 +680,14 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Metadata which can be used to manage the security profile.
+     * Metadata that can be used to manage the security profile.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param tags <p>
-     *            Metadata which can be used to manage the security profile.
+     *            Metadata that can be used to manage the security profile.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -422,14 +704,14 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
 
     /**
      * <p>
-     * Metadata which can be used to manage the security profile.
+     * Metadata that can be used to manage the security profile.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param tags <p>
-     *            Metadata which can be used to manage the security profile.
+     *            Metadata that can be used to manage the security profile.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -458,6 +740,10 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
             sb.append("behaviors: " + getBehaviors() + ",");
         if (getAlertTargets() != null)
             sb.append("alertTargets: " + getAlertTargets() + ",");
+        if (getAdditionalMetricsToRetain() != null)
+            sb.append("additionalMetricsToRetain: " + getAdditionalMetricsToRetain() + ",");
+        if (getAdditionalMetricsToRetainV2() != null)
+            sb.append("additionalMetricsToRetainV2: " + getAdditionalMetricsToRetainV2() + ",");
         if (getTags() != null)
             sb.append("tags: " + getTags());
         sb.append("}");
@@ -478,6 +764,14 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
         hashCode = prime * hashCode + ((getBehaviors() == null) ? 0 : getBehaviors().hashCode());
         hashCode = prime * hashCode
                 + ((getAlertTargets() == null) ? 0 : getAlertTargets().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getAdditionalMetricsToRetain() == null) ? 0 : getAdditionalMetricsToRetain()
+                        .hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getAdditionalMetricsToRetainV2() == null) ? 0
+                        : getAdditionalMetricsToRetainV2().hashCode());
         hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
@@ -514,6 +808,19 @@ public class CreateSecurityProfileRequest extends AmazonWebServiceRequest implem
             return false;
         if (other.getAlertTargets() != null
                 && other.getAlertTargets().equals(this.getAlertTargets()) == false)
+            return false;
+        if (other.getAdditionalMetricsToRetain() == null
+                ^ this.getAdditionalMetricsToRetain() == null)
+            return false;
+        if (other.getAdditionalMetricsToRetain() != null
+                && other.getAdditionalMetricsToRetain().equals(this.getAdditionalMetricsToRetain()) == false)
+            return false;
+        if (other.getAdditionalMetricsToRetainV2() == null
+                ^ this.getAdditionalMetricsToRetainV2() == null)
+            return false;
+        if (other.getAdditionalMetricsToRetainV2() != null
+                && other.getAdditionalMetricsToRetainV2().equals(
+                        this.getAdditionalMetricsToRetainV2()) == false)
             return false;
         if (other.getTags() == null ^ this.getTags() == null)
             return false;

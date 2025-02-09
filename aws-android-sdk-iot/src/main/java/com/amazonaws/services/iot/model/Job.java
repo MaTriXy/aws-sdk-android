@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -51,6 +51,13 @@ public class Job implements Serializable {
      * when the thing representing the device is added to a target group, even
      * after the job was completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -66,7 +73,7 @@ public class Job implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      */
     private String status;
 
@@ -141,21 +148,21 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      */
     private java.util.Date createdAt;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      */
     private java.util.Date lastUpdatedAt;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was completed.
+     * The time, in seconds since the epoch, when the job was completed.
      * </p>
      */
     private java.util.Date completedAt;
@@ -177,6 +184,101 @@ public class Job implements Serializable {
      * </p>
      */
     private TimeoutConfig timeoutConfig;
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     */
+    private String namespaceId;
+
+    /**
+     * <p>
+     * The ARN of the job template used to create the job.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1600<br/>
+     * <b>Pattern: </b>^arn:[!-~]+$<br/>
+     */
+    private String jobTemplateArn;
+
+    /**
+     * <p>
+     * The configuration for the criteria to retry the job.
+     * </p>
+     */
+    private JobExecutionsRetryConfig jobExecutionsRetryConfig;
+
+    /**
+     * <p>
+     * A key-value map that pairs the patterns that need to be replaced in a
+     * managed template job document schema. You can use the description of each
+     * key as a guidance to specify the inputs during runtime when creating a
+     * job.
+     * </p>
+     * <note>
+     * <p>
+     * <code>documentParameters</code> can only be used when creating jobs from
+     * Amazon Web Services managed templates. This parameter can't be used with
+     * custom job templates or to create jobs from them.
+     * </p>
+     * </note>
+     */
+    private java.util.Map<String, String> documentParameters;
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     */
+    private Boolean isConcurrent;
+
+    /**
+     * <p>
+     * The configuration that allows you to schedule a job for a future date and
+     * time in addition to specifying the end behavior for each job execution.
+     * </p>
+     */
+    private SchedulingConfig schedulingConfig;
+
+    /**
+     * <p>
+     * Displays the next seven maintenance window occurrences and their start
+     * times.
+     * </p>
+     */
+    private java.util.List<ScheduledJobRollout> scheduledJobRollouts;
+
+    /**
+     * <p>
+     * The package version Amazon Resource Names (ARNs) that are installed on
+     * the device when the job successfully completes.
+     * </p>
+     * <p>
+     * <b>Note:</b>The following Length Constraints relates to a single string.
+     * Up to five strings are allowed.
+     * </p>
+     */
+    private java.util.List<String> destinationPackageVersions;
 
     /**
      * <p>
@@ -298,6 +400,13 @@ public class Job implements Serializable {
      * when the thing representing the device is added to a target group, even
      * after the job was completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -311,6 +420,14 @@ public class Job implements Serializable {
      *         the device is added to a target group, even after the job was
      *         completed by all things originally in the group.
      *         </p>
+     *         <note>
+     *         <p>
+     *         We recommend that you use continuous jobs instead of snapshot
+     *         jobs for dynamic thing group targets. By using continuous jobs,
+     *         devices that join the group receive the job execution even after
+     *         the job has been created.
+     *         </p>
+     *         </note>
      * @see TargetSelection
      */
     public String getTargetSelection() {
@@ -326,6 +443,13 @@ public class Job implements Serializable {
      * when the thing representing the device is added to a target group, even
      * after the job was completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -339,6 +463,14 @@ public class Job implements Serializable {
      *            representing the device is added to a target group, even after
      *            the job was completed by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @see TargetSelection
      */
     public void setTargetSelection(String targetSelection) {
@@ -354,6 +486,13 @@ public class Job implements Serializable {
      * when the thing representing the device is added to a target group, even
      * after the job was completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -370,6 +509,14 @@ public class Job implements Serializable {
      *            representing the device is added to a target group, even after
      *            the job was completed by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      * @see TargetSelection
@@ -388,6 +535,13 @@ public class Job implements Serializable {
      * when the thing representing the device is added to a target group, even
      * after the job was completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -401,6 +555,14 @@ public class Job implements Serializable {
      *            representing the device is added to a target group, even after
      *            the job was completed by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @see TargetSelection
      */
     public void setTargetSelection(TargetSelection targetSelection) {
@@ -416,6 +578,13 @@ public class Job implements Serializable {
      * when the thing representing the device is added to a target group, even
      * after the job was completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -432,6 +601,14 @@ public class Job implements Serializable {
      *            representing the device is added to a target group, even after
      *            the job was completed by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      * @see TargetSelection
@@ -450,7 +627,7 @@ public class Job implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @return <p>
      *         The status of the job, one of <code>IN_PROGRESS</code>,
@@ -472,7 +649,7 @@ public class Job implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The status of the job, one of <code>IN_PROGRESS</code>,
@@ -497,7 +674,7 @@ public class Job implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The status of the job, one of <code>IN_PROGRESS</code>,
@@ -522,7 +699,7 @@ public class Job implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The status of the job, one of <code>IN_PROGRESS</code>,
@@ -547,7 +724,7 @@ public class Job implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The status of the job, one of <code>IN_PROGRESS</code>,
@@ -1019,12 +1196,11 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job was
-     *         created.
+     *         The time, in seconds since the epoch, when the job was created.
      *         </p>
      */
     public java.util.Date getCreatedAt() {
@@ -1033,11 +1209,11 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      *
      * @param createdAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
+     *            The time, in seconds since the epoch, when the job was
      *            created.
      *            </p>
      */
@@ -1047,14 +1223,14 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param createdAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
+     *            The time, in seconds since the epoch, when the job was
      *            created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -1067,11 +1243,11 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job was last
+     *         The time, in seconds since the epoch, when the job was last
      *         updated.
      *         </p>
      */
@@ -1081,12 +1257,12 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      *
      * @param lastUpdatedAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
-     *            last updated.
+     *            The time, in seconds since the epoch, when the job was last
+     *            updated.
      *            </p>
      */
     public void setLastUpdatedAt(java.util.Date lastUpdatedAt) {
@@ -1095,15 +1271,15 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastUpdatedAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
-     *            last updated.
+     *            The time, in seconds since the epoch, when the job was last
+     *            updated.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1115,12 +1291,11 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was completed.
+     * The time, in seconds since the epoch, when the job was completed.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job was
-     *         completed.
+     *         The time, in seconds since the epoch, when the job was completed.
      *         </p>
      */
     public java.util.Date getCompletedAt() {
@@ -1129,11 +1304,11 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was completed.
+     * The time, in seconds since the epoch, when the job was completed.
      * </p>
      *
      * @param completedAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
+     *            The time, in seconds since the epoch, when the job was
      *            completed.
      *            </p>
      */
@@ -1143,14 +1318,14 @@ public class Job implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was completed.
+     * The time, in seconds since the epoch, when the job was completed.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param completedAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
+     *            The time, in seconds since the epoch, when the job was
      *            completed.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -1278,6 +1453,730 @@ public class Job implements Serializable {
     }
 
     /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @return <p>
+     *         The namespace used to indicate that a job is a customer-managed
+     *         job.
+     *         </p>
+     *         <p>
+     *         When you specify a value for this parameter, Amazon Web Services
+     *         IoT Core sends jobs notifications to MQTT topics that contain the
+     *         value in the following format.
+     *         </p>
+     *         <p>
+     *         <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *         </p>
+     *         <note>
+     *         <p>
+     *         The <code>namespaceId</code> feature is in public preview.
+     *         </p>
+     *         </note>
+     */
+    public String getNamespaceId() {
+        return namespaceId;
+    }
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @param namespaceId <p>
+     *            The namespace used to indicate that a job is a
+     *            customer-managed job.
+     *            </p>
+     *            <p>
+     *            When you specify a value for this parameter, Amazon Web
+     *            Services IoT Core sends jobs notifications to MQTT topics that
+     *            contain the value in the following format.
+     *            </p>
+     *            <p>
+     *            <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>namespaceId</code> feature is in public preview.
+     *            </p>
+     *            </note>
+     */
+    public void setNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+    }
+
+    /**
+     * <p>
+     * The namespace used to indicate that a job is a customer-managed job.
+     * </p>
+     * <p>
+     * When you specify a value for this parameter, Amazon Web Services IoT Core
+     * sends jobs notifications to MQTT topics that contain the value in the
+     * following format.
+     * </p>
+     * <p>
+     * <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     * </p>
+     * <note>
+     * <p>
+     * The <code>namespaceId</code> feature is in public preview.
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_-]+<br/>
+     *
+     * @param namespaceId <p>
+     *            The namespace used to indicate that a job is a
+     *            customer-managed job.
+     *            </p>
+     *            <p>
+     *            When you specify a value for this parameter, Amazon Web
+     *            Services IoT Core sends jobs notifications to MQTT topics that
+     *            contain the value in the following format.
+     *            </p>
+     *            <p>
+     *            <code>$aws/things/<i>THING_NAME</i>/jobs/<i>JOB_ID</i>/notify-namespace-<i>NAMESPACE_ID</i>/</code>
+     *            </p>
+     *            <note>
+     *            <p>
+     *            The <code>namespaceId</code> feature is in public preview.
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The ARN of the job template used to create the job.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1600<br/>
+     * <b>Pattern: </b>^arn:[!-~]+$<br/>
+     *
+     * @return <p>
+     *         The ARN of the job template used to create the job.
+     *         </p>
+     */
+    public String getJobTemplateArn() {
+        return jobTemplateArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the job template used to create the job.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1600<br/>
+     * <b>Pattern: </b>^arn:[!-~]+$<br/>
+     *
+     * @param jobTemplateArn <p>
+     *            The ARN of the job template used to create the job.
+     *            </p>
+     */
+    public void setJobTemplateArn(String jobTemplateArn) {
+        this.jobTemplateArn = jobTemplateArn;
+    }
+
+    /**
+     * <p>
+     * The ARN of the job template used to create the job.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1600<br/>
+     * <b>Pattern: </b>^arn:[!-~]+$<br/>
+     *
+     * @param jobTemplateArn <p>
+     *            The ARN of the job template used to create the job.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withJobTemplateArn(String jobTemplateArn) {
+        this.jobTemplateArn = jobTemplateArn;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The configuration for the criteria to retry the job.
+     * </p>
+     *
+     * @return <p>
+     *         The configuration for the criteria to retry the job.
+     *         </p>
+     */
+    public JobExecutionsRetryConfig getJobExecutionsRetryConfig() {
+        return jobExecutionsRetryConfig;
+    }
+
+    /**
+     * <p>
+     * The configuration for the criteria to retry the job.
+     * </p>
+     *
+     * @param jobExecutionsRetryConfig <p>
+     *            The configuration for the criteria to retry the job.
+     *            </p>
+     */
+    public void setJobExecutionsRetryConfig(JobExecutionsRetryConfig jobExecutionsRetryConfig) {
+        this.jobExecutionsRetryConfig = jobExecutionsRetryConfig;
+    }
+
+    /**
+     * <p>
+     * The configuration for the criteria to retry the job.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param jobExecutionsRetryConfig <p>
+     *            The configuration for the criteria to retry the job.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withJobExecutionsRetryConfig(JobExecutionsRetryConfig jobExecutionsRetryConfig) {
+        this.jobExecutionsRetryConfig = jobExecutionsRetryConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A key-value map that pairs the patterns that need to be replaced in a
+     * managed template job document schema. You can use the description of each
+     * key as a guidance to specify the inputs during runtime when creating a
+     * job.
+     * </p>
+     * <note>
+     * <p>
+     * <code>documentParameters</code> can only be used when creating jobs from
+     * Amazon Web Services managed templates. This parameter can't be used with
+     * custom job templates or to create jobs from them.
+     * </p>
+     * </note>
+     *
+     * @return <p>
+     *         A key-value map that pairs the patterns that need to be replaced
+     *         in a managed template job document schema. You can use the
+     *         description of each key as a guidance to specify the inputs
+     *         during runtime when creating a job.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         <code>documentParameters</code> can only be used when creating
+     *         jobs from Amazon Web Services managed templates. This parameter
+     *         can't be used with custom job templates or to create jobs from
+     *         them.
+     *         </p>
+     *         </note>
+     */
+    public java.util.Map<String, String> getDocumentParameters() {
+        return documentParameters;
+    }
+
+    /**
+     * <p>
+     * A key-value map that pairs the patterns that need to be replaced in a
+     * managed template job document schema. You can use the description of each
+     * key as a guidance to specify the inputs during runtime when creating a
+     * job.
+     * </p>
+     * <note>
+     * <p>
+     * <code>documentParameters</code> can only be used when creating jobs from
+     * Amazon Web Services managed templates. This parameter can't be used with
+     * custom job templates or to create jobs from them.
+     * </p>
+     * </note>
+     *
+     * @param documentParameters <p>
+     *            A key-value map that pairs the patterns that need to be
+     *            replaced in a managed template job document schema. You can
+     *            use the description of each key as a guidance to specify the
+     *            inputs during runtime when creating a job.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            <code>documentParameters</code> can only be used when creating
+     *            jobs from Amazon Web Services managed templates. This
+     *            parameter can't be used with custom job templates or to create
+     *            jobs from them.
+     *            </p>
+     *            </note>
+     */
+    public void setDocumentParameters(java.util.Map<String, String> documentParameters) {
+        this.documentParameters = documentParameters;
+    }
+
+    /**
+     * <p>
+     * A key-value map that pairs the patterns that need to be replaced in a
+     * managed template job document schema. You can use the description of each
+     * key as a guidance to specify the inputs during runtime when creating a
+     * job.
+     * </p>
+     * <note>
+     * <p>
+     * <code>documentParameters</code> can only be used when creating jobs from
+     * Amazon Web Services managed templates. This parameter can't be used with
+     * custom job templates or to create jobs from them.
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param documentParameters <p>
+     *            A key-value map that pairs the patterns that need to be
+     *            replaced in a managed template job document schema. You can
+     *            use the description of each key as a guidance to specify the
+     *            inputs during runtime when creating a job.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            <code>documentParameters</code> can only be used when creating
+     *            jobs from Amazon Web Services managed templates. This
+     *            parameter can't be used with custom job templates or to create
+     *            jobs from them.
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withDocumentParameters(java.util.Map<String, String> documentParameters) {
+        this.documentParameters = documentParameters;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A key-value map that pairs the patterns that need to be replaced in a
+     * managed template job document schema. You can use the description of each
+     * key as a guidance to specify the inputs during runtime when creating a
+     * job.
+     * </p>
+     * <note>
+     * <p>
+     * <code>documentParameters</code> can only be used when creating jobs from
+     * Amazon Web Services managed templates. This parameter can't be used with
+     * custom job templates or to create jobs from them.
+     * </p>
+     * </note>
+     * <p>
+     * The method adds a new key-value pair into documentParameters parameter,
+     * and returns a reference to this object so that method calls can be
+     * chained together.
+     *
+     * @param key The key of the entry to be added into documentParameters.
+     * @param value The corresponding value of the entry to be added into
+     *            documentParameters.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job adddocumentParametersEntry(String key, String value) {
+        if (null == this.documentParameters) {
+            this.documentParameters = new java.util.HashMap<String, String>();
+        }
+        if (this.documentParameters.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString()
+                    + ") are provided.");
+        this.documentParameters.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into documentParameters.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     */
+    public Job cleardocumentParametersEntries() {
+        this.documentParameters = null;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether a job is concurrent. Will be true when a job is
+     *         rolling out new job executions or canceling previously created
+     *         executions, otherwise false.
+     *         </p>
+     */
+    public Boolean isIsConcurrent() {
+        return isConcurrent;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether a job is concurrent. Will be true when a job is
+     *         rolling out new job executions or canceling previously created
+     *         executions, otherwise false.
+     *         </p>
+     */
+    public Boolean getIsConcurrent() {
+        return isConcurrent;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     *
+     * @param isConcurrent <p>
+     *            Indicates whether a job is concurrent. Will be true when a job
+     *            is rolling out new job executions or canceling previously
+     *            created executions, otherwise false.
+     *            </p>
+     */
+    public void setIsConcurrent(Boolean isConcurrent) {
+        this.isConcurrent = isConcurrent;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param isConcurrent <p>
+     *            Indicates whether a job is concurrent. Will be true when a job
+     *            is rolling out new job executions or canceling previously
+     *            created executions, otherwise false.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withIsConcurrent(Boolean isConcurrent) {
+        this.isConcurrent = isConcurrent;
+        return this;
+    }
+
+    /**
+     * <p>
+     * The configuration that allows you to schedule a job for a future date and
+     * time in addition to specifying the end behavior for each job execution.
+     * </p>
+     *
+     * @return <p>
+     *         The configuration that allows you to schedule a job for a future
+     *         date and time in addition to specifying the end behavior for each
+     *         job execution.
+     *         </p>
+     */
+    public SchedulingConfig getSchedulingConfig() {
+        return schedulingConfig;
+    }
+
+    /**
+     * <p>
+     * The configuration that allows you to schedule a job for a future date and
+     * time in addition to specifying the end behavior for each job execution.
+     * </p>
+     *
+     * @param schedulingConfig <p>
+     *            The configuration that allows you to schedule a job for a
+     *            future date and time in addition to specifying the end
+     *            behavior for each job execution.
+     *            </p>
+     */
+    public void setSchedulingConfig(SchedulingConfig schedulingConfig) {
+        this.schedulingConfig = schedulingConfig;
+    }
+
+    /**
+     * <p>
+     * The configuration that allows you to schedule a job for a future date and
+     * time in addition to specifying the end behavior for each job execution.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param schedulingConfig <p>
+     *            The configuration that allows you to schedule a job for a
+     *            future date and time in addition to specifying the end
+     *            behavior for each job execution.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withSchedulingConfig(SchedulingConfig schedulingConfig) {
+        this.schedulingConfig = schedulingConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Displays the next seven maintenance window occurrences and their start
+     * times.
+     * </p>
+     *
+     * @return <p>
+     *         Displays the next seven maintenance window occurrences and their
+     *         start times.
+     *         </p>
+     */
+    public java.util.List<ScheduledJobRollout> getScheduledJobRollouts() {
+        return scheduledJobRollouts;
+    }
+
+    /**
+     * <p>
+     * Displays the next seven maintenance window occurrences and their start
+     * times.
+     * </p>
+     *
+     * @param scheduledJobRollouts <p>
+     *            Displays the next seven maintenance window occurrences and
+     *            their start times.
+     *            </p>
+     */
+    public void setScheduledJobRollouts(
+            java.util.Collection<ScheduledJobRollout> scheduledJobRollouts) {
+        if (scheduledJobRollouts == null) {
+            this.scheduledJobRollouts = null;
+            return;
+        }
+
+        this.scheduledJobRollouts = new java.util.ArrayList<ScheduledJobRollout>(
+                scheduledJobRollouts);
+    }
+
+    /**
+     * <p>
+     * Displays the next seven maintenance window occurrences and their start
+     * times.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param scheduledJobRollouts <p>
+     *            Displays the next seven maintenance window occurrences and
+     *            their start times.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withScheduledJobRollouts(ScheduledJobRollout... scheduledJobRollouts) {
+        if (getScheduledJobRollouts() == null) {
+            this.scheduledJobRollouts = new java.util.ArrayList<ScheduledJobRollout>(
+                    scheduledJobRollouts.length);
+        }
+        for (ScheduledJobRollout value : scheduledJobRollouts) {
+            this.scheduledJobRollouts.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Displays the next seven maintenance window occurrences and their start
+     * times.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param scheduledJobRollouts <p>
+     *            Displays the next seven maintenance window occurrences and
+     *            their start times.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withScheduledJobRollouts(
+            java.util.Collection<ScheduledJobRollout> scheduledJobRollouts) {
+        setScheduledJobRollouts(scheduledJobRollouts);
+        return this;
+    }
+
+    /**
+     * <p>
+     * The package version Amazon Resource Names (ARNs) that are installed on
+     * the device when the job successfully completes.
+     * </p>
+     * <p>
+     * <b>Note:</b>The following Length Constraints relates to a single string.
+     * Up to five strings are allowed.
+     * </p>
+     *
+     * @return <p>
+     *         The package version Amazon Resource Names (ARNs) that are
+     *         installed on the device when the job successfully completes.
+     *         </p>
+     *         <p>
+     *         <b>Note:</b>The following Length Constraints relates to a single
+     *         string. Up to five strings are allowed.
+     *         </p>
+     */
+    public java.util.List<String> getDestinationPackageVersions() {
+        return destinationPackageVersions;
+    }
+
+    /**
+     * <p>
+     * The package version Amazon Resource Names (ARNs) that are installed on
+     * the device when the job successfully completes.
+     * </p>
+     * <p>
+     * <b>Note:</b>The following Length Constraints relates to a single string.
+     * Up to five strings are allowed.
+     * </p>
+     *
+     * @param destinationPackageVersions <p>
+     *            The package version Amazon Resource Names (ARNs) that are
+     *            installed on the device when the job successfully completes.
+     *            </p>
+     *            <p>
+     *            <b>Note:</b>The following Length Constraints relates to a
+     *            single string. Up to five strings are allowed.
+     *            </p>
+     */
+    public void setDestinationPackageVersions(
+            java.util.Collection<String> destinationPackageVersions) {
+        if (destinationPackageVersions == null) {
+            this.destinationPackageVersions = null;
+            return;
+        }
+
+        this.destinationPackageVersions = new java.util.ArrayList<String>(
+                destinationPackageVersions);
+    }
+
+    /**
+     * <p>
+     * The package version Amazon Resource Names (ARNs) that are installed on
+     * the device when the job successfully completes.
+     * </p>
+     * <p>
+     * <b>Note:</b>The following Length Constraints relates to a single string.
+     * Up to five strings are allowed.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param destinationPackageVersions <p>
+     *            The package version Amazon Resource Names (ARNs) that are
+     *            installed on the device when the job successfully completes.
+     *            </p>
+     *            <p>
+     *            <b>Note:</b>The following Length Constraints relates to a
+     *            single string. Up to five strings are allowed.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withDestinationPackageVersions(String... destinationPackageVersions) {
+        if (getDestinationPackageVersions() == null) {
+            this.destinationPackageVersions = new java.util.ArrayList<String>(
+                    destinationPackageVersions.length);
+        }
+        for (String value : destinationPackageVersions) {
+            this.destinationPackageVersions.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * The package version Amazon Resource Names (ARNs) that are installed on
+     * the device when the job successfully completes.
+     * </p>
+     * <p>
+     * <b>Note:</b>The following Length Constraints relates to a single string.
+     * Up to five strings are allowed.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param destinationPackageVersions <p>
+     *            The package version Amazon Resource Names (ARNs) that are
+     *            installed on the device when the job successfully completes.
+     *            </p>
+     *            <p>
+     *            <b>Note:</b>The following Length Constraints relates to a
+     *            single string. Up to five strings are allowed.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public Job withDestinationPackageVersions(
+            java.util.Collection<String> destinationPackageVersions) {
+        setDestinationPackageVersions(destinationPackageVersions);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -1321,7 +2220,23 @@ public class Job implements Serializable {
         if (getJobProcessDetails() != null)
             sb.append("jobProcessDetails: " + getJobProcessDetails() + ",");
         if (getTimeoutConfig() != null)
-            sb.append("timeoutConfig: " + getTimeoutConfig());
+            sb.append("timeoutConfig: " + getTimeoutConfig() + ",");
+        if (getNamespaceId() != null)
+            sb.append("namespaceId: " + getNamespaceId() + ",");
+        if (getJobTemplateArn() != null)
+            sb.append("jobTemplateArn: " + getJobTemplateArn() + ",");
+        if (getJobExecutionsRetryConfig() != null)
+            sb.append("jobExecutionsRetryConfig: " + getJobExecutionsRetryConfig() + ",");
+        if (getDocumentParameters() != null)
+            sb.append("documentParameters: " + getDocumentParameters() + ",");
+        if (getIsConcurrent() != null)
+            sb.append("isConcurrent: " + getIsConcurrent() + ",");
+        if (getSchedulingConfig() != null)
+            sb.append("schedulingConfig: " + getSchedulingConfig() + ",");
+        if (getScheduledJobRollouts() != null)
+            sb.append("scheduledJobRollouts: " + getScheduledJobRollouts() + ",");
+        if (getDestinationPackageVersions() != null)
+            sb.append("destinationPackageVersions: " + getDestinationPackageVersions());
         sb.append("}");
         return sb.toString();
     }
@@ -1360,6 +2275,26 @@ public class Job implements Serializable {
                 + ((getJobProcessDetails() == null) ? 0 : getJobProcessDetails().hashCode());
         hashCode = prime * hashCode
                 + ((getTimeoutConfig() == null) ? 0 : getTimeoutConfig().hashCode());
+        hashCode = prime * hashCode
+                + ((getNamespaceId() == null) ? 0 : getNamespaceId().hashCode());
+        hashCode = prime * hashCode
+                + ((getJobTemplateArn() == null) ? 0 : getJobTemplateArn().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getJobExecutionsRetryConfig() == null) ? 0 : getJobExecutionsRetryConfig()
+                        .hashCode());
+        hashCode = prime * hashCode
+                + ((getDocumentParameters() == null) ? 0 : getDocumentParameters().hashCode());
+        hashCode = prime * hashCode
+                + ((getIsConcurrent() == null) ? 0 : getIsConcurrent().hashCode());
+        hashCode = prime * hashCode
+                + ((getSchedulingConfig() == null) ? 0 : getSchedulingConfig().hashCode());
+        hashCode = prime * hashCode
+                + ((getScheduledJobRollouts() == null) ? 0 : getScheduledJobRollouts().hashCode());
+        hashCode = prime
+                * hashCode
+                + ((getDestinationPackageVersions() == null) ? 0 : getDestinationPackageVersions()
+                        .hashCode());
         return hashCode;
     }
 
@@ -1455,6 +2390,49 @@ public class Job implements Serializable {
             return false;
         if (other.getTimeoutConfig() != null
                 && other.getTimeoutConfig().equals(this.getTimeoutConfig()) == false)
+            return false;
+        if (other.getNamespaceId() == null ^ this.getNamespaceId() == null)
+            return false;
+        if (other.getNamespaceId() != null
+                && other.getNamespaceId().equals(this.getNamespaceId()) == false)
+            return false;
+        if (other.getJobTemplateArn() == null ^ this.getJobTemplateArn() == null)
+            return false;
+        if (other.getJobTemplateArn() != null
+                && other.getJobTemplateArn().equals(this.getJobTemplateArn()) == false)
+            return false;
+        if (other.getJobExecutionsRetryConfig() == null
+                ^ this.getJobExecutionsRetryConfig() == null)
+            return false;
+        if (other.getJobExecutionsRetryConfig() != null
+                && other.getJobExecutionsRetryConfig().equals(this.getJobExecutionsRetryConfig()) == false)
+            return false;
+        if (other.getDocumentParameters() == null ^ this.getDocumentParameters() == null)
+            return false;
+        if (other.getDocumentParameters() != null
+                && other.getDocumentParameters().equals(this.getDocumentParameters()) == false)
+            return false;
+        if (other.getIsConcurrent() == null ^ this.getIsConcurrent() == null)
+            return false;
+        if (other.getIsConcurrent() != null
+                && other.getIsConcurrent().equals(this.getIsConcurrent()) == false)
+            return false;
+        if (other.getSchedulingConfig() == null ^ this.getSchedulingConfig() == null)
+            return false;
+        if (other.getSchedulingConfig() != null
+                && other.getSchedulingConfig().equals(this.getSchedulingConfig()) == false)
+            return false;
+        if (other.getScheduledJobRollouts() == null ^ this.getScheduledJobRollouts() == null)
+            return false;
+        if (other.getScheduledJobRollouts() != null
+                && other.getScheduledJobRollouts().equals(this.getScheduledJobRollouts()) == false)
+            return false;
+        if (other.getDestinationPackageVersions() == null
+                ^ this.getDestinationPackageVersions() == null)
+            return false;
+        if (other.getDestinationPackageVersions() != null
+                && other.getDestinationPackageVersions().equals(
+                        this.getDestinationPackageVersions()) == false)
             return false;
         return true;
     }

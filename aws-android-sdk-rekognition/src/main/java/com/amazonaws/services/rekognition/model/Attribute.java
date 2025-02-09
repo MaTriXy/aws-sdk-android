@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,7 +24,19 @@ import java.util.Map;
 public enum Attribute {
 
     DEFAULT("DEFAULT"),
-    ALL("ALL");
+    ALL("ALL"),
+    AGE_RANGE("AGE_RANGE"),
+    BEARD("BEARD"),
+    EMOTIONS("EMOTIONS"),
+    EYE_DIRECTION("EYE_DIRECTION"),
+    EYEGLASSES("EYEGLASSES"),
+    EYES_OPEN("EYES_OPEN"),
+    GENDER("GENDER"),
+    MOUTH_OPEN("MOUTH_OPEN"),
+    MUSTACHE("MUSTACHE"),
+    FACE_OCCLUDED("FACE_OCCLUDED"),
+    SMILE("SMILE"),
+    SUNGLASSES("SUNGLASSES");
 
     private String value;
 
@@ -42,6 +54,18 @@ public enum Attribute {
         enumMap = new HashMap<String, Attribute>();
         enumMap.put("DEFAULT", DEFAULT);
         enumMap.put("ALL", ALL);
+        enumMap.put("AGE_RANGE", AGE_RANGE);
+        enumMap.put("BEARD", BEARD);
+        enumMap.put("EMOTIONS", EMOTIONS);
+        enumMap.put("EYE_DIRECTION", EYE_DIRECTION);
+        enumMap.put("EYEGLASSES", EYEGLASSES);
+        enumMap.put("EYES_OPEN", EYES_OPEN);
+        enumMap.put("GENDER", GENDER);
+        enumMap.put("MOUTH_OPEN", MOUTH_OPEN);
+        enumMap.put("MUSTACHE", MUSTACHE);
+        enumMap.put("FACE_OCCLUDED", FACE_OCCLUDED);
+        enumMap.put("SMILE", SMILE);
+        enumMap.put("SUNGLASSES", SUNGLASSES);
     }
 
     /**

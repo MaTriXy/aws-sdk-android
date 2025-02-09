@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,7 +26,8 @@ public enum JobStatus {
     IN_PROGRESS("IN_PROGRESS"),
     CANCELED("CANCELED"),
     COMPLETED("COMPLETED"),
-    DELETION_IN_PROGRESS("DELETION_IN_PROGRESS");
+    DELETION_IN_PROGRESS("DELETION_IN_PROGRESS"),
+    SCHEDULED("SCHEDULED");
 
     private String value;
 
@@ -46,6 +47,7 @@ public enum JobStatus {
         enumMap.put("CANCELED", CANCELED);
         enumMap.put("COMPLETED", COMPLETED);
         enumMap.put("DELETION_IN_PROGRESS", DELETION_IN_PROGRESS);
+        enumMap.put("SCHEDULED", SCHEDULED);
     }
 
     /**

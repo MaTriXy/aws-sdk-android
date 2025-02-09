@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,28 +24,74 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Creates a new user in the specified user pool.
  * </p>
  * <p>
- * If <code>MessageAction</code> is not set, the default is to send a welcome
+ * If <code>MessageAction</code> isn't set, the default is to send a welcome
  * message via email or phone (SMS).
  * </p>
  * <note>
  * <p>
- * This message is based on a template that you configured in your call to or .
- * This template includes your custom sign-up instructions and placeholders for
- * user name and temporary password.
+ * This action might generate an SMS text message. Starting June 1, 2021, US
+ * telecom carriers require you to register an origination phone number before
+ * you can send SMS messages to US phone numbers. If you use SMS text messages
+ * in Amazon Cognito, you must register a phone number with <a
+ * href="https://console.aws.amazon.com/pinpoint/home/">Amazon Pinpoint</a>.
+ * Amazon Cognito uses the registered number automatically. Otherwise, Amazon
+ * Cognito users who must receive SMS messages might not be able to sign up,
+ * activate their accounts, or sign in.
+ * </p>
+ * <p>
+ * If you have never used SMS text messages with Amazon Cognito or any other
+ * Amazon Web Service, Amazon Simple Notification Service might place your
+ * account in the SMS sandbox. In <i> <a
+ * href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
+ * mode</a> </i>, you can send messages only to verified phone numbers. After
+ * you test your app while in the sandbox environment, you can move out of the
+ * sandbox and into production. For more information, see <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html"
+ * > SMS message settings for Amazon Cognito user pools</a> in the <i>Amazon
+ * Cognito Developer Guide</i>.
  * </p>
  * </note>
  * <p>
- * Alternatively, you can call AdminCreateUser with “SUPPRESS” for the
- * <code>MessageAction</code> parameter, and Amazon Cognito will not send any
- * email.
+ * This message is based on a template that you configured in your call to
+ * create or update a user pool. This template includes your custom sign-up
+ * instructions and placeholders for user name and temporary password.
+ * </p>
+ * <p>
+ * Alternatively, you can call <code>AdminCreateUser</code> with
+ * <code>SUPPRESS</code> for the <code>MessageAction</code> parameter, and
+ * Amazon Cognito won't send any email.
  * </p>
  * <p>
  * In either case, the user will be in the <code>FORCE_CHANGE_PASSWORD</code>
  * state until they sign in and change their password.
  * </p>
+ * <note>
  * <p>
- * AdminCreateUser requires developer credentials.
+ * Amazon Cognito evaluates Identity and Access Management (IAM) policies in
+ * requests for this API operation. For this operation, you must use IAM
+ * credentials to authorize requests, and you must grant yourself the
+ * corresponding IAM permission in a policy.
  * </p>
+ * <p class="title">
+ * <b>Learn more</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html"
+ * >Signing Amazon Web Services API Requests</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a href=
+ * "https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html"
+ * >Using the Amazon Cognito user pools API and user pool endpoints</a>
+ * </p>
+ * </li>
+ * </ul>
+ * </note>
  */
 public class AdminCreateUserRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -63,7 +109,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * The username for the user. Must be unique within the user pool. Must be a
      * UTF-8 string between 1 and 128 characters. After the user is created, the
-     * username cannot be changed.
+     * username can't be changed.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -77,10 +123,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * An array of name-value pairs that contain user attributes and attribute
      * values to be set for the user to be created. You can create a user
      * without specifying any attributes other than <code>Username</code>.
-     * However, any attributes that you specify as required (in or in the
-     * <b>Attributes</b> tab of the console) must be supplied either by you (in
-     * your call to <code>AdminCreateUser</code>) or by the user (when he or she
-     * signs up in response to your welcome message).
+     * However, any attributes that you specify as required (when creating a
+     * user pool or in the <b>Attributes</b> tab of the console) either you
+     * should supply (in your call to <code>AdminCreateUser</code>) or the user
+     * should supply (when they sign up in response to your welcome message).
      * </p>
      * <p>
      * For custom attributes, you must prepend the <code>custom:</code> prefix
@@ -88,7 +134,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * To send a message inviting the user to sign up, you must specify the
-     * user's email address or phone number. This can be done in your call to
+     * user's email address or phone number. You can do this in your call to
      * AdminCreateUser or in the <b>Users</b> tab of the Amazon Cognito console
      * for managing your user pools.
      * </p>
@@ -96,7 +142,9 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * In your call to <code>AdminCreateUser</code>, you can set the
      * <code>email_verified</code> attribute to <code>True</code>, and you can
      * set the <code>phone_number_verified</code> attribute to <code>True</code>
-     * . (You can also do this by calling .)
+     * . You can also do this by calling <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     * >AdminUpdateUserAttributes</a>.
      * </p>
      * <ul>
      * <li>
@@ -136,7 +184,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * validation process.
      * </p>
      * <p>
-     * The user's validation data is not persisted.
+     * The user's validation data isn't persisted.
      * </p>
      */
     private java.util.List<AttributeType> validationData;
@@ -148,30 +196,29 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * The temporary password is valid only once. To complete the Admin Create
-     * User flow, the user must enter the temporary password in the sign-in page
-     * along with a new password to be used in all future sign-ins.
+     * User flow, the user must enter the temporary password in the sign-in
+     * page, along with a new password to be used in all future sign-ins.
      * </p>
      * <p>
-     * This parameter is not required. If you do not specify a value, Amazon
+     * This parameter isn't required. If you don't specify a value, Amazon
      * Cognito generates one for you.
      * </p>
      * <p>
      * The temporary password can only be used until the user account expiration
-     * limit that you specified when you created the user pool. To reset the
-     * account after that time limit, you must call <code>AdminCreateUser</code>
-     * again, specifying <code>"RESEND"</code> for the
-     * <code>MessageAction</code> parameter.
+     * limit that you set for your user pool. To reset the account after that
+     * time limit, you must call <code>AdminCreateUser</code> again and specify
+     * <code>RESEND</code> for the <code>MessageAction</code> parameter.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>6 - 256<br/>
+     * <b>Length: </b> - 256<br/>
      * <b>Pattern: </b>[\S]+<br/>
      */
     private String temporaryPassword;
 
     /**
      * <p>
-     * This parameter is only used if the <code>phone_number_verified</code> or
+     * This parameter is used only if the <code>phone_number_verified</code> or
      * <code>email_verified</code> attribute is set to <code>True</code>.
      * Otherwise, it is ignored.
      * </p>
@@ -192,10 +239,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Set to <code>"RESEND"</code> to resend the invitation message to a user
+     * Set to <code>RESEND</code> to resend the invitation message to a user
      * that already exists and reset the expiration limit on the user's account.
-     * Set to <code>"SUPPRESS"</code> to suppress sending the message. Only one
-     * value can be specified.
+     * Set to <code>SUPPRESS</code> to suppress sending the message. You can
+     * specify only one value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -207,11 +254,63 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * Specify <code>"EMAIL"</code> if email will be used to send the welcome
      * message. Specify <code>"SMS"</code> if the phone number will be used. The
-     * default value is <code>"SMS"</code>. More than one value can be
-     * specified.
+     * default value is <code>"SMS"</code>. You can specify more than one value.
      * </p>
      */
     private java.util.List<String> desiredDeliveryMediums;
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminCreateUser API action, Amazon Cognito
+     * invokes the function that is assigned to the <i>pre sign-up</i> trigger.
+     * When Amazon Cognito invokes this function, it passes a JSON payload,
+     * which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute, which provides the data that you
+     * assigned to the ClientMetadata parameter in your AdminCreateUser request.
+     * In your function code in Lambda, you can process the
+     * <code>clientMetadata</code> value to enhance your workflow for your
+     * specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     */
+    private java.util.Map<String, String> clientMetadata;
 
     /**
      * <p>
@@ -277,7 +376,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * The username for the user. Must be unique within the user pool. Must be a
      * UTF-8 string between 1 and 128 characters. After the user is created, the
-     * username cannot be changed.
+     * username can't be changed.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -287,7 +386,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * @return <p>
      *         The username for the user. Must be unique within the user pool.
      *         Must be a UTF-8 string between 1 and 128 characters. After the
-     *         user is created, the username cannot be changed.
+     *         user is created, the username can't be changed.
      *         </p>
      */
     public String getUsername() {
@@ -298,7 +397,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * The username for the user. Must be unique within the user pool. Must be a
      * UTF-8 string between 1 and 128 characters. After the user is created, the
-     * username cannot be changed.
+     * username can't be changed.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -308,7 +407,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * @param username <p>
      *            The username for the user. Must be unique within the user
      *            pool. Must be a UTF-8 string between 1 and 128 characters.
-     *            After the user is created, the username cannot be changed.
+     *            After the user is created, the username can't be changed.
      *            </p>
      */
     public void setUsername(String username) {
@@ -319,7 +418,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * The username for the user. Must be unique within the user pool. Must be a
      * UTF-8 string between 1 and 128 characters. After the user is created, the
-     * username cannot be changed.
+     * username can't be changed.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -332,7 +431,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * @param username <p>
      *            The username for the user. Must be unique within the user
      *            pool. Must be a UTF-8 string between 1 and 128 characters.
-     *            After the user is created, the username cannot be changed.
+     *            After the user is created, the username can't be changed.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -347,10 +446,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * An array of name-value pairs that contain user attributes and attribute
      * values to be set for the user to be created. You can create a user
      * without specifying any attributes other than <code>Username</code>.
-     * However, any attributes that you specify as required (in or in the
-     * <b>Attributes</b> tab of the console) must be supplied either by you (in
-     * your call to <code>AdminCreateUser</code>) or by the user (when he or she
-     * signs up in response to your welcome message).
+     * However, any attributes that you specify as required (when creating a
+     * user pool or in the <b>Attributes</b> tab of the console) either you
+     * should supply (in your call to <code>AdminCreateUser</code>) or the user
+     * should supply (when they sign up in response to your welcome message).
      * </p>
      * <p>
      * For custom attributes, you must prepend the <code>custom:</code> prefix
@@ -358,7 +457,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * To send a message inviting the user to sign up, you must specify the
-     * user's email address or phone number. This can be done in your call to
+     * user's email address or phone number. You can do this in your call to
      * AdminCreateUser or in the <b>Users</b> tab of the Amazon Cognito console
      * for managing your user pools.
      * </p>
@@ -366,7 +465,9 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * In your call to <code>AdminCreateUser</code>, you can set the
      * <code>email_verified</code> attribute to <code>True</code>, and you can
      * set the <code>phone_number_verified</code> attribute to <code>True</code>
-     * . (You can also do this by calling .)
+     * . You can also do this by calling <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     * >AdminUpdateUserAttributes</a>.
      * </p>
      * <ul>
      * <li>
@@ -394,10 +495,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *         attribute values to be set for the user to be created. You can
      *         create a user without specifying any attributes other than
      *         <code>Username</code>. However, any attributes that you specify
-     *         as required (in or in the <b>Attributes</b> tab of the console)
-     *         must be supplied either by you (in your call to
-     *         <code>AdminCreateUser</code>) or by the user (when he or she
-     *         signs up in response to your welcome message).
+     *         as required (when creating a user pool or in the
+     *         <b>Attributes</b> tab of the console) either you should supply
+     *         (in your call to <code>AdminCreateUser</code>) or the user should
+     *         supply (when they sign up in response to your welcome message).
      *         </p>
      *         <p>
      *         For custom attributes, you must prepend the <code>custom:</code>
@@ -405,15 +506,17 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *         </p>
      *         <p>
      *         To send a message inviting the user to sign up, you must specify
-     *         the user's email address or phone number. This can be done in
-     *         your call to AdminCreateUser or in the <b>Users</b> tab of the
-     *         Amazon Cognito console for managing your user pools.
+     *         the user's email address or phone number. You can do this in your
+     *         call to AdminCreateUser or in the <b>Users</b> tab of the Amazon
+     *         Cognito console for managing your user pools.
      *         </p>
      *         <p>
      *         In your call to <code>AdminCreateUser</code>, you can set the
      *         <code>email_verified</code> attribute to <code>True</code>, and
      *         you can set the <code>phone_number_verified</code> attribute to
-     *         <code>True</code>. (You can also do this by calling .)
+     *         <code>True</code>. You can also do this by calling <a href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     *         >AdminUpdateUserAttributes</a>.
      *         </p>
      *         <ul>
      *         <li>
@@ -445,10 +548,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * An array of name-value pairs that contain user attributes and attribute
      * values to be set for the user to be created. You can create a user
      * without specifying any attributes other than <code>Username</code>.
-     * However, any attributes that you specify as required (in or in the
-     * <b>Attributes</b> tab of the console) must be supplied either by you (in
-     * your call to <code>AdminCreateUser</code>) or by the user (when he or she
-     * signs up in response to your welcome message).
+     * However, any attributes that you specify as required (when creating a
+     * user pool or in the <b>Attributes</b> tab of the console) either you
+     * should supply (in your call to <code>AdminCreateUser</code>) or the user
+     * should supply (when they sign up in response to your welcome message).
      * </p>
      * <p>
      * For custom attributes, you must prepend the <code>custom:</code> prefix
@@ -456,7 +559,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * To send a message inviting the user to sign up, you must specify the
-     * user's email address or phone number. This can be done in your call to
+     * user's email address or phone number. You can do this in your call to
      * AdminCreateUser or in the <b>Users</b> tab of the Amazon Cognito console
      * for managing your user pools.
      * </p>
@@ -464,7 +567,9 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * In your call to <code>AdminCreateUser</code>, you can set the
      * <code>email_verified</code> attribute to <code>True</code>, and you can
      * set the <code>phone_number_verified</code> attribute to <code>True</code>
-     * . (You can also do this by calling .)
+     * . You can also do this by calling <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     * >AdminUpdateUserAttributes</a>.
      * </p>
      * <ul>
      * <li>
@@ -492,10 +597,11 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            attribute values to be set for the user to be created. You can
      *            create a user without specifying any attributes other than
      *            <code>Username</code>. However, any attributes that you
-     *            specify as required (in or in the <b>Attributes</b> tab of the
-     *            console) must be supplied either by you (in your call to
-     *            <code>AdminCreateUser</code>) or by the user (when he or she
-     *            signs up in response to your welcome message).
+     *            specify as required (when creating a user pool or in the
+     *            <b>Attributes</b> tab of the console) either you should supply
+     *            (in your call to <code>AdminCreateUser</code>) or the user
+     *            should supply (when they sign up in response to your welcome
+     *            message).
      *            </p>
      *            <p>
      *            For custom attributes, you must prepend the
@@ -503,8 +609,8 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            </p>
      *            <p>
      *            To send a message inviting the user to sign up, you must
-     *            specify the user's email address or phone number. This can be
-     *            done in your call to AdminCreateUser or in the <b>Users</b>
+     *            specify the user's email address or phone number. You can do
+     *            this in your call to AdminCreateUser or in the <b>Users</b>
      *            tab of the Amazon Cognito console for managing your user
      *            pools.
      *            </p>
@@ -512,8 +618,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            In your call to <code>AdminCreateUser</code>, you can set the
      *            <code>email_verified</code> attribute to <code>True</code>,
      *            and you can set the <code>phone_number_verified</code>
-     *            attribute to <code>True</code>. (You can also do this by
-     *            calling .)
+     *            attribute to <code>True</code>. You can also do this by
+     *            calling <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     *            >AdminUpdateUserAttributes</a>.
      *            </p>
      *            <ul>
      *            <li>
@@ -551,10 +659,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * An array of name-value pairs that contain user attributes and attribute
      * values to be set for the user to be created. You can create a user
      * without specifying any attributes other than <code>Username</code>.
-     * However, any attributes that you specify as required (in or in the
-     * <b>Attributes</b> tab of the console) must be supplied either by you (in
-     * your call to <code>AdminCreateUser</code>) or by the user (when he or she
-     * signs up in response to your welcome message).
+     * However, any attributes that you specify as required (when creating a
+     * user pool or in the <b>Attributes</b> tab of the console) either you
+     * should supply (in your call to <code>AdminCreateUser</code>) or the user
+     * should supply (when they sign up in response to your welcome message).
      * </p>
      * <p>
      * For custom attributes, you must prepend the <code>custom:</code> prefix
@@ -562,7 +670,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * To send a message inviting the user to sign up, you must specify the
-     * user's email address or phone number. This can be done in your call to
+     * user's email address or phone number. You can do this in your call to
      * AdminCreateUser or in the <b>Users</b> tab of the Amazon Cognito console
      * for managing your user pools.
      * </p>
@@ -570,7 +678,9 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * In your call to <code>AdminCreateUser</code>, you can set the
      * <code>email_verified</code> attribute to <code>True</code>, and you can
      * set the <code>phone_number_verified</code> attribute to <code>True</code>
-     * . (You can also do this by calling .)
+     * . You can also do this by calling <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     * >AdminUpdateUserAttributes</a>.
      * </p>
      * <ul>
      * <li>
@@ -601,10 +711,11 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            attribute values to be set for the user to be created. You can
      *            create a user without specifying any attributes other than
      *            <code>Username</code>. However, any attributes that you
-     *            specify as required (in or in the <b>Attributes</b> tab of the
-     *            console) must be supplied either by you (in your call to
-     *            <code>AdminCreateUser</code>) or by the user (when he or she
-     *            signs up in response to your welcome message).
+     *            specify as required (when creating a user pool or in the
+     *            <b>Attributes</b> tab of the console) either you should supply
+     *            (in your call to <code>AdminCreateUser</code>) or the user
+     *            should supply (when they sign up in response to your welcome
+     *            message).
      *            </p>
      *            <p>
      *            For custom attributes, you must prepend the
@@ -612,8 +723,8 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            </p>
      *            <p>
      *            To send a message inviting the user to sign up, you must
-     *            specify the user's email address or phone number. This can be
-     *            done in your call to AdminCreateUser or in the <b>Users</b>
+     *            specify the user's email address or phone number. You can do
+     *            this in your call to AdminCreateUser or in the <b>Users</b>
      *            tab of the Amazon Cognito console for managing your user
      *            pools.
      *            </p>
@@ -621,8 +732,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            In your call to <code>AdminCreateUser</code>, you can set the
      *            <code>email_verified</code> attribute to <code>True</code>,
      *            and you can set the <code>phone_number_verified</code>
-     *            attribute to <code>True</code>. (You can also do this by
-     *            calling .)
+     *            attribute to <code>True</code>. You can also do this by
+     *            calling <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     *            >AdminUpdateUserAttributes</a>.
      *            </p>
      *            <ul>
      *            <li>
@@ -663,10 +776,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * An array of name-value pairs that contain user attributes and attribute
      * values to be set for the user to be created. You can create a user
      * without specifying any attributes other than <code>Username</code>.
-     * However, any attributes that you specify as required (in or in the
-     * <b>Attributes</b> tab of the console) must be supplied either by you (in
-     * your call to <code>AdminCreateUser</code>) or by the user (when he or she
-     * signs up in response to your welcome message).
+     * However, any attributes that you specify as required (when creating a
+     * user pool or in the <b>Attributes</b> tab of the console) either you
+     * should supply (in your call to <code>AdminCreateUser</code>) or the user
+     * should supply (when they sign up in response to your welcome message).
      * </p>
      * <p>
      * For custom attributes, you must prepend the <code>custom:</code> prefix
@@ -674,7 +787,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * To send a message inviting the user to sign up, you must specify the
-     * user's email address or phone number. This can be done in your call to
+     * user's email address or phone number. You can do this in your call to
      * AdminCreateUser or in the <b>Users</b> tab of the Amazon Cognito console
      * for managing your user pools.
      * </p>
@@ -682,7 +795,9 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * In your call to <code>AdminCreateUser</code>, you can set the
      * <code>email_verified</code> attribute to <code>True</code>, and you can
      * set the <code>phone_number_verified</code> attribute to <code>True</code>
-     * . (You can also do this by calling .)
+     * . You can also do this by calling <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     * >AdminUpdateUserAttributes</a>.
      * </p>
      * <ul>
      * <li>
@@ -713,10 +828,11 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            attribute values to be set for the user to be created. You can
      *            create a user without specifying any attributes other than
      *            <code>Username</code>. However, any attributes that you
-     *            specify as required (in or in the <b>Attributes</b> tab of the
-     *            console) must be supplied either by you (in your call to
-     *            <code>AdminCreateUser</code>) or by the user (when he or she
-     *            signs up in response to your welcome message).
+     *            specify as required (when creating a user pool or in the
+     *            <b>Attributes</b> tab of the console) either you should supply
+     *            (in your call to <code>AdminCreateUser</code>) or the user
+     *            should supply (when they sign up in response to your welcome
+     *            message).
      *            </p>
      *            <p>
      *            For custom attributes, you must prepend the
@@ -724,8 +840,8 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            </p>
      *            <p>
      *            To send a message inviting the user to sign up, you must
-     *            specify the user's email address or phone number. This can be
-     *            done in your call to AdminCreateUser or in the <b>Users</b>
+     *            specify the user's email address or phone number. You can do
+     *            this in your call to AdminCreateUser or in the <b>Users</b>
      *            tab of the Amazon Cognito console for managing your user
      *            pools.
      *            </p>
@@ -733,8 +849,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            In your call to <code>AdminCreateUser</code>, you can set the
      *            <code>email_verified</code> attribute to <code>True</code>,
      *            and you can set the <code>phone_number_verified</code>
-     *            attribute to <code>True</code>. (You can also do this by
-     *            calling .)
+     *            attribute to <code>True</code>. You can also do this by
+     *            calling <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html"
+     *            >AdminUpdateUserAttributes</a>.
      *            </p>
      *            <ul>
      *            <li>
@@ -781,7 +899,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * validation process.
      * </p>
      * <p>
-     * The user's validation data is not persisted.
+     * The user's validation data isn't persisted.
      * </p>
      *
      * @return <p>
@@ -798,7 +916,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *         validation data and uses it in the validation process.
      *         </p>
      *         <p>
-     *         The user's validation data is not persisted.
+     *         The user's validation data isn't persisted.
      *         </p>
      */
     public java.util.List<AttributeType> getValidationData() {
@@ -820,7 +938,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * validation process.
      * </p>
      * <p>
-     * The user's validation data is not persisted.
+     * The user's validation data isn't persisted.
      * </p>
      *
      * @param validationData <p>
@@ -838,7 +956,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            validation data and uses it in the validation process.
      *            </p>
      *            <p>
-     *            The user's validation data is not persisted.
+     *            The user's validation data isn't persisted.
      *            </p>
      */
     public void setValidationData(java.util.Collection<AttributeType> validationData) {
@@ -865,7 +983,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * validation process.
      * </p>
      * <p>
-     * The user's validation data is not persisted.
+     * The user's validation data isn't persisted.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -886,7 +1004,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            validation data and uses it in the validation process.
      *            </p>
      *            <p>
-     *            The user's validation data is not persisted.
+     *            The user's validation data isn't persisted.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -916,7 +1034,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * validation process.
      * </p>
      * <p>
-     * The user's validation data is not persisted.
+     * The user's validation data isn't persisted.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -937,7 +1055,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            validation data and uses it in the validation process.
      *            </p>
      *            <p>
-     *            The user's validation data is not persisted.
+     *            The user's validation data isn't persisted.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -955,23 +1073,22 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * The temporary password is valid only once. To complete the Admin Create
-     * User flow, the user must enter the temporary password in the sign-in page
-     * along with a new password to be used in all future sign-ins.
+     * User flow, the user must enter the temporary password in the sign-in
+     * page, along with a new password to be used in all future sign-ins.
      * </p>
      * <p>
-     * This parameter is not required. If you do not specify a value, Amazon
+     * This parameter isn't required. If you don't specify a value, Amazon
      * Cognito generates one for you.
      * </p>
      * <p>
      * The temporary password can only be used until the user account expiration
-     * limit that you specified when you created the user pool. To reset the
-     * account after that time limit, you must call <code>AdminCreateUser</code>
-     * again, specifying <code>"RESEND"</code> for the
-     * <code>MessageAction</code> parameter.
+     * limit that you set for your user pool. To reset the account after that
+     * time limit, you must call <code>AdminCreateUser</code> again and specify
+     * <code>RESEND</code> for the <code>MessageAction</code> parameter.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>6 - 256<br/>
+     * <b>Length: </b> - 256<br/>
      * <b>Pattern: </b>[\S]+<br/>
      *
      * @return <p>
@@ -982,20 +1099,19 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *         <p>
      *         The temporary password is valid only once. To complete the Admin
      *         Create User flow, the user must enter the temporary password in
-     *         the sign-in page along with a new password to be used in all
+     *         the sign-in page, along with a new password to be used in all
      *         future sign-ins.
      *         </p>
      *         <p>
-     *         This parameter is not required. If you do not specify a value,
+     *         This parameter isn't required. If you don't specify a value,
      *         Amazon Cognito generates one for you.
      *         </p>
      *         <p>
      *         The temporary password can only be used until the user account
-     *         expiration limit that you specified when you created the user
-     *         pool. To reset the account after that time limit, you must call
-     *         <code>AdminCreateUser</code> again, specifying
-     *         <code>"RESEND"</code> for the <code>MessageAction</code>
-     *         parameter.
+     *         expiration limit that you set for your user pool. To reset the
+     *         account after that time limit, you must call
+     *         <code>AdminCreateUser</code> again and specify
+     *         <code>RESEND</code> for the <code>MessageAction</code> parameter.
      *         </p>
      */
     public String getTemporaryPassword() {
@@ -1009,23 +1125,22 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * The temporary password is valid only once. To complete the Admin Create
-     * User flow, the user must enter the temporary password in the sign-in page
-     * along with a new password to be used in all future sign-ins.
+     * User flow, the user must enter the temporary password in the sign-in
+     * page, along with a new password to be used in all future sign-ins.
      * </p>
      * <p>
-     * This parameter is not required. If you do not specify a value, Amazon
+     * This parameter isn't required. If you don't specify a value, Amazon
      * Cognito generates one for you.
      * </p>
      * <p>
      * The temporary password can only be used until the user account expiration
-     * limit that you specified when you created the user pool. To reset the
-     * account after that time limit, you must call <code>AdminCreateUser</code>
-     * again, specifying <code>"RESEND"</code> for the
-     * <code>MessageAction</code> parameter.
+     * limit that you set for your user pool. To reset the account after that
+     * time limit, you must call <code>AdminCreateUser</code> again and specify
+     * <code>RESEND</code> for the <code>MessageAction</code> parameter.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>6 - 256<br/>
+     * <b>Length: </b> - 256<br/>
      * <b>Pattern: </b>[\S]+<br/>
      *
      * @param temporaryPassword <p>
@@ -1036,19 +1151,19 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            <p>
      *            The temporary password is valid only once. To complete the
      *            Admin Create User flow, the user must enter the temporary
-     *            password in the sign-in page along with a new password to be
+     *            password in the sign-in page, along with a new password to be
      *            used in all future sign-ins.
      *            </p>
      *            <p>
-     *            This parameter is not required. If you do not specify a value,
+     *            This parameter isn't required. If you don't specify a value,
      *            Amazon Cognito generates one for you.
      *            </p>
      *            <p>
      *            The temporary password can only be used until the user account
-     *            expiration limit that you specified when you created the user
-     *            pool. To reset the account after that time limit, you must
-     *            call <code>AdminCreateUser</code> again, specifying
-     *            <code>"RESEND"</code> for the <code>MessageAction</code>
+     *            expiration limit that you set for your user pool. To reset the
+     *            account after that time limit, you must call
+     *            <code>AdminCreateUser</code> again and specify
+     *            <code>RESEND</code> for the <code>MessageAction</code>
      *            parameter.
      *            </p>
      */
@@ -1063,26 +1178,25 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      * <p>
      * The temporary password is valid only once. To complete the Admin Create
-     * User flow, the user must enter the temporary password in the sign-in page
-     * along with a new password to be used in all future sign-ins.
+     * User flow, the user must enter the temporary password in the sign-in
+     * page, along with a new password to be used in all future sign-ins.
      * </p>
      * <p>
-     * This parameter is not required. If you do not specify a value, Amazon
+     * This parameter isn't required. If you don't specify a value, Amazon
      * Cognito generates one for you.
      * </p>
      * <p>
      * The temporary password can only be used until the user account expiration
-     * limit that you specified when you created the user pool. To reset the
-     * account after that time limit, you must call <code>AdminCreateUser</code>
-     * again, specifying <code>"RESEND"</code> for the
-     * <code>MessageAction</code> parameter.
+     * limit that you set for your user pool. To reset the account after that
+     * time limit, you must call <code>AdminCreateUser</code> again and specify
+     * <code>RESEND</code> for the <code>MessageAction</code> parameter.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>6 - 256<br/>
+     * <b>Length: </b> - 256<br/>
      * <b>Pattern: </b>[\S]+<br/>
      *
      * @param temporaryPassword <p>
@@ -1093,19 +1207,19 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            <p>
      *            The temporary password is valid only once. To complete the
      *            Admin Create User flow, the user must enter the temporary
-     *            password in the sign-in page along with a new password to be
+     *            password in the sign-in page, along with a new password to be
      *            used in all future sign-ins.
      *            </p>
      *            <p>
-     *            This parameter is not required. If you do not specify a value,
+     *            This parameter isn't required. If you don't specify a value,
      *            Amazon Cognito generates one for you.
      *            </p>
      *            <p>
      *            The temporary password can only be used until the user account
-     *            expiration limit that you specified when you created the user
-     *            pool. To reset the account after that time limit, you must
-     *            call <code>AdminCreateUser</code> again, specifying
-     *            <code>"RESEND"</code> for the <code>MessageAction</code>
+     *            expiration limit that you set for your user pool. To reset the
+     *            account after that time limit, you must call
+     *            <code>AdminCreateUser</code> again and specify
+     *            <code>RESEND</code> for the <code>MessageAction</code>
      *            parameter.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -1118,7 +1232,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * This parameter is only used if the <code>phone_number_verified</code> or
+     * This parameter is used only if the <code>phone_number_verified</code> or
      * <code>email_verified</code> attribute is set to <code>True</code>.
      * Otherwise, it is ignored.
      * </p>
@@ -1136,7 +1250,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      *
      * @return <p>
-     *         This parameter is only used if the
+     *         This parameter is used only if the
      *         <code>phone_number_verified</code> or <code>email_verified</code>
      *         attribute is set to <code>True</code>. Otherwise, it is ignored.
      *         </p>
@@ -1160,7 +1274,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * This parameter is only used if the <code>phone_number_verified</code> or
+     * This parameter is used only if the <code>phone_number_verified</code> or
      * <code>email_verified</code> attribute is set to <code>True</code>.
      * Otherwise, it is ignored.
      * </p>
@@ -1178,7 +1292,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      *
      * @return <p>
-     *         This parameter is only used if the
+     *         This parameter is used only if the
      *         <code>phone_number_verified</code> or <code>email_verified</code>
      *         attribute is set to <code>True</code>. Otherwise, it is ignored.
      *         </p>
@@ -1202,7 +1316,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * This parameter is only used if the <code>phone_number_verified</code> or
+     * This parameter is used only if the <code>phone_number_verified</code> or
      * <code>email_verified</code> attribute is set to <code>True</code>.
      * Otherwise, it is ignored.
      * </p>
@@ -1220,7 +1334,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * </p>
      *
      * @param forceAliasCreation <p>
-     *            This parameter is only used if the
+     *            This parameter is used only if the
      *            <code>phone_number_verified</code> or
      *            <code>email_verified</code> attribute is set to
      *            <code>True</code>. Otherwise, it is ignored.
@@ -1245,7 +1359,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * This parameter is only used if the <code>phone_number_verified</code> or
+     * This parameter is used only if the <code>phone_number_verified</code> or
      * <code>email_verified</code> attribute is set to <code>True</code>.
      * Otherwise, it is ignored.
      * </p>
@@ -1266,7 +1380,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * together.
      *
      * @param forceAliasCreation <p>
-     *            This parameter is only used if the
+     *            This parameter is used only if the
      *            <code>phone_number_verified</code> or
      *            <code>email_verified</code> attribute is set to
      *            <code>True</code>. Otherwise, it is ignored.
@@ -1294,20 +1408,20 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Set to <code>"RESEND"</code> to resend the invitation message to a user
+     * Set to <code>RESEND</code> to resend the invitation message to a user
      * that already exists and reset the expiration limit on the user's account.
-     * Set to <code>"SUPPRESS"</code> to suppress sending the message. Only one
-     * value can be specified.
+     * Set to <code>SUPPRESS</code> to suppress sending the message. You can
+     * specify only one value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>RESEND, SUPPRESS
      *
      * @return <p>
-     *         Set to <code>"RESEND"</code> to resend the invitation message to
-     *         a user that already exists and reset the expiration limit on the
-     *         user's account. Set to <code>"SUPPRESS"</code> to suppress
-     *         sending the message. Only one value can be specified.
+     *         Set to <code>RESEND</code> to resend the invitation message to a
+     *         user that already exists and reset the expiration limit on the
+     *         user's account. Set to <code>SUPPRESS</code> to suppress sending
+     *         the message. You can specify only one value.
      *         </p>
      * @see MessageActionType
      */
@@ -1317,20 +1431,20 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Set to <code>"RESEND"</code> to resend the invitation message to a user
+     * Set to <code>RESEND</code> to resend the invitation message to a user
      * that already exists and reset the expiration limit on the user's account.
-     * Set to <code>"SUPPRESS"</code> to suppress sending the message. Only one
-     * value can be specified.
+     * Set to <code>SUPPRESS</code> to suppress sending the message. You can
+     * specify only one value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>RESEND, SUPPRESS
      *
      * @param messageAction <p>
-     *            Set to <code>"RESEND"</code> to resend the invitation message
-     *            to a user that already exists and reset the expiration limit
-     *            on the user's account. Set to <code>"SUPPRESS"</code> to
-     *            suppress sending the message. Only one value can be specified.
+     *            Set to <code>RESEND</code> to resend the invitation message to
+     *            a user that already exists and reset the expiration limit on
+     *            the user's account. Set to <code>SUPPRESS</code> to suppress
+     *            sending the message. You can specify only one value.
      *            </p>
      * @see MessageActionType
      */
@@ -1340,10 +1454,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Set to <code>"RESEND"</code> to resend the invitation message to a user
+     * Set to <code>RESEND</code> to resend the invitation message to a user
      * that already exists and reset the expiration limit on the user's account.
-     * Set to <code>"SUPPRESS"</code> to suppress sending the message. Only one
-     * value can be specified.
+     * Set to <code>SUPPRESS</code> to suppress sending the message. You can
+     * specify only one value.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1353,10 +1467,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <b>Allowed Values: </b>RESEND, SUPPRESS
      *
      * @param messageAction <p>
-     *            Set to <code>"RESEND"</code> to resend the invitation message
-     *            to a user that already exists and reset the expiration limit
-     *            on the user's account. Set to <code>"SUPPRESS"</code> to
-     *            suppress sending the message. Only one value can be specified.
+     *            Set to <code>RESEND</code> to resend the invitation message to
+     *            a user that already exists and reset the expiration limit on
+     *            the user's account. Set to <code>SUPPRESS</code> to suppress
+     *            sending the message. You can specify only one value.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1369,20 +1483,20 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Set to <code>"RESEND"</code> to resend the invitation message to a user
+     * Set to <code>RESEND</code> to resend the invitation message to a user
      * that already exists and reset the expiration limit on the user's account.
-     * Set to <code>"SUPPRESS"</code> to suppress sending the message. Only one
-     * value can be specified.
+     * Set to <code>SUPPRESS</code> to suppress sending the message. You can
+     * specify only one value.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>RESEND, SUPPRESS
      *
      * @param messageAction <p>
-     *            Set to <code>"RESEND"</code> to resend the invitation message
-     *            to a user that already exists and reset the expiration limit
-     *            on the user's account. Set to <code>"SUPPRESS"</code> to
-     *            suppress sending the message. Only one value can be specified.
+     *            Set to <code>RESEND</code> to resend the invitation message to
+     *            a user that already exists and reset the expiration limit on
+     *            the user's account. Set to <code>SUPPRESS</code> to suppress
+     *            sending the message. You can specify only one value.
      *            </p>
      * @see MessageActionType
      */
@@ -1392,10 +1506,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
 
     /**
      * <p>
-     * Set to <code>"RESEND"</code> to resend the invitation message to a user
+     * Set to <code>RESEND</code> to resend the invitation message to a user
      * that already exists and reset the expiration limit on the user's account.
-     * Set to <code>"SUPPRESS"</code> to suppress sending the message. Only one
-     * value can be specified.
+     * Set to <code>SUPPRESS</code> to suppress sending the message. You can
+     * specify only one value.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1405,10 +1519,10 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <b>Allowed Values: </b>RESEND, SUPPRESS
      *
      * @param messageAction <p>
-     *            Set to <code>"RESEND"</code> to resend the invitation message
-     *            to a user that already exists and reset the expiration limit
-     *            on the user's account. Set to <code>"SUPPRESS"</code> to
-     *            suppress sending the message. Only one value can be specified.
+     *            Set to <code>RESEND</code> to resend the invitation message to
+     *            a user that already exists and reset the expiration limit on
+     *            the user's account. Set to <code>SUPPRESS</code> to suppress
+     *            sending the message. You can specify only one value.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1423,15 +1537,14 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * Specify <code>"EMAIL"</code> if email will be used to send the welcome
      * message. Specify <code>"SMS"</code> if the phone number will be used. The
-     * default value is <code>"SMS"</code>. More than one value can be
-     * specified.
+     * default value is <code>"SMS"</code>. You can specify more than one value.
      * </p>
      *
      * @return <p>
      *         Specify <code>"EMAIL"</code> if email will be used to send the
      *         welcome message. Specify <code>"SMS"</code> if the phone number
-     *         will be used. The default value is <code>"SMS"</code>. More than
-     *         one value can be specified.
+     *         will be used. The default value is <code>"SMS"</code>. You can
+     *         specify more than one value.
      *         </p>
      */
     public java.util.List<String> getDesiredDeliveryMediums() {
@@ -1442,15 +1555,14 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * Specify <code>"EMAIL"</code> if email will be used to send the welcome
      * message. Specify <code>"SMS"</code> if the phone number will be used. The
-     * default value is <code>"SMS"</code>. More than one value can be
-     * specified.
+     * default value is <code>"SMS"</code>. You can specify more than one value.
      * </p>
      *
      * @param desiredDeliveryMediums <p>
      *            Specify <code>"EMAIL"</code> if email will be used to send the
      *            welcome message. Specify <code>"SMS"</code> if the phone
      *            number will be used. The default value is <code>"SMS"</code>.
-     *            More than one value can be specified.
+     *            You can specify more than one value.
      *            </p>
      */
     public void setDesiredDeliveryMediums(java.util.Collection<String> desiredDeliveryMediums) {
@@ -1466,8 +1578,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * Specify <code>"EMAIL"</code> if email will be used to send the welcome
      * message. Specify <code>"SMS"</code> if the phone number will be used. The
-     * default value is <code>"SMS"</code>. More than one value can be
-     * specified.
+     * default value is <code>"SMS"</code>. You can specify more than one value.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1477,7 +1588,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            Specify <code>"EMAIL"</code> if email will be used to send the
      *            welcome message. Specify <code>"SMS"</code> if the phone
      *            number will be used. The default value is <code>"SMS"</code>.
-     *            More than one value can be specified.
+     *            You can specify more than one value.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1497,8 +1608,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      * <p>
      * Specify <code>"EMAIL"</code> if email will be used to send the welcome
      * message. Specify <code>"SMS"</code> if the phone number will be used. The
-     * default value is <code>"SMS"</code>. More than one value can be
-     * specified.
+     * default value is <code>"SMS"</code>. You can specify more than one value.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1508,7 +1618,7 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
      *            Specify <code>"EMAIL"</code> if email will be used to send the
      *            welcome message. Specify <code>"SMS"</code> if the phone
      *            number will be used. The default value is <code>"SMS"</code>.
-     *            More than one value can be specified.
+     *            You can specify more than one value.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1516,6 +1626,415 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
     public AdminCreateUserRequest withDesiredDeliveryMediums(
             java.util.Collection<String> desiredDeliveryMediums) {
         setDesiredDeliveryMediums(desiredDeliveryMediums);
+        return this;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminCreateUser API action, Amazon Cognito
+     * invokes the function that is assigned to the <i>pre sign-up</i> trigger.
+     * When Amazon Cognito invokes this function, it passes a JSON payload,
+     * which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute, which provides the data that you
+     * assigned to the ClientMetadata parameter in your AdminCreateUser request.
+     * In your function code in Lambda, you can process the
+     * <code>clientMetadata</code> value to enhance your workflow for your
+     * specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     *
+     * @return <p>
+     *         A map of custom key-value pairs that you can provide as input for
+     *         any custom workflows that this action triggers.
+     *         </p>
+     *         <p>
+     *         You create custom workflows by assigning Lambda functions to user
+     *         pool triggers. When you use the AdminCreateUser API action,
+     *         Amazon Cognito invokes the function that is assigned to the
+     *         <i>pre sign-up</i> trigger. When Amazon Cognito invokes this
+     *         function, it passes a JSON payload, which the function receives
+     *         as input. This payload contains a <code>clientMetadata</code>
+     *         attribute, which provides the data that you assigned to the
+     *         ClientMetadata parameter in your AdminCreateUser request. In your
+     *         function code in Lambda, you can process the
+     *         <code>clientMetadata</code> value to enhance your workflow for
+     *         your specific needs.
+     *         </p>
+     *         <p>
+     *         For more information, see <a href=
+     *         "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     *         > Customizing user pool Workflows with Lambda Triggers</a> in the
+     *         <i>Amazon Cognito Developer Guide</i>.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         When you use the ClientMetadata parameter, remember that Amazon
+     *         Cognito won't do the following:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         Store the ClientMetadata value. This data is available only to
+     *         Lambda triggers that are assigned to a user pool to support
+     *         custom workflows. If your user pool configuration doesn't include
+     *         triggers, the ClientMetadata parameter serves no purpose.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Validate the ClientMetadata value.
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Encrypt the ClientMetadata value. Don't use Amazon Cognito to
+     *         provide sensitive information.
+     *         </p>
+     *         </li>
+     *         </ul>
+     *         </note>
+     */
+    public java.util.Map<String, String> getClientMetadata() {
+        return clientMetadata;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminCreateUser API action, Amazon Cognito
+     * invokes the function that is assigned to the <i>pre sign-up</i> trigger.
+     * When Amazon Cognito invokes this function, it passes a JSON payload,
+     * which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute, which provides the data that you
+     * assigned to the ClientMetadata parameter in your AdminCreateUser request.
+     * In your function code in Lambda, you can process the
+     * <code>clientMetadata</code> value to enhance your workflow for your
+     * specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     *
+     * @param clientMetadata <p>
+     *            A map of custom key-value pairs that you can provide as input
+     *            for any custom workflows that this action triggers.
+     *            </p>
+     *            <p>
+     *            You create custom workflows by assigning Lambda functions to
+     *            user pool triggers. When you use the AdminCreateUser API
+     *            action, Amazon Cognito invokes the function that is assigned
+     *            to the <i>pre sign-up</i> trigger. When Amazon Cognito invokes
+     *            this function, it passes a JSON payload, which the function
+     *            receives as input. This payload contains a
+     *            <code>clientMetadata</code> attribute, which provides the data
+     *            that you assigned to the ClientMetadata parameter in your
+     *            AdminCreateUser request. In your function code in Lambda, you
+     *            can process the <code>clientMetadata</code> value to enhance
+     *            your workflow for your specific needs.
+     *            </p>
+     *            <p>
+     *            For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     *            > Customizing user pool Workflows with Lambda Triggers</a> in
+     *            the <i>Amazon Cognito Developer Guide</i>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            When you use the ClientMetadata parameter, remember that
+     *            Amazon Cognito won't do the following:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Store the ClientMetadata value. This data is available only to
+     *            Lambda triggers that are assigned to a user pool to support
+     *            custom workflows. If your user pool configuration doesn't
+     *            include triggers, the ClientMetadata parameter serves no
+     *            purpose.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Validate the ClientMetadata value.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Encrypt the ClientMetadata value. Don't use Amazon Cognito to
+     *            provide sensitive information.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </note>
+     */
+    public void setClientMetadata(java.util.Map<String, String> clientMetadata) {
+        this.clientMetadata = clientMetadata;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminCreateUser API action, Amazon Cognito
+     * invokes the function that is assigned to the <i>pre sign-up</i> trigger.
+     * When Amazon Cognito invokes this function, it passes a JSON payload,
+     * which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute, which provides the data that you
+     * assigned to the ClientMetadata parameter in your AdminCreateUser request.
+     * In your function code in Lambda, you can process the
+     * <code>clientMetadata</code> value to enhance your workflow for your
+     * specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param clientMetadata <p>
+     *            A map of custom key-value pairs that you can provide as input
+     *            for any custom workflows that this action triggers.
+     *            </p>
+     *            <p>
+     *            You create custom workflows by assigning Lambda functions to
+     *            user pool triggers. When you use the AdminCreateUser API
+     *            action, Amazon Cognito invokes the function that is assigned
+     *            to the <i>pre sign-up</i> trigger. When Amazon Cognito invokes
+     *            this function, it passes a JSON payload, which the function
+     *            receives as input. This payload contains a
+     *            <code>clientMetadata</code> attribute, which provides the data
+     *            that you assigned to the ClientMetadata parameter in your
+     *            AdminCreateUser request. In your function code in Lambda, you
+     *            can process the <code>clientMetadata</code> value to enhance
+     *            your workflow for your specific needs.
+     *            </p>
+     *            <p>
+     *            For more information, see <a href=
+     *            "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     *            > Customizing user pool Workflows with Lambda Triggers</a> in
+     *            the <i>Amazon Cognito Developer Guide</i>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            When you use the ClientMetadata parameter, remember that
+     *            Amazon Cognito won't do the following:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            Store the ClientMetadata value. This data is available only to
+     *            Lambda triggers that are assigned to a user pool to support
+     *            custom workflows. If your user pool configuration doesn't
+     *            include triggers, the ClientMetadata parameter serves no
+     *            purpose.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Validate the ClientMetadata value.
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Encrypt the ClientMetadata value. Don't use Amazon Cognito to
+     *            provide sensitive information.
+     *            </p>
+     *            </li>
+     *            </ul>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AdminCreateUserRequest withClientMetadata(java.util.Map<String, String> clientMetadata) {
+        this.clientMetadata = clientMetadata;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A map of custom key-value pairs that you can provide as input for any
+     * custom workflows that this action triggers.
+     * </p>
+     * <p>
+     * You create custom workflows by assigning Lambda functions to user pool
+     * triggers. When you use the AdminCreateUser API action, Amazon Cognito
+     * invokes the function that is assigned to the <i>pre sign-up</i> trigger.
+     * When Amazon Cognito invokes this function, it passes a JSON payload,
+     * which the function receives as input. This payload contains a
+     * <code>clientMetadata</code> attribute, which provides the data that you
+     * assigned to the ClientMetadata parameter in your AdminCreateUser request.
+     * In your function code in Lambda, you can process the
+     * <code>clientMetadata</code> value to enhance your workflow for your
+     * specific needs.
+     * </p>
+     * <p>
+     * For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html"
+     * > Customizing user pool Workflows with Lambda Triggers</a> in the
+     * <i>Amazon Cognito Developer Guide</i>.
+     * </p>
+     * <note>
+     * <p>
+     * When you use the ClientMetadata parameter, remember that Amazon Cognito
+     * won't do the following:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * Store the ClientMetadata value. This data is available only to Lambda
+     * triggers that are assigned to a user pool to support custom workflows. If
+     * your user pool configuration doesn't include triggers, the ClientMetadata
+     * parameter serves no purpose.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Validate the ClientMetadata value.
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Encrypt the ClientMetadata value. Don't use Amazon Cognito to provide
+     * sensitive information.
+     * </p>
+     * </li>
+     * </ul>
+     * </note>
+     * <p>
+     * The method adds a new key-value pair into ClientMetadata parameter, and
+     * returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param key The key of the entry to be added into ClientMetadata.
+     * @param value The corresponding value of the entry to be added into
+     *            ClientMetadata.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public AdminCreateUserRequest addClientMetadataEntry(String key, String value) {
+        if (null == this.clientMetadata) {
+            this.clientMetadata = new java.util.HashMap<String, String>();
+        }
+        if (this.clientMetadata.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString()
+                    + ") are provided.");
+        this.clientMetadata.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into ClientMetadata.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     */
+    public AdminCreateUserRequest clearClientMetadataEntries() {
+        this.clientMetadata = null;
         return this;
     }
 
@@ -1545,7 +2064,9 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
         if (getMessageAction() != null)
             sb.append("MessageAction: " + getMessageAction() + ",");
         if (getDesiredDeliveryMediums() != null)
-            sb.append("DesiredDeliveryMediums: " + getDesiredDeliveryMediums());
+            sb.append("DesiredDeliveryMediums: " + getDesiredDeliveryMediums() + ",");
+        if (getClientMetadata() != null)
+            sb.append("ClientMetadata: " + getClientMetadata());
         sb.append("}");
         return sb.toString();
     }
@@ -1571,6 +2092,8 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
                 * hashCode
                 + ((getDesiredDeliveryMediums() == null) ? 0 : getDesiredDeliveryMediums()
                         .hashCode());
+        hashCode = prime * hashCode
+                + ((getClientMetadata() == null) ? 0 : getClientMetadata().hashCode());
         return hashCode;
     }
 
@@ -1623,6 +2146,11 @@ public class AdminCreateUserRequest extends AmazonWebServiceRequest implements S
             return false;
         if (other.getDesiredDeliveryMediums() != null
                 && other.getDesiredDeliveryMediums().equals(this.getDesiredDeliveryMediums()) == false)
+            return false;
+        if (other.getClientMetadata() == null ^ this.getClientMetadata() == null)
+            return false;
+        if (other.getClientMetadata() != null
+                && other.getClientMetadata().equals(this.getClientMetadata()) == false)
             return false;
         return true;
     }

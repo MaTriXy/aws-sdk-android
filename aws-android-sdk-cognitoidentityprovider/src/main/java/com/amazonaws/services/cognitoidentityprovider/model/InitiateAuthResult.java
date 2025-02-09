@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,15 +25,19 @@ import java.io.Serializable;
 public class InitiateAuthResult implements Serializable {
     /**
      * <p>
-     * The name of the challenge which you are responding to with this call.
-     * This is returned to you in the <code>AdminInitiateAuth</code> response if
-     * you need to pass another challenge.
+     * The name of the challenge that you're responding to with this call. This
+     * name is returned in the <code>AdminInitiateAuth</code> response if you
+     * must pass another challenge.
      * </p>
      * <p>
-     * Valid values include the following. Note that all of these challenges
-     * require <code>USERNAME</code> and <code>SECRET_HASH</code> (if
-     * applicable) in the parameters.
+     * Valid values include the following:
      * </p>
+     * <note>
+     * <p>
+     * All of the following challenges require <code>USERNAME</code> and
+     * <code>SECRET_HASH</code> (if applicable) in the parameters.
+     * </p>
+     * </note>
      * <ul>
      * <li>
      * <p>
@@ -58,9 +62,9 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user
-     * pool and the previous challenges were passed, this challenge is returned
-     * so that Amazon Cognito can start tracking this device.
+     * <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on your
+     * user pool and the previous challenges were passed, this challenge is
+     * returned so that Amazon Cognito can start tracking this device.
      * </p>
      * </li>
      * <li>
@@ -71,10 +75,44 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to
-     * change their passwords after successful first login. This challenge
-     * should be passed with <code>NEW_PASSWORD</code> and any other required
-     * attributes.
+     * <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to change
+     * their passwords after successful first login.
+     * </p>
+     * <p>
+     * Respond to this challenge with <code>NEW_PASSWORD</code> and any required
+     * attributes that Amazon Cognito returned in the
+     * <code>requiredAttributes</code> parameter. You can also set values for
+     * attributes that aren't required by your user pool and that your app
+     * client can write. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     * >RespondToAuthChallenge</a>.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>RespondToAuthChallenge</code>, set a value for any keys that Amazon
+     * Cognito returned in the <code>requiredAttributes</code> parameter, then
+     * use the <code>UpdateUserAttributes</code> API operation to modify the
+     * value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code>: For users who are required to setup an MFA factor
+     * before they can sign in. The MFA types activated for the user pool will
+     * be listed in the challenge parameters <code>MFA_CAN_SETUP</code> value.
+     * </p>
+     * <p>
+     * To set up software token MFA, use the session returned here from
+     * <code>InitiateAuth</code> as an input to
+     * <code>AssociateSoftwareToken</code>. Use the session returned by
+     * <code>VerifySoftwareToken</code> as an input to
+     * <code>RespondToAuthChallenge</code> with challenge name
+     * <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     * administrator should help the user to add a phone number to their
+     * account, and then the user should call <code>InitiateAuth</code> again to
+     * restart sign-in.
      * </p>
      * </li>
      * </ul>
@@ -88,11 +126,10 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should pass both ways in challenge-response calls to the
+     * service. If the caller must pass another challenge, they return a session
+     * with other challenge parameters. This session should be passed as it is
+     * to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -102,8 +139,8 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. These are returned to you in the
-     * <code>InitiateAuth</code> response if you need to pass another challenge.
+     * The challenge parameters. These are returned in the
+     * <code>InitiateAuth</code> response if you must pass another challenge.
      * The responses in this parameter should be used to compute inputs to the
      * next call (<code>RespondToAuthChallenge</code>).
      * </p>
@@ -116,9 +153,9 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The result of the authentication response. This is only returned if the
-     * caller does not need to pass another challenge. If the caller does need
-     * to pass another challenge before it gets tokens,
+     * The result of the authentication response. This result is only returned
+     * if the caller doesn't need to pass another challenge. If the caller does
+     * need to pass another challenge before it gets tokens,
      * <code>ChallengeName</code>, <code>ChallengeParameters</code>, and
      * <code>Session</code> are returned.
      * </p>
@@ -127,15 +164,19 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The name of the challenge which you are responding to with this call.
-     * This is returned to you in the <code>AdminInitiateAuth</code> response if
-     * you need to pass another challenge.
+     * The name of the challenge that you're responding to with this call. This
+     * name is returned in the <code>AdminInitiateAuth</code> response if you
+     * must pass another challenge.
      * </p>
      * <p>
-     * Valid values include the following. Note that all of these challenges
-     * require <code>USERNAME</code> and <code>SECRET_HASH</code> (if
-     * applicable) in the parameters.
+     * Valid values include the following:
      * </p>
+     * <note>
+     * <p>
+     * All of the following challenges require <code>USERNAME</code> and
+     * <code>SECRET_HASH</code> (if applicable) in the parameters.
+     * </p>
+     * </note>
      * <ul>
      * <li>
      * <p>
@@ -160,9 +201,9 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user
-     * pool and the previous challenges were passed, this challenge is returned
-     * so that Amazon Cognito can start tracking this device.
+     * <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on your
+     * user pool and the previous challenges were passed, this challenge is
+     * returned so that Amazon Cognito can start tracking this device.
      * </p>
      * </li>
      * <li>
@@ -173,10 +214,44 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to
-     * change their passwords after successful first login. This challenge
-     * should be passed with <code>NEW_PASSWORD</code> and any other required
-     * attributes.
+     * <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to change
+     * their passwords after successful first login.
+     * </p>
+     * <p>
+     * Respond to this challenge with <code>NEW_PASSWORD</code> and any required
+     * attributes that Amazon Cognito returned in the
+     * <code>requiredAttributes</code> parameter. You can also set values for
+     * attributes that aren't required by your user pool and that your app
+     * client can write. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     * >RespondToAuthChallenge</a>.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>RespondToAuthChallenge</code>, set a value for any keys that Amazon
+     * Cognito returned in the <code>requiredAttributes</code> parameter, then
+     * use the <code>UpdateUserAttributes</code> API operation to modify the
+     * value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code>: For users who are required to setup an MFA factor
+     * before they can sign in. The MFA types activated for the user pool will
+     * be listed in the challenge parameters <code>MFA_CAN_SETUP</code> value.
+     * </p>
+     * <p>
+     * To set up software token MFA, use the session returned here from
+     * <code>InitiateAuth</code> as an input to
+     * <code>AssociateSoftwareToken</code>. Use the session returned by
+     * <code>VerifySoftwareToken</code> as an input to
+     * <code>RespondToAuthChallenge</code> with challenge name
+     * <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     * administrator should help the user to add a phone number to their
+     * account, and then the user should call <code>InitiateAuth</code> again to
+     * restart sign-in.
      * </p>
      * </li>
      * </ul>
@@ -187,16 +262,19 @@ public class InitiateAuthResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @return <p>
-     *         The name of the challenge which you are responding to with this
-     *         call. This is returned to you in the
-     *         <code>AdminInitiateAuth</code> response if you need to pass
-     *         another challenge.
+     *         The name of the challenge that you're responding to with this
+     *         call. This name is returned in the <code>AdminInitiateAuth</code>
+     *         response if you must pass another challenge.
      *         </p>
      *         <p>
-     *         Valid values include the following. Note that all of these
-     *         challenges require <code>USERNAME</code> and
+     *         Valid values include the following:
+     *         </p>
+     *         <note>
+     *         <p>
+     *         All of the following challenges require <code>USERNAME</code> and
      *         <code>SECRET_HASH</code> (if applicable) in the parameters.
      *         </p>
+     *         </note>
      *         <ul>
      *         <li>
      *         <p>
@@ -221,7 +299,7 @@ public class InitiateAuthResult implements Serializable {
      *         </li>
      *         <li>
      *         <p>
-     *         <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on
+     *         <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on
      *         your user pool and the previous challenges were passed, this
      *         challenge is returned so that Amazon Cognito can start tracking
      *         this device.
@@ -235,10 +313,47 @@ public class InitiateAuthResult implements Serializable {
      *         </li>
      *         <li>
      *         <p>
-     *         <code>NEW_PASSWORD_REQUIRED</code>: For users which are required
-     *         to change their passwords after successful first login. This
-     *         challenge should be passed with <code>NEW_PASSWORD</code> and any
-     *         other required attributes.
+     *         <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to
+     *         change their passwords after successful first login.
+     *         </p>
+     *         <p>
+     *         Respond to this challenge with <code>NEW_PASSWORD</code> and any
+     *         required attributes that Amazon Cognito returned in the
+     *         <code>requiredAttributes</code> parameter. You can also set
+     *         values for attributes that aren't required by your user pool and
+     *         that your app client can write. For more information, see <a
+     *         href=
+     *         "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     *         >RespondToAuthChallenge</a>.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you
+     *         can't modify a required attribute that already has a value. In
+     *         <code>RespondToAuthChallenge</code>, set a value for any keys
+     *         that Amazon Cognito returned in the
+     *         <code>requiredAttributes</code> parameter, then use the
+     *         <code>UpdateUserAttributes</code> API operation to modify the
+     *         value of any additional attributes.
+     *         </p>
+     *         </note></li>
+     *         <li>
+     *         <p>
+     *         <code>MFA_SETUP</code>: For users who are required to setup an
+     *         MFA factor before they can sign in. The MFA types activated for
+     *         the user pool will be listed in the challenge parameters
+     *         <code>MFA_CAN_SETUP</code> value.
+     *         </p>
+     *         <p>
+     *         To set up software token MFA, use the session returned here from
+     *         <code>InitiateAuth</code> as an input to
+     *         <code>AssociateSoftwareToken</code>. Use the session returned by
+     *         <code>VerifySoftwareToken</code> as an input to
+     *         <code>RespondToAuthChallenge</code> with challenge name
+     *         <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     *         administrator should help the user to add a phone number to their
+     *         account, and then the user should call <code>InitiateAuth</code>
+     *         again to restart sign-in.
      *         </p>
      *         </li>
      *         </ul>
@@ -250,15 +365,19 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The name of the challenge which you are responding to with this call.
-     * This is returned to you in the <code>AdminInitiateAuth</code> response if
-     * you need to pass another challenge.
+     * The name of the challenge that you're responding to with this call. This
+     * name is returned in the <code>AdminInitiateAuth</code> response if you
+     * must pass another challenge.
      * </p>
      * <p>
-     * Valid values include the following. Note that all of these challenges
-     * require <code>USERNAME</code> and <code>SECRET_HASH</code> (if
-     * applicable) in the parameters.
+     * Valid values include the following:
      * </p>
+     * <note>
+     * <p>
+     * All of the following challenges require <code>USERNAME</code> and
+     * <code>SECRET_HASH</code> (if applicable) in the parameters.
+     * </p>
+     * </note>
      * <ul>
      * <li>
      * <p>
@@ -283,9 +402,9 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user
-     * pool and the previous challenges were passed, this challenge is returned
-     * so that Amazon Cognito can start tracking this device.
+     * <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on your
+     * user pool and the previous challenges were passed, this challenge is
+     * returned so that Amazon Cognito can start tracking this device.
      * </p>
      * </li>
      * <li>
@@ -296,10 +415,44 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to
-     * change their passwords after successful first login. This challenge
-     * should be passed with <code>NEW_PASSWORD</code> and any other required
-     * attributes.
+     * <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to change
+     * their passwords after successful first login.
+     * </p>
+     * <p>
+     * Respond to this challenge with <code>NEW_PASSWORD</code> and any required
+     * attributes that Amazon Cognito returned in the
+     * <code>requiredAttributes</code> parameter. You can also set values for
+     * attributes that aren't required by your user pool and that your app
+     * client can write. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     * >RespondToAuthChallenge</a>.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>RespondToAuthChallenge</code>, set a value for any keys that Amazon
+     * Cognito returned in the <code>requiredAttributes</code> parameter, then
+     * use the <code>UpdateUserAttributes</code> API operation to modify the
+     * value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code>: For users who are required to setup an MFA factor
+     * before they can sign in. The MFA types activated for the user pool will
+     * be listed in the challenge parameters <code>MFA_CAN_SETUP</code> value.
+     * </p>
+     * <p>
+     * To set up software token MFA, use the session returned here from
+     * <code>InitiateAuth</code> as an input to
+     * <code>AssociateSoftwareToken</code>. Use the session returned by
+     * <code>VerifySoftwareToken</code> as an input to
+     * <code>RespondToAuthChallenge</code> with challenge name
+     * <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     * administrator should help the user to add a phone number to their
+     * account, and then the user should call <code>InitiateAuth</code> again to
+     * restart sign-in.
      * </p>
      * </li>
      * </ul>
@@ -310,16 +463,21 @@ public class InitiateAuthResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The name of the challenge which you are responding to with
-     *            this call. This is returned to you in the
-     *            <code>AdminInitiateAuth</code> response if you need to pass
+     *            The name of the challenge that you're responding to with this
+     *            call. This name is returned in the
+     *            <code>AdminInitiateAuth</code> response if you must pass
      *            another challenge.
      *            </p>
      *            <p>
-     *            Valid values include the following. Note that all of these
-     *            challenges require <code>USERNAME</code> and
-     *            <code>SECRET_HASH</code> (if applicable) in the parameters.
+     *            Valid values include the following:
      *            </p>
+     *            <note>
+     *            <p>
+     *            All of the following challenges require <code>USERNAME</code>
+     *            and <code>SECRET_HASH</code> (if applicable) in the
+     *            parameters.
+     *            </p>
+     *            </note>
      *            <ul>
      *            <li>
      *            <p>
@@ -344,7 +502,7 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled
+     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was activated
      *            on your user pool and the previous challenges were passed,
      *            this challenge is returned so that Amazon Cognito can start
      *            tracking this device.
@@ -358,10 +516,47 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>NEW_PASSWORD_REQUIRED</code>: For users which are
-     *            required to change their passwords after successful first
-     *            login. This challenge should be passed with
-     *            <code>NEW_PASSWORD</code> and any other required attributes.
+     *            <code>NEW_PASSWORD_REQUIRED</code>: For users who are required
+     *            to change their passwords after successful first login.
+     *            </p>
+     *            <p>
+     *            Respond to this challenge with <code>NEW_PASSWORD</code> and
+     *            any required attributes that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter. You can also set
+     *            values for attributes that aren't required by your user pool
+     *            and that your app client can write. For more information, see
+     *            <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     *            >RespondToAuthChallenge</a>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            In a <code>NEW_PASSWORD_REQUIRED</code> challenge response,
+     *            you can't modify a required attribute that already has a
+     *            value. In <code>RespondToAuthChallenge</code>, set a value for
+     *            any keys that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter, then use the
+     *            <code>UpdateUserAttributes</code> API operation to modify the
+     *            value of any additional attributes.
+     *            </p>
+     *            </note></li>
+     *            <li>
+     *            <p>
+     *            <code>MFA_SETUP</code>: For users who are required to setup an
+     *            MFA factor before they can sign in. The MFA types activated
+     *            for the user pool will be listed in the challenge parameters
+     *            <code>MFA_CAN_SETUP</code> value.
+     *            </p>
+     *            <p>
+     *            To set up software token MFA, use the session returned here
+     *            from <code>InitiateAuth</code> as an input to
+     *            <code>AssociateSoftwareToken</code>. Use the session returned
+     *            by <code>VerifySoftwareToken</code> as an input to
+     *            <code>RespondToAuthChallenge</code> with challenge name
+     *            <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA,
+     *            an administrator should help the user to add a phone number to
+     *            their account, and then the user should call
+     *            <code>InitiateAuth</code> again to restart sign-in.
      *            </p>
      *            </li>
      *            </ul>
@@ -373,15 +568,19 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The name of the challenge which you are responding to with this call.
-     * This is returned to you in the <code>AdminInitiateAuth</code> response if
-     * you need to pass another challenge.
+     * The name of the challenge that you're responding to with this call. This
+     * name is returned in the <code>AdminInitiateAuth</code> response if you
+     * must pass another challenge.
      * </p>
      * <p>
-     * Valid values include the following. Note that all of these challenges
-     * require <code>USERNAME</code> and <code>SECRET_HASH</code> (if
-     * applicable) in the parameters.
+     * Valid values include the following:
      * </p>
+     * <note>
+     * <p>
+     * All of the following challenges require <code>USERNAME</code> and
+     * <code>SECRET_HASH</code> (if applicable) in the parameters.
+     * </p>
+     * </note>
      * <ul>
      * <li>
      * <p>
@@ -406,9 +605,9 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user
-     * pool and the previous challenges were passed, this challenge is returned
-     * so that Amazon Cognito can start tracking this device.
+     * <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on your
+     * user pool and the previous challenges were passed, this challenge is
+     * returned so that Amazon Cognito can start tracking this device.
      * </p>
      * </li>
      * <li>
@@ -419,10 +618,44 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to
-     * change their passwords after successful first login. This challenge
-     * should be passed with <code>NEW_PASSWORD</code> and any other required
-     * attributes.
+     * <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to change
+     * their passwords after successful first login.
+     * </p>
+     * <p>
+     * Respond to this challenge with <code>NEW_PASSWORD</code> and any required
+     * attributes that Amazon Cognito returned in the
+     * <code>requiredAttributes</code> parameter. You can also set values for
+     * attributes that aren't required by your user pool and that your app
+     * client can write. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     * >RespondToAuthChallenge</a>.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>RespondToAuthChallenge</code>, set a value for any keys that Amazon
+     * Cognito returned in the <code>requiredAttributes</code> parameter, then
+     * use the <code>UpdateUserAttributes</code> API operation to modify the
+     * value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code>: For users who are required to setup an MFA factor
+     * before they can sign in. The MFA types activated for the user pool will
+     * be listed in the challenge parameters <code>MFA_CAN_SETUP</code> value.
+     * </p>
+     * <p>
+     * To set up software token MFA, use the session returned here from
+     * <code>InitiateAuth</code> as an input to
+     * <code>AssociateSoftwareToken</code>. Use the session returned by
+     * <code>VerifySoftwareToken</code> as an input to
+     * <code>RespondToAuthChallenge</code> with challenge name
+     * <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     * administrator should help the user to add a phone number to their
+     * account, and then the user should call <code>InitiateAuth</code> again to
+     * restart sign-in.
      * </p>
      * </li>
      * </ul>
@@ -436,16 +669,21 @@ public class InitiateAuthResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The name of the challenge which you are responding to with
-     *            this call. This is returned to you in the
-     *            <code>AdminInitiateAuth</code> response if you need to pass
+     *            The name of the challenge that you're responding to with this
+     *            call. This name is returned in the
+     *            <code>AdminInitiateAuth</code> response if you must pass
      *            another challenge.
      *            </p>
      *            <p>
-     *            Valid values include the following. Note that all of these
-     *            challenges require <code>USERNAME</code> and
-     *            <code>SECRET_HASH</code> (if applicable) in the parameters.
+     *            Valid values include the following:
      *            </p>
+     *            <note>
+     *            <p>
+     *            All of the following challenges require <code>USERNAME</code>
+     *            and <code>SECRET_HASH</code> (if applicable) in the
+     *            parameters.
+     *            </p>
+     *            </note>
      *            <ul>
      *            <li>
      *            <p>
@@ -470,7 +708,7 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled
+     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was activated
      *            on your user pool and the previous challenges were passed,
      *            this challenge is returned so that Amazon Cognito can start
      *            tracking this device.
@@ -484,10 +722,47 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>NEW_PASSWORD_REQUIRED</code>: For users which are
-     *            required to change their passwords after successful first
-     *            login. This challenge should be passed with
-     *            <code>NEW_PASSWORD</code> and any other required attributes.
+     *            <code>NEW_PASSWORD_REQUIRED</code>: For users who are required
+     *            to change their passwords after successful first login.
+     *            </p>
+     *            <p>
+     *            Respond to this challenge with <code>NEW_PASSWORD</code> and
+     *            any required attributes that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter. You can also set
+     *            values for attributes that aren't required by your user pool
+     *            and that your app client can write. For more information, see
+     *            <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     *            >RespondToAuthChallenge</a>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            In a <code>NEW_PASSWORD_REQUIRED</code> challenge response,
+     *            you can't modify a required attribute that already has a
+     *            value. In <code>RespondToAuthChallenge</code>, set a value for
+     *            any keys that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter, then use the
+     *            <code>UpdateUserAttributes</code> API operation to modify the
+     *            value of any additional attributes.
+     *            </p>
+     *            </note></li>
+     *            <li>
+     *            <p>
+     *            <code>MFA_SETUP</code>: For users who are required to setup an
+     *            MFA factor before they can sign in. The MFA types activated
+     *            for the user pool will be listed in the challenge parameters
+     *            <code>MFA_CAN_SETUP</code> value.
+     *            </p>
+     *            <p>
+     *            To set up software token MFA, use the session returned here
+     *            from <code>InitiateAuth</code> as an input to
+     *            <code>AssociateSoftwareToken</code>. Use the session returned
+     *            by <code>VerifySoftwareToken</code> as an input to
+     *            <code>RespondToAuthChallenge</code> with challenge name
+     *            <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA,
+     *            an administrator should help the user to add a phone number to
+     *            their account, and then the user should call
+     *            <code>InitiateAuth</code> again to restart sign-in.
      *            </p>
      *            </li>
      *            </ul>
@@ -502,15 +777,19 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The name of the challenge which you are responding to with this call.
-     * This is returned to you in the <code>AdminInitiateAuth</code> response if
-     * you need to pass another challenge.
+     * The name of the challenge that you're responding to with this call. This
+     * name is returned in the <code>AdminInitiateAuth</code> response if you
+     * must pass another challenge.
      * </p>
      * <p>
-     * Valid values include the following. Note that all of these challenges
-     * require <code>USERNAME</code> and <code>SECRET_HASH</code> (if
-     * applicable) in the parameters.
+     * Valid values include the following:
      * </p>
+     * <note>
+     * <p>
+     * All of the following challenges require <code>USERNAME</code> and
+     * <code>SECRET_HASH</code> (if applicable) in the parameters.
+     * </p>
+     * </note>
      * <ul>
      * <li>
      * <p>
@@ -535,9 +814,9 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user
-     * pool and the previous challenges were passed, this challenge is returned
-     * so that Amazon Cognito can start tracking this device.
+     * <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on your
+     * user pool and the previous challenges were passed, this challenge is
+     * returned so that Amazon Cognito can start tracking this device.
      * </p>
      * </li>
      * <li>
@@ -548,10 +827,44 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to
-     * change their passwords after successful first login. This challenge
-     * should be passed with <code>NEW_PASSWORD</code> and any other required
-     * attributes.
+     * <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to change
+     * their passwords after successful first login.
+     * </p>
+     * <p>
+     * Respond to this challenge with <code>NEW_PASSWORD</code> and any required
+     * attributes that Amazon Cognito returned in the
+     * <code>requiredAttributes</code> parameter. You can also set values for
+     * attributes that aren't required by your user pool and that your app
+     * client can write. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     * >RespondToAuthChallenge</a>.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>RespondToAuthChallenge</code>, set a value for any keys that Amazon
+     * Cognito returned in the <code>requiredAttributes</code> parameter, then
+     * use the <code>UpdateUserAttributes</code> API operation to modify the
+     * value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code>: For users who are required to setup an MFA factor
+     * before they can sign in. The MFA types activated for the user pool will
+     * be listed in the challenge parameters <code>MFA_CAN_SETUP</code> value.
+     * </p>
+     * <p>
+     * To set up software token MFA, use the session returned here from
+     * <code>InitiateAuth</code> as an input to
+     * <code>AssociateSoftwareToken</code>. Use the session returned by
+     * <code>VerifySoftwareToken</code> as an input to
+     * <code>RespondToAuthChallenge</code> with challenge name
+     * <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     * administrator should help the user to add a phone number to their
+     * account, and then the user should call <code>InitiateAuth</code> again to
+     * restart sign-in.
      * </p>
      * </li>
      * </ul>
@@ -562,16 +875,21 @@ public class InitiateAuthResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The name of the challenge which you are responding to with
-     *            this call. This is returned to you in the
-     *            <code>AdminInitiateAuth</code> response if you need to pass
+     *            The name of the challenge that you're responding to with this
+     *            call. This name is returned in the
+     *            <code>AdminInitiateAuth</code> response if you must pass
      *            another challenge.
      *            </p>
      *            <p>
-     *            Valid values include the following. Note that all of these
-     *            challenges require <code>USERNAME</code> and
-     *            <code>SECRET_HASH</code> (if applicable) in the parameters.
+     *            Valid values include the following:
      *            </p>
+     *            <note>
+     *            <p>
+     *            All of the following challenges require <code>USERNAME</code>
+     *            and <code>SECRET_HASH</code> (if applicable) in the
+     *            parameters.
+     *            </p>
+     *            </note>
      *            <ul>
      *            <li>
      *            <p>
@@ -596,7 +914,7 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled
+     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was activated
      *            on your user pool and the previous challenges were passed,
      *            this challenge is returned so that Amazon Cognito can start
      *            tracking this device.
@@ -610,10 +928,47 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>NEW_PASSWORD_REQUIRED</code>: For users which are
-     *            required to change their passwords after successful first
-     *            login. This challenge should be passed with
-     *            <code>NEW_PASSWORD</code> and any other required attributes.
+     *            <code>NEW_PASSWORD_REQUIRED</code>: For users who are required
+     *            to change their passwords after successful first login.
+     *            </p>
+     *            <p>
+     *            Respond to this challenge with <code>NEW_PASSWORD</code> and
+     *            any required attributes that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter. You can also set
+     *            values for attributes that aren't required by your user pool
+     *            and that your app client can write. For more information, see
+     *            <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     *            >RespondToAuthChallenge</a>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            In a <code>NEW_PASSWORD_REQUIRED</code> challenge response,
+     *            you can't modify a required attribute that already has a
+     *            value. In <code>RespondToAuthChallenge</code>, set a value for
+     *            any keys that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter, then use the
+     *            <code>UpdateUserAttributes</code> API operation to modify the
+     *            value of any additional attributes.
+     *            </p>
+     *            </note></li>
+     *            <li>
+     *            <p>
+     *            <code>MFA_SETUP</code>: For users who are required to setup an
+     *            MFA factor before they can sign in. The MFA types activated
+     *            for the user pool will be listed in the challenge parameters
+     *            <code>MFA_CAN_SETUP</code> value.
+     *            </p>
+     *            <p>
+     *            To set up software token MFA, use the session returned here
+     *            from <code>InitiateAuth</code> as an input to
+     *            <code>AssociateSoftwareToken</code>. Use the session returned
+     *            by <code>VerifySoftwareToken</code> as an input to
+     *            <code>RespondToAuthChallenge</code> with challenge name
+     *            <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA,
+     *            an administrator should help the user to add a phone number to
+     *            their account, and then the user should call
+     *            <code>InitiateAuth</code> again to restart sign-in.
      *            </p>
      *            </li>
      *            </ul>
@@ -625,15 +980,19 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The name of the challenge which you are responding to with this call.
-     * This is returned to you in the <code>AdminInitiateAuth</code> response if
-     * you need to pass another challenge.
+     * The name of the challenge that you're responding to with this call. This
+     * name is returned in the <code>AdminInitiateAuth</code> response if you
+     * must pass another challenge.
      * </p>
      * <p>
-     * Valid values include the following. Note that all of these challenges
-     * require <code>USERNAME</code> and <code>SECRET_HASH</code> (if
-     * applicable) in the parameters.
+     * Valid values include the following:
      * </p>
+     * <note>
+     * <p>
+     * All of the following challenges require <code>USERNAME</code> and
+     * <code>SECRET_HASH</code> (if applicable) in the parameters.
+     * </p>
+     * </note>
      * <ul>
      * <li>
      * <p>
@@ -658,9 +1017,9 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user
-     * pool and the previous challenges were passed, this challenge is returned
-     * so that Amazon Cognito can start tracking this device.
+     * <code>DEVICE_SRP_AUTH</code>: If device tracking was activated on your
+     * user pool and the previous challenges were passed, this challenge is
+     * returned so that Amazon Cognito can start tracking this device.
      * </p>
      * </li>
      * <li>
@@ -671,10 +1030,44 @@ public class InitiateAuthResult implements Serializable {
      * </li>
      * <li>
      * <p>
-     * <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to
-     * change their passwords after successful first login. This challenge
-     * should be passed with <code>NEW_PASSWORD</code> and any other required
-     * attributes.
+     * <code>NEW_PASSWORD_REQUIRED</code>: For users who are required to change
+     * their passwords after successful first login.
+     * </p>
+     * <p>
+     * Respond to this challenge with <code>NEW_PASSWORD</code> and any required
+     * attributes that Amazon Cognito returned in the
+     * <code>requiredAttributes</code> parameter. You can also set values for
+     * attributes that aren't required by your user pool and that your app
+     * client can write. For more information, see <a href=
+     * "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     * >RespondToAuthChallenge</a>.
+     * </p>
+     * <note>
+     * <p>
+     * In a <code>NEW_PASSWORD_REQUIRED</code> challenge response, you can't
+     * modify a required attribute that already has a value. In
+     * <code>RespondToAuthChallenge</code>, set a value for any keys that Amazon
+     * Cognito returned in the <code>requiredAttributes</code> parameter, then
+     * use the <code>UpdateUserAttributes</code> API operation to modify the
+     * value of any additional attributes.
+     * </p>
+     * </note></li>
+     * <li>
+     * <p>
+     * <code>MFA_SETUP</code>: For users who are required to setup an MFA factor
+     * before they can sign in. The MFA types activated for the user pool will
+     * be listed in the challenge parameters <code>MFA_CAN_SETUP</code> value.
+     * </p>
+     * <p>
+     * To set up software token MFA, use the session returned here from
+     * <code>InitiateAuth</code> as an input to
+     * <code>AssociateSoftwareToken</code>. Use the session returned by
+     * <code>VerifySoftwareToken</code> as an input to
+     * <code>RespondToAuthChallenge</code> with challenge name
+     * <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA, an
+     * administrator should help the user to add a phone number to their
+     * account, and then the user should call <code>InitiateAuth</code> again to
+     * restart sign-in.
      * </p>
      * </li>
      * </ul>
@@ -688,16 +1081,21 @@ public class InitiateAuthResult implements Serializable {
      * DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
      *
      * @param challengeName <p>
-     *            The name of the challenge which you are responding to with
-     *            this call. This is returned to you in the
-     *            <code>AdminInitiateAuth</code> response if you need to pass
+     *            The name of the challenge that you're responding to with this
+     *            call. This name is returned in the
+     *            <code>AdminInitiateAuth</code> response if you must pass
      *            another challenge.
      *            </p>
      *            <p>
-     *            Valid values include the following. Note that all of these
-     *            challenges require <code>USERNAME</code> and
-     *            <code>SECRET_HASH</code> (if applicable) in the parameters.
+     *            Valid values include the following:
      *            </p>
+     *            <note>
+     *            <p>
+     *            All of the following challenges require <code>USERNAME</code>
+     *            and <code>SECRET_HASH</code> (if applicable) in the
+     *            parameters.
+     *            </p>
+     *            </note>
      *            <ul>
      *            <li>
      *            <p>
@@ -722,7 +1120,7 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled
+     *            <code>DEVICE_SRP_AUTH</code>: If device tracking was activated
      *            on your user pool and the previous challenges were passed,
      *            this challenge is returned so that Amazon Cognito can start
      *            tracking this device.
@@ -736,10 +1134,47 @@ public class InitiateAuthResult implements Serializable {
      *            </li>
      *            <li>
      *            <p>
-     *            <code>NEW_PASSWORD_REQUIRED</code>: For users which are
-     *            required to change their passwords after successful first
-     *            login. This challenge should be passed with
-     *            <code>NEW_PASSWORD</code> and any other required attributes.
+     *            <code>NEW_PASSWORD_REQUIRED</code>: For users who are required
+     *            to change their passwords after successful first login.
+     *            </p>
+     *            <p>
+     *            Respond to this challenge with <code>NEW_PASSWORD</code> and
+     *            any required attributes that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter. You can also set
+     *            values for attributes that aren't required by your user pool
+     *            and that your app client can write. For more information, see
+     *            <a href=
+     *            "https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RespondToAuthChallenge.html"
+     *            >RespondToAuthChallenge</a>.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            In a <code>NEW_PASSWORD_REQUIRED</code> challenge response,
+     *            you can't modify a required attribute that already has a
+     *            value. In <code>RespondToAuthChallenge</code>, set a value for
+     *            any keys that Amazon Cognito returned in the
+     *            <code>requiredAttributes</code> parameter, then use the
+     *            <code>UpdateUserAttributes</code> API operation to modify the
+     *            value of any additional attributes.
+     *            </p>
+     *            </note></li>
+     *            <li>
+     *            <p>
+     *            <code>MFA_SETUP</code>: For users who are required to setup an
+     *            MFA factor before they can sign in. The MFA types activated
+     *            for the user pool will be listed in the challenge parameters
+     *            <code>MFA_CAN_SETUP</code> value.
+     *            </p>
+     *            <p>
+     *            To set up software token MFA, use the session returned here
+     *            from <code>InitiateAuth</code> as an input to
+     *            <code>AssociateSoftwareToken</code>. Use the session returned
+     *            by <code>VerifySoftwareToken</code> as an input to
+     *            <code>RespondToAuthChallenge</code> with challenge name
+     *            <code>MFA_SETUP</code> to complete sign-in. To set up SMS MFA,
+     *            an administrator should help the user to add a phone number to
+     *            their account, and then the user should call
+     *            <code>InitiateAuth</code> again to restart sign-in.
      *            </p>
      *            </li>
      *            </ul>
@@ -754,20 +1189,18 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should pass both ways in challenge-response calls to the
+     * service. If the caller must pass another challenge, they return a session
+     * with other challenge parameters. This session should be passed as it is
+     * to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @return <p>
-     *         The session which should be passed both ways in
-     *         challenge-response calls to the service. If the or API call
-     *         determines that the caller needs to go through another challenge,
+     *         The session that should pass both ways in challenge-response
+     *         calls to the service. If the caller must pass another challenge,
      *         they return a session with other challenge parameters. This
      *         session should be passed as it is to the next
      *         <code>RespondToAuthChallenge</code> API call.
@@ -779,20 +1212,18 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should pass both ways in challenge-response calls to the
+     * service. If the caller must pass another challenge, they return a session
+     * with other challenge parameters. This session should be passed as it is
+     * to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
-     *            challenge-response calls to the service. If the or API call
-     *            determines that the caller needs to go through another
+     *            The session that should pass both ways in challenge-response
+     *            calls to the service. If the caller must pass another
      *            challenge, they return a session with other challenge
      *            parameters. This session should be passed as it is to the next
      *            <code>RespondToAuthChallenge</code> API call.
@@ -804,11 +1235,10 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The session which should be passed both ways in challenge-response calls
-     * to the service. If the or API call determines that the caller needs to go
-     * through another challenge, they return a session with other challenge
-     * parameters. This session should be passed as it is to the next
-     * <code>RespondToAuthChallenge</code> API call.
+     * The session that should pass both ways in challenge-response calls to the
+     * service. If the caller must pass another challenge, they return a session
+     * with other challenge parameters. This session should be passed as it is
+     * to the next <code>RespondToAuthChallenge</code> API call.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -818,9 +1248,8 @@ public class InitiateAuthResult implements Serializable {
      * <b>Length: </b>20 - 2048<br/>
      *
      * @param session <p>
-     *            The session which should be passed both ways in
-     *            challenge-response calls to the service. If the or API call
-     *            determines that the caller needs to go through another
+     *            The session that should pass both ways in challenge-response
+     *            calls to the service. If the caller must pass another
      *            challenge, they return a session with other challenge
      *            parameters. This session should be passed as it is to the next
      *            <code>RespondToAuthChallenge</code> API call.
@@ -835,8 +1264,8 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. These are returned to you in the
-     * <code>InitiateAuth</code> response if you need to pass another challenge.
+     * The challenge parameters. These are returned in the
+     * <code>InitiateAuth</code> response if you must pass another challenge.
      * The responses in this parameter should be used to compute inputs to the
      * next call (<code>RespondToAuthChallenge</code>).
      * </p>
@@ -846,8 +1275,8 @@ public class InitiateAuthResult implements Serializable {
      * </p>
      *
      * @return <p>
-     *         The challenge parameters. These are returned to you in the
-     *         <code>InitiateAuth</code> response if you need to pass another
+     *         The challenge parameters. These are returned in the
+     *         <code>InitiateAuth</code> response if you must pass another
      *         challenge. The responses in this parameter should be used to
      *         compute inputs to the next call (
      *         <code>RespondToAuthChallenge</code>).
@@ -863,8 +1292,8 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. These are returned to you in the
-     * <code>InitiateAuth</code> response if you need to pass another challenge.
+     * The challenge parameters. These are returned in the
+     * <code>InitiateAuth</code> response if you must pass another challenge.
      * The responses in this parameter should be used to compute inputs to the
      * next call (<code>RespondToAuthChallenge</code>).
      * </p>
@@ -874,8 +1303,8 @@ public class InitiateAuthResult implements Serializable {
      * </p>
      *
      * @param challengeParameters <p>
-     *            The challenge parameters. These are returned to you in the
-     *            <code>InitiateAuth</code> response if you need to pass another
+     *            The challenge parameters. These are returned in the
+     *            <code>InitiateAuth</code> response if you must pass another
      *            challenge. The responses in this parameter should be used to
      *            compute inputs to the next call (
      *            <code>RespondToAuthChallenge</code>).
@@ -891,8 +1320,8 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. These are returned to you in the
-     * <code>InitiateAuth</code> response if you need to pass another challenge.
+     * The challenge parameters. These are returned in the
+     * <code>InitiateAuth</code> response if you must pass another challenge.
      * The responses in this parameter should be used to compute inputs to the
      * next call (<code>RespondToAuthChallenge</code>).
      * </p>
@@ -905,8 +1334,8 @@ public class InitiateAuthResult implements Serializable {
      * together.
      *
      * @param challengeParameters <p>
-     *            The challenge parameters. These are returned to you in the
-     *            <code>InitiateAuth</code> response if you need to pass another
+     *            The challenge parameters. These are returned in the
+     *            <code>InitiateAuth</code> response if you must pass another
      *            challenge. The responses in this parameter should be used to
      *            compute inputs to the next call (
      *            <code>RespondToAuthChallenge</code>).
@@ -926,8 +1355,8 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The challenge parameters. These are returned to you in the
-     * <code>InitiateAuth</code> response if you need to pass another challenge.
+     * The challenge parameters. These are returned in the
+     * <code>InitiateAuth</code> response if you must pass another challenge.
      * The responses in this parameter should be used to compute inputs to the
      * next call (<code>RespondToAuthChallenge</code>).
      * </p>
@@ -970,19 +1399,20 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The result of the authentication response. This is only returned if the
-     * caller does not need to pass another challenge. If the caller does need
-     * to pass another challenge before it gets tokens,
+     * The result of the authentication response. This result is only returned
+     * if the caller doesn't need to pass another challenge. If the caller does
+     * need to pass another challenge before it gets tokens,
      * <code>ChallengeName</code>, <code>ChallengeParameters</code>, and
      * <code>Session</code> are returned.
      * </p>
      *
      * @return <p>
-     *         The result of the authentication response. This is only returned
-     *         if the caller does not need to pass another challenge. If the
-     *         caller does need to pass another challenge before it gets tokens,
-     *         <code>ChallengeName</code>, <code>ChallengeParameters</code>, and
-     *         <code>Session</code> are returned.
+     *         The result of the authentication response. This result is only
+     *         returned if the caller doesn't need to pass another challenge. If
+     *         the caller does need to pass another challenge before it gets
+     *         tokens, <code>ChallengeName</code>,
+     *         <code>ChallengeParameters</code>, and <code>Session</code> are
+     *         returned.
      *         </p>
      */
     public AuthenticationResultType getAuthenticationResult() {
@@ -991,18 +1421,18 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The result of the authentication response. This is only returned if the
-     * caller does not need to pass another challenge. If the caller does need
-     * to pass another challenge before it gets tokens,
+     * The result of the authentication response. This result is only returned
+     * if the caller doesn't need to pass another challenge. If the caller does
+     * need to pass another challenge before it gets tokens,
      * <code>ChallengeName</code>, <code>ChallengeParameters</code>, and
      * <code>Session</code> are returned.
      * </p>
      *
      * @param authenticationResult <p>
-     *            The result of the authentication response. This is only
-     *            returned if the caller does not need to pass another
-     *            challenge. If the caller does need to pass another challenge
-     *            before it gets tokens, <code>ChallengeName</code>,
+     *            The result of the authentication response. This result is only
+     *            returned if the caller doesn't need to pass another challenge.
+     *            If the caller does need to pass another challenge before it
+     *            gets tokens, <code>ChallengeName</code>,
      *            <code>ChallengeParameters</code>, and <code>Session</code> are
      *            returned.
      *            </p>
@@ -1013,9 +1443,9 @@ public class InitiateAuthResult implements Serializable {
 
     /**
      * <p>
-     * The result of the authentication response. This is only returned if the
-     * caller does not need to pass another challenge. If the caller does need
-     * to pass another challenge before it gets tokens,
+     * The result of the authentication response. This result is only returned
+     * if the caller doesn't need to pass another challenge. If the caller does
+     * need to pass another challenge before it gets tokens,
      * <code>ChallengeName</code>, <code>ChallengeParameters</code>, and
      * <code>Session</code> are returned.
      * </p>
@@ -1024,10 +1454,10 @@ public class InitiateAuthResult implements Serializable {
      * together.
      *
      * @param authenticationResult <p>
-     *            The result of the authentication response. This is only
-     *            returned if the caller does not need to pass another
-     *            challenge. If the caller does need to pass another challenge
-     *            before it gets tokens, <code>ChallengeName</code>,
+     *            The result of the authentication response. This result is only
+     *            returned if the caller doesn't need to pass another challenge.
+     *            If the caller does need to pass another challenge before it
+     *            gets tokens, <code>ChallengeName</code>,
      *            <code>ChallengeParameters</code>, and <code>Session</code> are
      *            returned.
      *            </p>

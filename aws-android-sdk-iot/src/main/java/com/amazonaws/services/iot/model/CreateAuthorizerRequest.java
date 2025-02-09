@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import com.amazonaws.AmazonWebServiceRequest;
  * <p>
  * Creates an authorizer.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >CreateAuthorizer</a> action.
+ * </p>
  */
 public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements Serializable {
     /**
@@ -40,6 +45,10 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
      * <p>
      * The ARN of the authorizer's Lambda function.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      */
     private String authorizerFunctionArn;
 
@@ -72,6 +81,48 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
      * <b>Allowed Values: </b>ACTIVE, INACTIVE
      */
     private String status;
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the custom authorizer.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     */
+    private java.util.List<Tag> tags;
+
+    /**
+     * <p>
+     * Specifies whether IoT validates the token signature in an authorization
+     * request.
+     * </p>
+     */
+    private Boolean signingDisabled;
+
+    /**
+     * <p>
+     * When <code>true</code>, the result from the authorizer’s Lambda function
+     * is cached for clients that use persistent HTTP connections. The results
+     * are cached for the time specified by the Lambda function in
+     * <code>refreshAfterInSeconds</code>. This value does not affect
+     * authorization of clients that use MQTT connections.
+     * </p>
+     * <p>
+     * The default value is <code>false</code>.
+     * </p>
+     */
+    private Boolean enableCachingForHttp;
 
     /**
      * <p>
@@ -134,6 +185,10 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
      * <p>
      * The ARN of the authorizer's Lambda function.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @return <p>
      *         The ARN of the authorizer's Lambda function.
@@ -147,6 +202,10 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
      * <p>
      * The ARN of the authorizer's Lambda function.
      * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param authorizerFunctionArn <p>
      *            The ARN of the authorizer's Lambda function.
@@ -163,6 +222,10 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>[\s\S]*<br/>
      *
      * @param authorizerFunctionArn <p>
      *            The ARN of the authorizer's Lambda function.
@@ -426,6 +489,372 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
     }
 
     /**
+     * <p>
+     * Metadata which can be used to manage the custom authorizer.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @return <p>
+     *         Metadata which can be used to manage the custom authorizer.
+     *         </p>
+     *         <note>
+     *         <p>
+     *         For URI Request parameters use format:
+     *         ...key1=value1&amp;key2=value2...
+     *         </p>
+     *         <p>
+     *         For the CLI command-line parameter use format: &amp;&amp;tags
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         <p>
+     *         For the cli-input-json file use format: "tags":
+     *         "key1=value1&amp;key2=value2..."
+     *         </p>
+     *         </note>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the custom authorizer.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the custom authorizer.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the custom authorizer.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the custom authorizer.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateAuthorizerRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Metadata which can be used to manage the custom authorizer.
+     * </p>
+     * <note>
+     * <p>
+     * For URI Request parameters use format: ...key1=value1&amp;key2=value2...
+     * </p>
+     * <p>
+     * For the CLI command-line parameter use format: &amp;&amp;tags
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * <p>
+     * For the cli-input-json file use format: "tags":
+     * "key1=value1&amp;key2=value2..."
+     * </p>
+     * </note>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Metadata which can be used to manage the custom authorizer.
+     *            </p>
+     *            <note>
+     *            <p>
+     *            For URI Request parameters use format:
+     *            ...key1=value1&amp;key2=value2...
+     *            </p>
+     *            <p>
+     *            For the CLI command-line parameter use format: &amp;&amp;tags
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            <p>
+     *            For the cli-input-json file use format: "tags":
+     *            "key1=value1&amp;key2=value2..."
+     *            </p>
+     *            </note>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateAuthorizerRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
+     * <p>
+     * Specifies whether IoT validates the token signature in an authorization
+     * request.
+     * </p>
+     *
+     * @return <p>
+     *         Specifies whether IoT validates the token signature in an
+     *         authorization request.
+     *         </p>
+     */
+    public Boolean isSigningDisabled() {
+        return signingDisabled;
+    }
+
+    /**
+     * <p>
+     * Specifies whether IoT validates the token signature in an authorization
+     * request.
+     * </p>
+     *
+     * @return <p>
+     *         Specifies whether IoT validates the token signature in an
+     *         authorization request.
+     *         </p>
+     */
+    public Boolean getSigningDisabled() {
+        return signingDisabled;
+    }
+
+    /**
+     * <p>
+     * Specifies whether IoT validates the token signature in an authorization
+     * request.
+     * </p>
+     *
+     * @param signingDisabled <p>
+     *            Specifies whether IoT validates the token signature in an
+     *            authorization request.
+     *            </p>
+     */
+    public void setSigningDisabled(Boolean signingDisabled) {
+        this.signingDisabled = signingDisabled;
+    }
+
+    /**
+     * <p>
+     * Specifies whether IoT validates the token signature in an authorization
+     * request.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param signingDisabled <p>
+     *            Specifies whether IoT validates the token signature in an
+     *            authorization request.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateAuthorizerRequest withSigningDisabled(Boolean signingDisabled) {
+        this.signingDisabled = signingDisabled;
+        return this;
+    }
+
+    /**
+     * <p>
+     * When <code>true</code>, the result from the authorizer’s Lambda function
+     * is cached for clients that use persistent HTTP connections. The results
+     * are cached for the time specified by the Lambda function in
+     * <code>refreshAfterInSeconds</code>. This value does not affect
+     * authorization of clients that use MQTT connections.
+     * </p>
+     * <p>
+     * The default value is <code>false</code>.
+     * </p>
+     *
+     * @return <p>
+     *         When <code>true</code>, the result from the authorizer’s Lambda
+     *         function is cached for clients that use persistent HTTP
+     *         connections. The results are cached for the time specified by the
+     *         Lambda function in <code>refreshAfterInSeconds</code>. This value
+     *         does not affect authorization of clients that use MQTT
+     *         connections.
+     *         </p>
+     *         <p>
+     *         The default value is <code>false</code>.
+     *         </p>
+     */
+    public Boolean isEnableCachingForHttp() {
+        return enableCachingForHttp;
+    }
+
+    /**
+     * <p>
+     * When <code>true</code>, the result from the authorizer’s Lambda function
+     * is cached for clients that use persistent HTTP connections. The results
+     * are cached for the time specified by the Lambda function in
+     * <code>refreshAfterInSeconds</code>. This value does not affect
+     * authorization of clients that use MQTT connections.
+     * </p>
+     * <p>
+     * The default value is <code>false</code>.
+     * </p>
+     *
+     * @return <p>
+     *         When <code>true</code>, the result from the authorizer’s Lambda
+     *         function is cached for clients that use persistent HTTP
+     *         connections. The results are cached for the time specified by the
+     *         Lambda function in <code>refreshAfterInSeconds</code>. This value
+     *         does not affect authorization of clients that use MQTT
+     *         connections.
+     *         </p>
+     *         <p>
+     *         The default value is <code>false</code>.
+     *         </p>
+     */
+    public Boolean getEnableCachingForHttp() {
+        return enableCachingForHttp;
+    }
+
+    /**
+     * <p>
+     * When <code>true</code>, the result from the authorizer’s Lambda function
+     * is cached for clients that use persistent HTTP connections. The results
+     * are cached for the time specified by the Lambda function in
+     * <code>refreshAfterInSeconds</code>. This value does not affect
+     * authorization of clients that use MQTT connections.
+     * </p>
+     * <p>
+     * The default value is <code>false</code>.
+     * </p>
+     *
+     * @param enableCachingForHttp <p>
+     *            When <code>true</code>, the result from the authorizer’s
+     *            Lambda function is cached for clients that use persistent HTTP
+     *            connections. The results are cached for the time specified by
+     *            the Lambda function in <code>refreshAfterInSeconds</code>.
+     *            This value does not affect authorization of clients that use
+     *            MQTT connections.
+     *            </p>
+     *            <p>
+     *            The default value is <code>false</code>.
+     *            </p>
+     */
+    public void setEnableCachingForHttp(Boolean enableCachingForHttp) {
+        this.enableCachingForHttp = enableCachingForHttp;
+    }
+
+    /**
+     * <p>
+     * When <code>true</code>, the result from the authorizer’s Lambda function
+     * is cached for clients that use persistent HTTP connections. The results
+     * are cached for the time specified by the Lambda function in
+     * <code>refreshAfterInSeconds</code>. This value does not affect
+     * authorization of clients that use MQTT connections.
+     * </p>
+     * <p>
+     * The default value is <code>false</code>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param enableCachingForHttp <p>
+     *            When <code>true</code>, the result from the authorizer’s
+     *            Lambda function is cached for clients that use persistent HTTP
+     *            connections. The results are cached for the time specified by
+     *            the Lambda function in <code>refreshAfterInSeconds</code>.
+     *            This value does not affect authorization of clients that use
+     *            MQTT connections.
+     *            </p>
+     *            <p>
+     *            The default value is <code>false</code>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateAuthorizerRequest withEnableCachingForHttp(Boolean enableCachingForHttp) {
+        this.enableCachingForHttp = enableCachingForHttp;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -445,7 +874,13 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
         if (getTokenSigningPublicKeys() != null)
             sb.append("tokenSigningPublicKeys: " + getTokenSigningPublicKeys() + ",");
         if (getStatus() != null)
-            sb.append("status: " + getStatus());
+            sb.append("status: " + getStatus() + ",");
+        if (getTags() != null)
+            sb.append("tags: " + getTags() + ",");
+        if (getSigningDisabled() != null)
+            sb.append("signingDisabled: " + getSigningDisabled() + ",");
+        if (getEnableCachingForHttp() != null)
+            sb.append("enableCachingForHttp: " + getEnableCachingForHttp());
         sb.append("}");
         return sb.toString();
     }
@@ -467,6 +902,11 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
                 + ((getTokenSigningPublicKeys() == null) ? 0 : getTokenSigningPublicKeys()
                         .hashCode());
         hashCode = prime * hashCode + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
+        hashCode = prime * hashCode
+                + ((getSigningDisabled() == null) ? 0 : getSigningDisabled().hashCode());
+        hashCode = prime * hashCode
+                + ((getEnableCachingForHttp() == null) ? 0 : getEnableCachingForHttp().hashCode());
         return hashCode;
     }
 
@@ -504,6 +944,20 @@ public class CreateAuthorizerRequest extends AmazonWebServiceRequest implements 
         if (other.getStatus() == null ^ this.getStatus() == null)
             return false;
         if (other.getStatus() != null && other.getStatus().equals(this.getStatus()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
+            return false;
+        if (other.getSigningDisabled() == null ^ this.getSigningDisabled() == null)
+            return false;
+        if (other.getSigningDisabled() != null
+                && other.getSigningDisabled().equals(this.getSigningDisabled()) == false)
+            return false;
+        if (other.getEnableCachingForHttp() == null ^ this.getEnableCachingForHttp() == null)
+            return false;
+        if (other.getEnableCachingForHttp() != null
+                && other.getEnableCachingForHttp().equals(this.getEnableCachingForHttp()) == false)
             return false;
         return true;
     }

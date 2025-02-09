@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,16 +21,56 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Gets a list of all customer master keys (CMKs) in the caller's AWS account
- * and region.
+ * Gets a list of all KMS keys in the caller's Amazon Web Services account and
+ * Region.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a KMS key
+ * in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:ListKeys</a> (IAM policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>CreateKey</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>DescribeKey</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListAliases</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListResourceTags</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class ListKeysRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
      * Use this parameter to specify the maximum number of items to return. When
-     * this value is present, AWS KMS does not return more than the specified
-     * number of items, but it might return fewer.
+     * this value is present, KMS does not return more than the specified number
+     * of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -58,8 +98,8 @@ public class ListKeysRequest extends AmazonWebServiceRequest implements Serializ
     /**
      * <p>
      * Use this parameter to specify the maximum number of items to return. When
-     * this value is present, AWS KMS does not return more than the specified
-     * number of items, but it might return fewer.
+     * this value is present, KMS does not return more than the specified number
+     * of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -71,8 +111,8 @@ public class ListKeysRequest extends AmazonWebServiceRequest implements Serializ
      *
      * @return <p>
      *         Use this parameter to specify the maximum number of items to
-     *         return. When this value is present, AWS KMS does not return more
-     *         than the specified number of items, but it might return fewer.
+     *         return. When this value is present, KMS does not return more than
+     *         the specified number of items, but it might return fewer.
      *         </p>
      *         <p>
      *         This value is optional. If you include a value, it must be
@@ -87,8 +127,8 @@ public class ListKeysRequest extends AmazonWebServiceRequest implements Serializ
     /**
      * <p>
      * Use this parameter to specify the maximum number of items to return. When
-     * this value is present, AWS KMS does not return more than the specified
-     * number of items, but it might return fewer.
+     * this value is present, KMS does not return more than the specified number
+     * of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -100,9 +140,8 @@ public class ListKeysRequest extends AmazonWebServiceRequest implements Serializ
      *
      * @param limit <p>
      *            Use this parameter to specify the maximum number of items to
-     *            return. When this value is present, AWS KMS does not return
-     *            more than the specified number of items, but it might return
-     *            fewer.
+     *            return. When this value is present, KMS does not return more
+     *            than the specified number of items, but it might return fewer.
      *            </p>
      *            <p>
      *            This value is optional. If you include a value, it must be
@@ -117,8 +156,8 @@ public class ListKeysRequest extends AmazonWebServiceRequest implements Serializ
     /**
      * <p>
      * Use this parameter to specify the maximum number of items to return. When
-     * this value is present, AWS KMS does not return more than the specified
-     * number of items, but it might return fewer.
+     * this value is present, KMS does not return more than the specified number
+     * of items, but it might return fewer.
      * </p>
      * <p>
      * This value is optional. If you include a value, it must be between 1 and
@@ -133,9 +172,8 @@ public class ListKeysRequest extends AmazonWebServiceRequest implements Serializ
      *
      * @param limit <p>
      *            Use this parameter to specify the maximum number of items to
-     *            return. When this value is present, AWS KMS does not return
-     *            more than the specified number of items, but it might return
-     *            fewer.
+     *            return. When this value is present, KMS does not return more
+     *            than the specified number of items, but it might return fewer.
      *            </p>
      *            <p>
      *            This value is optional. If you include a value, it must be

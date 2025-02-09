@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -31,6 +32,11 @@ class DominantLanguageDetectionJobPropertiesJsonMarshaller {
             String jobId = dominantLanguageDetectionJobProperties.getJobId();
             jsonWriter.name("JobId");
             jsonWriter.value(jobId);
+        }
+        if (dominantLanguageDetectionJobProperties.getJobArn() != null) {
+            String jobArn = dominantLanguageDetectionJobProperties.getJobArn();
+            jsonWriter.name("JobArn");
+            jsonWriter.value(jobArn);
         }
         if (dominantLanguageDetectionJobProperties.getJobName() != null) {
             String jobName = dominantLanguageDetectionJobProperties.getJobName();
@@ -74,6 +80,16 @@ class DominantLanguageDetectionJobPropertiesJsonMarshaller {
                     .getDataAccessRoleArn();
             jsonWriter.name("DataAccessRoleArn");
             jsonWriter.value(dataAccessRoleArn);
+        }
+        if (dominantLanguageDetectionJobProperties.getVolumeKmsKeyId() != null) {
+            String volumeKmsKeyId = dominantLanguageDetectionJobProperties.getVolumeKmsKeyId();
+            jsonWriter.name("VolumeKmsKeyId");
+            jsonWriter.value(volumeKmsKeyId);
+        }
+        if (dominantLanguageDetectionJobProperties.getVpcConfig() != null) {
+            VpcConfig vpcConfig = dominantLanguageDetectionJobProperties.getVpcConfig();
+            jsonWriter.name("VpcConfig");
+            VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
         }
         jsonWriter.endObject();
     }

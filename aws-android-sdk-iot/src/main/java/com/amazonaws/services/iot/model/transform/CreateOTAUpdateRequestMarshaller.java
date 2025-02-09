@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.iot.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -77,6 +80,17 @@ public class CreateOTAUpdateRequestMarshaller implements
                 }
                 jsonWriter.endArray();
             }
+            if (createOTAUpdateRequest.getProtocols() != null) {
+                java.util.List<String> protocols = createOTAUpdateRequest.getProtocols();
+                jsonWriter.name("protocols");
+                jsonWriter.beginArray();
+                for (String protocolsItem : protocols) {
+                    if (protocolsItem != null) {
+                        jsonWriter.value(protocolsItem);
+                    }
+                }
+                jsonWriter.endArray();
+            }
             if (createOTAUpdateRequest.getTargetSelection() != null) {
                 String targetSelection = createOTAUpdateRequest.getTargetSelection();
                 jsonWriter.name("targetSelection");
@@ -88,6 +102,26 @@ public class CreateOTAUpdateRequestMarshaller implements
                 jsonWriter.name("awsJobExecutionsRolloutConfig");
                 AwsJobExecutionsRolloutConfigJsonMarshaller.getInstance().marshall(
                         awsJobExecutionsRolloutConfig, jsonWriter);
+            }
+            if (createOTAUpdateRequest.getAwsJobPresignedUrlConfig() != null) {
+                AwsJobPresignedUrlConfig awsJobPresignedUrlConfig = createOTAUpdateRequest
+                        .getAwsJobPresignedUrlConfig();
+                jsonWriter.name("awsJobPresignedUrlConfig");
+                AwsJobPresignedUrlConfigJsonMarshaller.getInstance().marshall(
+                        awsJobPresignedUrlConfig, jsonWriter);
+            }
+            if (createOTAUpdateRequest.getAwsJobAbortConfig() != null) {
+                AwsJobAbortConfig awsJobAbortConfig = createOTAUpdateRequest.getAwsJobAbortConfig();
+                jsonWriter.name("awsJobAbortConfig");
+                AwsJobAbortConfigJsonMarshaller.getInstance().marshall(awsJobAbortConfig,
+                        jsonWriter);
+            }
+            if (createOTAUpdateRequest.getAwsJobTimeoutConfig() != null) {
+                AwsJobTimeoutConfig awsJobTimeoutConfig = createOTAUpdateRequest
+                        .getAwsJobTimeoutConfig();
+                jsonWriter.name("awsJobTimeoutConfig");
+                AwsJobTimeoutConfigJsonMarshaller.getInstance().marshall(awsJobTimeoutConfig,
+                        jsonWriter);
             }
             if (createOTAUpdateRequest.getFiles() != null) {
                 java.util.List<OTAUpdateFile> files = createOTAUpdateRequest.getFiles();
@@ -119,6 +153,17 @@ public class CreateOTAUpdateRequestMarshaller implements
                     }
                 }
                 jsonWriter.endObject();
+            }
+            if (createOTAUpdateRequest.getTags() != null) {
+                java.util.List<Tag> tags = createOTAUpdateRequest.getTags();
+                jsonWriter.name("tags");
+                jsonWriter.beginArray();
+                for (Tag tagsItem : tags) {
+                    if (tagsItem != null) {
+                        TagJsonMarshaller.getInstance().marshall(tagsItem, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
             }
 
             jsonWriter.endObject();

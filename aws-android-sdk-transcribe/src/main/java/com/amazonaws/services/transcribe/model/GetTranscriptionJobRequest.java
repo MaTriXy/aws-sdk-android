@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -21,16 +21,29 @@ import com.amazonaws.AmazonWebServiceRequest;
 
 /**
  * <p>
- * Returns information about a transcription job. To see the status of the job,
- * check the <code>TranscriptionJobStatus</code> field. If the status is
- * <code>COMPLETED</code>, the job is finished and you can find the results at
- * the location specified in the <code>TranscriptionFileUri</code> field.
+ * Provides information about the specified transcription job.
+ * </p>
+ * <p>
+ * To view the status of the specified transcription job, check the
+ * <code>TranscriptionJobStatus</code> field. If the status is
+ * <code>COMPLETED</code>, the job is finished. You can find the results at the
+ * location specified in <code>TranscriptFileUri</code>. If the status is
+ * <code>FAILED</code>, <code>FailureReason</code> provides details on why your
+ * transcription job failed.
+ * </p>
+ * <p>
+ * If you enabled content redaction, the redacted transcript can be found at the
+ * location specified in <code>RedactedTranscriptFileUri</code>.
+ * </p>
+ * <p>
+ * To get a list of your transcription jobs, use the operation.
  * </p>
  */
 public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The name of the job.
+     * The name of the transcription job you want information about. Job names
+     * are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -41,7 +54,8 @@ public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The name of the job.
+     * The name of the transcription job you want information about. Job names
+     * are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -49,7 +63,8 @@ public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @return <p>
-     *         The name of the job.
+     *         The name of the transcription job you want information about. Job
+     *         names are case sensitive.
      *         </p>
      */
     public String getTranscriptionJobName() {
@@ -58,7 +73,8 @@ public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The name of the job.
+     * The name of the transcription job you want information about. Job names
+     * are case sensitive.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -66,7 +82,8 @@ public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param transcriptionJobName <p>
-     *            The name of the job.
+     *            The name of the transcription job you want information about.
+     *            Job names are case sensitive.
      *            </p>
      */
     public void setTranscriptionJobName(String transcriptionJobName) {
@@ -75,7 +92,8 @@ public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implemen
 
     /**
      * <p>
-     * The name of the job.
+     * The name of the transcription job you want information about. Job names
+     * are case sensitive.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -86,7 +104,8 @@ public class GetTranscriptionJobRequest extends AmazonWebServiceRequest implemen
      * <b>Pattern: </b>^[0-9a-zA-Z._-]+<br/>
      *
      * @param transcriptionJobName <p>
-     *            The name of the job.
+     *            The name of the transcription job you want information about.
+     *            Job names are case sensitive.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

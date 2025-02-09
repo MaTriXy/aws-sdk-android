@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -69,7 +69,9 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The date the user import job was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      */
     private java.util.Date creationDate;
@@ -136,7 +138,7 @@ public class UserImportJobType implements Serializable {
      * <p>
      * <code>Expired</code> - You created a job, but did not start the job
      * within 24-48 hours. All data associated with the job was deleted, and the
-     * job cannot be started.
+     * job can't be started.
      * </p>
      * </li>
      * </ul>
@@ -149,9 +151,10 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job. For more information, see "Creating the CloudWatch Logs IAM Role" in
-     * the Amazon Cognito Developer Guide.
+     * The role Amazon Resource Name (ARN) for the Amazon CloudWatch Logging
+     * role for the user import job. For more information, see
+     * "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito Developer
+     * Guide.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -178,7 +181,7 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The number of users that could not be imported.
+     * The number of users that couldn't be imported.
      * </p>
      */
     private Long failedUsers;
@@ -430,11 +433,15 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The date the user import job was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @return <p>
-     *         The date the user import job was created.
+     *         The date and time, in <a
+     *         href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *         8601</a> format, when the item was created.
      *         </p>
      */
     public java.util.Date getCreationDate() {
@@ -443,11 +450,15 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The date the user import job was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      *
      * @param creationDate <p>
-     *            The date the user import job was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      */
     public void setCreationDate(java.util.Date creationDate) {
@@ -456,14 +467,18 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The date the user import job was created.
+     * The date and time, in <a
+     * href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     * 8601</a> format, when the item was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param creationDate <p>
-     *            The date the user import job was created.
+     *            The date and time, in <a href=
+     *            "https://www.iso.org/iso-8601-date-and-time-format.html">ISO
+     *            8601</a> format, when the item was created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -611,7 +626,7 @@ public class UserImportJobType implements Serializable {
      * <p>
      * <code>Expired</code> - You created a job, but did not start the job
      * within 24-48 hours. All data associated with the job was deleted, and the
-     * job cannot be started.
+     * job can't be started.
      * </p>
      * </li>
      * </ul>
@@ -667,7 +682,7 @@ public class UserImportJobType implements Serializable {
      *         <p>
      *         <code>Expired</code> - You created a job, but did not start the
      *         job within 24-48 hours. All data associated with the job was
-     *         deleted, and the job cannot be started.
+     *         deleted, and the job can't be started.
      *         </p>
      *         </li>
      *         </ul>
@@ -725,7 +740,7 @@ public class UserImportJobType implements Serializable {
      * <p>
      * <code>Expired</code> - You created a job, but did not start the job
      * within 24-48 hours. All data associated with the job was deleted, and the
-     * job cannot be started.
+     * job can't be started.
      * </p>
      * </li>
      * </ul>
@@ -781,7 +796,7 @@ public class UserImportJobType implements Serializable {
      *            <p>
      *            <code>Expired</code> - You created a job, but did not start
      *            the job within 24-48 hours. All data associated with the job
-     *            was deleted, and the job cannot be started.
+     *            was deleted, and the job can't be started.
      *            </p>
      *            </li>
      *            </ul>
@@ -839,7 +854,7 @@ public class UserImportJobType implements Serializable {
      * <p>
      * <code>Expired</code> - You created a job, but did not start the job
      * within 24-48 hours. All data associated with the job was deleted, and the
-     * job cannot be started.
+     * job can't be started.
      * </p>
      * </li>
      * </ul>
@@ -898,7 +913,7 @@ public class UserImportJobType implements Serializable {
      *            <p>
      *            <code>Expired</code> - You created a job, but did not start
      *            the job within 24-48 hours. All data associated with the job
-     *            was deleted, and the job cannot be started.
+     *            was deleted, and the job can't be started.
      *            </p>
      *            </li>
      *            </ul>
@@ -959,7 +974,7 @@ public class UserImportJobType implements Serializable {
      * <p>
      * <code>Expired</code> - You created a job, but did not start the job
      * within 24-48 hours. All data associated with the job was deleted, and the
-     * job cannot be started.
+     * job can't be started.
      * </p>
      * </li>
      * </ul>
@@ -1015,7 +1030,7 @@ public class UserImportJobType implements Serializable {
      *            <p>
      *            <code>Expired</code> - You created a job, but did not start
      *            the job within 24-48 hours. All data associated with the job
-     *            was deleted, and the job cannot be started.
+     *            was deleted, and the job can't be started.
      *            </p>
      *            </li>
      *            </ul>
@@ -1073,7 +1088,7 @@ public class UserImportJobType implements Serializable {
      * <p>
      * <code>Expired</code> - You created a job, but did not start the job
      * within 24-48 hours. All data associated with the job was deleted, and the
-     * job cannot be started.
+     * job can't be started.
      * </p>
      * </li>
      * </ul>
@@ -1132,7 +1147,7 @@ public class UserImportJobType implements Serializable {
      *            <p>
      *            <code>Expired</code> - You created a job, but did not start
      *            the job within 24-48 hours. All data associated with the job
-     *            was deleted, and the job cannot be started.
+     *            was deleted, and the job can't be started.
      *            </p>
      *            </li>
      *            </ul>
@@ -1147,9 +1162,10 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job. For more information, see "Creating the CloudWatch Logs IAM Role" in
-     * the Amazon Cognito Developer Guide.
+     * The role Amazon Resource Name (ARN) for the Amazon CloudWatch Logging
+     * role for the user import job. For more information, see
+     * "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito Developer
+     * Guide.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -1159,8 +1175,8 @@ public class UserImportJobType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @return <p>
-     *         The role ARN for the Amazon CloudWatch Logging role for the user
-     *         import job. For more information, see
+     *         The role Amazon Resource Name (ARN) for the Amazon CloudWatch
+     *         Logging role for the user import job. For more information, see
      *         "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito
      *         Developer Guide.
      *         </p>
@@ -1171,9 +1187,10 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job. For more information, see "Creating the CloudWatch Logs IAM Role" in
-     * the Amazon Cognito Developer Guide.
+     * The role Amazon Resource Name (ARN) for the Amazon CloudWatch Logging
+     * role for the user import job. For more information, see
+     * "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito Developer
+     * Guide.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -1183,10 +1200,10 @@ public class UserImportJobType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param cloudWatchLogsRoleArn <p>
-     *            The role ARN for the Amazon CloudWatch Logging role for the
-     *            user import job. For more information, see
-     *            "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito
-     *            Developer Guide.
+     *            The role Amazon Resource Name (ARN) for the Amazon CloudWatch
+     *            Logging role for the user import job. For more information,
+     *            see "Creating the CloudWatch Logs IAM Role" in the Amazon
+     *            Cognito Developer Guide.
      *            </p>
      */
     public void setCloudWatchLogsRoleArn(String cloudWatchLogsRoleArn) {
@@ -1195,9 +1212,10 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The role ARN for the Amazon CloudWatch Logging role for the user import
-     * job. For more information, see "Creating the CloudWatch Logs IAM Role" in
-     * the Amazon Cognito Developer Guide.
+     * The role Amazon Resource Name (ARN) for the Amazon CloudWatch Logging
+     * role for the user import job. For more information, see
+     * "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito Developer
+     * Guide.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -1210,10 +1228,10 @@ public class UserImportJobType implements Serializable {
      * /,.@-]+(:[\w+=/,.@-]+)?(:[\w+=/,.@-]+)?<br/>
      *
      * @param cloudWatchLogsRoleArn <p>
-     *            The role ARN for the Amazon CloudWatch Logging role for the
-     *            user import job. For more information, see
-     *            "Creating the CloudWatch Logs IAM Role" in the Amazon Cognito
-     *            Developer Guide.
+     *            The role Amazon Resource Name (ARN) for the Amazon CloudWatch
+     *            Logging role for the user import job. For more information,
+     *            see "Creating the CloudWatch Logs IAM Role" in the Amazon
+     *            Cognito Developer Guide.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -1315,11 +1333,11 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The number of users that could not be imported.
+     * The number of users that couldn't be imported.
      * </p>
      *
      * @return <p>
-     *         The number of users that could not be imported.
+     *         The number of users that couldn't be imported.
      *         </p>
      */
     public Long getFailedUsers() {
@@ -1328,11 +1346,11 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The number of users that could not be imported.
+     * The number of users that couldn't be imported.
      * </p>
      *
      * @param failedUsers <p>
-     *            The number of users that could not be imported.
+     *            The number of users that couldn't be imported.
      *            </p>
      */
     public void setFailedUsers(Long failedUsers) {
@@ -1341,14 +1359,14 @@ public class UserImportJobType implements Serializable {
 
     /**
      * <p>
-     * The number of users that could not be imported.
+     * The number of users that couldn't be imported.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param failedUsers <p>
-     *            The number of users that could not be imported.
+     *            The number of users that couldn't be imported.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

@@ -14,6 +14,8 @@ public class SignInUIOptions {
         this.builder = builder;
     }
 
+    public String getBrowserPackage() { return builder.browserPackage; }
+
     public Integer getLogo() {
         return builder.logo;
     }
@@ -30,20 +32,37 @@ public class SignInUIOptions {
         return builder.nextActivityClass;
     }
 
+    public HostedUIOptions getHostedUIOptions() {
+        return builder.hostedUIOptions;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder {
+        private String browserPackage;
         private Integer logo;
         private Integer backgroundColor;
         private boolean canCancel;
         private Class<? extends Activity> nextActivityClass;
+        private HostedUIOptions hostedUIOptions;
 
         public Builder() { }
 
         public Builder logo(final Integer logoResourceId) {
             logo = logoResourceId;
+            return this;
+        }
+
+        /**
+         * Specify which browser package to use for the sign in operation (e.g. "org.mozilla.firefox").
+         * Defaults to the Chrome package if not specified.
+         * @param browserPackage the browser package to use for the sign in operation (e.g. "org.mozilla.firefox").
+         * @return The builder object.
+         */
+        public Builder browserPackage(final String browserPackage) {
+            this.browserPackage = browserPackage;
             return this;
         }
 
@@ -59,6 +78,11 @@ public class SignInUIOptions {
 
         public Builder nextActivity(final Class<? extends Activity> nextActivityClass) {
             this.nextActivityClass = nextActivityClass;
+            return this;
+        }
+
+        public Builder hostedUIOptions(final HostedUIOptions hostedUIOptions) {
+            this.hostedUIOptions = hostedUIOptions;
             return this;
         }
 

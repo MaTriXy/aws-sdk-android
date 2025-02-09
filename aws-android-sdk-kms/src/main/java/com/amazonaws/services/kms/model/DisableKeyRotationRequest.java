@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,26 +22,107 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Disables <a href=
- * "http://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html"
- * >automatic rotation of the key material</a> for the specified customer master
- * key (CMK). You cannot perform this operation on a CMK in a different AWS
- * account.
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html"
+ * >automatic rotation of the key material</a> of the specified symmetric
+ * encryption KMS key.
  * </p>
  * <p>
- * The result of this operation varies with the key state of the CMK. For
- * details, see <a
- * href="http://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
- * >How Key State Affects Use of a Customer Master Key</a> in the <i>AWS Key
- * Management Service Developer Guide</i>.
+ * Automatic key rotation is supported only on symmetric encryption KMS keys.
+ * You cannot enable automatic rotation of <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html"
+ * >asymmetric KMS keys</a>, <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html">HMAC
+ * KMS keys</a>, KMS keys with <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+ * >imported key material</a>, or KMS keys in a <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+ * >custom key store</a>. To enable or disable automatic rotation of a set of
+ * related <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-manage.html#multi-region-rotate"
+ * >multi-Region keys</a>, set the property on the primary key.
+ * </p>
+ * <p>
+ * You can enable (<a>EnableKeyRotation</a>) and disable automatic rotation of
+ * the key material in <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk"
+ * >customer managed KMS keys</a>. Key material rotation of <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk"
+ * >Amazon Web Services managed KMS keys</a> is not configurable. KMS always
+ * rotates the key material for every year. Rotation of <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk"
+ * >Amazon Web Services owned KMS keys</a> varies.
+ * </p>
+ * <note>
+ * <p>
+ * In May 2022, KMS changed the rotation schedule for Amazon Web Services
+ * managed keys from every three years to every year. For details, see
+ * <a>EnableKeyRotation</a>.
+ * </p>
+ * </note>
+ * <p>
+ * The KMS key that you use for this operation must be in a compatible key
+ * state. For details, see <a
+ * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-state.html"
+ * >Key states of KMS keys</a> in the <i>Key Management Service Developer
+ * Guide</i>.
+ * </p>
+ * <p>
+ * <b>Cross-account use</b>: No. You cannot perform this operation on a KMS key
+ * in a different Amazon Web Services account.
+ * </p>
+ * <p>
+ * <b>Required permissions</b>: <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/kms-api-permissions-reference.html"
+ * >kms:DisableKeyRotation</a> (key policy)
+ * </p>
+ * <p>
+ * <b>Related operations:</b>
+ * </p>
+ * <ul>
+ * <li>
+ * <p>
+ * <a>EnableKeyRotation</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>GetKeyRotationStatus</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>ListKeyRotations</a>
+ * </p>
+ * </li>
+ * <li>
+ * <p>
+ * <a>RotateKeyOnDemand</a>
+ * </p>
+ * </li>
+ * </ul>
+ * <p>
+ * <b>Eventual consistency</b>: The KMS API follows an eventual consistency
+ * model. For more information, see <a href=
+ * "https://docs.aws.amazon.com/kms/latest/developerguide/programming-eventual-consistency.html"
+ * >KMS eventual consistency</a>.
  * </p>
  */
 public class DisableKeyRotationRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies a symmetric encryption KMS key. You cannot enable or disable
+     * automatic rotation of <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     * >asymmetric KMS keys</a>, <a
+     * href="https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     * >HMAC KMS keys</a>, KMS keys with <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     * >imported key material</a>, or KMS keys in a <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     * >custom key store</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -60,7 +141,7 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -71,10 +152,19 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies a symmetric encryption KMS key. You cannot enable or disable
+     * automatic rotation of <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     * >asymmetric KMS keys</a>, <a
+     * href="https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     * >HMAC KMS keys</a>, KMS keys with <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     * >imported key material</a>, or KMS keys in a <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     * >custom key store</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -93,7 +183,7 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -101,10 +191,19 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * <b>Length: </b>1 - 2048<br/>
      *
      * @return <p>
-     *         A unique identifier for the customer master key (CMK).
+     *         Identifies a symmetric encryption KMS key. You cannot enable or
+     *         disable automatic rotation of <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     *         >asymmetric KMS keys</a>, <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     *         >HMAC KMS keys</a>, KMS keys with <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     *         >imported key material</a>, or KMS keys in a <a href=
+     *         "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     *         >custom key store</a>.
      *         </p>
      *         <p>
-     *         Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     *         Specify the key ID or key ARN of the KMS key.
      *         </p>
      *         <p>
      *         For example:
@@ -123,8 +222,8 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      *         </li>
      *         </ul>
      *         <p>
-     *         To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
-     *         <a>DescribeKey</a>.
+     *         To get the key ID and key ARN for a KMS key, use <a>ListKeys</a>
+     *         or <a>DescribeKey</a>.
      *         </p>
      */
     public String getKeyId() {
@@ -133,10 +232,19 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies a symmetric encryption KMS key. You cannot enable or disable
+     * automatic rotation of <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     * >asymmetric KMS keys</a>, <a
+     * href="https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     * >HMAC KMS keys</a>, KMS keys with <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     * >imported key material</a>, or KMS keys in a <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     * >custom key store</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -155,7 +263,7 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -163,11 +271,19 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Identifies a symmetric encryption KMS key. You cannot enable
+     *            or disable automatic rotation of <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     *            >asymmetric KMS keys</a>, <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     *            >HMAC KMS keys</a>, KMS keys with <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     *            >imported key material</a>, or KMS keys in a <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     *            >custom key store</a>.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -186,8 +302,8 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      */
     public void setKeyId(String keyId) {
@@ -196,10 +312,19 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
 
     /**
      * <p>
-     * A unique identifier for the customer master key (CMK).
+     * Identifies a symmetric encryption KMS key. You cannot enable or disable
+     * automatic rotation of <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     * >asymmetric KMS keys</a>, <a
+     * href="https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     * >HMAC KMS keys</a>, KMS keys with <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     * >imported key material</a>, or KMS keys in a <a href=
+     * "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     * >custom key store</a>.
      * </p>
      * <p>
-     * Specify the key ID or the Amazon Resource Name (ARN) of the CMK.
+     * Specify the key ID or key ARN of the KMS key.
      * </p>
      * <p>
      * For example:
@@ -218,7 +343,7 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * </li>
      * </ul>
      * <p>
-     * To get the key ID and key ARN for a CMK, use <a>ListKeys</a> or
+     * To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or
      * <a>DescribeKey</a>.
      * </p>
      * <p>
@@ -229,11 +354,19 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      * <b>Length: </b>1 - 2048<br/>
      *
      * @param keyId <p>
-     *            A unique identifier for the customer master key (CMK).
+     *            Identifies a symmetric encryption KMS key. You cannot enable
+     *            or disable automatic rotation of <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html#asymmetric-cmks"
+     *            >asymmetric KMS keys</a>, <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/hmac.html"
+     *            >HMAC KMS keys</a>, KMS keys with <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html"
+     *            >imported key material</a>, or KMS keys in a <a href=
+     *            "https://docs.aws.amazon.com/kms/latest/developerguide/custom-key-store-overview.html"
+     *            >custom key store</a>.
      *            </p>
      *            <p>
-     *            Specify the key ID or the Amazon Resource Name (ARN) of the
-     *            CMK.
+     *            Specify the key ID or key ARN of the KMS key.
      *            </p>
      *            <p>
      *            For example:
@@ -252,8 +385,8 @@ public class DisableKeyRotationRequest extends AmazonWebServiceRequest implement
      *            </li>
      *            </ul>
      *            <p>
-     *            To get the key ID and key ARN for a CMK, use <a>ListKeys</a>
-     *            or <a>DescribeKey</a>.
+     *            To get the key ID and key ARN for a KMS key, use
+     *            <a>ListKeys</a> or <a>DescribeKey</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

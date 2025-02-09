@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Provides configuration parameters for the output of topic detection jobs.
+ * Provides configuration parameters for the output of inference jobs.
  * </p>
  * <p/>
  */
@@ -28,7 +28,7 @@ public class OutputDataConfig implements Serializable {
      * <p>
      * When you use the <code>OutputDataConfig</code> object with asynchronous
      * operations, you specify the Amazon S3 location where you want to write
-     * the output data. The URI must be in the same region as the API endpoint
+     * the output data. The URI must be in the same Region as the API endpoint
      * that you are calling. The location is used as the prefix for the actual
      * location of the output file.
      * </p>
@@ -38,6 +38,11 @@ public class OutputDataConfig implements Serializable {
      * contains the location of the output file, called
      * <code>output.tar.gz</code>. It is a compressed archive that contains the
      * ouput of the operation.
+     * </p>
+     * <p>
+     * For a PII entity detection job, the output file is plain text, not a
+     * compressed archive. The output file name is the same as the input file,
+     * with <code>.out</code> appended at the end.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -48,9 +53,46 @@ public class OutputDataConfig implements Serializable {
 
     /**
      * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt the output results from an analysis
+     * job. The KmsKeyId can be one of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * ARN of a KMS Key Alias:
+     * <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String kmsKeyId;
+
+    /**
+     * <p>
      * When you use the <code>OutputDataConfig</code> object with asynchronous
      * operations, you specify the Amazon S3 location where you want to write
-     * the output data. The URI must be in the same region as the API endpoint
+     * the output data. The URI must be in the same Region as the API endpoint
      * that you are calling. The location is used as the prefix for the actual
      * location of the output file.
      * </p>
@@ -60,6 +102,11 @@ public class OutputDataConfig implements Serializable {
      * contains the location of the output file, called
      * <code>output.tar.gz</code>. It is a compressed archive that contains the
      * ouput of the operation.
+     * </p>
+     * <p>
+     * For a PII entity detection job, the output file is plain text, not a
+     * compressed archive. The output file name is the same as the input file,
+     * with <code>.out</code> appended at the end.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -70,7 +117,7 @@ public class OutputDataConfig implements Serializable {
      *         When you use the <code>OutputDataConfig</code> object with
      *         asynchronous operations, you specify the Amazon S3 location where
      *         you want to write the output data. The URI must be in the same
-     *         region as the API endpoint that you are calling. The location is
+     *         Region as the API endpoint that you are calling. The location is
      *         used as the prefix for the actual location of the output file.
      *         </p>
      *         <p>
@@ -79,6 +126,11 @@ public class OutputDataConfig implements Serializable {
      *         <code>S3Uri</code> field contains the location of the output
      *         file, called <code>output.tar.gz</code>. It is a compressed
      *         archive that contains the ouput of the operation.
+     *         </p>
+     *         <p>
+     *         For a PII entity detection job, the output file is plain text,
+     *         not a compressed archive. The output file name is the same as the
+     *         input file, with <code>.out</code> appended at the end.
      *         </p>
      */
     public String getS3Uri() {
@@ -89,7 +141,7 @@ public class OutputDataConfig implements Serializable {
      * <p>
      * When you use the <code>OutputDataConfig</code> object with asynchronous
      * operations, you specify the Amazon S3 location where you want to write
-     * the output data. The URI must be in the same region as the API endpoint
+     * the output data. The URI must be in the same Region as the API endpoint
      * that you are calling. The location is used as the prefix for the actual
      * location of the output file.
      * </p>
@@ -99,6 +151,11 @@ public class OutputDataConfig implements Serializable {
      * contains the location of the output file, called
      * <code>output.tar.gz</code>. It is a compressed archive that contains the
      * ouput of the operation.
+     * </p>
+     * <p>
+     * For a PII entity detection job, the output file is plain text, not a
+     * compressed archive. The output file name is the same as the input file,
+     * with <code>.out</code> appended at the end.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -109,7 +166,7 @@ public class OutputDataConfig implements Serializable {
      *            When you use the <code>OutputDataConfig</code> object with
      *            asynchronous operations, you specify the Amazon S3 location
      *            where you want to write the output data. The URI must be in
-     *            the same region as the API endpoint that you are calling. The
+     *            the same Region as the API endpoint that you are calling. The
      *            location is used as the prefix for the actual location of the
      *            output file.
      *            </p>
@@ -120,6 +177,11 @@ public class OutputDataConfig implements Serializable {
      *            file, called <code>output.tar.gz</code>. It is a compressed
      *            archive that contains the ouput of the operation.
      *            </p>
+     *            <p>
+     *            For a PII entity detection job, the output file is plain text,
+     *            not a compressed archive. The output file name is the same as
+     *            the input file, with <code>.out</code> appended at the end.
+     *            </p>
      */
     public void setS3Uri(String s3Uri) {
         this.s3Uri = s3Uri;
@@ -129,7 +191,7 @@ public class OutputDataConfig implements Serializable {
      * <p>
      * When you use the <code>OutputDataConfig</code> object with asynchronous
      * operations, you specify the Amazon S3 location where you want to write
-     * the output data. The URI must be in the same region as the API endpoint
+     * the output data. The URI must be in the same Region as the API endpoint
      * that you are calling. The location is used as the prefix for the actual
      * location of the output file.
      * </p>
@@ -139,6 +201,11 @@ public class OutputDataConfig implements Serializable {
      * contains the location of the output file, called
      * <code>output.tar.gz</code>. It is a compressed archive that contains the
      * ouput of the operation.
+     * </p>
+     * <p>
+     * For a PII entity detection job, the output file is plain text, not a
+     * compressed archive. The output file name is the same as the input file,
+     * with <code>.out</code> appended at the end.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -152,7 +219,7 @@ public class OutputDataConfig implements Serializable {
      *            When you use the <code>OutputDataConfig</code> object with
      *            asynchronous operations, you specify the Amazon S3 location
      *            where you want to write the output data. The URI must be in
-     *            the same region as the API endpoint that you are calling. The
+     *            the same Region as the API endpoint that you are calling. The
      *            location is used as the prefix for the actual location of the
      *            output file.
      *            </p>
@@ -163,11 +230,233 @@ public class OutputDataConfig implements Serializable {
      *            file, called <code>output.tar.gz</code>. It is a compressed
      *            archive that contains the ouput of the operation.
      *            </p>
+     *            <p>
+     *            For a PII entity detection job, the output file is plain text,
+     *            not a compressed archive. The output file name is the same as
+     *            the input file, with <code>.out</code> appended at the end.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public OutputDataConfig withS3Uri(String s3Uri) {
         this.s3Uri = s3Uri;
+        return this;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt the output results from an analysis
+     * job. The KmsKeyId can be one of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * ARN of a KMS Key Alias:
+     * <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the Amazon Web Services Key Management Service (KMS) key
+     *         that Amazon Comprehend uses to encrypt the output results from an
+     *         analysis job. The KmsKeyId can be one of the following formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         ARN of a KMS Key Alias:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getKmsKeyId() {
+        return kmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt the output results from an analysis
+     * job. The KmsKeyId can be one of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * ARN of a KMS Key Alias:
+     * <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param kmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt the output results
+     *            from an analysis job. The KmsKeyId can be one of the following
+     *            formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            ARN of a KMS Key Alias:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setKmsKeyId(String kmsKeyId) {
+        this.kmsKeyId = kmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt the output results from an analysis
+     * job. The KmsKeyId can be one of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * ARN of a KMS Key Alias:
+     * <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param kmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt the output results
+     *            from an analysis job. The KmsKeyId can be one of the following
+     *            formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            KMS Key Alias: <code>"alias/ExampleAlias"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            ARN of a KMS Key Alias:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public OutputDataConfig withKmsKeyId(String kmsKeyId) {
+        this.kmsKeyId = kmsKeyId;
         return this;
     }
 
@@ -183,7 +472,9 @@ public class OutputDataConfig implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         if (getS3Uri() != null)
-            sb.append("S3Uri: " + getS3Uri());
+            sb.append("S3Uri: " + getS3Uri() + ",");
+        if (getKmsKeyId() != null)
+            sb.append("KmsKeyId: " + getKmsKeyId());
         sb.append("}");
         return sb.toString();
     }
@@ -194,6 +485,7 @@ public class OutputDataConfig implements Serializable {
         int hashCode = 1;
 
         hashCode = prime * hashCode + ((getS3Uri() == null) ? 0 : getS3Uri().hashCode());
+        hashCode = prime * hashCode + ((getKmsKeyId() == null) ? 0 : getKmsKeyId().hashCode());
         return hashCode;
     }
 
@@ -211,6 +503,10 @@ public class OutputDataConfig implements Serializable {
         if (other.getS3Uri() == null ^ this.getS3Uri() == null)
             return false;
         if (other.getS3Uri() != null && other.getS3Uri().equals(this.getS3Uri()) == false)
+            return false;
+        if (other.getKmsKeyId() == null ^ this.getKmsKeyId() == null)
+            return false;
+        if (other.getKmsKeyId() != null && other.getKmsKeyId().equals(this.getKmsKeyId()) == false)
             return false;
         return true;
     }

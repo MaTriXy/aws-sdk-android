@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -81,6 +82,11 @@ class ActionJsonMarshaller {
             jsonWriter.name("cloudwatchAlarm");
             CloudwatchAlarmActionJsonMarshaller.getInstance().marshall(cloudwatchAlarm, jsonWriter);
         }
+        if (action.getCloudwatchLogs() != null) {
+            CloudwatchLogsAction cloudwatchLogs = action.getCloudwatchLogs();
+            jsonWriter.name("cloudwatchLogs");
+            CloudwatchLogsActionJsonMarshaller.getInstance().marshall(cloudwatchLogs, jsonWriter);
+        }
         if (action.getElasticsearch() != null) {
             ElasticsearchAction elasticsearch = action.getElasticsearch();
             jsonWriter.name("elasticsearch");
@@ -101,10 +107,40 @@ class ActionJsonMarshaller {
             jsonWriter.name("iotEvents");
             IotEventsActionJsonMarshaller.getInstance().marshall(iotEvents, jsonWriter);
         }
+        if (action.getIotSiteWise() != null) {
+            IotSiteWiseAction iotSiteWise = action.getIotSiteWise();
+            jsonWriter.name("iotSiteWise");
+            IotSiteWiseActionJsonMarshaller.getInstance().marshall(iotSiteWise, jsonWriter);
+        }
         if (action.getStepFunctions() != null) {
             StepFunctionsAction stepFunctions = action.getStepFunctions();
             jsonWriter.name("stepFunctions");
             StepFunctionsActionJsonMarshaller.getInstance().marshall(stepFunctions, jsonWriter);
+        }
+        if (action.getTimestream() != null) {
+            TimestreamAction timestream = action.getTimestream();
+            jsonWriter.name("timestream");
+            TimestreamActionJsonMarshaller.getInstance().marshall(timestream, jsonWriter);
+        }
+        if (action.getHttp() != null) {
+            HttpAction http = action.getHttp();
+            jsonWriter.name("http");
+            HttpActionJsonMarshaller.getInstance().marshall(http, jsonWriter);
+        }
+        if (action.getKafka() != null) {
+            KafkaAction kafka = action.getKafka();
+            jsonWriter.name("kafka");
+            KafkaActionJsonMarshaller.getInstance().marshall(kafka, jsonWriter);
+        }
+        if (action.getOpenSearch() != null) {
+            OpenSearchAction openSearch = action.getOpenSearch();
+            jsonWriter.name("openSearch");
+            OpenSearchActionJsonMarshaller.getInstance().marshall(openSearch, jsonWriter);
+        }
+        if (action.getLocation() != null) {
+            LocationAction location = action.getLocation();
+            jsonWriter.name("location");
+            LocationActionJsonMarshaller.getInstance().marshall(location, jsonWriter);
         }
         jsonWriter.endObject();
     }

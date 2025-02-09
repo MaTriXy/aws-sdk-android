@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,13 +22,17 @@ import com.amazonaws.AmazonWebServiceRequest;
 /**
  * <p>
  * Creates a collection in an AWS Region. You can add faces to the collection
- * using the operation.
+ * using the <a>IndexFaces</a> operation.
  * </p>
  * <p>
  * For example, you might create collections, one for each of your application
  * users. A user can then index faces using the <code>IndexFaces</code>
  * operation and persist results in a specific collection. Then, a user can
  * search the collection for faces in the user-specific container.
+ * </p>
+ * <p>
+ * When you create a collection, it is associated with the latest version of the
+ * face model version.
  * </p>
  * <note>
  * <p>
@@ -37,7 +41,9 @@ import com.amazonaws.AmazonWebServiceRequest;
  * </note>
  * <p>
  * This operation requires permissions to perform the
- * <code>rekognition:CreateCollection</code> action.
+ * <code>rekognition:CreateCollection</code> action. If you want to tag your
+ * collection, you also require permission to perform the
+ * <code>rekognition:TagResource</code> operation.
  * </p>
  */
 public class CreateCollectionRequest extends AmazonWebServiceRequest implements Serializable {
@@ -51,6 +57,14 @@ public class CreateCollectionRequest extends AmazonWebServiceRequest implements 
      * <b>Pattern: </b>[a-zA-Z0-9_.\-]+<br/>
      */
     private String collectionId;
+
+    /**
+     * <p>
+     * A set of tags (key-value pairs) that you want to attach to the
+     * collection.
+     * </p>
+     */
+    private java.util.Map<String, String> tags;
 
     /**
      * Default constructor for CreateCollectionRequest object. Callers should
@@ -131,6 +145,93 @@ public class CreateCollectionRequest extends AmazonWebServiceRequest implements 
     }
 
     /**
+     * <p>
+     * A set of tags (key-value pairs) that you want to attach to the
+     * collection.
+     * </p>
+     *
+     * @return <p>
+     *         A set of tags (key-value pairs) that you want to attach to the
+     *         collection.
+     *         </p>
+     */
+    public java.util.Map<String, String> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * A set of tags (key-value pairs) that you want to attach to the
+     * collection.
+     * </p>
+     *
+     * @param tags <p>
+     *            A set of tags (key-value pairs) that you want to attach to the
+     *            collection.
+     *            </p>
+     */
+    public void setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+    }
+
+    /**
+     * <p>
+     * A set of tags (key-value pairs) that you want to attach to the
+     * collection.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            A set of tags (key-value pairs) that you want to attach to the
+     *            collection.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateCollectionRequest withTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+        return this;
+    }
+
+    /**
+     * <p>
+     * A set of tags (key-value pairs) that you want to attach to the
+     * collection.
+     * </p>
+     * <p>
+     * The method adds a new key-value pair into Tags parameter, and returns a
+     * reference to this object so that method calls can be chained together.
+     *
+     * @param key The key of the entry to be added into Tags.
+     * @param value The corresponding value of the entry to be added into Tags.
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public CreateCollectionRequest addTagsEntry(String key, String value) {
+        if (null == this.tags) {
+            this.tags = new java.util.HashMap<String, String>();
+        }
+        if (this.tags.containsKey(key))
+            throw new IllegalArgumentException("Duplicated keys (" + key.toString()
+                    + ") are provided.");
+        this.tags.put(key, value);
+        return this;
+    }
+
+    /**
+     * Removes all the entries added into Tags.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     */
+    public CreateCollectionRequest clearTagsEntries() {
+        this.tags = null;
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -142,7 +243,9 @@ public class CreateCollectionRequest extends AmazonWebServiceRequest implements 
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         if (getCollectionId() != null)
-            sb.append("CollectionId: " + getCollectionId());
+            sb.append("CollectionId: " + getCollectionId() + ",");
+        if (getTags() != null)
+            sb.append("Tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -154,6 +257,7 @@ public class CreateCollectionRequest extends AmazonWebServiceRequest implements 
 
         hashCode = prime * hashCode
                 + ((getCollectionId() == null) ? 0 : getCollectionId().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -172,6 +276,10 @@ public class CreateCollectionRequest extends AmazonWebServiceRequest implements 
             return false;
         if (other.getCollectionId() != null
                 && other.getCollectionId().equals(this.getCollectionId()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

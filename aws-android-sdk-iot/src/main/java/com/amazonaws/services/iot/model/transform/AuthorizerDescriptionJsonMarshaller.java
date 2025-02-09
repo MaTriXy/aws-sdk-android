@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.iot.model.transform;
 
 import com.amazonaws.services.iot.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -75,6 +76,16 @@ class AuthorizerDescriptionJsonMarshaller {
             java.util.Date lastModifiedDate = authorizerDescription.getLastModifiedDate();
             jsonWriter.name("lastModifiedDate");
             jsonWriter.value(lastModifiedDate);
+        }
+        if (authorizerDescription.getSigningDisabled() != null) {
+            Boolean signingDisabled = authorizerDescription.getSigningDisabled();
+            jsonWriter.name("signingDisabled");
+            jsonWriter.value(signingDisabled);
+        }
+        if (authorizerDescription.getEnableCachingForHttp() != null) {
+            Boolean enableCachingForHttp = authorizerDescription.getEnableCachingForHttp();
+            jsonWriter.name("enableCachingForHttp");
+            jsonWriter.value(enableCachingForHttp);
         }
         jsonWriter.endObject();
     }

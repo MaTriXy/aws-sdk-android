@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import android.text.TextUtils;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
 import com.amazonaws.DefaultRequest;
@@ -29,6 +31,7 @@ import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.iot.model.*;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.StringUtils;
 import com.amazonaws.util.StringInputStream;
 import com.amazonaws.util.json.AwsJsonWriter;
@@ -98,6 +101,47 @@ public class UpdateSecurityProfileRequestMarshaller implements
                     }
                 }
                 jsonWriter.endObject();
+            }
+            if (updateSecurityProfileRequest.getAdditionalMetricsToRetain() != null) {
+                java.util.List<String> additionalMetricsToRetain = updateSecurityProfileRequest
+                        .getAdditionalMetricsToRetain();
+                jsonWriter.name("additionalMetricsToRetain");
+                jsonWriter.beginArray();
+                for (String additionalMetricsToRetainItem : additionalMetricsToRetain) {
+                    if (additionalMetricsToRetainItem != null) {
+                        jsonWriter.value(additionalMetricsToRetainItem);
+                    }
+                }
+                jsonWriter.endArray();
+            }
+            if (updateSecurityProfileRequest.getAdditionalMetricsToRetainV2() != null) {
+                java.util.List<MetricToRetain> additionalMetricsToRetainV2 = updateSecurityProfileRequest
+                        .getAdditionalMetricsToRetainV2();
+                jsonWriter.name("additionalMetricsToRetainV2");
+                jsonWriter.beginArray();
+                for (MetricToRetain additionalMetricsToRetainV2Item : additionalMetricsToRetainV2) {
+                    if (additionalMetricsToRetainV2Item != null) {
+                        MetricToRetainJsonMarshaller.getInstance().marshall(
+                                additionalMetricsToRetainV2Item, jsonWriter);
+                    }
+                }
+                jsonWriter.endArray();
+            }
+            if (updateSecurityProfileRequest.getDeleteBehaviors() != null) {
+                Boolean deleteBehaviors = updateSecurityProfileRequest.getDeleteBehaviors();
+                jsonWriter.name("deleteBehaviors");
+                jsonWriter.value(deleteBehaviors);
+            }
+            if (updateSecurityProfileRequest.getDeleteAlertTargets() != null) {
+                Boolean deleteAlertTargets = updateSecurityProfileRequest.getDeleteAlertTargets();
+                jsonWriter.name("deleteAlertTargets");
+                jsonWriter.value(deleteAlertTargets);
+            }
+            if (updateSecurityProfileRequest.getDeleteAdditionalMetricsToRetain() != null) {
+                Boolean deleteAdditionalMetricsToRetain = updateSecurityProfileRequest
+                        .getDeleteAdditionalMetricsToRetain();
+                jsonWriter.name("deleteAdditionalMetricsToRetain");
+                jsonWriter.value(deleteAdditionalMetricsToRetain);
             }
 
             jsonWriter.endObject();

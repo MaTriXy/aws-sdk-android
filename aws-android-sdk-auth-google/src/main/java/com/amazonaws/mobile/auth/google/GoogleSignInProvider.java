@@ -24,9 +24,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -110,8 +110,8 @@ public class GoogleSignInProvider implements SignInProvider, SignInPermissionsHa
 
     /**
      * Constructor. Builds the Google Api Client.
-     * @param context context.
-     * @param configuration the AWS Configuration.
+     * @param activityContext context.
+     * @param awsConfig the AWS Configuration.
      */
     @Override
     public void initialize(@NonNull final Context activityContext, 

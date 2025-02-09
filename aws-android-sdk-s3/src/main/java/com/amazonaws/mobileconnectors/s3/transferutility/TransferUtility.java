@@ -15,29 +15,37 @@
 
 package com.amazonaws.mobileconnectors.s3.transferutility;
 
-import static com.amazonaws.services.s3.internal.Constants.MAXIMUM_UPLOAD_PARTS;
-import static com.amazonaws.services.s3.internal.Constants.MB;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
-import org.json.JSONObject;
 
 import com.amazonaws.AmazonWebServiceRequest;
+import com.amazonaws.logging.Log;
+import com.amazonaws.logging.LogFactory;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.regions.Region;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.S3ClientOptions;
+import com.amazonaws.services.s3.internal.Constants;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.util.VersionInfoUtils;
 
-import com.amazonaws.logging.Log;
-import com.amazonaws.logging.LogFactory;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.amazonaws.services.s3.internal.Constants.GB;
+import static com.amazonaws.services.s3.internal.Constants.MAXIMUM_UPLOAD_PARTS;
+import static com.amazonaws.services.s3.internal.Constants.MB;
 
 /**
  * The transfer utility is a high-level class for applications to upload and
@@ -118,6 +126,11 @@ public class TransferUtility {
     private static final Object LOCK = new Object();
 
     /**
+     * An Android Networking utility that gives network specific information.
+     */
+    final ConnectivityManager connManager;
+
+    /**
      * Constants that indicate the type of the transfer operation.
      */
     private static final String TRANSFER_ADD = "add_transfer";
@@ -129,7 +142,9 @@ public class TransferUtility {
      * Default minimum part size for upload parts. Anything below this will use a
      * single upload
      */
-    static final int MINIMUM_UPLOAD_PART_SIZE = 5 * MB;
+    static final int DEFAULT_MINIMUM_UPLOAD_PART_SIZE_IN_BYTES = 5 * MB;
+    static final int MINIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES = 5 * MB;
+    static final long MAXIMUM_SUPPORTED_UPLOAD_PART_SIZE_IN_BYTES = 5 * GB;
 
     private static String userAgentFromConfig = "";
 
@@ -258,6 +273,23 @@ public class TransferUtility {
                     this.s3.setRegion(Region.getRegion(tuConfig.getString("Region")));
                     this.defaultBucket = tuConfig.getString("Bucket");
 
+                    // Checks if awsconfiguration.json has local testing flag to dangerously connect to HTTP endpoint.
+                    // Defaults to false unless specified.
+                    final boolean canConnectToHTTPEndpoint = tuConfig.has(Constants.LOCAL_TESTING_FLAG_NAME) ?
+                            tuConfig.getBoolean(Constants.LOCAL_TESTING_FLAG_NAME) : false;
+
+                    // Mutates AmazonS3Client object to have local endpoint
+                    if (canConnectToHTTPEndpoint) {
+                        this.s3.setEndpoint(Constants.LOCAL_TESTING_ENDPOINT);
+                        this.s3.setS3ClientOptions(S3ClientOptions.builder()
+                                // Prevents reformatting host address to accommodate AWS service hostname pattern
+                                .setPathStyleAccess(true)
+                                // Skips data integrity check after each transfer because correct
+                                // hashing algorithm isn't yet implemented in local storage server
+                                .skipContentMd5Check(true)
+                                .build());
+                    }
+
                     TransferUtility.setUserAgentFromConfig(this.awsConfig.getUserAgent());
                 } catch (Exception e) {
                     throw new IllegalArgumentException("Failed to read S3TransferUtility "
@@ -298,6 +330,7 @@ public class TransferUtility {
         this.dbUtil = new TransferDBUtil(context.getApplicationContext());
         this.updater = TransferStatusUpdater.getInstance(context.getApplicationContext());
         TransferThreadPool.init(this.transferUtilityOptions.getTransferThreadPoolSize());
+        this.connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     /**
@@ -318,6 +351,7 @@ public class TransferUtility {
         this.dbUtil = new TransferDBUtil(context.getApplicationContext());
         this.updater = TransferStatusUpdater.getInstance(context.getApplicationContext());
         TransferThreadPool.init(this.transferUtilityOptions.getTransferThreadPoolSize());
+        this.connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     private String getDefaultBucketOrThrow() {
@@ -374,15 +408,18 @@ public class TransferUtility {
         if (file == null || file.isDirectory()) {
             throw new IllegalArgumentException("Invalid file: " + file);
         }
-        final Uri uri = dbUtil.insertSingleTransferRecord(TransferType.DOWNLOAD, bucket, key, file);
+        final Uri uri = dbUtil.insertSingleTransferRecord(TransferType.DOWNLOAD, bucket, key, file, transferUtilityOptions);
         final int recordId = Integer.parseInt(uri.getLastPathSegment());
         if (file.isFile()) {
             LOGGER.warn("Overwrite existing file: " + file);
             file.delete();
         }
 
+        // Creating the observer before the job is submitted because the listener needs to be registered
+        // with TransferStatusUpdater when the job is being submitted.
+        TransferObserver transferObserver = new TransferObserver(recordId, dbUtil, bucket, key, file, listener);
         submitTransferJob(TRANSFER_ADD, recordId);
-        return new TransferObserver(recordId, dbUtil, bucket, key, file, listener);
+        return transferObserver;
     }
 
     /**
@@ -539,12 +576,15 @@ public class TransferUtility {
         } else {
 
             final Uri uri = dbUtil.insertSingleTransferRecord(TransferType.UPLOAD, bucket, key, file, metadata,
-                    cannedAcl);
+                    cannedAcl, transferUtilityOptions);
             recordId = Integer.parseInt(uri.getLastPathSegment());
         }
 
+        // Creating the observer before the job is submitted because the listener needs to be registered
+        // with TransferStatusUpdater when the job is being submitted.
+        TransferObserver transferObserver = new TransferObserver(recordId, dbUtil, bucket, key, file, listener);
         submitTransferJob(TRANSFER_ADD, recordId);
-        return new TransferObserver(recordId, dbUtil, bucket, key, file, listener);
+        return transferObserver;
     }
 
     /**
@@ -562,6 +602,38 @@ public class TransferUtility {
     public TransferObserver upload(String key, File file, ObjectMetadata metadata, CannedAccessControlList cannedAcl,
             TransferListener listener) {
         return upload(getDefaultBucketOrThrow(), key, file, metadata, cannedAcl, listener);
+    }
+
+    /**
+     * Starts uploading the inputStream to the <b>default</b> bucket, using the given key.
+     *
+     * @param key           The key in the specified bucket by which to store the new object.
+     * @param inputStream   The input stream to upload.
+     * @return A TransferObserver used to track upload progress and state
+     */
+    public TransferObserver upload(String key, InputStream inputStream) throws IOException {
+        return upload(key, inputStream, UploadOptions.builder().build());
+    }
+
+    /**
+     * Starts uploading the inputStream to the given bucket, using the given key.
+     *
+     * @param key           The key in the specified bucket by which to store the new object.
+     * @param inputStream   The input stream to upload.
+     * @param options       An UploadOptions which hold all of the optional parameters
+     *                      i.e. bucket, metadata, cannedAcl and transferListener.
+     * @return A TransferObserver used to track upload progress and state
+     */
+    public TransferObserver upload(String key, InputStream inputStream, UploadOptions options) throws IOException {
+        File file = writeInputStreamToFile(inputStream);
+        return upload(
+                options.getBucket() != null ? options.getBucket() : getDefaultBucketOrThrow(),
+                key,
+                file,
+                options.getMetadata() != null ? options.getMetadata() : new ObjectMetadata(),
+                options.getCannedAcl(),
+                options.getTransferListener()
+        );
     }
 
     /**
@@ -701,15 +773,16 @@ public class TransferUtility {
      */
     private int createMultipartUploadRecords(String bucket, String key, File file, ObjectMetadata metadata,
             CannedAccessControlList cannedAcl) {
-        long remainingLenth = file.length();
-        double partSize = (double) remainingLenth / (double) MAXIMUM_UPLOAD_PARTS;
+        long remainingLength = file.length();
+        double partSize = (double) remainingLength / (double) MAXIMUM_UPLOAD_PARTS;
         partSize = Math.ceil(partSize);
-        final long optimalPartSize = (long) Math.max(partSize, MINIMUM_UPLOAD_PART_SIZE);
+        final long optimalPartSize = (long) Math.max(partSize,
+                transferUtilityOptions.getMinimumUploadPartSizeInBytes());
         long fileOffset = 0;
         int partNumber = 1;
 
         // the number of parts
-        final int partCount = (int) Math.ceil((double) remainingLenth / (double) optimalPartSize);
+        final int partCount = (int) Math.ceil((double) remainingLength / (double) optimalPartSize);
 
         /*
          * the size of valuesArray is partCount + 1, one for a multipart upload summary,
@@ -717,16 +790,41 @@ public class TransferUtility {
          */
         final ContentValues[] valuesArray = new ContentValues[partCount + 1];
         valuesArray[0] = dbUtil.generateContentValuesForMultiPartUpload(bucket, key, file, fileOffset, 0, "",
-                file.length(), 0, metadata, cannedAcl);
+                file.length(), 0, metadata, cannedAcl, transferUtilityOptions);
         for (int i = 1; i < partCount + 1; i++) {
-            final long bytesForPart = Math.min(optimalPartSize, remainingLenth);
+            final long bytesForPart = Math.min(optimalPartSize, remainingLength);
             valuesArray[i] = dbUtil.generateContentValuesForMultiPartUpload(bucket, key, file, fileOffset, partNumber,
-                    "", bytesForPart, remainingLenth - optimalPartSize <= 0 ? 1 : 0, metadata, cannedAcl);
+                    "", bytesForPart, remainingLength - optimalPartSize <= 0 ? 1 : 0, metadata, cannedAcl, transferUtilityOptions);
             fileOffset += optimalPartSize;
-            remainingLenth -= optimalPartSize;
+            remainingLength -= optimalPartSize;
             partNumber++;
         }
         return dbUtil.bulkInsertTransferRecords(valuesArray);
+    }
+
+    private File writeInputStreamToFile(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            throw new IllegalArgumentException("Invalid inputStream: " + inputStream);
+        }
+
+        // Saves the data as a file in the temporary directory
+        File file = File.createTempFile(TransferStatusUpdater.TEMP_FILE_PREFIX, ".tmp");
+        OutputStream outStream = new FileOutputStream(file);
+        try {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            // Keep reading until reaches the end of the stream
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
+                outStream.flush();
+            }
+        } catch (IOException ioException) {
+            file.delete();
+            throw new IOException("Error writing the inputStream into a file.", ioException);
+        } finally {
+            outStream.close();
+        }
+        return file;
     }
 
     /**
@@ -881,7 +979,7 @@ public class TransferUtility {
         }
 
         if (TRANSFER_ADD.equals(action) || TRANSFER_RESUME.equals(action)) {
-            transfer.start(s3, dbUtil, updater);
+            transfer.start(s3, dbUtil, updater, connManager);
         } else if (TRANSFER_PAUSE.equals(action)) {
             transfer.pause(s3, updater);
         } else if (TRANSFER_CANCEL.equals(action)) {
@@ -892,7 +990,10 @@ public class TransferUtility {
     }
 
     private boolean shouldUploadInMultipart(File file) {
-        return (file != null && file.length() > MINIMUM_UPLOAD_PART_SIZE);
+        return (
+                file != null &&
+                file.length() > transferUtilityOptions.getMinimumUploadPartSizeInBytes()
+        );
     }
 
     static <X extends AmazonWebServiceRequest> X appendTransferServiceUserAgentString(final X request) {

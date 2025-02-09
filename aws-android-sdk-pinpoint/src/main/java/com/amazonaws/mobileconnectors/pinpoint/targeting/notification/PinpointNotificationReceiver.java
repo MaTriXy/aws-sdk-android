@@ -1,5 +1,5 @@
 /**
- * Copyright 2016-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,48 +15,19 @@
 
 package com.amazonaws.mobileconnectors.pinpoint.targeting.notification;
 
-import java.util.HashMap;
-import java.util.Map;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 
 /**
- * The Amazon Pinpoint push notification receiver.
+ * @deprecated This class is no longer functional and will soon be removed. At one point,
+ * we required adding this receiver to the app manifest. That code block should be removed.
  */
+@Deprecated
 public class PinpointNotificationReceiver extends BroadcastReceiver {
-
-    private static volatile NotificationClient notificationClient = null;
-
-    public static void setNotificationClient(NotificationClient notificationClient) {
-        PinpointNotificationReceiver.notificationClient = notificationClient;
-    }
-
-    public static void setNotificationClient(NotificationClientBase notificationClientBase) {
-        PinpointNotificationReceiver.notificationClient = new NotificationClient(notificationClientBase);
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (notificationClient != null) {
-            final String prefix = NotificationClientBase.CAMPAIGN_PUSH_KEY_PREFIX;
-            final Map<String, String> campaignAttributes = new HashMap<String, String>();
-            campaignAttributes.put(NotificationClientBase.CAMPAIGN_ID_ATTRIBUTE_KEY,
-                                   intent.getStringExtra(prefix.concat(NotificationClientBase.CAMPAIGN_ID_ATTRIBUTE_KEY)));
-            campaignAttributes
-                .put(NotificationClientBase.CAMPAIGN_TREATMENT_ID_ATTRIBUTE_KEY,
-                     intent.getStringExtra(prefix.concat(NotificationClientBase.CAMPAIGN_TREATMENT_ID_ATTRIBUTE_KEY)));
-            campaignAttributes
-                .put(NotificationClientBase.CAMPAIGN_ACTIVITY_ID_ATTRIBUTE_KEY,
-                     intent.getStringExtra(prefix.concat(NotificationClientBase.CAMPAIGN_ACTIVITY_ID_ATTRIBUTE_KEY)));
-            notificationClient.handleNotificationOpen(campaignAttributes,
-                                                      intent.getExtras());
-        } else {
-            final PackageManager pm = context.getPackageManager();
-            final Intent launchIntent = pm.getLaunchIntentForPackage(intent.getPackage());
-            launchIntent.putExtras(intent.getExtras());
-            context.startActivity(launchIntent);
-        }
+        // do nothing
     }
 }

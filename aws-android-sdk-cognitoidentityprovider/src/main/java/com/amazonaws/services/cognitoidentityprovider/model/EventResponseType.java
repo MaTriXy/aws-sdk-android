@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,8 +23,9 @@ import java.util.Map;
  */
 public enum EventResponseType {
 
-    Success("Success"),
-    Failure("Failure");
+    Pass("Pass"),
+    Fail("Fail"),
+    InProgress("InProgress");
 
     private String value;
 
@@ -40,8 +41,9 @@ public enum EventResponseType {
     private static final Map<String, EventResponseType> enumMap;
     static {
         enumMap = new HashMap<String, EventResponseType>();
-        enumMap.put("Success", Success);
-        enumMap.put("Failure", Failure);
+        enumMap.put("Pass", Pass);
+        enumMap.put("Fail", Fail);
+        enumMap.put("InProgress", InProgress);
     }
 
     /**

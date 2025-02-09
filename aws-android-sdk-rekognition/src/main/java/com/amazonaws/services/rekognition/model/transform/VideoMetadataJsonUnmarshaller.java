@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -53,8 +53,8 @@ class VideoMetadataJsonUnmarshaller implements Unmarshaller<VideoMetadata, JsonU
             } else if (name.equals("FrameWidth")) {
                 videoMetadata.setFrameWidth(LongJsonUnmarshaller.getInstance()
                         .unmarshall(context));
-            } else if (name.equals("Rotation")) {
-                videoMetadata.setRotation(IntegerJsonUnmarshaller.getInstance()
+            } else if (name.equals("ColorRange")) {
+                videoMetadata.setColorRange(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

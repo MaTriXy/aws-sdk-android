@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ import java.io.Serializable;
 public class ListKeyPoliciesResult implements Serializable {
     /**
      * <p>
-     * A list of key policy names. Currently, there is only one key policy per
-     * CMK and it is always named <code>default</code>.
+     * A list of key policy names. The only valid value is <code>default</code>.
      * </p>
      */
     private java.util.List<String> policyNames = new java.util.ArrayList<String>();
@@ -51,13 +50,12 @@ public class ListKeyPoliciesResult implements Serializable {
 
     /**
      * <p>
-     * A list of key policy names. Currently, there is only one key policy per
-     * CMK and it is always named <code>default</code>.
+     * A list of key policy names. The only valid value is <code>default</code>.
      * </p>
      *
      * @return <p>
-     *         A list of key policy names. Currently, there is only one key
-     *         policy per CMK and it is always named <code>default</code>.
+     *         A list of key policy names. The only valid value is
+     *         <code>default</code>.
      *         </p>
      */
     public java.util.List<String> getPolicyNames() {
@@ -66,13 +64,12 @@ public class ListKeyPoliciesResult implements Serializable {
 
     /**
      * <p>
-     * A list of key policy names. Currently, there is only one key policy per
-     * CMK and it is always named <code>default</code>.
+     * A list of key policy names. The only valid value is <code>default</code>.
      * </p>
      *
      * @param policyNames <p>
-     *            A list of key policy names. Currently, there is only one key
-     *            policy per CMK and it is always named <code>default</code>.
+     *            A list of key policy names. The only valid value is
+     *            <code>default</code>.
      *            </p>
      */
     public void setPolicyNames(java.util.Collection<String> policyNames) {
@@ -86,16 +83,15 @@ public class ListKeyPoliciesResult implements Serializable {
 
     /**
      * <p>
-     * A list of key policy names. Currently, there is only one key policy per
-     * CMK and it is always named <code>default</code>.
+     * A list of key policy names. The only valid value is <code>default</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param policyNames <p>
-     *            A list of key policy names. Currently, there is only one key
-     *            policy per CMK and it is always named <code>default</code>.
+     *            A list of key policy names. The only valid value is
+     *            <code>default</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -112,16 +108,15 @@ public class ListKeyPoliciesResult implements Serializable {
 
     /**
      * <p>
-     * A list of key policy names. Currently, there is only one key policy per
-     * CMK and it is always named <code>default</code>.
+     * A list of key policy names. The only valid value is <code>default</code>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param policyNames <p>
-     *            A list of key policy names. Currently, there is only one key
-     *            policy per CMK and it is always named <code>default</code>.
+     *            A list of key policy names. The only valid value is
+     *            <code>default</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

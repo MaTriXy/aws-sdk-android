@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,11 +19,12 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Information about a person whose face matches a face(s) in a Amazon
+ * Information about a person whose face matches a face(s) in an Amazon
  * Rekognition collection. Includes information about the faces in the Amazon
- * Rekognition collection (), information about the person (<a>PersonDetail</a>)
- * and the timestamp for when the person was detected in a video. An array of
- * <code>PersonMatch</code> objects is returned by .
+ * Rekognition collection (<a>FaceMatch</a>), information about the person
+ * (<a>PersonDetail</a>), and the time stamp for when the person was detected in
+ * a video. An array of <code>PersonMatch</code> objects is returned by
+ * <a>GetFaceSearch</a>.
  * </p>
  */
 public class PersonMatch implements Serializable {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,7 +25,9 @@ public enum EventType {
 
     SignIn("SignIn"),
     SignUp("SignUp"),
-    ForgotPassword("ForgotPassword");
+    ForgotPassword("ForgotPassword"),
+    PasswordChange("PasswordChange"),
+    ResendCode("ResendCode");
 
     private String value;
 
@@ -44,6 +46,8 @@ public enum EventType {
         enumMap.put("SignIn", SignIn);
         enumMap.put("SignUp", SignUp);
         enumMap.put("ForgotPassword", ForgotPassword);
+        enumMap.put("PasswordChange", PasswordChange);
+        enumMap.put("ResendCode", ResendCode);
     }
 
     /**

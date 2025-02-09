@@ -20,13 +20,11 @@ package com.amazonaws.kinesisvideo.internal.producer.jni;
 import com.amazonaws.kinesisvideo.common.logging.Log;
 import com.amazonaws.kinesisvideo.common.preconditions.Preconditions;
 
-import android.support.annotation.NonNull;
-//import javax.annotation.concurrent.ThreadSafe;
+import androidx.annotation.NonNull;
 
 /**
  * Static helper for loading libraries
  */
-//@ThreadSafe
 class NativeLibraryLoader {
 
     private final Log mLog;

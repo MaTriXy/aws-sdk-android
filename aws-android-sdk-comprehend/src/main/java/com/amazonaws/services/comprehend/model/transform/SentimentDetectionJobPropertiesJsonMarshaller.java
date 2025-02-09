@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -30,6 +31,11 @@ class SentimentDetectionJobPropertiesJsonMarshaller {
             String jobId = sentimentDetectionJobProperties.getJobId();
             jsonWriter.name("JobId");
             jsonWriter.value(jobId);
+        }
+        if (sentimentDetectionJobProperties.getJobArn() != null) {
+            String jobArn = sentimentDetectionJobProperties.getJobArn();
+            jsonWriter.name("JobArn");
+            jsonWriter.value(jobArn);
         }
         if (sentimentDetectionJobProperties.getJobName() != null) {
             String jobName = sentimentDetectionJobProperties.getJobName();
@@ -76,6 +82,16 @@ class SentimentDetectionJobPropertiesJsonMarshaller {
             String dataAccessRoleArn = sentimentDetectionJobProperties.getDataAccessRoleArn();
             jsonWriter.name("DataAccessRoleArn");
             jsonWriter.value(dataAccessRoleArn);
+        }
+        if (sentimentDetectionJobProperties.getVolumeKmsKeyId() != null) {
+            String volumeKmsKeyId = sentimentDetectionJobProperties.getVolumeKmsKeyId();
+            jsonWriter.name("VolumeKmsKeyId");
+            jsonWriter.value(volumeKmsKeyId);
+        }
+        if (sentimentDetectionJobProperties.getVpcConfig() != null) {
+            VpcConfig vpcConfig = sentimentDetectionJobProperties.getVpcConfig();
+            jsonWriter.name("VpcConfig");
+            VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
         }
         jsonWriter.endObject();
     }

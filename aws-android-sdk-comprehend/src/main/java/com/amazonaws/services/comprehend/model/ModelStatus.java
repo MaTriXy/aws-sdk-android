@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -26,8 +26,11 @@ public enum ModelStatus {
     SUBMITTED("SUBMITTED"),
     TRAINING("TRAINING"),
     DELETING("DELETING"),
+    STOP_REQUESTED("STOP_REQUESTED"),
+    STOPPED("STOPPED"),
     IN_ERROR("IN_ERROR"),
-    TRAINED("TRAINED");
+    TRAINED("TRAINED"),
+    TRAINED_WITH_WARNING("TRAINED_WITH_WARNING");
 
     private String value;
 
@@ -46,8 +49,11 @@ public enum ModelStatus {
         enumMap.put("SUBMITTED", SUBMITTED);
         enumMap.put("TRAINING", TRAINING);
         enumMap.put("DELETING", DELETING);
+        enumMap.put("STOP_REQUESTED", STOP_REQUESTED);
+        enumMap.put("STOPPED", STOPPED);
         enumMap.put("IN_ERROR", IN_ERROR);
         enumMap.put("TRAINED", TRAINED);
+        enumMap.put("TRAINED_WITH_WARNING", TRAINED_WITH_WARNING);
     }
 
     /**

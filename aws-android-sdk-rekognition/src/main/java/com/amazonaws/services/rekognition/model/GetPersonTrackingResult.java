@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -59,30 +59,48 @@ public class GetPersonTrackingResult implements Serializable {
 
     /**
      * <p>
-     * An array of the persons detected in the video and the times they are
-     * tracked throughout the video. An array element will exist for each time
-     * the person is tracked.
+     * An array of the persons detected in the video and the time(s) their path
+     * was tracked throughout the video. An array element will exist for each
+     * time a person's path is tracked.
      * </p>
      */
     private java.util.List<PersonDetection> persons;
 
     /**
-     * The new value for the billableDurationSeconds property for this object.
+     * <p>
+     * Job identifier for the person tracking operation for which you want to
+     * obtain results. The job identifer is returned by an initial call to
+     * StartPersonTracking.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Length: </b>1 - 64<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      */
-    private Integer billableDurationSeconds;
+    private String jobId;
 
     /**
-     * The new value for the errorCode property for this object.
+     * <p>
+     * Video file stored in an Amazon S3 bucket. Amazon Rekognition video start
+     * operations such as <a>StartLabelDetection</a> use <code>Video</code> to
+     * specify a video for analysis. The supported file formats are .mp4, .mov
+     * and .avi.
+     * </p>
      */
-    private String errorCode;
+    private Video video;
 
     /**
-     * The new value for the warnings property for this object.
+     * <p>
+     * A job identifier specified in the call to StartCelebrityRecognition and
+     * returned in the job completion notification sent to your Amazon Simple
+     * Notification Service topic.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      */
-    private java.util.List<Warning> warnings;
+    private String jobTag;
 
     /**
      * <p>
@@ -359,15 +377,15 @@ public class GetPersonTrackingResult implements Serializable {
 
     /**
      * <p>
-     * An array of the persons detected in the video and the times they are
-     * tracked throughout the video. An array element will exist for each time
-     * the person is tracked.
+     * An array of the persons detected in the video and the time(s) their path
+     * was tracked throughout the video. An array element will exist for each
+     * time a person's path is tracked.
      * </p>
      *
      * @return <p>
-     *         An array of the persons detected in the video and the times they
-     *         are tracked throughout the video. An array element will exist for
-     *         each time the person is tracked.
+     *         An array of the persons detected in the video and the time(s)
+     *         their path was tracked throughout the video. An array element
+     *         will exist for each time a person's path is tracked.
      *         </p>
      */
     public java.util.List<PersonDetection> getPersons() {
@@ -376,15 +394,15 @@ public class GetPersonTrackingResult implements Serializable {
 
     /**
      * <p>
-     * An array of the persons detected in the video and the times they are
-     * tracked throughout the video. An array element will exist for each time
-     * the person is tracked.
+     * An array of the persons detected in the video and the time(s) their path
+     * was tracked throughout the video. An array element will exist for each
+     * time a person's path is tracked.
      * </p>
      *
      * @param persons <p>
-     *            An array of the persons detected in the video and the times
-     *            they are tracked throughout the video. An array element will
-     *            exist for each time the person is tracked.
+     *            An array of the persons detected in the video and the time(s)
+     *            their path was tracked throughout the video. An array element
+     *            will exist for each time a person's path is tracked.
      *            </p>
      */
     public void setPersons(java.util.Collection<PersonDetection> persons) {
@@ -398,18 +416,18 @@ public class GetPersonTrackingResult implements Serializable {
 
     /**
      * <p>
-     * An array of the persons detected in the video and the times they are
-     * tracked throughout the video. An array element will exist for each time
-     * the person is tracked.
+     * An array of the persons detected in the video and the time(s) their path
+     * was tracked throughout the video. An array element will exist for each
+     * time a person's path is tracked.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param persons <p>
-     *            An array of the persons detected in the video and the times
-     *            they are tracked throughout the video. An array element will
-     *            exist for each time the person is tracked.
+     *            An array of the persons detected in the video and the time(s)
+     *            their path was tracked throughout the video. An array element
+     *            will exist for each time a person's path is tracked.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -426,18 +444,18 @@ public class GetPersonTrackingResult implements Serializable {
 
     /**
      * <p>
-     * An array of the persons detected in the video and the times they are
-     * tracked throughout the video. An array element will exist for each time
-     * the person is tracked.
+     * An array of the persons detected in the video and the time(s) their path
+     * was tracked throughout the video. An array element will exist for each
+     * time a person's path is tracked.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param persons <p>
-     *            An array of the persons detected in the video and the times
-     *            they are tracked throughout the video. An array element will
-     *            exist for each time the person is tracked.
+     *            An array of the persons detected in the video and the time(s)
+     *            their path was tracked throughout the video. An array element
+     *            will exist for each time a person's path is tracked.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -448,141 +466,206 @@ public class GetPersonTrackingResult implements Serializable {
     }
 
     /**
-     * Returns the value of the billableDurationSeconds property for this
-     * object.
+     * <p>
+     * Job identifier for the person tracking operation for which you want to
+     * obtain results. The job identifer is returned by an initial call to
+     * StartPersonTracking.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Length: </b>1 - 64<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      *
-     * @return The value of the billableDurationSeconds property for this
-     *         object.
+     * @return <p>
+     *         Job identifier for the person tracking operation for which you
+     *         want to obtain results. The job identifer is returned by an
+     *         initial call to StartPersonTracking.
+     *         </p>
      */
-    public Integer getBillableDurationSeconds() {
-        return billableDurationSeconds;
+    public String getJobId() {
+        return jobId;
     }
 
     /**
-     * Sets the value of billableDurationSeconds
+     * <p>
+     * Job identifier for the person tracking operation for which you want to
+     * obtain results. The job identifer is returned by an initial call to
+     * StartPersonTracking.
+     * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Length: </b>1 - 64<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      *
-     * @param billableDurationSeconds The new value for the
-     *            billableDurationSeconds property for this object.
+     * @param jobId <p>
+     *            Job identifier for the person tracking operation for which you
+     *            want to obtain results. The job identifer is returned by an
+     *            initial call to StartPersonTracking.
+     *            </p>
      */
-    public void setBillableDurationSeconds(Integer billableDurationSeconds) {
-        this.billableDurationSeconds = billableDurationSeconds;
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
     }
 
     /**
-     * Sets the value of the billableDurationSeconds property for this object.
+     * <p>
+     * Job identifier for the person tracking operation for which you want to
+     * obtain results. The job identifer is returned by an initial call to
+     * StartPersonTracking.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Range: </b>0 - <br/>
+     * <b>Length: </b>1 - 64<br/>
+     * <b>Pattern: </b>^[a-zA-Z0-9-_]+$<br/>
      *
-     * @param billableDurationSeconds The new value for the
-     *            billableDurationSeconds property for this object.
+     * @param jobId <p>
+     *            Job identifier for the person tracking operation for which you
+     *            want to obtain results. The job identifer is returned by an
+     *            initial call to StartPersonTracking.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
-    public GetPersonTrackingResult withBillableDurationSeconds(Integer billableDurationSeconds) {
-        this.billableDurationSeconds = billableDurationSeconds;
+    public GetPersonTrackingResult withJobId(String jobId) {
+        this.jobId = jobId;
         return this;
     }
 
     /**
-     * Returns the value of the errorCode property for this object.
+     * <p>
+     * Video file stored in an Amazon S3 bucket. Amazon Rekognition video start
+     * operations such as <a>StartLabelDetection</a> use <code>Video</code> to
+     * specify a video for analysis. The supported file formats are .mp4, .mov
+     * and .avi.
+     * </p>
      *
-     * @return The value of the errorCode property for this object.
+     * @return <p>
+     *         Video file stored in an Amazon S3 bucket. Amazon Rekognition
+     *         video start operations such as <a>StartLabelDetection</a> use
+     *         <code>Video</code> to specify a video for analysis. The supported
+     *         file formats are .mp4, .mov and .avi.
+     *         </p>
      */
-    public String getErrorCode() {
-        return errorCode;
+    public Video getVideo() {
+        return video;
     }
 
     /**
-     * Sets the value of errorCode
+     * <p>
+     * Video file stored in an Amazon S3 bucket. Amazon Rekognition video start
+     * operations such as <a>StartLabelDetection</a> use <code>Video</code> to
+     * specify a video for analysis. The supported file formats are .mp4, .mov
+     * and .avi.
+     * </p>
      *
-     * @param errorCode The new value for the errorCode property for this
-     *            object.
+     * @param video <p>
+     *            Video file stored in an Amazon S3 bucket. Amazon Rekognition
+     *            video start operations such as <a>StartLabelDetection</a> use
+     *            <code>Video</code> to specify a video for analysis. The
+     *            supported file formats are .mp4, .mov and .avi.
+     *            </p>
      */
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public void setVideo(Video video) {
+        this.video = video;
     }
 
     /**
-     * Sets the value of the errorCode property for this object.
+     * <p>
+     * Video file stored in an Amazon S3 bucket. Amazon Rekognition video start
+     * operations such as <a>StartLabelDetection</a> use <code>Video</code> to
+     * specify a video for analysis. The supported file formats are .mp4, .mov
+     * and .avi.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
-     * @param errorCode The new value for the errorCode property for this
-     *            object.
+     * @param video <p>
+     *            Video file stored in an Amazon S3 bucket. Amazon Rekognition
+     *            video start operations such as <a>StartLabelDetection</a> use
+     *            <code>Video</code> to specify a video for analysis. The
+     *            supported file formats are .mp4, .mov and .avi.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
-    public GetPersonTrackingResult withErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public GetPersonTrackingResult withVideo(Video video) {
+        this.video = video;
         return this;
     }
 
     /**
-     * Returns the value of the warnings property for this object.
+     * <p>
+     * A job identifier specified in the call to StartCelebrityRecognition and
+     * returned in the job completion notification sent to your Amazon Simple
+     * Notification Service topic.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
-     * @return The value of the warnings property for this object.
+     * @return <p>
+     *         A job identifier specified in the call to
+     *         StartCelebrityRecognition and returned in the job completion
+     *         notification sent to your Amazon Simple Notification Service
+     *         topic.
+     *         </p>
      */
-    public java.util.List<Warning> getWarnings() {
-        return warnings;
+    public String getJobTag() {
+        return jobTag;
     }
 
     /**
-     * Sets the value of warnings
+     * <p>
+     * A job identifier specified in the call to StartCelebrityRecognition and
+     * returned in the job completion notification sent to your Amazon Simple
+     * Notification Service topic.
+     * </p>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
-     * @param warnings The new value for the warnings property for this object.
+     * @param jobTag <p>
+     *            A job identifier specified in the call to
+     *            StartCelebrityRecognition and returned in the job completion
+     *            notification sent to your Amazon Simple Notification Service
+     *            topic.
+     *            </p>
      */
-    public void setWarnings(java.util.Collection<Warning> warnings) {
-        if (warnings == null) {
-            this.warnings = null;
-            return;
-        }
-
-        this.warnings = new java.util.ArrayList<Warning>(warnings);
+    public void setJobTag(String jobTag) {
+        this.jobTag = jobTag;
     }
 
     /**
-     * Sets the value of the warnings property for this object.
+     * <p>
+     * A job identifier specified in the call to StartCelebrityRecognition and
+     * returned in the job completion notification sent to your Amazon Simple
+     * Notification Service topic.
+     * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
-     *
-     * @param warnings The new value for the warnings property for this object.
-     * @return A reference to this updated object so that method calls can be
-     *         chained together.
-     */
-    public GetPersonTrackingResult withWarnings(Warning... warnings) {
-        if (getWarnings() == null) {
-            this.warnings = new java.util.ArrayList<Warning>(warnings.length);
-        }
-        for (Warning value : warnings) {
-            this.warnings.add(value);
-        }
-        return this;
-    }
-
-    /**
-     * Sets the value of the warnings property for this object.
      * <p>
-     * Returns a reference to this object so that method calls can be chained
-     * together.
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b>1 - 1024<br/>
+     * <b>Pattern: </b>[a-zA-Z0-9_.\-:+=\/]+<br/>
      *
-     * @param warnings The new value for the warnings property for this object.
+     * @param jobTag <p>
+     *            A job identifier specified in the call to
+     *            StartCelebrityRecognition and returned in the job completion
+     *            notification sent to your Amazon Simple Notification Service
+     *            topic.
+     *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
-    public GetPersonTrackingResult withWarnings(java.util.Collection<Warning> warnings) {
-        setWarnings(warnings);
+    public GetPersonTrackingResult withJobTag(String jobTag) {
+        this.jobTag = jobTag;
         return this;
     }
 
@@ -607,12 +690,12 @@ public class GetPersonTrackingResult implements Serializable {
             sb.append("NextToken: " + getNextToken() + ",");
         if (getPersons() != null)
             sb.append("Persons: " + getPersons() + ",");
-        if (getBillableDurationSeconds() != null)
-            sb.append("BillableDurationSeconds: " + getBillableDurationSeconds() + ",");
-        if (getErrorCode() != null)
-            sb.append("ErrorCode: " + getErrorCode() + ",");
-        if (getWarnings() != null)
-            sb.append("Warnings: " + getWarnings());
+        if (getJobId() != null)
+            sb.append("JobId: " + getJobId() + ",");
+        if (getVideo() != null)
+            sb.append("Video: " + getVideo() + ",");
+        if (getJobTag() != null)
+            sb.append("JobTag: " + getJobTag());
         sb.append("}");
         return sb.toString();
     }
@@ -629,12 +712,9 @@ public class GetPersonTrackingResult implements Serializable {
                 + ((getVideoMetadata() == null) ? 0 : getVideoMetadata().hashCode());
         hashCode = prime * hashCode + ((getNextToken() == null) ? 0 : getNextToken().hashCode());
         hashCode = prime * hashCode + ((getPersons() == null) ? 0 : getPersons().hashCode());
-        hashCode = prime
-                * hashCode
-                + ((getBillableDurationSeconds() == null) ? 0 : getBillableDurationSeconds()
-                        .hashCode());
-        hashCode = prime * hashCode + ((getErrorCode() == null) ? 0 : getErrorCode().hashCode());
-        hashCode = prime * hashCode + ((getWarnings() == null) ? 0 : getWarnings().hashCode());
+        hashCode = prime * hashCode + ((getJobId() == null) ? 0 : getJobId().hashCode());
+        hashCode = prime * hashCode + ((getVideo() == null) ? 0 : getVideo().hashCode());
+        hashCode = prime * hashCode + ((getJobTag() == null) ? 0 : getJobTag().hashCode());
         return hashCode;
     }
 
@@ -673,19 +753,17 @@ public class GetPersonTrackingResult implements Serializable {
             return false;
         if (other.getPersons() != null && other.getPersons().equals(this.getPersons()) == false)
             return false;
-        if (other.getBillableDurationSeconds() == null ^ this.getBillableDurationSeconds() == null)
+        if (other.getJobId() == null ^ this.getJobId() == null)
             return false;
-        if (other.getBillableDurationSeconds() != null
-                && other.getBillableDurationSeconds().equals(this.getBillableDurationSeconds()) == false)
+        if (other.getJobId() != null && other.getJobId().equals(this.getJobId()) == false)
             return false;
-        if (other.getErrorCode() == null ^ this.getErrorCode() == null)
+        if (other.getVideo() == null ^ this.getVideo() == null)
             return false;
-        if (other.getErrorCode() != null
-                && other.getErrorCode().equals(this.getErrorCode()) == false)
+        if (other.getVideo() != null && other.getVideo().equals(this.getVideo()) == false)
             return false;
-        if (other.getWarnings() == null ^ this.getWarnings() == null)
+        if (other.getJobTag() == null ^ this.getJobTag() == null)
             return false;
-        if (other.getWarnings() != null && other.getWarnings().equals(this.getWarnings()) == false)
+        if (other.getJobTag() != null && other.getJobTag().equals(this.getJobTag()) == false)
             return false;
         return true;
     }

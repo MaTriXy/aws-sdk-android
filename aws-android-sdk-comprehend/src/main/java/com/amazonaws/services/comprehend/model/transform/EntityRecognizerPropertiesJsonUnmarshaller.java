@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -75,6 +75,29 @@ class EntityRecognizerPropertiesJsonUnmarshaller implements
                 entityRecognizerProperties.setDataAccessRoleArn(StringJsonUnmarshaller
                         .getInstance()
                         .unmarshall(context));
+            } else if (name.equals("VolumeKmsKeyId")) {
+                entityRecognizerProperties.setVolumeKmsKeyId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VpcConfig")) {
+                entityRecognizerProperties.setVpcConfig(VpcConfigJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("ModelKmsKeyId")) {
+                entityRecognizerProperties.setModelKmsKeyId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("VersionName")) {
+                entityRecognizerProperties.setVersionName(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("SourceModelArn")) {
+                entityRecognizerProperties.setSourceModelArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("FlywheelArn")) {
+                entityRecognizerProperties.setFlywheelArn(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("OutputDataConfig")) {
+                entityRecognizerProperties
+                        .setOutputDataConfig(EntityRecognizerOutputDataConfigJsonUnmarshaller
+                                .getInstance()
+                                .unmarshall(context));
             } else {
                 reader.skipValue();
             }

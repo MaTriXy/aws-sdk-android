@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,12 +43,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Access Management
-     * (IAM) role that grants Amazon Comprehend read access to your input data.
-     * For more information, see <a href=
-     * "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     * >https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing
-     * -permissions.html#auth-role-permissions</a>.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     * >Role-based permissions</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -70,12 +69,13 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      */
     private String languageCode;
 
@@ -90,6 +90,54 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
      * <b>Pattern: </b>^[a-zA-Z0-9-]+$<br/>
      */
     private String clientRequestToken;
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     */
+    private String volumeKmsKeyId;
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your key phrases
+     * detection job. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     */
+    private VpcConfig vpcConfig;
+
+    /**
+     * <p>
+     * Tags to associate with the key phrases detection job. A tag is a
+     * key-value pair that adds metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     */
+    private java.util.List<Tag> tags;
 
     /**
      * <p>
@@ -185,12 +233,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Access Management
-     * (IAM) role that grants Amazon Comprehend read access to your input data.
-     * For more information, see <a href=
-     * "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     * >https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing
-     * -permissions.html#auth-role-permissions</a>.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     * >Role-based permissions</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -198,12 +245,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @return <p>
-     *         The Amazon Resource Name (ARN) of the AWS Identity and Access
-     *         Management (IAM) role that grants Amazon Comprehend read access
-     *         to your input data. For more information, see <a href=
-     *         "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     *         >https://docs.aws.amazon.com/comprehend/latest/dg/access-control-
-     *         managing-permissions.html#auth-role-permissions</a>.
+     *         The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     *         Comprehend read access to your input data. For more information,
+     *         see <a href=
+     *         "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     *         >Role-based permissions</a>.
      *         </p>
      */
     public String getDataAccessRoleArn() {
@@ -212,12 +258,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Access Management
-     * (IAM) role that grants Amazon Comprehend read access to your input data.
-     * For more information, see <a href=
-     * "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     * >https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing
-     * -permissions.html#auth-role-permissions</a>.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     * >Role-based permissions</a>.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -225,12 +270,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and Access
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data. For more information, see <a href=
-     *            "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     *            >https://docs.aws.amazon.com/comprehend/latest/dg/access-
-     *            control-managing-permissions.html#auth-role-permissions</a>.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data. For more
+     *            information, see <a href=
+     *            "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     *            >Role-based permissions</a>.
      *            </p>
      */
     public void setDataAccessRoleArn(String dataAccessRoleArn) {
@@ -239,12 +283,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The Amazon Resource Name (ARN) of the AWS Identity and Access Management
-     * (IAM) role that grants Amazon Comprehend read access to your input data.
-     * For more information, see <a href=
-     * "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     * >https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing
-     * -permissions.html#auth-role-permissions</a>.
+     * The Amazon Resource Name (ARN) of the IAM role that grants Amazon
+     * Comprehend read access to your input data. For more information, see <a
+     * href=
+     * "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     * >Role-based permissions</a>.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -255,12 +298,11 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
      * <b>Pattern: </b>arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+<br/>
      *
      * @param dataAccessRoleArn <p>
-     *            The Amazon Resource Name (ARN) of the AWS Identity and Access
-     *            Management (IAM) role that grants Amazon Comprehend read
-     *            access to your input data. For more information, see <a href=
-     *            "https://docs.aws.amazon.com/comprehend/latest/dg/access-control-managing-permissions.html#auth-role-permissions"
-     *            >https://docs.aws.amazon.com/comprehend/latest/dg/access-
-     *            control-managing-permissions.html#auth-role-permissions</a>.
+     *            The Amazon Resource Name (ARN) of the IAM role that grants
+     *            Amazon Comprehend read access to your input data. For more
+     *            information, see <a href=
+     *            "https://docs.aws.amazon.com/comprehend/latest/dg/security_iam_id-based-policy-examples.html#auth-role-permissions"
+     *            >Role-based permissions</a>.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -329,17 +371,18 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @return <p>
-     *         The language of the input documents. You can specify English
-     *         ("en") or Spanish ("es"). All documents must be in the same
-     *         language.
+     *         The language of the input documents. You can specify any of the
+     *         primary languages supported by Amazon Comprehend. All documents
+     *         must be in the same language.
      *         </p>
      * @see LanguageCode
      */
@@ -349,17 +392,18 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @see LanguageCode
      */
@@ -369,20 +413,21 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -395,17 +440,18 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @see LanguageCode
      */
@@ -415,20 +461,21 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
 
     /**
      * <p>
-     * The language of the input documents. You can specify English ("en") or
-     * Spanish ("es"). All documents must be in the same language.
+     * The language of the input documents. You can specify any of the primary
+     * languages supported by Amazon Comprehend. All documents must be in the
+     * same language.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Allowed Values: </b>en, es, fr, de, it, pt
+     * <b>Allowed Values: </b>en, es, fr, de, it, pt, ar, hi, ja, ko, zh, zh-TW
      *
      * @param languageCode <p>
-     *            The language of the input documents. You can specify English
-     *            ("en") or Spanish ("es"). All documents must be in the same
-     *            language.
+     *            The language of the input documents. You can specify any of
+     *            the primary languages supported by Amazon Comprehend. All
+     *            documents must be in the same language.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -503,6 +550,335 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
     }
 
     /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @return <p>
+     *         ID for the Amazon Web Services Key Management Service (KMS) key
+     *         that Amazon Comprehend uses to encrypt data on the storage volume
+     *         attached to the ML compute instance(s) that process the analysis
+     *         job. The VolumeKmsKeyId can be either of the following formats:
+     *         </p>
+     *         <ul>
+     *         <li>
+     *         <p>
+     *         KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         <li>
+     *         <p>
+     *         Amazon Resource Name (ARN) of a KMS Key:
+     *         <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *         </p>
+     *         </li>
+     *         </ul>
+     */
+    public String getVolumeKmsKeyId() {
+        return volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     */
+    public void setVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+    }
+
+    /**
+     * <p>
+     * ID for the Amazon Web Services Key Management Service (KMS) key that
+     * Amazon Comprehend uses to encrypt data on the storage volume attached to
+     * the ML compute instance(s) that process the analysis job. The
+     * VolumeKmsKeyId can be either of the following formats:
+     * </p>
+     * <ul>
+     * <li>
+     * <p>
+     * KMS Key ID: <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * <li>
+     * <p>
+     * Amazon Resource Name (ARN) of a KMS Key:
+     * <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     * </p>
+     * </li>
+     * </ul>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     * <p>
+     * <b>Constraints:</b><br/>
+     * <b>Length: </b> - 2048<br/>
+     * <b>Pattern: </b>^\p{ASCII}+$<br/>
+     *
+     * @param volumeKmsKeyId <p>
+     *            ID for the Amazon Web Services Key Management Service (KMS)
+     *            key that Amazon Comprehend uses to encrypt data on the storage
+     *            volume attached to the ML compute instance(s) that process the
+     *            analysis job. The VolumeKmsKeyId can be either of the
+     *            following formats:
+     *            </p>
+     *            <ul>
+     *            <li>
+     *            <p>
+     *            KMS Key ID:
+     *            <code>"1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            <li>
+     *            <p>
+     *            Amazon Resource Name (ARN) of a KMS Key:
+     *            <code>"arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"</code>
+     *            </p>
+     *            </li>
+     *            </ul>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartKeyPhrasesDetectionJobRequest withVolumeKmsKeyId(String volumeKmsKeyId) {
+        this.volumeKmsKeyId = volumeKmsKeyId;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your key phrases
+     * detection job. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @return <p>
+     *         Configuration parameters for an optional private Virtual Private
+     *         Cloud (VPC) containing the resources you are using for your key
+     *         phrases detection job. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *         >Amazon VPC</a>.
+     *         </p>
+     */
+    public VpcConfig getVpcConfig() {
+        return vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your key phrases
+     * detection job. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for an optional private Virtual
+     *            Private Cloud (VPC) containing the resources you are using for
+     *            your key phrases detection job. For more information, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     */
+    public void setVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+    }
+
+    /**
+     * <p>
+     * Configuration parameters for an optional private Virtual Private Cloud
+     * (VPC) containing the resources you are using for your key phrases
+     * detection job. For more information, see <a href=
+     * "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     * >Amazon VPC</a>.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param vpcConfig <p>
+     *            Configuration parameters for an optional private Virtual
+     *            Private Cloud (VPC) containing the resources you are using for
+     *            your key phrases detection job. For more information, see <a
+     *            href=
+     *            "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+     *            >Amazon VPC</a>.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartKeyPhrasesDetectionJobRequest withVpcConfig(VpcConfig vpcConfig) {
+        this.vpcConfig = vpcConfig;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the key phrases detection job. A tag is a
+     * key-value pair that adds metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     *
+     * @return <p>
+     *         Tags to associate with the key phrases detection job. A tag is a
+     *         key-value pair that adds metadata to a resource used by Amazon
+     *         Comprehend. For example, a tag with "Sales" as the key might be
+     *         added to a resource to indicate its use by the sales department.
+     *         </p>
+     */
+    public java.util.List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the key phrases detection job. A tag is a
+     * key-value pair that adds metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     *
+     * @param tags <p>
+     *            Tags to associate with the key phrases detection job. A tag is
+     *            a key-value pair that adds metadata to a resource used by
+     *            Amazon Comprehend. For example, a tag with "Sales" as the key
+     *            might be added to a resource to indicate its use by the sales
+     *            department.
+     *            </p>
+     */
+    public void setTags(java.util.Collection<Tag> tags) {
+        if (tags == null) {
+            this.tags = null;
+            return;
+        }
+
+        this.tags = new java.util.ArrayList<Tag>(tags);
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the key phrases detection job. A tag is a
+     * key-value pair that adds metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Tags to associate with the key phrases detection job. A tag is
+     *            a key-value pair that adds metadata to a resource used by
+     *            Amazon Comprehend. For example, a tag with "Sales" as the key
+     *            might be added to a resource to indicate its use by the sales
+     *            department.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartKeyPhrasesDetectionJobRequest withTags(Tag... tags) {
+        if (getTags() == null) {
+            this.tags = new java.util.ArrayList<Tag>(tags.length);
+        }
+        for (Tag value : tags) {
+            this.tags.add(value);
+        }
+        return this;
+    }
+
+    /**
+     * <p>
+     * Tags to associate with the key phrases detection job. A tag is a
+     * key-value pair that adds metadata to a resource used by Amazon
+     * Comprehend. For example, a tag with "Sales" as the key might be added to
+     * a resource to indicate its use by the sales department.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param tags <p>
+     *            Tags to associate with the key phrases detection job. A tag is
+     *            a key-value pair that adds metadata to a resource used by
+     *            Amazon Comprehend. For example, a tag with "Sales" as the key
+     *            might be added to a resource to indicate its use by the sales
+     *            department.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public StartKeyPhrasesDetectionJobRequest withTags(java.util.Collection<Tag> tags) {
+        setTags(tags);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object; useful for testing and
      * debugging.
      *
@@ -524,7 +900,13 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
         if (getLanguageCode() != null)
             sb.append("LanguageCode: " + getLanguageCode() + ",");
         if (getClientRequestToken() != null)
-            sb.append("ClientRequestToken: " + getClientRequestToken());
+            sb.append("ClientRequestToken: " + getClientRequestToken() + ",");
+        if (getVolumeKmsKeyId() != null)
+            sb.append("VolumeKmsKeyId: " + getVolumeKmsKeyId() + ",");
+        if (getVpcConfig() != null)
+            sb.append("VpcConfig: " + getVpcConfig() + ",");
+        if (getTags() != null)
+            sb.append("Tags: " + getTags());
         sb.append("}");
         return sb.toString();
     }
@@ -545,6 +927,10 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
                 + ((getLanguageCode() == null) ? 0 : getLanguageCode().hashCode());
         hashCode = prime * hashCode
                 + ((getClientRequestToken() == null) ? 0 : getClientRequestToken().hashCode());
+        hashCode = prime * hashCode
+                + ((getVolumeKmsKeyId() == null) ? 0 : getVolumeKmsKeyId().hashCode());
+        hashCode = prime * hashCode + ((getVpcConfig() == null) ? 0 : getVpcConfig().hashCode());
+        hashCode = prime * hashCode + ((getTags() == null) ? 0 : getTags().hashCode());
         return hashCode;
     }
 
@@ -587,6 +973,20 @@ public class StartKeyPhrasesDetectionJobRequest extends AmazonWebServiceRequest 
             return false;
         if (other.getClientRequestToken() != null
                 && other.getClientRequestToken().equals(this.getClientRequestToken()) == false)
+            return false;
+        if (other.getVolumeKmsKeyId() == null ^ this.getVolumeKmsKeyId() == null)
+            return false;
+        if (other.getVolumeKmsKeyId() != null
+                && other.getVolumeKmsKeyId().equals(this.getVolumeKmsKeyId()) == false)
+            return false;
+        if (other.getVpcConfig() == null ^ this.getVpcConfig() == null)
+            return false;
+        if (other.getVpcConfig() != null
+                && other.getVpcConfig().equals(this.getVpcConfig()) == false)
+            return false;
+        if (other.getTags() == null ^ this.getTags() == null)
+            return false;
+        if (other.getTags() != null && other.getTags().equals(this.getTags()) == false)
             return false;
         return true;
     }

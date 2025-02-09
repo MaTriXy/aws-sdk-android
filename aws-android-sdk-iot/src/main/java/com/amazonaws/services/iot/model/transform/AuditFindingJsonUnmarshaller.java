@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,7 +35,10 @@ class AuditFindingJsonUnmarshaller implements Unmarshaller<AuditFinding, JsonUnm
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if (name.equals("taskId")) {
+            if (name.equals("findingId")) {
+                auditFinding.setFindingId(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("taskId")) {
                 auditFinding.setTaskId(StringJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else if (name.equals("checkName")) {
@@ -64,6 +67,9 @@ class AuditFindingJsonUnmarshaller implements Unmarshaller<AuditFinding, JsonUnm
                         .unmarshall(context));
             } else if (name.equals("reasonForNonComplianceCode")) {
                 auditFinding.setReasonForNonComplianceCode(StringJsonUnmarshaller.getInstance()
+                        .unmarshall(context));
+            } else if (name.equals("isSuppressed")) {
+                auditFinding.setIsSuppressed(BooleanJsonUnmarshaller.getInstance()
                         .unmarshall(context));
             } else {
                 reader.skipValue();

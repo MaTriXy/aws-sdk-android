@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@ import java.io.Serializable;
 
 /**
  * <p>
- * Provides information about a single type of moderated content found in an
- * image or video. Each type of moderated content has a label within a
- * hierarchical taxonomy. For more information, see Detecting Unsafe Content in
- * the Amazon Rekognition Developer Guide.
+ * Provides information about a single type of inappropriate, unwanted, or
+ * offensive content found in an image or video. Each type of moderated content
+ * has a label within a hierarchical taxonomy. For more information, see Content
+ * moderation in the Amazon Rekognition Developer Guide.
  * </p>
  */
 public class ModerationLabel implements Serializable {
@@ -38,20 +38,20 @@ public class ModerationLabel implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      */
     private Float confidence;
 
     /**
      * <p>
-     * The label name for the type of content detected in the image.
+     * The label name for the type of unsafe content detected in the image.
      * </p>
      */
     private String name;
 
     /**
      * <p>
-     * The name for the parent label. Labels at the top-level of the hierarchy
+     * The name for the parent label. Labels at the top level of the hierarchy
      * have the parent label <code>""</code>.
      * </p>
      */
@@ -69,7 +69,7 @@ public class ModerationLabel implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @return <p>
      *         Specifies the confidence that Amazon Rekognition has that the
@@ -98,7 +98,7 @@ public class ModerationLabel implements Serializable {
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param confidence <p>
      *            Specifies the confidence that Amazon Rekognition has that the
@@ -130,7 +130,7 @@ public class ModerationLabel implements Serializable {
      * together.
      * <p>
      * <b>Constraints:</b><br/>
-     * <b>Length: </b>0 - 100<br/>
+     * <b>Length: </b>0.0 - 100.0<br/>
      *
      * @param confidence <p>
      *            Specifies the confidence that Amazon Rekognition has that the
@@ -152,11 +152,12 @@ public class ModerationLabel implements Serializable {
 
     /**
      * <p>
-     * The label name for the type of content detected in the image.
+     * The label name for the type of unsafe content detected in the image.
      * </p>
      *
      * @return <p>
-     *         The label name for the type of content detected in the image.
+     *         The label name for the type of unsafe content detected in the
+     *         image.
      *         </p>
      */
     public String getName() {
@@ -165,11 +166,12 @@ public class ModerationLabel implements Serializable {
 
     /**
      * <p>
-     * The label name for the type of content detected in the image.
+     * The label name for the type of unsafe content detected in the image.
      * </p>
      *
      * @param name <p>
-     *            The label name for the type of content detected in the image.
+     *            The label name for the type of unsafe content detected in the
+     *            image.
      *            </p>
      */
     public void setName(String name) {
@@ -178,14 +180,15 @@ public class ModerationLabel implements Serializable {
 
     /**
      * <p>
-     * The label name for the type of content detected in the image.
+     * The label name for the type of unsafe content detected in the image.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param name <p>
-     *            The label name for the type of content detected in the image.
+     *            The label name for the type of unsafe content detected in the
+     *            image.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -197,12 +200,12 @@ public class ModerationLabel implements Serializable {
 
     /**
      * <p>
-     * The name for the parent label. Labels at the top-level of the hierarchy
+     * The name for the parent label. Labels at the top level of the hierarchy
      * have the parent label <code>""</code>.
      * </p>
      *
      * @return <p>
-     *         The name for the parent label. Labels at the top-level of the
+     *         The name for the parent label. Labels at the top level of the
      *         hierarchy have the parent label <code>""</code>.
      *         </p>
      */
@@ -212,12 +215,12 @@ public class ModerationLabel implements Serializable {
 
     /**
      * <p>
-     * The name for the parent label. Labels at the top-level of the hierarchy
+     * The name for the parent label. Labels at the top level of the hierarchy
      * have the parent label <code>""</code>.
      * </p>
      *
      * @param parentName <p>
-     *            The name for the parent label. Labels at the top-level of the
+     *            The name for the parent label. Labels at the top level of the
      *            hierarchy have the parent label <code>""</code>.
      *            </p>
      */
@@ -227,7 +230,7 @@ public class ModerationLabel implements Serializable {
 
     /**
      * <p>
-     * The name for the parent label. Labels at the top-level of the hierarchy
+     * The name for the parent label. Labels at the top level of the hierarchy
      * have the parent label <code>""</code>.
      * </p>
      * <p>
@@ -235,7 +238,7 @@ public class ModerationLabel implements Serializable {
      * together.
      *
      * @param parentName <p>
-     *            The name for the parent label. Labels at the top-level of the
+     *            The name for the parent label. Labels at the top level of the
      *            hierarchy have the parent label <code>""</code>.
      *            </p>
      * @return A reference to this updated object so that method calls can be

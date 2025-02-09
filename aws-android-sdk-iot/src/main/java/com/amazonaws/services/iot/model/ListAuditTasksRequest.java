@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -24,13 +24,18 @@ import com.amazonaws.AmazonWebServiceRequest;
  * Lists the Device Defender audits that have been performed during a given time
  * period.
  * </p>
+ * <p>
+ * Requires permission to access the <a href=
+ * "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions"
+ * >ListAuditTasks</a> action.
+ * </p>
  */
 public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Serializable {
     /**
      * <p>
-     * The beginning of the time period. Note that audit information is retained
-     * for a limited time (180 days). Requesting a start time prior to what is
-     * retained results in an "InvalidRequestException".
+     * The beginning of the time period. Audit information is retained for a
+     * limited time (90 days). Requesting a start time prior to what is retained
+     * results in an "InvalidRequestException".
      * </p>
      */
     private java.util.Date startTime;
@@ -56,7 +61,8 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
     /**
      * <p>
      * A filter to limit the output to audits with the specified completion
-     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED" or "CANCELED".
+     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED", or
+     * "CANCELED".
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -83,16 +89,15 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
 
     /**
      * <p>
-     * The beginning of the time period. Note that audit information is retained
-     * for a limited time (180 days). Requesting a start time prior to what is
-     * retained results in an "InvalidRequestException".
+     * The beginning of the time period. Audit information is retained for a
+     * limited time (90 days). Requesting a start time prior to what is retained
+     * results in an "InvalidRequestException".
      * </p>
      *
      * @return <p>
-     *         The beginning of the time period. Note that audit information is
-     *         retained for a limited time (180 days). Requesting a start time
-     *         prior to what is retained results in an
-     *         "InvalidRequestException".
+     *         The beginning of the time period. Audit information is retained
+     *         for a limited time (90 days). Requesting a start time prior to
+     *         what is retained results in an "InvalidRequestException".
      *         </p>
      */
     public java.util.Date getStartTime() {
@@ -101,15 +106,15 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
 
     /**
      * <p>
-     * The beginning of the time period. Note that audit information is retained
-     * for a limited time (180 days). Requesting a start time prior to what is
-     * retained results in an "InvalidRequestException".
+     * The beginning of the time period. Audit information is retained for a
+     * limited time (90 days). Requesting a start time prior to what is retained
+     * results in an "InvalidRequestException".
      * </p>
      *
      * @param startTime <p>
-     *            The beginning of the time period. Note that audit information
-     *            is retained for a limited time (180 days). Requesting a start
-     *            time prior to what is retained results in an
+     *            The beginning of the time period. Audit information is
+     *            retained for a limited time (90 days). Requesting a start time
+     *            prior to what is retained results in an
      *            "InvalidRequestException".
      *            </p>
      */
@@ -119,18 +124,18 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
 
     /**
      * <p>
-     * The beginning of the time period. Note that audit information is retained
-     * for a limited time (180 days). Requesting a start time prior to what is
-     * retained results in an "InvalidRequestException".
+     * The beginning of the time period. Audit information is retained for a
+     * limited time (90 days). Requesting a start time prior to what is retained
+     * results in an "InvalidRequestException".
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param startTime <p>
-     *            The beginning of the time period. Note that audit information
-     *            is retained for a limited time (180 days). Requesting a start
-     *            time prior to what is retained results in an
+     *            The beginning of the time period. Audit information is
+     *            retained for a limited time (90 days). Requesting a start time
+     *            prior to what is retained results in an
      *            "InvalidRequestException".
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -300,7 +305,8 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
     /**
      * <p>
      * A filter to limit the output to audits with the specified completion
-     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED" or "CANCELED".
+     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED", or
+     * "CANCELED".
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -309,7 +315,7 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
      * @return <p>
      *         A filter to limit the output to audits with the specified
      *         completion status: can be one of "IN_PROGRESS", "COMPLETED",
-     *         "FAILED" or "CANCELED".
+     *         "FAILED", or "CANCELED".
      *         </p>
      * @see AuditTaskStatus
      */
@@ -320,7 +326,8 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
     /**
      * <p>
      * A filter to limit the output to audits with the specified completion
-     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED" or "CANCELED".
+     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED", or
+     * "CANCELED".
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -329,7 +336,7 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
      * @param taskStatus <p>
      *            A filter to limit the output to audits with the specified
      *            completion status: can be one of "IN_PROGRESS", "COMPLETED",
-     *            "FAILED" or "CANCELED".
+     *            "FAILED", or "CANCELED".
      *            </p>
      * @see AuditTaskStatus
      */
@@ -340,7 +347,8 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
     /**
      * <p>
      * A filter to limit the output to audits with the specified completion
-     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED" or "CANCELED".
+     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED", or
+     * "CANCELED".
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -352,7 +360,7 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
      * @param taskStatus <p>
      *            A filter to limit the output to audits with the specified
      *            completion status: can be one of "IN_PROGRESS", "COMPLETED",
-     *            "FAILED" or "CANCELED".
+     *            "FAILED", or "CANCELED".
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -366,7 +374,8 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
     /**
      * <p>
      * A filter to limit the output to audits with the specified completion
-     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED" or "CANCELED".
+     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED", or
+     * "CANCELED".
      * </p>
      * <p>
      * <b>Constraints:</b><br/>
@@ -375,7 +384,7 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
      * @param taskStatus <p>
      *            A filter to limit the output to audits with the specified
      *            completion status: can be one of "IN_PROGRESS", "COMPLETED",
-     *            "FAILED" or "CANCELED".
+     *            "FAILED", or "CANCELED".
      *            </p>
      * @see AuditTaskStatus
      */
@@ -386,7 +395,8 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
     /**
      * <p>
      * A filter to limit the output to audits with the specified completion
-     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED" or "CANCELED".
+     * status: can be one of "IN_PROGRESS", "COMPLETED", "FAILED", or
+     * "CANCELED".
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -398,7 +408,7 @@ public class ListAuditTasksRequest extends AmazonWebServiceRequest implements Se
      * @param taskStatus <p>
      *            A filter to limit the output to audits with the specified
      *            completion status: can be one of "IN_PROGRESS", "COMPLETED",
-     *            "FAILED" or "CANCELED".
+     *            "FAILED", or "CANCELED".
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

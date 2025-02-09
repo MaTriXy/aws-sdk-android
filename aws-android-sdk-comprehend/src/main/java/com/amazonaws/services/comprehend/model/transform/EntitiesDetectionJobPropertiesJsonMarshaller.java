@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazonaws.services.comprehend.model.transform;
 
 import com.amazonaws.services.comprehend.model.*;
+import com.amazonaws.util.DateUtils;
 import com.amazonaws.util.json.AwsJsonWriter;
 
 /**
@@ -30,6 +31,11 @@ class EntitiesDetectionJobPropertiesJsonMarshaller {
             String jobId = entitiesDetectionJobProperties.getJobId();
             jsonWriter.name("JobId");
             jsonWriter.value(jobId);
+        }
+        if (entitiesDetectionJobProperties.getJobArn() != null) {
+            String jobArn = entitiesDetectionJobProperties.getJobArn();
+            jsonWriter.name("JobArn");
+            jsonWriter.value(jobArn);
         }
         if (entitiesDetectionJobProperties.getJobName() != null) {
             String jobName = entitiesDetectionJobProperties.getJobName();
@@ -81,6 +87,21 @@ class EntitiesDetectionJobPropertiesJsonMarshaller {
             String dataAccessRoleArn = entitiesDetectionJobProperties.getDataAccessRoleArn();
             jsonWriter.name("DataAccessRoleArn");
             jsonWriter.value(dataAccessRoleArn);
+        }
+        if (entitiesDetectionJobProperties.getVolumeKmsKeyId() != null) {
+            String volumeKmsKeyId = entitiesDetectionJobProperties.getVolumeKmsKeyId();
+            jsonWriter.name("VolumeKmsKeyId");
+            jsonWriter.value(volumeKmsKeyId);
+        }
+        if (entitiesDetectionJobProperties.getVpcConfig() != null) {
+            VpcConfig vpcConfig = entitiesDetectionJobProperties.getVpcConfig();
+            jsonWriter.name("VpcConfig");
+            VpcConfigJsonMarshaller.getInstance().marshall(vpcConfig, jsonWriter);
+        }
+        if (entitiesDetectionJobProperties.getFlywheelArn() != null) {
+            String flywheelArn = entitiesDetectionJobProperties.getFlywheelArn();
+            jsonWriter.name("FlywheelArn");
+            jsonWriter.value(flywheelArn);
         }
         jsonWriter.endObject();
     }

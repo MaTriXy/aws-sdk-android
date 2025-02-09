@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,6 +61,13 @@ public class JobSummary implements Serializable {
      * when the thing is added to a target group, even after the job was
      * completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -74,30 +81,39 @@ public class JobSummary implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      */
     private String status;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      */
     private java.util.Date createdAt;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      */
     private java.util.Date lastUpdatedAt;
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job completed.
+     * The time, in seconds since the epoch, when the job completed.
      * </p>
      */
     private java.util.Date completedAt;
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     */
+    private Boolean isConcurrent;
 
     /**
      * <p>
@@ -270,6 +286,13 @@ public class JobSummary implements Serializable {
      * when the thing is added to a target group, even after the job was
      * completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -283,6 +306,14 @@ public class JobSummary implements Serializable {
      *         target group, even after the job was completed by all things
      *         originally in the group.
      *         </p>
+     *         <note>
+     *         <p>
+     *         We recommend that you use continuous jobs instead of snapshot
+     *         jobs for dynamic thing group targets. By using continuous jobs,
+     *         devices that join the group receive the job execution even after
+     *         the job has been created.
+     *         </p>
+     *         </note>
      * @see TargetSelection
      */
     public String getTargetSelection() {
@@ -298,6 +329,13 @@ public class JobSummary implements Serializable {
      * when the thing is added to a target group, even after the job was
      * completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -311,6 +349,14 @@ public class JobSummary implements Serializable {
      *            is added to a target group, even after the job was completed
      *            by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @see TargetSelection
      */
     public void setTargetSelection(String targetSelection) {
@@ -326,6 +372,13 @@ public class JobSummary implements Serializable {
      * when the thing is added to a target group, even after the job was
      * completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -342,6 +395,14 @@ public class JobSummary implements Serializable {
      *            is added to a target group, even after the job was completed
      *            by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      * @see TargetSelection
@@ -360,6 +421,13 @@ public class JobSummary implements Serializable {
      * when the thing is added to a target group, even after the job was
      * completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>CONTINUOUS, SNAPSHOT
@@ -373,6 +441,14 @@ public class JobSummary implements Serializable {
      *            is added to a target group, even after the job was completed
      *            by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @see TargetSelection
      */
     public void setTargetSelection(TargetSelection targetSelection) {
@@ -388,6 +464,13 @@ public class JobSummary implements Serializable {
      * when the thing is added to a target group, even after the job was
      * completed by all things originally in the group.
      * </p>
+     * <note>
+     * <p>
+     * We recommend that you use continuous jobs instead of snapshot jobs for
+     * dynamic thing group targets. By using continuous jobs, devices that join
+     * the group receive the job execution even after the job has been created.
+     * </p>
+     * </note>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
@@ -404,6 +487,14 @@ public class JobSummary implements Serializable {
      *            is added to a target group, even after the job was completed
      *            by all things originally in the group.
      *            </p>
+     *            <note>
+     *            <p>
+     *            We recommend that you use continuous jobs instead of snapshot
+     *            jobs for dynamic thing group targets. By using continuous
+     *            jobs, devices that join the group receive the job execution
+     *            even after the job has been created.
+     *            </p>
+     *            </note>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      * @see TargetSelection
@@ -420,7 +511,7 @@ public class JobSummary implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @return <p>
      *         The job summary status.
@@ -438,7 +529,7 @@ public class JobSummary implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The job summary status.
@@ -459,7 +550,7 @@ public class JobSummary implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The job summary status.
@@ -480,7 +571,7 @@ public class JobSummary implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The job summary status.
@@ -501,7 +592,7 @@ public class JobSummary implements Serializable {
      * <p>
      * <b>Constraints:</b><br/>
      * <b>Allowed Values: </b>IN_PROGRESS, CANCELED, COMPLETED,
-     * DELETION_IN_PROGRESS
+     * DELETION_IN_PROGRESS, SCHEDULED
      *
      * @param status <p>
      *            The job summary status.
@@ -517,12 +608,11 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job was
-     *         created.
+     *         The time, in seconds since the epoch, when the job was created.
      *         </p>
      */
     public java.util.Date getCreatedAt() {
@@ -531,11 +621,11 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      *
      * @param createdAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
+     *            The time, in seconds since the epoch, when the job was
      *            created.
      *            </p>
      */
@@ -545,14 +635,14 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was created.
+     * The time, in seconds since the epoch, when the job was created.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param createdAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
+     *            The time, in seconds since the epoch, when the job was
      *            created.
      *            </p>
      * @return A reference to this updated object so that method calls can be
@@ -565,11 +655,11 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job was last
+     *         The time, in seconds since the epoch, when the job was last
      *         updated.
      *         </p>
      */
@@ -579,12 +669,12 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      *
      * @param lastUpdatedAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
-     *            last updated.
+     *            The time, in seconds since the epoch, when the job was last
+     *            updated.
      *            </p>
      */
     public void setLastUpdatedAt(java.util.Date lastUpdatedAt) {
@@ -593,15 +683,15 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job was last updated.
+     * The time, in seconds since the epoch, when the job was last updated.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param lastUpdatedAt <p>
-     *            The time, in milliseconds since the epoch, when the job was
-     *            last updated.
+     *            The time, in seconds since the epoch, when the job was last
+     *            updated.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
@@ -613,12 +703,11 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job completed.
+     * The time, in seconds since the epoch, when the job completed.
      * </p>
      *
      * @return <p>
-     *         The time, in milliseconds since the epoch, when the job
-     *         completed.
+     *         The time, in seconds since the epoch, when the job completed.
      *         </p>
      */
     public java.util.Date getCompletedAt() {
@@ -627,12 +716,11 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job completed.
+     * The time, in seconds since the epoch, when the job completed.
      * </p>
      *
      * @param completedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            completed.
+     *            The time, in seconds since the epoch, when the job completed.
      *            </p>
      */
     public void setCompletedAt(java.util.Date completedAt) {
@@ -641,21 +729,94 @@ public class JobSummary implements Serializable {
 
     /**
      * <p>
-     * The time, in milliseconds since the epoch, when the job completed.
+     * The time, in seconds since the epoch, when the job completed.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
      * together.
      *
      * @param completedAt <p>
-     *            The time, in milliseconds since the epoch, when the job
-     *            completed.
+     *            The time, in seconds since the epoch, when the job completed.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.
      */
     public JobSummary withCompletedAt(java.util.Date completedAt) {
         this.completedAt = completedAt;
+        return this;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether a job is concurrent. Will be true when a job is
+     *         rolling out new job executions or canceling previously created
+     *         executions, otherwise false.
+     *         </p>
+     */
+    public Boolean isIsConcurrent() {
+        return isConcurrent;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     *
+     * @return <p>
+     *         Indicates whether a job is concurrent. Will be true when a job is
+     *         rolling out new job executions or canceling previously created
+     *         executions, otherwise false.
+     *         </p>
+     */
+    public Boolean getIsConcurrent() {
+        return isConcurrent;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     *
+     * @param isConcurrent <p>
+     *            Indicates whether a job is concurrent. Will be true when a job
+     *            is rolling out new job executions or canceling previously
+     *            created executions, otherwise false.
+     *            </p>
+     */
+    public void setIsConcurrent(Boolean isConcurrent) {
+        this.isConcurrent = isConcurrent;
+    }
+
+    /**
+     * <p>
+     * Indicates whether a job is concurrent. Will be true when a job is rolling
+     * out new job executions or canceling previously created executions,
+     * otherwise false.
+     * </p>
+     * <p>
+     * Returns a reference to this object so that method calls can be chained
+     * together.
+     *
+     * @param isConcurrent <p>
+     *            Indicates whether a job is concurrent. Will be true when a job
+     *            is rolling out new job executions or canceling previously
+     *            created executions, otherwise false.
+     *            </p>
+     * @return A reference to this updated object so that method calls can be
+     *         chained together.
+     */
+    public JobSummary withIsConcurrent(Boolean isConcurrent) {
+        this.isConcurrent = isConcurrent;
         return this;
     }
 
@@ -685,7 +846,9 @@ public class JobSummary implements Serializable {
         if (getLastUpdatedAt() != null)
             sb.append("lastUpdatedAt: " + getLastUpdatedAt() + ",");
         if (getCompletedAt() != null)
-            sb.append("completedAt: " + getCompletedAt());
+            sb.append("completedAt: " + getCompletedAt() + ",");
+        if (getIsConcurrent() != null)
+            sb.append("isConcurrent: " + getIsConcurrent());
         sb.append("}");
         return sb.toString();
     }
@@ -707,6 +870,8 @@ public class JobSummary implements Serializable {
                 + ((getLastUpdatedAt() == null) ? 0 : getLastUpdatedAt().hashCode());
         hashCode = prime * hashCode
                 + ((getCompletedAt() == null) ? 0 : getCompletedAt().hashCode());
+        hashCode = prime * hashCode
+                + ((getIsConcurrent() == null) ? 0 : getIsConcurrent().hashCode());
         return hashCode;
     }
 
@@ -757,6 +922,11 @@ public class JobSummary implements Serializable {
             return false;
         if (other.getCompletedAt() != null
                 && other.getCompletedAt().equals(this.getCompletedAt()) == false)
+            return false;
+        if (other.getIsConcurrent() == null ^ this.getIsConcurrent() == null)
+            return false;
+        if (other.getIsConcurrent() != null
+                && other.getIsConcurrent().equals(this.getIsConcurrent()) == false)
             return false;
         return true;
     }

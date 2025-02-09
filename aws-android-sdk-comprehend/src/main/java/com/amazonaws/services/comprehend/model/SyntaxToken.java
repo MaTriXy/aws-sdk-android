@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,7 +61,9 @@ public class SyntaxToken implements Serializable {
      * <p>
      * Provides the part of speech label and the confidence level that Amazon
      * Comprehend has that the part of speech was correctly identified. For more
-     * information, see <a>how-syntax</a>.
+     * information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      */
     private PartOfSpeechTag partOfSpeech;
@@ -271,13 +273,17 @@ public class SyntaxToken implements Serializable {
      * <p>
      * Provides the part of speech label and the confidence level that Amazon
      * Comprehend has that the part of speech was correctly identified. For more
-     * information, see <a>how-syntax</a>.
+     * information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      *
      * @return <p>
      *         Provides the part of speech label and the confidence level that
      *         Amazon Comprehend has that the part of speech was correctly
-     *         identified. For more information, see <a>how-syntax</a>.
+     *         identified. For more information, see <a href=
+     *         "https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     *         >Syntax</a> in the Comprehend Developer Guide.
      *         </p>
      */
     public PartOfSpeechTag getPartOfSpeech() {
@@ -288,14 +294,17 @@ public class SyntaxToken implements Serializable {
      * <p>
      * Provides the part of speech label and the confidence level that Amazon
      * Comprehend has that the part of speech was correctly identified. For more
-     * information, see <a>how-syntax</a>.
+     * information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      *
      * @param partOfSpeech <p>
      *            Provides the part of speech label and the confidence level
      *            that Amazon Comprehend has that the part of speech was
-     *            correctly identified. For more information, see
-     *            <a>how-syntax</a>.
+     *            correctly identified. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     *            >Syntax</a> in the Comprehend Developer Guide.
      *            </p>
      */
     public void setPartOfSpeech(PartOfSpeechTag partOfSpeech) {
@@ -306,7 +315,9 @@ public class SyntaxToken implements Serializable {
      * <p>
      * Provides the part of speech label and the confidence level that Amazon
      * Comprehend has that the part of speech was correctly identified. For more
-     * information, see <a>how-syntax</a>.
+     * information, see <a
+     * href="https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     * >Syntax</a> in the Comprehend Developer Guide.
      * </p>
      * <p>
      * Returns a reference to this object so that method calls can be chained
@@ -315,8 +326,9 @@ public class SyntaxToken implements Serializable {
      * @param partOfSpeech <p>
      *            Provides the part of speech label and the confidence level
      *            that Amazon Comprehend has that the part of speech was
-     *            correctly identified. For more information, see
-     *            <a>how-syntax</a>.
+     *            correctly identified. For more information, see <a href=
+     *            "https://docs.aws.amazon.com/comprehend/latest/dg/how-syntax.html"
+     *            >Syntax</a> in the Comprehend Developer Guide.
      *            </p>
      * @return A reference to this updated object so that method calls can be
      *         chained together.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,14 +23,45 @@ import java.util.Map;
  */
 public enum LanguageCode {
 
-    EnUS("en-US"),
-    EsUS("es-US"),
-    EnAU("en-AU"),
-    FrCA("fr-CA"),
-    EnGB("en-GB"),
+    AfZA("af-ZA"),
+    ArAE("ar-AE"),
+    ArSA("ar-SA"),
+    DaDK("da-DK"),
+    DeCH("de-CH"),
     DeDE("de-DE"),
+    EnAB("en-AB"),
+    EnAU("en-AU"),
+    EnGB("en-GB"),
+    EnIE("en-IE"),
+    EnIN("en-IN"),
+    EnUS("en-US"),
+    EnWL("en-WL"),
+    EsES("es-ES"),
+    EsUS("es-US"),
+    FaIR("fa-IR"),
+    FrCA("fr-CA"),
+    FrFR("fr-FR"),
+    HeIL("he-IL"),
+    HiIN("hi-IN"),
+    IdID("id-ID"),
+    ItIT("it-IT"),
+    JaJP("ja-JP"),
+    KoKR("ko-KR"),
+    MsMY("ms-MY"),
+    NlNL("nl-NL"),
     PtBR("pt-BR"),
-    FrFR("fr-FR");
+    PtPT("pt-PT"),
+    RuRU("ru-RU"),
+    TaIN("ta-IN"),
+    TeIN("te-IN"),
+    TrTR("tr-TR"),
+    ZhCN("zh-CN"),
+    ZhTW("zh-TW"),
+    ThTH("th-TH"),
+    EnZA("en-ZA"),
+    EnNZ("en-NZ"),
+    ViVN("vi-VN"),
+    SvSE("sv-SE");
 
     private String value;
 
@@ -46,14 +77,45 @@ public enum LanguageCode {
     private static final Map<String, LanguageCode> enumMap;
     static {
         enumMap = new HashMap<String, LanguageCode>();
-        enumMap.put("en-US", EnUS);
-        enumMap.put("es-US", EsUS);
-        enumMap.put("en-AU", EnAU);
-        enumMap.put("fr-CA", FrCA);
-        enumMap.put("en-GB", EnGB);
+        enumMap.put("af-ZA", AfZA);
+        enumMap.put("ar-AE", ArAE);
+        enumMap.put("ar-SA", ArSA);
+        enumMap.put("da-DK", DaDK);
+        enumMap.put("de-CH", DeCH);
         enumMap.put("de-DE", DeDE);
-        enumMap.put("pt-BR", PtBR);
+        enumMap.put("en-AB", EnAB);
+        enumMap.put("en-AU", EnAU);
+        enumMap.put("en-GB", EnGB);
+        enumMap.put("en-IE", EnIE);
+        enumMap.put("en-IN", EnIN);
+        enumMap.put("en-US", EnUS);
+        enumMap.put("en-WL", EnWL);
+        enumMap.put("es-ES", EsES);
+        enumMap.put("es-US", EsUS);
+        enumMap.put("fa-IR", FaIR);
+        enumMap.put("fr-CA", FrCA);
         enumMap.put("fr-FR", FrFR);
+        enumMap.put("he-IL", HeIL);
+        enumMap.put("hi-IN", HiIN);
+        enumMap.put("id-ID", IdID);
+        enumMap.put("it-IT", ItIT);
+        enumMap.put("ja-JP", JaJP);
+        enumMap.put("ko-KR", KoKR);
+        enumMap.put("ms-MY", MsMY);
+        enumMap.put("nl-NL", NlNL);
+        enumMap.put("pt-BR", PtBR);
+        enumMap.put("pt-PT", PtPT);
+        enumMap.put("ru-RU", RuRU);
+        enumMap.put("ta-IN", TaIN);
+        enumMap.put("te-IN", TeIN);
+        enumMap.put("tr-TR", TrTR);
+        enumMap.put("zh-CN", ZhCN);
+        enumMap.put("zh-TW", ZhTW);
+        enumMap.put("th-TH", ThTH);
+        enumMap.put("en-ZA", EnZA);
+        enumMap.put("en-NZ", EnNZ);
+        enumMap.put("vi-VN", ViVN);
+        enumMap.put("sv-SE", SvSE);
     }
 
     /**
